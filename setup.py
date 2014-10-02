@@ -14,5 +14,5 @@ setup(
     packages=['blake', 'test'],
     long_description=read('README'),
     classifiers=["Development Status :: 3 - Alpha"],
-    install_requires=["flask"]
+    install_requires=["flask", "sqlalchemy"]
 )

@@ -1,5 +1,9 @@
 from flask import Flask
+from .api import api
 
 app = Flask(__name__)
 
-# Routes can be defined here, or in a separate blueprint which is then initialized here
+# Blueprints should be registered here
+app.register_blueprint(api)
+
+# Routes can be defined here
