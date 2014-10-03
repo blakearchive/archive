@@ -22,17 +22,17 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: '/static/html/home.html',
         controller: "HomeController"
     });
-    $routeProvider.when('/collection/:collectionId', {
-        templateUrl: '/static/html/collection.html',
-        controller: "CollectionController"
+    $routeProvider.when('/object/:objectId', {
+        templateUrl: '/static/html/object.html',
+        controller: "ObjectController"
+    });
+    $routeProvider.when('/copy/:copyId', {
+        templateUrl: '/static/html/copy.html',
+        controller: "CopyController"
     });
     $routeProvider.when('/work/:workId', {
         templateUrl: '/static/html/work.html',
         controller: "WorkController"
-    });
-    $routeProvider.when('/object/:objectId', {
-        templateUrl: '/static/html/object.html',
-        controller: "ObjectController"
     });
     $routeProvider.when('/compare/', {
         templateUrl: '/static/html/compare.html',
@@ -134,10 +134,10 @@ app.factory("BlakeComparableGroup", function (BlakeObject) {
 });
 
 /**
- * All data accessor functions should be placed here.  This service should duplicate the api of the back-end
- * BlakeDataService interface.
+ * All data accessor functions should be placed here.  This service should mirror the api of the back-end
+ * BlakeDataService.
  */
-app.factory("BlakeDataService", function ($http, $q, BlakeWork, BlakeCopy, BlakeObject) {
+app.factory("BlakeDataService", function ($http, $q, BlakeWork, BlakeCopy, BlakeObject, BlakeVirtualWorkGroup, BlakeComparableGroup) {
     var service = {
         query: function (config) {
             var url = '';
@@ -149,6 +149,56 @@ app.factory("BlakeDataService", function ($http, $q, BlakeWork, BlakeCopy, Blake
                 }).error(function (data, status) {
                     reject(data, status);
                 });
+            });
+        },
+        getObject: function (objectId) {
+            var url = '/api/object/' + objectId;
+            return $q(function(resolve, reject) {
+                $http.get(url).success(function (data) {
+                    resolve(BlakeObject.create(data));
+                }).error(function (data, status) {
+                    reject(data, status);
+                })
+            });
+        },
+        getCopy: function (copyId) {
+            var url = '/api/copy/' + copyId;
+            return $q(function(resolve, reject) {
+                $http.get(url).success(function (data) {
+                    resolve(BlakeCopy.create(data));
+                }).error(function (data, status) {
+                    reject(data, status);
+                })
+            });
+        },
+        getWork: function (workId) {
+            var url = '/api/work/' + workId;
+            return $q(function(resolve, reject) {
+                $http.get(url).success(function (data) {
+                    resolve(BlakeWork.create(data));
+                }).error(function (data, status) {
+                    reject(data, status);
+                })
+            });
+        },
+        getVirtualWorkGroup: function (virtualWorkGroupId) {
+            var url = '/api/virtual_work_group/' + virtualWorkGroupId;
+            return $q(function(resolve, reject) {
+                $http.get(url).success(function (data) {
+                    resolve(BlakeVirtualWorkGroup.create(data));
+                }).error(function (data, status) {
+                    reject(data, status);
+                })
+            });
+        },
+        getComparableGroup: function (comparableGroupId) {
+            var url = '/api/comparable_group/' + comparableGroupId;
+            return $q(function(resolve, reject) {
+                $http.get(url).success(function (data) {
+                    resolve(BlakeComparableGroup.create(data));
+                }).error(function (data, status) {
+                    reject(data, status);
+                })
             });
         }
     };

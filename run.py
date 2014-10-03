@@ -21,7 +21,4 @@ def catch_all(path):
 
 
 if __name__ == "__main__":
-    with app.app_context():
-        models.db.drop_all()
-        models.db.create_all()
     app.run()

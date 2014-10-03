@@ -9,10 +9,10 @@ def read(fname):
 setup(
     name="blake-archive",
     version="0.1",
-    description="Blake archive back-end",
+    description="Blake archive web app",
     license="Closed source",
     packages=['blake', 'test'],
     long_description=read('README'),
     classifiers=["Development Status :: 3 - Alpha"],
-    install_requires=["flask", "sqlalchemy"]
+    install_requires=["flask", "sqlalchemy", "flask-sqlalchemy", "nose"]
 )
