@@ -10,7 +10,10 @@ class BlakeDataService(object):
     @classmethod
     def query(cls, config):
         # Construct a custom query based on the config object
-        query = models.BlakeObject.query
+        # assuming config has a property text, the query text to search for
+        tsquery = models.db.func.to_tsquery(config.text)
+        rank = models.db.func.ts_rank_cd(models.BlakeObject.document_vector, tsquery).label("rank")
+        query = models.BlakeObject.query.filter(rank > 0).order_by(models.db.desc(rank))
         # We will probably have to knit together results from several queries
         return query.all()
 

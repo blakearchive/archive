@@ -1,22 +1,5 @@
 var app = angular.module('blake', ['ngRoute']);
 
-function createService(constructor) {
-    return {
-        create: function (config) {
-            var i, result;
-            if (config.length) {
-                result = [];
-                for (i = 0; i < config.length; i++) {
-                    result.push(constructor(config))
-                }
-            } else {
-                result = constructor(config);
-            }
-            return result;
-        }
-    };
-}
-
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider.when('/', {
         templateUrl: '/static/html/home.html',
@@ -47,7 +30,26 @@ app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 });
 
-app.factory("BlakeObject", function () {
+app.factory("GenericService", function () {
+    return function (constructor) {
+        return {
+            create: function (config) {
+                var i, result;
+                if (config.length) {
+                    result = [];
+                    for (i = 0; i < config.length; i++) {
+                        result.push(constructor(config))
+                    }
+                } else {
+                    result = constructor(config);
+                }
+                return result;
+            }
+        };
+    }
+});
+
+app.factory("BlakeObject", function (GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeObject.
      *
@@ -57,10 +59,10 @@ app.factory("BlakeObject", function () {
         return {id: config.id, document: config.document};
     };
 
-    return createService(constructor);
+    return GenericService(constructor);
 });
 
-app.factory("BlakeCopy", function (BlakeObject) {
+app.factory("BlakeCopy", function (BlakeObject, GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeCopy, with child objects transformed into the
      * BlakeObjects.
@@ -70,15 +72,15 @@ app.factory("BlakeCopy", function (BlakeObject) {
     var constructor = function (config) {
         var i, copy = {id: config.id, document: config.document, objects: []};
         for (i = 0; i < config.objects.length; i++) {
-            copy.objects.push(BlakeObject.create(config.copies[i]))
+            copy.objects.push(BlakeObject.create(config.copies[i]));
         }
         return copy;
     };
 
-    return createService(constructor);
+    return GenericService(constructor);
 });
 
-app.factory("BlakeWork", function (BlakeCopy) {
+app.factory("BlakeWork", function (BlakeCopy, GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeWork, with child objects transformed into the
      * BlakeCopies.
@@ -88,15 +90,15 @@ app.factory("BlakeWork", function (BlakeCopy) {
     var constructor = function (config) {
         var i, work = {id: config.id, document: config.document, copies: []};
         for (i = 0; i < config.copies.length; i++) {
-            work.copies.push(BlakeCopy.create(config.copies[i]))
+            work.copies.push(BlakeCopy.create(config.copies[i]));
         }
         return work;
     };
 
-    return createService(constructor);
+    return GenericService(constructor);
 });
 
-app.factory("BlakeVirtualWorkGroup", function (BlakeWork) {
+app.factory("BlakeVirtualWorkGroup", function (BlakeWork, GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeVirtualWorkGroup, with child objects transformed
      * into the BlakeWorks.
@@ -107,15 +109,15 @@ app.factory("BlakeVirtualWorkGroup", function (BlakeWork) {
         // TODO: double check if virtual work groups have a document
         var i, work = {id: config.id, document: config.document, works: []};
         for (i = 0; i < config.works.length; i++) {
-            work.works.push(BlakeWork.create(config.copies[i]))
+            work.works.push(BlakeWork.create(config.copies[i]));
         }
         return work;
     };
 
-    return createService(constructor);
+    return GenericService(constructor);
 });
 
-app.factory("BlakeComparableGroup", function (BlakeObject) {
+app.factory("BlakeComparableGroup", function (BlakeObject, GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeComparableGroup, with child objects transformed
      * into the BlakeObjects.
@@ -125,17 +127,17 @@ app.factory("BlakeComparableGroup", function (BlakeObject) {
     var constructor = function (config) {
         var i, comparableGroup = {id: config.id, objects: []};
         for (i = 0; i < config.objects.length; i++) {
-            comparableGroup.objects.push(BlakeObject.create(config.objects[i]))
+            comparableGroup.objects.push(BlakeObject.create(config.objects[i]));
         }
         return comparableGroup;
     };
 
-    return createService(constructor);
+    return GenericService(constructor);
 });
 
 /**
- * All data accessor functions should be placed here.  This service should mirror the api of the back-end
- * BlakeDataService.
+ * For the time being, all data accessor functions should be placed here.  This service should mirror the API
+ * of the back-end BlakeDataService.
  */
 app.factory("BlakeDataService", function ($http, $q, BlakeWork, BlakeCopy, BlakeObject, BlakeVirtualWorkGroup, BlakeComparableGroup) {
     var service = {
