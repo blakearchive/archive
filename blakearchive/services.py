@@ -10,12 +10,19 @@ class BlakeDataService(object):
     @classmethod
     def query(cls, config):
         # Construct a custom query based on the config object
-        # assuming config has a property text, the query text to search for
-        tsquery = models.db.func.to_tsquery(config.text)
-        rank = models.db.func.ts_rank_cd(models.BlakeObject.document_vector, tsquery).label("rank")
-        query = models.BlakeObject.query.filter(rank > 0).order_by(models.db.desc(rank))
+        tsquery = models.db.func.to_tsquery(config["searchString"])
+        obj_rank = models.db.func.ts_rank_cd(models.BlakeObject.document_vector, tsquery).label("obj_rank")
+        copy_rank = models.db.func.ts_rank_cd(models.BlakeCopy.document_vector, tsquery).label("copy_rank")
+        work_rank = models.db.func.ts_rank_cd(models.BlakeWork.document_vector, tsquery).label("work_rank")
+        objects = models.BlakeObject.query.filter(obj_rank > 0).order_by(models.db.desc(obj_rank)).all()
+        copies = models.BlakeCopy.query.filter(copy_rank > 0).order_by(models.db.desc(copy_rank)).all()
+        works = models.BlakeCopy.query.filter(work_rank > 0).order_by(models.db.desc(work_rank)).all()
         # We will probably have to knit together results from several queries
-        return query.all()
+        return {
+            "objects": objects,
+            "copies": copies,
+            "works": works
+        }
 
     @classmethod
     def get_object(cls, object_id):

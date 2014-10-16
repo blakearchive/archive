@@ -16,6 +16,14 @@ class BlakeObject(db.Model):
         super(BlakeObject, self).__init__(*args, **kwargs)
         self.document_vector = db.func.to_tsvector(self.document)
 
+    @property
+    def to_dict(self):
+        return {
+            "object_id": self.object_id,
+            "copy_id": self.copy_id,
+            "document": self.document
+        }
+
 
 class BlakeCopy(db.Model):
     __tablename__ = "copy"
@@ -29,6 +37,15 @@ class BlakeCopy(db.Model):
         super(BlakeCopy, self).__init__(*args, **kwargs)
         self.document_vector = db.func.to_tsvector(self.document)
 
+    @property
+    def to_dict(self):
+        return {
+            "copy_id": self.copy_id,
+            "work_id": self.work_id,
+            "document": self.document,
+            "objects": [o.to_dict for o in self.objects]
+        }
+
 
 class BlakeWork(db.Model):
     __tablename__ = "work"
@@ -40,6 +57,14 @@ class BlakeWork(db.Model):
     def __init__(self, *args, **kwargs):
         super(BlakeWork, self).__init__(*args, **kwargs)
         self.document_vector = db.func.to_tsvector(self.document)
+
+    @property
+    def to_dict(self):
+        return {
+            "work_id": self.work_id,
+            "document": self.document,
+            "copies": [c.to_dict for c in self.copies]
+        }
 
 
 # TODO: Check if virtual work group membership is many-to-many or many-to-one.  Assuming many-to-many for now.
@@ -63,6 +88,14 @@ class BlakeVirtualWorkGroup(db.Model):
         super(BlakeVirtualWorkGroup, self).__init__(*args, **kwargs)
         self.document_vector = db.func.to_tsvector(self.document)
 
+    @property
+    def to_dict(self):
+        return {
+            "virtual_work_group_id": self.virtual_work_group_id,
+            "document": self.document,
+            "works": [w.to_dict for w in self.works]
+        }
+
 
 # TODO: Check if comparable group membership is many-to-many or many-to-one.  Assuming many-to-many for now.
 comparable_group__object = db.Table(
@@ -84,3 +117,11 @@ class BlakeComparableGroup(db.Model):
     def __init__(self, *args, **kwargs):
         super(BlakeComparableGroup, self).__init__(*args, **kwargs)
         self.document_vector = db.func.to_tsvector(self.document)
+
+    @property
+    def to_dict(self):
+        return {
+            "comparable_group_id": self.comparable_group_id,
+            "document": self.document,
+            "objects": [o.to_dict for o in self.objects]
+        }

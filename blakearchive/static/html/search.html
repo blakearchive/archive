@@ -1,0 +1,43 @@
+<h1>Blake Search</h1>
+<div class="row">
+  <div class="col-xs-9"><input type="text" class="form-control" ng-model="searchString"></div>
+  <div class="col-xs-3">
+    <button class="btn btn-primary btn-block" ng-click="search()">Search</button>
+  </div>
+</div>
+<hr>
+<div class="row" ng-show="results">
+  <div class="col-sm-2">
+    <div ng-show="results.works.length > 0" class="checkbox">
+      <label><input type="checkbox" ng-model="showWorks">Works ({{ results.works.length }})</label>
+    </div>
+    <div ng-show="results.copies.length > 0" class="checkbox">
+      <label><input type="checkbox" ng-model="showCopies">Copies ({{ results.copies.length }})</label>
+    </div>
+    <div ng-show="results.objects.length > 0" class="checkbox">
+      <label><input type="checkbox" ng-model="showObjects">Objects ({{ results.objects.length }})</label>
+    </div>
+  </div>
+  <div class="col-sm-10">
+    <div ng-show="results.works.length > 0 && showWorks">
+      <h3>Works</h3>
+      <ul>
+        <li ng-repeat="work in results.works"></li>
+      </ul>
+    </div>
+
+    <div ng-show="results.copies.length > 0 && showCopies">
+      <h3>Copies</h3>
+      <ul>
+        <li ng-repeat="copies in results.copies"></li>
+      </ul>
+    </div>
+
+    <div ng-show="results.objects.length > 0 && showObjects">
+      <h3>Objects</h3>
+      <ul>
+        <li ng-repeat="obj in results.objects"></li>
+      </ul>
+    </div>
+  </div>
+</div>

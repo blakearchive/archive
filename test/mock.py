@@ -8,7 +8,11 @@ from . import data
 class MockBlakeDataService(object):
     @classmethod
     def query(cls, config):
-        return data.blake_objects
+        return {
+            "objects": data.blake_objects,
+            "copies": data.blake_copies,
+            "works": data.blake_works
+        }
 
     @classmethod
     def get_object(cls, object_id):
