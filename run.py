@@ -1,12 +1,12 @@
 from flask import send_file
-from blakearchive import app, models
-from test.mock import MockBlakeDataService
+from blakearchive import app, models, services, config
+# from test.mock import MockBlakeDataService
 
 # Configuration for local test runs belongs here
 app.config["DEBUG"] = True
-app.config["SECRET_KEY"] = "not_so_secret_key"
-app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://user:password@host/database'
-app.config["BLAKE_DATA_SERVICE"] = MockBlakeDataService
+app.config["SECRET_KEY"] = config.app_secret_key
+app.config["SQLALCHEMY_DATABASE_URI"] = config.db_connection_string
+app.config["BLAKE_DATA_SERVICE"] = services.BlakeDataService
 # The database object must initialize the app in order to be able to perform queries
 models.db.init_app(app)
 
@@ -21,4 +21,4 @@ def catch_all(path):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=8002)

@@ -1,6 +1,6 @@
 angular.module('blake', ['ngRoute']).config(function ($routeProvider, $locationProvider) {
-    $routeProvider.when('/', {
-        templateUrl: '/static/html/home.html',
+    $routeProvider.when('/blake/', {
+        templateUrl: '/blake/static/html/home.html',
         controller: "HomeController"
     });
     $routeProvider.when('/object/:objectId', {
@@ -19,12 +19,12 @@ angular.module('blake', ['ngRoute']).config(function ($routeProvider, $locationP
         templateUrl: '/static/html/compare.html',
         controller: "CompareController"
     });
-    $routeProvider.when('/search/', {
-        templateUrl: '/static/html/search.html',
+    $routeProvider.when('/blake/search/', {
+        templateUrl: '/blake/static/html/search.html',
         controller: "SearchController"
     });
 
-    $routeProvider.otherwise({redirectTo: '/'});
+    $routeProvider.otherwise({redirectTo: '/blake/'});
     $locationProvider.html5Mode(true);
 });
 
@@ -54,7 +54,11 @@ angular.module('blake').factory("BlakeObject", function (GenericService) {
      * @param config
      */
     var constructor = function (config) {
-        return {id: config.id, document: config.document};
+        var obj = angular.copy(config);
+        obj.illustration_description = angular.fromJson(config.illustration_description);
+        obj.characteristics = angular.fromJson(config.characteristics);
+        obj.text = angular.fromJson(config.text);
+        return obj;
     };
 
     return GenericService(constructor);
@@ -68,9 +72,16 @@ angular.module('blake').factory("BlakeCopy", function (BlakeObject, GenericServi
      * @param config
      */
     var constructor = function (config) {
-        var i, copy = {id: config.id, document: config.document, objects: []};
-        for (i = 0; i < config.objects.length; i++) {
-            copy.objects.push(BlakeObject.create(config.objects[i]));
+        var i, copy = {
+            copy_id: config.copy_id,
+            work_id: config.work_id,
+            header: angular.fromJson(config.header),
+            objects: []
+        };
+        if (config.objects) {
+            for (i = 0; i < config.objects.length; i++) {
+                copy.objects.push(BlakeObject.create(config.objects[i]));
+            }
         }
         return copy;
     };
@@ -86,9 +97,11 @@ angular.module('blake').factory("BlakeWork", function (BlakeCopy, GenericService
      * @param config
      */
     var constructor = function (config) {
-        var i, work = {id: config.id, document: config.document, copies: []};
-        for (i = 0; i < config.copies.length; i++) {
-            work.copies.push(BlakeCopy.create(config.copies[i]));
+        var i, work = {work_id: config.work_id, bad_id: config.bad_id, copies: []};
+        if (config.copies) {
+            for (i = 0; i < config.copies.length; i++) {
+                work.copies.push(BlakeCopy.create(config.copies[i]));
+            }
         }
         return work;
     };
@@ -140,14 +153,10 @@ angular.module('blake').factory("BlakeComparableGroup", function (BlakeObject, G
 angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWork, BlakeCopy, BlakeObject, BlakeVirtualWorkGroup, BlakeComparableGroup) {
     return {
         query: function (config) {
-            var url = '/api/query';
+            var url = '/blake/api/query';
             return $q(function(resolve, reject) {
                 $http.post(url, config).success(function (data) {
-                    resolve({
-                        works: BlakeWork.create(data.works),
-                        copies: BlakeCopy.create(data.copies),
-                        objects: BlakeObject.create(data.objects)
-                    });
+                    resolve(data);
                 }).error(function (data, status) {
                     reject(data, status);
                 });
@@ -163,6 +172,15 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
                 })
             });
         },
+        getObjectsWithSameMotif: function (objectId) {
+
+        },
+        getObjectsFromSameMatrix: function (objectId) {
+
+        },
+        getObjectsFromSameProductionSequence: function (objectId) {
+
+        },
         getCopy: function (copyId) {
             var url = '/api/copy/' + copyId;
             return $q(function(resolve, reject) {
@@ -173,6 +191,9 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
                 })
             });
         },
+        getObjectsForCopy: function (copyId) {
+
+        },
         getWork: function (workId) {
             var url = '/api/work/' + workId;
             return $q(function(resolve, reject) {
@@ -182,6 +203,12 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
                     reject(data, status);
                 })
             });
+        },
+        getWorks: function () {
+
+        },
+        getCopiesForWork: function (workId) {
+
         },
         getVirtualWorkGroup: function (virtualWorkGroupId) {
             var url = '/api/virtual_work_group/' + virtualWorkGroupId;
@@ -224,9 +251,10 @@ angular.module('blake').controller("CompareController", function ($scope, BlakeD
 
 angular.module('blake').controller("SearchController", function ($scope, BlakeDataService) {
     $scope.search = function () {
-        BlakeDataService.query({searchString: $scope.searchString}).then(function (results) {
+        BlakeDataService.query($scope.searchConfig).then(function (results) {
             $scope.results = results;
         });
+
     };
 
     $scope.showWorks = true;

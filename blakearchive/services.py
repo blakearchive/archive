@@ -1,4 +1,10 @@
+import pysolr
+import copy
+import json
 from . import models
+
+
+solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake/')
 
 
 class BlakeDataService(object):
@@ -8,40 +14,57 @@ class BlakeDataService(object):
     """
 
     @classmethod
-    def query(cls, config):
-        # Construct a custom query based on the config object
-        tsquery = models.db.func.to_tsquery(config["searchString"])
-        obj_rank = models.db.func.ts_rank_cd(models.BlakeObject.document_vector, tsquery).label("obj_rank")
-        copy_rank = models.db.func.ts_rank_cd(models.BlakeCopy.document_vector, tsquery).label("copy_rank")
-        work_rank = models.db.func.ts_rank_cd(models.BlakeWork.document_vector, tsquery).label("work_rank")
-        objects = models.BlakeObject.query.filter(obj_rank > 0).order_by(models.db.desc(obj_rank)).all()
-        copies = models.BlakeCopy.query.filter(copy_rank > 0).order_by(models.db.desc(copy_rank)).all()
-        works = models.BlakeCopy.query.filter(work_rank > 0).order_by(models.db.desc(work_rank)).all()
+    def query_objects(cls, config):
+        def transform_result(result):
+            new_result = copy.copy(result)
+            new_result["text"] = json.loads(result["text"])
+            new_result["characteristics"] = json.loads(result["characteristics"])
+            new_result["illustration_description"] = json.loads(result["illustration_description"])
+            return new_result
+        results = solr.search(config["searchString"])
+        transformed_results = [transform_result(r) for r in results]
         # We will probably have to knit together results from several queries
-        return {
-            "objects": objects,
-            "copies": copies,
-            "works": works
-        }
+        return transformed_results
 
     @classmethod
     def get_object(cls, object_id):
         return models.BlakeObject.query.filter(models.BlakeObject.object_id == object_id).first()
 
     @classmethod
+    def get_objects_with_same_motif(cls, object_id):
+        object_ = models.BlakeObject.query.filter(models.BlakeObject.object_id == object_id).first()
+        return []
+
+    @classmethod
+    def get_objects_from_same_production_sequence(cls, object_id):
+        object_ = models.BlakeObject.query.filter(models.BlakeObject.object_id == object_id).first()
+        return object_.objects_from_same_production_sequence
+
+    @classmethod
+    def get_objects_from_same_matrix(cls, object_id):
+        object_ = models.BlakeObject.query.filter(models.BlakeObject.object_id == object_id).first()
+        return object_.objects_from_same_matrix
+
+    @classmethod
     def get_copy(cls, copy_id):
         return models.BlakeCopy.query.filter(models.BlakeCopy.copy_id == copy_id).first()
+
+    @classmethod
+    def get_objects_for_copy(cls, copy_id):
+        return models.BlakeObject.query\
+            .join(models.BlakeCopy)\
+            .filter(models.BlakeCopy.copy_id == copy_id).all()
 
     @classmethod
     def get_work(cls, work_id):
         return models.BlakeWork.query.filter(models.BlakeWork.work_id == work_id).first()
 
     @classmethod
-    def get_virtual_work_group(cls, virtual_work_group_id):
-        clause = models.BlakeVirtualWorkGroup.virtual_work_group_id == virtual_work_group_id
-        return models.BlakeVirtualWorkGroup.query.filter(clause).first()
+    def get_works(cls):
+        return models.BlakeWork.query.all()
 
     @classmethod
-    def get_comparable_group(cls, comparable_group_id):
-        clause = models.BlakeComparableGroup.comparable_group_id == comparable_group_id
-        return models.BlakeComparableGroup.query.filter(clause).first()
+    def get_copies_for_work(cls, work_id):
+        return models.BlakeCopy.query\
+            .join(models.BlakeWork)\
+            .filter(models.BlakeWork.work_id == work_id).all()
