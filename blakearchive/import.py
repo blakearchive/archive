@@ -48,6 +48,7 @@ class BlakeDocumentImporter(object):
         bo = models.BlakeObject()
 
         bo.desc_id = obj.attrib.get("id")
+        bo.dbi = obj.attrib.get("dbi").lower()
         self.objects[bo.desc_id] = bo
         # We need to pull out the illusdesc and store it separately
         for illustration_description in obj.xpath("illusdesc"):

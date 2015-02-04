@@ -15,8 +15,8 @@ angular.module('blake', ['ngRoute']).config(function ($routeProvider, $locationP
         templateUrl: '/static/html/work.html',
         controller: "WorkController"
     });
-    $routeProvider.when('/compare/', {
-        templateUrl: '/static/html/compare.html',
+    $routeProvider.when('/blake/compare/', {
+        templateUrl: '/blake/static/html/compare.html',
         controller: "CompareController"
     });
     $routeProvider.when('/blake/search/', {
@@ -109,38 +109,20 @@ angular.module('blake').factory("BlakeWork", function (BlakeCopy, GenericService
     return GenericService(constructor);
 });
 
-angular.module('blake').factory("BlakeVirtualWorkGroup", function (BlakeWork, GenericService) {
+angular.module('blake').factory("BlakeFeaturedWork", function (GenericService) {
     /**
-     * Constructor takes a config object and creates a BlakeVirtualWorkGroup, with child objects transformed
-     * into the BlakeWorks.
+     * Constructor takes a config object and creates a BlakeFeaturedWork.
      *
      * @param config
      */
     var constructor = function (config) {
-        // TODO: double check if virtual work groups have a document
-        var i, work = {id: config.id, document: config.document, works: []};
-        for (i = 0; i < config.works.length; i++) {
-            work.works.push(BlakeWork.create(config.works[i]));
-        }
-        return work;
-    };
-
-    return GenericService(constructor);
-});
-
-angular.module('blake').factory("BlakeComparableGroup", function (BlakeObject, GenericService) {
-    /**
-     * Constructor takes a config object and creates a BlakeComparableGroup, with child objects transformed
-     * into the BlakeObjects.
-     *
-     * @param config
-     */
-    var constructor = function (config) {
-        var i, comparableGroup = {id: config.id, objects: []};
-        for (i = 0; i < config.objects.length; i++) {
-            comparableGroup.objects.push(BlakeObject.create(config.objects[i]));
-        }
-        return comparableGroup;
+        var featuredWork = {
+            title: config.title,
+            byline: config.byline,
+            desc_id: config.desc_id,
+            dbi: config.dbi
+        };
+        return featuredWork;
     };
 
     return GenericService(constructor);
@@ -150,7 +132,7 @@ angular.module('blake').factory("BlakeComparableGroup", function (BlakeObject, G
  * For the time being, all data accessor functions should be placed here.  This service should mirror the API
  * of the back-end BlakeDataService.
  */
-angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWork, BlakeCopy, BlakeObject, BlakeVirtualWorkGroup, BlakeComparableGroup) {
+angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
     return {
         query: function (config) {
             var url = '/blake/api/query';
@@ -210,23 +192,16 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
         getCopiesForWork: function (workId) {
 
         },
-        getVirtualWorkGroup: function (virtualWorkGroupId) {
-            var url = '/api/virtual_work_group/' + virtualWorkGroupId;
+        getFeaturedWorks: function () {
+            var featuredWorks = [], url = '/blake/api/featured_work/';
             return $q(function(resolve, reject) {
                 $http.get(url).success(function (data) {
-                    resolve(BlakeVirtualWorkGroup.create(data));
+                    data.results.forEach(function (featuredWork) {
+                        featuredWorks.push(BlakeFeaturedWork.create(featuredWork));
+                    });
+                    resolve(featuredWorks);
                 }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
-        },
-        getComparableGroup: function (comparableGroupId) {
-            var url = '/api/comparable_group/' + comparableGroupId;
-            return $q(function(resolve, reject) {
-                $http.get(url).success(function (data) {
-                    resolve(BlakeComparableGroup.create(data));
-                }).error(function (data, status) {
-                    reject(data, status);
+                    reject(data, status)
                 })
             });
         }
@@ -234,7 +209,9 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
 });
 
 angular.module('blake').controller("HomeController", function ($scope, BlakeDataService) {
-
+    BlakeDataService.getFeaturedWorks().then(function (results) {
+        $scope.featured_works = results;
+    });
 });
 
 angular.module('blake').controller("WorkController", function ($scope, BlakeDataService) {
@@ -246,7 +223,9 @@ angular.module('blake').controller("ObjectController", function ($scope, BlakeDa
 });
 
 angular.module('blake').controller("CompareController", function ($scope, BlakeDataService) {
-
+    BlakeDataService.getFeaturedWorks().then(function (results) {
+        $scope.featured_works = results;
+    });
 });
 
 angular.module('blake').controller("SearchController", function ($scope, BlakeDataService) {

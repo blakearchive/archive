@@ -3,21 +3,139 @@
 <head lang="en">
   <meta charset="UTF-8">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/blake/static/css/styles.css">
+  <link rel="stylesheet" href="/blake/static/css/jquery.fs.scroller.css">
   <title></title>
   <base href="/">
 </head>
 <body ng-app="blake">
-<div class="container">
+<div class="site-header-container">
+  <div class="row">
+    <div class="col-sm-11">
+      <a class="navbar-brand" href="/"><span class="name">The William Blake Archive</span><span
+          class="sig"></span></a>
+
+      <div class="lightbox"><span class="lb-amount">2</span></div>
+    </div>
+    <div class="col-sm-1">
+      <button type="button" class="collapse-archive menu-closed">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+  </div>
+</div>
+</div> <!-- /.container -->
+<div class="container-fluid site-header">
+  <!-- This UL is temporary for testing purposes, and will be replaced by the nav directive when complete -->
   <ul class="list-inline">
     <li><a href="/blake/">Home</a></li>
     <li><a href="/blake/compare/">Compare</a></li>
     <li><a href="/blake/search/">Search</a></li>
   </ul>
+  <navigation-bar></navigation-bar> <!-- Directive placeholder -->
+</div>
 
+<div class="container-fluid main">
+  <!-- This div is the viewport where all views will be loaded, so css for individual pages should
+       be based on elements below this point in the DOM -->
   <div ng-view></div>
+</div>
+<span class="back-top">Back to top</span>
+
+<div class="container">
+
+  <footer>
+    <div class="row">
+
+      <ul class="col-sm-4">
+        <li><a href="#">About Blake</a>
+          <ul>
+            <li><a href="#">Biography</a></li>
+            <li><a href="#">Glossary</a></li>
+            <li><a href="#">Chronology</a></li>
+            <li><a href="#">Illuminated Printing</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#">Resources for Further Research</a>
+          <ul>
+            <li><a href="#">General Bibliography</a></li>
+            <li><a href="#">Specific Bibliography</a></li>
+            <li><a href="#">Collection Lists</a></li>
+            <li><a href="#">The Complete Poetry and of William Blake</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="col-sm-4">
+        <li><a href="#">About the Archive</a>
+          <ul>
+            <li><a href="#">Archive at a Glance</a></li>
+            <li><a href="#">Editorial Principles</a></li>
+            <li><a href="#">About the Editors</a></li>
+            <li><a href="#">How to Use the Archive (Help Documentation)</a></li>
+            <li><a href="#">Contributing Collections</a></li>
+            <li><a href="#">Standard References and Abbreviations</a></li>
+            <li><a href="#">Frequently Asked Questions</a></li>
+            <li><a href="#">Technical Summary</a></li>
+            <li><a href="#">Articles about the Archive</a></li>
+            <li><a href="#">Plan of the Archive</a></li>
+            <li><a href="#">The Blake Archive in the Context of CDLA</a></li>
+            <li><a href="#">Complete Credits</a></li>
+            <li><a href="#">Advisory Board</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="col-sm-4">
+        <li><a href="#">Tour of the Archive</a></li>
+        <li><a href="#">Copyright and Permissions Information</a></li>
+        <li><a href="#">Frequently Asked Questions</a></li>
+        <li><a href="#">Contact the Archive</a></li>
+        <li><a href="#">Related Sites</a></li>
+      </ul>
+
+    </div>
+
+    <hr>
+
+    <div class="row">
+
+      <div class="col-sm-12 col-md-5 copyright">
+        <p>© Copyright 2014, The William Blake Archive<br>
+          <a href="http://designhammer.com">Website designed by DesignHammer LLC. ~ Building Smarter
+            Websites</a></p>
+      </div>
+
+      <div class="col-sm-12 col-md-7 subscribe">
+        <p>Subscribe to Blake Archive</p>
+
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <div class="input-group">
+              <label class="sr-only" for="inputEmail">Subscribe</label>
+              <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-default">Sign in</button>
+        </form>
+      </div>
+
+    </div>
+  </footer>
+
 </div>
 </body>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/blake/static/js/main.js"></script>
+<script src="/blake/static/js/bootstrap.min.js"></script>
+<script src="/blake/static/js/jquery.lazyload.min.js"></script>
+<script src="/blake/static/js/jquery.fs.scroller.min.js"></script>
+<script src="/blake/static/js/scripts.js"></script>
+<script src="/blake/static/directives/objects-in-copy/directive.js"></script>
 </html>

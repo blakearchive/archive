@@ -1,7 +1,8 @@
 import pysolr
+from sqlalchemy.sql import func
 import copy
 import json
-from . import models
+import models
 
 
 solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake/')
@@ -68,3 +69,7 @@ class BlakeDataService(object):
         return models.BlakeCopy.query\
             .join(models.BlakeWork)\
             .filter(models.BlakeWork.work_id == work_id).all()
+
+    @classmethod
+    def get_featured_works(cls, count=20):
+        return models.BlakeFeaturedWork.query.order_by(func.random()).limit(count)
