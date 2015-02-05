@@ -36,6 +36,7 @@ class BlakeObject(db.Model):
     desc_id = db.Column(db.UnicodeText, index=True)
     dbi = db.Column(db.UnicodeText, index=True)
     bentley_id = db.Column(db.UnicodeText, index=True)
+    full_object_id = db.Column(db.UnicodeText)
     illustration_description = db.Column(JSON)
     characteristics = db.Column(JSON)
     text = db.Column(JSON)
@@ -65,6 +66,7 @@ class BlakeObject(db.Model):
             "desc_id": self.desc_id,
             "dbi": self.dbi,
             "copy_id": self.copy_id,
+            "full_object_id": self.full_object_id,
             "illustration_description": self.illustration_description,
             "characteristics": self.characteristics,
             "text": self.text,

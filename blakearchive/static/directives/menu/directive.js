@@ -120,3 +120,7 @@ angular.module('blake').directive('blakeMenu', function() {
         templateUrl: '/blake/static/directives/menu/template.html'
     };
 });
+
+angular.module('blake').controller('menuController', ['$scope', 'BlakeDataService', function($scope, BlakeDataService) {
+
+}]);

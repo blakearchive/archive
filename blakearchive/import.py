@@ -61,8 +61,11 @@ class BlakeDocumentImporter(object):
         for phystext in obj.xpath("phystext"):
             bo.text = element_to_dict(phystext)["phystext"]
             break
+        for objid in obj.xpath("objtitle/objid"):
+            bo.full_object_id = objid.xpath("string()").encode("utf-8")
+            break
         for objcode in obj.xpath("objtitle/objid/objcode"):
-            obj_id = objcode.get("code").upper()
+            obj_id = objcode.get("code").encode("utf-8").upper()
             if obj_id.startswith("B"):
                 bo.bentley_id = obj_id
                 break
@@ -81,7 +84,7 @@ class BlakeDocumentImporter(object):
             raise ValueError("Document is not a blake archive xml document")
         (work_id, copy_id) = root.get("id").split(".")
         for comp_date in root.xpath("//compdate"):
-            comp_date_string = comp_date.xpath("text()")[0]
+            comp_date_string = comp_date.xpath("string()").encode("utf-8")
             comp_date = re.match("\D*(\d{4})", comp_date_string).group(1)
             break
         if work_id not in self.works:
@@ -99,7 +102,7 @@ class BlakeDocumentImporter(object):
             copy.title = title.xpath("string()").encode("utf-8")
             break
         for institution in root.xpath("//institution"):
-            copy.institution = institution.xpath("text()")
+            copy.institution = institution.xpath("string()").encode("utf-8")
             break
         copy.medium = root.get("type").encode("utf-8")
         self.copies.append(copy)
