@@ -119,13 +119,12 @@ angular.module('blake').factory("BlakeFeaturedWork", function (GenericService) {
      * @param config
      */
     var constructor = function (config) {
-        var featuredWork = {
+        return {
             title: config.title,
             byline: config.byline,
             desc_id: config.desc_id,
             dbi: config.dbi
         };
-        return featuredWork;
     };
 
     return GenericService(constructor);
@@ -136,77 +135,170 @@ angular.module('blake').factory("BlakeFeaturedWork", function (GenericService) {
  * of the back-end BlakeDataService.
  */
 angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
-    return {
-        query: function (config) {
-            var url = directoryPrefix + '/api/query';
-            return $q(function(resolve, reject) {
-                $http.post(url, config).success(function (data) {
-                    resolve(data);
-                }).error(function (data, status) {
-                    reject(data, status);
+    var selectedWork, selectedCopy, selectedObject, selectedWorkCopies, selectedCopyObjects, queryObjects,
+        getObject, getObjectsWithSameMotif, getObjectsFromSameMatrix, getObjectsFromSameProductionSequence,
+        getCopy, getObjectsForCopy, getWork, getWorks, getCopiesForWork, getFeaturedWorks, setSelectedWork,
+        setSelectedCopy, setSelectedObject;
+
+    queryObjects = function (config) {
+        var url = directoryPrefix + '/api/query_objects';
+        return $q(function(resolve, reject) {
+            $http.post(url, config).success(function (data) {
+                resolve(data);
+            }).error(function (data, status) {
+                reject(data, status);
+            });
+        });
+    };
+
+    getObject = function (objectId) {
+        var url = directoryPrefix + '/api/object/' + objectId;
+        return $q(function(resolve, reject) {
+            $http.get(url).success(function (data) {
+                resolve(BlakeObject.create(data));
+            }).error(function (data, status) {
+                reject(data, status);
+            })
+        });
+    };
+
+    getObjectsWithSameMotif = function (objectId) {
+        var url = directoryPrefix + '/api/object/' + objectId + '/objects_with_same_motif';
+        return $q(function(resolve, reject) {
+            $http.get(url).success(function (data) {
+                resolve(BlakeObject.create(data));
+            }).error(function (data, status) {
+                reject(data, status);
+            })
+        });
+    };
+
+    getObjectsFromSameMatrix = function (objectId) {
+        var url = directoryPrefix + '/api/object/' + objectId + '/objects_from_same_matrix';
+        return $q(function(resolve, reject) {
+            $http.get(url).success(function (data) {
+                resolve(BlakeObject.create(data));
+            }).error(function (data, status) {
+                reject(data, status);
+            })
+        });
+    };
+
+    getObjectsFromSameProductionSequence = function (objectId) {
+        var url = directoryPrefix + '/api/object/' + objectId + '/objects_from_same_production_sequence';
+        return $q(function(resolve, reject) {
+            $http.get(url).success(function (data) {
+                resolve(BlakeObject.create(data));
+            }).error(function (data, status) {
+                reject(data, status);
+            })
+        });
+    };
+
+    getCopy = function (copyId) {
+        var url = directoryPrefix + '/api/copy/' + copyId;
+        return $q(function(resolve, reject) {
+            $http.get(url).success(function (data) {
+                resolve(BlakeCopy.create(data));
+            }).error(function (data, status) {
+                reject(data, status);
+            })
+        });
+    };
+
+    getObjectsForCopy = function (copyId) {
+        var url = directoryPrefix + '/api/copy/' + copyId + '/objects';
+        return $q(function(resolve, reject) {
+            $http.get(url).success(function (data) {
+                resolve(BlakeObject.create(data));
+            }).error(function (data, status) {
+                reject(data, status);
+            })
+        });
+    };
+
+    getWork = function (workId) {
+        var url = directoryPrefix + '/api/work/' + workId;
+        return $q(function(resolve, reject) {
+            $http.get(url).success(function (data) {
+                resolve(BlakeWork.create(data));
+            }).error(function (data, status) {
+                reject(data, status);
+            })
+        });
+    };
+
+    getWorks = function () {
+        var url = directoryPrefix + '/api/work/' + workId;
+        return $q(function(resolve, reject) {
+            $http.get(url).success(function (data) {
+                resolve(BlakeWork.create(data));
+            }).error(function (data, status) {
+                reject(data, status);
+            })
+        });
+    };
+
+    getCopiesForWork = function (workId) {
+        var url = directoryPrefix + '/api/work/' + workId + '/copies';
+        return $q(function(resolve, reject) {
+            $http.get(url).success(function (data) {
+                resolve(BlakeCopy.create(data));
+            }).error(function (data, status) {
+                reject(data, status);
+            })
+        });
+    };
+
+    getFeaturedWorks = function () {
+        var featuredWorks = [], url = directoryPrefix + '/api/featured_work/';
+        return $q(function(resolve, reject) {
+            $http.get(url).success(function (data) {
+                data.results.forEach(function (featuredWork) {
+                    featuredWorks.push(BlakeFeaturedWork.create(featuredWork));
                 });
-            });
-        },
-        getObject: function (objectId) {
-            var url = directoryPrefix + '/api/object/' + objectId;
-            return $q(function(resolve, reject) {
-                $http.get(url).success(function (data) {
-                    resolve(BlakeObject.create(data));
-                }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
-        },
-        getObjectsWithSameMotif: function (objectId) {
+                resolve(featuredWorks);
+            }).error(function (data, status) {
+                reject(data, status)
+            })
+        });
+    };
 
-        },
-        getObjectsFromSameMatrix: function (objectId) {
+    setSelectedWork = function (workId) {
 
-        },
-        getObjectsFromSameProductionSequence: function (objectId) {
+    };
 
-        },
-        getCopy: function (copyId) {
-            var url = directoryPrefix + '/api/copy/' + copyId;
-            return $q(function(resolve, reject) {
-                $http.get(url).success(function (data) {
-                    resolve(BlakeCopy.create(data));
-                }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
-        },
-        getObjectsForCopy: function (copyId) {
+    setSelectedCopy = function (copyId) {
 
-        },
-        getWork: function (workId) {
-            var url = directoryPrefix + '/api/work/' + workId;
-            return $q(function(resolve, reject) {
-                $http.get(url).success(function (data) {
-                    resolve(BlakeWork.create(data));
-                }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
-        },
-        getWorks: function () {
+    };
 
-        },
-        getCopiesForWork: function (workId) {
+    setSelectedObject = function (objectId) {
 
+    };
+
+    return {
+        queryObjects: queryObjects,
+        getObject: getObject,
+        getObjectsWithSameMotif: getObjectsWithSameMotif,
+        getObjectsFromSameMatrix: getObjectsFromSameMatrix,
+        getObjectsFromSameProductionSequence: getObjectsFromSameProductionSequence,
+        getCopy: getCopy,
+        getObjectsForCopy: getObjectsForCopy,
+        getWork: getWork,
+        getWorks: getWorks,
+        getCopiesForWork: getCopiesForWork,
+        getFeaturedWorks: getFeaturedWorks,
+        setSelectedWork: setSelectedWork,
+        setSelectedCopy: setSelectedCopy,
+        setSelectedObject: setSelectedObject,
+        getSelectedWork: function () {
+            return selectedWork;
         },
-        getFeaturedWorks: function () {
-            var featuredWorks = [], url = directoryPrefix + '/api/featured_work/';
-            return $q(function(resolve, reject) {
-                $http.get(url).success(function (data) {
-                    data.results.forEach(function (featuredWork) {
-                        featuredWorks.push(BlakeFeaturedWork.create(featuredWork));
-                    });
-                    resolve(featuredWorks);
-                }).error(function (data, status) {
-                    reject(data, status)
-                })
-            });
+        getSelectedCopy: function () {
+            return selectedCopy;
+        },
+        getSelectedObject: function () {
+            return selectedObject;
         }
     };
 });
@@ -214,7 +306,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
 /**
  * This is a mock version of the BlakeDataService, which can be used for testing.
  */
-angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
+angular.module('blake').factory("MockBlakeDataService", function ($http, $q, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
     var getObjects = function () {
         return $q(function(resolve, reject) {
             $http.get(directoryPrefix + '/static/json/objects.json').success(function(data) {
@@ -275,6 +367,16 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
         });
     };
 
+    var getFeaturedWorks = function () {
+        return $q(function(resolve, reject) {
+            $http.get(directoryPrefix + '/static/json/featured_works.json').success(function(data) {
+                resolve(BlakeFeaturedWork.create(data));
+            }).error(function (data, status) {
+                reject(data, status);
+            });
+        });
+    };
+
     return {
         query: function (config) {
             return getObjects();
@@ -307,7 +409,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
             return getCopies();
         },
         getFeaturedWorks: function () {
-            // TODO: add featured works json file
+            return getFeaturedWorks();
         }
     };
 });
@@ -334,7 +436,7 @@ angular.module('blake').controller("CompareController", function ($scope, BlakeD
 
 angular.module('blake').controller("SearchController", function ($scope, BlakeDataService) {
     $scope.search = function () {
-        BlakeDataService.query($scope.searchConfig).then(function (results) {
+        BlakeDataService.queryObjects($scope.searchConfig).then(function (results) {
             $scope.results = results;
         });
     };

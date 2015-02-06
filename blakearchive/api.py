@@ -6,7 +6,7 @@ from flask import Blueprint, request, current_app, jsonify
 api = Blueprint('api', __name__, url_prefix='/blake/api')
 
 
-@api.route('/query', methods=["POST"])
+@api.route('/query_objects', methods=["POST"])
 def query():
     config = request.get_json()
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
