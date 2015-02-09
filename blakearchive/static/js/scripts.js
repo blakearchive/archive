@@ -25,15 +25,7 @@
 
     // Get the width of the window and the postion of the dropdowns.
     // Use that information to position the drop-downs across the screen.
-    // -------------------------------------------------------------------
-
-    $('nav.navbar ul.navbar-nav > li.dropdown').click(function() {
-      var viewport_width = $(window).width();
-      var element_position = $(this).offset().left;
-
-      $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
-    });
-
+    // ------------------------------------------------------------------
 
     $(window).resize(response_change.waitForIdle(function() {
 

@@ -5,7 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The William Blake Archive</title>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/blake/static/css/styles.css">
   <link rel="stylesheet" href="/blake/static/css/jquery.fs.scroller.css">
   <base href="/">
@@ -53,7 +54,7 @@
             </span>
       </div>
     </form>
-    <ul class="nav navbar-nav blake-menu" ng-controller="menuController" menus="data"></ul>
+    <navigation-menu></navigation-menu>
   </div>
 </nav>
 <ul class="list-inline">
@@ -162,7 +163,6 @@
 <script src="/blake/static/js/main.js"></script>
 <script src="/blake/static/js/jquery.lazyload.min.js"></script>
 <script src="/blake/static/js/jquery.fs.scroller.min.js"></script>
-<script src="/blake/static/js/dh-scripts.js"></script>
 <script src="/blake/static/js/scripts.js"></script>
 <script src="/blake/static/js/main.js"></script>
 <script src="/blake/static/directives/objects-in-copy/directive.js"></script>

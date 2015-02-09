@@ -100,7 +100,7 @@ angular.module('blake').factory("BlakeWork", function (BlakeCopy, GenericService
      */
     var constructor = function (config) {
 
-        var i, work = {work_id: config.work_id, bad_id: config.bad_id, copies: []};
+        var i, work = angular.copy(config);
         if (config.copies) {
             for (i = 0; i < config.copies.length; i++) {
                 work.copies.push(BlakeCopy.create(config.copies[i]));
@@ -119,12 +119,7 @@ angular.module('blake').factory("BlakeFeaturedWork", function (GenericService) {
      * @param config
      */
     var constructor = function (config) {
-        return {
-            title: config.title,
-            byline: config.byline,
-            desc_id: config.desc_id,
-            dbi: config.dbi
-        };
+        return angular.copy(config);
     };
 
     return GenericService(constructor);
@@ -166,7 +161,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
         var url = directoryPrefix + '/api/object/' + objectId + '/objects_with_same_motif';
         return $q(function(resolve, reject) {
             $http.get(url).success(function (data) {
-                resolve(BlakeObject.create(data));
+                resolve(BlakeObject.create(data.results));
             }).error(function (data, status) {
                 reject(data, status);
             })
@@ -177,7 +172,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
         var url = directoryPrefix + '/api/object/' + objectId + '/objects_from_same_matrix';
         return $q(function(resolve, reject) {
             $http.get(url).success(function (data) {
-                resolve(BlakeObject.create(data));
+                resolve(BlakeObject.create(data.results));
             }).error(function (data, status) {
                 reject(data, status);
             })
@@ -188,7 +183,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
         var url = directoryPrefix + '/api/object/' + objectId + '/objects_from_same_production_sequence';
         return $q(function(resolve, reject) {
             $http.get(url).success(function (data) {
-                resolve(BlakeObject.create(data));
+                resolve(BlakeObject.create(data.results));
             }).error(function (data, status) {
                 reject(data, status);
             })
@@ -210,7 +205,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
         var url = directoryPrefix + '/api/copy/' + copyId + '/objects';
         return $q(function(resolve, reject) {
             $http.get(url).success(function (data) {
-                resolve(BlakeObject.create(data));
+                resolve(BlakeObject.create(data.results));
             }).error(function (data, status) {
                 reject(data, status);
             })
@@ -229,10 +224,10 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
     };
 
     getWorks = function () {
-        var url = directoryPrefix + '/api/work/' + workId;
+        var url = directoryPrefix + '/api/work/';
         return $q(function(resolve, reject) {
             $http.get(url).success(function (data) {
-                resolve(BlakeWork.create(data));
+                resolve(BlakeWork.create(data.results));
             }).error(function (data, status) {
                 reject(data, status);
             })
@@ -243,7 +238,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
         var url = directoryPrefix + '/api/work/' + workId + '/copies';
         return $q(function(resolve, reject) {
             $http.get(url).success(function (data) {
-                resolve(BlakeCopy.create(data));
+                resolve(BlakeCopy.create(data.results));
             }).error(function (data, status) {
                 reject(data, status);
             })
@@ -251,13 +246,10 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
     };
 
     getFeaturedWorks = function () {
-        var featuredWorks = [], url = directoryPrefix + '/api/featured_work/';
+        var url = directoryPrefix + '/api/featured_work/';
         return $q(function(resolve, reject) {
             $http.get(url).success(function (data) {
-                data.results.forEach(function (featuredWork) {
-                    featuredWorks.push(BlakeFeaturedWork.create(featuredWork));
-                });
-                resolve(featuredWorks);
+                resolve(BlakeFeaturedWork.create(data.results));
             }).error(function (data, status) {
                 reject(data, status)
             })
@@ -429,9 +421,7 @@ angular.module('blake').controller("ObjectController", function ($scope, BlakeDa
 });
 
 angular.module('blake').controller("CompareController", function ($scope, BlakeDataService) {
-    BlakeDataService.getFeaturedWorks().then(function (results) {
-        $scope.featured_works = results;
-    });
+
 });
 
 angular.module('blake').controller("SearchController", function ($scope, BlakeDataService) {
