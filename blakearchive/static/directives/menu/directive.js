@@ -1,4 +1,4 @@
-angular.module('blake').directive('blakeMenu', function() {
+angular.module('blake').directive('navigationMenu', function() {
     function link(scope, element, attrs) {
         var category = function(item) {
             switch(item) {
@@ -56,7 +56,7 @@ angular.module('blake').directive('blakeMenu', function() {
             }
         };
 
-        scope.$watch('menus', function(data) {
+        scope.organizeMenus = function(data) {
             if (!data) { return; }
             // Sort before nesting
             data.sort(function(a, b) { return a.composition_date - b.composition_date; });
@@ -107,16 +107,28 @@ angular.module('blake').directive('blakeMenu', function() {
             });
 
             scope.menu_lists = menus;
-        });
+        }
 
     }
 
     return {
-        restrict: 'C',
+        restrict: 'E',
         link: link,
-        scope: {
-            menus: '='
-        },
-        templateUrl: '/blakearchive/static/html/menu.html'
+        controller: "MenuController",
+        templateUrl: '/blake/static/directives/menu/template.html'
     };
 });
+
+angular.module('blake').controller('MenuController', ['$scope', 'BlakeDataService', function($scope, BlakeDataService) {
+
+    $('nav.navbar ul.navbar-nav > li.dropdown').click(function() {
+      var viewport_width = $(window).width();
+      var element_position = $(this).offset().left;
+
+      $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
+    });
+
+    BlakeDataService.getWorks().then(function (data) {
+        $scope.organizeMenus(data);
+    });
+}]);

@@ -25,17 +25,10 @@
 
     // Get the width of the window and the postion of the dropdowns.
     // Use that information to position the drop-downs across the screen.
-    // Modified to allow for directive templating
-    // -------------------------------------------------------------------
-
-    $('body').on('click', 'nav.navbar ul.navbar-nav > li.dropdown', function() {
-      var viewport_width = $(window).width();
-      var element_position = $(this).offset().left;
-
-      $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
-    });
+    // ------------------------------------------------------------------
 
     $(window).resize(response_change.waitForIdle(function() {
+
       if ( $('nav.navbar ul.navbar-nav li.dropdown').hasClass('open') ) {
         var viewport_width = $(window).width();
         var element_position = $('nav.navbar ul.navbar-nav li.dropdown.open').offset().left;
@@ -45,7 +38,7 @@
     }, 100));
 
 
-    // Remember if the archive menu is open or closed by using local storage.
+    // Remeber if the archive menu is open or closed by using local storage.
     // -------------------------------------------------------------------
 
     var $archive_btn = $('button.collapse-archive');

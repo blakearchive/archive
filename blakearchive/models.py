@@ -33,9 +33,10 @@ class BlakeObject(db.Model):
     __tablename__ = "object"
     object_id = db.Column(db.Integer, primary_key=True)
     copy_id = db.Column(db.Integer, db.ForeignKey("copy.copy_id"))
-    desc_id = db.Column(db.UnicodeText, unique=True, index=True)
-    dbi = db.Column(db.UnicodeText, unique=True, index=True)
+    desc_id = db.Column(db.UnicodeText, index=True)
+    dbi = db.Column(db.UnicodeText, index=True)
     bentley_id = db.Column(db.UnicodeText, index=True)
+    full_object_id = db.Column(db.UnicodeText)
     illustration_description = db.Column(JSON)
     characteristics = db.Column(JSON)
     text = db.Column(JSON)
@@ -63,7 +64,9 @@ class BlakeObject(db.Model):
             "bentley_id": self.bentley_id,
             "object_id": self.object_id,
             "desc_id": self.desc_id,
+            "dbi": self.dbi,
             "copy_id": self.copy_id,
+            "full_object_id": self.full_object_id,
             "illustration_description": self.illustration_description,
             "characteristics": self.characteristics,
             "text": self.text,
@@ -131,6 +134,14 @@ class BlakeFeaturedWork(db.Model):
     featured_work_id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.UnicodeText)
     byline = db.Column(db.UnicodeText)
-    image = db.Column(db.UnicodeText)
     desc_id = db.Column(db.UnicodeText)
     dbi = db.Column(db.UnicodeText)
+
+    @property
+    def to_dict(self):
+        return {
+            "title": self.title,
+            "byline": self.byline,
+            "dbi": self.dbi,
+            "desc_id": self.desc_id
+        }
