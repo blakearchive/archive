@@ -1,52 +1,52 @@
 <ul class="nav navbar-nav blake-menu">
 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Illuminated <span>Books</span></a>
   <ul class="dropdown-menu" role="menu">
-      <li ng-repeat="menu_list in menu_lists.illuminated_books"><a href="/blake/work/{{ menu_list.work_id}}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
+      <li ng-repeat="menu_list in menu_lists.illuminated_books"><a href="/blake/work/{{ menu_list.work_id }}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
   </ul>
 </li>
 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Commercial Book <span>Illustrations</span></a>
   <ul class="dropdown-menu" role="menu">
     <li role="presentation" class="dropdown-header">Designed and Engraved by Blake</li>
-      <li ng-repeat="menu_list in menu_lists.book_illustration[0].designed_engraved"><a href="/blake/work/{{ menu_list.work_id}}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
+      <li ng-repeat="menu_list in menu_lists.book_illustration[0].designed_engraved"><a href="/blake/work/{{ menu_list.work_id }}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
     <li role="presentation" class="dropdown-header">Designed by Blake and Engraved by Other Engravers</li>
-      <li ng-repeat="menu_list in menu_lists.book_illustration[0].designed"><a href="/blake/work/{{ menu_list.work_id}}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
+      <li ng-repeat="menu_list in menu_lists.book_illustration[0].designed"><a href="/blake/work/{{ menu_list.work_id }}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
     <li role="presentation" class="dropdown-header">Engraved by Blake After Designs by Other Artists</li>
-      <li ng-repeat="menu_list in menu_lists.book_illustration[0].engraved"><a href="/blake/work/{{ menu_list.work_id}}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
+      <li ng-repeat="menu_list in menu_lists.book_illustration[0].engraved"><a href="/blake/work/{{ menu_list.work_id }}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
       <li>&nbsp;</li><li>&nbsp;</li>
   </ul>
 </li>
 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Separate Prints and <span>Prints in Series</span></a>
   <ul class="dropdown-menu" role="menu">
     <li role="presentation" class="dropdown-header">Designed and Engraved by Blake</li>
-      <li ng-repeat="menu_list in menu_lists.prints[0].designed_engraved"><a href="/blake/work/{{ menu_list.work_id}}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
+      <li ng-repeat="menu_list in menu_lists.prints[0].designed_engraved"><a href="/blake/work/{{ menu_list.work_id }}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
     <li role="presentation" class="dropdown-header">Designed by Blake and Engraved by Other Engravers</li>
       <li class="empty-subcat" ng-repeat="menu_list in menu_lists.prints[1].designed">—</li>
     <li role="presentation" class="dropdown-header">Engraved by Blake After Designs by Other Artists</li>
-      <li ng-repeat="menu_list in menu_lists.prints[0].engraved"><a href="/blake/work/{{ menu_list.work_id}}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
+      <li ng-repeat="menu_list in menu_lists.prints[0].engraved"><a href="/blake/work/{{ menu_list.work_id }}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
     <li role="presentation" class="dropdown-header">Color Printed Drawings</li>
-      <li ng-repeat="menu_list in menu_lists.prints[0].drawings"><a href="/blake/work/{{ menu_list.work_id}}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
+      <li ng-repeat="menu_list in menu_lists.prints[0].drawings"><a href="/blake/work/{{ menu_list.work_id }}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
   </ul>
 </li>
 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Drawings and <span>Paintings</span></a>
   <ul class="dropdown-menu" role="menu">
     <li role="presentation" class="dropdown-header">Pencil Sketches</li>
-      <li ng-repeat="menu_list in menu_lists.drawings_paintings[0].pencil"><a href="/blake/work/{{ menu_list.work_id}}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
+      <li ng-repeat="menu_list in menu_lists.drawings_paintings[0].pencil"><a href="/blake/work/{{ menu_list.work_id }}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
     <li role="presentation" class="dropdown-header">Pen and Ink Drawings</li>
       <li class="empty-subcat">—</li>
     <li role="presentation" class="dropdown-header">Monochrome Wash Drawings</li>
-      <li ng-repeat="menu_list in menu_lists.drawings_paintings[0].monochrome"><a href="/blake/work/{{ menu_list.work_id}}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
+      <li ng-repeat="menu_list in menu_lists.drawings_paintings[0].monochrome"><a href="/blake/work/{{ menu_list.work_id }}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
     <li role="presentation" class="dropdown-header">Water Color Drawings</li>
-      <li ng-repeat="menu_list in menu_lists.drawings_paintings[0].wc"><a href="/blake/work/{{ menu_list.work_id}}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
+      <li ng-repeat="menu_list in menu_lists.drawings_paintings[0].wc"><a href="/blake/work/{{ menu_list.work_id }}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
     <li role="presentation" class="dropdown-header">Paintings</li>
-      <li ng-repeat="menu_list in menu_lists.drawings_paintings[0].paintings"><a href="/blake/work/{{ menu_list.work_id}}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
+      <li ng-repeat="menu_list in menu_lists.drawings_paintings[0].paintings"><a href="/blake/work/{{ menu_list.work_id }}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
   </ul>
 </li>
 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Manuscripts and <span>Typographic Works</span></a>
   <ul class="dropdown-menu" role="menu">
     <li role="presentation" class="dropdown-header">Manuscripts</li>
-      <li ng-repeat="menu_list in menu_lists.manuscripts_typo[0].manuscripts"><a href="/blake/work/{{ menu_list.work_id}}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
+      <li ng-repeat="menu_list in menu_lists.manuscripts_typo[0].manuscripts"><a href="/blake/work/{{ menu_list.work_id }}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
     <li role="presentation" class="dropdown-header">Letters</li>
-      <li ng-repeat="menu_list in menu_lists.manuscripts_typo[0].letters"><a href="/blake/work/{{ menu_list.work_id}}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
+      <li ng-repeat="menu_list in menu_lists.manuscripts_typo[0].letters"><a href="/blake/work/{{ menu_list.work_id }}">{{ menu_list.title }} ({{ menu_list.composition_date }})</a></li>
     <li role="presentation" class="dropdown-header">Typographic Editions</li>
       <li class="empty-subcat">—</li>
   </ul>
