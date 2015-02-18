@@ -5,6 +5,7 @@
 angular.module('blake').directive("copiesForWork", function () {
     return {
         restrict: 'E',
+        scope: true,
         templateUrl: "/blake/static/directives/copies-for-work/template.html",
         controller: "CopiesForWorkController"
     }
