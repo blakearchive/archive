@@ -7,7 +7,7 @@ angular.module('blake').directive('copyInformation', function() {
     }
 
     return {
-        restrict: 'C',
+        restrict: 'E',
         link: link,
         scope: {
             copyinfo: '='

@@ -1,0 +1,15 @@
+<div class="container">
+    <p><em>Dates are the probable dates of printing.</em></p>
+
+    <div class="row">
+
+      <div class="col-sm-6 col-md-3 copies-columns" ng-repeat="copy in copies" ng-controller="copyworksController">
+          <div class="handprint-block">
+        <a href="/blake/work/{{ copy.work_id }}">
+          <span class="object-img" style="background-image: url({{''}});" lazy-src></span>
+          <span class="description">{{ copy.source.comp_date["@value"]] }}, {{ copy.objdescid.origination.imprint.date }} ({{ copy.institution }})</span>
+        </a>
+      </div></div>
+
+    </div><!-- row -->
+</div>

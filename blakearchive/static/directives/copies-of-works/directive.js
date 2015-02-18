@@ -5,7 +5,10 @@ angular.module('blake').directive('copiesWorks', function() {
 
             data.sort(function(a, b) { return a.source.comp_date["@value"] - b.source.comp_date["@value"]; });
 
-            var copies = {};
+            var copies = [];
+            data.forEach(function(d) {
+               copies.push(d);
+            });
 
             scope.copies = copies;
         });
@@ -20,3 +23,9 @@ angular.module('blake').directive('copiesWorks', function() {
         templateUrl: '/blake/static/directives/copies-of-works/template.html'
     };
 });
+
+angular.module('blake').controller('copyworksController', ['$scope', '$routeParams', 'BlakeDataService', function($scope, $routeParams, BlakeDataService) {
+     BlakeDataService.getCopiesForWork($routeParams.work_id).then(function (results) {
+        $scope.copies = results;
+    });
+}]);
