@@ -3,6 +3,19 @@
  */
 
 angular.module('blake').directive("copiesForWork", function () {
+    scope.$watch('copies', function (data) {
+        if (!data) { return; }
+
+        data.sort(function(a, b) { return a.source.comp_date["@value"] - b.source.comp_date["@value"]; });
+
+        var copies = [];
+        data.forEach(function(d) {
+            copies.push(d);
+        });
+
+        scope.copies = copies;
+    });
+
     return {
         restrict: 'E',
         scope: true,
