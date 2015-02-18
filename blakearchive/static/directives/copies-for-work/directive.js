@@ -26,6 +26,6 @@ angular.module('blake').directive("copiesForWork", function () {
 
 angular.module('blake').controller("CopiesForWorkController", function ($scope, BlakeDataService) {
     BlakeDataService.getCopiesForWork().then(function(data) {
-        $scope.objects = data;
+        $scope.copies = data;
     })
 });

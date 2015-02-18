@@ -11,8 +11,13 @@ angular.module('blake').directive("objectsForCopy", function () {
     }
 });
 
-angular.module('blake').controller("ObjectsForCopyController", function ($scope, MockBlakeDataService) {
-    MockBlakeDataService.getObjectsForCopy().then(function(data) {
-        $scope.objects = data;
-    })
+angular.module('blake').controller("ObjectsForCopyController", function ($scope, BlakeDataService) {
+    $scope.$watch(BlakeDataService.getSelectedCopy, function (copy) {
+        if (copy) {
+            $scope.copy = copy;
+            BlakeDataService.getObjectsForCopy(copy.bad_id).then(function (data) {
+                $scope.objects = data;
+            })
+        }
+    });
 });

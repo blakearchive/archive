@@ -40,10 +40,8 @@ class BlakeDocumentImporter(object):
     def process_object(self, obj):
 
         def element_to_dict(o):
-            return xmltodict.parse(etree.tostring(o, encoding='utf8', method='xml'))
-
-        def elements_to_json(elements):
-            return [element_to_dict(o) for o in elements]
+            element_xml = etree.tostring(o, encoding='utf8', method='xml')
+            return xmltodict.parse(element_xml, force_cdata=True)
 
         bo = models.BlakeObject()
 
@@ -53,7 +51,7 @@ class BlakeDocumentImporter(object):
         # We need to pull out the illusdesc and store it separately
         for illustration_description in obj.xpath("illusdesc"):
             characteristics = illustration_description.xpath("illustration/component/characteristic")
-            bo.characteristics = elements_to_json(characteristics)
+            bo.characteristics = [element_to_dict(c) for c in characteristics]
             for desc in illustration_description.xpath("illustration/illusobjdesc"):
                 bo.illustration_description = element_to_dict(desc)
                 break
@@ -92,10 +90,10 @@ class BlakeDocumentImporter(object):
             self.works[work_id] = models.BlakeWork(bad_id=work_id, title=root.get("work"),
                                                    medium=root.get("type"), composition_date=comp_date,
                                                    composition_date_string=comp_date_string)
-        header_json = json.dumps(
-            xmltodict.parse(etree.tostring(root.xpath("header")[0], encoding='utf8', method='xml'))["header"])
-        source_json = json.dumps(
-            xmltodict.parse(etree.tostring(root.xpath("objdesc/source")[0], encoding='utf8', method='xml'))["source"])
+        header_xml = etree.tostring(root.xpath("header")[0], encoding='utf8', method='xml')
+        header_json = json.dumps(xmltodict.parse(header_xml, force_cdata=True)["header"])
+        source_xml = etree.tostring(root.xpath("objdesc/source")[0], encoding='utf8', method='xml')
+        source_json = json.dumps(xmltodict.parse(source_xml, force_cdata=True)["source"])
         objects = [self.process_object(o) for o in root.xpath("objdesc/desc")]
         copy = models.BlakeCopy(bad_id=copy_id, header=header_json, source=source_json, objects=objects,
                                 composition_date=comp_date, composition_date_string=comp_date_string)

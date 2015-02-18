@@ -18,9 +18,13 @@ angular.module('blake').controller("CopyInformationController", function ($scope
 
     $scope.getOriginationRole = function (role) {
         if (role.join) {
-            return role.join(' ');
+            var roleText = [];
+            role.forEach(function (role) {
+                roleText.push(role['#text']);
+            });
+            return roleText.join(' ');
         } else {
-            return role;
+            return role['#text'];
         }
     }
 });
