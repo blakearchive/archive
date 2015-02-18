@@ -7744,16 +7744,16 @@ body.archive ul.nav-tabs.objects > li.active > a:focus {
     border-right: 1px solid #ddd;
   }
 }
-body.archive .tab-pane {
+.tab-pane {
   padding-bottom: 2em;
 }
-body.archive .tab-pane dl dt {
+ .tab-pane dl dt {
   color: #b0afaf;
   font-size: 10px;
   text-transform: uppercase;
 }
 @media (min-width: 768px) {
-  body.archive .tab-pane dl dt {
+  .tab-pane dl dt {
     line-height: 2;
     text-align: right;
     padding-bottom: 7px;
@@ -7763,26 +7763,26 @@ body.archive .tab-pane dl dt {
   }
 }
 @media (min-width: 992px) {
-  body.archive .tab-pane dl dt {
+   .tab-pane dl dt {
     width: 125px;
   }
 }
-body.archive .tab-pane dl dd {
+.tab-pane dl dd {
   padding-bottom: 14px;
 }
 @media (min-width: 768px) {
-  body.archive .tab-pane dl dd {
+  .tab-pane dl dd {
     margin-left: 107px;
     padding-bottom: 7px;
   }
 }
 @media (min-width: 992px) {
-  body.archive .tab-pane dl dd {
+  .tab-pane dl dd {
     margin-left: 132px;
   }
 }
 @media (min-width: 768px) {
-  body.archive .tab-pane#copy-info .col-sm-6:first-child {
+  .tab-pane#copy-info .col-sm-6:first-child {
     border-right: 1px solid #f1f1f1;
   }
 }

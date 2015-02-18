@@ -42,28 +42,28 @@ def get_objects_from_same_matrix(object_id):
     return jsonify({"results": [r.to_dict for r in results]})
 
 
-@api.route('/copy/<int:copy_id>')
+@api.route('/copy/<copy_id>')
 def get_copy(copy_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     result = blake_data_service.get_copy(copy_id)
     return jsonify(result.to_dict)
 
 
-@api.route('/copy/<int:copy_id>/objects')
+@api.route('/copy/<copy_id>/objects')
 def get_objects_for_copy(copy_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     results = blake_data_service.get_objects_for_copy(copy_id)
     return jsonify({"results": [r.to_dict for r in results]})
 
 
-@api.route('/work/<int:work_id>/copies')
+@api.route('/work/<work_id>/copies')
 def get_copies_for_work(work_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     results = blake_data_service.get_copies_for_work(work_id)
     return jsonify({"results": [r.to_dict for r in results]})
 
 
-@api.route('/work/<int:work_id>')
+@api.route('/work/<work_id>')
 def get_work(work_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     result = blake_data_service.get_work(work_id)

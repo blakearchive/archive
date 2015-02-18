@@ -82,7 +82,8 @@ class BlakeDocumentImporter(object):
             root = etree.fromstring(document).getroot()
         if not root.tag == "bad":
             raise ValueError("Document is not a blake archive xml document")
-        (work_id, copy_id) = root.get("id").split(".")
+        copy_id = root.get("id").lower()
+        work_id = copy_id.split(".")[0]
         for comp_date in root.xpath("//compdate"):
             comp_date_string = comp_date.xpath("string()").encode("utf-8")
             comp_date = re.match("\D*(\d{4})", comp_date_string).group(1)

@@ -77,8 +77,12 @@ angular.module('blake').factory("BlakeCopy", function (BlakeObject, GenericServi
         var i, copy = {
             copy_id: config.copy_id,
             work_id: config.work_id,
+            bad_id: config.bad_id,
+            title: config.title,
+            institution: config.institution,
+            image: config.image,
             header: angular.fromJson(config.header),
-            objects: []
+            source: angular.fromJson(config.source)
         };
         if (config.objects) {
             for (i = 0; i < config.objects.length; i++) {
@@ -257,11 +261,21 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
     };
 
     setSelectedWork = function (workId) {
-
+        return getWork(workId).then(function (work) {
+            selectedWork = work;
+            getCopiesForWork(workId).then(function (copies) {
+                selectedWorkCopies = copies;
+            })
+        });
     };
 
     setSelectedCopy = function (copyId) {
-
+        return getCopy(copyId).then(function (copy) {
+            selectedCopy = copy;
+            getObjectsForCopy(copyId).then(function (objects) {
+                selectedCopyObjects = objects;
+            })
+        })
     };
 
     setSelectedObject = function (objectId) {
@@ -291,6 +305,12 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
         },
         getSelectedObject: function () {
             return selectedObject;
+        },
+        getSelectedWorkCopies: function () {
+            return selectedWorkCopies;
+        },
+        getSelectedCopyObjects: function () {
+            return selectedCopyObjects;
         }
     };
 });
@@ -420,8 +440,8 @@ angular.module('blake').controller("ObjectController", function ($scope, BlakeDa
 
 });
 
-angular.module('blake').controller("CompareController", function ($scope, BlakeDataService) {
-
+angular.module('blake').controller("CopyController", function ($scope, $routeParams, BlakeDataService) {
+    BlakeDataService.setSelectedCopy($routeParams.copyId);
 });
 
 angular.module('blake').controller("SearchController", function ($scope, BlakeDataService) {

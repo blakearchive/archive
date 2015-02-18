@@ -47,28 +47,28 @@ class BlakeDataService(object):
         return object_.objects_from_same_matrix
 
     @classmethod
-    def get_copy(cls, copy_id):
-        return models.BlakeCopy.query.filter(models.BlakeCopy.copy_id == copy_id).first()
+    def get_copy(cls, bad_id):
+        return models.BlakeCopy.query.filter(models.BlakeCopy.bad_id == bad_id).first()
 
     @classmethod
-    def get_objects_for_copy(cls, copy_id):
+    def get_objects_for_copy(cls, bad_id):
         return models.BlakeObject.query\
             .join(models.BlakeCopy)\
-            .filter(models.BlakeCopy.copy_id == copy_id).all()
+            .filter(models.BlakeCopy.bad_id == bad_id).all()
 
     @classmethod
-    def get_work(cls, work_id):
-        return models.BlakeWork.query.filter(models.BlakeWork.work_id == work_id).first()
+    def get_work(cls, bad_id):
+        return models.BlakeWork.query.filter(models.BlakeWork.bad_id == bad_id).first()
 
     @classmethod
     def get_works(cls):
         return models.BlakeWork.query.all()
 
     @classmethod
-    def get_copies_for_work(cls, work_id):
+    def get_copies_for_work(cls, bad_id):
         return models.BlakeCopy.query\
             .join(models.BlakeWork)\
-            .filter(models.BlakeWork.work_id == work_id).all()
+            .filter(models.BlakeWork.bad_id == bad_id).all()
 
     @classmethod
     def get_featured_works(cls, count=20):

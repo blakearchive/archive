@@ -6,7 +6,7 @@ angular.module('blake').directive("objectsInCopy", function () {
     return {
         restrict: 'E',
         scope: true,
-        templateUrl: "/blake/static/directives/objects-in-copy/template.html",
+        templateUrl: "/blake/static/directives/objects-for-copy/template.html",
         controller: "ObjectsInCopyController"
     }
 });
