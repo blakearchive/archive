@@ -105,6 +105,7 @@
     // -------------------------------------------------------------------
 
     // Set the max-height for the detail tray in object view.
+    /**
     function trayHeight() {
       var set_tray_height = $(window).height() - 86;
       var panel_count = $('.panel-group .panel-default').length;
@@ -120,29 +121,6 @@
         trayHeight();
       }, 100));
     }
-
-
-    // Toggle detail open and close.
-    // -------------------------------------------------------------------
-
-    var $detail_tray = $('#object-container');
-
-    $('.tray-toggle').click(function() {
-      if ( $detail_tray.hasClass('tray-closed') ) {
-        $detail_tray.removeClass('tray-closed').addClass('tray-open');
-        setTimeout(function() {
-          $('.scrollbar').scroller('reset');
-        }, 300);
-        $('.scrollbar').scroller('reset');
-      } else {
-        $detail_tray.removeClass('tray-open').addClass('tray-closed');
-        $('.scrollbar').scroller('reset');
-        setTimeout(function() {
-          $('.scrollbar').scroller('reset');
-        }, 300);
-      }
-    });
-
 
     // Show thumbnails for the carousel buttons.
     // -------------------------------------------------------------------
@@ -189,6 +167,7 @@
       });
     }
 
+       */
 
     // Create slider layout for compare view.
     // -------------------------------------------------------------------

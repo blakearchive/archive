@@ -1,0 +1,167 @@
+<div id="archive" class="container-fluid archive-top">
+  <div id="object-container" class="row tray-closed">
+    <div id="object-detail-tray">
+      <div class="tray-toggle" ng-click="toggleTray()">Open/Close Tray</div>
+      <div id="object-detail-tray-inner">
+        <!-- <accordion close-others="true">
+          <accordion-group heading="Textual Transcription">
+
+          </accordion-group>
+        </accordion> -->
+          <!--Textual Transcription-->
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-textual-transcription">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#textual-transcription"
+                   aria-expanded="true" aria-controls="textual-transcription">Textual Transcription</a>
+                <a class="new-window" href="#new-window" title="new window">New window</a>
+              </h4>
+            </div>
+            <div id="textual-transcription" class="panel-collapse collapse in" role="tabpanel"
+                 aria-labelledby="heading-textual-transcription">
+              <div class="panel-body">
+                <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, {{  }}</p>
+
+                <p><a href="#">[ n ]</a></p>
+                <ol>
+                  <li ng-repeat="line in getObjLines()"><span>{{ line }}</span></li>
+                </ol>
+                <p><a href="#">Color key for transcriptions</a></p>
+              </div>
+            </div>
+          </div>
+          <!--Illustration Description-->
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-illustration-description">
+              <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                   href="#illustration-description" aria-expanded="false"
+                   aria-controls="illustration-description">Illustration Description</a>
+                <a class="new-window" href="#new-window" title="new window">New window</a>
+              </h4>
+            </div>
+            <div id="illustration-description" class="panel-collapse collapse" role="tabpanel"
+                 aria-labelledby="heading-illustration-description">
+              <div class="panel-body">
+                <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, {{ obj.full_object_id }}</p>
+
+                <p><strong>Sector CD<br>
+                  Plate Illustration:</strong></p>
+
+                <p>{{ obj.illustration_description.illusobjdesc['#text'] }}</p>
+                <div ng-repeat="component in obj.components">
+                <p><strong>Component (Sector {{ component.component['@location'] }})</strong></p>
+
+                <p class="keywords">Keywords: <ul class="list-inline">
+                  <li ng-repeat="characteristic in component.component.characteristic">{{ characteristic["#text"] }}</li>
+                </ul></p>
+
+                <p>{{ component.component.illusobjdesc['#text'] }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--Editors’ Notes-->
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-editors-notes">
+              <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#editors-notes"
+                   aria-expanded="false" aria-controls="editors-notes">Editors’ Notes</a>
+                <a class="new-window" href="#new-window" title="new window">New window</a>
+              </h4>
+            </div>
+            <div id="editors-notes" class="panel-collapse collapse" role="tabpanel"
+                 aria-labelledby="heading-editors-notes">
+              <div class="panel-body">
+                <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, {{ obj.full_object_id }}</p>
+
+                <p><strong>Object Note(s):</strong></p>
+                <div ng-if="obj.physical_description.objnote">
+                  <p>Note:</p>
+
+                  <p>{{ obj.physical_description.objnote['#text'] }}</p>
+                </div>
+                <p><strong>Textual Note(s):</strong></p>
+
+                <p><em>No textual notes for this object</em></p>
+              </div>
+            </div>
+          </div>
+          <!--Object Meta Data-->
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-object-metadata">
+              <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#object-metadata"
+                   aria-expanded="false" aria-controls="object-metadata">Object Meta Data</a>
+                <a class="new-window" href="#new-window" title="new window">New window</a>
+              </h4>
+            </div>
+            <div id="object-metadata" class="panel-collapse collapse" role="tabpanel"
+                 aria-labelledby="heading-object-metadata">
+              <div class="panel-body">
+                <p class="object-title">The Marriage of Heaven and Hell, object 20 (Bentley 20, Erdman 20,
+                  Keynes 20)</p>
+
+                <p><em>Object Meta Data goes here...</em></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.tray-->
+
+    <div id="object-view" class="view-objects">
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="featured-object">
+          <p class="object-title">The Marriage of Heaven and Hell, Copy C</p>
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="item">
+              <img src="http://www.blakearchive.org/blake/images/{{ obj.dbi }}.300.jpg">
+              <p class="object-subtitle"><span class="object-no">{{ obj.full_object_id }}</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="featured-object-controls">
+          <!-- Controls -->
+          <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon chevron" aria-hidden="true"></span>
+            <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ previousObject.dbi }}.100.jpg)"></span>
+            <span class="object-text"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon chevron" aria-hidden="true"></span>
+            <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ nextObject.dbi }}.100.jpg)"></span>
+            <span class="object-text"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+
+      <!--Edit buttons-->
+      <div id="object-tools">
+        <div id="object-tools-inner">
+          <div class="btn-group edit-object" role="group">
+            <button type="button" class="btn btn-default add-lightbox"><span class="edit-icon"></span> Add To
+              Lightbox
+            </button>
+            <button type="button" class="btn btn-default rotate"><span class="edit-icon"></span> Rotate
+            </button>
+            <button type="button" class="btn btn-default zoom"><span class="edit-icon"></span> Zoom</button>
+            <button type="button" class="btn btn-default true-size"><span class="edit-icon"></span> True Size
+            </button>
+            <button type="button" class="btn btn-default new-window"><span class="edit-icon"></span> New
+              Window
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="show-hide-tools"><span>Show / Hide Tools</span></div>
+
+    </div>
+    <!--/.object-view-->
+  </div>
+</div><!-- /.container -->

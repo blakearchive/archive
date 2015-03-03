@@ -16,12 +16,27 @@ import config
 
 class BlakeDocumentImporter(object):
     def __init__(self):
-        self.works = {}
-        self.copies = []
+        self.works = []
+        self.copies = {}
         self.objects = {}
         self.relationships = tablib.Dataset()
+        self.works_dataset = tablib.Dataset()
         with open("static/csv/blake-relations.csv") as f:
             self.relationships.csv = f.read()
+        with open("static/csv/works.csv") as f:
+            self.works_dataset.csv = f.read()
+
+    def populate_works(self):
+        for work_entry in self.works_dataset:
+            composition_date = int(re.search(r"(\d{4})", work_entry[2]).group(1))
+            work = models.BlakeWork(title=work_entry[0].encode('utf-8'), medium=work_entry[1],
+                                    composition_date=composition_date,
+                                    composition_date_string=work_entry[2].encode('utf-8'),
+                                    info=work_entry[4].encode('utf-8'))
+            self.works.append(work)
+            for copy in work_entry[3].split(","):
+
+                work.copies.append(self.copies[copy])
 
     def process_relationships(self):
         for relationship in self.relationships:
@@ -50,8 +65,8 @@ class BlakeDocumentImporter(object):
         self.objects[bo.desc_id] = bo
         # We need to pull out the illusdesc and store it separately
         for illustration_description in obj.xpath("illusdesc"):
-            characteristics = illustration_description.xpath("illustration/component/characteristic")
-            bo.characteristics = [element_to_dict(c) for c in characteristics]
+            components = illustration_description.xpath("illustration/component")
+            bo.components = [element_to_dict(c) for c in components]
             for desc in illustration_description.xpath("illustration/illusobjdesc"):
                 bo.illustration_description = element_to_dict(desc)
                 break
@@ -70,7 +85,7 @@ class BlakeDocumentImporter(object):
         for title in obj.xpath("objtitle/title"):
             bo.title = title.xpath("string()").encode("utf-8")
             break
-        bo.notes = " ".join(n.xpath("string()").encode("utf-8") for n in obj.xpath("//note") + obj.xpath("//objnote"))
+        bo.physical_description = element_to_dict(obj.xpath("physdesc")[0])["physdesc"]
         return bo
 
     def process(self, document):
@@ -81,15 +96,10 @@ class BlakeDocumentImporter(object):
         if not root.tag == "bad":
             raise ValueError("Document is not a blake archive xml document")
         copy_id = root.get("id").lower()
-        work_id = copy_id.split(".")[0]
         for comp_date in root.xpath("//compdate"):
             comp_date_string = comp_date.xpath("string()").encode("utf-8")
             comp_date = re.match("\D*(\d{4})", comp_date_string).group(1)
             break
-        if work_id not in self.works:
-            self.works[work_id] = models.BlakeWork(bad_id=work_id, title=root.get("work"),
-                                                   medium=root.get("type"), composition_date=comp_date,
-                                                   composition_date_string=comp_date_string)
         header_xml = etree.tostring(root.xpath("header")[0], encoding='utf8', method='xml')
         header_json = json.dumps(xmltodict.parse(header_xml, force_cdata=True)["header"])
         source_xml = etree.tostring(root.xpath("objdesc/source")[0], encoding='utf8', method='xml')
@@ -104,8 +114,7 @@ class BlakeDocumentImporter(object):
             copy.institution = institution.xpath("string()").encode("utf-8")
             break
         copy.medium = root.get("type").encode("utf-8")
-        self.copies.append(copy)
-        self.works[work_id].copies.append(copy)
+        self.copies[copy.bad_id] = copy
         print "added copy"
 
 
@@ -123,11 +132,12 @@ def main():
         except ValueError as err:
             print err
     importer.process_relationships()
+    importer.populate_works()
     engine = models.db.create_engine(config.db_connection_string)
     session = sessionmaker(bind=engine)()
     models.BlakeObject.metadata.drop_all(bind=engine)
     models.BlakeObject.metadata.create_all(bind=engine)
-    session.add_all(importer.works.values())
+    session.add_all(importer.works)
     session.add_all(importer.objects.values())
     session.commit()
 

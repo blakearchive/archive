@@ -133,7 +133,7 @@ angular.module('blake').factory("BlakeFeaturedWork", function (GenericService) {
  * For the time being, all data accessor functions should be placed here.  This service should mirror the API
  * of the back-end BlakeDataService.
  */
-angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
+angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootScope, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
     var selectedWork, selectedCopy, selectedObject, selectedWorkCopies, selectedCopyObjects, queryObjects,
         getObject, getObjectsWithSameMotif, getObjectsFromSameMatrix, getObjectsFromSameProductionSequence,
         getCopy, getObjectsForCopy, getWork, getWorks, getCopiesForWork, getFeaturedWorks, setSelectedWork,
@@ -263,8 +263,10 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
     setSelectedWork = function (workId) {
         return getWork(workId).then(function (work) {
             selectedWork = work;
+            $rootScope.$broadcast("workSelectionChange", work);
             getCopiesForWork(workId).then(function (copies) {
                 selectedWorkCopies = copies;
+                $rootScope.$broadcast("workSelectionCopiesChange");
             })
         });
     };
@@ -272,14 +274,21 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, BlakeWo
     setSelectedCopy = function (copyId) {
         return getCopy(copyId).then(function (copy) {
             selectedCopy = copy;
+            $rootScope.$broadcast("copySelectionChange", copy);
             getObjectsForCopy(copyId).then(function (objects) {
                 selectedCopyObjects = objects;
+                selectedObject = objects[0];
+                $rootScope.$broadcast("copySelectionObjectsChange");
+                $rootScope.$broadcast("objectSelectionChange");
             })
         })
     };
 
     setSelectedObject = function (objectId) {
-
+        return getObject(objectId).then(function (obj) {
+            selectedObject = obj;
+            $rootScope.$broadcast("objectSelectionChange");
+        })
     };
 
     return {
