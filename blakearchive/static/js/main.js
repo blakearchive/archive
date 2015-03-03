@@ -1,6 +1,14 @@
 directoryPrefix = '/blake';
 
-angular.module('blake', ['ngRoute']).config(function ($routeProvider, $locationProvider) {
+angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
+    .controller('CarouselController', ['$scope', '$timeout', '$transition', '$q', function        ($scope, $timeout, $transition, $q) {
+}]).directive('carousel', [function() {
+    return {
+
+    }
+}]);
+
+angular.module('blake', ['ngRoute', 'ui.bootstrap']).config(function ($routeProvider, $locationProvider) {
     $routeProvider.when(directoryPrefix + '/', {
         templateUrl: directoryPrefix + '/static/html/home.html',
         controller: "HomeController"
