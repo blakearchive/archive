@@ -1,3 +1,7 @@
 .carousel-inner > .item {
     display: block !important;
 }
+
+#archive #object-detail-tray .panel-group .panel.panel-default .panel-body {
+    max-height: 339px !important;
+}

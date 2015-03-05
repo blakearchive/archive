@@ -12,6 +12,8 @@ angular.module('blake').directive("objectViewer", function () {
 
 angular.module('blake').controller("ObjectViewerController", function ($scope, BlakeDataService) {
 
+    $scope.BlakeDataService = BlakeDataService;
+
     $scope.getPreviousNextObjects = function () {
         if ($scope.objects && $scope.objects.length) {
             for (var i = $scope.objects.length; i--;) {
@@ -36,11 +38,19 @@ angular.module('blake').controller("ObjectViewerController", function ($scope, B
     $scope.getObjLines = function () {
         var objLines = [];
         if ($scope.obj) {
-            $scope.obj.text.lg.forEach(function (lg) {
-                lg.l.forEach(function (l) {
-                    objLines.push(l["#text"]);
-                })
-            });
+            if ($scope.obj.text.lg.length) {
+                $scope.obj.text.lg.forEach(function (lg) {
+                    if (lg.l.length) {
+                        lg.l.forEach(function (l) {
+                            objLines.push(l["#text"]);
+                        })
+                    } else {
+                        objLines.push(lg.l["#text"])
+                    }
+                });
+            } else {
+
+            }
         }
         return objLines;
     };
