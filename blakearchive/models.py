@@ -38,9 +38,9 @@ class BlakeObject(db.Model):
     bentley_id = db.Column(db.UnicodeText, index=True)
     full_object_id = db.Column(db.UnicodeText)
     illustration_description = db.Column(JSON)
-    characteristics = db.Column(JSON)
+    components = db.Column(JSON)
     text = db.Column(JSON)
-    notes = db.Column(db.UnicodeText)
+    physical_description = db.Column(JSON)
     title = db.Column(db.UnicodeText)
     objects_from_same_matrix = db.relationship(
         "BlakeObject",
@@ -68,9 +68,9 @@ class BlakeObject(db.Model):
             "copy_id": self.copy_id,
             "full_object_id": self.full_object_id,
             "illustration_description": self.illustration_description,
-            "characteristics": self.characteristics,
+            "components": self.components,
             "text": self.text,
-            "notes": self.notes,
+            "physical_description": self.physical_description,
             "title": self.title
         }
 
@@ -125,7 +125,8 @@ class BlakeWork(db.Model):
             "title": self.title,
             "medium": self.medium,
             "info": self.info,
-            "composition_date": self.composition_date
+            "composition_date": self.composition_date,
+            "composition_date_string": self.composition_date_string
         }
 
 

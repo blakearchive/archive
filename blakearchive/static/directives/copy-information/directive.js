@@ -5,15 +5,17 @@
 angular.module('blake').directive("copyInformation", function () {
     return {
         restrict: 'E',
-        scope: true,
         templateUrl: "/blake/static/directives/copy-information/template.html",
         controller: "CopyInformationController"
     }
 });
 
 angular.module('blake').controller("CopyInformationController", function ($scope, BlakeDataService) {
-    $scope.$watch(BlakeDataService.getSelectedCopy, function (copy) {
-        $scope.copy = copy;
+
+    $scope.copy = BlakeDataService.getSelectedCopy();
+
+    $scope.$on("copySelectionChange", function () {
+        $scope.copy = BlakeDataService.getSelectedCopy()
     });
 
     $scope.getOriginationRole = function (role) {
