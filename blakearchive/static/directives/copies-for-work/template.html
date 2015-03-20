@@ -1,18 +1,19 @@
 <div role="tabpanel" class="tab-pane fadein active" id="objects-copy">
   <header class="page-header">
-    <p class="subhead">Objects In Copy</p>
+    <p class="subhead">Copies for Work</p>
 
-    <h1>The Marriage of Heaven and Hell
-      <span>copy C, 1790 (Morgan Library and Museum)</span></h1>
+    <h1>{{ copy.header.filedesc.titlestmt.title['@reg'] }}
+      <span>{{ copy.header.filedesc.titlestmt.title.copy['#text'] }} ({{ copy.source.objdescid.compdate['#text'] }})</span></h1>
   </header>
+  <p><em>Dates are the probable dates of printing.</em></p>
   <div class="row">
 
-    <div ng-repeat="obj in objects" class="col-sm-6 col-md-3">
+    <div ng-repeat="obj in objects" class="col-sm-6 col-md-3 copies-columns">
       <div class="handprint-block">
-        <a href="#">
+        <a href="/blake/work/{{ obj.copy_id }}">
           <span class="object-img"
                 style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
-          <span class="description"><strong></strong>{{ obj.full_object_id }}</span>
+          <span class="description"><strong></strong>{{ obj.source.comp_date["@value"]] }}, {{ obj.objdescid.origination.imprint.date }} ({{ obj.institution }})</span>
         </a>
       </div>
     </div>

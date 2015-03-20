@@ -12,7 +12,16 @@ angular.module('blake').directive("copiesForWork", function () {
 });
 
 angular.module('blake').controller("CopiesForWorkController", function ($scope, BlakeDataService) {
-    BlakeDataService.getCopiesForWork().then(function(data) {
-        $scope.copies = data;
-    })
+    $scope.$watch(BlakeDataService.getSelectedCopy, function (copy) {
+        if (copy) {
+            $scope.copy = copy;
+            BlakeDataService.getCopiesForWork(copy.bad_id).then(function (data) {
+                data.sort(function (a, b) {
+                    return a.source.comp_date["@value"] - b.source.comp_date["@value"];
+                });
+
+                $scope.objects = data;
+            });
+        }
+    });
 });

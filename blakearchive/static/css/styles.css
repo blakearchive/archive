@@ -8254,4 +8254,16 @@ body.search form.date-results button:hover {
     width: 80%;
   }
 }
+
+/**
+* Non DesignHammer CSS
+*/
+.copies-columns {
+  -webkit-column-count: 4;
+  -webkit-column-gap: 10px;
+  -moz-column-count: 4;
+  -moz-column-gap: 10px;
+  column-count:4;
+  column-gap:10px;
+}
 /*# sourceMappingURL=styles.css.map */
