@@ -1,9 +1,9 @@
 <div role="tabpanel" class="tab-pane fadein active" id="objects-copy">
   <header class="page-header">
-    <p class="subhead">Objects In Copy</p>
+    <p class="subhead">Objects From the Same Production Sequence</p>
 
-    <h1>The Marriage of Heaven and Hell
-      <span>copy C, 1790 (Morgan Library and Museum)</span></h1>
+    <h1>{{ copy.header.filedesc.titlestmt.title['@reg'] }}
+      <span>Object {{ item.object_id }}</span></h1>
   </header>
   <div class="row">
 
@@ -12,10 +12,9 @@
         <a href="#">
           <span class="object-img"
                 style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
-          <span class="description"><strong>{{ obj.title }}</strong>{{ obj.full_object_id }}</span>
+          <span class="description"><strong></strong>{{ obj.full_object_id }}</span>
         </a>
       </div>
     </div>
-
   </div>
 </div>
