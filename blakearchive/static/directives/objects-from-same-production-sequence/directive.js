@@ -12,7 +12,12 @@ angular.module('blake').directive("objectsFromSameSequence", function () {
 });
 
 angular.module('blake').controller("ObjectsFromSameSequenceController", function ($scope, BlakeDataService) {
-    BlakeDataService.getObjectsFromSameProductionSequence().then(function(data) {
-        $scope.objects = data;
-    })
+    $scope.$watch(BlakeDataService.getSelectedObject, function (obj) {
+         if (obj) {
+             $scope.item = obj;
+             BlakeDataService.getObjectsFromSameProductionSequence(obj.object_id).then(function (data) {
+                 $scope.objects = data;
+             });
+         }
+     });
 });
