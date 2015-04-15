@@ -1,22 +1,20 @@
-<div role="tabpanel" class="tab-pane fadein active" id="objects-copy">
-  <header class="page-header">
-    <p class="subhead">Copies for Work</p>
+<header class="page-header">
+  <p class="subhead">Copies for Work</p>
 
-    <h1>{{ copy.header.filedesc.titlestmt.title['@reg'] }}
-      <span>{{ copy.header.filedesc.titlestmt.title.copy['#text'] }} ({{ copy.source.objdescid.compdate['#text'] }})</span></h1>
-  </header>
-  <p><em>Dates are the probable dates of printing.</em></p>
-  <div class="row">
+  <h1>{{ work.title }}
+    <span>({{ work.composition_date_string }})</span></h1>
+</header>
+<p><em>Dates are the probable dates of printing.</em></p>
+<div class="row">
 
-    <div ng-repeat="obj in objects" class="col-sm-6 col-md-3 copies-columns">
-      <div class="handprint-block">
-        <a href="/blake/work/{{ obj.copy_id }}">
-          <span class="object-img"
-                style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
-          <span class="description"><strong></strong>{{ obj.source.comp_date["@value"]] }}, {{ obj.objdescid.origination.imprint.date }} ({{ obj.institution }})</span>
-        </a>
-      </div>
+  <div ng-repeat="copy in copies" class="col-sm-6 col-md-3">
+    <div class="handprint-block">
+      <a href="/blake/copy/{{ copy.bad_id }}">
+        <span class="object-img"
+              style="background-image: url(http://www.blakearchive.org/blake/images/{{ copy.bad_id }}.p1.100.jpg);"></span>
+        <span class="description"><strong>{{ copy.title }}</strong> Copy {{ copy.archive_copy_id }}, {{ copy.composition_date_string }} ({{ copy.institution }})</span>
+      </a>
     </div>
-
   </div>
+
 </div>

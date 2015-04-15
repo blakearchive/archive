@@ -6,6 +6,7 @@ import os
 import json
 import tablib
 import re
+from collections import defaultdict
 from lxml import etree
 
 import xmltodict
@@ -19,10 +20,21 @@ class BlakeDocumentImporter(object):
         self.works = []
         self.copies = {}
         self.objects = {}
+        self.motif_relationships_expanded = defaultdict(lambda: set())
         self.relationships = tablib.Dataset()
+        self.motif_relationships = tablib.Dataset()
         self.works_dataset = tablib.Dataset()
         with open("static/csv/blake-relations.csv") as f:
             self.relationships.csv = f.read()
+        with open("static/csv/same_motif.csv") as f:
+            self.motif_relationships.csv = f.read()
+        for (desc_id, matching_ids, in_archive) in self.motif_relationships:
+            desc_id = desc_id.lower()
+            matching_ids = matching_ids.lower()
+            matching_ids_set = set(matching_ids.split(",") + [desc_id])
+            for matching_id in matching_ids_set:
+                all_but_current_id = matching_ids_set ^ set([matching_id])
+                self.motif_relationships_expanded[matching_id].update(all_but_current_id)
         with open("static/csv/works.csv") as f:
             self.works_dataset.csv = f.read()
 
@@ -30,23 +42,30 @@ class BlakeDocumentImporter(object):
         for work_entry in self.works_dataset:
             composition_date = int(re.search(r"(\d{4})", work_entry[2]).group(1))
             work = models.BlakeWork(title=work_entry[0].encode('utf-8'), medium=work_entry[1],
+                                    bad_id=work_entry[5],
                                     composition_date=composition_date,
                                     composition_date_string=work_entry[2].encode('utf-8'),
-                                    info=work_entry[4].encode('utf-8'))
+                                    image=work_entry[3].encode('utf-8'),
+                                    info=work_entry[6].encode('utf-8'))
             self.works.append(work)
-            for copy in work_entry[3].split(","):
+            for copy in work_entry[4].split(","):
 
                 work.copies.append(self.copies[copy])
 
+    def process_motif_relationships(self):
+        for obj in self.objects.values():
+            same_motif_objs = [self.objects[desc_id] for desc_id in self.motif_relationships_expanded[obj.desc_id]]
+            obj.objects_with_same_motif = same_motif_objs
+
     def process_relationships(self):
         for relationship in self.relationships:
-            obj = self.objects.get(relationship[0])
+            obj = self.objects.get(relationship[0].lower())
             same_matrix = []
             same_production_sequence = []
-            for desc_id in relationship[4].split(","):
+            for desc_id in relationship[4].lower().split(","):
                 if self.objects.get(desc_id):
                     same_matrix.append(self.objects.get(desc_id))
-            for desc_id in relationship[5].split(","):
+            for desc_id in relationship[5].lower().split(","):
                 if self.objects.get(desc_id):
                     same_production_sequence.append(self.objects.get(desc_id))
             obj.objects_from_same_matrix.extend(same_matrix)
@@ -60,7 +79,7 @@ class BlakeDocumentImporter(object):
 
         bo = models.BlakeObject()
 
-        bo.desc_id = obj.attrib.get("id")
+        bo.desc_id = obj.attrib.get("id").lower()
         bo.dbi = obj.attrib.get("dbi").lower()
         self.objects[bo.desc_id] = bo
         # We need to pull out the illusdesc and store it separately
@@ -80,8 +99,10 @@ class BlakeDocumentImporter(object):
         for objcode in obj.xpath("objtitle/objid/objcode"):
             obj_id = objcode.get("code").encode("utf-8").upper()
             if obj_id.startswith("B"):
-                bo.bentley_id = obj_id
-                break
+                bentley_id = re.search(r'\d+', obj_id)
+                if bentley_id:
+                    bo.bentley_id = int(bentley_id.group(0))
+                    break
         for title in obj.xpath("objtitle/title"):
             bo.title = title.xpath("string()").encode("utf-8")
             break
@@ -100,13 +121,15 @@ class BlakeDocumentImporter(object):
             comp_date_string = comp_date.xpath("string()").encode("utf-8")
             comp_date = re.match("\D*(\d{4})", comp_date_string).group(1)
             break
+        archive_copy_id = root.get("copy")
         header_xml = etree.tostring(root.xpath("header")[0], encoding='utf8', method='xml')
         header_json = json.dumps(xmltodict.parse(header_xml, force_cdata=True)["header"])
         source_xml = etree.tostring(root.xpath("objdesc/source")[0], encoding='utf8', method='xml')
         source_json = json.dumps(xmltodict.parse(source_xml, force_cdata=True)["source"])
         objects = [self.process_object(o) for o in root.xpath("objdesc/desc")]
         copy = models.BlakeCopy(bad_id=copy_id, header=header_json, source=source_json, objects=objects,
-                                composition_date=comp_date, composition_date_string=comp_date_string)
+                                composition_date=comp_date, composition_date_string=comp_date_string,
+                                archive_copy_id=archive_copy_id)
         for title in root.xpath("header/filedesc/titlestmt/title"):
             copy.title = title.xpath("string()").encode("utf-8")
             break
@@ -115,6 +138,12 @@ class BlakeDocumentImporter(object):
             break
         copy.medium = root.get("type").encode("utf-8")
         self.copies[copy.bad_id] = copy
+        for obj in objects:
+            obj.copy_title = copy.title
+            obj.archive_copy_id = copy.archive_copy_id
+            obj.copy_institution = copy.institution
+            obj.copy_composition_date = copy.composition_date
+            obj.copy_bad_id = copy.bad_id
         print "added copy"
 
 
@@ -132,6 +161,7 @@ def main():
         except ValueError as err:
             print err
     importer.process_relationships()
+    importer.process_motif_relationships()
     importer.populate_works()
     engine = models.db.create_engine(config.db_connection_string)
     session = sessionmaker(bind=engine)()

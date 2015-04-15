@@ -35,8 +35,13 @@ class BlakeObject(db.Model):
     copy_id = db.Column(db.Integer, db.ForeignKey("copy.copy_id"))
     desc_id = db.Column(db.UnicodeText, index=True)
     dbi = db.Column(db.UnicodeText, index=True)
-    bentley_id = db.Column(db.UnicodeText, index=True)
+    bentley_id = db.Column(db.Integer, index=True)
     full_object_id = db.Column(db.UnicodeText)
+    copy_title = db.Column(db.UnicodeText)
+    archive_copy_id = db.Column(db.Text)
+    copy_institution = db.Column(db.Text)
+    copy_composition_date = db.Column(db.Integer)
+    copy_bad_id = db.Column(db.Text)
     illustration_description = db.Column(JSON)
     components = db.Column(JSON)
     text = db.Column(JSON)
@@ -54,6 +59,12 @@ class BlakeObject(db.Model):
         primaryjoin=object_id == production_sequence__object.c.object_id,
         secondaryjoin=object_id == production_sequence__object.c.related_object_id,
         remote_side=production_sequence__object.c.related_object_id)
+    objects_with_same_motif = db.relationship(
+        "BlakeObject",
+        secondary=motif__object,
+        primaryjoin=object_id == motif__object.c.object_id,
+        secondaryjoin=object_id == motif__object.c.related_object_id,
+        remote_side=motif__object.c.related_object_id)
 
     def __init__(self, *args, **kwargs):
         super(BlakeObject, self).__init__(*args, **kwargs)
@@ -66,6 +77,11 @@ class BlakeObject(db.Model):
             "desc_id": self.desc_id,
             "dbi": self.dbi,
             "copy_id": self.copy_id,
+            "copy_title": self.copy_title,
+            "archive_copy_id": self.archive_copy_id,
+            "copy_institution": self.copy_institution,
+            "copy_composition_date": self.copy_composition_date,
+            "copy_bad_id": self.copy_bad_id,
             "full_object_id": self.full_object_id,
             "illustration_description": self.illustration_description,
             "components": self.components,
@@ -80,6 +96,7 @@ class BlakeCopy(db.Model):
     copy_id = db.Column(db.Integer, primary_key=True)
     work_id = db.Column(db.Integer, db.ForeignKey("work.work_id"))
     bad_id = db.Column(db.UnicodeText, index=True)
+    archive_copy_id = db.Column(db.Text)
     header = db.Column(JSON)
     source = db.Column(JSON)
     title = db.Column(db.UnicodeText)
@@ -96,13 +113,16 @@ class BlakeCopy(db.Model):
     def to_dict(self):
         return {
             "copy_id": self.copy_id,
+            "archive_copy_id": self.archive_copy_id,
             "work_id": self.work_id,
             "bad_id": self.bad_id,
             "source": self.source,
             "title": self.title,
             "institution": self.institution,
             "image": self.image,
-            "header": self.header
+            "header": self.header,
+            "composition_date": self.composition_date,
+            "composition_date_string": self.composition_date_string
         }
 
 
@@ -114,6 +134,7 @@ class BlakeWork(db.Model):
     medium = db.Column(db.UnicodeText)
     copies = db.relationship(BlakeCopy, backref="work")
     info = db.Column(db.UnicodeText)
+    image = db.Column(db.UnicodeText)
     composition_date = db.Column(db.Integer)
     composition_date_string = db.Column(db.UnicodeText)
 
@@ -125,6 +146,7 @@ class BlakeWork(db.Model):
             "title": self.title,
             "medium": self.medium,
             "info": self.info,
+            "image": self.image,
             "composition_date": self.composition_date,
             "composition_date_string": self.composition_date_string
         }

@@ -12,12 +12,14 @@ angular.module('blake').directive("objectsFromSameMatrix", function () {
 });
 
 angular.module('blake').controller("ObjectsFromSameMatrixController", function ($scope, BlakeDataService) {
-     $scope.$watch(BlakeDataService.getSelectedCopy, function (copy) {
-         if (copy) {
-             $scope.copy = copy;
-             BlakeDataService.getObjectsFromSameMatrix(copy.bad_id).then(function (data) {
-                 $scope.objects = data;
-             });
-         }
-     });
+    $scope.BlakeDataService = BlakeDataService;
+    $scope.$on("objectSelectionChange", function () {
+        var obj = BlakeDataService.getSelectedObject();
+        if (obj) {
+            $scope.item = obj;
+            BlakeDataService.getObjectsFromSameMatrix(obj.object_id).then(function (data) {
+                $scope.objects = data;
+            });
+        }
+    });
 });

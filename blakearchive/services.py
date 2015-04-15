@@ -34,7 +34,7 @@ class BlakeDataService(object):
     @classmethod
     def get_objects_with_same_motif(cls, object_id):
         object_ = models.BlakeObject.query.filter(models.BlakeObject.object_id == object_id).first()
-        return []
+        return object_.objects_with_same_motif
 
     @classmethod
     def get_objects_from_same_production_sequence(cls, object_id):
@@ -54,6 +54,7 @@ class BlakeDataService(object):
     def get_objects_for_copy(cls, bad_id):
         return models.BlakeObject.query\
             .join(models.BlakeCopy)\
+            .order_by(models.BlakeObject.bentley_id)\
             .filter(models.BlakeCopy.bad_id == bad_id).all()
 
     @classmethod

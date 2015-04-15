@@ -1,12 +1,11 @@
 directoryPrefix = '/blake';
 
 angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
-    .controller('CarouselController', ['$scope', '$timeout', '$transition', '$q', function        ($scope, $timeout, $transition, $q) {
-}]).directive('carousel', [function() {
-    return {
-
-    }
-}]);
+    .controller('CarouselController', ['$scope', '$timeout', '$transition', '$q',
+        function ($scope, $timeout, $transition, $q) {
+        }]).directive('carousel', [function () {
+        return {}
+    }]);
 
 angular.module('blake', ['ngRoute', 'ui.bootstrap']).config(function ($routeProvider, $locationProvider) {
     $routeProvider.when(directoryPrefix + '/', {
@@ -18,6 +17,10 @@ angular.module('blake', ['ngRoute', 'ui.bootstrap']).config(function ($routeProv
         controller: "ObjectController"
     });
     $routeProvider.when(directoryPrefix + '/copy/:copyId', {
+        templateUrl: directoryPrefix + '/static/html/copy.html',
+        controller: "CopyController"
+    });
+    $routeProvider.when(directoryPrefix + '/copy/:copyId/:objectId', {
         templateUrl: directoryPrefix + '/static/html/copy.html',
         controller: "CopyController"
     });
@@ -82,16 +85,10 @@ angular.module('blake').factory("BlakeCopy", function (BlakeObject, GenericServi
      * @param config
      */
     var constructor = function (config) {
-        var i, copy = {
-            copy_id: config.copy_id,
-            work_id: config.work_id,
-            bad_id: config.bad_id,
-            title: config.title,
-            institution: config.institution,
-            image: config.image,
-            header: angular.fromJson(config.header),
-            source: angular.fromJson(config.source)
-        };
+        var i, copy = angular.copy(config);
+        copy.header = angular.fromJson(config.header);
+        copy.source = angular.fromJson(config.source);
+
         if (config.objects) {
             for (i = 0; i < config.objects.length; i++) {
                 copy.objects.push(BlakeObject.create(config.objects[i]));
@@ -145,11 +142,12 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
     var selectedWork, selectedCopy, selectedObject, selectedWorkCopies, selectedCopyObjects, queryObjects,
         getObject, getObjectsWithSameMotif, getObjectsFromSameMatrix, getObjectsFromSameProductionSequence,
         getCopy, getObjectsForCopy, getWork, getWorks, getCopiesForWork, getFeaturedWorks, setSelectedWork,
-        setSelectedCopy, setSelectedObject;
+        setSelectedCopy, setSelectedObject, addComparisonObject, removeComparisonObject,
+        clearComparisonObjects, comparisonObjects = [];
 
     queryObjects = function (config) {
         var url = directoryPrefix + '/api/query_objects';
-        return $q(function(resolve, reject) {
+        return $q(function (resolve, reject) {
             $http.post(url, config).success(function (data) {
                 resolve(data);
             }).error(function (data, status) {
@@ -160,7 +158,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
 
     getObject = function (objectId) {
         var url = directoryPrefix + '/api/object/' + objectId;
-        return $q(function(resolve, reject) {
+        return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
                 resolve(BlakeObject.create(data));
             }).error(function (data, status) {
@@ -171,7 +169,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
 
     getObjectsWithSameMotif = function (objectId) {
         var url = directoryPrefix + '/api/object/' + objectId + '/objects_with_same_motif';
-        return $q(function(resolve, reject) {
+        return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
                 resolve(BlakeObject.create(data.results));
             }).error(function (data, status) {
@@ -182,7 +180,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
 
     getObjectsFromSameMatrix = function (objectId) {
         var url = directoryPrefix + '/api/object/' + objectId + '/objects_from_same_matrix';
-        return $q(function(resolve, reject) {
+        return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
                 resolve(BlakeObject.create(data.results));
             }).error(function (data, status) {
@@ -193,7 +191,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
 
     getObjectsFromSameProductionSequence = function (objectId) {
         var url = directoryPrefix + '/api/object/' + objectId + '/objects_from_same_production_sequence';
-        return $q(function(resolve, reject) {
+        return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
                 resolve(BlakeObject.create(data.results));
             }).error(function (data, status) {
@@ -204,7 +202,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
 
     getCopy = function (copyId) {
         var url = directoryPrefix + '/api/copy/' + copyId;
-        return $q(function(resolve, reject) {
+        return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
                 resolve(BlakeCopy.create(data));
             }).error(function (data, status) {
@@ -215,7 +213,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
 
     getObjectsForCopy = function (copyId) {
         var url = directoryPrefix + '/api/copy/' + copyId + '/objects';
-        return $q(function(resolve, reject) {
+        return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
                 resolve(BlakeObject.create(data.results));
             }).error(function (data, status) {
@@ -226,7 +224,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
 
     getWork = function (workId) {
         var url = directoryPrefix + '/api/work/' + workId;
-        return $q(function(resolve, reject) {
+        return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
                 resolve(BlakeWork.create(data));
             }).error(function (data, status) {
@@ -237,7 +235,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
 
     getWorks = function () {
         var url = directoryPrefix + '/api/work/';
-        return $q(function(resolve, reject) {
+        return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
                 resolve(BlakeWork.create(data.results));
             }).error(function (data, status) {
@@ -248,7 +246,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
 
     getCopiesForWork = function (workId) {
         var url = directoryPrefix + '/api/work/' + workId + '/copies';
-        return $q(function(resolve, reject) {
+        return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
                 resolve(BlakeCopy.create(data.results));
             }).error(function (data, status) {
@@ -259,7 +257,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
 
     getFeaturedWorks = function () {
         var url = directoryPrefix + '/api/featured_work/';
-        return $q(function(resolve, reject) {
+        return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
                 resolve(BlakeFeaturedWork.create(data.results));
             }).error(function (data, status) {
@@ -279,13 +277,21 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
         });
     };
 
-    setSelectedCopy = function (copyId) {
+    setSelectedCopy = function (copyId, objectId) {
         return getCopy(copyId).then(function (copy) {
             selectedCopy = copy;
             $rootScope.$broadcast("copySelectionChange", copy);
             getObjectsForCopy(copyId).then(function (objects) {
                 selectedCopyObjects = objects;
-                selectedObject = objects[0];
+                if (objectId) {
+                    objects.forEach(function (obj) {
+                        if (obj.object_id == objectId) {
+                            selectedObject = obj;
+                        }
+                    })
+                } else {
+                    selectedObject = objects[0];
+                }
                 $rootScope.$broadcast("copySelectionObjectsChange");
                 $rootScope.$broadcast("objectSelectionChange");
             })
@@ -297,6 +303,34 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
             selectedObject = obj;
             $rootScope.$broadcast("objectSelectionChange");
         })
+    };
+
+    addComparisonObject = function (obj) {
+        var i, objInList = false;
+        // Don't add an object to the list twice
+        for (i = comparisonObjects.length; i--;) {
+            if (comparisonObjects[i].object_id == obj.object_id) {
+                objInList = true;
+                break;
+            }
+        }
+        if (!objInList) {
+            comparisonObjects.push(obj)
+        }
+    };
+
+    removeComparisonObject = function (obj) {
+        var i;
+        for (i = comparisonObjects.length; i--;) {
+            if (comparisonObjects[i].object_id == obj.object_id) {
+                comparisonObjects.splice(i, 1);
+                break;
+            }
+        }
+    };
+
+    clearComparisonObjects = function () {
+        comparisonObjects = [];
     };
 
     return {
@@ -328,7 +362,10 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
         },
         getSelectedCopyObjects: function () {
             return selectedCopyObjects;
-        }
+        },
+        addComparisonObject: addComparisonObject,
+        removeComparisonObject: removeComparisonObject,
+        clearComparisonObjects: clearComparisonObjects
     };
 });
 
@@ -337,8 +374,8 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
  */
 angular.module('blake').factory("MockBlakeDataService", function ($http, $q, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
     var getObjects = function () {
-        return $q(function(resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/objects.json').success(function(data) {
+        return $q(function (resolve, reject) {
+            $http.get(directoryPrefix + '/static/json/objects.json').success(function (data) {
                 resolve(BlakeObject.create(data));
             }).error(function (data, status) {
                 reject(data, status);
@@ -347,8 +384,8 @@ angular.module('blake').factory("MockBlakeDataService", function ($http, $q, Bla
     };
 
     var getObject = function () {
-        return $q(function(resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/objects.json').success(function(data) {
+        return $q(function (resolve, reject) {
+            $http.get(directoryPrefix + '/static/json/objects.json').success(function (data) {
                 resolve(BlakeObject.create(data[0]));
             }).error(function (data, status) {
                 reject(data, status);
@@ -357,8 +394,8 @@ angular.module('blake').factory("MockBlakeDataService", function ($http, $q, Bla
     };
 
     var getCopies = function () {
-        return $q(function(resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/copies.json').success(function(data) {
+        return $q(function (resolve, reject) {
+            $http.get(directoryPrefix + '/static/json/copies.json').success(function (data) {
                 resolve(BlakeCopy.create(data));
             }).error(function (data, status) {
                 reject(data, status);
@@ -367,8 +404,8 @@ angular.module('blake').factory("MockBlakeDataService", function ($http, $q, Bla
     };
 
     var getCopy = function () {
-        return $q(function(resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/copies.json').success(function(data) {
+        return $q(function (resolve, reject) {
+            $http.get(directoryPrefix + '/static/json/copies.json').success(function (data) {
                 resolve(BlakeCopy.create(data[0]));
             }).error(function (data, status) {
                 reject(data, status);
@@ -377,8 +414,8 @@ angular.module('blake').factory("MockBlakeDataService", function ($http, $q, Bla
     };
 
     var getWorks = function () {
-        return $q(function(resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/works.json').success(function(data) {
+        return $q(function (resolve, reject) {
+            $http.get(directoryPrefix + '/static/json/works.json').success(function (data) {
                 resolve(BlakeWork.create(data));
             }).error(function (data, status) {
                 reject(data, status);
@@ -387,8 +424,8 @@ angular.module('blake').factory("MockBlakeDataService", function ($http, $q, Bla
     };
 
     var getWork = function () {
-        return $q(function(resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/works.json').success(function(data) {
+        return $q(function (resolve, reject) {
+            $http.get(directoryPrefix + '/static/json/works.json').success(function (data) {
                 resolve(BlakeWork.create(data[0]));
             }).error(function (data, status) {
                 reject(data, status);
@@ -397,8 +434,8 @@ angular.module('blake').factory("MockBlakeDataService", function ($http, $q, Bla
     };
 
     var getFeaturedWorks = function () {
-        return $q(function(resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/featured_works.json').success(function(data) {
+        return $q(function (resolve, reject) {
+            $http.get(directoryPrefix + '/static/json/featured_works.json').success(function (data) {
                 resolve(BlakeFeaturedWork.create(data));
             }).error(function (data, status) {
                 reject(data, status);
@@ -449,16 +486,16 @@ angular.module('blake').controller("HomeController", function ($scope, BlakeData
     });
 });
 
-angular.module('blake').controller("WorkController", function ($scope, BlakeDataService) {
-
+angular.module('blake').controller("WorkController", function ($scope, $routeParams, BlakeDataService) {
+    BlakeDataService.setSelectedWork($routeParams.workId);
 });
 
-angular.module('blake').controller("ObjectController", function ($scope, BlakeDataService) {
-
+angular.module('blake').controller("ObjectController", function ($scope, $routeParams, BlakeDataService) {
+    BlakeDataService.setSelectedWork($routeParams.objectId);
 });
 
 angular.module('blake').controller("CopyController", function ($scope, $routeParams, BlakeDataService) {
-    BlakeDataService.setSelectedCopy($routeParams.copyId);
+    BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.objectId);
 });
 
 angular.module('blake').controller("SearchController", function ($scope, BlakeDataService) {
