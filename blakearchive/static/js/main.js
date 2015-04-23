@@ -29,8 +29,7 @@ angular.module('blake', ['ngRoute', 'ui.bootstrap']).config(function ($routeProv
         controller: "WorkController"
     });
     $routeProvider.when(directoryPrefix + '/compare/', {
-        templateUrl: directoryPrefix + '/static/html/compare.html',
-        controller: "CompareController"
+        templateUrl: directoryPrefix + '/static/html/compare.html'
     });
     $routeProvider.when(directoryPrefix + '/search/', {
         templateUrl: directoryPrefix + '/static/html/search.html',
@@ -143,7 +142,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
         getObject, getObjectsWithSameMotif, getObjectsFromSameMatrix, getObjectsFromSameProductionSequence,
         getCopy, getObjectsForCopy, getWork, getWorks, getCopiesForWork, getFeaturedWorks, setSelectedWork,
         setSelectedCopy, setSelectedObject, addComparisonObject, removeComparisonObject,
-        clearComparisonObjects, comparisonObjects = [];
+        clearComparisonObjects, isComparisonObject, comparisonObjects = [];
 
     queryObjects = function (config) {
         var url = directoryPrefix + '/api/query_objects';
@@ -315,7 +314,8 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
             }
         }
         if (!objInList) {
-            comparisonObjects.push(obj)
+            comparisonObjects.push(obj);
+            $rootScope.$broadcast("comparisonObjectsChange");
         }
     };
 
@@ -324,6 +324,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
         for (i = comparisonObjects.length; i--;) {
             if (comparisonObjects[i].object_id == obj.object_id) {
                 comparisonObjects.splice(i, 1);
+                $rootScope.$broadcast("comparisonObjectsChange");
                 break;
             }
         }
@@ -331,6 +332,16 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
 
     clearComparisonObjects = function () {
         comparisonObjects = [];
+        $rootScope.$broadcast("comparisonObjectsChange");
+    };
+
+    isComparisonObject = function (obj) {
+        for (var i = comparisonObjects.length; i--;) {
+            if (comparisonObjects[i].object_id == obj.object_id) {
+                return true;
+            }
+        }
+        return false;
     };
 
     return {
@@ -365,7 +376,11 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
         },
         addComparisonObject: addComparisonObject,
         removeComparisonObject: removeComparisonObject,
-        clearComparisonObjects: clearComparisonObjects
+        clearComparisonObjects: clearComparisonObjects,
+        getComparisonObjects: function () {
+            return comparisonObjects;
+        },
+        isComparisonObject: isComparisonObject
     };
 });
 

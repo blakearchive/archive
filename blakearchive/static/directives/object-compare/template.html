@@ -1,19 +1,105 @@
-<header class="page-header">
-  <p class="subhead">Objects In Copy</p>
+<div id="archive" class="container-fluid archive-top">
+  <div id="object-container" class="row tray-closed">
+    <div id="object-detail-tray">
+      <div class="tray-toggle" ng-click="toggleTray()">Open/Close Tray</div>
+      <div id="object-detail-tray-inner">
+        <accordion close-others="true">
+          <accordion-group heading="Textual Transcription">
+            <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, {{ }}</p>
 
-  <h1>{{ copy.header.filedesc.titlestmt.title['@reg'] }}
-    <span>{{ copy.header.filedesc.titlestmt.title.copy['#text'] }}, {{ copy.source.objdescid.compdate['#text'] }} ({{ copy.institution }})</span></h1>
-</header>
-<div class="row">
+            <p><a href="#">[ n ]</a></p>
+            <ol>
+              <li ng-repeat="line in getObjLines()"><span>{{ line }}</span></li>
+            </ol>
+            <p><a href="#">Color key for transcriptions</a></p>
+          </accordion-group>
+          <accordion-group heading="Illustration Description">
+            <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, {{ obj.full_object_id }}</p>
 
-  <div ng-repeat="obj in objects" class="col-sm-6 col-md-3">
-    <div class="handprint-block">
-      <a href="#">
-        <span class="object-img"
-              style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
-        <span class="description"><strong></strong>{{ obj.full_object_id }}</span>
-      </a>
+            <p><strong>Sector CD<br>
+              Plate Illustration:</strong></p>
+
+            <p>{{ obj.illustration_description.illusobjdesc['#text'] }}</p>
+
+            <div ng-repeat="component in obj.components">
+              <p><strong>Component (Sector {{ component.component['@location'] }})</strong></p>
+
+              <p class="keywords">Keywords:
+              <ul class="list-inline">
+                <li ng-repeat="characteristic in component.component.characteristic">{{ characteristic["#text"] }}</li>
+              </ul>
+              </p>
+
+              <p>{{ component.component.illusobjdesc['#text'] }}</p>
+            </div>
+          </accordion-group>
+          <accordion-group heading="Editors’ Notes">
+            <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, {{ obj.full_object_id }}</p>
+
+            <p><strong>Object Note(s):</strong></p>
+
+            <div ng-if="obj.physical_description.objnote">
+              <p>Note:</p>
+
+              <p>{{ obj.physical_description.objnote['#text'] }}</p>
+            </div>
+            <p><strong>Textual Note(s):</strong></p>
+
+            <p><em>No textual notes for this object</em></p>
+          </accordion-group>
+          <accordion-group heading="Object Meta Data">
+            <p class="object-title">The Marriage of Heaven and Hell, object 20 (Bentley 20, Erdman 20,
+              Keynes 20)</p>
+
+            <p><em>Object Meta Data goes here...</em></p>
+          </accordion-group>
+        </accordion>
+      </div>
     </div>
   </div>
+  <!--/.tray-->
+  <div id="object-view" class="compare-objects">
 
+    <div id="compare" class="scrollbar">
+      <div class="featured-object">
+        <div class="compare-inner">
+          <div class="item" ng-repeat="o in comparisonObjects">
+            <p class="object-title">{{ o.copy_title }}, Copy {{ o.archive_copy_id }}</p>
+            <img src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.300.jpg">
+
+            <p class="object-subtitle">{{ o.copy_composition_date }} ({{ o.copy_institution }}) {{ o.full_object_id }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.compare-->
+
+    <div id="object-tools">
+      <div id="object-tools-inner">
+        <!--Edit buttons-->
+        <div class="btn-group edit-object" role="group">
+          <button type="button" class="btn btn-default add-lightbox"><span class="edit-icon"></span> Add To
+            Lightbox
+          </button>
+          <button type="button" class="btn btn-default rotate"><span class="edit-icon"></span> Rotate</button>
+          <button type="button" class="btn btn-default zoom"><span class="edit-icon"></span> Zoom</button>
+          <button type="button" class="btn btn-default true-size"><span class="edit-icon"></span> True Size
+          </button>
+          <button type="button" class="btn btn-default new-window"><span class="edit-icon"></span> New Window
+          </button>
+        </div>
+
+        <div id="compare-thumbs">
+          <div id="compare-thumbs-inner">
+            <div ng-repeat="o in comparisonObjects" class="item"
+                 style="background-image: url(http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="show-hide-tools"><span>Show / Hide Tools</span></div>
+
+  </div>
+  <!--/.object-view-->
 </div>

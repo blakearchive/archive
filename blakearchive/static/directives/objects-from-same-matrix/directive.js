@@ -22,4 +22,10 @@ angular.module('blake').controller("ObjectsFromSameMatrixController", function (
             });
         }
     });
+
+    $scope.selectAll = function () {
+        for (var i = $scope.objects.length; i--;) {
+            BlakeDataService.addComparisonObject($scope.objects[i]);
+        }
+    }
 });
