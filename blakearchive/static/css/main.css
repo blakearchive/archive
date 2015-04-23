@@ -5,3 +5,192 @@
 #archive #object-detail-tray .panel-group .panel.panel-default .panel-body {
     max-height: 339px !important;
 }
+
+/* Begin image location mods */
+
+.site-header-container a.navbar-brand span.sig {
+  background-image: url("../img/global/william_blake_archive.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  .site-header-container a.navbar-brand span.sig {
+    background-image: url("../img/global/william_blake_archive@2x.png") !important;
+  }
+}
+
+.lightbox {
+  background-image: url("../img/global/icon-lightbox.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  .lightbox {
+    background-image: url("../img/global/icon-lightbox@2x.png") !important;
+  }
+}
+
+nav.navbar ul.navbar-nav > li > a {
+  background-image: url("../img/global/arrow-open.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  nav.navbar ul.navbar-nav > li > a {
+    background-image: url("../img/global/arrow-open@2x.png") !important;
+  }
+}
+
+nav.navbar ul.navbar-nav .open > a,
+nav.navbar ul.navbar-nav .open > a:hover,
+nav.navbar ul.navbar-nav .open > a:focus {
+  background-image: url("../img/global/arrow-close.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  nav.navbar ul.navbar-nav .open > a,
+  nav.navbar ul.navbar-nav .open > a:hover,
+  nav.navbar ul.navbar-nav .open > a:focus {
+    background-image: url("../img/global/arrow-close@2x.png") !important;
+  }
+}
+
+nav.navbar ul.navbar-nav .active > a,
+nav.navbar ul.navbar-nav .active > a:hover,
+nav.navbar ul.navbar-nav .active > a:focus {
+  background-image: url("../img/global/arrow-open-active.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  nav.navbar ul.navbar-nav .active > a,
+  nav.navbar ul.navbar-nav .active > a:hover,
+  nav.navbar ul.navbar-nav .active > a:focus {
+    background-image: url("../img/global/arrow-open-active@2x.png") !important;
+  }
+}
+
+nav.navbar ul.navbar-nav .open.active > a:hover,
+nav.navbar ul.navbar-nav .open.active > a:focus {
+  background-image: url("../img/global/arrow-close-active.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  nav.navbar ul.navbar-nav .open.active > a:hover,
+  nav.navbar ul.navbar-nav .open.active > a:focus {
+    background-image: url("../img/global/arrow-close-active@2x.png") !important;
+  }
+}
+
+a.select-all-objects {
+  background-image: url("../img/global/select-icon.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  a.select-all-objects {
+    background-image: url("../img/global/select-icon@2x.png") !important;
+  }
+}
+
+a.compare-selected-objects {
+  background-image: url("../img/global/compare-icon.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  a.compare-selected-objects {
+    background-image: url("../img/global/compare-icon@2x.png") !important;
+  }
+}
+
+.selected.handprint-block a span.object-img span.selected {
+  background: transparent url(../img/global/selected-object-icon.png) no-repeat 0 0 !important;
+}
+
+a.new-window {
+  background-image: url("../img/global/new-window-icon.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  a.new-window {
+    background-image: url("../img/global/new-window-icon@2x.png") !important;
+  }
+}
+
+.back-top {
+  background-image: url("../img/global/back-top-arrow.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  .back-top {
+    background-image: url("../img/global/back-top-arrow.png") !important;
+  }
+}
+
+#archive .tray-toggle {
+  background-image: url("../img/global/open-close-tray-icon-mobile.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  #archive .tray-toggle {
+    background-image: url("../img/global/open-close-tray-icon-mobile@2x.png") !important;
+  }
+}
+
+@media (min-width: 992px) {
+  #archive .tray-toggle {
+    background-image: url("../img/global/open-close-tray-icon.png") !important;
+  }
+}
+@media (min-width: 992px) and only screen and (-webkit-min-device-pixel-ratio: 2), (min-width: 992px) and only screen and (min--moz-device-pixel-ratio: 2), (min-width: 992px) and only screen and (-o-min-device-pixel-ratio: 2/1), (min-width: 992px) and only screen and (min-device-pixel-ratio: 2), (min-width: 992px) and only screen and (min-resolution: 192dpi), (min-width: 992px) and only screen and (min-resolution: 2dppx) {
+  #archive .tray-toggle {
+    background-image: url("../img/global/open-close-tray-icon@2x.png") !important;
+  }
+}
+
+#archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .panel-title a {
+  background-image: url("../img/global/detail-tray-icons.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  #archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .panel-title a {
+    background-image: url("../img/global/detail-tray-icons@2x.png") !important;
+  }
+}
+
+#archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .panel-title a.new-window {
+  background-image: url("../img/global/new-window-icon.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  #archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .panel-title a.new-window {
+    background-image: url("../img/global/new-window-icon@2x.png") !important;
+  }
+}
+
+#archive #object-view .featured-object-controls .chevron-right {
+  background-image: url("../img/global/chevron-thin-right.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  #archive #object-view .featured-object-controls .chevron-right {
+    background-image: url("../img/global/chevron-thin-right@2x.png") !important;
+  }
+}
+
+#archive #object-view .featured-object-controls .chevron-left {
+  background-image: url("../img/global/chevron-thin-left.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  #archive #object-view .featured-object-controls .chevron-left {
+    background-image: url("../img/global/chevron-thin-left@2x.png") !important;
+  }
+}
+
+#archive #object-view .btn-group.edit-object .btn.btn-default .edit-icon {
+  background-image: url("../img/global/edit-icons.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  #archive #object-view .btn-group.edit-object .btn.btn-default .edit-icon {
+    background-image: url("../img/global/edit-icons@2x.png") !important;
+  }
+}
+
+/* End image location mods */
