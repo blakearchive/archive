@@ -6,23 +6,61 @@
   </div>
 </div>
 <hr>
-<div class="row" ng-show="results">
-  <div class="col-sm-10">
-    <div ng-show="results.length > 0">
+<div class="row">
+  <div class="col-sm-3">
+    <h3>Restrict date range:</h3>
+    Starting: <input type="number" ng-model="searchConfig.minDate" min="1772" max="1827"><br>
+    Ending: <input type="number" ng-model="searchConfig.maxDate" min="1772" max="1827"><br>
+    <ul class="list-inline">
+      <li><input type="checkbox" ng-model="searchConfig.useCompDate">Composition date</li>
+      <li><input type="checkbox" ng-model="searchConfig.usePrintDate">Printing date</li>
+    </ul>
+    <h3>Search within:</h3>
+    <input type="checkbox" ng-model="searchConfig.searchText">Textual transcriptions<br>
+    <input type="checkbox" ng-model="searchConfig.searchWorkInformation">Editors' notes and work information<br>
+    <input type="checkbox" ng-model="searchConfig.searchImageKeywords">Image keywords<br>
+    <input type="checkbox" ng-model="searchConfig.searchImageDescriptions">Image descriptions<br>
+    <input type="checkbox" ng-model="searchConfig.searchSiteInformation">Site information<br>
+    <input type="checkbox" ng-model="searchConfig.searchCompletePoetry">The Complete Poetry and Prose of William Blake, by
+    David V. Erdman<br>
+  </div>
+  <div class="col-sm-9">
+    <div ng-hide="results.object_results.length > 0 || results.work_results.length > 0">
+      No results found
+    </div>
+    <div ng-show="results.object_results.length > 0">
       <h3>Objects</h3>
-      <ul>
-        <li ng-repeat="obj in results">
-          <ul class="list-inline">
-            <li ng-repeat="characteristic in obj.characteristics">{{ characteristic.characteristic }}</li>
-          </ul>
-          <p>{{ obj.illustration_description.illusobjdesc }}</p>
-          <ol>
-            <li ng-repeat="lineGroup in obj.text.lg">
-            <ol><li ng-repeat="line in lineGroup.l">{{ line['#text'] }}</li></ol>
-            </li>
-          </ol>
-        </li>
-      </ul>
+
+      <div class="row">
+        <div ng-repeat="obj in results.object_results" class="col-sm-6 col-md-3">
+          <div class="handprint-block">
+            <a href="/blake/object/{{ obj.bad_id }}">
+        <span class="object-img"
+              style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
+              <span
+                  class="description"><strong>{{ obj.title }}</strong></span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div ng-show="results.work_results.length > 0">
+      <h3>Works</h3>
+
+      <div class="row">
+        <div ng-repeat="work in results.work_results" class="col-sm-6 col-md-3">
+          <div class="handprint-block">
+            <a href="/blake/work/{{ work.bad_id }}">
+        <span class="object-img"
+              style="background-image: url(http://www.blakearchive.org/blake/images/{{ work.image }}.100.jpg);"></span>
+              <span
+                  class="description"><strong>{{ obj.title }}</strong></span>
+            </a>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>

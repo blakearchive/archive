@@ -5,7 +5,8 @@ import json
 import models
 
 
-solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake/')
+blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-object')
+blake_work_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-work')
 
 
 class BlakeDataService(object):
@@ -19,13 +20,14 @@ class BlakeDataService(object):
         def transform_result(result):
             new_result = copy.copy(result)
             new_result["text"] = json.loads(result["text"])
-            new_result["characteristics"] = json.loads(result["characteristics"])
+            new_result["components"] = json.loads(result["components"])
             new_result["illustration_description"] = json.loads(result["illustration_description"])
             return new_result
-        results = solr.search(config["searchString"])
-        transformed_results = [transform_result(r) for r in results]
+        obj_results = blake_object_solr.search(config["searchString"])
+        transformed_obj_results = [transform_result(r) for r in obj_results]
+        work_results = blake_work_solr.search(config["searchString"])
         # We will probably have to knit together results from several queries
-        return transformed_results
+        return {"object_results": transformed_obj_results, "work_results": list(work_results)}
 
     @classmethod
     def get_object(cls, object_id):
