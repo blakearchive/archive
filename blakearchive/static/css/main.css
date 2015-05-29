@@ -1,3 +1,7 @@
+div.container-fluid > .navbar-form {
+  margin-right: 5%;
+}
+
 .carousel-inner > .item {
     display: block !important;
 }
