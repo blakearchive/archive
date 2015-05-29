@@ -22,31 +22,19 @@
 </head>
 <body class="home ng-scope" ng-app="blake">
 
-<div class="site-header-container">
-  <div class="container-fluid site-header">
+    <div class="site-header-container"><div class="container-fluid site-header">
+      <a class="navbar-brand" href="/"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
+      <button type="button" class="collapse-archive menu-open">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="lightbox"><a href="#" class="lb-amount">3</a></div>
 
-    <div class="row">
-      <div class="col-sm-11">
-        <a class="navbar-brand" href="/"><span class="name">The William Blake Archive</span><span
-            class="sig"></span></a>
-
-        <div class="lightbox"><span class="lb-amount">3</span></div>
         <view-sub-menu></view-sub-menu>
 
-      </div>
-      <div class="col-sm-1">
-        <button type="button" class="collapse-archive menu-closed">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- /.container -->
+    </div></div> <!-- /.container -->
 
 <nav class="navbar navbar-default menu-closed" role="navigation">
   <div class="container-fluid">
@@ -73,6 +61,7 @@
 </ul>
 -->
 <div class="container-fluid main">
+
   <!-- This div is the viewport where all views will be loaded, so css for individual pages should
        be based on elements below this point in the DOM -->
   <div ng-view></div>
