@@ -38,7 +38,7 @@ angular.module('blake').controller("ObjectViewerController", function ($scope, B
     $scope.getObjLines = function () {
         var objLines = [];
         if ($scope.obj) {
-            if ($scope.obj.text.lg.length) {
+            if ($scope.obj.text && $scope.obj.text.lg && $scope.obj.text.lg.length) {
                 $scope.obj.text.lg.forEach(function (lg) {
                     if (lg.l.length) {
                         lg.l.forEach(function (l) {

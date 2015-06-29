@@ -35,17 +35,26 @@ class BlakeDataService(object):
 
     @classmethod
     def get_objects_with_same_motif(cls, object_id):
-        object_ = models.BlakeObject.query.filter(models.BlakeObject.object_id == object_id).first()
+        object_ = models.BlakeObject.query\
+            .filter(models.BlakeObject.object_id == object_id)\
+            .order_by(models.BlakeObject.bentley_id)\
+            .first()
         return object_.objects_with_same_motif
 
     @classmethod
     def get_objects_from_same_production_sequence(cls, object_id):
-        object_ = models.BlakeObject.query.filter(models.BlakeObject.object_id == object_id).first()
+        object_ = models.BlakeObject.query\
+            .filter(models.BlakeObject.object_id == object_id)\
+            .order_by(models.BlakeObject.bentley_id)\
+            .first()
         return object_.objects_from_same_production_sequence
 
     @classmethod
     def get_objects_from_same_matrix(cls, object_id):
-        object_ = models.BlakeObject.query.filter(models.BlakeObject.object_id == object_id).first()
+        object_ = models.BlakeObject.query\
+            .filter(models.BlakeObject.object_id == object_id)\
+            .order_by(models.BlakeObject.bentley_id)\
+            .first()
         return object_.objects_from_same_matrix
 
     @classmethod
