@@ -3,11 +3,16 @@ div.container-fluid > .navbar-form {
 }
 
 .carousel-inner > .item {
-    display: block !important;
+  display: block !important;
+}
+
+.carousel-inner > .item img {
+  max-height: 650px;
+  max-width: 975px;
 }
 
 #archive #object-detail-tray .panel-group .panel.panel-default .panel-body {
-    max-height: 339px !important;
+  max-height: 339px !important;
 }
 
 /* Begin image location mods */
@@ -198,3 +203,12 @@ a.new-window {
 }
 
 /* End image location mods */
+
+#home {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+#archive #object-view.view-objects .featured-object-controls .object-thumb:hover {
+  cursor: hand;
+}
