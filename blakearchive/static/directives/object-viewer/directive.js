@@ -88,24 +88,25 @@ angular.module('blake').controller("ObjectViewerController", function ($scope, B
           };
         };
 
+        var object_view = $("#object-view");
+
         // Set the max-height for the detail tray in object view.
         function trayHeight() {
-          var set_tray_height = $("#object-view").height();
-          var panel_count = $('.panel-group .panel-default').length;
-          var set_tray_body_height = (set_tray_height - (panel_count * 47));
+            var set_tray_height = object_view.height();
+            var panel_count = $('.panel-group .panel-default').length;
+            var set_tray_body_height = (set_tray_height - (panel_count * 47));
 
-          $('.panel-group').css('min-height', set_tray_height + 'px');
-          $('.panel-group .panel-body').css('max-height', set_tray_body_height + 'px');
+            $('.panel-group').css('min-height', set_tray_height + 'px');
+            $('.panel-group .panel-body').css('max-height', set_tray_body_height + 'px');
         }
 
         if ( $('#object-detail-tray').length ) {
-          trayHeight();
-          $(window).resize(response_change.waitForIdle(function() {
             trayHeight();
-          }, 100));
+            object_view.resize(response_change.waitForIdle(function() {
+                trayHeight();
+            }, 100));
         }
     };
-
 
     $scope.copy = BlakeDataService.getSelectedCopy();
     $scope.objects = BlakeDataService.getSelectedCopyObjects();
