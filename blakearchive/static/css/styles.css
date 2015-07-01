@@ -7326,22 +7326,21 @@ a.new-window:hover {
     transition: all 0.3s ease-out;
   }
 }
-#archive .tray-open #object-view {
+#archive .tray-open + #object-view {
   width: inherit;
 }
 @media (min-width: 992px) {
-  #archive .tray-open #object-view {
+  #archive .tray-open + #object-view {
     width: 75%;
     margin-left: 25%;
   }
 }
-#archive .tray-closed #object-view {
+#archive .tray-closed + #object-view {
   border-top: 2px solid #424242;
 }
 @media (min-width: 992px) {
-  #archive .tray-closed #object-view {
+  #archive .tray-closed + #object-view {
     border-top: none;
-    border-left: 5px solid #424242;
     width: 100%;
     margin-left: 0;
   }
