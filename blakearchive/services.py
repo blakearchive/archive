@@ -52,7 +52,7 @@ class BlakeDataService(object):
                 else:
                     query = "(%s) AND %s" % (query, print_date_string)
             return query
-
+        # updated search
         obj_results = blake_object_solr.search(generate_object_query(config))
         transformed_obj_results = [transform_result(r) for r in obj_results]
         work_results = blake_work_solr.search(generate_work_query(config))
