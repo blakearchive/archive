@@ -23,9 +23,39 @@ class BlakeDataService(object):
             new_result["components"] = json.loads(result["components"])
             new_result["illustration_description"] = json.loads(result["illustration_description"])
             return new_result
-        obj_results = blake_object_solr.search(config["searchString"])
+
+        def generate_work_query(config):
+            query = 'title:"%s"' % config.get("searchString")
+            if config.get("searchWorkInformation"):
+                query += ' OR info:"%s"' % config.get("searchString")
+            if config.get("useCompDate"):
+                min_date = config.get("minDate", '*')
+                max_date = config.get("maxDate", '*')
+                query = "(%s) AND composition_date:[%s TO %s]" % (query, min_date, max_date)
+            return query
+
+        def generate_object_query(config):
+            query = 'title:"%s"' % config.get("searchString")
+            if config.get("searchImageKeywords"):
+                query += " OR components:%s" % config.get("searchString")
+            if config.get("searchImageDescription"):
+                query += " OR illustration_description:%s" % config.get("searchString")
+            if config.get("useCompDate") or config.get("usePrintDate"):
+                min_date = config.get("minDate", '*')
+                max_date = config.get("maxDate", '*')
+                comp_date_string = "copy_composition_date:[%s TO %s]" % (min_date, max_date)
+                print_date_string = "copy_print_date:[%s TO %s]" % (min_date, max_date)
+                if config.get("useCompDate") and config.get("usePrintDate"):
+                    query = "(%s) AND (%s OR %s)" % (query, comp_date_string, print_date_string)
+                elif config.get("useCompDate"):
+                    query = "(%s) AND %s" % (query, comp_date_string)
+                else:
+                    query = "(%s) AND %s" % (query, print_date_string)
+            return query
+
+        obj_results = blake_object_solr.search(generate_object_query(config))
         transformed_obj_results = [transform_result(r) for r in obj_results]
-        work_results = blake_work_solr.search(config["searchString"])
+        work_results = blake_work_solr.search(generate_work_query(config))
         # We will probably have to knit together results from several queries
         return {"object_results": transformed_obj_results, "work_results": list(work_results)}
 
