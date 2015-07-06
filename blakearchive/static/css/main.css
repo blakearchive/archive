@@ -212,3 +212,7 @@ a.new-window {
 #archive #object-view.view-objects .featured-object-controls .object-thumb:hover {
   cursor: hand;
 }
+
+.chevron, .glyphicon {
+  pointer-events: none;
+}
