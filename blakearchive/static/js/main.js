@@ -539,12 +539,21 @@ angular.module('blake').controller("CopyController", function ($scope, $routePar
     BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.objectId);
 });
 
-angular.module('blake').controller("SearchController", function ($scope, BlakeDataService) {
+angular.module('blake').controller("SearchController", function ($scope, $location, $routeParams, BlakeDataService) {
     $scope.search = function () {
         BlakeDataService.queryObjects($scope.searchConfig).then(function (results) {
             $scope.results = results;
         });
     };
+
+    $scope.loadSearchPage = function () {
+        $location.url(directoryPrefix + "/search?search=" + encodeURIComponent($scope.searchText));
+    };
+
+    if ($routeParams.search) {
+        $scope.searchConfig = {"searchString": $routeParams.search};
+        $scope.search();
+    }
 
     $scope.showWorks = true;
     $scope.showCopies = true;

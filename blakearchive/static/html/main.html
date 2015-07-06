@@ -51,10 +51,10 @@
 <nav class="navbar navbar-default menu-closed" role="navigation">
   <div class="container-fluid">
     <form class="navbar-form" role="search">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search">
+      <div ng-controller="SearchController" class="input-group">
+        <input ng-model="searchText" type="text" class="form-control" placeholder="Search">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"
+              <button ng-click="loadSearchPage()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"
                                                                   aria-hidden="true"></span></button>
             </span>
       </div>
