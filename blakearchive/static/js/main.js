@@ -142,7 +142,8 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
         getObject, getObjectsWithSameMotif, getObjectsFromSameMatrix, getObjectsFromSameProductionSequence,
         getCopy, getObjectsForCopy, getWork, getWorks, getCopiesForWork, getFeaturedWorks, setSelectedWork,
         setSelectedCopy, setSelectedObject, addComparisonObject, removeComparisonObject,
-        clearComparisonObjects, isComparisonObject, comparisonObjects = [];
+        clearComparisonObjects, isComparisonObject, comparisonObjects = [], hasObjectsWithSameMotif = false,
+        hasObjectsFromSameMatrix = false, hasObjectsFromSameProductionSequence = false, objectSelectionChange;
 
     queryObjects = function (config) {
         var url = directoryPrefix + '/api/query_objects';
@@ -166,10 +167,20 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
         });
     };
 
+    objectSelectionChange = function () {
+        hasObjectsFromSameMatrix = false;
+        hasObjectsFromSameProductionSequence = false;
+        hasObjectsWithSameMotif = false;
+        $rootScope.$broadcast("objectSelectionChange")
+    };
+
     getObjectsWithSameMotif = function (objectId) {
         var url = directoryPrefix + '/api/object/' + objectId + '/objects_with_same_motif';
         return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
+                if (data.results.length) {
+                    hasObjectsWithSameMotif = true;
+                }
                 resolve(BlakeObject.create(data.results));
             }).error(function (data, status) {
                 reject(data, status);
@@ -181,6 +192,9 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
         var url = directoryPrefix + '/api/object/' + objectId + '/objects_from_same_matrix';
         return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
+                if (data.results.length) {
+                    hasObjectsFromSameMatrix = true;
+                }
                 resolve(BlakeObject.create(data.results));
             }).error(function (data, status) {
                 reject(data, status);
@@ -192,6 +206,9 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
         var url = directoryPrefix + '/api/object/' + objectId + '/objects_from_same_production_sequence';
         return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
+                if (data.results.length) {
+                    hasObjectsFromSameProductionSequence = true;
+                }
                 resolve(BlakeObject.create(data.results));
             }).error(function (data, status) {
                 reject(data, status);
@@ -292,7 +309,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
                     selectedObject = objects[0];
                 }
                 $rootScope.$broadcast("copySelectionObjectsChange");
-                $rootScope.$broadcast("objectSelectionChange");
+                objectSelectionChange();
             })
         })
     };
@@ -300,7 +317,7 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
     setSelectedObject = function (objectId) {
         return getObject(objectId).then(function (obj) {
             selectedObject = obj;
-            $rootScope.$broadcast("objectSelectionChange");
+            objectSelectionChange();
         })
     };
 
@@ -348,8 +365,17 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
         queryObjects: queryObjects,
         getObject: getObject,
         getObjectsWithSameMotif: getObjectsWithSameMotif,
+        hasObjectsWithSameMotif: function () {
+            return hasObjectsWithSameMotif;
+        },
         getObjectsFromSameMatrix: getObjectsFromSameMatrix,
+        hasObjectsFromSameMatrix: function () {
+            return hasObjectsFromSameMatrix;
+        },
         getObjectsFromSameProductionSequence: getObjectsFromSameProductionSequence,
+        hasObjectsFromSameProductionSequence: function () {
+            return hasObjectsFromSameProductionSequence;
+        },
         getCopy: getCopy,
         getObjectsForCopy: getObjectsForCopy,
         getWork: getWork,

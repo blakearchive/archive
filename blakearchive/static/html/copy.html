@@ -6,17 +6,17 @@
       <objects-for-copy></objects-for-copy>
     </div>
     </tab>
-    <tab heading="Objects Printed from the Same Matrix">
+    <tab ng-show="BlakeDataService.hasObjectsFromSameMatrix()" heading="Objects Printed from the Same Matrix">
       <div class="tab-pane">
         <objects-from-same-matrix></objects-from-same-matrix>
       </div>
     </tab>
-    <tab heading="Objects from the Same Production Sequence">
+    <tab ng-show="BlakeDataService.hasObjectsFromSameProductionSequence()" heading="Objects from the Same Production Sequence">
       <div class="tab-pane">
         <objects-from-same-production-sequence></objects-from-same-production-sequence>
       </div>
     </tab>
-    <tab heading="Objects with the Same Motif">
+    <tab ng-show="BlakeDataService.hasObjectsWithSameMotif()" heading="Objects with the Same Motif">
       <div class="tab-pane">
         <objects-with-same-motif></objects-with-same-motif>
       </div>
