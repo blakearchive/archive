@@ -8554,7 +8554,7 @@ a.new-window:hover {
 }
 @media (min-width: 768px) {
   #home.container-fluid.main .row div[class^="col-"] {
-    max-width: 340px;
+    max-width: 825px;
     max-height: 800px;
   }
 }
