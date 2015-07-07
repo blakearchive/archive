@@ -216,3 +216,15 @@ a.new-window {
 .chevron, .glyphicon {
   pointer-events: none;
 }
+
+#date-search > li {
+  padding-bottom: 10px;
+}
+
+#search-button {
+  margin-left: 10px;
+}
+
+#home h1 {
+  text-align:  center;
+}
