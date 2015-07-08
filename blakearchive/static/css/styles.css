@@ -8555,11 +8555,7 @@ a.new-window:hover {
 }
 @media (min-width: 768px) {
   #home.container-fluid.main .row div[class^="col-"] {
-<<<<<<< .merge_file_WexBFS
   /*  max-width: 340px; */
-=======
-    max-width: 825px;
->>>>>>> .merge_file_KDJC5v
     max-height: 800px;
   }
 }
