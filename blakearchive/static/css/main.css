@@ -216,3 +216,12 @@ a.new-window {
 .chevron, .glyphicon {
   pointer-events: none;
 }
+
+.action-items-wrapper ul li {
+  display: inline;
+}
+
+.matrix {
+  margin-top: -20px;
+}
+

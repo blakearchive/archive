@@ -6,14 +6,16 @@
       <span>Object {{ item.bentley_id }}</span></h1>
   </header>
   <div class="row">
-
     <div class="col-sm-12 action-items">
-      <div class="action-items-wrapper">
-        <a class="select-all-objects" ng-click="selectAll()">Select All Objects</a>
-        <a href="/blake/compare/" class="compare-selected-objects">Compare The 3 Selected Objects</a>
+      <div class="action-items-wrapper matrix">
+        <ul class="list-unstyled">
+          <li><a class="select-all-objects" ng-click="selectAll()">Select All Objects</a></li>
+          <li><a href="/blake/compare/" class="compare-selected-objects">Compare The 3 Selected Objects</a></li>
+        </ul>
       </div>
     </div>
-
+  </div>
+  <div class="row">
     <div ng-repeat="obj in objects" class="col-sm-6 col-md-3">
       <div class="handprint-block">
         <a href="/blake/copy/{{ obj.copy_bad_id }}/{{ obj.object_id }}">
