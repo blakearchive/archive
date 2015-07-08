@@ -1,18 +1,23 @@
 <h1>Blake Search</h1>
 <div class="row">
-  <div class="col-xs-9"><input type="text" class="form-control" ng-model="searchConfig.searchString"></div>
-  <div class="col-xs-3">
-    <button class="btn btn-primary btn-block" ng-click="search()">Search</button>
+  <div class="col-xs-offset-4 col-xs-4">
+    <input type="text" class="form-control" placeholder="Search the Blake Archive" ng-model="searchConfig.searchString">
   </div>
+  <div class="col-xs-1">
+    <button id="search-button" class="btn btn-primary btn-block" ng-click="search()">Search</button>
+  </div>
+  <div class="col-xs-4"></div>
 </div>
 <hr>
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-md-offset-1 col-md-3">
     <h3>Restrict date range:</h3>
-    Starting: <input type="number" ng-model="searchConfig.minDate" min="1772" max="1827"><br>
-    Ending: <input type="number" ng-model="searchConfig.maxDate" min="1772" max="1827"><br>
+    <ul id="date-search" class="list-inline">
+      <li>Starting: <input type="number" ng-model="searchConfig.minDate" min="1772" max="1827"></li>
+      <li>Ending: <input type="number" ng-model="searchConfig.maxDate" min="1772" max="1827"></li>
+      </ul>
     <ul class="list-inline">
-      <li><input type="checkbox" ng-model="searchConfig.useCompDate">Composition date</li>
+      <li style="padding-bottom: 10px"><input type="checkbox" ng-model="searchConfig.useCompDate">Composition date</li>
       <li><input type="checkbox" ng-model="searchConfig.usePrintDate">Printing date</li>
     </ul>
     <h3>Search within:</h3>
@@ -24,7 +29,7 @@
     <input type="checkbox" ng-model="searchConfig.searchCompletePoetry">The Complete Poetry and Prose of William Blake, by
     David V. Erdman<br>
   </div>
-  <div class="col-sm-9">
+  <div class="col-md-8">
     <div ng-hide="results.object_results.length > 0 || results.work_results.length > 0">
       No results found
     </div>
@@ -32,34 +37,33 @@
       <h3>Objects</h3>
 
       <div class="row">
-        <div ng-repeat="obj in results.object_results" class="col-sm-6 col-md-3">
-          <div class="handprint-block">
-            <a href="/blake/object/{{ obj.bad_id }}">
-        <span class="object-img"
-              style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
-              <span
-                  class="description"><strong>{{ obj.title }}</strong></span>
-            </a>
-          </div>
-        </div>
+        <ul class="list-unstyled">
+          <li ng-repeat="obj in results.object_results" class="col-sm-12 col-md-4 handprint-block"">
 
+              <a href="/blake/object/{{ obj.bad_id }}">
+          <span class="object-img"
+                style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
+                <span
+                    class="description"><strong>{{ obj.title }}</strong></span>
+              </a>
+          </li>
+        </ul>
       </div>
     </div>
     <div ng-show="results.work_results.length > 0">
       <h3>Works</h3>
 
       <div class="row">
-        <div ng-repeat="work in results.work_results" class="col-sm-6 col-md-3">
-          <div class="handprint-block">
-            <a href="/blake/work/{{ work.bad_id }}">
-        <span class="object-img"
-              style="background-image: url(http://www.blakearchive.org/blake/images/{{ work.image }}.100.jpg);"></span>
-              <span
-                  class="description"><strong>{{ obj.title }}</strong></span>
-            </a>
-          </div>
-        </div>
-
+        <ul class="list-unstyled">
+          <li ng-repeat="work in results.work_results" class="col-sm-6 col-md-3 handprint-block">
+              <a href="/blake/work/{{ work.bad_id }}">
+          <span class="object-img"
+                style="background-image: url(http://www.blakearchive.org/blake/images/{{ work.image }}.100.jpg);"></span>
+                <span
+                    class="description"><strong>{{ obj.title }}</strong></span>
+              </a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
