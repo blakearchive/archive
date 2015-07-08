@@ -225,3 +225,14 @@ a.new-window {
   margin-top: -20px;
 }
 
+#date-search > li {
+  padding-bottom: 10px;
+}
+
+#search-button {
+  margin-left: 10px;
+}
+
+#home h1 {
+  text-align:  center;
+}
