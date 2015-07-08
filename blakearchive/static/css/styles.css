@@ -8115,10 +8115,11 @@ a.new-window:hover {
 #archive #object-view #compare.scrollbar .compare-inner:after {
   clear: both;
 }
+/*
 #archive #object-view #compare.scrollbar .compare-inner .item img {
   opacity: 0;
   filter: alpha(opacity=0);
-}
+} */
 #archive #object-view.compare-objects #compare .compare-inner .item {
   margin: 0 15px;
 }
@@ -8554,7 +8555,7 @@ a.new-window:hover {
 }
 @media (min-width: 768px) {
   #home.container-fluid.main .row div[class^="col-"] {
-    max-width: 340px;
+  /*  max-width: 340px; */
     max-height: 800px;
   }
 }
