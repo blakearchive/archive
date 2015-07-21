@@ -8057,15 +8057,15 @@ a.new-window:hover {
   }
 }
 @media (min-width: 768px) {
-  #archive-tabs .tab-pane#copy-info .col-sm-6:first-child {
-    border-right: 1px solid #f1f1f1;
+  copy-information .col-sm-6:first-child {
+    border-right: 1px solid lightgray;
   }
 }
 @media (min-width: 768px) {
-  #archive-tabs .tab-pane#copy-info .col-sm-6:last-child {
-    border-left: 1px solid #f1f1f1;
-    margin-left: -1px;
+  copy-information .col-sm-6:last-child {
+    padding-left: 30px;
   }
+}
 }
 #archive #object-view #compare.scrollbar {
   position: relative;
@@ -8546,7 +8546,7 @@ a.new-window:hover {
 }
 #home.container-fluid.main .row div[class^="col-"] {
   max-height: auto;
-  padding: 0;
+ /* padding: 0; */
 }
 @media (max-width: 400px) {
   #home.container-fluid.main .row div[class^="col-"] {
