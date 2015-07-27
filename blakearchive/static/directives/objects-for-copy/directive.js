@@ -11,7 +11,7 @@ angular.module('blake').directive("objectsForCopy", function () {
     }
 });
 
-angular.module('blake').controller("ObjectsForCopyController", function ($scope, BlakeDataService) {
+angular.module('blake').controller("ObjectsForCopyController", ['$scope', 'BlakeDataService', function ($scope, BlakeDataService) {
     $scope.$watch(BlakeDataService.getSelectedCopy, function (copy) {
         if (copy) {
             $scope.copy = copy;
@@ -20,4 +20,4 @@ angular.module('blake').controller("ObjectsForCopyController", function ($scope,
             })
         }
     });
-});
+}]);
