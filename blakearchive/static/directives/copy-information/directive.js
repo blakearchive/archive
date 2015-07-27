@@ -10,7 +10,7 @@ angular.module('blake').directive("copyInformation", function () {
     }
 });
 
-angular.module('blake').controller("CopyInformationController", function ($scope, BlakeDataService) {
+angular.module('blake').controller("CopyInformationController",['$scope', 'BlakeDataService', function ($scope, BlakeDataService) {
 
     $scope.copy = BlakeDataService.getSelectedCopy();
 
@@ -31,4 +31,4 @@ angular.module('blake').controller("CopyInformationController", function ($scope
             }
         }
     }
-});
+}]);
