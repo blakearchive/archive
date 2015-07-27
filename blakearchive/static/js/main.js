@@ -7,7 +7,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
         return {}
     }]);
 
-angular.module('blake', ['ngRoute', 'ui.bootstrap']).config(function ($routeProvider, $locationProvider) {
+angular.module('blake', ['ngRoute', 'ui.bootstrap']).config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when(directoryPrefix + '/', {
         templateUrl: directoryPrefix + '/static/html/home.html',
         controller: "HomeController"
@@ -38,7 +38,7 @@ angular.module('blake', ['ngRoute', 'ui.bootstrap']).config(function ($routeProv
 
     $routeProvider.otherwise({redirectTo: directoryPrefix + '/'});
     $locationProvider.html5Mode(true);
-});
+}]);
 
 angular.module('blake').factory("GenericService", function () {
     return function (constructor) {
@@ -59,7 +59,7 @@ angular.module('blake').factory("GenericService", function () {
     }
 });
 
-angular.module('blake').factory("BlakeObject", function (GenericService) {
+angular.module('blake').factory("BlakeObject", ['GenericService', function (GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeObject.
      *
@@ -74,9 +74,9 @@ angular.module('blake').factory("BlakeObject", function (GenericService) {
     };
 
     return GenericService(constructor);
-});
+}]);
 
-angular.module('blake').factory("BlakeCopy", function (BlakeObject, GenericService) {
+angular.module('blake').factory("BlakeCopy", ['BlakeObject', 'GenericService', function (BlakeObject, GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeCopy, with child objects transformed into the
      * BlakeObjects.
@@ -97,9 +97,9 @@ angular.module('blake').factory("BlakeCopy", function (BlakeObject, GenericServi
     };
 
     return GenericService(constructor);
-});
+}]);
 
-angular.module('blake').factory("BlakeWork", function (BlakeCopy, GenericService) {
+angular.module('blake').factory("BlakeWork", ['BlakeCopy','GenericService', function (BlakeCopy, GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeWork, with child objects transformed into the
      * BlakeCopies.
@@ -118,9 +118,9 @@ angular.module('blake').factory("BlakeWork", function (BlakeCopy, GenericService
     };
 
     return GenericService(constructor);
-});
+}]);
 
-angular.module('blake').factory("BlakeFeaturedWork", function (GenericService) {
+angular.module('blake').factory("BlakeFeaturedWork", ['GenericService', function (GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeFeaturedWork.
      *
@@ -131,13 +131,13 @@ angular.module('blake').factory("BlakeFeaturedWork", function (GenericService) {
     };
 
     return GenericService(constructor);
-});
+}]);
 
 /**
  * For the time being, all data accessor functions should be placed here.  This service should mirror the API
  * of the back-end BlakeDataService.
  */
-angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootScope, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
+angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope', 'BlakeWork', 'BlakeCopy', 'BlakeObject', 'BlakeFeaturedWork', function ($http, $q, $rootScope, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
     var selectedWork, selectedCopy, selectedObject, selectedWorkCopies, selectedCopyObjects, queryObjects,
         getObject, getObjectsWithSameMotif, getObjectsFromSameMatrix, getObjectsFromSameProductionSequence,
         getCopy, getObjectsForCopy, getWork, getWorks, getCopiesForWork, getFeaturedWorks, setSelectedWork,
@@ -408,12 +408,12 @@ angular.module('blake').factory("BlakeDataService", function ($http, $q, $rootSc
         },
         isComparisonObject: isComparisonObject
     };
-});
+}]);
 
 /**
  * This is a mock version of the BlakeDataService, which can be used for testing.
  */
-angular.module('blake').factory("MockBlakeDataService", function ($http, $q, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
+angular.module('blake').factory("MockBlakeDataService", ['$http', '$q', 'BlakeWork', 'BlakeCopy', 'BlakeObject', 'BlakeFeaturedWork', function ($http, $q, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
     var getObjects = function () {
         return $q(function (resolve, reject) {
             $http.get(directoryPrefix + '/static/json/objects.json').success(function (data) {
@@ -519,27 +519,27 @@ angular.module('blake').factory("MockBlakeDataService", function ($http, $q, Bla
             return getFeaturedWorks();
         }
     };
-});
+}]);
 
-angular.module('blake').controller("HomeController", function ($scope, BlakeDataService) {
+angular.module('blake').controller("HomeController", ['$scope', 'BlakeDataService', function ($scope, BlakeDataService) {
     BlakeDataService.getFeaturedWorks().then(function (results) {
         $scope.featured_works = results;
     });
-});
+}]);
 
-angular.module('blake').controller("WorkController", function ($scope, $routeParams, BlakeDataService) {
+angular.module('blake').controller("WorkController", ['$scope', '$routeParams', 'BlakeDataService', function ($scope, $routeParams, BlakeDataService) {
     BlakeDataService.setSelectedWork($routeParams.workId);
-});
+}]);
 
-angular.module('blake').controller("ObjectController", function ($scope, $routeParams, BlakeDataService) {
+angular.module('blake').controller("ObjectController", ['$scope', '$routeParams', 'BlakeDataService', function ($scope, $routeParams, BlakeDataService) {
     BlakeDataService.setSelectedWork($routeParams.objectId);
-});
+}]);
 
-angular.module('blake').controller("CopyController", function ($scope, $routeParams, BlakeDataService) {
+angular.module('blake').controller("CopyController", ['$scope', '$routeParams', 'BlakeDataService', function ($scope, $routeParams, BlakeDataService) {
     BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.objectId);
-});
+}]);
 
-angular.module('blake').controller("SearchController", function ($scope, $location, $routeParams, BlakeDataService) {
+angular.module('blake').controller("SearchController", ['$scope', '$location', '$routeParams', 'BlakeDataService', function ($scope, $location, $routeParams, BlakeDataService) {
     $scope.search = function () {
         BlakeDataService.queryObjects($scope.searchConfig).then(function (results) {
             $scope.results = results;
@@ -558,4 +558,4 @@ angular.module('blake').controller("SearchController", function ($scope, $locati
     $scope.showWorks = true;
     $scope.showCopies = true;
     $scope.showObjects = true;
-});
+}]);
