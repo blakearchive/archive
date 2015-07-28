@@ -11,7 +11,7 @@ angular.module('blake').directive("objectCompare", function () {
     }
 });
 
-angular.module('blake').controller("ObjectCompareController", function ($scope, BlakeDataService) {
+angular.module('blake').controller("ObjectCompareController",['$scope', 'BlakeDataService', function ($scope, BlakeDataService) {
 
     $scope.BlakeDataService = BlakeDataService;
 
@@ -65,4 +65,4 @@ angular.module('blake').controller("ObjectCompareController", function ($scope, 
     });
 
 
-});
+}]);
