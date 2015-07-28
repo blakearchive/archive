@@ -10,7 +10,7 @@ angular.module('blake').directive("objectViewer", function () {
     }
 });
 
-angular.module('blake').controller("ObjectViewerController", function ($scope, BlakeDataService) {
+angular.module('blake').controller("ObjectViewerController",['$scope', 'BlakeDataService', function ($scope, BlakeDataService) {
 
     $scope.BlakeDataService = BlakeDataService;
 
@@ -125,4 +125,4 @@ angular.module('blake').controller("ObjectViewerController", function ($scope, B
         $scope.obj = BlakeDataService.getSelectedObject();
         $scope.getPreviousNextObjects();
     })
-});
+}]);

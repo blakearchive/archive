@@ -11,7 +11,7 @@ angular.module('blake').directive("objectsFromSameMatrix", function () {
     }
 });
 
-angular.module('blake').controller("ObjectsFromSameMatrixController", function ($scope, BlakeDataService) {
+angular.module('blake').controller("ObjectsFromSameMatrixController", ['$scope', 'BlakeDataService', function ($scope, BlakeDataService) {
     $scope.BlakeDataService = BlakeDataService;
     $scope.$on("objectSelectionChange", function () {
         var obj = BlakeDataService.getSelectedObject();
@@ -28,4 +28,4 @@ angular.module('blake').controller("ObjectsFromSameMatrixController", function (
             BlakeDataService.addComparisonObject($scope.objects[i]);
         }
     }
-});
+}]);

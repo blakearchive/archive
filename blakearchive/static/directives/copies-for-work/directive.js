@@ -10,7 +10,7 @@ angular.module('blake').directive("copiesForWork", function () {
     }
 });
 
-angular.module('blake').controller("CopiesForWorkController", function ($scope, BlakeDataService) {
+angular.module('blake').controller("CopiesForWorkController", ['$scope', 'BlakeDataService', function ($scope, BlakeDataService) {
     $scope.$on("workSelectionChange", function () {
         $scope.work = BlakeDataService.getSelectedWork();
     });
@@ -23,4 +23,4 @@ angular.module('blake').controller("CopiesForWorkController", function ($scope, 
 
         $scope.copies = data;
     });
-});
+}]);

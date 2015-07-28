@@ -11,7 +11,7 @@ angular.module('blake').directive("objectsFromSameProductionSequence", function 
     }
 });
 
-angular.module('blake').controller("ObjectsFromSameProductionSequenceController", function ($scope, BlakeDataService) {
+angular.module('blake').controller("ObjectsFromSameProductionSequenceController", ['$scope', 'BlakeDataService', function ($scope, BlakeDataService) {
     $scope.BlakeDataService = BlakeDataService;
     $scope.$on("objectSelectionChange", function () {
         var obj = BlakeDataService.getSelectedObject();
@@ -22,4 +22,4 @@ angular.module('blake').controller("ObjectsFromSameProductionSequenceController"
             });
         }
     });
-});
+}]);
