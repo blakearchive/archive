@@ -26,8 +26,9 @@ module.exports = function(grunt) {
            }
         },
 
-        purifycss: {
-            options: {},
+     /* Removes too much CSS so slide out details panel breaks
+       purifycss: {
+            options: {rejected: true},
             target: {
               src: [
                   'blakearchive/static/html/*.html',
@@ -42,16 +43,16 @@ module.exports = function(grunt) {
                   "blakearchive/static/directives/objects-with-same-motif/template.html",
                   "blakearchive/static/directives/object-compare/template.html"
               ],
-              css: ["blakearchive/static/css/jquery.fs.scroller.css", "blakearchive/static/css/styles.css", "blakearchive/static/css/main.css"],
-              dest: 'blakearchive/static/css/purestyles.css'
+              css: ["blakearchive/static/css/styles.css"],
+              dest:'blakearchive/static/css/purestyles.css'
             }
-        },
+        }, */
 
         cssmin: {
             combine: {
                 files: {
-                //  'blakearchive/static/css/output.min.css': ["blakearchive/static/css/styles.css", "blakearchive/static/css/main.css"]
-                 'blakearchive/static/css/output.min.css': ["blakearchive/static/css/purestyles.css"]
+                  'blakearchive/static/css/output.min.css': ["blakearchive/static/css/styles.css", "blakearchive/static/css/main.css"]
+                // 'blakearchive/static/css/output.min.css': ["blakearchive/static/css/purestyles.css"]
                 }
             }
         }
@@ -59,10 +60,10 @@ module.exports = function(grunt) {
 
     // Load the plugins.
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-purifycss');
+ //   grunt.loadNpmTasks('grunt-purifycss');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     // Default task(s).
     grunt.registerTask('default', ['uglify', 'cssmin']);
-    grunt.registerTask('purify', ['purifycss']);
+//    grunt.registerTask('purify', ['purifycss']);
 };
