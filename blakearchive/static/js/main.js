@@ -7,7 +7,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
         return {}
     }]);
 
-angular.module('blake', ['ngRoute', 'ui.bootstrap']).config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+angular.module('blake', ['ngRoute', 'ui.bootstrap', angularDragula(angular)]).config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when(directoryPrefix + '/', {
         templateUrl: directoryPrefix + '/static/html/home.html',
         controller: "HomeController"
