@@ -159,6 +159,7 @@ class BlakeFeaturedWork(db.Model):
     byline = db.Column(db.UnicodeText)
     desc_id = db.Column(db.UnicodeText)
     dbi = db.Column(db.UnicodeText)
+    bad_id = db.Column(db.Text)
 
     @property
     def to_dict(self):
@@ -166,5 +167,6 @@ class BlakeFeaturedWork(db.Model):
             "title": self.title,
             "byline": self.byline,
             "dbi": self.dbi,
-            "desc_id": self.desc_id
+            "desc_id": self.desc_id,
+            "bad_id": self.bad_id
         }
