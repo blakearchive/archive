@@ -62,10 +62,10 @@
 
     <div id="compare" class="scrollbar">
       <div class="featured-object">
-        <div class="compare-inner">
+        <div class="compare-inner" dragula="'first-bag'">
           <div class="item" ng-repeat="o in comparisonObjects">
             <p class="object-title">{{ o.copy_title }}, Copy {{ o.archive_copy_id }}</p>
-            <img src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.300.jpg">
+            <img src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg">
 
             <p class="object-subtitle">{{ o.copy_composition_date }} ({{ o.copy_institution }}) {{ o.full_object_id }}
             </p>
