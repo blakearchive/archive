@@ -16,8 +16,10 @@ def main():
         session.add(models.BlakeFeaturedWork(dbi=entry[0].encode("utf-8"),
                                              desc_id=entry[1].encode("utf-8"),
                                              byline=entry[2].encode("utf-8"),
-                                             title=entry[3].encode("utf-8")))
+                                             title=entry[3].encode("utf-8"),
+                                             bad_id=entry[4].encode("utf-8")))
     session.commit()
+
 
 
 if __name__ == "__main__":

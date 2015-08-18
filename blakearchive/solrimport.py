@@ -21,6 +21,7 @@ def main():
             "bentley_id": blake_object.bentley_id,
             "dbi": blake_object.dbi,
             "desc_id": blake_object.desc_id,
+            "copy_id": blake_object.copy_bad_id,
             "components": json.dumps(blake_object.components),
             "illustration_description": json.dumps(blake_object.illustration_description),
             "text": json.dumps(blake_object.text),
@@ -29,7 +30,7 @@ def main():
         }
         if blake_object.copy.work:
             obj["work_title"] = blake_object.copy.work.title
-            obj["composition_date"] = blake_object.copy.work.composition_date
+            obj["copy_composition_date"] = blake_object.copy.work.composition_date
             obj["work_medium"] = blake_object.copy.work.medium
         blake_object_solr.add([obj])
     blake_object_solr.optimize()
