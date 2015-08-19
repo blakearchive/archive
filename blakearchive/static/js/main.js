@@ -521,6 +521,30 @@ angular.module('blake').factory("MockBlakeDataService", ['$http', '$q', 'BlakeWo
     };
 }]);
 
+angular.module('blake').factory("UtilityServices", function() {
+    var responseChange = function() {
+        var response_change = {};
+
+        response_change.waitForIdle = function(fn, delay) {
+          var timer = null;
+          return function () {
+            var context = this,
+                args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+              fn.apply(context, args);
+            }, delay);
+          };
+        };
+
+        return response_change;
+    };
+
+    return {
+        responseChange: responseChange
+    }
+});
+
 angular.module('blake').controller("HomeController", ['$scope', 'BlakeDataService', function ($scope, BlakeDataService) {
     BlakeDataService.getFeaturedWorks().then(function (results) {
         $scope.featured_works = results;
