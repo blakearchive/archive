@@ -11,7 +11,7 @@ angular.module('blake').directive("objectCompare", function () {
     }
 });
 
-angular.module('blake').controller("ObjectCompareController",['$scope', 'BlakeDataService', function ($scope, BlakeDataService) {
+angular.module('blake').controller("ObjectCompareController",['$scope', 'BlakeDataService', 'UtilityServices', function ($scope, BlakeDataService, UtilityServices) {
 
     $scope.BlakeDataService = BlakeDataService;
 
@@ -64,5 +64,36 @@ angular.module('blake').controller("ObjectCompareController",['$scope', 'BlakeDa
         $scope.obj = BlakeDataService.getSelectedObject();
     });
 
+    // Horizontal Scroll with fixed height/width images
+    var response_change = UtilityServices.responseChange();
+
+    function setObjectCompare() {
+      var compare_object_width = 0;
+      $('#object-view #compare .item').each(function() {
+        compare_object_width += Number( $(this).width() );
+      });
+
+      $('#object-view #compare .compare-inner').css('width', (compare_object_width + 10) + 'px');
+    }
+
+    function objectCompareHeight() {
+      var set_object_compare_height = $(window).height() - 370;
+      $('#object-view #compare .featured-object img').css('height', set_object_compare_height + 'px');
+    }
+
+    angular.element(document).ready(function () {
+        $('#home').removeClass('main'); // Need class main for overall app, but not this directive
+
+        setObjectCompare();
+        objectCompareHeight();
+    });
+
+    $(window).on('resize', response_change.waitForIdle(function() {
+        setObjectCompare();
+    }, 100));
+
+    $(window).on('resize', response_change.waitForIdle(function() {
+        objectCompareHeight();
+      }, 100));
 
 }]);
