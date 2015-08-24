@@ -38,7 +38,7 @@
     }, 100));
 
 
-    // Remeber if the archive menu is open or closed by using local storage.
+    // Remember if the archive menu is open or closed by using local storage.
     // -------------------------------------------------------------------
 
     var $archive_btn = $('button.collapse-archive');
@@ -46,6 +46,10 @@
 
     // If the menu hasn't been dismissed, show it.
     var archive_menu_dismissed = 'false';
+
+    if ( localStorage.getItem('archive_menu_dismissed')  === null ) {
+      localStorage.setItem('archive_menu_dismissed', archive_menu_dismissed);
+    }
 
     if (localStorage.getItem('archive_menu_dismissed') !== 'true') {
       $archive_btn.addClass('menu-closed').removeClass('menu-open');
@@ -60,7 +64,7 @@
       if ( $archive_menu.hasClass('menu-open') ) {
         $archive_menu.removeClass('menu-open').addClass('menu-closed');
         $archive_btn.removeClass('menu-open').addClass('menu-closed');
-        localStorage.setItem('archive_menu_dismissed', 'false');
+        localStorage.setItem('archive_menu_dismissed', archive_menu_dismissed);
       } else {
         $archive_menu.addClass('menu-open').removeClass('menu-closed');
         $archive_btn.addClass('menu-open').removeClass('menu-closed');
