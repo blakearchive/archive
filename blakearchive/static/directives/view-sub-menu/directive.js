@@ -7,5 +7,5 @@ angular.module('blake').directive("viewSubMenu", function() {
     };
 });
 
-angular.module('blake').controller('viewSubMenuController', ['$scope', function($scope) {
+angular.module('blake').controller('viewSubMenuController', ['$scope', 'ShowSubMenu', function($scope) {
 }]);
