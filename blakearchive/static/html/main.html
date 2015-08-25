@@ -24,44 +24,34 @@
 
 <div class="site-header-container">
   <div class="container-fluid site-header">
-
-    <div class="row">
-      <div class="col-sm-11">
         <a class="navbar-brand" href="/"><span class="name">The William Blake Archive</span><span
             class="sig"></span></a>
-
-        <div class="lightbox"><a class="lb-amount" href="#">3</a></div>
-        <view-sub-menu></view-sub-menu>
-
-      </div>
-      <div class="col-sm-1">
         <button type="button" class="collapse-archive menu-closed">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-      </div>
-    </div>
-
+        <div class="lightbox"><a class="lb-amount" href="#">3</a></div>
+        <view-sub-menu></view-sub-menu>
   </div>
 </div>
 <!-- /.container -->
 
 <nav class="navbar navbar-default menu-closed" role="navigation">
   <div class="container-fluid">
-    <form class="navbar-form" role="search">
-      <div ng-controller="SearchController" class="input-group">
+    <form ng-controller="SearchController" class="navbar-form" role="search" ng-submit="loadSearchPage()">
+      <div class="input-group">
         <input ng-model="searchText" type="text" class="form-control" placeholder="Search">
             <span class="input-group-btn">
-              <button ng-click="loadSearchPage()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"
-                                                                  aria-hidden="true"></span></button>
+              <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </span>
       </div>
     </form>
     <navigation-menu></navigation-menu>
   </div>
 </nav>
+</navigation-bar>
 <!--
 <ul class="list-inline">
   <li><a href="/blake/">Home</a></li>
@@ -191,4 +181,3 @@
 <script src="/blake/static/directives/object-compare/directive.js"></script> -->
 <script src="/blake/static/js/minified/output.min.js"></script>
 </html>
-
