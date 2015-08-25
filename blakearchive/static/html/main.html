@@ -33,7 +33,7 @@
           <span class="icon-bar"></span>
         </button>
         <div class="lightbox"><a class="lb-amount" href="#">3</a></div>
-        <view-sub-menu></view-sub-menu>
+        <view-sub-menu ng-if="showSubMenu == 1"></view-sub-menu>
   </div>
 </div>
 <!-- /.container -->
@@ -76,50 +76,9 @@
     <div class="row">
 
       <ul class="nav nav-pills">
-        <li class="dropdown" dropdown on-toggle="toggled(open)">
-          <a class="dropdown-toggle" dropdown-toggle href="#">About Blake
-           <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Biography</a></li>
-            <li><a href="#">Glossary</a></li>
-            <li><a href="#">Chronology</a></li>
-            <li><a href="#">Illuminated Printing</a></li>
-          </ul>
-        </li>
-
-        <li class="dropdown" dropdown on-toggle="toggled(open)">
-          <a class="dropdown-toggle" dropdown-toggle href="#">Resources for Further Research
-           <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">General Bibliography</a></li>
-            <li><a href="#">Specific Bibliography</a></li>
-            <li><a href="#">Collection Lists</a></li>
-            <li><a href="#">The Complete Poetry and of William Blake</a></li>
-          </ul>
-        </li>
-
-        <li class="dropdown" dropdown on-toggle="toggled(open)">
-          <a class="dropdown-toggle" dropdown-toggle href="#">About the Archive
-           <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Archive at a Glance</a></li>
-            <li><a href="#">Editorial Principles</a></li>
-            <li><a href="#">About the Editors</a></li>
-            <li><a href="#">How to Use the Archive (Help Documentation)</a></li>
-            <li><a href="#">Contributing Collections</a></li>
-            <li><a href="#">Standard References and Abbreviations</a></li>
-            <li><a href="#">Technical Summary</a></li>
-            <li><a href="#">Articles about the Archive</a></li>
-            <li><a href="#">Plan of the Archive</a></li>
-            <li><a href="#">The Blake Archive in the Context of CDLA</a></li>
-            <li><a href="#">Complete Credits</a></li>
-            <li><a href="#">Advisory Board</a></li>
-          </ul>
-        </li>
-
+        <li><a href="#">About Blake</a></li>
+        <li><a href="#">Resources for Further Research</a></li>
+        <li><a href="#">About the Archive</a></li>
         <li><a href="#">Tour of the Archive</a></li>
         <li><a href="#">Copyright and Permissions Information</a></li>
         <li><a href="#">Frequently Asked Questions</a></li>
