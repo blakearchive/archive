@@ -10,7 +10,7 @@ angular.module('blake').directive("objectViewer", function () {
     }
 });
 
-angular.module('blake').controller("ObjectViewerController",['$rootScope', '$scope', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
+angular.module('blake').controller("ObjectViewerController",['$rootScope', '$scope', '$timeout', 'BlakeDataService', function ($rootScope, $scope, $timeout, BlakeDataService) {
     $rootScope.showSubMenu = 1;
     $scope.BlakeDataService = BlakeDataService;
 
@@ -71,42 +71,48 @@ angular.module('blake').controller("ObjectViewerController",['$rootScope', '$sco
                 $('.scrollbar').scroller('reset');
             }, 300);
         }
-
-        // Get the height of the object detail.
-        // -------------------------------------------------------------------
-        var response_change = {};
-
-        response_change.waitForIdle = function(fn, delay) {
-          var timer = null;
-          return function () {
-            var context = this,
-                args = arguments;
-            clearTimeout(timer);
-            timer = setTimeout(function () {
-              fn.apply(context, args);
-            }, delay);
-          };
-        };
-
-        var object_view = $("#object-view");
-
-        // Set the max-height for the detail tray in object view.
-        function trayHeight() {
-            var set_tray_height = object_view.height();
-            var panel_count = $('.panel-group .panel-default').length;
-            var set_tray_body_height = (set_tray_height - (panel_count * 47));
-
-            $('.panel-group').css('min-height', set_tray_height + 'px');
-            $('.panel-group .panel-body').css('max-height', set_tray_body_height + 'px');
-        }
-
-        if ( $('#object-detail-tray').length ) {
-            trayHeight();
-            object_view.resize(response_change.waitForIdle(function() {
-                trayHeight();
-            }, 100));
-        }
     };
+
+    /**
+     * Get the height of the object detail.
+     * Pretty awkward solution to the way Design Hammer set this up. Image loaded via Ajax, so need a delay to execute getting correct height
+     */
+    angular.element(document).ready(function () {
+        $timeout(function() {
+            var response_change = {};
+
+            response_change.waitForIdle = function(fn, delay) {
+              var timer = null;
+              return function () {
+                var context = this,
+                    args = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                  fn.apply(context, args);
+                }, delay);
+              };
+            };
+
+            var object_view = $("#object-view");
+
+            // Set the max-height for the detail tray in object view.
+            function trayHeight() {
+                var set_tray_height = object_view.height(); console.log(set_tray_height)
+                var panel_count = $('.panel-group .panel-default').length;
+                var set_tray_body_height = (set_tray_height - (panel_count * 47));
+
+                $('.panel-group').css('min-height', set_tray_height + 'px');
+                $('.panel-group .panel-body').css('max-height', set_tray_body_height + 'px');
+            }
+
+            if ( $('#object-detail-tray').length ) {
+                trayHeight();
+                object_view.resize(response_change.waitForIdle(function() {
+                    trayHeight();
+                }, 100));
+            }
+        }, 75);
+    });
 
     $scope.copy = BlakeDataService.getSelectedCopy();
     $scope.objects = BlakeDataService.getSelectedCopyObjects();
