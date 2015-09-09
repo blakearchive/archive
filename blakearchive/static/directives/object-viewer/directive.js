@@ -74,10 +74,13 @@ angular.module('blake').controller("ObjectViewerController",['$rootScope', '$sco
     };
 
     /**
-     * Get the height of the object detail.
+     *
+     * @param set_delay in milliseconds
+     * * Get the height of the object detail.
      * Pretty awkward solution to the way Design Hammer set this up. Image loaded via Ajax, so need a delay to execute getting correct height
      */
-    angular.element(document).ready(function () {
+    function getImageHeight(set_delay) {
+       angular.element(document).ready(function () {
         $timeout(function() {
             var response_change = {};
 
@@ -111,8 +114,12 @@ angular.module('blake').controller("ObjectViewerController",['$rootScope', '$sco
                     trayHeight();
                 }, 100));
             }
-        }, 75);
+        }, set_delay);
     });
+    }
+
+    getImageHeight(75);
+
 
     $scope.copy = BlakeDataService.getSelectedCopy();
     $scope.objects = BlakeDataService.getSelectedCopyObjects();
@@ -130,5 +137,6 @@ angular.module('blake').controller("ObjectViewerController",['$rootScope', '$sco
     $scope.$on("objectSelectionChange", function () {
         $scope.obj = BlakeDataService.getSelectedObject();
         $scope.getPreviousNextObjects();
+        getImageHeight(0)
     })
 }]);
