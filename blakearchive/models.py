@@ -45,6 +45,7 @@ class BlakeObject(db.Model):
     illustration_description = db.Column(JSON)
     components = db.Column(JSON)
     text = db.Column(JSON)
+    markup_text = db.Column(db.Text)
     physical_description = db.Column(JSON)
     title = db.Column(db.UnicodeText)
     objects_from_same_matrix = db.relationship(
@@ -86,6 +87,7 @@ class BlakeObject(db.Model):
             "illustration_description": self.illustration_description,
             "components": self.components,
             "text": self.text,
+            "markup_text": self.markup_text,
             "physical_description": self.physical_description,
             "title": self.title
         }

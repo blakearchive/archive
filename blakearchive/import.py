@@ -20,14 +20,20 @@ class BlakeDocumentImporter(object):
         self.works = []
         self.copies = {}
         self.objects = {}
+        self.copy_handprint_map = {}
         self.motif_relationships_expanded = defaultdict(lambda: set())
         self.relationships = tablib.Dataset()
         self.motif_relationships = tablib.Dataset()
         self.works_dataset = tablib.Dataset()
+        self.copy_handprints = tablib.Dataset()
         with open("static/csv/blake-relations.csv") as f:
             self.relationships.csv = f.read()
         with open("static/csv/same_motif.csv") as f:
             self.motif_relationships.csv = f.read()
+        with open("static/csv/copy-handprints.csv") as f:
+            self.copy_handprints.csv = f.read()
+        for (copy_bad_id, dbi) in self.copy_handprints:
+            self.copy_handprint_map[copy_bad_id] = dbi
         for (desc_id, matching_ids, in_archive) in self.motif_relationships:
             desc_id = desc_id.lower()
             matching_ids = matching_ids.lower()
@@ -37,6 +43,8 @@ class BlakeDocumentImporter(object):
                 self.motif_relationships_expanded[matching_id].update(all_but_current_id)
         with open("static/csv/works.csv") as f:
             self.works_dataset.csv = f.read()
+        xslt_xml = etree.parse(open("static/xslt/transcription.xsl"))
+        self.transform = etree.XSLT(xslt_xml)
 
     def populate_works(self):
         for work_entry in self.works_dataset:
@@ -107,6 +115,7 @@ class BlakeDocumentImporter(object):
             bo.title = title.xpath("string()").encode("utf-8")
             break
         bo.physical_description = element_to_dict(obj.xpath("physdesc")[0])["physdesc"]
+        bo.markup_text = str(self.transform(obj))
         return bo
 
     def process(self, document):
@@ -130,6 +139,10 @@ class BlakeDocumentImporter(object):
         copy = models.BlakeCopy(bad_id=copy_id, header=header_json, source=source_json, objects=objects,
                                 composition_date=comp_date, composition_date_string=comp_date_string,
                                 archive_copy_id=archive_copy_id)
+        if copy_id in self.copy_handprint_map:
+            copy.image=self.copy_handprint_map[copy_id]
+        else:
+            print "No handprint for ", copy_id
         for title in root.xpath("header/filedesc/titlestmt/title"):
             copy.title = title.xpath("string()").encode("utf-8")
             break
