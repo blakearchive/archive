@@ -521,7 +521,32 @@ angular.module('blake').factory("MockBlakeDataService", ['$http', '$q', 'BlakeWo
     };
 }]);
 
-angular.module('blake').controller("HomeController", ['$scope', 'BlakeDataService', function ($scope, BlakeDataService) {
+angular.module('blake').factory("UtilityServices", function() {
+    var responseChange = function() {
+        var response_change = {};
+
+        response_change.waitForIdle = function(fn, delay) {
+          var timer = null;
+          return function () {
+            var context = this,
+                args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+              fn.apply(context, args);
+            }, delay);
+          };
+        };
+
+        return response_change;
+    };
+
+    return {
+        responseChange: responseChange
+    }
+});
+
+angular.module('blake').controller("HomeController", ['$rootScope', '$scope', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
+    $rootScope.showSubMenu = 0;
     BlakeDataService.getFeaturedWorks().then(function (results) {
         $scope.featured_works = results;
     });
@@ -539,7 +564,9 @@ angular.module('blake').controller("CopyController", ['$scope', '$routeParams', 
     BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.objectId);
 }]);
 
-angular.module('blake').controller("SearchController", ['$scope', '$location', '$routeParams', 'BlakeDataService', function ($scope, $location, $routeParams, BlakeDataService) {
+angular.module('blake').controller("SearchController", ['$rootScope', '$scope', '$location', '$routeParams', 'BlakeDataService', function ($rootScope, $scope, $location, $routeParams, BlakeDataService) {
+    $rootScope.showSubMenu = 0;
+
     $scope.search = function () {
         BlakeDataService.queryObjects($scope.searchConfig).then(function (results) {
             $scope.results = results;

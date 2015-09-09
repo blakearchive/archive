@@ -10,8 +10,8 @@ angular.module('blake').directive("objectViewer", function () {
     }
 });
 
-angular.module('blake').controller("ObjectViewerController",['$scope', 'BlakeDataService', function ($scope, BlakeDataService) {
-
+angular.module('blake').controller("ObjectViewerController",['$rootScope', '$scope', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
+    $rootScope.showSubMenu = 1;
     $scope.BlakeDataService = BlakeDataService;
 
     $scope.getPreviousNextObjects = function () {

@@ -1,7 +1,7 @@
 (function($){
   'use strict';
 
-  $(document).ready(function() {
+  $(function() {
 
     // Utility function. Causes the callback to only fire after a delay. If the
     // callback is called before the delay it waits. Useful for rapidly firing callbacks
@@ -27,7 +27,7 @@
     // Use that information to position the drop-downs across the screen.
     // ------------------------------------------------------------------
 
-    $(window).resize(response_change.waitForIdle(function() {
+    $(window).on('resize', response_change.waitForIdle(function() {
 
       if ( $('nav.navbar ul.navbar-nav li.dropdown').hasClass('open') ) {
         var viewport_width = $(window).width();
@@ -56,7 +56,7 @@
     }
 
     // toggle class
-    $archive_btn.click(function() {
+    $archive_btn.on('click', function() {
       if ( $archive_menu.hasClass('menu-open') ) {
         $archive_menu.removeClass('menu-open').addClass('menu-closed');
         $archive_btn.removeClass('menu-open').addClass('menu-closed');
@@ -80,7 +80,7 @@
 
     if ( $('#object-view .carousel').length ) {
       objectViewHeight();
-      $(window).resize(response_change.waitForIdle(function() {
+      $(window).on('resize', response_change.waitForIdle(function() {
         objectViewHeight();
       }, 100));
     }
@@ -89,14 +89,14 @@
     // -------------------------------------------------------------------
 
     // Set the image height for the compare view
-    function objectCompareHeight() {
+  /**  function objectCompareHeight() {
       var set_object_compare_height = $(window).height() - 370;
       $('#object-view #compare .featured-object img').css('height', set_object_compare_height + 'px');
     }
 
     if ( $('#object-view #compare').length ) {
       objectCompareHeight();
-      $(window).resize(response_change.waitForIdle(function() {
+      $(window).on('resize', response_change.waitForIdle(function() {
         objectCompareHeight();
       }, 100));
     }
@@ -105,7 +105,7 @@
     // -------------------------------------------------------------------
 
     // Set the max-height for the detail tray in object view.
-    /**
+
     function trayHeight() {
       var set_tray_height = $(window).height() - 86;
       var panel_count = $('.panel-group .panel-default').length;
@@ -167,7 +167,7 @@
       });
     }
 
-       */
+
 
     // Create slider layout for compare view.
     // -------------------------------------------------------------------
@@ -183,10 +183,10 @@
 
     if ( $('#object-view #compare').length ) {
       setObjectCompare();
-      $(window).resize(response_change.waitForIdle(function() {
+      $(window).on('resize', response_change.waitForIdle(function() {
         setObjectCompare();
       }, 100));
-    }
+    }*/
 
 
     // Set the scroller and reset on browser resize.
@@ -199,7 +199,7 @@
       horizontal: true
     });
 
-    $(window).resize(response_change.waitForIdle(function() {
+    $(window).on('resize', response_change.waitForIdle(function() {
       $('.scrollbar').scroller('reset');
     }, 100));
 
@@ -209,13 +209,13 @@
 
     if ( $('.back-top').length ) {
 
-      $('.back-top').click(function() {
+      $('.back-top').on('click', function() {
         $('html, body').animate({
             scrollTop: 0
         }, 'slow');
       });
 
-      $(window).scroll(function() {
+      $(window).on('scroll', function() {
         var scroll = $(window).scrollTop();
         if (scroll >= 50) {
           $('.back-top').addClass('scrolling');

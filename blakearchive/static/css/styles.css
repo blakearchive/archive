@@ -6440,6 +6440,7 @@ h3 {
   height: 41px;
   padding-top: 11px;
   float: right;
+  margin-right: -.5%;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   .lightbox {
@@ -6870,7 +6871,7 @@ nav.navbar form.navbar-form {
   nav.navbar form.navbar-form {
     position: absolute;
     top: -78px;
-    right: 120px;
+    right: 80px;
     z-index: 1;
   }
 }
