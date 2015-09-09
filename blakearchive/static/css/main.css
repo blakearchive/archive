@@ -1,5 +1,5 @@
 div.container-fluid > .navbar-form {
-  margin-right: 5%;
+  margin-right: 22px;
 }
 
 .carousel-inner > .item {
@@ -235,6 +235,11 @@ a.new-window {
 
 #home h1 {
   text-align:  center;
+}
+
+#home.container-fluid.main .row div[class^="col-"] {
+  padding-left: 1px;
+  padding-right: 1px;
 }
 
 /**
