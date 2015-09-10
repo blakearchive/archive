@@ -521,6 +521,21 @@ angular.module('blake').factory("MockBlakeDataService", ['$http', '$q', 'BlakeWo
     };
 }]);
 
+angular.module('blake').factory("FormatService", function () {
+    var cap = function(full_text) {
+        if(/\s+copy\s+/.test(full_text)) {
+            return full_text.replace(/copy/, 'Copy');
+        }
+      return false;
+    };
+
+    return {
+        cap: function() {
+            return cap();
+        }
+    }
+});
+
 angular.module('blake').factory("UtilityServices", function() {
     var responseChange = function() {
         var response_change = {};
