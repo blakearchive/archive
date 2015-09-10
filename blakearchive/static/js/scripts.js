@@ -241,9 +241,11 @@
 
     parallaxScroll();
 
-    if ( $('body.home').length ) {
+    var body_home = $('body.home');
 
-      $(window).bind('scroll', function(e){
+    if ( body_home.length ) {
+
+      window_frame.bind('scroll', function(e){
         parallaxScroll();
       });
     }
@@ -252,7 +254,7 @@
     // Lazy loader.
     // -------------------------------------------------------------------
 
-    if ( $('body.home').length ) {
+    if ( body_home.length ) {
 
       $(function() {
         $("img.lazy-load").lazyload({
