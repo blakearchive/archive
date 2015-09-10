@@ -7,7 +7,7 @@
     // callback is called before the delay it waits. Useful for rapidly firing callbacks
     // like window.resize
     // -------------------------------------------------------------------
-  var window_frame = $(window);
+    var window_frame = $(window);
     var response_change = {};
 
     response_change.waitForIdle = function(fn, delay) {
