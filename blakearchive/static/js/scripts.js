@@ -209,7 +209,7 @@
     var back_top = $('.back-top');
 
     if ( back_top.length ) {
-      $('.back-top').on('click', function() {
+      back_top.on('click', function() {
         $('html, body').animate({
             scrollTop: 0
         }, 'slow');
