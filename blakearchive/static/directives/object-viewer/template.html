@@ -62,7 +62,8 @@
   <div id="object-view" class="view-objects">
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
       <div class="featured-object">
-        <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, {{ copy.archive_copy_id }}</p>
+        <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, <span ng-if="copy.archive_copy_id !== ''">Copy</span> {{ copy.archive_copy_id }}</p>
+
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
           <div class="item">

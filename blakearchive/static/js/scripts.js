@@ -7,7 +7,7 @@
     // callback is called before the delay it waits. Useful for rapidly firing callbacks
     // like window.resize
     // -------------------------------------------------------------------
-
+    var window_frame = $(window);
     var response_change = {};
 
     response_change.waitForIdle = function(fn, delay) {
@@ -27,10 +27,10 @@
     // Use that information to position the drop-downs across the screen.
     // ------------------------------------------------------------------
 
-    $(window).on('resize', response_change.waitForIdle(function() {
+    window_frame.on('resize', response_change.waitForIdle(function() {
 
       if ( $('nav.navbar ul.navbar-nav li.dropdown').hasClass('open') ) {
-        var viewport_width = $(window).width();
+        var viewport_width = window_frame.width();
         var element_position = $('nav.navbar ul.navbar-nav li.dropdown.open').offset().left;
 
         $('nav.navbar ul.navbar-nav li.dropdown.open').find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
@@ -74,13 +74,13 @@
 
     // Set the image height for the carousel
     function objectViewHeight() {
-      var set_object_view_height = $(window).height() - 220;
+      var set_object_view_height = window_frame.height() - 220;
       $('#object-view .carousel .featured-object img').css('height', set_object_view_height + 'px');
     }
 
     if ( $('#object-view .carousel').length ) {
       objectViewHeight();
-      $(window).on('resize', response_change.waitForIdle(function() {
+      window_frame.on('resize', response_change.waitForIdle(function() {
         objectViewHeight();
       }, 100));
     }
@@ -206,21 +206,21 @@
 
     // Back to top scroll arrow.
     // -------------------------------------------------------------------
+    var back_top = $('.back-top');
 
-    if ( $('.back-top').length ) {
-
-      $('.back-top').on('click', function() {
+    if ( back_top.length ) {
+      back_top.on('click', function() {
         $('html, body').animate({
             scrollTop: 0
         }, 'slow');
       });
 
-      $(window).on('scroll', function() {
-        var scroll = $(window).scrollTop();
+      window_frame.on('scroll', function() {
+        var scroll = window_frame.scrollTop();
         if (scroll >= 50) {
-          $('.back-top').addClass('scrolling');
+          back_top.addClass('scrolling');
         } else {
-          $('.back-top').removeClass('scrolling');
+          back_top.removeClass('scrolling');
         }
       });
     }
@@ -230,7 +230,7 @@
     // -------------------------------------------------------------------
 
     function parallaxScroll(){
-      var scrolled = $(window).scrollTop();
+      var scrolled = window_frame.scrollTop();
       $('#scroll-wrapper1').css('margin-top',(-90-(scrolled*0.2))+'px');
       $('#scroll-wrapper2').css('margin-top',(-20-(scrolled*0.4))+'px');
       $('#scroll-wrapper3').css('margin-top',(-90-(scrolled*0.14))+'px');
@@ -241,9 +241,11 @@
 
     parallaxScroll();
 
-    if ( $('body.home').length ) {
+    var body_home = $('body.home');
 
-      $(window).bind('scroll', function(e){
+    if ( body_home.length ) {
+
+      window_frame.bind('scroll', function(e){
         parallaxScroll();
       });
     }
@@ -252,7 +254,7 @@
     // Lazy loader.
     // -------------------------------------------------------------------
 
-    if ( $('body.home').length ) {
+    if ( body_home.length ) {
 
       $(function() {
         $("img.lazy-load").lazyload({
