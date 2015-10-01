@@ -11,7 +11,7 @@ angular.module('blake').directive("objectCompare", function () {
     }
 });
 
-angular.module('blake').controller("ObjectCompareController",['$scope', 'BlakeDataService', 'UtilityServices', function ($scope, BlakeDataService, UtilityServices) {
+angular.module('blake').controller("ObjectCompareController",['$scope', '$timeout', 'BlakeDataService', 'UtilityServices', function ($scope, $timeout, BlakeDataService, UtilityServices) {
 
     $scope.BlakeDataService = BlakeDataService;
 
@@ -82,10 +82,12 @@ angular.module('blake').controller("ObjectCompareController",['$scope', 'BlakeDa
     }
 
     angular.element(document).ready(function () {
-        $('#home').removeClass('main'); // Need class main for overall app, but not this directive
+        $timeout(function() {
+            //  $('#home').removeClass('main'); // Need class main for overall app, but not this directive
 
-        setObjectCompare();
-        objectCompareHeight();
+            setObjectCompare();
+            objectCompareHeight();
+        }, 0);
     });
 
     $(window).on('resize', response_change.waitForIdle(function() {
