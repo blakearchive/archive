@@ -87,6 +87,19 @@ angular.module('blake').controller("ObjectCompareController",['$scope', '$timeou
 
             setObjectCompare();
             objectCompareHeight();
+
+             var object_view = $("div.compare-inner");
+
+             // Set the max-height for the detail tray in object view.
+             var trayHeight = UtilityServices.trayHeight(object_view);
+
+             if ( $('#object-detail-tray').length ) {
+                 trayHeight();
+
+                 object_view.resize(response_change.waitForIdle(function() {
+                     trayHeight();
+                 }, 10));
+             }
         }, 0);
     });
 
