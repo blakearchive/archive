@@ -101,7 +101,7 @@ angular.module('blake').controller("ObjectViewerController",['$rootScope', '$sco
 
                 // Set the max-height for the detail tray in object view.
                 function trayHeight() {
-                    var set_tray_height = object_view.height(); console.log(set_tray_height)
+                    var set_tray_height = object_view.height();
                     var panel_count = $('.panel-group .panel-default').length;
                     var set_tray_body_height = (set_tray_height - (panel_count * 47));
 
