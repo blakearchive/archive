@@ -63,8 +63,16 @@
                   <a href="#">Object Meta Data</a>
                   <a href="#" title="new window" class="new-window hide" ng-click=""></a>
               </accordion-heading>
-              <p class="object-title">The Marriage of Heaven and Hell, object 20 (Bentley 20, Erdman 20,
-                Keynes 20)</p>
+              <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, {{ obj.full_object_id }}</p>
+
+              <p><em>Object Meta Data goes here...</em></p>
+          </accordion-group>
+            <accordion-group>
+              <accordion-heading>
+                  <a href="#">TEI Markup</a>
+                  <a href="#" title="new window" class="new-window hide" ng-click=""></a>
+              </accordion-heading>
+              <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, {{ obj.full_object_id }}</p>
 
               <p><em>Object Meta Data goes here...</em></p>
           </accordion-group>
