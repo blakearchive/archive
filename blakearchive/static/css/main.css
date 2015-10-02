@@ -239,6 +239,24 @@ a.new-window {
   bottom: 10px;
 }
 
+#archive #object-view.compare-objects #compare .compare-inner .item {
+    margin: 0 0 20px;
+}
+
+#archive #object-view.compare-objects #compare .compare-inner .item p.object-title {
+  font-size: 14px;
+}
+
+#archive #object-view.compare-objects #compare .compare-inner .item p.object-subtitle {
+  text-align: center;
+}
+
+#archive #object-view.compare-objects #compare .compare-inner .item p.object-title,
+#archive #object-view.compare-objects #compare .compare-inner .item p.object-subtitle {
+  max-width: 75%;
+  margin: 0 0 10px 45px;
+}
+
 /**
 * Used by drag and drop module
 */
