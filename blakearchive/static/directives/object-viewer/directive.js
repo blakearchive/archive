@@ -10,7 +10,7 @@ angular.module('blake').directive("objectViewer", function () {
     }
 });
 
-angular.module('blake').controller("ObjectViewerController",['$rootScope', '$scope', '$timeout', 'BlakeDataService', function ($rootScope, $scope, $timeout, BlakeDataService) {
+angular.module('blake').controller("ObjectViewerController",['$rootScope', '$scope', '$timeout', 'BlakeDataService', 'UtilityServices', function ($rootScope, $scope, $timeout, BlakeDataService, UtilityServices) {
     $rootScope.showSubMenu = 1;
     $scope.BlakeDataService = BlakeDataService;
 
@@ -100,26 +100,35 @@ angular.module('blake').controller("ObjectViewerController",['$rootScope', '$sco
                 var object_view = $("#object-view");
 
                 // Set the max-height for the detail tray in object view.
-                function trayHeight() {
-                    var set_tray_height = object_view.height();
-                    var panel_count = $('.panel-group .panel-default').length;
-                    var set_tray_body_height = (set_tray_height - (panel_count * 47));
-
-                    $('.panel-group').css('min-height', set_tray_height + 'px');
-                    $('.panel-group .panel-body').css('max-height', set_tray_body_height + 'px');
-                }
-
                 if ( $('#object-detail-tray').length ) {
-                    trayHeight();
+                    UtilityServices.trayHeight(object_view);
                     object_view.resize(response_change.waitForIdle(function() {
-                        trayHeight();
-                    }, 100));
+                        UtilityServices.trayHeight(object_view);
+                    }, 10));
                 }
             }, set_delay);
         });
     }
 
     getImageHeight(0);
+
+    $scope.openWindow = function(e) {
+        var full_text = e.target.innerHTML;
+        window.open()
+    };
+
+    angular.element(document).ready(function () {
+        $timeout(function() {
+            var hidden = $('div.panel-collapse');
+            var button = $('.new-window');
+
+            if (hidden.hasClass('in')) {
+                button.removeClass('hide')
+            } else {
+                button.addClass('hide');
+            }
+        }, 0);
+    });
 
 
     $scope.copy = BlakeDataService.getSelectedCopy();

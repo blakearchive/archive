@@ -4,7 +4,11 @@
       <div class="tray-toggle" ng-click="toggleTray()">Open/Close Tray</div>
       <div id="object-detail-tray-inner">
         <accordion close-others="true">
-          <accordion-group heading="Textual Transcription">
+          <accordion-group>
+              <accordion-heading>
+                  <a href="#">Textual Transcription</a>
+                  <a href="#" title="new window" class="new-window hide" ng-click=""></a>
+              </accordion-heading>
               <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, {{ copy.archive_copy_id }}</p>
 
               <p><a href="#">[ n ]</a></p>
@@ -13,7 +17,11 @@
               </ol>
               <p><a href="#">Color key for transcriptions</a></p>
           </accordion-group>
-          <accordion-group heading="Illustration Description">
+          <accordion-group>
+              <accordion-heading>
+                  <a href="#">Illustration Description</a>
+                  <a href="#" title="new window" class="new-window hide" ng-click=""></a>
+              </accordion-heading>
               <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, {{ obj.full_object_id }}</p>
 
               <p><strong>Sector CD<br>
@@ -33,7 +41,11 @@
                 <p>{{ component.component.illusobjdesc['#text'] }}</p>
               </div>
           </accordion-group>
-          <accordion-group heading="Editors’ Notes">
+          <accordion-group>
+              <accordion-heading>
+                  <a href="#">Editors’ Notes</a>
+                  <a href="#" title="new window" class="new-window hide" ng-click=""></a>
+              </accordion-heading>
               <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, {{ obj.full_object_id }}</p>
 
               <p><strong>Object Note(s):</strong></p>
@@ -44,10 +56,13 @@
                 <p>{{ obj.physical_description.objnote['#text'] }}</p>
               </div>
               <p><strong>Textual Note(s):</strong></p>
-
               <p><em>No textual notes for this object</em></p>
           </accordion-group>
-          <accordion-group heading="Object Meta Data">
+          <accordion-group>
+              <accordion-heading>
+                  <a href="#">Object Meta Data</a>
+                  <a href="#" title="new window" class="new-window hide" ng-click=""></a>
+              </accordion-heading>
               <p class="object-title">The Marriage of Heaven and Hell, object 20 (Bentley 20, Erdman 20,
                 Keynes 20)</p>
 

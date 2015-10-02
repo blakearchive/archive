@@ -152,16 +152,6 @@ a.new-window {
   }
 }
 
-#archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .panel-title a {
-  background-image: url("../img/global/detail-tray-icons.png") !important;
-}
-
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  #archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .panel-title a {
-    background-image: url("../img/global/detail-tray-icons@2x.png") !important;
-  }
-}
-
 #archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .panel-title a.new-window {
   background-image: url("../img/global/new-window-icon.png") !important;
 }
@@ -242,7 +232,11 @@ a.new-window {
 }
 
 #archive #object-view.compare-objects #compare .compare-inner .item {
-  max-width: 275px;
+  max-width: 300px;
+}
+
+#archive .tray-open .tray-toggle, #archive .tray-closed .tray-toggle {
+  bottom: 10px;
 }
 
 /**
