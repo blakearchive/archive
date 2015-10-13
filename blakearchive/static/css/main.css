@@ -276,6 +276,10 @@ p.object-subtitle span.object-no:first-letter {
   text-transform: capitalize;
 }
 
+.horz-scroll {
+  overflow-y: scroll;
+}
+
 /**
 * Used by drag and drop module
 */
