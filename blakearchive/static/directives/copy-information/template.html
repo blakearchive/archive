@@ -7,7 +7,7 @@
 <div class="row copy-info">
   <div class="col-sm-6">
     <h3>Copy Information</h3>
-    <dl>
+    <dl class="dl-horizontal">
       <dt>Title:</dt>
       <dd>{{ copy.header.filedesc.titlestmt.title['@reg'] }}</dd>
       <div ng-repeat="origination in copy.source.objdescid.origination">
@@ -95,7 +95,7 @@
 
   <div class="col-sm-6" id="copy-col-2">
     <h3>Provenance</h3>
-    <dl>
+    <dl class="dl-horizontal">
       <dt>Name:</dt>
       <dd>{{ copy.source.provenance.name['#text'] }}</dd>
       <dt>Date:</dt>
@@ -111,7 +111,7 @@
     </dl>
 
     <h3>Present Location</h3>
-    <dl>
+    <dl class="dl-horizontal">
       <dt>Mailing Address:</dt>
       <dd>{{ copy.source.repository.institution['#text'] }}<br>
         {{ copy.source.repository.addressline[0]['#text'] }}<br>
