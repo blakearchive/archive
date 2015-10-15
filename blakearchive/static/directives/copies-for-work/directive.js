@@ -66,6 +66,7 @@ angular.module('blake').controller("CopiesForWorkController", ['$scope', 'BlakeD
                     return false;
             }
         }
+
         if ($scope.work) {
             if ($scope.work.medium == 'illbk') {
                 return "http://www.blakearchive.org/blake/images/" + copy.bad_id + ".p1.100.jpg";
@@ -76,8 +77,48 @@ angular.module('blake').controller("CopiesForWorkController", ['$scope', 'BlakeD
         }
     };
 
+    /**
+     * Print out full text for medium instead of abbreviation
+     * @param medium
+     * @returns {*}
+     */
+    var getWorkTypeReadable = function(medium) {
+         switch(medium) {
+                case "illbk":
+                    return "Illuminated Books";
+                    break;
+                case "comb":
+                case "comdes":
+                case "comeng":
+                    return "Commercial Book Illustrations";
+                    break;
+                case "spb":
+                case "spdes":
+                case "speng":
+                case "cprint":
+                    return "Prints";
+                    break;
+                case "mono":
+                case "paint":
+                case "pen":
+                case "penink":
+                case "penc":
+                case "wc":
+                    return "Drawings and Paintings";
+                    break;
+                case "ms":
+                case "ltr":
+                case "te":
+                    return "Manuscripts and Typographic Works";
+                    break;
+                default:
+                    return false;
+            }
+    };
+
     $scope.$on("workSelectionChange", function () {
         $scope.work = BlakeDataService.getSelectedWork();
+        $scope.work.medium_pretty = getWorkTypeReadable($scope.work.medium);
     });
 
     $scope.$on("workSelectionCopiesChange", function () {
