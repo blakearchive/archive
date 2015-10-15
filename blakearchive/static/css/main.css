@@ -276,6 +276,10 @@ p.object-subtitle span.object-no:first-letter {
   text-transform: capitalize;
 }
 
+#archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .accordion-toggle a {
+  background-position: 13px 15px;
+}
+
 .horz-scroll {
   overflow-x: auto;
 }
