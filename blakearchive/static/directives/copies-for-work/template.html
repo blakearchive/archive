@@ -1,20 +1,21 @@
 <header class="page-header">
-  <p class="subhead">Copies for Work</p>
-
-  <h1>{{ work.title }}
-    <span>({{ work.composition_date_string }})</span></h1>
+  <p class="subhead">{{ work.medium_pretty }}</p>
+  <h1>{{ work.title }} ({{ work.composition_date_string }})</h1>
 </header>
-<p><em>Dates are the probable dates of printing.</em></p>
-<div class="row">
 
-  <div ng-repeat="copy in copies" class="col-sm-6 col-md-3">
-    <div class="handprint-block">
-      <a href="/blake/copy/{{ copy.bad_id }}">
-        <span class="object-img"
-              style="background-image: url({{ getCopyFirstObject(copy) }});"></span>
-        <span class="description"><strong>{{ copy.title }}</strong> Copy {{ copy.archive_copy_id }}, {{ copy.composition_date_string }} ({{ copy.institution }})</span>
-      </a>
+<article>
+  <div class="container">
+    <p><em>Dates are the probable dates of printing.</em></p>
+    <div class="row">
+      <div ng-repeat="copy in copies" class="col-sm-6 col-md-3">
+        <div class="handprint-block">
+          <a href="/blake/copy/{{ copy.bad_id }}">
+            <span class="object-img"
+                  style="background-image: url({{ getCopyFirstObject(copy) }});"></span>
+            <span class="description">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date_string }} ({{ copy.institution }})</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
-
-</div>
+</article>
