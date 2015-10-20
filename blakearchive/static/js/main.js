@@ -7,7 +7,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
         return {}
     }]);
 
-angular.module('blake', ['ngRoute', 'ui.bootstrap', angularDragula(angular)]).config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+angular.module('blake', ['ngRoute', 'ui-rangeSlider', 'ui.bootstrap', angularDragula(angular)]).config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when(directoryPrefix + '/', {
         templateUrl: directoryPrefix + '/static/html/home.html',
         controller: "HomeController"
@@ -592,8 +592,38 @@ angular.module('blake').controller("SearchController", ['$rootScope', '$scope', 
         $location.url(directoryPrefix + "/search?search=" + encodeURIComponent($scope.searchText));
     };
 
+    $scope.searchConfig = {minDate: 1772, maxDate: 1827};
+
+    $scope.objectResultsInDateRange = function (resultType) {
+        var i, inRange = [], results;
+        if ($scope.results) {
+            results = $scope.results.object_results[resultType];
+            for (i = 0; i < results.length; i++) {
+                if (results[i].copy_composition_date >= $scope.searchConfig.minDate &&
+                    results[i].copy_composition_date <= $scope.searchConfig.maxDate) {
+                    inRange.push(results[i]);
+                }
+            }
+        }
+        return inRange;
+    };
+
+    $scope.workResultsInDateRange = function (resultType) {
+        var i, inRange = [], results;
+        if ($scope.results) {
+            results = $scope.results.work_results[resultType];
+            for (i = 0; i < results.length; i++) {
+                if (results[i].composition_date >= $scope.searchConfig.minDate &&
+                    results[i].composition_date <= $scope.searchConfig.maxDate) {
+                    inRange.push(results[i]);
+                }
+            }
+        }
+        return inRange;
+    };
+
     if ($routeParams.search) {
-        $scope.searchConfig = {"searchString": $routeParams.search};
+        $scope.searchConfig.searchString = $routeParams.search;
         $scope.search();
     }
 
