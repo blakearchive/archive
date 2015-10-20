@@ -555,8 +555,19 @@ angular.module('blake').factory("UtilityServices", function() {
         return response_change;
     };
 
+    // Set the max-height for the detail tray in object view.
+    var trayHeight = function(selector) {
+        var set_tray_height = selector.height();
+        var panel_count = $('.panel-group .panel-default').length;
+        var set_tray_body_height = (set_tray_height - (panel_count * 47));
+
+        $('.panel-group').css('min-height', set_tray_height + 'px');
+        $('.panel-group .panel-body').css('max-height', set_tray_body_height + 'px');
+    }
+
     return {
-        responseChange: responseChange
+        responseChange: responseChange,
+        trayHeight: trayHeight
     }
 });
 
