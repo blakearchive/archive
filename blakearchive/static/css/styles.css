@@ -7471,7 +7471,7 @@ a.new-window:hover {
   position: relative;
   z-index: 1;
 }
-#archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .panel-title a {
+#archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .accordion-toggle a {
   color: #ccc;
   background-color: #333;
   background-repeat: no-repeat;
@@ -8554,16 +8554,17 @@ a.new-window:hover {
     width: 100%;
   }
 }
+/*
 @media (min-width: 768px) {
   #home.container-fluid.main .row div[class^="col-"] {
-  /*  max-width: 340px; */
+    max-width: 340px;
     max-height: 800px;
   }
-}
+} */
 @media (min-width: 1890px) {
   #home.container-fluid.main .row div[class^="col-"] {
     max-width: 16.7%;
-    max-height: 900px;
+  /*  max-height: 900px; */
   }
 }
 @media (min-width: 768px) {
