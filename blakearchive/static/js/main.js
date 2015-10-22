@@ -317,6 +317,8 @@ angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope'
     setSelectedObject = function (objectId) {
         return getObject(objectId).then(function (obj) {
             selectedObject = obj;
+            clearComparisonObjects();
+            addComparisonObject(obj);
             objectSelectionChange();
         })
     };
@@ -563,7 +565,7 @@ angular.module('blake').factory("UtilityServices", function() {
 
         $('.panel-group').css('min-height', set_tray_height + 'px');
         $('.panel-group .panel-body').css('max-height', set_tray_body_height + 'px');
-    }
+    };
 
     return {
         responseChange: responseChange,
@@ -591,6 +593,8 @@ angular.module('blake').controller("CopyController", ['$scope', '$routeParams', 
 }]);
 
 angular.module('blake').controller("SearchController", ['$rootScope', '$scope', '$location', '$routeParams', 'BlakeDataService', function ($rootScope, $scope, $location, $routeParams, BlakeDataService) {
+    var objectMatchingMedium, workMatchingMedium;
+
     $rootScope.showSubMenu = 0;
 
     $scope.search = function () {
@@ -603,15 +607,63 @@ angular.module('blake').controller("SearchController", ['$rootScope', '$scope', 
         $location.url(directoryPrefix + "/search?search=" + encodeURIComponent($scope.searchText));
     };
 
-    $scope.searchConfig = {minDate: 1772, maxDate: 1827};
+    $scope.searchConfig = {
+        useCompDate: true,
+        searchTitle: true,
+        searchIlluminatedBooks: true,
+        searchCommercialBookIllustrations: true,
+        searchSeparatePrints: true,
+        searchDrawingsPaintings: true,
+        searchManuscripts: true,
+        searchRelatedMaterials: true,
+        minDate: 1772,
+        maxDate: 1827
+    };
 
-    $scope.objectResultsInDateRange = function (resultType) {
+    objectMatchingMedium = function (result) {
+        if ($scope.searchConfig.searchIlluminatedBooks && result.work_medium == "illbk") return true;
+        if ($scope.searchConfig.searchCommercialBookIllustrations &&
+            (result.work_medium == "comb" || result.work_medium == "comdes" || result.work_medium == "comeng")) return true;
+        if ($scope.searchConfig.searchSeparatePrints &&
+            (result.work_medium == "spb" || result.work_medium == "spdes" || result.work_medium == "speng")) return true;
+        if ($scope.searchConfig.searchCommercialBookIllustrations &&
+            (result.work_medium == "comb" || result.work_medium == "comdes" || result.work_medium == "comeng")) return true;
+        if ($scope.searchConfig.searchDrawingsPaintings &&
+            (result.work_medium == "cprint" || result.work_medium == "penc" || result.work_medium == "penink" ||
+                result.work_medium == "mono" || result.work_medium == "wc" || result.work_medium == "paint")) return true;
+        if ($scope.searchConfig.searchManuscripts &&
+            (result.work_medium == "ms" || result.work_medium == "ltr" || result.work_medium == "te")) return true;
+        if ($scope.searchConfig.searchRelatedMaterials &&
+            (result.work_medium == "rmb" || result.work_medium == "rmoth")) return true;
+        return false;
+    };
+
+    workMatchingMedium = function (result) {
+        if ($scope.searchConfig.searchIlluminatedBooks && result.medium == "illbk") return true;
+        if ($scope.searchConfig.searchCommercialBookIllustrations &&
+            (result.medium == "comb" || result.medium == "comdes" || result.medium == "comeng")) return true;
+        if ($scope.searchConfig.searchSeparatePrints &&
+            (result.medium == "spb" || result.medium == "spdes" || result.medium == "speng")) return true;
+        if ($scope.searchConfig.searchCommercialBookIllustrations &&
+            (result.medium == "comb" || result.medium == "comdes" || result.medium == "comeng")) return true;
+        if ($scope.searchConfig.searchDrawingsPaintings &&
+            (result.medium == "cprint" || result.medium == "penc" || result.medium == "penink" ||
+                result.medium == "mono" || result.medium == "wc" || result.medium == "paint")) return true;
+        if ($scope.searchConfig.searchManuscripts &&
+            (result.medium == "ms" || result.medium == "ltr" || result.medium == "te")) return true;
+        if ($scope.searchConfig.searchRelatedMaterials &&
+            (result.medium == "rmb" || result.medium == "rmoth")) return true;
+        return false;
+    };
+    
+    $scope.objectResultsMatchingFilter = function (resultType) {
         var i, inRange = [], results;
         if ($scope.results) {
             results = $scope.results.object_results[resultType];
             for (i = 0; i < results.length; i++) {
                 if (results[i].copy_composition_date >= $scope.searchConfig.minDate &&
-                    results[i].copy_composition_date <= $scope.searchConfig.maxDate) {
+                    results[i].copy_composition_date <= $scope.searchConfig.maxDate &&
+                    objectMatchingMedium(results[i])) {
                     inRange.push(results[i]);
                 }
             }
@@ -619,13 +671,14 @@ angular.module('blake').controller("SearchController", ['$rootScope', '$scope', 
         return inRange;
     };
 
-    $scope.workResultsInDateRange = function (resultType) {
+    $scope.workResultsMatchingFilter = function (resultType) {
         var i, inRange = [], results;
         if ($scope.results) {
             results = $scope.results.work_results[resultType];
             for (i = 0; i < results.length; i++) {
                 if (results[i].composition_date >= $scope.searchConfig.minDate &&
-                    results[i].composition_date <= $scope.searchConfig.maxDate) {
+                    results[i].composition_date <= $scope.searchConfig.maxDate &&
+                    workMatchingMedium(results[i])) {
                     inRange.push(results[i]);
                 }
             }
