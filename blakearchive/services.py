@@ -50,6 +50,7 @@ class BlakeDataService(object):
         def object_query(config):
             title_results = []
             tag_results = []
+            text_results = []
             description_results = []
             if config.get("searchTitle"):
                 search_string = generate_search_element("title", config.get("searchString"))
@@ -57,11 +58,15 @@ class BlakeDataService(object):
             if config.get("searchImageKeywords"):
                 search_string = generate_search_element("components", config.get("searchString"))
                 tag_results = blake_object_solr.search(search_string)
-            if config.get("searchImageDescription"):
+            if config.get("searchText"):
+                search_string = generate_search_element("text", config.get("searchString"))
+                text_results = blake_object_solr.search(search_string)
+            if config.get("searchImageDescriptions"):
                 search_string = generate_search_element("illustration_description", config.get("searchString"))
                 description_results = blake_object_solr.search(search_string)
             return {"title_results": [transform_result(r) for r in title_results],
                     "tag_results": [transform_result(r) for r in tag_results],
+                    "text_results": [transform_result(r) for r in text_results],
                     "description_results": [transform_result(r) for r in description_results]}
         # updated search
         obj_results = object_query(config)

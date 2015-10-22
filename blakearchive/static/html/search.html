@@ -18,7 +18,7 @@
         </ul>
     </div>
     <div class="col-md-1">
-        <div class="btn-group" dropdown is-open="isOpen">
+        <div class="btn-group" dropdown>
         <button id="search-type-button" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>Search Type</button>
         <ul dropdown-menu class="dropdown-menu" role="menu" aria-labelledby="search-type-button">
             <li>
@@ -39,6 +39,32 @@
         </ul>
             </div>
         </div>
+        <div class="col-md-1">
+        <div class="btn-group" dropdown>
+        <button id="search-medium-button" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>Search Medium</button>
+        <ul dropdown-menu class="dropdown-menu" role="menu" aria-labelledby="search-medium-button">
+            <li>
+                <input type="checkbox" ng-model="searchConfig.searchIlluminatedBooks">Illuminated books
+            </li>
+            <li>
+                <input type="checkbox" ng-model="searchConfig.searchCommercialBookIllustrations">Commercial book illustrations
+            </li>
+            <li>
+                <input type="checkbox" ng-model="searchConfig.searchSeparatePrints">Separate prints
+            </li>
+            <li>
+                <input type="checkbox" ng-model="searchConfig.searchDrawingsPaintings">Drawings and paintings
+            </li>
+            <li>
+                <input type="checkbox" ng-model="searchConfig.searchManuscripts">Manuscripts and typographic editions
+            </li>
+
+            <li>
+                <input type="checkbox" ng-model="searchConfig.searchRelatedMaterials">Related materials
+            </li>
+        </ul>
+            </div>
+        </div>
         <div class="col-md-2">
             <input type="text" class="form-control" placeholder="Search the Blake Archive"
                    ng-model="searchConfig.searchString">
@@ -50,19 +76,20 @@
 </div>
 <div class="row">
     <div class="col-md-offset-1 col-md-10">
-        <div ng-hide="workResultsInDateRange('title_results').length > 0 ||
-                      workResultsInDateRange('work_info_results').length > 0 ||
-                      objectResultsInDateRange('title_results').length > 0 ||
-                      objectResultsInDateRange('tag_results').length > 0 ||
-                      objectResultsInDateRange('description_results').length > 0">
+        <div ng-hide="workResultsMatchingFilter('title_results').length > 0 ||
+                      workResultsMatchingFilter('work_info_results').length > 0 ||
+                      objectResultsMatchingFilter('title_results').length > 0 ||
+                      objectResultsMatchingFilter('text_results').length > 0 ||
+                      objectResultsMatchingFilter('tag_results').length > 0 ||
+                      objectResultsMatchingFilter('description_results').length > 0">
             No results found
         </div>
-        <div ng-show="objectResultsInDateRange('title_results').length > 0">
+        <div ng-show="objectResultsMatchingFilter('title_results').length > 0">
             <h3>Objects with a matching title</h3>
 
             <div class="row">
                 <ul class="list-unstyled">
-                    <li ng-repeat="obj in objectResultsInDateRange('title_results')" class="col-sm-12 col-md-4 handprint-block">
+                    <li ng-repeat="obj in objectResultsMatchingFilter('title_results')" class="col-sm-12 col-md-4 handprint-block">
 
                         <a href="/blake/copy/{{ obj.copy_id }}/{{ obj.id }}">
           <span class="object-img"
@@ -74,12 +101,29 @@
                 </ul>
             </div>
         </div>
-        <div ng-show="objectResultsInDateRange('tag_results').length > 0">
+        <div ng-show="objectResultsMatchingFilter('text_results').length > 0">
+            <h3>Objects with matching text</h3>
+
+            <div class="row">
+                <ul class="list-unstyled">
+                    <li ng-repeat="obj in objectResultsMatchingFilter('text_results')" class="col-sm-12 col-md-4 handprint-block">
+
+                        <a href="/blake/copy/{{ obj.copy_id }}/{{ obj.id }}">
+          <span class="object-img"
+                style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
+                <span
+                        class="description"><strong>{{ obj.title }}</strong></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div ng-show="objectResultsMatchingFilter('tag_results').length > 0">
             <h3>Objects with a matching image tag</h3>
 
             <div class="row">
                 <ul class="list-unstyled">
-                    <li ng-repeat="obj in objectResultsInDateRange('tag_results')" class="col-sm-12 col-md-4 handprint-block">
+                    <li ng-repeat="obj in objectResultsMatchingFilter('tag_results')" class="col-sm-12 col-md-4 handprint-block">
 
                         <a href="/blake/copy/{{ obj.copy_id }}/{{ obj.id }}">
           <span class="object-img"
@@ -91,12 +135,12 @@
                 </ul>
             </div>
         </div>
-        <div ng-show="objectResultsInDateRange('description_results').length > 0">
+        <div ng-show="objectResultsMatchingFilter('description_results').length > 0">
             <h3>Objects with a matching illustration description</h3>
 
             <div class="row">
                 <ul class="list-unstyled">
-                    <li ng-repeat="obj in objectResultsInDateRange('description_results')" class="col-sm-12 col-md-4 handprint-block">
+                    <li ng-repeat="obj in objectResultsMatchingFilter('description_results')" class="col-sm-12 col-md-4 handprint-block">
 
                         <a href="/blake/copy/{{ obj.copy_id }}/{{ obj.id }}">
           <span class="object-img"
@@ -108,12 +152,12 @@
                 </ul>
             </div>
         </div>
-        <div ng-show="workResultsInDateRange('title_results').length > 0">
+        <div ng-show="workResultsMatchingFilter('title_results').length > 0">
             <h3>Works with a matching title</h3>
 
             <div class="row">
                 <ul class="list-unstyled">
-                    <li ng-repeat="work in workResultsInDateRange('title_results')" class="col-sm-6 col-md-3 handprint-block">
+                    <li ng-repeat="work in workResultsMatchingFilter('title_results')" class="col-sm-6 col-md-3 handprint-block">
                         <a href="/blake/work/{{ work.bad_id }}">
           <span class="object-img"
                 style="background-image: url(http://www.blakearchive.org/blake/images/{{ work.image }}.100.jpg);"></span>
@@ -124,12 +168,12 @@
                 </ul>
             </div>
         </div>
-        <div ng-show="workResultsInDateRange('work_info_results').length > 0">
+        <div ng-show="workResultsMatchingFilter('work_info_results').length > 0">
             <h3>Works with matching work information or notes</h3>
 
             <div class="row">
                 <ul class="list-unstyled">
-                    <li ng-repeat="work in workResultsInDateRange('work_info_results')" class="col-sm-6 col-md-3 handprint-block">
+                    <li ng-repeat="work in workResultsMatchingFilter('work_info_results')" class="col-sm-6 col-md-3 handprint-block">
                         <a href="/blake/work/{{ work.bad_id }}">
           <span class="object-img"
                 style="background-image: url(http://www.blakearchive.org/blake/images/{{ work.image }}.100.jpg);"></span>
