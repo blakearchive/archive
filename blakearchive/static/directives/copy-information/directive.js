@@ -15,7 +15,7 @@ angular.module('blake').controller("CopyInformationController",['$scope', 'Blake
     $scope.copy = BlakeDataService.getSelectedCopy();
 
     $scope.$on("copySelectionChange", function () {
-        $scope.copy = BlakeDataService.getSelectedCopy()
+        $scope.copy = BlakeDataService.getSelectedCopy();
     });
 
     $scope.getOriginationRole = function (role) {
