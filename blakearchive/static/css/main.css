@@ -280,26 +280,11 @@ p.object-subtitle span.object-no:first-letter {
   background-position: 13px 15px;
 }
 
-.horz-scroll {
-  overflow-x: auto;
+#archive #object-view.compare-objects #compare .item {
+  float: left;
+  margin: 0 0 20px;
 }
 
-/**
-* Used by drag and drop module
-*/
-.gu-mirror {
-  margin: 10px;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.2);
-  transition: opacity 0.4s ease-in-out;
+#compare .item {
   cursor: move;
-  cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
-}
-
-.gu-unselectable {
-  cursor: grabbing;
-  cursor: -moz-grabbing;
-  cursor: -webkit-grabbing;
 }
