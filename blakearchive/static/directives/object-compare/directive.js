@@ -64,6 +64,10 @@ angular.module('blake').controller("ObjectCompareController",['$scope', '$timeou
         $scope.obj = BlakeDataService.getSelectedObject();
     });
 
+    $scope.copyChange = function(copy_id, objectId) {
+        $scope.copy = BlakeDataService.getSelectedCopy(copy_id, objectId);
+    };
+
     // Horizontal Scroll with fixed height/width images
     var response_change = UtilityServices.responseChange();
 
