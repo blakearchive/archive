@@ -20,7 +20,8 @@ module.exports = function(grunt) {
                     "blakearchive/static/directives/objects-from-same-matrix/directive.js",
                     "blakearchive/static/directives/objects-from-same-production-sequence/directive.js",
                     "blakearchive/static/directives/objects-with-same-motif/directive.js",
-                    "blakearchive/static/directives/object-compare/directive.js"
+                    "blakearchive/static/directives/object-compare/directive.js",
+                    "blakearchive/static/directives/info-tray/directive.js"
                 ]
               }
            }
@@ -41,7 +42,8 @@ module.exports = function(grunt) {
                   "blakearchive/static/directives/objects-from-same-matrix/template.html",
                   "blakearchive/static/directives/objects-from-same-production-sequence/template.html",
                   "blakearchive/static/directives/objects-with-same-motif/template.html",
-                  "blakearchive/static/directives/object-compare/template.html"
+                  "blakearchive/static/directives/object-compare/template.html",
+                  "blakearchive/static/directives/info-tray/template.html"
               ],
               css: ["blakearchive/static/css/styles.css"],
               dest:'blakearchive/static/css/purestyles.css'
