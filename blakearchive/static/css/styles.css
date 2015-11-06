@@ -7510,6 +7510,11 @@ a.new-window:hover {
   z-index: 1;
   display: block;
 }
+
+#archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .panel-title a.new-window.full-screen {
+  right: 35px;
+}
+
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   #archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .panel-title a.new-window {
     background-image: url("/blake/static/img/global/new-window-icon@2x.png");
