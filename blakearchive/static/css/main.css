@@ -141,6 +141,13 @@ a.new-window {
   }
 }
 
+@media (min-width: 975px) {
+  #search-button {
+    margin-left: -15px;
+    width: auto;
+  }
+}
+
 @media (min-width: 992px) {
   #archive .tray-toggle {
     background-image: url("../img/global/open-close-tray-icon.png") !important;
@@ -219,10 +226,6 @@ a.new-window {
   padding-bottom: 10px;
 }
 
-#search-button {
-  margin-left: 10px;
-}
-
 #home h1 {
   text-align:  center;
 }
@@ -288,3 +291,15 @@ p.object-subtitle span.object-no:first-letter {
 #compare .item {
   cursor: move;
 }
+
+#search-type-button + ul {
+  width: 175px;
+}
+
+#search-medium-button + ul {
+  width: 275px;
+}
+
+div.blake-search .col-md-1 {
+    width: auto;
+  }

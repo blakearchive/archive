@@ -1,10 +1,7 @@
 <h1>Blake Search</h1>
-<div class="row">
 
-    <div class="col-xs-4"></div>
-</div>
 <hr>
-<div class="row">
+<div class="row blake-search">
     <form ng-submit="search()">
     <div class="col-md-offset-1 col-md-3">
         <h3>Restrict date range:</h3>
@@ -19,50 +16,50 @@
     </div>
     <div class="col-md-1">
         <div class="btn-group" dropdown>
-        <button id="search-type-button" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>Search Type</button>
-        <ul dropdown-menu class="dropdown-menu" role="menu" aria-labelledby="search-type-button">
-            <li>
-                <input type="checkbox" ng-model="searchConfig.searchTitle">Title
-            </li>
-            <li>
-                <input type="checkbox" ng-model="searchConfig.searchText">Transcriptions
-            </li>
-            <li>
-                <input type="checkbox" ng-model="searchConfig.searchWorkInformation">Editors' notes
-            </li>
-            <li>
-                <input type="checkbox" ng-model="searchConfig.searchImageKeywords">Image tags
-            </li>
-            <li>
-                <input type="checkbox" ng-model="searchConfig.searchImageDescriptions">Illustration descriptions
-            </li>
-        </ul>
-            </div>
+            <button id="search-type-button" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>Search Type</button>
+            <ul dropdown-menu class="dropdown-menu" role="menu" aria-labelledby="search-type-button">
+                <li>
+                    <input type="checkbox" ng-model="searchConfig.searchTitle"> Title
+                </li>
+                <li>
+                    <input type="checkbox" ng-model="searchConfig.searchText"> Transcriptions
+                </li>
+                <li>
+                    <input type="checkbox" ng-model="searchConfig.searchWorkInformation"> Editors' notes
+                </li>
+                <li>
+                    <input type="checkbox" ng-model="searchConfig.searchImageKeywords"> Image tags
+                </li>
+                <li>
+                    <input type="checkbox" ng-model="searchConfig.searchImageDescriptions"> Illustration descriptions
+                </li>
+            </ul>
         </div>
+    </div>
         <div class="col-md-1">
-        <div class="btn-group" dropdown>
-        <button id="search-medium-button" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>Search Medium</button>
-        <ul dropdown-menu class="dropdown-menu" role="menu" aria-labelledby="search-medium-button">
-            <li>
-                <input type="checkbox" ng-model="searchConfig.searchIlluminatedBooks">Illuminated books
-            </li>
-            <li>
-                <input type="checkbox" ng-model="searchConfig.searchCommercialBookIllustrations">Commercial book illustrations
-            </li>
-            <li>
-                <input type="checkbox" ng-model="searchConfig.searchSeparatePrints">Separate prints
-            </li>
-            <li>
-                <input type="checkbox" ng-model="searchConfig.searchDrawingsPaintings">Drawings and paintings
-            </li>
-            <li>
-                <input type="checkbox" ng-model="searchConfig.searchManuscripts">Manuscripts and typographic editions
-            </li>
+            <div class="btn-group" dropdown>
+            <button id="search-medium-button" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>Search Medium</button>
+                <ul dropdown-menu class="dropdown-menu" role="menu" aria-labelledby="search-medium-button">
+                    <li>
+                        <input type="checkbox" ng-model="searchConfig.searchIlluminatedBooks"> Illuminated books
+                    </li>
+                    <li>
+                        <input type="checkbox" ng-model="searchConfig.searchCommercialBookIllustrations"> Commercial book illustrations
+                    </li>
+                    <li>
+                        <input type="checkbox" ng-model="searchConfig.searchSeparatePrints"> Separate prints
+                    </li>
+                    <li>
+                        <input type="checkbox" ng-model="searchConfig.searchDrawingsPaintings"> Drawings and paintings
+                    </li>
+                    <li>
+                        <input type="checkbox" ng-model="searchConfig.searchManuscripts"> Manuscripts and typographic editions
+                    </li>
 
-            <li>
-                <input type="checkbox" ng-model="searchConfig.searchRelatedMaterials">Related materials
-            </li>
-        </ul>
+                    <li>
+                        <input type="checkbox" ng-model="searchConfig.searchRelatedMaterials"> Related materials
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="col-md-2">
@@ -74,7 +71,7 @@
         </div>
     </form>
 </div>
-<div class="row">
+<div class="row blake-search">
     <div class="col-md-offset-1 col-md-10">
         <div ng-hide="workResultsMatchingFilter('title_results').length > 0 ||
                       workResultsMatchingFilter('work_info_results').length > 0 ||
