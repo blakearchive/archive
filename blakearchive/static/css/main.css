@@ -301,16 +301,13 @@ p.object-subtitle span.object-no:first-letter {
 }
 
 div.blake-search .col-md-1 {
-    width: auto;
-  }
+  width: auto;
+}
 
 .columns {
   -webkit-column-count: 3;
   -moz-column-count: 3;
   column-count: 3;
-  -webkit-column-gap: 0;
-  -moz-column-gap: 0;
-  column-gap: 0;
 }
 
 .columns, .columns-short {
