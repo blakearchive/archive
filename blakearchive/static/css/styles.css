@@ -7241,6 +7241,7 @@ a.new-window:hover {
 .handprint-block span.description {
   font-size: 12px;
   display: block;
+  text-transform: capitalize;
 }
 .section-group {
   padding: 1em 0 2em;
