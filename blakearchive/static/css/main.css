@@ -301,5 +301,15 @@ p.object-subtitle span.object-no:first-letter {
 }
 
 div.blake-search .col-md-1 {
-    width: auto;
-  }
+  width: auto;
+}
+
+.columns {
+  -webkit-column-count: 3;
+  -moz-column-count: 3;
+  column-count: 3;
+}
+
+.columns, .columns-short {
+    margin-left: 0;
+}

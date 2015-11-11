@@ -17,5 +17,23 @@
         </div>
       </div>
     </div>
+    <div class="section-group">{{ work.info }}</div>
+    <div class="section-group">
+      <h3>All Known Copies</h3>
+      <div class="row" ng-class="copies.length > 2 ? 'columns' : 'columns-short'">
+        <div ng-repeat="copy in copies">
+          <p>
+            <a href="/blake/copy/{{ copy.bad_id }}">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date }}</a>
+            <br/>
+            {{ copy.institution }}
+            <br/>
+            {{ copy.source.repository.addressline[0]['#text'] }}<br>
+            {{ copy.source.repository.addressline[1]['#text'] }}<br>
+            {{ copy.source.repository.addressline[2]['#text'] }}
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
+
 </article>
