@@ -590,10 +590,47 @@ angular.module('blake').factory("UtilityServices", function() {
        });
     };
 
+    /**
+     * Toggle the info tray open and shut
+     */
+    var togglingTray = function() {
+        var $detail_tray = $('#object-container');
+
+        if ($detail_tray.hasClass('tray-closed')) {
+            $detail_tray.removeClass('tray-closed').addClass('tray-open');
+            setTimeout(function () {
+                $('.scrollbar').scroller('reset');
+            }, 300);
+            $('.scrollbar').scroller('reset');
+        } else {
+            $detail_tray.removeClass('tray-open').addClass('tray-closed');
+            $('.scrollbar').scroller('reset');
+            setTimeout(function () {
+                $('.scrollbar').scroller('reset');
+            }, 300);
+        }
+    };
+
+    var imageText = function($scope, objLines) {
+        $scope.obj.text.lg.forEach(function (lg) {
+            if (lg.l.length) {
+                lg.l.forEach(function (l) {
+                    objLines.push(l["#text"]);
+                })
+            } else {
+                objLines.push(lg.l["#text"])
+            }
+        });
+
+        return objLines;
+    };
+
     return {
         responseChange: responseChange,
         trayHeight: trayHeight,
-        getImageHeight: getImageHeight
+        getImageHeight: getImageHeight,
+        togglingTray: togglingTray,
+        imageText: imageText
     }
 });
 
