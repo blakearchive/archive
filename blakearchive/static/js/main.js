@@ -567,9 +567,33 @@ angular.module('blake').factory("UtilityServices", function() {
         $('.panel-group .panel-body').css('max-height', set_tray_body_height + 'px');
     };
 
+    /**
+     *
+     * @param set_delay in milliseconds
+     * * Get the height of the object detail.
+     * Pretty awkward solution to the way Design Hammer set this up. Image loaded via Ajax, so need a delay to execute getting correct height
+     */
+    var getImageHeight = function(set_delay, $timeout) {
+       angular.element(document).ready(function () {
+            $timeout(function() {
+                var response_change = responseChange();
+                var object_view = $("#object-view");
+
+                // Set the max-height for the detail tray in object view.
+                if ( $('#object-detail-tray').length ) {
+                    trayHeight(object_view);
+                    object_view.resize(response_change.waitForIdle(function() {
+                        trayHeight(object_view);
+                    }, 10));
+                }
+            }, set_delay);
+       });
+    };
+
     return {
         responseChange: responseChange,
-        trayHeight: trayHeight
+        trayHeight: trayHeight,
+        getImageHeight: getImageHeight
     }
 });
 
