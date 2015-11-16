@@ -39,42 +39,14 @@ angular.module('blake').controller("ObjectViewerController",['$rootScope', '$sco
         var objLines = [];
         if ($scope.obj) {
             if ($scope.obj.text && $scope.obj.text.lg && $scope.obj.text.lg.length) {
-                $scope.obj.text.lg.forEach(function (lg) {
-                    if (lg.l.length) {
-                        lg.l.forEach(function (l) {
-                            objLines.push(l["#text"]);
-                        })
-                    } else {
-                        objLines.push(lg.l["#text"])
-                    }
-                });
-            } else {
-
+                objLines = UtilityServices.imageText($scope, objLines);
             }
         }
         return objLines;
     };
 
-    $scope.toggleTray = function () {
-        var $detail_tray = $('#object-container');
-
-        if ($detail_tray.hasClass('tray-closed')) {
-            $detail_tray.removeClass('tray-closed').addClass('tray-open');
-            setTimeout(function () {
-                $('.scrollbar').scroller('reset');
-            }, 300);
-            $('.scrollbar').scroller('reset');
-        } else {
-            $detail_tray.removeClass('tray-open').addClass('tray-closed');
-            $('.scrollbar').scroller('reset');
-            setTimeout(function () {
-                $('.scrollbar').scroller('reset');
-            }, 300);
-        }
-    };
-
-
-
+    // Just need a function reference here
+    $scope.toggleTray = UtilityServices.togglingTray;
 
     $scope.openWindow = function(e) {
         var full_text = e.target.innerHTML;
