@@ -18,40 +18,15 @@ angular.module('blake').controller("ObjectCompareController",['$scope', '$timeou
     $scope.getObjLines = function () {
         var objLines = [];
         if ($scope.obj) {
-            if ($scope.obj.text.lg.length) {
-                $scope.obj.text.lg.forEach(function (lg) {
-                    if (lg.l.length) {
-                        lg.l.forEach(function (l) {
-                            objLines.push(l["#text"]);
-                        })
-                    } else {
-                        objLines.push(lg.l["#text"])
-                    }
-                });
-            } else {
-
+            if ($scope.obj.text.lg !== undefined && $scope.obj.text.lg.length) {
+                objLines = UtilityServices.imageText($scope, objLines);
             }
         }
         return objLines;
     };
 
-    $scope.toggleTray = function () {
-        var $detail_tray = $('#object-container');
-
-        if ($detail_tray.hasClass('tray-closed')) {
-            $detail_tray.removeClass('tray-closed').addClass('tray-open');
-            setTimeout(function () {
-                $('.scrollbar').scroller('reset');
-            }, 300);
-            $('.scrollbar').scroller('reset');
-        } else {
-            $detail_tray.removeClass('tray-open').addClass('tray-closed');
-            $('.scrollbar').scroller('reset');
-            setTimeout(function () {
-                $('.scrollbar').scroller('reset');
-            }, 300);
-        }
-    };
+    // Just need a function reference here
+    $scope.toggleTray = UtilityServices.togglingTray;
 
     $scope.comparisonObjects = BlakeDataService.getComparisonObjects();
     $scope.obj = BlakeDataService.getSelectedObject();
