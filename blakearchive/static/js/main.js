@@ -294,6 +294,7 @@ angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope'
     };
 
     setSelectedCopy = function (copyId, objectId) {
+        console.log(copyId, objectId)
         return getCopy(copyId).then(function (copy) {
             selectedCopy = copy;
             $rootScope.$broadcast("copySelectionChange", copy);
