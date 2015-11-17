@@ -8524,8 +8524,10 @@ a.new-window:hover {
 }
 #home.container-fluid.main {
   overflow: hidden;
-  max-height: 800px;
+/*  max-height: 800px; */
 }
+
+/*
 @media (max-width: 400px) {
   #home.container-fluid.main {
     max-height: 1470px;
@@ -8535,7 +8537,7 @@ a.new-window:hover {
   #home.container-fluid.main {
     max-height: inherit;
   }
-}
+}*/
 @media (min-width: 1890px) {
   #home.container-fluid.main {
     padding: 0;
