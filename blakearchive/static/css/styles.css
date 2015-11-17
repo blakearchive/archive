@@ -8571,13 +8571,13 @@ a.new-window:hover {
     max-width: 340px;
     max-height: 800px;
   }
-} */
+}
 @media (min-width: 1890px) {
   #home.container-fluid.main .row div[class^="col-"] {
-    max-width: 16.7%;
-  /*  max-height: 900px; */
+  max-width: 16.7%;
+    max-height: 900px;
   }
-}
+}*/
 @media (min-width: 768px) {
   #home.container-fluid.main .row div[class^="col-"] a.scrolling {
     display: block;
