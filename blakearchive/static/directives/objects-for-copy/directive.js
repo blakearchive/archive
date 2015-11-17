@@ -11,6 +11,9 @@ angular.module('blake').directive("objectsForCopy", function () {
     }
 });
 
+/*
+Appears to be unnecessary, but I'll leave it here until Nathan takes a look. Viewer certainly loads faster without it.
+
 angular.module('blake').controller("ObjectsForCopyController", ['$scope', 'BlakeDataService', function ($scope, BlakeDataService) {
     $scope.$watch(BlakeDataService.getSelectedCopy, function (copy) {
         if (copy) {
@@ -20,4 +23,7 @@ angular.module('blake').controller("ObjectsForCopyController", ['$scope', 'Blake
             })
         }
     });
+}]);*/
+
+angular.module('blake').controller("ObjectsForCopyController", ['$scope', function ($scope) {
 }]);
