@@ -15,6 +15,14 @@ angular.module('blake').controller("ObjectCompareController",['$scope', '$timeou
 
     $scope.BlakeDataService = BlakeDataService;
 
+    $scope.updateCopyInfo = function(copyId, objectId) {
+        var copy_num = copyId.split('.')
+            .slice(0, 2)
+            .join('.');
+
+        $scope.copy = BlakeDataService.setSelectedCopy(copy_num, objectId);
+    };
+
     $scope.getObjLines = function () {
         var objLines = [];
         if ($scope.obj) {
@@ -39,10 +47,6 @@ angular.module('blake').controller("ObjectCompareController",['$scope', '$timeou
         $scope.obj = BlakeDataService.getSelectedObject();
     });
 
-    $scope.copyChange = function(copy_id, objectId) {
-        $scope.copy = BlakeDataService.getSelectedCopy(copy_id, objectId);
-    };
-
     // Horizontal Scroll with fixed height/width images
     var response_change = UtilityServices.responseChange();
 
@@ -62,30 +66,24 @@ angular.module('blake').controller("ObjectCompareController",['$scope', '$timeou
 
     angular.element(document).ready(function () {
         $timeout(function() {
-            //  $('#home').removeClass('main'); // Need class main for overall app, but not this directive
-
             setObjectCompare();
             objectCompareHeight();
 
-             var object_view = $("div.compare-inner");
+            var object_view = $("div.compare-inner");
 
-             // Set the max-height for the detail tray in object view.
-             if ( $('#object-detail-tray').length ) {
-                 UtilityServices.trayHeight(object_view);
+            // Set the max-height for the detail tray in object view.
+            if ( $('#object-detail-tray').length ) {
+                UtilityServices.trayHeight(object_view);
 
-                 object_view.resize(response_change.waitForIdle(function() {
-                     UtilityServices.trayHeight(object_view);
-                 }, 10));
-             }
+                object_view.resize(response_change.waitForIdle(function() {
+                    UtilityServices.trayHeight(object_view);
+                }, 10));
+            }
         }, 0);
     });
 
     $(window).on('resize', response_change.waitForIdle(function() {
         setObjectCompare();
-    }, 100));
-
-    $(window).on('resize', response_change.waitForIdle(function() {
         objectCompareHeight();
-      }, 100));
-
+    }, 100));
 }]);
