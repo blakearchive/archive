@@ -10,9 +10,9 @@
         <p class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, <span ng-if="copy.archive_copy_id !== ''">Copy</span> {{ copy.archive_copy_id }}</p>
 
         <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
+        <div class="carousel-inner" role="listbox" ng-style="{'height': viewerHeight}">
           <div class="item">
-            <img src="http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg">
+            <img src="http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg" ng-style="{'height': imageHeight}">
 
             <p class="object-subtitle"><span class="object-no">{{ obj.full_object_id }}</span></p>
           </div>
