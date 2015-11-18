@@ -53,6 +53,10 @@ angular.module('blake').controller("ObjectViewerController",['$rootScope', '$sco
         window.open('http://www.blakearchive.org/blake/')
     };
 
+    // Set viewer height
+    $scope.viewerHeight = UtilityServices.imageViewerHeight() + 'px';
+    $scope.imageHeight = ($scope.viewerHeight.split('px')[0] - 50)  + 'px';
+
     $scope.copy = BlakeDataService.getSelectedCopy();
     $scope.objects = BlakeDataService.getSelectedCopyObjects();
     $scope.obj = BlakeDataService.getSelectedObject();
@@ -72,5 +76,5 @@ angular.module('blake').controller("ObjectViewerController",['$rootScope', '$sco
         $scope.obj = BlakeDataService.getSelectedObject();
         $scope.getPreviousNextObjects();
         UtilityServices.getImageHeight(100, $timeout);
-    })
+    });
 }]);

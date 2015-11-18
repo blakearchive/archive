@@ -6,11 +6,6 @@ div.container-fluid > .navbar-form {
   display: block !important;
 }
 
-.carousel-inner > .item img {
-  max-height: 650px;
-  max-width: 975px;
-}
-
 #archive #object-detail-tray .panel-group .panel.panel-default .panel-body {
   max-height: 339px !important;
 }

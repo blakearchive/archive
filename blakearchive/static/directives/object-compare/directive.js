@@ -36,6 +36,10 @@ angular.module('blake').controller("ObjectCompareController",['$scope', '$timeou
     // Just need a function reference here
     $scope.toggleTray = UtilityServices.togglingTray;
 
+     // Set viewer height
+    $scope.compareViewerHeight = UtilityServices.imageViewerHeight() + 'px';
+    $scope.compareImageHeight = ($scope.compareViewerHeight.split('px')[0] - 125)  + 'px';
+
     $scope.comparisonObjects = BlakeDataService.getComparisonObjects();
     $scope.obj = BlakeDataService.getSelectedObject();
 
