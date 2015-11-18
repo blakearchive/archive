@@ -307,3 +307,8 @@ div.blake-search .col-md-1 {
 .columns, .columns-short {
     margin-left: 0;
 }
+
+/* Won't work in IE, but should help in allowing image clicks on homepage to go to object view */
+.object-description {
+  pointer-events: none;
+}
