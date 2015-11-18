@@ -625,12 +625,19 @@ angular.module('blake').factory("UtilityServices", function() {
         return objLines;
     };
 
+    var imageViewerHeight = function() {
+        var viewer_height = $(window).innerHeight();
+        var offset = Math.round(viewer_height * .35);
+        return viewer_height - offset;
+    };
+
     return {
         responseChange: responseChange,
         trayHeight: trayHeight,
         getImageHeight: getImageHeight,
         togglingTray: togglingTray,
-        imageText: imageText
+        imageText: imageText,
+        imageViewerHeight: imageViewerHeight
     }
 });
 
