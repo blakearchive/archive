@@ -312,3 +312,16 @@ div.blake-search .col-md-1 {
 .object-description {
   pointer-events: none;
 }
+
+/* Needed to move buttons back up. They're not clickable if in the info tray header. */
+.panel-body > a.new-window {
+    display: inline-block;
+    margin-top: -40px;
+    position: absolute;
+    right: 5px;
+    z-index: 5;
+}
+
+.panel-body > a.full-screen {
+  right: 35px;
+}
