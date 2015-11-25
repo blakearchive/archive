@@ -21,6 +21,17 @@ Currently there are two.
 1. "fab deploy" deploys the code from github and restarts the server.
 2. "fab update_solr" rebuilds the solr index.
 
+
+### Connecting flask to the server
+Create a file in the blakearchive directory called config.py. It will be ignored by git, but it allows you to connect to the db and
+set your environment, production vs local.
+
+It will need the following variables correctly filled out:
+
+app_secret_key = "not_so_secret_key"
+db_connection_string = 'postgres://test:@test.unc.edu/test'
+production = False
+
 ### Running Grunt Tasks
 You'll need to have Node.js installed on your local machine.
 
