@@ -2,7 +2,7 @@ from flask import Flask
 from .api import api
 from blakearchive import config
 
-if config.production:
+if hasattr(config, "production") and config.production:
     app = Flask(__name__)
 else:
     app = Flask(__name__, static_url_path='/blake/static', static_folder='static')

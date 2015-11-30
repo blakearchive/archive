@@ -11,7 +11,7 @@
         <div class="handprint-block">
           <a href="/blake/copy/{{ copy.bad_id }}">
             <span class="object-img"
-                  style="background-image: url({{ getCopyFirstObject(copy) }});"></span>
+                  style="background-image: url(http://www.blakearchive.org/blake/images/{{ copy.image.toLowerCase() }}.100.jpg);"></span>
             <span class="description">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date_string }} ({{ copy.institution }})</span>
           </a>
         </div>
@@ -34,11 +34,15 @@
         </div>
       </div>
     </div>
-    <div class="section-group" ng-class="copies.length > 0 ? '' : 'hidden'">
+    <div class="section-group" ng-class="work.related_works.length > 0 ? '' : 'hidden'">
       <h3>All Known Related Items</h3>
-      <div class="row" ng-class="copies.length > 2 ? 'columns' : 'columns-short'">
-        <div ng-repeat="copy in copies">
-          <p></p>
+      <div class="row" ng-class="work.related_works.length > 2 ? 'columns' : 'columns-short'">
+        <div ng-repeat="relatedWork in work.related_works">
+          <p>
+            <span ng-if="relatedWork.title.type == 'copy'"><a href="/blake/copy/{{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>
+            <span ng-if="!relatedWork.title.type">{{ relatedWork.title.text }}</span><br />
+            <span ng-if="relatedWork.info" ng-bind-html="relatedWork.info"></span>
+          </p>
         </div>
       </div>
     </div>
