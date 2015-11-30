@@ -1,6 +1,7 @@
 from __future__ import with_statement
 from fabric.api import settings, run, cd, env
 import fab_settings
+from blakearchive.solrimport import main as solr_ingest
 
 
 env.hosts = [fab_settings.production['server']]
@@ -17,11 +18,11 @@ def deploy(code_dir="/htdocs/webdata/blake/archive", production=True):
     with cd(code_dir):
         run("sudo git pull")
         if production:
-            run("sudo /usr/local/bin/bounce-webserver.sh")
+            run("sudo /usr/local/bin/bounce-webserver.sh graceful")
 
 
 def update_solr():
     """
     Index production Solr
     """
-    pass
+    solr_ingest()

@@ -30,7 +30,8 @@ It will need the following variables correctly filled out:
 
 app_secret_key = "not_so_secret_key"
 db_connection_string = 'postgres://test:@test.unc.edu/test'
-production = False
+production = False (Note: In this case production refers to whether it sits on a UNC Libraries machine or not. True it does. False it doesn't.)
+solr = "lib_dev" (Can have one of three values: "lib_prod" for UNC Libraries production solr core. "lib_dev" for UNC Libraries production solr core. "other" for ITS or local solr core.)
 
 ### Running Grunt Tasks
 You'll need to have Node.js installed on your local machine.
