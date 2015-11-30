@@ -34,7 +34,9 @@ class BlakeDataService(object):
                     return part_text.lower()
                 else:
                     return "%s:'%s'" % (prefix, part_text)
-            search_string_parts = re.split(r"\s+(and|or)\s+", search_string, flags=re.I)
+
+            regx = re.compile(r"\s+(and|or)\s+", re.IGNORECASE)
+            search_string_parts = re.split(regx, search_string)
             return "(" + " ".join(generate_element_part(p) for p in search_string_parts) + ")"
 
         def transform_result(result):
