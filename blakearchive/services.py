@@ -110,7 +110,7 @@ class BlakeDataService(object):
     def get_objects_for_copy(cls, bad_id):
         return models.BlakeObject.query\
             .join(models.BlakeCopy)\
-            .order_by(models.BlakeObject.bentley_id)\
+            .order_by(models.BlakeObject.object_number)\
             .filter(models.BlakeCopy.bad_id == bad_id).all()
 
     @classmethod
@@ -128,5 +128,5 @@ class BlakeDataService(object):
             .filter(models.BlakeWork.bad_id == bad_id).all()
 
     @classmethod
-    def get_featured_works(cls, count=20):
+    def get_featured_works(cls, count=25):
         return models.BlakeFeaturedWork.query.order_by(func.random()).limit(count)

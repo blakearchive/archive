@@ -36,6 +36,7 @@ class BlakeObject(db.Model):
     desc_id = db.Column(db.UnicodeText, index=True)
     dbi = db.Column(db.UnicodeText, index=True)
     bentley_id = db.Column(db.Integer, index=True)
+    object_number = db.Column(db.Integer, index=True)
     full_object_id = db.Column(db.UnicodeText)
     copy_title = db.Column(db.UnicodeText)
     archive_copy_id = db.Column(db.Text)
@@ -74,6 +75,7 @@ class BlakeObject(db.Model):
     def to_dict(self):
         return {
             "bentley_id": self.bentley_id,
+            "object_number": self.object_number,
             "object_id": self.object_id,
             "desc_id": self.desc_id,
             "dbi": self.dbi,
@@ -139,6 +141,7 @@ class BlakeWork(db.Model):
     image = db.Column(db.UnicodeText)
     composition_date = db.Column(db.Integer)
     composition_date_string = db.Column(db.UnicodeText)
+    related_works = db.Column(JSON)
 
     @property
     def to_dict(self):
@@ -150,7 +153,8 @@ class BlakeWork(db.Model):
             "info": self.info,
             "image": self.image,
             "composition_date": self.composition_date,
-            "composition_date_string": self.composition_date_string
+            "composition_date_string": self.composition_date_string,
+            "related_works": self.related_works
         }
 
 

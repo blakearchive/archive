@@ -3,14 +3,13 @@ __author__ = 'nathan'
 import argparse
 import glob
 import os
+import os.path
 import json
 import tablib
 import re
 from collections import defaultdict
 from lxml import etree
-
 import xmltodict
-
 import models
 import config
 
@@ -21,17 +20,21 @@ class BlakeDocumentImporter(object):
         self.copies = {}
         self.objects = {}
         self.copy_handprint_map = {}
+        self.work_info_map = {}
         self.motif_relationships_expanded = defaultdict(lambda: set())
         self.relationships = tablib.Dataset()
         self.motif_relationships = tablib.Dataset()
         self.works_dataset = tablib.Dataset()
         self.copy_handprints = tablib.Dataset()
+        self.work_data = tablib.Dataset()
         with open("static/csv/blake-relations.csv") as f:
             self.relationships.csv = f.read()
         with open("static/csv/same_motif.csv") as f:
             self.motif_relationships.csv = f.read()
         with open("static/csv/copy-handprints.csv") as f:
             self.copy_handprints.csv = f.read()
+        with open("static/csv/works.csv") as f:
+            self.work_data.csv = f.read()
         for (copy_bad_id, dbi) in self.copy_handprints:
             self.copy_handprint_map[copy_bad_id] = dbi
         for (desc_id, matching_ids, in_archive) in self.motif_relationships:
@@ -46,6 +49,27 @@ class BlakeDocumentImporter(object):
         xslt_xml = etree.parse(open("static/xslt/transcription.xsl"))
         self.transform = etree.XSLT(xslt_xml)
 
+    def process_info_file(self, document):
+        def transform_relationship(rel):
+            rel_text = rel.xpath("text()")
+            link = rel.xpath("link")
+            if link:
+                title = {
+                    "text": link[0].xpath("string()").encode("utf-8"),
+                    "link": link[0].attrib["ptr"].encode("utf-8"),
+                    "type": link[0].attrib["type"].encode("utf-8")
+                }
+            else:
+                title = {"text": rel_text[0].strip().encode("utf-8")}
+            result = {"title": title}
+            if len(rel_text) == 3:
+                result["collection"] = rel_text[1].strip().encode("utf-8")
+                result["location"] = rel_text[2].strip().encode("utf-8")
+            return result
+        root = etree.parse(document).getroot()
+        document_name = os.path.split(document)[1]
+        self.work_info_map[document_name] = [transform_relationship(r) for r in root.xpath("./related/relationship")]
+
     def populate_works(self):
         for work_entry in self.works_dataset:
             composition_date = int(re.search(r"(\d{4})", work_entry[2]).group(1))
@@ -55,9 +79,12 @@ class BlakeDocumentImporter(object):
                                     composition_date_string=work_entry[2].encode('utf-8'),
                                     image=work_entry[3].encode('utf-8'),
                                     info=work_entry[6].encode('utf-8'))
+            if work_entry[7] in self.work_info_map:
+                work.related_works = self.work_info_map[work_entry[7]]
+            else:
+                print "info file does not exist: %s" % work_entry[7]
             self.works.append(work)
             for copy in work_entry[4].split(","):
-
                 work.copies.append(self.copies[copy])
 
     def process_motif_relationships(self):
@@ -104,6 +131,11 @@ class BlakeDocumentImporter(object):
         for objid in obj.xpath("objtitle/objid"):
             bo.full_object_id = objid.xpath("string()").encode("utf-8")
             break
+        for objnumber in obj.xpath("objtitle/objid/objnumber"):
+            obj_number = objnumber.get("code").encode("utf-8").upper()
+            obj_number_value = re.search(r'\d+', obj_number)
+            if obj_number_value:
+                bo.object_number = int(obj_number_value.group(0))
         for objcode in obj.xpath("objtitle/objid/objcode"):
             obj_id = objcode.get("code").encode("utf-8").upper()
             if obj_id.startswith("B"):
@@ -140,7 +172,7 @@ class BlakeDocumentImporter(object):
                                 composition_date=comp_date, composition_date_string=comp_date_string,
                                 archive_copy_id=archive_copy_id)
         if copy_id in self.copy_handprint_map:
-            copy.image=self.copy_handprint_map[copy_id]
+            copy.image = self.copy_handprint_map[copy_id]
         else:
             print "No handprint for ", copy_id
         for title in root.xpath("header/filedesc/titlestmt/title"):
@@ -165,10 +197,17 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("document_filename")
+    parser.add_argument("info_filename")
     args = parser.parse_args()
-    matching_files = glob.glob(args.document_filename)
+    matching_bad_files = glob.glob(args.document_filename)
+    matching_info_files = glob.glob(args.info_filename)
     importer = BlakeDocumentImporter()
-    for matching_file in matching_files:
+    for matching_info_file in matching_info_files:
+        try:
+            importer.process_info_file(matching_info_file)
+        except ValueError as err:
+            print err
+    for matching_file in matching_bad_files:
         try:
             importer.process(matching_file)
         except ValueError as err:
