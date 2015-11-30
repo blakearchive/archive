@@ -36,7 +36,7 @@ class BlakeDocumentImporter(object):
         with open("static/csv/works.csv") as f:
             self.work_data.csv = f.read()
         for (copy_bad_id, dbi) in self.copy_handprints:
-            self.copy_handprint_map[copy_bad_id] = dbi
+            self.copy_handprint_map[copy_bad_id] = dbi.lower()
         for (desc_id, matching_ids, in_archive) in self.motif_relationships:
             desc_id = desc_id.lower()
             matching_ids = matching_ids.lower()
@@ -60,11 +60,8 @@ class BlakeDocumentImporter(object):
                     "type": link[0].attrib["type"].encode("utf-8")
                 }
             else:
-                title = {"text": rel_text[0].strip().encode("utf-8")}
-            result = {"title": title}
-            if len(rel_text) == 3:
-                result["collection"] = rel_text[1].strip().encode("utf-8")
-                result["location"] = rel_text[2].strip().encode("utf-8")
+                title = {"text": "".join(i.xpath("string()").encode("utf-8").strip() for i in rel.xpath("i"))}
+            result = {"title": title, "info": "<br />".join(rt.encode("utf-8").strip() for rt in rel_text)}
             return result
         root = etree.parse(document).getroot()
         document_name = os.path.split(document)[1]

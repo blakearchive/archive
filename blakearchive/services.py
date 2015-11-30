@@ -8,10 +8,10 @@ import config
 import models
 
 
-if config.solr == "lib_prod":
+if hasattr(config, "solr") and config.solr == "lib_prod":
     blake_object_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake-object')
     blake_work_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake-work')
-elif config.solr == "lib_dev":
+elif hasattr(config, "solr") and config.solr == "lib_dev":
     blake_object_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-object')
     blake_work_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-work')
 else:
