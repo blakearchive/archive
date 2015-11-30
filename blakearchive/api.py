@@ -1,9 +1,12 @@
 import json
 
 from flask import Blueprint, request, current_app, jsonify
+import config
 
-
-api = Blueprint('api', __name__, url_prefix='/blake/api')
+if config.production:
+    api = Blueprint('api', __name__, url_prefix='/api')
+else:
+    api = Blueprint('api', __name__, url_prefix='/blake/api')
 
 
 @api.route('/query_objects', methods=["POST"])

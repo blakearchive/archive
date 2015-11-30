@@ -567,9 +567,77 @@ angular.module('blake').factory("UtilityServices", function() {
         $('.panel-group .panel-body').css('max-height', set_tray_body_height + 'px');
     };
 
+    /**
+     *
+     * @param set_delay in milliseconds
+     * * Get the height of the object detail.
+     * Pretty awkward solution to the way Design Hammer set this up. Image loaded via Ajax, so need a delay to execute getting correct height
+     */
+    var getImageHeight = function(set_delay, $timeout) {
+       angular.element(document).ready(function () {
+            $timeout(function() {
+                var response_change = responseChange();
+                var object_view = $("#object-view");
+
+                // Set the max-height for the detail tray in object view.
+                if ( $('#object-detail-tray').length ) {
+                    trayHeight(object_view);
+                    object_view.resize(response_change.waitForIdle(function() {
+                        trayHeight(object_view);
+                    }, 10));
+                }
+            }, set_delay);
+       });
+    };
+
+    /**
+     * Toggle the info tray open and shut
+     */
+    var togglingTray = function() {
+        var $detail_tray = $('#object-container');
+
+        if ($detail_tray.hasClass('tray-closed')) {
+            $detail_tray.removeClass('tray-closed').addClass('tray-open');
+            setTimeout(function () {
+                $('.scrollbar').scroller('reset');
+            }, 300);
+            $('.scrollbar').scroller('reset');
+        } else {
+            $detail_tray.removeClass('tray-open').addClass('tray-closed');
+            $('.scrollbar').scroller('reset');
+            setTimeout(function () {
+                $('.scrollbar').scroller('reset');
+            }, 300);
+        }
+    };
+
+    var imageText = function($scope, objLines) {
+        $scope.obj.text.lg.forEach(function (lg) {
+            if (lg.l.length) {
+                lg.l.forEach(function (l) {
+                    objLines.push(l["#text"]);
+                })
+            } else {
+                objLines.push(lg.l["#text"])
+            }
+        });
+
+        return objLines;
+    };
+
+    var imageViewerHeight = function() {
+        var viewer_height = $(window).innerHeight();
+        var offset = Math.round(viewer_height * .35);
+        return viewer_height - offset;
+    };
+
     return {
         responseChange: responseChange,
-        trayHeight: trayHeight
+        trayHeight: trayHeight,
+        getImageHeight: getImageHeight,
+        togglingTray: togglingTray,
+        imageText: imageText,
+        imageViewerHeight: imageViewerHeight
     }
 });
 

@@ -6,15 +6,6 @@ div.container-fluid > .navbar-form {
   display: block !important;
 }
 
-.carousel-inner > .item img {
-  max-height: 650px;
-  max-width: 975px;
-}
-
-#archive #object-detail-tray .panel-group .panel.panel-default .panel-body {
-  max-height: 339px !important;
-}
-
 /* Begin image location mods */
 
 .site-header-container a.navbar-brand span.sig {
@@ -311,4 +302,22 @@ div.blake-search .col-md-1 {
 
 .columns, .columns-short {
     margin-left: 0;
+}
+
+/* Won't work in IE, but should help in allowing image clicks on homepage to go to object view */
+.object-description {
+  pointer-events: none;
+}
+
+/* Needed to move buttons back up. They're not clickable if in the info tray header. */
+.panel-body > a.new-window {
+    display: inline-block;
+    margin-top: -40px;
+    position: absolute;
+    right: 5px;
+    z-index: 5;
+}
+
+.panel-body > a.full-screen {
+  right: 35px;
 }

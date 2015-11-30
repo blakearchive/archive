@@ -34,6 +34,14 @@
         </div>
       </div>
     </div>
+    <div class="section-group" ng-class="copies.length > 0 ? '' : 'hidden'">
+      <h3>All Known Related Items</h3>
+      <div class="row" ng-class="copies.length > 2 ? 'columns' : 'columns-short'">
+        <div ng-repeat="copy in copies">
+          <p></p>
+        </div>
+      </div>
+    </div>
   </div>
 
 </article>

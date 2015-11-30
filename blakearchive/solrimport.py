@@ -1,16 +1,24 @@
 __author__ = 'nathan'
 import json
 import pysolr
-
+import config
 import models
 
 
 def main():
     from sqlalchemy.orm import sessionmaker
 
-    blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-object')
-    blake_work_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-work')
-    engine = models.db.create_engine('postgres://bad_test:insecure_password@treehug.its.unc.edu/bad_test')
+    if config.solr == "lib_prod":
+        blake_object_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake-object')
+        blake_work_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake-work')
+    elif config.solr == "lib_dev":
+        blake_object_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-object')
+        blake_work_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-work')
+    else:
+        blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-object')
+        blake_work_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-work')
+
+    engine = models.db.create_engine(config.db_connection_string)
     session = sessionmaker(bind=engine)()
     objects = session.query(models.BlakeObject).all()
     blake_object_solr.delete(q='*:*')
