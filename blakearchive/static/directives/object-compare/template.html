@@ -4,12 +4,12 @@
   </div>
   <!--/.tray-->
   <div id="object-view" class="compare-objects">
-    <div id="compare" class="scrollbar">
+    <div id="compare" class="scrollbar" ng-style="{'height': compareViewerHeight}">
 
         <div id="compared" class="featured-object compare-inner" ng-sortable="{ group: 'o', animation: 150 }">
           <div class="item" ng-repeat="o in comparisonObjects">
             <p class="object-title">{{ o.copy_title }}, Copy {{ o.archive_copy_id }}</p>
-            <img ng-click="copyChange(o.archive_copy_id, o.bad_id)" src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg">
+            <img ng-click="updateCopyInfo(o.desc_id, '')" ng-style="{'max-height': compareImageHeight}" src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg">
 
             <p class="object-subtitle">{{ o.copy_composition_date }} ({{ o.copy_institution }}) {{ o.full_object_id }}
             </p>
