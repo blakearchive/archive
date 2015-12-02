@@ -26,7 +26,6 @@ class BlakeDocumentImporter(object):
         self.motif_relationships = tablib.Dataset()
         self.works_dataset = tablib.Dataset()
         self.copy_handprints = tablib.Dataset()
-        self.work_data = tablib.Dataset()
         with open("static/csv/blake-relations.csv") as f:
             self.relationships.csv = f.read()
         with open("static/csv/same_motif.csv") as f:
@@ -34,7 +33,7 @@ class BlakeDocumentImporter(object):
         with open("static/csv/copy-handprints.csv") as f:
             self.copy_handprints.csv = f.read()
         with open("static/csv/works.csv") as f:
-            self.work_data.csv = f.read()
+            self.works_dataset.csv = f.read()
         for (copy_bad_id, dbi) in self.copy_handprints:
             self.copy_handprint_map[copy_bad_id] = dbi.lower()
         for (desc_id, matching_ids, in_archive) in self.motif_relationships:
@@ -44,8 +43,6 @@ class BlakeDocumentImporter(object):
             for matching_id in matching_ids_set:
                 all_but_current_id = matching_ids_set ^ set([matching_id])
                 self.motif_relationships_expanded[matching_id].update(all_but_current_id)
-        with open("static/csv/works.csv") as f:
-            self.works_dataset.csv = f.read()
         xslt_xml = etree.parse(open("static/xslt/transcription.xsl"))
         self.transform = etree.XSLT(xslt_xml)
 
@@ -155,9 +152,13 @@ class BlakeDocumentImporter(object):
         if not root.tag == "bad":
             raise ValueError("Document is not a blake archive xml document")
         copy_id = root.get("id").lower()
-        for comp_date in root.xpath("//compdate"):
-            comp_date_string = comp_date.xpath("string()").encode("utf-8")
+        for cd in root.xpath("//compdate"):
+            comp_date_string = cd.xpath("string()").encode("utf-8")
             comp_date = re.match("\D*(\d{4})", comp_date_string).group(1)
+            break
+        print_date = None
+        for pd in root.xpath("//printdate"):
+            print_date = pd.attrib["value"]
             break
         archive_copy_id = root.get("copy")
         header_xml = etree.tostring(root.xpath("header")[0], encoding='utf8', method='xml')
@@ -167,7 +168,7 @@ class BlakeDocumentImporter(object):
         objects = [self.process_object(o) for o in root.xpath("objdesc/desc")]
         copy = models.BlakeCopy(bad_id=copy_id, header=header_json, source=source_json, objects=objects,
                                 composition_date=comp_date, composition_date_string=comp_date_string,
-                                archive_copy_id=archive_copy_id)
+                                print_date=print_date, archive_copy_id=archive_copy_id)
         if copy_id in self.copy_handprint_map:
             copy.image = self.copy_handprint_map[copy_id]
         else:
