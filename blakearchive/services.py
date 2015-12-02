@@ -135,7 +135,8 @@ class BlakeDataService(object):
     def get_copies_for_work(cls, bad_id):
         return models.BlakeCopy.query\
             .join(models.BlakeWork)\
-            .filter(models.BlakeWork.bad_id == bad_id).all()
+            .filter(models.BlakeWork.bad_id == bad_id)\
+            .order_by(models.BlakeCopy.print_date).all()
 
     @classmethod
     def get_featured_works(cls, count=25):
