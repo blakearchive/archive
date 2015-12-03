@@ -325,10 +325,3 @@ div.blake-search .col-md-1 {
 .panel-body > a.full-screen {
   right: 35px;
 }
-
-.panel-group .panel-body:-webkit-full-screen, .panel-group .panel-body:-moz-full-screen #tray-description, .panel-group .panel-body:-ms-fullscreen, .panel-group .panel-body:fullscreen {
-  height: 100% !important;
-  width: 100% !important;
-  overflow-x: visible !important;
-  max-height: none;
-}

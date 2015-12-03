@@ -640,7 +640,9 @@ angular.module('blake').factory("UtilityServices", function() {
             var set_tray_height = selector.css('max-height');
             localStorage.setItem('panel-height', set_tray_height);
             Fullscreen.enable(document.getElementById(panel_id));
-            selector.css('max-height', 'none');
+            var max_size = $(window).innerWidth();
+            var offset = Math.round(max_size * .3); // Need offset to show full text for long entries
+            selector.css({'max-height': (max_size - offset) + 'px' });
         }
     };
 
