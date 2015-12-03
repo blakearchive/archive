@@ -310,7 +310,7 @@ div.blake-search .col-md-1 {
 }
 
 /* Needed to move buttons back up. They're not clickable if in the info tray header. */
-.panel-body > a.new-window {
+.panel-body > .new-window {
     display: inline-block;
     margin-top: -40px;
     position: absolute;
@@ -318,6 +318,17 @@ div.blake-search .col-md-1 {
     z-index: 5;
 }
 
+.new-window:hover {
+  cursor: pointer;
+}
+
 .panel-body > a.full-screen {
   right: 35px;
+}
+
+.panel-group .panel-body:-webkit-full-screen, .panel-group .panel-body:-moz-full-screen #tray-description, .panel-group .panel-body:-ms-fullscreen, .panel-group .panel-body:fullscreen {
+  height: 100% !important;
+  width: 100% !important;
+  overflow-x: visible !important;
+  max-height: none;
 }

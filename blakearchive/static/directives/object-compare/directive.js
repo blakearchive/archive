@@ -11,7 +11,7 @@ angular.module('blake').directive("objectCompare", function () {
     }
 });
 
-angular.module('blake').controller("ObjectCompareController",['$scope', '$timeout', 'BlakeDataService', 'UtilityServices', function ($scope, $timeout, BlakeDataService, UtilityServices) {
+angular.module('blake').controller("ObjectCompareController",['$scope', '$timeout', 'Fullscreen', 'BlakeDataService', 'UtilityServices', function ($scope, $timeout, Fullscreen, BlakeDataService, UtilityServices) {
 
     $scope.BlakeDataService = BlakeDataService;
 
@@ -26,10 +26,11 @@ angular.module('blake').controller("ObjectCompareController",['$scope', '$timeou
     $scope.getObjLines = function () {
         var objLines = [];
         if ($scope.obj) {
-            if ($scope.obj.text.lg !== undefined && $scope.obj.text.lg.length) {
+            if ($scope.obj.text.lg !== undefined && $scope.obj.text.lg !== null && $scope.obj.text.lg.length) {
                 objLines = UtilityServices.imageText($scope, objLines);
             }
         }
+
         return objLines;
     };
 
@@ -39,6 +40,13 @@ angular.module('blake').controller("ObjectCompareController",['$scope', '$timeou
      // Set viewer height
     $scope.compareViewerHeight = UtilityServices.imageViewerHeight() + 'px';
     $scope.compareImageHeight = ($scope.compareViewerHeight.split('px')[0] - 125)  + 'px';
+
+    // Open an info panel in fullscreen mode
+    $scope.goFullscreen = function(panel_id) {
+        UtilityServices.fullScreen(Fullscreen, panel_id);
+    };
+    // Reset to previous panel dimensions, set by UtilityServices.trayHeight
+    UtilityServices.resetPanelFromFullscreen(Fullscreen);
 
     $scope.comparisonObjects = BlakeDataService.getComparisonObjects();
     $scope.obj = BlakeDataService.getSelectedObject();
