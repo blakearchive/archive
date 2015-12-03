@@ -7,7 +7,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
         return {}
     }]);
 
-angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable']).config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular']).config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when(directoryPrefix + '/', {
         templateUrl: directoryPrefix + '/static/html/home.html',
         controller: "HomeController"
@@ -631,13 +631,46 @@ angular.module('blake').factory("UtilityServices", function() {
         return viewer_height - offset;
     };
 
+    var fullScreen = function(Fullscreen, panel_id) {
+        var selector = $('.panel-group .panel-body');
+
+        if (Fullscreen.isEnabled()) {
+            Fullscreen.cancel();
+        } else {
+            var set_tray_height = selector.css('max-height');
+            localStorage.setItem('panel-height', set_tray_height);
+            Fullscreen.enable(document.getElementById(panel_id));
+            selector.css('max-height', 'none');
+        }
+    };
+
+    var resetPanelFromFullscreen = function(Fullscreen) {
+        if (document.addEventListener) {
+            document.addEventListener('webkitfullscreenchange', resetPanelSize, false);
+            document.addEventListener('mozfullscreenchange', resetPanelSize, false);
+            document.addEventListener('fullscreenchange', resetPanelSize, false);
+            document.addEventListener('MSFullscreenChange', resetPanelSize, false);
+        }
+
+        function resetPanelSize() {
+            if(!Fullscreen.isEnabled()) {
+               // Reset to previous max height
+                var height_property = localStorage.getItem('panel-height');
+                localStorage.removeItem('panel-height');
+                $('.panel-group .panel-body').css('max-height', height_property);
+            }
+        }
+    };
+
     return {
         responseChange: responseChange,
         trayHeight: trayHeight,
         getImageHeight: getImageHeight,
         togglingTray: togglingTray,
         imageText: imageText,
-        imageViewerHeight: imageViewerHeight
+        imageViewerHeight: imageViewerHeight,
+        fullScreen: fullScreen,
+        resetPanelFromFullscreen: resetPanelFromFullscreen
     }
 });
 
