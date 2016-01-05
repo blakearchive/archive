@@ -18,6 +18,17 @@ angular.module('blake').controller("CopyInformationController",['$scope', 'Blake
         $scope.copy = BlakeDataService.getSelectedCopy();
     });
 
+    $scope.$on("objectSelectionChange", function () {
+        var obj = BlakeDataService.getSelectedObject(), copy = BlakeDataService.getSelectedCopy();
+        if (copy.source && copy.header) {
+            $scope.copySource = copy.source;
+            $scope.copyHeader = copy.header;
+        } else {
+            $scope.copySource = obj.source;
+            $scope.copyHeader = obj.header;
+        }
+    });
+
     $scope.getOriginationRole = function (role) {
         if (role) {
             if (role.join) {
