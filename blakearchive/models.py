@@ -49,6 +49,8 @@ class BlakeObject(db.Model):
     markup_text = db.Column(db.Text)
     physical_description = db.Column(JSON)
     title = db.Column(db.UnicodeText)
+    header = db.Column(JSON)
+    source = db.Column(JSON)
     objects_from_same_matrix = db.relationship(
         "BlakeObject",
         secondary=matrix__object,
@@ -91,7 +93,9 @@ class BlakeObject(db.Model):
             "text": self.text,
             "markup_text": self.markup_text,
             "physical_description": self.physical_description,
-            "title": self.title
+            "title": self.title,
+            "header": self.header,
+            "source": self.source
         }
 
 
@@ -144,6 +148,7 @@ class BlakeWork(db.Model):
     composition_date = db.Column(db.Integer)
     composition_date_string = db.Column(db.UnicodeText)
     related_works = db.Column(JSON)
+    virtual = db.Column(db.Boolean)
 
     @property
     def to_dict(self):
@@ -156,7 +161,8 @@ class BlakeWork(db.Model):
             "image": self.image,
             "composition_date": self.composition_date,
             "composition_date_string": self.composition_date_string,
-            "related_works": self.related_works
+            "related_works": self.related_works,
+            "virtual": self.virtual
         }
 
 
