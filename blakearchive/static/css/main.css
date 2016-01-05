@@ -8,6 +8,57 @@ div.container-fluid > .navbar-form {
 
 /* Begin image location mods */
 
+#home .col-xs-1, 
+#home .col-sm-1, 
+#home .col-md-1, 
+#home .col-lg-1, 
+#home .col-xs-2, 
+#home .col-sm-2, 
+#home .col-md-2, 
+#home .col-lg-2, 
+#home .col-xs-3, 
+#home .col-sm-3, 
+#home .col-md-3, 
+#home .col-lg-3, 
+#home .col-xs-4, 
+#home .col-sm-4, 
+#home .col-md-4, 
+#home .col-lg-4, 
+#home .col-xs-5, 
+#home .col-sm-5, 
+#home .col-md-5, 
+#home .col-lg-5, 
+#home .col-xs-6, 
+#home .col-sm-6, 
+#home .col-md-6, 
+#home .col-lg-6, 
+#home .col-xs-7, 
+#home .col-sm-7, 
+#home .col-md-7, 
+#home .col-lg-7, 
+#home .col-xs-8, 
+#home .col-sm-8, 
+#home .col-md-8, 
+#home .col-lg-8, 
+#home .col-xs-9, 
+#home .col-sm-9, 
+#home .col-md-9, 
+#home .col-lg-9, 
+#home .col-xs-10, 
+#home .col-sm-10, 
+#home .col-md-10, 
+#home .col-lg-10, 
+#home .col-xs-11, 
+#home .col-sm-11, 
+#home .col-md-11, 
+#home .col-lg-11, 
+#home .col-xs-12, 
+#home .col-sm-12, 
+#home .col-md-12, 
+#home .col-lg-12 {
+  padding-right: 0;
+}
+
 .site-header-container a.navbar-brand span.sig {
   background-image: url("../img/global/william_blake_archive.png") !important;
 }
@@ -310,12 +361,16 @@ div.blake-search .col-md-1 {
 }
 
 /* Needed to move buttons back up. They're not clickable if in the info tray header. */
-.panel-body > a.new-window {
+.panel-body > .new-window {
     display: inline-block;
     margin-top: -40px;
     position: absolute;
     right: 5px;
     z-index: 5;
+}
+
+.new-window:hover {
+  cursor: pointer;
 }
 
 .panel-body > a.full-screen {

@@ -10,7 +10,7 @@ angular.module('blake').directive("objectViewer", function () {
     }
 });
 
-angular.module('blake').controller("ObjectViewerController",['$rootScope', '$scope', '$timeout', 'BlakeDataService', 'UtilityServices', function ($rootScope, $scope, $timeout, BlakeDataService, UtilityServices) {
+angular.module('blake').controller("ObjectViewerController",['$rootScope', '$scope', '$timeout', 'Fullscreen', 'BlakeDataService', 'UtilityServices', function ($rootScope, $scope, $timeout, Fullscreen, BlakeDataService, UtilityServices) {
     $rootScope.showSubMenu = 1;
     $scope.BlakeDataService = BlakeDataService;
 
@@ -52,6 +52,14 @@ angular.module('blake').controller("ObjectViewerController",['$rootScope', '$sco
         var full_text = e.target.innerHTML;
         window.open('http://www.blakearchive.org/blake/')
     };
+
+    // Open an info panel in fullscreen mode
+    $scope.goFullscreen = function(panel_id) {
+        UtilityServices.fullScreen(Fullscreen, panel_id);
+    };
+
+    // Reset to previous panel dimensions, originally set by UtilityServices.trayHeight
+    UtilityServices.resetPanelFromFullscreen(Fullscreen);
 
     // Set viewer height
     $scope.viewerHeight = UtilityServices.imageViewerHeight() + 'px';
