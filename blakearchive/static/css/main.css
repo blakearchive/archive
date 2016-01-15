@@ -273,7 +273,7 @@ a.new-window {
 }
 
 #home.container-fluid.main .row div[class^="col-"] {
-  padding-left: 1px;
+  padding: 0;
 }
 
 #archive #object-view.compare-objects #compare .compare-inner .item {
@@ -375,4 +375,66 @@ div.blake-search .col-md-1 {
 
 .panel-body > a.full-screen {
   right: 35px;
+}
+
+
+/******
+* Image Waterfall
+*******/
+#home.homePageOverride.container-fluid.main {
+  overflow: hidden;
+  max-height: 800px;
+}
+
+@media (max-width: 400px) {
+  #home.homePageOverride.container-fluid.main {
+    max-height: 1470px;
+  }
+}
+@media (min-width: 768px) {
+  #home.homePageOverride.container-fluid.main {
+    max-height: inherit;
+  }
+}
+
+@media (min-width: 768px) {
+  #home.homePageOverride.container-fluid.main .row div[class^="col-"] {
+    max-width: 340px;
+    max-height: 800px;
+  }
+}
+@media (min-width: 1890px) {
+  #home.homePageOverride.container-fluid.main .row div[class^="col-"] {
+    max-width: 16.7%;
+    max-height: 900px;
+  }
+}
+
+@media (min-width: 768px) {
+  #home.homePageOverride.container-fluid.main .row div[class^="col-"] div.scrolling {
+    display: block;
+  }
+}
+
+@media (min-width: 768px) {
+    #home.homePageOverride.container-fluid.main .row div[class^="col-"] span.object-container {
+      padding: 3px;
+    }
+}
+#home.homePageOverride.container-fluid.main .row div[class^="col-"] span.object-container {
+  display: block;
+  padding: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+#home.homePageOverride.container-fluid.main .row div[class^="col-"] span.object-container a img{
+  min-width: 100%;
+}
+
+@media (min-width: 768px) {
+  #home.homePageOverride.container-fluid.main > div > .row {
+    margin-left: -6%;
+    width: 2040px;
+  }
 }
