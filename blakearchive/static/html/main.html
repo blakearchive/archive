@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The William Blake Archive</title>
-  <!-- <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
-<!--      <link rel="stylesheet" href="/blake/static/css/styles.css">
-   <link rel="stylesheet" href="/blake/static/css/main.css">-->
-  <link rel="stylesheet" href="/blake/static/css/angular.rangeSlider.css">
- <link rel="stylesheet" href="/blake/static/css/output.min.css">
-  <base href="/">
-  <link rel="icon" href="/blake/static/img/favicon.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The William Blake Archive</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/blake/static/css/styles.css">
+    <link rel="stylesheet" href="/blake/static/css/main.css">
+    <link rel="stylesheet" href="/blake/static/css/angular.rangeSlider.css">
+    <!--<link rel="stylesheet" href="/blake/static/css/output.min.css">-->
+    <base href="/">
+    <link rel="icon" href="/blake/static/img/favicon.ico" type="image/x-icon">
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,7 +21,6 @@
     <![endif]-->
 </head>
 <body class="home ng-scope" ng-app="blake">
-
 <div class="site-header-container">
   <div class="container-fluid site-header">
         <a class="navbar-brand" href="/"><span class="name">The William Blake Archive</span><span
@@ -62,7 +61,7 @@
   <li><a href="/blake/search/">Search</a></li>
 </ul>
 -->
-<div  id="home" class="container-fluid main">
+<div  id="home" class="container-fluid main" ng-class="{'homePageOverride': homePageOverride == true}">
   <!-- This div is the viewport where all views will be loaded, so css for individual pages should
        be based on elements below this point in the DOM -->
   <div ng-view autoscroll></div>

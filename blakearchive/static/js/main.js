@@ -681,7 +681,18 @@ angular.module('blake').factory("UtilityServices", function() {
 angular.module('blake').controller("HomeController", ['$rootScope', '$scope', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
     $rootScope.showSubMenu = 0;
     BlakeDataService.getFeaturedWorks().then(function (results) {
+        var i = 0,
+            sci = 1;
+        angular.forEach(results, function(value) {
+            value.column = sci;
+            ++i;
+            if(i == 4){
+                ++sci;
+                i = 0;
+            }
+        });
         $scope.featured_works = results;
+        $rootScope.homePageOverride= true;
     });
 }]);
 
@@ -689,7 +700,7 @@ angular.module('blake').controller("WorkController", ['$scope', '$routeParams', 
     BlakeDataService.setSelectedWork($routeParams.workId);
 }]);
 
-angular.module('blake').controller("ObjectController", ['$scope', '$routeParams', 'BlakeDataService', function ($scope, $routeParams, BlakeDataService) {
+angular.module('blake').controller("ObjectController", ['$scope', '$routeParams', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
     BlakeDataService.setSelectedWork($routeParams.objectId);
 }]);
 
