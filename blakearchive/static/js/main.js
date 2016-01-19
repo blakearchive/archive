@@ -70,6 +70,8 @@ angular.module('blake').factory("BlakeObject", ['GenericService', function (Gene
         obj.illustration_description = angular.fromJson(config.illustration_description);
         obj.characteristics = angular.fromJson(config.characteristics);
         obj.text = angular.fromJson(config.text);
+        obj.header = angular.fromJson(config.header);
+        obj.source = angular.fromJson(config.source);
         return obj;
     };
 
@@ -692,7 +694,9 @@ angular.module('blake').controller("ObjectController", ['$scope', '$routeParams'
 }]);
 
 angular.module('blake').controller("CopyController", ['$scope', '$routeParams', 'BlakeDataService', function ($scope, $routeParams, BlakeDataService) {
-    BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.objectId);
+    BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.objectId).then(function (results) {
+        BlakeDataService.setSelectedWork(BlakeDataService.getSelectedCopy().bad_id)
+    });
 }]);
 
 angular.module('blake').controller("SearchController", ['$rootScope', '$scope', '$location', '$routeParams', 'BlakeDataService', function ($rootScope, $scope, $location, $routeParams, BlakeDataService) {

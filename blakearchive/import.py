@@ -1,5 +1,3 @@
-__author__ = 'nathan'
-
 import argparse
 import glob
 import os
@@ -8,6 +6,7 @@ import json
 import tablib
 import re
 from collections import defaultdict
+import itertools
 from lxml import etree
 import xmltodict
 import models
@@ -21,6 +20,7 @@ class BlakeDocumentImporter(object):
         self.objects = {}
         self.copy_handprint_map = {}
         self.work_info_map = {}
+        self.virtual_works = defaultdict(lambda: set())
         self.motif_relationships_expanded = defaultdict(lambda: set())
         self.relationships = tablib.Dataset()
         self.motif_relationships = tablib.Dataset()
@@ -34,6 +34,8 @@ class BlakeDocumentImporter(object):
             self.copy_handprints.csv = f.read()
         with open("static/csv/works.csv") as f:
             self.works_dataset.csv = f.read()
+            for (work_id, bads) in zip(self.works_dataset["bad_id"], self.works_dataset["virtual objects"]):
+                self.virtual_works[work_id].update(re.split(r",\s*", bads))
         for (copy_bad_id, dbi) in self.copy_handprints:
             self.copy_handprint_map[copy_bad_id] = dbi.lower()
         for (desc_id, matching_ids, in_archive) in self.motif_relationships:
@@ -65,21 +67,43 @@ class BlakeDocumentImporter(object):
         self.work_info_map[document_name] = [transform_relationship(r) for r in root.xpath("./related/relationship")]
 
     def populate_works(self):
-        for work_entry in self.works_dataset:
-            composition_date = int(re.search(r"(\d{4})", work_entry[2]).group(1))
-            work = models.BlakeWork(title=work_entry[0].encode('utf-8'), medium=work_entry[1],
-                                    bad_id=work_entry[5],
+        for (title, medium, composition_date_string, cover_image, copies, bad_id, info, info_filename, virtual,
+             virtual_objects) in self.works_dataset:
+            if not bad_id:
+                bad_id = info_filename.split(".", 1)[0]
+            composition_date = int(re.search(r"(\d{4})", composition_date_string).group(1))
+            work = models.BlakeWork(title=title.encode('utf-8'), medium=medium,
+                                    bad_id=bad_id, virtual=bool(virtual),
                                     composition_date=composition_date,
-                                    composition_date_string=work_entry[2].encode('utf-8'),
-                                    image=work_entry[3].encode('utf-8'),
-                                    info=work_entry[6].encode('utf-8'))
-            if work_entry[7] in self.work_info_map:
-                work.related_works = self.work_info_map[work_entry[7]]
+                                    composition_date_string=composition_date_string.encode('utf-8'),
+                                    image=cover_image.encode('utf-8'),
+                                    info=info.encode('utf-8'))
+            if info_filename in self.work_info_map:
+                work.related_works = self.work_info_map[info_filename]
             else:
-                print "info file does not exist: %s" % work_entry[7]
+                print "info file does not exist: %s" % info_filename
             self.works.append(work)
-            for copy in work_entry[4].split(","):
-                work.copies.append(self.copies[copy])
+            if int(virtual) == 1:
+                # Virtual works need to have a special copy created just for them
+                objects = list(itertools.chain.from_iterable(self.copies[copy_id].objects for copy_id in virtual_objects.split(",")))
+                virtual_work_copy = models.BlakeCopy(work_id=bad_id, title=title.encode('utf-8'), image=cover_image,
+                                                     bad_id=bad_id, archive_copy_id=bad_id,
+                                                     composition_date=composition_date,
+                                                     composition_date_string=composition_date_string)
+                # We need to clean-up since we're not using the previously generated copy, but the new virtual copy
+                for obj in objects:
+                    old_copy = obj.copy
+                    obj.header = old_copy.header
+                    obj.source = old_copy.source
+                    obj.copy = virtual_work_copy
+                    if old_copy.bad_id in self.copies:
+                        del self.copies[old_copy.bad_id]
+                work.copies.append(virtual_work_copy)
+                self.copies[bad_id] = virtual_work_copy
+            else:
+                for copy in copies.split(","):
+                    if copy in self.copies:
+                        work.copies.append(self.copies[copy])
 
     def process_motif_relationships(self):
         for obj in self.objects.values():
