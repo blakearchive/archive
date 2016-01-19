@@ -68,6 +68,12 @@ angular.module('blake').controller("ObjectViewerController",['$rootScope', '$sco
     $scope.copy = BlakeDataService.getSelectedCopy();
     $scope.objects = BlakeDataService.getSelectedCopyObjects();
     $scope.obj = BlakeDataService.getSelectedObject();
+    if ($scope.copy && !$scope.work) {
+        BlakeDataService.setSelectedWork($scope.copy.bad_id)
+    } else {
+        $scope.work = BlakeDataService.getSelectedWork();
+    }
+
     $scope.getPreviousNextObjects();
 
     $scope.$on("copySelectionChange", function () {
@@ -84,5 +90,9 @@ angular.module('blake').controller("ObjectViewerController",['$rootScope', '$sco
         $scope.obj = BlakeDataService.getSelectedObject();
         $scope.getPreviousNextObjects();
         UtilityServices.getImageHeight(100, $timeout);
+    });
+
+    $scope.$on("workSelectionChange", function () {
+        $scope.work = BlakeDataService.getSelectedWork();
     });
 }]);

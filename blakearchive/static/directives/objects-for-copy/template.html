@@ -1,8 +1,10 @@
 <header class="page-header">
   <p class="subhead">Objects In Copy</p>
 
-  <h1>{{ copy.header.filedesc.titlestmt.title['@reg'] }}
-    <span>{{ copy.header.filedesc.titlestmt.title.copy['#text'] }}, {{ copy.source.objdescid.compdate['#text'] }} ({{ copy.institution }})</span></h1>
+  <h1 ng-if="!work.virtual">{{ copy.header.filedesc.titlestmt.title['@reg'] }}
+    <span>{{ copy.header.filedesc.titlestmt.title.copy['#text'] }}, {{ copy.source.objdescid.compdate['#text'] }} ({{ copy.institution }})</span>
+  </h1>
+  <h1 ng-if="work.virtual">{{ work.title }}</h1>
 </header>
 <div class="row">
 
