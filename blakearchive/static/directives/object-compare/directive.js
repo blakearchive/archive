@@ -48,7 +48,6 @@ angular.module('blake').controller("ObjectCompareController",['$scope', '$timeou
     // Reset to previous panel dimensions, set by UtilityServices.trayHeight
     UtilityServices.resetPanelFromFullscreen(Fullscreen);
 
-    $scope.compare = true;
     $scope.comparisonObjects = BlakeDataService.getComparisonObjects();
     $scope.obj = BlakeDataService.getSelectedObject();
 
