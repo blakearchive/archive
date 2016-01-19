@@ -26,7 +26,7 @@ angular.module('blake').controller("ObjectCompareController",['$scope', '$timeou
     $scope.getObjLines = function () {
         var objLines = [];
         if ($scope.obj) {
-            if ($scope.obj.text.lg !== undefined && $scope.obj.text.lg !== null && $scope.obj.text.lg.length) {
+            if ($scope.obj.text !== undefined && $scope.obj.text !== null && $scope.obj.text.lg.length) {
                 objLines = UtilityServices.imageText($scope, objLines);
             }
         }
