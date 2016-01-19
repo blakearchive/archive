@@ -9,8 +9,8 @@
     <div class="col-sm-12 action-items">
       <div class="action-items-wrapper matrix">
         <ul class="list-unstyled">
-          <li><a class="select-all-objects" ng-click="selectAll()">Select All Objects</a></li>
-          <li><a href="/blake/compare/" class="compare-selected-objects">Compare The 3 Selected Objects</a></li>
+          <li><a class="select-all-objects" ng-click="selectAll()" ng-model="selectedAll">{{ compareText }}</a></li>
+          <li><a href="/blake/compare/" class="compare-selected-objects">Compare Selected Objects</a></li>
         </ul>
       </div>
     </div>
@@ -20,12 +20,16 @@
       <div class="handprint-block">
         <a href="/blake/copy/{{ obj.copy_bad_id }}/{{ obj.object_id }}">
           <span class="object-img"
-                style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
+                style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg); background-size: 100% 100%;">
+          </span>
           <span
               class="description"><strong>{{ obj.copy_title }}</strong> Copy {{ obj.archive_copy_id }}, {{ obj.copy_composition_date }} ({{ obj.copy_institution }})
            {{ obj.full_object_id }}
           </span>
         </a>
+        <div class="selected-for-compare">
+          <input type="checkbox" class="selected-img" ng-model="obj.Selected" ng-click="selectOne(obj)">
+        </div>
       </div>
     </div>
 
