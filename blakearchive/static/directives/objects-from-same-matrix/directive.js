@@ -23,19 +23,20 @@ angular.module('blake').controller("ObjectsFromSameMatrixController", ['$scope',
         }
     });
 
-    //
+    // Add/remove all objects for comparison
     $scope.compareText = "Select All Objects";
     $scope.selectedAll = false;
+    BlakeDataService.clearComparisonObjects();
 
-    // Select all objects for comparison
     $scope.selectAll = function () {
         var obj_size = $scope.objects.length;
+        BlakeDataService.clearComparisonObjects(); // Clear out old comparisons
 
         if(!$scope.selectedAll) {
             $scope.compareText = "Clear All Objects";
             $scope.selectedAll = true;
 
-            // Main viewer img
+            // Add main viewer img
             BlakeDataService.addComparisonObject($scope.item);
 
             // Add imgs to compare main viewer img too.
@@ -46,12 +47,28 @@ angular.module('blake').controller("ObjectsFromSameMatrixController", ['$scope',
         } else {
             $scope.compareText = "Select All Objects";
             $scope.selectedAll = false;
-            BlakeDataService.removeComparisonObject($scope.item);
 
             for (var j = obj_size; j--;) {
                 $scope.objects[j].Selected = false;
-                BlakeDataService.removeComparisonObject($scope.objects[j]);
             }
+
+            BlakeDataService.clearComparisonObjects();
+        }
+    };
+
+    // Add/remove single object for comparison
+    $scope.selectOne = function(obj) {
+        if(!obj.Selected) {
+            obj.Selected = false;
+            BlakeDataService.removeComparisonObject(obj);
+        } else {
+            obj.Selected = true;
+            BlakeDataService.addComparisonObject(obj);
+        }
+
+        // Add main viewer img
+        if(BlakeDataService.getComparisonObjects) {
+            BlakeDataService.addComparisonObject($scope.item);
         }
     };
 }]);
