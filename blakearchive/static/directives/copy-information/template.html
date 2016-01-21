@@ -1,26 +1,28 @@
 <header class="page-header">
-  <p class="subhead">Copy Information</p>
-
-  <h1>{{ copyHeader.filedesc.titlestmt.title['@reg'] }}</h1>
+    <p class="subhead">Copy Information</p>
+    <h1>{{ copyHeader.filedesc.titlestmt.title['@reg'] }}</h1>
 </header>
 
-<div class="row copy-info">
-  <div class="col-sm-6">
-    <h3>Copy Information</h3>
-    <dl class="dl-horizontal">
-      <dt>Title:</dt>
-      <dd>{{ copyHeader.filedesc.titlestmt.title['@reg'] }}</dd>
-      <div ng-repeat="origination in copySource.objdescid.origination">
-        <dt>Origination:</dt>
-        <dd>{{ origination['#text'] }}: {{ getOriginationRole(origination['role']) }}</dd>
-        <div ng-if="origination.note">
-          <dt>Note:</dt>
-          <dd>{{ origination.note['#text'] }}</dd>
-        </div>
-      </div>
-      <dt>Publisher:</dt>
-      <dd>{{ copySource.objdescid.imprint.publisher['#text'] }}</dd>
-      <div ng-if="copySource.objdescid.imprint.publisher.note">
+<div class="row">
+    <div class="col-sm-6">
+        <h3>Copy Information</h3>
+        <dl>
+
+            <dt>Title:</dt>
+            <dd>{{ copyHeader.filedesc.titlestmt.title['@reg'] }}</dd>
+
+            <div ng-repeat="origination in copySource.objdescid.origination">
+                <dt>Origination:</dt>
+                <dd>{{ origination['#text'] }}: {{ getOriginationRole(origination['role']) }}</dd>
+                <div ng-if="origination.note">
+                    <dt>Note:</dt>
+                    <dd>{{ origination.note['#text'] }}</dd>
+                </div>
+            </div>
+
+            <dt>Publisher:</dt>
+            <dd>{{ copySource.objdescid.imprint.publisher['#text'] }}</dd>
+            <div ng-if="copySource.objdescid.imprint.publisher.note">
         <dt>Note:</dt>
         <dd>{{ copySource.objdescid.imprint.publisher.note['#text'] }}</dd>
       </div>
@@ -95,7 +97,7 @@
     </dl>
   </div>
 
-  <div class="col-sm-6" id="copy-col-2">
+  <div class="col-sm-6">
     <h3>Provenance</h3>
     <dl class="dl-horizontal">
       <dt>Name:</dt>

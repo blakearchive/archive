@@ -8069,13 +8069,8 @@ a.new-window:hover {
   }
 }
 @media (min-width: 768px) {
-  copy-information .col-sm-6:first-child {
-    border-right: 1px solid lightgray;
-  }
-}
-@media (min-width: 768px) {
-  copy-information .col-sm-6:last-child {
-    padding-left: 30px;
+  #archive-tabs .tab-pane#copy-info .col-sm-6:first-child {
+    border-right: 1px solid #f1f1f1;
   }
 }
 
