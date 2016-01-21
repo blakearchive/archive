@@ -1,0 +1,68 @@
+    <div class="container-fluid tabs">
+        <div class="container">
+            <ul class="nav nav-tabs objects" role="tablist">
+                <li ng-repeat="tab in tabs" role="presentation" ng-class="{active: tab.active == 'active'}">
+                    <a href="" ng-click="showTab(tab.href)" role="tab">{{tab.name}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid main">
+        <div class="container">
+            <div class="tab-content">
+                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="selectedTab == '#objects-in-copy'" id="objects-in-copy">
+                    <objects-for-copy></objects-for-copy>
+                </div>
+                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="selectedTab == '#objects-from-same-matrix'"  id="objects-from-same-matrix">
+                    <objects-from-same-matrix></objects-from-same-matrix>
+                </div>
+                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="selectedTab == '#objects-from-same-production-sequence'"  id="objects-from-same-production-sequence">
+                    <objects-from-same-production-sequence></objects-from-same-production-sequence>
+                </div>
+                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="selectedTab == '#objects-with-same-motif'" id="objects-with-same-motif">
+                    <objects-with-same-motif></objects-with-same-motif>
+                </div>
+                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="selectedTab == '#copy-info'" id="copy-info">
+                    <copy-information></copy-information>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<tabset>
+        <tab heading="Objects in Copy" class="show-tab-true">
+            <div class="container-fluid main">
+                <div class="container">
+                    <objects-for-copy></objects-for-copy>
+                </div>
+            </div>
+        </tab>
+        <tab ng-show="BlakeDataService.hasObjectsFromSameMatrix()" class="show-tab-{{BlakeDataService.hasObjectsFromSameMatrix()}}" heading="Objects Printed from the Same Matrix">
+            {{ BlakeDataService.hasObjectsFromSameMatrix() }}
+            <div class="container-fluid main">
+                <div class="container">
+                    <objects-from-same-matrix></objects-from-same-matrix>
+                </div>
+            </div>
+        </tab>
+        <tab ng-show="BlakeDataService.hasObjectsFromSameProductionSequence()" class="show-tab-{{BlakeDataService.hasObjectsFromSameProductionSequence()}}" heading="Objects from the Same Production Sequence">
+            <div class="container-fluid main">
+                <div class="container">
+                    <objects-from-same-production-sequence></objects-from-same-production-sequence>
+                </div>
+            </div>
+        </tab>
+        <tab ng-show="BlakeDataService.hasObjectsWithSameMotif()" class="show-tab-{{BlakeDataService.hasObjectsWithSameMotif()}}" heading="Objects with the Same Motif">
+            <div class="container-fluid main">
+                <div class="container">
+                    <objects-with-same-motif></objects-with-same-motif>
+                </div>
+            </div>
+        </tab>
+        <tab heading="Copy Information" class="show-tab-true">
+            <div class="container-fluid main">
+                <div class="container">
+                    <copy-information></copy-information>
+                </div>
+            </div>
+        </tab>
+    </tabset>-->

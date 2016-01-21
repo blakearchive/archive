@@ -95,4 +95,5 @@ angular.module('blake').controller("ObjectViewerController",['$rootScope', '$sco
     $scope.$on("workSelectionChange", function () {
         $scope.work = BlakeDataService.getSelectedWork();
     });
+
 }]);
