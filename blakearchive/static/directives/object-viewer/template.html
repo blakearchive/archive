@@ -1,4 +1,3 @@
-<div id="archive" class="container-fluid archive-top">
   <div id="object-container" class="row tray-closed">
     <info-tray></info-tray>
   </div>
@@ -10,10 +9,11 @@
         <p ng-if="!work.virtual" class="object-title">{{ copy.header.filedesc.titlestmt.title['@reg'] }}, <span ng-if="copy.archive_copy_id !== ''">Copy</span> {{ copy.archive_copy_id }}</p>
         <p ng-if="work.virtual" class="object-title">{{ work.title }}</p>
         <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox" ng-style="{'height': viewerHeight}">
+        <!--<div class="carousel-inner" role="listbox" ng-style="{'height': viewerHeight}">-->
+        <div class="carousel-inner" role="listbox">
           <div class="item">
-            <img src="http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg" ng-style="{'max-height': imageHeight}">
-
+            <!--<img src="http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg" ng-style="{'max-height': imageHeight}">-->
+            <img src="http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg" style="height: 498px; max-width: 70%;">
             <p class="object-subtitle"><span class="object-no">{{ obj.full_object_id }}</span></p>
           </div>
         </div>
@@ -60,4 +60,3 @@
 
   </div>
   <!--/.object-view-->
-</div>

@@ -7,7 +7,8 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
         return {}
     }]);
 
-angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular']).config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+
+angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate']).config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when(directoryPrefix + '/', {
         templateUrl: directoryPrefix + '/static/html/home.html',
         controller: "HomeController"
@@ -39,6 +40,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
     $routeProvider.otherwise({redirectTo: directoryPrefix + '/'});
     $locationProvider.html5Mode(true);
 }]);
+
 
 angular.module('blake').factory("GenericService", function () {
     return function (constructor) {
@@ -692,7 +694,7 @@ angular.module('blake').controller("HomeController", ['$rootScope', '$scope', 'B
             }
         });
         $scope.featured_works = results;
-        $rootScope.homePageOverride= true;
+        $rootScope.homePageOverride = true;
     });
 }]);
 
