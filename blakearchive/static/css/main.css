@@ -444,59 +444,60 @@ div.blake-search .col-md-1 {
 /******
 * Image Waterfall
 *******/
-#home.homePageOverride.container-fluid.main {
-  overflow: hidden;
-  max-height: 800px;
+#homepage {
+    overflow: hidden;
+    max-height: 800px;
+    margin-bottom: -3em;
 }
 
 @media (max-width: 400px) {
-  #home.homePageOverride.container-fluid.main {
+  #homepage {
     max-height: 1470px;
   }
 }
 @media (min-width: 768px) {
-  #home.homePageOverride.container-fluid.main {
+  #homepage {
     max-height: inherit;
   }
 }
 
 @media (min-width: 768px) {
-  #home.homePageOverride.container-fluid.main .row div[class^="col-"] {
+  #homepage div[class^="col-"] {
     max-width: 340px;
     max-height: 800px;
   }
 }
 @media (min-width: 1890px) {
-  #home.homePageOverride.container-fluid.main .row div[class^="col-"] {
+  #homepage div[class^="col-"] {
     max-width: 16.7%;
     max-height: 900px;
   }
 }
 
 @media (min-width: 768px) {
-  #home.homePageOverride.container-fluid.main .row div[class^="col-"] div.scrolling {
+  #homepage div[class^="col-"] div.scrolling {
     display: block;
   }
 }
 
 @media (min-width: 768px) {
-    #home.homePageOverride.container-fluid.main .row div[class^="col-"] span.object-container {
+    #homepage div[class^="col-"] span.object-container {
       padding: 3px;
     }
 }
-#home.homePageOverride.container-fluid.main .row div[class^="col-"] span.object-container {
+#homepage div[class^="col-"] span.object-container {
   display: block;
   padding: 1px;
   position: relative;
   z-index: 1;
 }
 
-#home.homePageOverride.container-fluid.main .row div[class^="col-"] span.object-container a img{
+#homepage.row div[class^="col-"] span.object-container a img{
   min-width: 100%;
 }
 
 @media (min-width: 768px) {
-  #home.homePageOverride.container-fluid.main > div > .row {
+  #homepage {
     margin-left: -6%;
     width: 2040px;
   }
