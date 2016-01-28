@@ -149,7 +149,24 @@ angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope'
         clearComparisonObjects, isComparisonObject, comparisonObjects = [], hasObjectsWithSameMotif = false,
         hasObjectsFromSameMatrix = false, hasObjectsFromSameProductionSequence = false, objectSelectionChange;
 
+    /**
+     *
+     * @param config - The search configuration
+     * @param config.searchTitle - Perform a title search (both Object and Work)
+     * @param config.workTitleOffset - An optional offset to use for work title search results, for pagination
+     * @param config.objectTitleOffset - An optional offset to use for work title search results, for pagination
+     * @param config.searchWorkInformation - Perform a work information search
+     * @param config.workInformationOffset - An optional offset to use for work information search results, for pagination
+     * @param config.searchImageKeywords - Perform an image keyword search
+     * @param config.objectKeywordOffset - an optional offset to use for image keyword search results, for pagination
+     * @param config.searchText - perform an object text search
+     * @param config.searchTextOffset - optional offset to use for text search results, for pagination
+     * @param config.searchImageDescription - perform an image description search
+     * @param config.objectDescriptionOffset - an optional offset to use for description search results
+     * @returns {*}
+     */
     queryObjects = function (config) {
+
         var url = directoryPrefix + '/api/query_objects';
         return $q(function (resolve, reject) {
             $http.post(url, config).success(function (data) {
@@ -708,7 +725,12 @@ angular.module('blake').controller("ObjectController", ['$scope', '$routeParams'
 
 angular.module('blake').controller("CopyController", ['$scope', '$routeParams', 'BlakeDataService', function ($scope, $routeParams, BlakeDataService) {
     BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.objectId).then(function (results) {
-        BlakeDataService.setSelectedWork(BlakeDataService.getSelectedCopy().bad_id)
+        var copyBad = BlakeDataService.getSelectedCopy().bad_id,
+            workBadMatch = /(.*)\.\w*/.exec(copyBad),
+            workBad = workBadMatch ? workBadMatch[0] : null;
+        if (workBad) {
+            BlakeDataService.setSelectedWork(workBad);
+        }
     });
 }]);
 
@@ -779,7 +801,7 @@ angular.module('blake').controller("SearchController", ['$rootScope', '$scope', 
     $scope.objectResultsMatchingFilter = function (resultType) {
         var i, inRange = [], results;
         if ($scope.results) {
-            results = $scope.results.object_results[resultType];
+            results = $scope.results.object_results[resultType].results;
             for (i = 0; i < results.length; i++) {
                 if (results[i].copy_composition_date >= $scope.searchConfig.minDate &&
                     results[i].copy_composition_date <= $scope.searchConfig.maxDate &&
@@ -794,7 +816,7 @@ angular.module('blake').controller("SearchController", ['$rootScope', '$scope', 
     $scope.workResultsMatchingFilter = function (resultType) {
         var i, inRange = [], results;
         if ($scope.results) {
-            results = $scope.results.work_results[resultType];
+            results = $scope.results.work_results[resultType].results;
             for (i = 0; i < results.length; i++) {
                 if (results[i].composition_date >= $scope.searchConfig.minDate &&
                     results[i].composition_date <= $scope.searchConfig.maxDate &&

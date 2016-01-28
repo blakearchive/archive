@@ -1,6 +1,6 @@
 import json
 
-from flask import Blueprint, request, current_app, jsonify
+from flask import Blueprint, request, current_app, jsonify, abort
 import config
 
 if hasattr(config, "production") and config.production:
@@ -70,6 +70,8 @@ def get_copies_for_work(work_id):
 def get_work(work_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     result = blake_data_service.get_work(work_id)
+    if not result:
+        return abort(404)
     return jsonify(result.to_dict)
 
 
