@@ -7,7 +7,8 @@
     <title>The William Blake Archive</title>
     <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/blake/static/css/styles.css">
-    <link rel="stylesheet" href="/blake/static/css/main.css">
+    <link rel="stylesheet" href="/blake/static/css/override.css">
+    <!--<link rel="stylesheet" href="/blake/static/css/main.css">-->
     <link rel="stylesheet" href="/blake/static/css/angular.rangeSlider.css">
     <!--<link rel="stylesheet" href="/blake/static/css/output.min.css">-->
     <base href="/">
@@ -20,7 +21,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="home ng-scope" ng-app="blake">
+<body ng-app="blake" resize scroll>
 <div class="site-header-container">
   <div class="container-fluid site-header">
         <a class="navbar-brand" href="/"><span class="name">The William Blake Archive</span><span
@@ -61,13 +62,11 @@
   <li><a href="/blake/search/">Search</a></li>
 </ul>
 -->
-<div  id="home" class="container-fluid main">
-  <!-- This div is the viewport where all views will be loaded, so css for individual pages should
+<!-- This div is the viewport where all views will be loaded, so css for individual pages should
        be based on elements below this point in the DOM -->
-  <div ng-view autoscroll></div>
-</div>
-
-<span class="back-top">Back to top</span>
+<div ng-view autoscroll></div>
+{{test}}
+<span class="back-top" ng-class="{'scrolling': showToTop}">Back to top</span>
 
 <div class="container">
 
@@ -129,20 +128,21 @@
 <script src="/blake/static/js/jquery.lazyload.min.js"></script>
 <script src="/blake/static/js/jquery.fs.scroller.min.js"></script>
 <script src="/blake/static/js/angular.rangeSlider.min.js"></script>
-<script src="/blake/static/js/main.js"></script>
 <script src="/blake/static/js/scripts.js"></script>
 <script src="/blake/static/js/main.js"></script>
-<script src="/blake/static/directives/objects-for-copy/directive.js"></script>
-<script src="/blake/static/directives/copies-for-work/directive.js"></script>
+<script src="/blake/static/directives/objects-for-copy/objectsForCopy.directive.js"></script>
 <script src="/blake/static/directives/view-sub-menu/directive.js"></script>
 <script src="/blake/static/directives/menu/directive.js"></script>
-<script src="/blake/static/directives/copy-information/directive.js"></script>
-<script src="/blake/static/directives/object-viewer/directive.js"></script>
-<script src="/blake/static/directives/objects-from-same-matrix/directive.js"></script>
-<script src="/blake/static/directives/objects-from-same-production-sequence/directive.js"></script>
-<script src="/blake/static/directives/objects-with-same-motif/directive.js"></script>
+<script src="/blake/static/directives/copy-information/copyInformation.directive.js"></script>
+<script src="/blake/static/directives/objects-from-same-matrix/objectsFromSameMatrix.directive.js"></script>
+<script src="/blake/static/directives/objects-from-same-production-sequence/objectsFromSameProduction.directive.js"></script>
+<script src="/blake/static/directives/objects-with-same-motif/objectsWithSameMotif.directive.js"></script>
 <script src="/blake/static/directives/object-compare/directive.js"></script>
-<script src="/blake/static/directives/info-tray/directive.js"></script>
-<script src="/blake/static/directives/copy-tabs/directive.js"></script>
-<!-- <script src="/blake/static/js/minified/output.min.js"></script> -->
+<script src="/blake/static/directives/info-tray/infoTray.directive.js"></script>
+<script src="/blake/static/directives/copy-tabs/copyTabs.directive.js"></script>
+<script src="/blake/static/controllers/copy/copy.controller.js"></script>
+<script src="/blake/static/controllers/work/work.controller.js"></script>
+<script src="/blake/static/controllers/search/search.controller.js"></script>
+<script src="/blake/static/controllers/home/home.controller.js"></script>
+<!--<script src="/blake/static/js/minified/output.min.js"></script>-->
 </html>
