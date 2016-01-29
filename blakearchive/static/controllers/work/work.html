@@ -1,0 +1,100 @@
+<div id="categories-section" class="container-fluid main">
+    <header class="page-header">
+        <p class="subhead">{{ workCtrl.work.medium_pretty }}</p>
+        <h1>{{ workCtrl.work.title }} ({{ workCtrl.work.composition_date_string }})</h1>
+    </header>
+
+    <article class="catrgories">
+        <div class="container">
+            <p><em>Dates are the probable dates of printing.</em></p>
+            <div class="row" ng-repeat="increment in workCtrl.rows">
+                <div ng-repeat="copy in workCtrl.copies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3">
+                    <div class="handprint-block">
+                        <a href="/blake/copy/{{ copy.bad_id }}">
+                            <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ copy.image.toLowerCase() }}.100.jpg);"></span>
+                            <span class="description">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date_string }} ({{ copy.institution }})</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="section-group">{{ workCtrl.work.info }}</div>
+        </div>
+    </article>
+</div>
+<div class="container-bottom">
+    <div class="container">
+        <div class="section-group">
+            <h2>Related Works</h2>
+            <p>Related works currently available in the William Blake Archive appear as links below. Works not currently available appear as plain text.</p>
+        </div>
+        <div class="section-group" ng-if="workCtrl.work.medium=='illbk'">
+            <h3>All Known Copies</h3>
+            <div class="row">
+            <!--<div class="row" ng-class="workCtrl.workCtrl.copies.length > 2 ? 'columns' : 'columns-short'">-->
+                <div class="col-sm-4">
+                    <p ng-repeat="copy in workCtrl.copies | limitTo:workCtrl.knownCopiesDiv3">
+                        <a href="/blake/copy/{{ copy.bad_id }}">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date }}</a>
+                        <br/>
+                        {{ copy.institution }}
+                        <br/>
+                        {{ copy.source.repository.addressline[0]['#text'] }}<br>
+                        {{ copy.source.repository.addressline[1]['#text'] }}<br>
+                        {{ copy.source.repository.addressline[2]['#text'] }}
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p ng-repeat="copy in workCtrl.copies | limitTo:workCtrl.knownCopiesDiv3:(workCtrl.knownCopiesDiv3 * 2) - workCtrl.knownCopiesDiv3">
+                        <a href="/blake/copy/{{ copy.bad_id }}">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date }}</a>
+                        <br/>
+                        {{ copy.institution }}
+                        <br/>
+                        {{ copy.source.repository.addressline[0]['#text'] }}<br>
+                        {{ copy.source.repository.addressline[1]['#text'] }}<br>
+                        {{ copy.source.repository.addressline[2]['#text'] }}
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p ng-repeat="copy in workCtrl.copies | limitTo:workCtrl.knownCopiesDiv3:(workCtrl.knownCopiesDiv3 * 3) - workCtrl.knownCopiesDiv3">
+                        <a href="/blake/copy/{{ copy.bad_id }}">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date }}</a>
+                        <br/>
+                        {{ copy.institution }}
+                        <br/>
+                        {{ copy.source.repository.addressline[0]['#text'] }}<br>
+                        {{ copy.source.repository.addressline[1]['#text'] }}<br>
+                        {{ copy.source.repository.addressline[2]['#text'] }}
+                    </p>
+                </div>
+            <!--</div>-->
+            </div>
+        </div>
+        <div class="section-group" ng-class="workCtrl.work.related_works.length > 0 ? '' : 'hidden'">
+            <h3>All Known Related Items</h3>
+            <div class="row">
+                <!--<div class="row" ng-class="workCtrl.work.related_works.length > 2 ? 'columns' : 'columns-short'">-->
+                <div class="col-sm-4">
+                    <p ng-repeat="relatedWork in workCtrl.work.related_works | limitTo:workCtrl.allKnownRelatedItemsDiv3">
+                        <span ng-if="relatedWork.title.type == 'copy'"><a href="/blake/copy/{{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>
+                        <span ng-if="!relatedWork.title.type">{{ relatedWork.title.text }}</span><br />
+                        <span ng-if="relatedWork.info" ng-bind-html="relatedWork.info"></span>
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p ng-repeat="relatedWork in workCtrl.work.related_works | limitTo:workCtrl.allKnownRelatedItemsDiv3:(workCtrl.allKnownRelatedItemsDiv3 * 2) - workCtrl.allKnownRelatedItemsDiv3">
+                        <span ng-if="relatedWork.title.type == 'copy'"><a href="/blake/copy/{{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>
+                        <span ng-if="!relatedWork.title.type">{{ relatedWork.title.text }}</span><br />
+                        <span ng-if="relatedWork.info" ng-bind-html="relatedWork.info"></span>
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p ng-repeat="relatedWork in workCtrl.work.related_works | limitTo:workCtrl.allKnownRelatedItemsDiv3:(workCtrl.allKnownRelatedItemsDiv3 * 3) - workCtrl.allKnownRelatedItemsDiv3">
+                        <span ng-if="relatedWork.title.type == 'copy'"><a href="/blake/copy/{{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>
+                        <span ng-if="!relatedWork.title.type">{{ relatedWork.title.text }}</span><br />
+                        <span ng-if="relatedWork.info" ng-bind-html="relatedWork.info"></span>
+                    </p>
+                </div>
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>
