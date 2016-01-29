@@ -1,0 +1,16 @@
+<div id="home" class="container-fluid main" parallax>
+    <div class="row">
+        <div class="col-sm-2 col-xs-6 scroll-window" ng-repeat="(colKey, colVal) in home.columns">
+            <div id="scroll-wrapper" style="margin-top: {{colVal.topOffset}}" class="scrolling">
+                <span class="object-container" ng-repeat="work in home.featured_works | filter: { column: colKey } track by $index">
+                      <a href="/blake/copy/{{ work.bad_id }}">
+                          <img class="lazy-load" src="/blake/static/img/featured/{{ work.dbi }}.100.jpg">
+                      </a>
+                      <span class="object-description">
+                            <span class="category">{{ work.title }}</span><span class="copy-object">{{ work.byline }}</span>
+                      </span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

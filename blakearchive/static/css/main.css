@@ -503,6 +503,17 @@ div.blake-search .col-md-1 {
   }
 }
 
+@media (min-width: 768px){
+    .scroll-window:nth-child(odd) .scrolling{
+        margin-top: -90px;
+    }
+    .scroll-window:nth-child(even) .scrolling{
+        margin-top: -20px;
+    }
+}
+
+/* END IMAGE WATERFALL */
+
 #archive-tabs .container-fluid.main .container .tab-content .tab-pane .row div[class^="col-"] {
     padding-left: 15px;
     padding-right: 15px;

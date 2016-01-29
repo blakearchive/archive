@@ -1,0 +1,39 @@
+/*
+ * Image Waterfall
+ */
+@media (min-width: 768px){
+    #home.container-fluid.main .row div[class^="col-"] div.scrolling {
+        display: block;
+    }
+}
+#home span.object-container a, #home span.object-container a img{
+    min-width: 100%;
+}
+
+#archive #object-detail-tray .panel-group {
+    min-height: inherit;
+}
+#object-detail-tray-inner,#object-detail-tray-accordion{
+    min-height: inherit;
+}
+
+#archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading a{
+    color: #ccc;
+}
+
+#archive #object-detail-tray .panel-group .panel.panel-default#textual-transcription > .panel-heading a,
+#archive #object-detail-tray .panel-group .panel.panel-default#object-tei > .panel-heading a {
+    background-position: 13px 15px;
+}
+
+#archive #object-detail-tray .panel-group .panel.panel-default#illustration-description > .panel-heading a {
+    background-position: 13px -109px;
+}
+
+#archive #object-detail-tray .panel-group .panel.panel-default#editors-notes > .panel-heading a {
+    background-position: 13px -232px;
+}
+
+#archive #object-detail-tray .panel-group .panel.panel-default#object-metadata > .panel-heading a {
+    background-position: 13px -361px;
+}

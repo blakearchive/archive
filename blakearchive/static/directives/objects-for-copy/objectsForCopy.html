@@ -1,0 +1,18 @@
+<header class="page-header">
+  <p class="subhead">Objects In Copy</p>
+  <h1 ng-if="!oic.work.virtual">{{ oic.copy.header.filedesc.titlestmt.title['@reg'] }}
+    <span>{{ oic.copy.header.filedesc.titlestmt.title.copy['#text'] }}, {{ oic.copy.source.objdescid.compdate['#text'] }} ({{ oic.copy.institution }})</span>
+  </h1>
+  <h1 ng-if="oic.work.virtual">{{ oic.work.title }}</h1>
+</header>
+<div class="row">
+  <div ng-repeat="obj in oic.objects" class="col-sm-6 col-md-3">
+    <div class="handprint-block">
+      <a href="/blake/copy/{{ oic.copy.bad_id }}/{{ obj.object_id }}">
+        <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
+        <span class="description">{{ obj.full_object_id }}</span>
+      </a>
+    </div>
+  </div>
+
+</div>
