@@ -8,41 +8,9 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     }]);
 
 
-angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate']).config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-    $routeProvider.when(directoryPrefix + '/', {
-        templateUrl: directoryPrefix + '/static/html/home.html',
-        controller: "HomeController"
-    });
-    $routeProvider.when(directoryPrefix + '/object/:objectId', {
-        templateUrl: directoryPrefix + '/static/html/object.html',
-        controller: "ObjectController"
-    });
-    $routeProvider.when(directoryPrefix + '/copy/:copyId', {
-        templateUrl: directoryPrefix + '/static/html/copy.html',
-        controller: "CopyController"
-    });
-    $routeProvider.when(directoryPrefix + '/copy/:copyId/:objectId', {
-        templateUrl: directoryPrefix + '/static/html/copy.html',
-        controller: "CopyController"
-    });
-    $routeProvider.when(directoryPrefix + '/work/:workId', {
-        templateUrl: directoryPrefix + '/static/html/work.html',
-        controller: "WorkController"
-    });
-    $routeProvider.when(directoryPrefix + '/compare/', {
-        templateUrl: directoryPrefix + '/static/html/compare.html'
-    });
-    $routeProvider.when(directoryPrefix + '/search/', {
-        templateUrl: directoryPrefix + '/static/html/search.html',
-        controller: "SearchController"
-    });
+angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate'])
 
-    $routeProvider.otherwise({redirectTo: directoryPrefix + '/'});
-    $locationProvider.html5Mode(true);
-}]);
-
-
-angular.module('blake').factory("GenericService", function () {
+.factory("GenericService", function () {
     return function (constructor) {
         return {
             create: function (config) {
@@ -59,28 +27,80 @@ angular.module('blake').factory("GenericService", function () {
             }
         };
     }
-});
+})
 
-angular.module('blake').factory("BlakeObject", ['GenericService', function (GenericService) {
+.factory("BlakeObject", ['GenericService', function (GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeObject.
      *
      * @param config
      */
+
+    parseObjectLines = function(object,array){
+
+        if(angular.isArray(object)) {
+            angular.forEach(object, function (objectSet, lineKey) {
+                if (angular.isArray(objectSet.l)) {
+                    angular.forEach(objectSet.l, function (v, k) {
+                        var indent = angular.isDefined(v['@indent']) ? v['@indent'] : 0;
+                        array.push({'indent': indent, 'text': v['#text']})
+                    });
+                } else {
+                    var indent = angular.isDefined(objectSet.l['@indent']) ? objectSet.l['@indent'] : 0;
+
+                    if (angular.isDefined(objectSet.l.physnumber)) {
+                        array.push({'indent': indent, 'text': objectSet.l.physnumber['#text']})
+                    } else {
+                        array.push({'indent': indent, 'text': objectSet.l['#text']})
+                    }
+                }
+            });
+        } else if (angular.isArray(object.l)){
+            angular.forEach(object.l, function (v, k) {
+                var indent = angular.isDefined(v['@indent']) ? v['@indent'] : 0;
+                array.push({'indent': indent, 'text': v['#text']});
+            });
+        } else {
+            var indent = angular.isDefined(object.l['@indent']) ? object.l['@indent'] : 0;
+
+            if (angular.isDefined(object.l.physnumber)) {
+                array.push({'indent': indent, 'text': object.l.physnumber['#text']});
+            } else {
+                array.push({'indent': indent, 'text': object.l['#text']});
+            }
+        }
+    }
+
+
     var constructor = function (config) {
         var obj = angular.copy(config);
-        obj.illustration_description = angular.fromJson(config.illustration_description);
-        obj.characteristics = angular.fromJson(config.characteristics);
-        obj.text = angular.fromJson(config.text);
-        obj.header = angular.fromJson(config.header);
-        obj.source = angular.fromJson(config.source);
-        return obj;
+        if(obj){
+            obj.illustration_description = angular.fromJson(config.illustration_description);
+            obj.characteristics = angular.fromJson(config.characteristics);
+            obj.text = angular.fromJson(config.text);
+            obj.lines = [];
+            if(angular.isObject(obj.text)){
+                if(angular.isDefined(obj.text.texthead)){
+                    parseObjectLines(obj.text.texthead,obj.lines);
+                }
+
+                if(angular.isDefined(obj.text.lg)){
+                    parseObjectLines(obj.text.lg,obj.lines);
+                }
+
+            }
+            obj.header = angular.fromJson(config.header);
+            obj.source = angular.fromJson(config.source);
+
+            return obj;
+        }
+
     };
 
     return GenericService(constructor);
-}]);
+}])
 
-angular.module('blake').factory("BlakeCopy", ['BlakeObject', 'GenericService', function (BlakeObject, GenericService) {
+.factory("BlakeCopy", ['BlakeObject', 'GenericService', function (BlakeObject, GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeCopy, with child objects transformed into the
      * BlakeObjects.
@@ -101,9 +121,9 @@ angular.module('blake').factory("BlakeCopy", ['BlakeObject', 'GenericService', f
     };
 
     return GenericService(constructor);
-}]);
+}])
 
-angular.module('blake').factory("BlakeWork", ['BlakeCopy','GenericService', function (BlakeCopy, GenericService) {
+.factory("BlakeWork", ['BlakeCopy','GenericService', function (BlakeCopy, GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeWork, with child objects transformed into the
      * BlakeCopies.
@@ -122,9 +142,9 @@ angular.module('blake').factory("BlakeWork", ['BlakeCopy','GenericService', func
     };
 
     return GenericService(constructor);
-}]);
+}])
 
-angular.module('blake').factory("BlakeFeaturedWork", ['GenericService', function (GenericService) {
+.factory("BlakeFeaturedWork", ['GenericService', function (GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeFeaturedWork.
      *
@@ -135,19 +155,21 @@ angular.module('blake').factory("BlakeFeaturedWork", ['GenericService', function
     };
 
     return GenericService(constructor);
-}]);
+}])
 
-/**
- * For the time being, all data accessor functions should be placed here.  This service should mirror the API
- * of the back-end BlakeDataService.
- */
-angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope', 'BlakeWork', 'BlakeCopy', 'BlakeObject', 'BlakeFeaturedWork', function ($http, $q, $rootScope, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
-    var selectedWork, selectedCopy, selectedObject, selectedWorkCopies, selectedCopyObjects, queryObjects,
+.factory("BlakeDataService", ['$http', '$q', '$rootScope', 'BlakeWork', 'BlakeCopy', 'BlakeObject', 'BlakeFeaturedWork', function ($http, $q, $rootScope, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
+    /**
+     * For the time being, all data accessor functions should be placed here.  This service should mirror the API
+     * of the back-end BlakeDataService.
+     */
+
+    var dataFactory = {};
+    /*var selectedWork, selectedCopy, selectedObject, selectedWorkCopies, selectedCopyObjects, queryObjects,
         getObject, getObjectsWithSameMotif, getObjectsFromSameMatrix, getObjectsFromSameProductionSequence,
         getCopy, getObjectsForCopy, getWork, getWorks, getCopiesForWork, getFeaturedWorks, setSelectedWork,
         setSelectedCopy, setSelectedObject, addComparisonObject, removeComparisonObject,
         clearComparisonObjects, isComparisonObject, comparisonObjects = [], hasObjectsWithSameMotif = false,
-        hasObjectsFromSameMatrix = false, hasObjectsFromSameProductionSequence = false, objectSelectionChange;
+        hasObjectsFromSameMatrix = false, hasObjectsFromSameProductionSequence = false, objectSelectionChange;*/
 
     /**
      *
@@ -165,8 +187,8 @@ angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope'
      * @param config.objectDescriptionOffset - an optional offset to use for description search results
      * @returns {*}
      */
-    queryObjects = function (config) {
 
+    dataFactory.queryObjects = function (config) {
         var url = directoryPrefix + '/api/query_objects';
         return $q(function (resolve, reject) {
             $http.post(url, config).success(function (data) {
@@ -177,7 +199,7 @@ angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope'
         });
     };
 
-    getObject = function (objectId) {
+    dataFactory.getObject = function (objectId) {
         var url = directoryPrefix + '/api/object/' + objectId;
         return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
@@ -188,48 +210,49 @@ angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope'
         });
     };
 
-    objectSelectionChange = function () {
-        hasObjectsFromSameMatrix = false;
-        hasObjectsFromSameProductionSequence = false;
-        hasObjectsWithSameMotif = false;
-        $rootScope.$broadcast("objectSelectionChange")
-    };
 
-    getObjectsWithSameMotif = function (objectId) {
+    dataFactory.getObjectsWithSameMotif = function (objectId) {
         var url = directoryPrefix + '/api/object/' + objectId + '/objects_with_same_motif';
+        //console.log('getting motif');
         return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
-                if (data.results.length) {
-                    hasObjectsWithSameMotif = true;
-                }
+                dataFactory.hasObjectsWithSameMotif = data.results.length ? true : false;
+                /*if (data.results.length) {
+                    dataFactory.hasObjectsWithSameMotif = true;
+                }*/
                 resolve(BlakeObject.create(data.results));
+                //console.log('resolved motif');
             }).error(function (data, status) {
                 reject(data, status);
             })
         });
     };
 
-    getObjectsFromSameMatrix = function (objectId) {
+    dataFactory.getObjectsFromSameMatrix = function (objectId) {
         var url = directoryPrefix + '/api/object/' + objectId + '/objects_from_same_matrix';
+        //console.log('getting matrix');
         return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
-                if (data.results.length) {
-                    hasObjectsFromSameMatrix = true;
-                }
+                dataFactory.hasObjectsFromSameMatrix = data.results.length ? true : false;
+                /*if (data.results.length) {
+                    dataFactory.hasObjectsFromSameMatrix = true;
+                }*/
                 resolve(BlakeObject.create(data.results));
+                //console.log('resolved matrix');
             }).error(function (data, status) {
                 reject(data, status);
             })
         });
     };
 
-    getObjectsFromSameProductionSequence = function (objectId) {
+    dataFactory.getObjectsFromSameProductionSequence = function (objectId) {
         var url = directoryPrefix + '/api/object/' + objectId + '/objects_from_same_production_sequence';
         return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
-                if (data.results.length) {
-                    hasObjectsFromSameProductionSequence = true;
-                }
+                dataFactory.hasObjectsFromSameProductionSequence = data.results.length ? true : false;
+                /*if (data.results.length) {
+                    dataFactory.hasObjectsFromSameProductionSequence = true;
+                }*/
                 resolve(BlakeObject.create(data.results));
             }).error(function (data, status) {
                 reject(data, status);
@@ -237,7 +260,7 @@ angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope'
         });
     };
 
-    getCopy = function (copyId) {
+    dataFactory.getCopy = function (copyId) {
         var url = directoryPrefix + '/api/copy/' + copyId;
         return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
@@ -248,7 +271,7 @@ angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope'
         });
     };
 
-    getObjectsForCopy = function (copyId) {
+    dataFactory.getObjectsForCopy = function (copyId) {
         var url = directoryPrefix + '/api/copy/' + copyId + '/objects';
         return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
@@ -259,7 +282,7 @@ angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope'
         });
     };
 
-    getWork = function (workId) {
+    dataFactory.getWork = function (workId) {
         var url = directoryPrefix + '/api/work/' + workId;
         return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
@@ -270,7 +293,7 @@ angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope'
         });
     };
 
-    getWorks = function () {
+    dataFactory.getWorks = function () {
         var url = directoryPrefix + '/api/work/';
         return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
@@ -281,7 +304,7 @@ angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope'
         });
     };
 
-    getCopiesForWork = function (workId) {
+    dataFactory.getCopiesForWork = function (workId) {
         var url = directoryPrefix + '/api/work/' + workId + '/copies';
         return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
@@ -292,7 +315,7 @@ angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope'
         });
     };
 
-    getFeaturedWorks = function () {
+    dataFactory.getFeaturedWorks = function () {
         var url = directoryPrefix + '/api/featured_work/';
         return $q(function (resolve, reject) {
             $http.get(url).success(function (data) {
@@ -303,248 +326,126 @@ angular.module('blake').factory("BlakeDataService", ['$http', '$q', '$rootScope'
         });
     };
 
-    setSelectedWork = function (workId) {
-        return getWork(workId).then(function (work) {
-            selectedWork = work;
-            $rootScope.$broadcast("workSelectionChange", work);
-            getCopiesForWork(workId).then(function (copies) {
-                selectedWorkCopies = copies;
-                $rootScope.$broadcast("workSelectionCopiesChange");
+    dataFactory.setSelectedWork = function (workId) {
+        console.log('trying '+workId);
+        return dataFactory.getWork(workId).then(function (work) {
+            console.log(workId + 'worked');
+            dataFactory.selectedWork = work;
+            dataFactory.getCopiesForWork(workId).then(function (copies) {
+                dataFactory.selectedWorkCopies = copies;
+                $rootScope.$broadcast("update:work");
+                console.log('update:work fired');
             })
-        });
-    };
+        }).catch(function(){
+                console.log(workId + ' did not work');
+                var splitWorkId = workId.split('.');
+                console.log('trying '+splitWorkId[0]);
 
-    setSelectedCopy = function (copyId, objectId) {
-        return getCopy(copyId).then(function (copy) {
-            selectedCopy = copy;
-            $rootScope.$broadcast("copySelectionChange", copy);
-            getObjectsForCopy(copyId).then(function (objects) {
-                selectedCopyObjects = objects;
-                if (objectId) {
-                    objects.forEach(function (obj) {
-                        if (obj.object_id == objectId) {
-                            selectedObject = obj;
-                        }
+                dataFactory.getWork(splitWorkId[0]).then(function (work) {
+                    console.log(splitWorkId[0] + 'worked');
+                    dataFactory.selectedWork = work;
+                    $rootScope.$broadcast("update:work");
+                    console.log('update:work fired');
+                    dataFactory.getCopiesForWork(splitWorkId[0]).then(function (copies) {
+                        dataFactory.selectedWorkCopies = copies;
                     })
-                } else {
-                    selectedObject = objects[0];
-                }
-                $rootScope.$broadcast("copySelectionObjectsChange");
-                objectSelectionChange();
-            })
+                }).catch(function(){
+                    dataFactory.selectedWork = {};
+                })
+        });
+
+    };
+
+    dataFactory.setSelectedCopy = function (copyId, objectId) {
+        return $q.all([
+            dataFactory.getCopy(copyId),
+            dataFactory.getObjectsForCopy(copyId),
+        ]).then(function(data){
+            dataFactory.selectedCopy = data[0];
+            dataFactory.selectedCopyObjects = data[1];
+            if (objectId) {
+                data[1].forEach(function (obj) {
+                    if (obj.object_id == objectId) {
+                        dataFactory.selectedObject = obj;
+                    }
+                })
+            } else {
+                dataFactory.selectedObject = data[1][0];
+            }
+            $rootScope.$broadcast("update:copy");
+            console.log('update copy fired');
+            dataFactory.objectSelectionChange();
         })
     };
 
-    setSelectedObject = function (objectId) {
-        return getObject(objectId).then(function (obj) {
-            selectedObject = obj;
-            clearComparisonObjects();
-            addComparisonObject(obj);
-            objectSelectionChange();
+    dataFactory.setSelectedObject = function (objectId) {
+        return dataFactory.getObject(objectId).then(function (obj) {
+            dataFactory.selectedObject = obj;
+            dataFactory.clearComparisonObjects();
+            dataFactory.addComparisonObject(obj);
+            dataFactory.objectSelectionChange();
         })
     };
 
-    addComparisonObject = function (obj) {
+    dataFactory.objectSelectionChange = function () {
+        return $q.all([
+            dataFactory.getObjectsFromSameMatrix(dataFactory.selectedObject.object_id),
+            dataFactory.getObjectsFromSameProductionSequence(dataFactory.selectedObject.object_id),
+            dataFactory.getObjectsWithSameMotif(dataFactory.selectedObject.object_id)
+        ]).then(function(data){
+            dataFactory.sameMatrix = data[0];
+            dataFactory.sameSequence = data[1];
+            dataFactory.sameMotif = data[2];
+            $rootScope.$broadcast("update:object");
+            console.log('update:object fired');
+        })
+    };
+
+    dataFactory.addComparisonObject = function (obj) {
         var i, objInList = false;
         // Don't add an object to the list twice
-        for (i = comparisonObjects.length; i--;) {
-            if (comparisonObjects[i].object_id == obj.object_id) {
+        for (i = dataFactory.comparisonObjects.length; i--;) {
+            if (dataFactory.comparisonObjects[i].object_id == obj.object_id) {
                 objInList = true;
                 break;
             }
         }
         if (!objInList) {
-            comparisonObjects.push(obj);
-            $rootScope.$broadcast("comparisonObjectsChange");
+            dataFactory.comparisonObjects.push(obj);
         }
     };
 
-    removeComparisonObject = function (obj) {
+    dataFactory.removeComparisonObject = function (obj) {
         var i;
-        for (i = comparisonObjects.length; i--;) {
-            if (comparisonObjects[i].object_id == obj.object_id) {
-                comparisonObjects.splice(i, 1);
-                $rootScope.$broadcast("comparisonObjectsChange");
+        for (i = dataFactory.comparisonObjects.length; i--;) {
+            if (dataFactory.comparisonObjects[i].object_id == obj.object_id) {
+                dataFactory.comparisonObjects.splice(i, 1);
                 break;
             }
         }
     };
 
-    clearComparisonObjects = function () {
-        comparisonObjects = [];
-        $rootScope.$broadcast("comparisonObjectsChange");
+    dataFactory.clearComparisonObjects = function () {
+        dataFactory.comparisonObjects = [];
     };
 
-    isComparisonObject = function (obj) {
-        for (var i = comparisonObjects.length; i--;) {
-            if (comparisonObjects[i].object_id == obj.object_id) {
+    dataFactory.isComparisonObject = function (obj) {
+        for (var i = dataFactory.comparisonObjects.length; i--;) {
+            if (dataFactory.comparisonObjects[i].object_id == obj.object_id) {
                 return true;
             }
         }
         return false;
     };
 
-    return {
-        queryObjects: queryObjects,
-        getObject: getObject,
-        getObjectsWithSameMotif: getObjectsWithSameMotif,
-        hasObjectsWithSameMotif: function () {
-            return hasObjectsWithSameMotif;
-        },
-        getObjectsFromSameMatrix: getObjectsFromSameMatrix,
-        hasObjectsFromSameMatrix: function () {
-            return hasObjectsFromSameMatrix;
-        },
-        getObjectsFromSameProductionSequence: getObjectsFromSameProductionSequence,
-        hasObjectsFromSameProductionSequence: function () {
-            return hasObjectsFromSameProductionSequence;
-        },
-        getCopy: getCopy,
-        getObjectsForCopy: getObjectsForCopy,
-        getWork: getWork,
-        getWorks: getWorks,
-        getCopiesForWork: getCopiesForWork,
-        getFeaturedWorks: getFeaturedWorks,
-        setSelectedWork: setSelectedWork,
-        setSelectedCopy: setSelectedCopy,
-        setSelectedObject: setSelectedObject,
-        getSelectedWork: function () {
-            return selectedWork;
-        },
-        getSelectedCopy: function () {
-            return selectedCopy;
-        },
-        getSelectedObject: function () {
-            return selectedObject;
-        },
-        getSelectedWorkCopies: function () {
-            return selectedWorkCopies;
-        },
-        getSelectedCopyObjects: function () {
-            return selectedCopyObjects;
-        },
-        addComparisonObject: addComparisonObject,
-        removeComparisonObject: removeComparisonObject,
-        clearComparisonObjects: clearComparisonObjects,
-        getComparisonObjects: function () {
-            return comparisonObjects;
-        },
-        isComparisonObject: isComparisonObject
-    };
-}]);
+    dataFactory.getObjTest = function(){
+        return dataFactory.selectedObject;
+    }
 
-/**
- * This is a mock version of the BlakeDataService, which can be used for testing.
- */
-angular.module('blake').factory("MockBlakeDataService", ['$http', '$q', 'BlakeWork', 'BlakeCopy', 'BlakeObject', 'BlakeFeaturedWork', function ($http, $q, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
-    var getObjects = function () {
-        return $q(function (resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/objects.json').success(function (data) {
-                resolve(BlakeObject.create(data));
-            }).error(function (data, status) {
-                reject(data, status);
-            });
-        });
-    };
+    return dataFactory;
+}])
 
-    var getObject = function () {
-        return $q(function (resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/objects.json').success(function (data) {
-                resolve(BlakeObject.create(data[0]));
-            }).error(function (data, status) {
-                reject(data, status);
-            });
-        });
-    };
-
-    var getCopies = function () {
-        return $q(function (resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/copies.json').success(function (data) {
-                resolve(BlakeCopy.create(data));
-            }).error(function (data, status) {
-                reject(data, status);
-            });
-        });
-    };
-
-    var getCopy = function () {
-        return $q(function (resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/copies.json').success(function (data) {
-                resolve(BlakeCopy.create(data[0]));
-            }).error(function (data, status) {
-                reject(data, status);
-            });
-        });
-    };
-
-    var getWorks = function () {
-        return $q(function (resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/works.json').success(function (data) {
-                resolve(BlakeWork.create(data));
-            }).error(function (data, status) {
-                reject(data, status);
-            });
-        });
-    };
-
-    var getWork = function () {
-        return $q(function (resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/works.json').success(function (data) {
-                resolve(BlakeWork.create(data[0]));
-            }).error(function (data, status) {
-                reject(data, status);
-            });
-        });
-    };
-
-    var getFeaturedWorks = function () {
-        return $q(function (resolve, reject) {
-            $http.get(directoryPrefix + '/static/json/featured_works.json').success(function (data) {
-                resolve(BlakeFeaturedWork.create(data));
-            }).error(function (data, status) {
-                reject(data, status);
-            });
-        });
-    };
-
-    return {
-        query: function (config) {
-            return getObjects();
-        },
-        getObject: function (objectId) {
-            return getObject();
-        },
-        getObjectsWithSameMotif: function (objectId) {
-            return getObjects();
-        },
-        getObjectsFromSameMatrix: function (objectId) {
-            return getObjects();
-        },
-        getObjectsFromSameProductionSequence: function (objectId) {
-            return getObjects();
-        },
-        getCopy: function (copyId) {
-            return getCopy();
-        },
-        getObjectsForCopy: function (copyId) {
-            return getObjects();
-        },
-        getWork: function (workId) {
-            return getWork();
-        },
-        getWorks: function () {
-            return getWorks();
-        },
-        getCopiesForWork: function (workId) {
-            return getCopies();
-        },
-        getFeaturedWorks: function () {
-            return getFeaturedWorks();
-        }
-    };
-}]);
-
-angular.module('blake').factory("FormatService", function () {
+.factory("FormatService", function () {
     var cap = function(full_text) {
         if(/\s+copy\s+/.test(full_text)) {
             return full_text.replace(/copy/, 'Copy');
@@ -557,10 +458,11 @@ angular.module('blake').factory("FormatService", function () {
             return cap();
         }
     }
-});
+})
 
-angular.module('blake').factory("UtilityServices", function() {
-    var responseChange = function() {
+.factory("UtilityServices", function() {
+
+    /*var responseChange = function() {
         var response_change = {};
 
         response_change.waitForIdle = function(fn, delay) {
@@ -576,17 +478,17 @@ angular.module('blake').factory("UtilityServices", function() {
         };
 
         return response_change;
-    };
+    };*/
 
     // Set the max-height for the detail tray in object view.
-    var trayHeight = function(selector) {
+    /*var trayHeight = function(selector) {
         var set_tray_height = selector.height();
         var panel_count = $('.panel-group .panel-default').length;
         var set_tray_body_height = (set_tray_height - (panel_count * 47));
 
         $('.panel-group').css('min-height', set_tray_height + 'px');
         $('.panel-group .panel-body').css('max-height', set_tray_body_height + 'px');
-    };
+    };*/
 
     /**
      *
@@ -594,7 +496,7 @@ angular.module('blake').factory("UtilityServices", function() {
      * * Get the height of the object detail.
      * Pretty awkward solution to the way Design Hammer set this up. Image loaded via Ajax, so need a delay to execute getting correct height
      */
-    var getImageHeight = function(set_delay, $timeout) {
+    /*var getImageHeight = function(set_delay, $timeout) {
        angular.element(document).ready(function () {
             $timeout(function() {
                 var response_change = responseChange();
@@ -609,28 +511,8 @@ angular.module('blake').factory("UtilityServices", function() {
                 }
             }, set_delay);
        });
-    };
+    };*/
 
-    /**
-     * Toggle the info tray open and shut
-     */
-    var togglingTray = function() {
-        var $detail_tray = $('#object-container');
-
-        if ($detail_tray.hasClass('tray-closed')) {
-            $detail_tray.removeClass('tray-closed').addClass('tray-open');
-            setTimeout(function () {
-                $('.scrollbar').scroller('reset');
-            }, 300);
-            $('.scrollbar').scroller('reset');
-        } else {
-            $detail_tray.removeClass('tray-open').addClass('tray-closed');
-            $('.scrollbar').scroller('reset');
-            setTimeout(function () {
-                $('.scrollbar').scroller('reset');
-            }, 300);
-        }
-    };
 
     var imageText = function($scope, objLines) {
         $scope.obj.text.lg.forEach(function (lg) {
@@ -646,11 +528,11 @@ angular.module('blake').factory("UtilityServices", function() {
         return objLines;
     };
 
-    var imageViewerHeight = function() {
+    /*var imageViewerHeight = function() {
         var viewer_height = $(window).innerHeight();
         var offset = Math.round(viewer_height * .35);
         return viewer_height - offset;
-    };
+    };*/
 
     var fullScreen = function(Fullscreen, panel_id) {
         var selector = $('.panel-group .panel-body');
@@ -686,18 +568,95 @@ angular.module('blake').factory("UtilityServices", function() {
     };
 
     return {
-        responseChange: responseChange,
-        trayHeight: trayHeight,
-        getImageHeight: getImageHeight,
-        togglingTray: togglingTray,
+        //responseChange: responseChange,
+        //trayHeight: trayHeight,
+        //getImageHeight: getImageHeight,
         imageText: imageText,
-        imageViewerHeight: imageViewerHeight,
+        //imageViewerHeight: imageViewerHeight,
         fullScreen: fullScreen,
         resetPanelFromFullscreen: resetPanelFromFullscreen
     }
-});
+})
 
-angular.module('blake').controller("HomeController", ['$rootScope', '$scope', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
+.factory('windowDimensions', ['$window', function($window) {
+        return {
+            height: function() {
+                return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+            },
+            width: function() {
+                return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            }
+        };
+    }
+])
+
+.factory('WindowSize',function(){
+    var windowSize = {};
+
+    windowSize.height = '';
+    windowSize.width = '';
+
+    return windowSize;
+})
+.directive('resize', ['$window', '$timeout', 'WindowSize', function($window, $timeout, WindowSize ) {
+    return function (scope, element) {
+        var w = angular.element($window);
+        scope.getWindowDimensions = function () {
+            return {
+                'h': w.height(),
+                'w': w.width()
+            };
+        };
+        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+            $timeout.cancel(scope.resizing);
+
+            // Add a timeout to not call the resizing function every pixel
+            scope.resizing = $timeout( function() {
+                WindowSize.height = newValue.h;
+                WindowSize.width = newValue.w;
+                scope.$broadcast('resize::resize', { height: WindowSize.height, width : WindowSize.width });
+            }, 300);
+
+
+        }, true);
+
+        w.bind('resize', function () {
+            scope.$apply();
+        });
+    }
+
+}])
+
+/***
+ * this is an attempt to angularize the scroll to top button. Two problems
+ *      1. it only works on the homepage....ummm....?
+ *      2. angular doesn't have anyway to smooth scroll to the top without running a shit ton of math and timeouts...
+ *      so we're just going to use jquery for now
+
+.directive('scroll', function ($window) {
+    return function(scope, element, attrs) {
+        angular.element($window).bind("scroll", function() {
+            if (this.pageYOffset >= 50) {
+
+                scope.showToTop = true;
+            } else {
+                scope.showToTop = false;
+            }
+            scope.test = this.pageYOffset;
+        });
+    };
+})
+
+***/
+
+.directive('parallax', function ($window) {
+    return function(scope, element, attrs) {
+        angular.element($window).bind("scroll", function() {
+            scope.$broadcast('scroll::scroll', {'offset':this.pageYOffset});
+        });
+    };
+})
+/*.controller("HomeController", ['$rootScope', '$scope', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
     $rootScope.showSubMenu = 0;
     BlakeDataService.getFeaturedWorks().then(function (results) {
         var i = 0,
@@ -713,127 +672,50 @@ angular.module('blake').controller("HomeController", ['$rootScope', '$scope', 'B
         $scope.featured_works = results;
         $rootScope.homePageOverride = true;
     });
-}]);
+}])*/
 
-angular.module('blake').controller("WorkController", ['$scope', '$routeParams', 'BlakeDataService', function ($scope, $routeParams, BlakeDataService) {
+/*.controller("WorkController", ['$scope', '$routeParams', 'BlakeDataService', function ($scope, $routeParams, BlakeDataService) {
     BlakeDataService.setSelectedWork($routeParams.workId);
-}]);
+}])*/
 
-angular.module('blake').controller("ObjectController", ['$scope', '$routeParams', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
+.controller("ObjectController", ['$scope', '$routeParams', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
     BlakeDataService.setSelectedWork($routeParams.objectId);
-}]);
+}])
 
-angular.module('blake').controller("CopyController", ['$scope', '$routeParams', 'BlakeDataService', function ($scope, $routeParams, BlakeDataService) {
-    BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.objectId).then(function (results) {
-        var copyBad = BlakeDataService.getSelectedCopy().bad_id,
-            workBadMatch = /(.*)\.\w*/.exec(copyBad),
-            workBad = workBadMatch ? workBadMatch[0] : null;
-        if (workBad) {
-            BlakeDataService.setSelectedWork(workBad);
-        }
+.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+    $routeProvider.when(directoryPrefix + '/', {
+        templateUrl: directoryPrefix + '/static/controllers/home/home.html',
+        controller: "HomeController",
+        controllerAs: 'home'
     });
-}]);
+    $routeProvider.when(directoryPrefix + '/object/:objectId', {
+        templateUrl: directoryPrefix + '/static/html/object.html',
+        controller: "ObjectController"
+    });
+    $routeProvider.when(directoryPrefix + '/copy/:copyId', {
+        templateUrl: directoryPrefix + '/static/controllers/copy/copy.html',
+        controller: "CopyController",
+        controllerAs: 'copyCtrl'
+    });
+    $routeProvider.when(directoryPrefix + '/copy/:copyId/:objectId', {
+        templateUrl: directoryPrefix + '/static/controllers/copy/copy.html',
+        controller: "CopyController",
+        controllerAs: 'copyCtrl'
 
-angular.module('blake').controller("SearchController", ['$rootScope', '$scope', '$location', '$routeParams', 'BlakeDataService', function ($rootScope, $scope, $location, $routeParams, BlakeDataService) {
-    var objectMatchingMedium, workMatchingMedium;
+    });
+    $routeProvider.when(directoryPrefix + '/work/:workId', {
+        templateUrl: directoryPrefix + '/static/controllers/work/work.html',
+        controller: "WorkController",
+        controllerAs: 'workCtrl'
+    });
+    $routeProvider.when(directoryPrefix + '/compare/', {
+        templateUrl: directoryPrefix + '/static/html/compare.html'
+    });
+    $routeProvider.when(directoryPrefix + '/search/', {
+        templateUrl: directoryPrefix + '/static/controllers/search/search.html',
+        controller: "SearchController"
+    });
 
-    $rootScope.showSubMenu = 0;
-
-    $scope.search = function () {
-        BlakeDataService.queryObjects($scope.searchConfig).then(function (results) {
-            $scope.results = results;
-        });
-    };
-
-    $scope.loadSearchPage = function () {
-        $location.url(directoryPrefix + "/search?search=" + encodeURIComponent($scope.searchText));
-    };
-
-    $scope.searchConfig = {
-        useCompDate: true,
-        searchTitle: true,
-        searchIlluminatedBooks: true,
-        searchCommercialBookIllustrations: true,
-        searchSeparatePrints: true,
-        searchDrawingsPaintings: true,
-        searchManuscripts: true,
-        searchRelatedMaterials: true,
-        minDate: 1772,
-        maxDate: 1827
-    };
-
-    objectMatchingMedium = function (result) {
-        if ($scope.searchConfig.searchIlluminatedBooks && result.work_medium == "illbk") return true;
-        if ($scope.searchConfig.searchCommercialBookIllustrations &&
-            (result.work_medium == "comb" || result.work_medium == "comdes" || result.work_medium == "comeng")) return true;
-        if ($scope.searchConfig.searchSeparatePrints &&
-            (result.work_medium == "spb" || result.work_medium == "spdes" || result.work_medium == "speng")) return true;
-        if ($scope.searchConfig.searchCommercialBookIllustrations &&
-            (result.work_medium == "comb" || result.work_medium == "comdes" || result.work_medium == "comeng")) return true;
-        if ($scope.searchConfig.searchDrawingsPaintings &&
-            (result.work_medium == "cprint" || result.work_medium == "penc" || result.work_medium == "penink" ||
-                result.work_medium == "mono" || result.work_medium == "wc" || result.work_medium == "paint")) return true;
-        if ($scope.searchConfig.searchManuscripts &&
-            (result.work_medium == "ms" || result.work_medium == "ltr" || result.work_medium == "te")) return true;
-        if ($scope.searchConfig.searchRelatedMaterials &&
-            (result.work_medium == "rmb" || result.work_medium == "rmoth")) return true;
-        return false;
-    };
-
-    workMatchingMedium = function (result) {
-        if ($scope.searchConfig.searchIlluminatedBooks && result.medium == "illbk") return true;
-        if ($scope.searchConfig.searchCommercialBookIllustrations &&
-            (result.medium == "comb" || result.medium == "comdes" || result.medium == "comeng")) return true;
-        if ($scope.searchConfig.searchSeparatePrints &&
-            (result.medium == "spb" || result.medium == "spdes" || result.medium == "speng")) return true;
-        if ($scope.searchConfig.searchCommercialBookIllustrations &&
-            (result.medium == "comb" || result.medium == "comdes" || result.medium == "comeng")) return true;
-        if ($scope.searchConfig.searchDrawingsPaintings &&
-            (result.medium == "cprint" || result.medium == "penc" || result.medium == "penink" ||
-                result.medium == "mono" || result.medium == "wc" || result.medium == "paint")) return true;
-        if ($scope.searchConfig.searchManuscripts &&
-            (result.medium == "ms" || result.medium == "ltr" || result.medium == "te")) return true;
-        if ($scope.searchConfig.searchRelatedMaterials &&
-            (result.medium == "rmb" || result.medium == "rmoth")) return true;
-        return false;
-    };
-    
-    $scope.objectResultsMatchingFilter = function (resultType) {
-        var i, inRange = [], results;
-        if ($scope.results) {
-            results = $scope.results.object_results[resultType].results;
-            for (i = 0; i < results.length; i++) {
-                if (results[i].copy_composition_date >= $scope.searchConfig.minDate &&
-                    results[i].copy_composition_date <= $scope.searchConfig.maxDate &&
-                    objectMatchingMedium(results[i])) {
-                    inRange.push(results[i]);
-                }
-            }
-        }
-        return inRange;
-    };
-
-    $scope.workResultsMatchingFilter = function (resultType) {
-        var i, inRange = [], results;
-        if ($scope.results) {
-            results = $scope.results.work_results[resultType].results;
-            for (i = 0; i < results.length; i++) {
-                if (results[i].composition_date >= $scope.searchConfig.minDate &&
-                    results[i].composition_date <= $scope.searchConfig.maxDate &&
-                    workMatchingMedium(results[i])) {
-                    inRange.push(results[i]);
-                }
-            }
-        }
-        return inRange;
-    };
-
-    if ($routeParams.search) {
-        $scope.searchConfig.searchString = $routeParams.search;
-        $scope.search();
-    }
-
-    $scope.showWorks = true;
-    $scope.showCopies = true;
-    $scope.showObjects = true;
+    $routeProvider.otherwise({redirectTo: directoryPrefix + '/'});
+    $locationProvider.html5Mode(true);
 }]);

@@ -1,0 +1,94 @@
+<div id="object-detail-tray" ng-style="{'min-height': tray.trayHeight}">
+      <div class="tray-toggle" ng-click="tray.toggle()">Open/Close Tray</div>
+      <div id="object-detail-tray-inner">
+        <accordion close-others="true" id="object-detail-tray-accordion">
+          <accordion-group id="textual-transcription">
+              <div ng-style="{'max-height': tray.trayBodyHeight}">
+                  <accordion-heading>
+                      Textual Transcription
+                  </accordion-heading>
+                  <!--<a ng-click="tray.goFullscreen('tray-transcription')" title="full screen" class="new-window full-screen"></a>-->
+                  <!--<a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
+                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.copy.archive_copy_id }}</p>
+
+                  <p><a href="#">[ n ]</a></p>
+                  <ol>
+                      <li ng-repeat="line in tray.obj.lines"><span>{{ line.text }}</span></li>
+                  </ol>
+                  <p><a href="#">Color key for transcriptions</a></p>
+              </div>
+          </accordion-group>
+          <accordion-group id="illustration-description">
+              <div ng-style="{'max-height': tray.trayBodyHeight}">
+                  <accordion-heading>
+                      Illustration Description
+                  </accordion-heading>
+                  <!--<a ng-click="tray.goFullscreen('illustration-description')" title="full screen" class="new-window full-screen"></a>
+                  <a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
+                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.obj.full_object_id }}</p>
+
+                  <p><strong>Sector CD<br>
+                    Plate Illustration:</strong></p>
+
+                  <p>{{ tray.obj.illustration_description.illusobjdesc['#text'] }}</p>
+
+                  <div ng-repeat="component in tray.obj.components">
+                    <p><strong>Component (Sector {{ component.component['@location'] }})</strong></p>
+
+                    <p class="keywords">Keywords:
+                    <ul class="list-inline">
+                      <li ng-repeat="characteristic in component.component.characteristic">{{ characteristic["#text"] }}</li>
+                    </ul>
+                    </p>
+
+                    <p>{{ component.component.illusobjdesc['#text'] }}</p>
+                  </div>
+              </div>
+          </accordion-group>
+          <accordion-group id="editors-notes">
+              <div ng-style="{'max-height': tray.trayBodyHeight}">
+                  <accordion-heading>
+                      Editors’ Notes
+                  </accordion-heading>
+                  <!--<a ng-click="tray.goFullscreen('editors-notes')" title="full screen" class="new-window full-screen"></a>
+                  <a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
+                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.obj.full_object_id }}</p>
+
+                  <p><strong>Object Note(s):</strong></p>
+
+                  <div ng-if="tray.obj.physical_description.objnote">
+                    <p>Note:</p>
+
+                    <p>{{ tray.obj.physical_description.objnote['#text'] }}</p>
+                  </div>
+                  <p><strong>Textual Note(s):</strong></p>
+                  <p><em>No textual notes for this object</em></p>
+              </div>
+          </accordion-group>
+          <accordion-group id="object-metadata">
+              <div ng-style="{'max-height': tray.trayBodyHeight}">
+                  <accordion-heading>
+                      Object Meta Data
+                  </accordion-heading>
+                  <!--<a ng-click="tray.goFullscreen('object-metadata')" title="full screen" class="new-window full-screen"></a>
+                  <a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
+                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.obj.full_object_id }}</p>
+
+                  <p><em>Object Meta Data goes here...</em></p>
+              </div>
+          </accordion-group>
+            <accordion-group id="object-tei">
+                <div ng-style="{'max-height': tray.trayBodyHeight}">
+                  <accordion-heading>
+                      TEI Markup
+                  </accordion-heading>
+                    <!--<a ng-click="tray.goFullscreen('object-tei')" title="full screen" class="new-window full-screen"></a>
+                  <a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
+                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.obj.full_object_id }}</p>
+
+                  <p><em>Object Meta Data goes here...</em></p>
+                </div>
+          </accordion-group>
+        </accordion>
+      </div>
+</div>

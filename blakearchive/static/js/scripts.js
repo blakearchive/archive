@@ -73,7 +73,7 @@
     // -------------------------------------------------------------------
 
     // Set the image height for the carousel
-    function objectViewHeight() {
+    /*function objectViewHeight() {
       var set_object_view_height = window_frame.height() - 220;
       $('#object-view .carousel .featured-object img').css('height', set_object_view_height + 'px');
     }
@@ -83,7 +83,7 @@
       window_frame.on('resize', response_change.waitForIdle(function() {
         objectViewHeight();
       }, 100));
-    }
+    }*/
 
     // Get the height of the object compare view.
     // -------------------------------------------------------------------
@@ -229,7 +229,7 @@
     // Parallax scroll the homepage panels.
     // -------------------------------------------------------------------
 
-    function parallaxScroll(){
+    /*function parallaxScroll(){
       var scrolled = window_frame.scrollTop();
       $('#scroll-wrapper1').css('margin-top',(-90-(scrolled*0.2))+'px');
       $('#scroll-wrapper2').css('margin-top',(-20-(scrolled*0.4))+'px');
@@ -248,11 +248,12 @@
       window_frame.bind('scroll', function(e){
         parallaxScroll();
       });
-    }
+    }*/
 
 
-    // Lazy loader.
+    // Lazy loader. Do we need this?
     // -------------------------------------------------------------------
+    var body_home = $('body.home');
 
     if ( body_home.length ) {
 
@@ -262,6 +263,65 @@
         });
       });
     }
+
+    // Show / hide object tools.
+    // -------------------------------------------------------------------
+
+    /*if ( $('#object-view .show-hide-tools').length ) {
+
+      $('#object-view').addClass('show-tools');
+      $('.show-hide-tools span').text('+').attr('title', 'Hide Tools');
+
+      // change on click
+      $('.show-hide-tools').click(function() {
+        if ( $('#object-view').hasClass('show-tools') ) {
+
+          if ( $('#object-view.view-objects .show-hide-tools').length ) {
+            $('.btn-group.edit-object').animate({
+              opacity: 0
+            }, 500);
+          }
+
+          if ( $('#object-view.compare-objects .show-hide-tools').length ) {
+            $('.btn-group.edit-object, #compare-thumbs-inner').animate({
+              opacity: 0
+            }, 700);
+          }
+
+          setTimeout(function() {
+            $('#object-view').removeClass('show-tools').addClass('hide-tools');
+            $('.show-hide-tools span').text('+').attr('title', 'Show Tools');
+            if ( $('#object-view.view-objects .show-hide-tools').length ) {
+              object_view_height();
+            }
+            if ( $('#object-view.compare-objects .show-hide-tools').length ) {
+              object_compare_height();
+              set_object_compare_layout();
+            }
+
+          }, 500);
+
+        } else {
+
+          $('#object-view').removeClass('hide-tools').addClass('show-tools');
+          $('.show-hide-tools span').text('+').attr('title', 'Hide Tools');
+          if ( $('#object-view.view-objects .show-hide-tools').length ) {
+            object_view_height();
+            $('.btn-group.edit-object').animate({
+              opacity: 1
+            }, 700);
+          }
+          if ( $('#object-view.compare-objects .show-hide-tools').length ) {
+            object_compare_height();
+            set_object_compare_layout();
+            $('.btn-group.edit-object, #compare-thumbs-inner').animate({
+              opacity: 1
+            }, 700);
+          }
+        }
+
+      });
+    }*/
 
 
   }); // document
