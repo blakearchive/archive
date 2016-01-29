@@ -72,7 +72,7 @@
         $scope.objectResultsMatchingFilter = function (resultType) {
             var i, inRange = [], results;
             if ($scope.results) {
-                results = $scope.results.object_results[resultType].results;
+                results = $scope.results.object_results[resultType];
                 for (i = 0; i < results.length; i++) {
                     if (results[i].copy_composition_date >= $scope.searchConfig.minDate &&
                         results[i].copy_composition_date <= $scope.searchConfig.maxDate &&
@@ -87,7 +87,7 @@
         $scope.workResultsMatchingFilter = function (resultType) {
             var i, inRange = [], results;
             if ($scope.results) {
-                results = $scope.results.work_results[resultType].results;
+                results = $scope.results.work_results[resultType];
                 for (i = 0; i < results.length; i++) {
                     if (results[i].composition_date >= $scope.searchConfig.minDate &&
                         results[i].composition_date <= $scope.searchConfig.maxDate &&
