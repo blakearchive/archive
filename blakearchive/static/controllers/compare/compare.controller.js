@@ -18,11 +18,9 @@
 
 
         vm.viewerHeight =  ( WindowSize.height - 270 );
-        vm.imageHeight = vm.viewerHeight - 100;
 
         $scope.$on('resize::resize',function(event,window){
             vm.viewerHeight =  ( window.height - 270 );
-            vm.imageHeight = vm.viewerHeight - 100;
         });
 
         /*var compare_object_width = 0;
@@ -70,7 +68,6 @@
 
         $scope.$on("update:object", function () {
             vm.obj = BlakeDataService.selectedObject;
-            vm.setViewWidth();
         });
 
         // Horizontal Scroll with fixed height/width images

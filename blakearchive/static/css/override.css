@@ -77,6 +77,7 @@ a.compare-selected-objects {
     margin: 0;
     float:none;
     display: inline-block;
+    white-space: normal;
 }
 #archive #object-view.compare-objects #compare .compare-inner .item img{
     opacity:1;

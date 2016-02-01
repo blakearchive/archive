@@ -89,7 +89,7 @@
     // -------------------------------------------------------------------
 
     // Set the image height for the compare view
-  /**  function objectCompareHeight() {
+    function objectCompareHeight() {
       var set_object_compare_height = $(window).height() - 370;
       $('#object-view #compare .featured-object img').css('height', set_object_compare_height + 'px');
     }
@@ -106,7 +106,7 @@
 
     // Set the max-height for the detail tray in object view.
 
-    function trayHeight() {
+    /*function trayHeight() {
       var set_tray_height = $(window).height() - 86;
       var panel_count = $('.panel-group .panel-default').length;
       var set_tray_body_height = (set_tray_height - (panel_count * 47));
@@ -120,12 +120,12 @@
       $(window).resize(response_change.waitForIdle(function() {
         trayHeight();
       }, 100));
-    }
+    }*/
 
     // Show thumbnails for the carousel buttons.
     // -------------------------------------------------------------------
 
-    function loadNextObject() {
+    /*function loadNextObject() {
       if( $('.featured-object .carousel-inner .item.active').is(':last-child') ) {
         var active_first_image = $('.featured-object .carousel-inner .item:first-child img').attr('src').slice(0,-7);
         $('.featured-object-controls a.carousel-control.right .objecticon-right').css('background-image', 'url(' + active_first_image + '100.jpg)');
@@ -165,7 +165,7 @@
           loadPrevObject();
         }, 1000);
       });
-    }
+    }*/
 
 
 
@@ -186,7 +186,7 @@
       $(window).on('resize', response_change.waitForIdle(function() {
         setObjectCompare();
       }, 100));
-    }*/
+    }
 
 
     // Set the scroller and reset on browser resize.
