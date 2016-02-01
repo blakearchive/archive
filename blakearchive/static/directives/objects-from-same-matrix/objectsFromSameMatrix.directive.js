@@ -14,6 +14,7 @@
                 vm.item = obj;
                 vm.objects = BlakeDataService.sameMatrix;
             }
+            vm.copy = BlakeDataService.selectedCopy;
 
             // Add/remove all objects for comparison
             vm.compareText = "Select All Objects";
@@ -26,6 +27,10 @@
         $scope.$on("update:object", function () {
             vm.init();
         });
+        $scope.$on("update:copy", function () {
+            vm.init();
+        });
+
 
         vm.selectAll = function () {
             var obj_size = vm.objects.length;
@@ -42,7 +47,6 @@
                 for (var i = obj_size; i--;) {
                     vm.objects[i].Selected = true;
                     BlakeDataService.addComparisonObject(vm.objects[i]);
-                    console.log(BlakeDataService.comparisonObjects);
                 }
             } else {
                 vm.compareText = "Select All Objects";

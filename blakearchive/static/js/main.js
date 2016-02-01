@@ -381,8 +381,8 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
     dataFactory.setSelectedObject = function (objectId) {
         return dataFactory.getObject(objectId).then(function (obj) {
             dataFactory.selectedObject = obj;
-            dataFactory.clearComparisonObjects();
-            dataFactory.addComparisonObject(obj);
+            //dataFactory.clearComparisonObjects();
+            //dataFactory.addComparisonObject(obj);
             dataFactory.objectSelectionChange();
         })
     };
@@ -413,6 +413,8 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         if (!objInList) {
             dataFactory.comparisonObjects.push(obj);
         }
+        $rootScope.$broadcast("update:comparison");
+        console.log('update:comparison fired');
     };
 
     dataFactory.removeComparisonObject = function (obj) {
@@ -423,10 +425,14 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
                 break;
             }
         }
+        $rootScope.$broadcast("update:comparison");
+        console.log('update:comparison fired');
     };
 
     dataFactory.clearComparisonObjects = function () {
         dataFactory.comparisonObjects = [];
+        $rootScope.$broadcast("update:comparison");
+        console.log('update:comparison fired');
     };
 
     dataFactory.isComparisonObject = function (obj) {
@@ -437,10 +443,6 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         }
         return false;
     };
-
-    dataFactory.getObjTest = function(){
-        return dataFactory.selectedObject;
-    }
 
     return dataFactory;
 }])
@@ -709,7 +711,9 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         controllerAs: 'workCtrl'
     });
     $routeProvider.when(directoryPrefix + '/compare/', {
-        templateUrl: directoryPrefix + '/static/html/compare.html'
+        templateUrl: directoryPrefix + '/static/controllers/compare/compare.html',
+        controller: "CompareController",
+        controllerAs: 'compareCtrl'
     });
     $routeProvider.when(directoryPrefix + '/search/', {
         templateUrl: directoryPrefix + '/static/controllers/search/search.html',

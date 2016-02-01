@@ -37,3 +37,47 @@
 #archive #object-detail-tray .panel-group .panel.panel-default#object-metadata > .panel-heading a {
     background-position: 13px -361px;
 }
+
+/*
+ * Compare buttons
+ */
+.matrix {
+    margin-top: -20px;
+}
+a.select-all-objects {
+    background-image: url("../img/global/select-icon.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+    a.select-all-objects {
+        background-image: url("../img/global/select-icon@2x.png") !important;
+    }
+}
+a.compare-selected-objects {
+    background-image: url("../img/global/compare-icon.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+    a.compare-selected-objects {
+        background-image: url("../img/global/compare-icon@2x.png") !important;
+    }
+}
+
+/*
+ * Compare objects
+ */
+#compare .featured-objects{
+    float:left;
+}
+#compare .compare-inner {
+    white-space: nowrap;
+}
+
+#archive #object-view.compare-objects #compare .compare-inner .item{
+    margin: 0;
+    float:none;
+    display: inline-block;
+}
+#archive #object-view.compare-objects #compare .compare-inner .item img{
+    opacity:1;
+}

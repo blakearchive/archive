@@ -55,6 +55,8 @@
             vm.selectedTab = '#objects-in-copy';
         }
 
+        vm.buildTabs();
+
     }
 
     controller.$inject = ['$scope','BlakeDataService'];
