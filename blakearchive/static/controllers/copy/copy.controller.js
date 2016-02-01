@@ -12,6 +12,15 @@
             BlakeDataService.setSelectedWork(BlakeDataService.selectedCopy.bad_id).then(function(){
                 vm.init();
             });
+
+            // alternate solution to works not loading, need to investigate
+            //var copyBad = BlakeDataService.getSelectedCopy().bad_id,
+              //  workBadMatch = /(.*)\.\w*/.exec(copyBad),
+                //workBad = workBadMatch ? workBadMatch[0] : null;
+            //if (workBad) {
+              //  BlakeDataService.setSelectedWork(workBad);
+            //}
+
         });
 
         vm.init = function(){
