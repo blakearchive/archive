@@ -82,3 +82,24 @@ a.compare-selected-objects {
 #archive #object-view.compare-objects #compare .compare-inner .item img{
     opacity:1;
 }
+
+.select-for-compare-wrapper{
+    width: 220px;
+    position: relative;
+}
+.select-for-compare{
+    position: absolute;
+    right: 0;
+    font-size: 2em;
+    opacity: 0;
+    color: #fff;
+    background-color: rgba(1,1,1,0.5);
+    padding: 2px 2px 4px 4px;
+}
+.handprint-block:hover .select-for-compare{
+    opacity:1;
+}
+.handprint-block.selected-for-comparison .select-for-compare{
+    opacity: 1;
+    color: #91c054;
+}

@@ -1,9 +1,9 @@
 <div id="archive" class="container-fluid archive-top">
-    <div id="object-container" class="row tray-closed">
+    <div id="object-container" class="row" ng-class="compareCtrl.trayOpen ? 'tray-open' : 'tray-closed'">
         <info-tray toggle="compareCtrl.toggleTray()" copy="compareCtrl.copy" obj="compareCtrl.obj"></info-tray>
     </div>
     <!--/.tray-->
-    <div id="object-view" class="compare-objects">
+    <div id="object-view" ng-class="compareCtrl.showTools ? 'show-tools' : 'hide-tools'" class="compare-objects">
         <div id="compare" class="scrollbar" style="height: {{compareCtrl.viewerHeight}}px">
             <div class="featured-object">
                 <div id="compared" class="compare-inner" ng-sortable="{ group: 'o', animation: 150 }">
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="show-hide-tools"><span>+</span></div>
+        <div class="show-hide-tools" ng-click="compareCtrl.toggleTools()"><span>+</span></div>
 
     </div>
     <!--/.object-view-->

@@ -62,12 +62,14 @@
 
         // Add/remove single object for comparison
         vm.selectOne = function(obj) {
-            if(!obj.Selected) {
-                obj.Selected = false;
-                BlakeDataService.removeComparisonObject(obj);
-            } else {
-                obj.Selected = true;
+            var key = vm.objects.indexOf(obj);
+            if(!vm.objects[key].Selected) {
+                vm.objects[key].Selected = true;
+                //obj.Selected = false;
                 BlakeDataService.addComparisonObject(obj);
+            } else {
+                vm.objects[key].Selected = false;
+                BlakeDataService.removeComparisonObject(obj);
             }
 
             // Add main viewer img
