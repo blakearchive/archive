@@ -37,3 +37,69 @@
 #archive #object-detail-tray .panel-group .panel.panel-default#object-metadata > .panel-heading a {
     background-position: 13px -361px;
 }
+
+/*
+ * Compare buttons
+ */
+.matrix {
+    margin-top: -20px;
+}
+a.select-all-objects {
+    background-image: url("../img/global/select-icon.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+    a.select-all-objects {
+        background-image: url("../img/global/select-icon@2x.png") !important;
+    }
+}
+a.compare-selected-objects {
+    background-image: url("../img/global/compare-icon.png") !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+    a.compare-selected-objects {
+        background-image: url("../img/global/compare-icon@2x.png") !important;
+    }
+}
+
+/*
+ * Compare objects
+ */
+#compare .featured-objects{
+    float:left;
+}
+#compare .compare-inner {
+    white-space: nowrap;
+}
+
+#archive #object-view.compare-objects #compare .compare-inner .item{
+    margin: 0;
+    float:none;
+    display: inline-block;
+    white-space: normal;
+}
+#archive #object-view.compare-objects #compare .compare-inner .item img{
+    opacity:1;
+}
+
+.select-for-compare-wrapper{
+    width: 220px;
+    position: relative;
+}
+.select-for-compare{
+    position: absolute;
+    right: 0;
+    font-size: 2em;
+    opacity: 0;
+    color: #fff;
+    background-color: rgba(1,1,1,0.5);
+    padding: 2px 2px 4px 4px;
+}
+.handprint-block:hover .select-for-compare{
+    opacity:1;
+}
+.handprint-block.selected-for-comparison .select-for-compare{
+    opacity: 1;
+    color: #91c054;
+}

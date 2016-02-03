@@ -381,8 +381,8 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
     dataFactory.setSelectedObject = function (objectId) {
         return dataFactory.getObject(objectId).then(function (obj) {
             dataFactory.selectedObject = obj;
-            dataFactory.clearComparisonObjects();
-            dataFactory.addComparisonObject(obj);
+            //dataFactory.clearComparisonObjects();
+            //dataFactory.addComparisonObject(obj);
             dataFactory.objectSelectionChange();
         })
     };
@@ -413,6 +413,8 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         if (!objInList) {
             dataFactory.comparisonObjects.push(obj);
         }
+        $rootScope.$broadcast("update:comparison");
+        console.log('update:comparison fired');
     };
 
     dataFactory.removeComparisonObject = function (obj) {
@@ -423,10 +425,14 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
                 break;
             }
         }
+        $rootScope.$broadcast("update:comparison");
+        console.log('update:comparison fired');
     };
 
     dataFactory.clearComparisonObjects = function () {
         dataFactory.comparisonObjects = [];
+        $rootScope.$broadcast("update:comparison");
+        console.log('update:comparison fired');
     };
 
     dataFactory.isComparisonObject = function (obj) {
@@ -437,10 +443,6 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         }
         return false;
     };
-
-    dataFactory.getObjTest = function(){
-        return dataFactory.selectedObject;
-    }
 
     return dataFactory;
 }])
@@ -590,14 +592,17 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
     }
 ])
 
-.factory('WindowSize',function(){
-    var windowSize = {};
+.factory('WindowSize',['$window',function($window){
+    var windowSize = {},
+        w = angular.element($window);
 
-    windowSize.height = '';
-    windowSize.width = '';
+    windowSize.height = w.height();
+    windowSize.width = w.width();
+
+    console.log(windowSize.height);
 
     return windowSize;
-})
+}])
 .directive('resize', ['$window', '$timeout', 'WindowSize', function($window, $timeout, WindowSize ) {
     return function (scope, element) {
         var w = angular.element($window);
@@ -607,6 +612,9 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
                 'w': w.width()
             };
         };
+
+        //scope.getWindowDimensions();
+
         scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
             $timeout.cancel(scope.resizing);
 
@@ -615,6 +623,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
                 WindowSize.height = newValue.h;
                 WindowSize.width = newValue.w;
                 scope.$broadcast('resize::resize', { height: WindowSize.height, width : WindowSize.width });
+                console.log('broadcast happened');
             }, 300);
 
 
@@ -625,6 +634,33 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         });
     }
 
+}])
+.directive('comparisonImage', ['WindowSize', function(WindowSize){
+    var link = function(scope, element, attrs) {
+
+        scope.setStyles = function(windowSize){
+            var elementHeight = element.height(),
+                elementWidth = element.width(),
+                ratio = elementWidth / elementHeight,
+                newHeight = (windowSize.height - 370),
+                newWidth = newHeight * ratio;
+                element.css('height',newHeight);
+                element.parent().css('width',newWidth)
+            //console.log('resize happened, height = '+elementHeight+' width = '+elementWidth+', newheight = '+ newHeight + ' newwidth='+newWidth);
+        }
+
+        element.on('load',function(){
+            scope.setStyles(WindowSize);
+        })
+
+        scope.$on('resize::resize', function(e,w) {
+            scope.setStyles(w)
+        });
+    };
+    return {
+        restrict: 'A',
+        link: link
+    };
 }])
 
 /***
@@ -709,7 +745,9 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         controllerAs: 'workCtrl'
     });
     $routeProvider.when(directoryPrefix + '/compare/', {
-        templateUrl: directoryPrefix + '/static/html/compare.html'
+        templateUrl: directoryPrefix + '/static/controllers/compare/compare.html',
+        controller: "CompareController",
+        controllerAs: 'compareCtrl'
     });
     $routeProvider.when(directoryPrefix + '/search/', {
         templateUrl: directoryPrefix + '/static/controllers/search/search.html',

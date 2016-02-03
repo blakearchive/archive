@@ -1,0 +1,52 @@
+<div id="archive" class="container-fluid archive-top">
+    <div id="object-container" class="row" ng-class="compareCtrl.trayOpen ? 'tray-open' : 'tray-closed'">
+        <info-tray toggle="compareCtrl.toggleTray()" copy="compareCtrl.copy" obj="compareCtrl.obj"></info-tray>
+    </div>
+    <!--/.tray-->
+    <div id="object-view" ng-class="compareCtrl.showTools ? 'show-tools' : 'hide-tools'" class="compare-objects">
+        <div id="compare" class="scrollbar" style="height: {{compareCtrl.viewerHeight}}px">
+            <div class="featured-object">
+                <div id="compared" class="compare-inner" ng-sortable="{ group: 'o', animation: 150 }">
+                    <div class="item" ng-repeat="o in compareCtrl.comparisonObjects">
+                        <p class="object-title">{{ o.copy_title }}, Copy {{ o.archive_copy_id }}</p>
+                        <img ng-click="compareCtrl.updateCopyInfo(o.desc_id, '')" ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" comparison-image>
+                        <p class="object-subtitle">{{ o.copy_composition_date }} ({{ o.copy_institution }}) {{ o.full_object_id }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--/.compare-->
+
+        <div id="object-tools">
+            <div id="object-tools-inner">
+                <!--Edit buttons-->
+                <div class="btn-group edit-object" role="group">
+                    <button type="button" class="btn btn-default add-lightbox"><span class="edit-icon"></span> Add To
+                        Lightbox
+                    </button>
+                    <button type="button" class="btn btn-default rotate"><span class="edit-icon"></span> Rotate</button>
+                    <button type="button" class="btn btn-default zoom"><span class="edit-icon"></span> Zoom</button>
+                    <button type="button" class="btn btn-default true-size"><span class="edit-icon"></span> True Size
+                    </button>
+                    <button type="button" class="btn btn-default new-window"><span class="edit-icon"></span> New Window
+                    </button>
+                </div>
+
+                <div id="compare-thumbs">
+                    <div id="compare-thumbs-inner">
+                        <div ng-repeat="o in compareCtrl.comparisonObjects" class="item"
+                             style="background-image: url(http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="show-hide-tools" ng-click="compareCtrl.toggleTools()"><span>+</span></div>
+
+    </div>
+    <!--/.object-view-->
+</div>
+<div id="archive-tabs" role="tabpanel">
+    <copy-tabs></copy-tabs>
+</div>
