@@ -172,7 +172,7 @@
     // Create slider layout for compare view.
     // -------------------------------------------------------------------
 
-    function setObjectCompare() {
+    /*function setObjectCompare() {
       var compare_object_width = 0;
       $('#object-view #compare .item').each(function() {
         compare_object_width += Number( $(this).width() );
@@ -186,7 +186,7 @@
       $(window).on('resize', response_change.waitForIdle(function() {
         setObjectCompare();
       }, 100));
-    }
+    }*/
 
 
     // Set the scroller and reset on browser resize.
