@@ -29,7 +29,7 @@
             templateUrl: "/blake/static/directives/objects-for-copy/objectsForCopy.html",
             controller: controller,
             controllerAs: 'oic',
-            bindToController: true,
+            bindToController: true
         }
     }
 
