@@ -5,8 +5,7 @@
         <div id="object-view" ng-class="copyCtrl.showTools ? 'show-tools' : 'hide-tools'" class="view-objects">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
                 <div class="featured-object">
-                    <p ng-if="!copyCtrl.work.virtual" class="object-title">{{ copyCtrl.copy.header.filedesc.titlestmt.title['@reg'] }}, <span ng-if="copyCtrl.copy.archive_copy_id !== ''">Copy</span> {{ copyCtrl.copy.archive_copy_id }}</p>
-                    <p ng-if="copyCtrl.work.virtual" class="object-title">{{ copyCtrl.work.title }}</p>
+                    <p class="object-title">{{ copyCtrl.objectTitle }}</p>
                     <!-- Wrapper for slides -->
                     <!--<div class="carousel-inner" role="listbox" ng-style="{'height': viewerHeight}">-->
                     <div class="carousel-inner" role="listbox">

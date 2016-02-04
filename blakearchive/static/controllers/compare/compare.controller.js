@@ -4,9 +4,11 @@
 
 (function() {
 
-    var controller = function ($scope,UtilityServices,Fullscreen,BlakeDataService,$routeParams,WindowSize,$timeout) {
+    var controller = function ($scope,UtilityServices,Fullscreen,BlakeDataService,$routeParams,WindowSize,$timeout,$rootScope) {
 
         var vm = this;
+
+        $rootScope.showSubMenu = 1;
 
         /*vm.updateCopyInfo = function (copyId, objectId) {
             var copy_num = copyId.split('.')
@@ -59,6 +61,7 @@
         UtilityServices.resetPanelFromFullscreen(Fullscreen);
 
         vm.comparisonObjects = BlakeDataService.comparisonObjects;
+        console.log(vm.comparisonObjects);
         vm.obj = BlakeDataService.selectedObject;
 
         /*$scope.$on("update:comparison", function () {
@@ -112,7 +115,7 @@
     }
 
 
-    controller.$inject = ['$scope','UtilityServices','Fullscreen','BlakeDataService','$routeParams','WindowSize','$timeout'];
+    controller.$inject = ['$scope','UtilityServices','Fullscreen','BlakeDataService','$routeParams','WindowSize','$timeout','$rootScope'];
 
     angular.module('blake').controller("CompareController", controller);
 
