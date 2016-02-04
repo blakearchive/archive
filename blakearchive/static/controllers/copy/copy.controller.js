@@ -88,11 +88,11 @@
 
         // Set viewer height
         //vm.viewerHeight = UtilityServices.imageViewerHeight() + 'px';
-        vm.imageHeight =  ( WindowSize.height - 270 );
+        /*vm.imageHeight =  ( WindowSize.height - 270 );
 
         $scope.$on('resize::resize',function(event,window){
             vm.imageHeight =  ( WindowSize.height - 270 );
-        });
+        });*/
 
         vm.trayOpen = false;
         vm.showTools = true;
@@ -102,9 +102,7 @@
         }
         vm.toggleTools = function(){
             vm.showTools = !vm.showTools;
-
-            vm.imageHeight = vm.showTools == true ? (vm.imageHeight - 50) : (vm.imageHeight + 50);
-            console.log(vm.imageHeight);
+            $scope.$broadcast('copyCtrl::toggleTools',{tools:vm.showTools});
         }
 
     };

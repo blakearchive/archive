@@ -3,23 +3,8 @@
     var controller = function($scope,BlakeDataService,WindowSize){
         var vm = this;
 
-        /*function trayHeight() {
-            var set_tray_height = $(window).height() - 86;
-            var panel_count = $('.panel-group .panel-default').length;
-            var set_tray_body_height = (set_tray_height - (panel_count * 47));
 
-            $('.panel-group').css('min-height', set_tray_height + 'px');
-            $('.panel-group .panel-body').css('max-height', set_tray_body_height + 'px');
-        }
-
-        if ( $('#object-detail-tray').length ) {
-            trayHeight();
-            $(window).resize(response_change.waitForIdle(function() {
-                trayHeight();
-            }, 100));
-        }*/
-
-        vm.trayPixels = ( WindowSize.height - 145 );
+        vm.trayPixels = ( WindowSize.height - 136 );
         if(WindowSize.width <= 992){
             vm.trayHeight = 0
         } else {
@@ -38,7 +23,7 @@
 
 
         $scope.$on('resize::resize',function(event,window){
-            vm.trayPixels = ( window.height - 145 );
+            vm.trayPixels = ( window.height - 136 );
             if(WindowSize.width <= 992){
                 vm.trayHeight = 0
             } else {
