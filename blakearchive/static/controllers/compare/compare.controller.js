@@ -45,9 +45,6 @@
         }
         vm.toggleTools = function(){
             vm.showTools = !vm.showTools;
-
-            vm.imageHeight = vm.showTools == true ? (vm.imageHeight - 50) : (vm.imageHeight + 50);
-            console.log(vm.imageHeight);
         }
 
 
