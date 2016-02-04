@@ -8,7 +8,7 @@
             <div class="featured-object">
                 <div id="compared" class="compare-inner" ng-sortable="{ group: 'o', animation: 150 }">
                     <div class="item" ng-repeat="o in compareCtrl.comparisonObjects">
-                        <p class="object-title">{{ o.copy_title }}, Copy {{ o.archive_copy_id }}</p>
+                        <p class="object-title">{{ o.title }}, Copy {{ o.archive_copy_id }}</p>
                         <img ng-click="compareCtrl.updateCopyInfo(o.desc_id, '')" ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" comparison-image>
                         <p class="object-subtitle">{{ o.copy_composition_date }} ({{ o.copy_institution }}) {{ o.full_object_id }}
                         </p>

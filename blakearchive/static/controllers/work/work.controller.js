@@ -80,21 +80,21 @@
          * @param medium
          * @returns {*}
          */
-        var getWorkTypeReadable = function(medium) {
+        var getWorkTypeVars = function(medium) {
             switch(medium) {
                 case "illbk":
-                    return "Illuminated Books";
+                    return {'medium':"Illuminated Books",'probable':'printing'};
                     break;
                 case "comb":
                 case "comdes":
                 case "comeng":
-                    return "Commercial Book Illustrations";
+                    return {'medium':"Commercial Book Illustrations",'probable':'printing'};
                     break;
                 case "spb":
                 case "spdes":
                 case "speng":
                 case "cprint":
-                    return "Prints";
+                    return {'medium':"Prints",'probable':'printing'};
                     break;
                 case "mono":
                 case "paint":
@@ -102,22 +102,26 @@
                 case "penink":
                 case "penc":
                 case "wc":
-                    return "Drawings and Paintings";
+                    return {'medium':"Drawings and Paintings",'probable':'composition'};
                     break;
                 case "ms":
                 case "ltr":
                 case "te":
-                    return "Manuscripts and Typographic Works";
+                    return {'medium':"Manuscripts and Typographic Works",'probable':'composition'};
                     break;
                 default:
                     return false;
             }
         };
 
+
         $scope.$on("update:work", function () {
             vm.work = BlakeDataService.selectedWork;
-            vm.work.medium_pretty = getWorkTypeReadable(vm.work.medium);
+            var workVars = getWorkTypeVars(vm.work.medium);
+            vm.work.medium_pretty =  workVars.medium;
+            vm.work.probable = workVars.probable;
             var data = BlakeDataService.selectedWorkCopies;
+
             data.sort(function (a, b) {
                 return a.source.objdescid.compdate["@value"] - b.source.objdescid.compdate["@value"];
             });
@@ -132,6 +136,9 @@
             for(var i = 1; i <= vm.rowCount; i++){
                 vm.rows.push(i);
             }
+
+            console.log(vm.work);
+            console.log(vm.copies);
 
         });
 
