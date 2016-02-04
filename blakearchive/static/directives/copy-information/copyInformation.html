@@ -1,6 +1,6 @@
 <header class="page-header">
     <p class="subhead">Copy Information</p>
-    <h1>{{ info.copyHeader.filedesc.titlestmt.title['@reg'] }}</h1>
+    <h1>{{ info.copyHeader.filedesc.titlestmt.title.main['#text'] }}</h1>
 </header>
 
 <div class="row">
@@ -9,7 +9,7 @@
         <dl>
 
             <dt>Title:</dt>
-            <dd>{{ info.copyHeader.filedesc.titlestmt.title['@reg'] }}</dd>
+            <dd>{{ info.copyHeader.filedesc.titlestmt.title.main['#text'] }}</dd>
 
             <div ng-repeat="origination in info.copySource.objdescid.origination">
                 <dt>Origination:</dt>
