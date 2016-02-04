@@ -327,9 +327,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
     };
 
     dataFactory.setSelectedWork = function (workId) {
-        console.log('trying '+workId);
         return dataFactory.getWork(workId).then(function (work) {
-            console.log(workId + 'worked');
             dataFactory.selectedWork = work;
             dataFactory.getCopiesForWork(workId).then(function (copies) {
                 dataFactory.selectedWorkCopies = copies;
@@ -337,12 +335,8 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
                 console.log('update:work fired');
             })
         }).catch(function(){
-                console.log(workId + ' did not work');
                 var splitWorkId = workId.split('.');
-                console.log('trying '+splitWorkId[0]);
-
                 dataFactory.getWork(splitWorkId[0]).then(function (work) {
-                    console.log(splitWorkId[0] + 'worked');
                     dataFactory.selectedWork = work;
                     $rootScope.$broadcast("update:work");
                     console.log('update:work fired');
@@ -580,26 +574,12 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
     }
 })
 
-.factory('windowDimensions', ['$window', function($window) {
-        return {
-            height: function() {
-                return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-            },
-            width: function() {
-                return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-            }
-        };
-    }
-])
-
 .factory('WindowSize',['$window',function($window){
     var windowSize = {},
         w = angular.element($window);
 
     windowSize.height = w.height();
     windowSize.width = w.width();
-
-    console.log(windowSize.height);
 
     return windowSize;
 }])
@@ -623,7 +603,6 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
                 WindowSize.height = newValue.h;
                 WindowSize.width = newValue.w;
                 scope.$broadcast('resize::resize', { height: WindowSize.height, width : WindowSize.width });
-                console.log('broadcast happened');
             }, 300);
 
 
@@ -634,6 +613,31 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         });
     }
 
+}])
+.directive('copyImage', ['WindowSize', function(WindowSize){
+        var link = function(scope, element, attrs) {
+
+            scope.setStyles = function(windowSize){
+                var newHeight = (windowSize.height - 270);
+                element.height(newHeight);
+            }
+
+            element.on('load',function(){
+                scope.setStyles(WindowSize);
+            })
+
+            scope.$on('resize::resize', function(e,w) {
+                scope.setStyles(w)
+            });
+            scope.$on('copyCtrl::toggleTools',function(e,d){
+                var adjustment = d.tools == true ? -50 : 50 ;
+                element.height(element.height() + adjustment);
+            })
+        };
+        return {
+            restrict: 'A',
+            link: link
+        };
 }])
 .directive('comparisonImage', ['WindowSize', function(WindowSize){
     var link = function(scope, element, attrs) {

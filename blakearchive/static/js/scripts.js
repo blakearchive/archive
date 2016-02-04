@@ -89,7 +89,7 @@
     // -------------------------------------------------------------------
 
     // Set the image height for the compare view
-    function objectCompareHeight() {
+    /*function objectCompareHeight() {
       var set_object_compare_height = $(window).height() - 370;
       $('#object-view #compare .featured-object img').css('height', set_object_compare_height + 'px');
     }
@@ -99,7 +99,7 @@
       $(window).on('resize', response_change.waitForIdle(function() {
         objectCompareHeight();
       }, 100));
-    }
+    }*/
 
     // Get the height of the object detail.
     // -------------------------------------------------------------------

@@ -10,7 +10,7 @@
                     <!--<div class="carousel-inner" role="listbox" ng-style="{'height': viewerHeight}">-->
                     <div class="carousel-inner" role="listbox">
                         <div class="item active">
-                            <img src="http://www.blakearchive.org/blake/images/{{ copyCtrl.obj.dbi }}.100.jpg" style="height: {{copyCtrl.imageHeight}}px">
+                            <img src="http://www.blakearchive.org/blake/images/{{ copyCtrl.obj.dbi }}.100.jpg" copy-image>
                             <p class="object-subtitle"><span class="object-no">{{ copyCtrl.obj.full_object_id }}</span></p>
                         </div>
                     </div>
@@ -31,27 +31,10 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-            </div>
 
-            <!--Edit buttons-->
-            <div id="object-tools">
-                <div id="object-tools-inner">
-                    <div class="btn-group edit-object" role="group">
-                        <button type="button" class="btn btn-default add-lightbox"><span class="edit-icon"></span> Add To
-                            Lightbox
-                        </button>
-                        <button type="button" class="btn btn-default rotate"><span class="edit-icon"></span> Rotate
-                        </button>
-                        <button type="button" class="btn btn-default zoom"><span class="edit-icon"></span> Zoom</button>
-                        <button type="button" class="btn btn-default true-size"><span class="edit-icon"></span> True Size
-                        </button>
-                        <button type="button" class="btn btn-default new-window"><span class="edit-icon"></span> New
-                            Window
-                        </button>
-                    </div>
-                </div>
+                <object-tools toggle="copyCtrl.toggleTools()"></object-tools>
+
             </div>
-            <div class="show-hide-tools" ng-click="copyCtrl.toggleTools()"><span>+</span></div>
 
         </div>
     </div>
