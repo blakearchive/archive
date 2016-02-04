@@ -4,9 +4,11 @@
 
 (function () {
 
-    var controller = function ($scope,UtilityServices,Fullscreen,BlakeDataService,$routeParams,WindowSize) {
+    var controller = function ($scope,UtilityServices,Fullscreen,BlakeDataService,$routeParams,WindowSize,$rootScope) {
 
         var vm = this;
+
+        $rootScope.showSubMenu = 1;
 
         BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.objectId).then(function() {
             BlakeDataService.setSelectedWork(BlakeDataService.selectedCopy.bad_id).then(function(){
@@ -26,8 +28,10 @@
         vm.init = function(){
             vm.copy = BlakeDataService.selectedCopy;
             vm.objects = BlakeDataService.selectedCopyObjects;
+            console.log(vm.objects);
             vm.obj = BlakeDataService.selectedObject;
             vm.work = BlakeDataService.selectedWork;
+            vm.setObjectTitle();
             vm.getPreviousNextObjects();
         }
 
@@ -46,7 +50,18 @@
                 vm.obj = BlakeDataService.selectedObject;
                 console.log(vm.obj.text);
                 vm.getPreviousNextObjects();
+                vm.setObjectTitle();
             });
+        }
+
+        vm.setObjectTitle = function(){
+            if(angular.isObject(vm.obj.header)){
+                vm.objectTitle = vm.obj.header.filedesc.titlestmt.title.main['#text'];
+            } else if (angular.isObject(vm.copy.header)){
+                vm.objectTitle = vm.copy.header.filedesc.titlestmt.title.main['#text'] + ', Copy ' + vm.copy.archive_copy_id;
+            } else {
+                vm.objectTitle = vm.work.title;
+            }
         }
 
 
@@ -95,7 +110,7 @@
     };
 
 
-    controller.$inject = ['$scope','UtilityServices','Fullscreen','BlakeDataService','$routeParams','WindowSize'];
+    controller.$inject = ['$scope','UtilityServices','Fullscreen','BlakeDataService','$routeParams','WindowSize','$rootScope'];
 
     angular.module('blake').controller('CopyController', controller);
 

@@ -1,6 +1,6 @@
 <header class="page-header">
   <p class="subhead">Objects In Copy</p>
-  <h1 ng-if="!oic.work.virtual">{{ oic.copy.header.filedesc.titlestmt.title['@reg'] }}
+  <h1 ng-if="!oic.work.virtual">{{ oic.copy.header.filedesc.titlestmt.title.main['#text'] }}
     <span>{{ oic.copy.header.filedesc.titlestmt.title.copy['#text'] }}, {{ oic.copy.source.objdescid.compdate['#text'] }} ({{ oic.copy.institution }})</span>
   </h1>
   <h1 ng-if="oic.work.virtual">{{ oic.work.title }}</h1>
