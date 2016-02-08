@@ -31,6 +31,7 @@
         })
 
         BlakeDataService.getFeaturedWorks().then(function (results) {
+            console.log(results);
             var i = 0,
                 sci = 1;
             angular.forEach(results, function(value) {
@@ -42,6 +43,7 @@
                 }
             });
             vm.featured_works = results;
+            console.log(vm.featured_works);
         });
 
     }
