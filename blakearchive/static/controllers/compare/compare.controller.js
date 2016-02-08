@@ -30,8 +30,8 @@
         vm.showTools = true;
 
         vm.toggleTray = function(){
-            vm.trayOpen = !vm.trayOpen;
         }
+            vm.trayOpen = !vm.trayOpen;
         vm.toggleTools = function(){
             vm.showTools = !vm.showTools;
             vm.viewerHeight = vm.showTools == true ? vm.viewerHeight - 112 : vm.viewerHeight + 112;

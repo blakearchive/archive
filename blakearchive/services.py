@@ -55,13 +55,13 @@ class BlakeDataService(object):
                 offset = config.get("workTitleOffset", 0)
                 search_string = generate_search_element("title", config.get("searchString"))
                 solr_results = blake_work_solr.search(search_string, start=offset)
-                results["title"]["results"] = [transform_result(result) for result in solr_results]
+                results["title"]["results"] = list(solr_results)
                 results["title"]["count"] = solr_results.hits
             if config.get("searchWorkInformation"):
                 offset = config.get("workInformationOffset", 0)
                 search_string = generate_search_element("info", config.get("searchString"))
                 solr_results = blake_work_solr.search(search_string, start=offset)
-                results["info"]["results"] = [transform_result(result) for result in solr_results]
+                results["info"]["results"] = list(solr_results)
                 results["info"]["count"] = solr_results.hits
             return results
 
