@@ -47,56 +47,37 @@ class BlakeDataService(object):
             return new_result
 
         def work_query(config):
-            results = {
-                "title": {"count": 0, "results": []},
-                "work_info": {"count": 0, "results": []}
-            }
+            title_results = []
+            work_info_results = []
             if config.get("searchTitle"):
-                offset = config.get("workTitleOffset", 0)
                 search_string = generate_search_element("title", config.get("searchString"))
-                solr_results = blake_work_solr.search(search_string, start=offset)
-                results["title"]["results"] = [transform_result(result) for result in solr_results]
-                results["title"]["count"] = solr_results.hits
+                title_results = blake_work_solr.search(search_string)
             if config.get("searchWorkInformation"):
-                offset = config.get("workInformationOffset", 0)
                 search_string = generate_search_element("info", config.get("searchString"))
-                solr_results = blake_work_solr.search(search_string, start=offset)
-                results["info"]["results"] = [transform_result(result) for result in solr_results]
-                results["info"]["count"] = solr_results.hits
-            return results
+                work_info_results = blake_work_solr.search(search_string)
+            return {"title_results": list(title_results), "work_info_results": list(work_info_results)}
 
         def object_query(config):
-            results = {
-                "title": {"count": 0, "results": []},
-                "tag": {"count": 0, "results": []},
-                "text": {"count": 0, "results": []},
-                "description": {"count": 0, "results": []}
-            }
+            title_results = []
+            tag_results = []
+            text_results = []
+            description_results = []
             if config.get("searchTitle"):
-                offset = config.get("objectTitleOffset", 0)
                 search_string = generate_search_element("title", config.get("searchString"))
-                solr_results = blake_object_solr.search(search_string, start=offset)
-                results["title"]["results"] = [transform_result(result) for result in solr_results]
-                results["title"]["count"] = solr_results.hits
+                title_results = blake_object_solr.search(search_string)
             if config.get("searchImageKeywords"):
-                offset = config.get("objectKeywordsOffset", 0)
                 search_string = generate_search_element("components", config.get("searchString"))
-                solr_results = blake_object_solr.search(search_string, start=offset)
-                results["tag"]["results"] = [transform_result(result) for result in solr_results]
-                results["tag"]["count"] = solr_results.hits
+                tag_results = blake_object_solr.search(search_string)
             if config.get("searchText"):
-                offset = config.get("objectTextOffset", 0)
                 search_string = generate_search_element("text", config.get("searchString"))
-                solr_results = blake_object_solr.search(search_string, start=offset)
-                results["text"]["results"] = [transform_result(result) for result in solr_results]
-                results["text"]["count"] = solr_results.hits
+                text_results = blake_object_solr.search(search_string)
             if config.get("searchImageDescriptions"):
-                offset = config.get("objectDescriptionOffset", 0)
                 search_string = generate_search_element("illustration_description", config.get("searchString"))
-                solr_results = blake_object_solr.search(search_string, start=offset)
-                results["description"]["results"] = [transform_result(result) for result in solr_results]
-                results["description"]["count"] = solr_results.hits
-            return results
+                description_results = blake_object_solr.search(search_string)
+            return {"title_results": [transform_result(r) for r in title_results],
+                    "tag_results": [transform_result(r) for r in tag_results],
+                    "text_results": [transform_result(r) for r in text_results],
+                    "description_results": [transform_result(r) for r in description_results]}
         # updated search
         obj_results = object_query(config)
         work_results = work_query(config)

@@ -62,7 +62,10 @@
                     <p>{{ tray.obj.physical_description.objnote['#text'] }}</p>
                   </div>
                   <p><strong>Textual Note(s):</strong></p>
-                  <p><em>No textual notes for this object</em></p>
+                  <ul ng-if="tray.obj.notes.length > 0">
+                      <li ng-repeat="note in tray.obj.notes">{{ note }}</li>
+                  </ul>
+                  <p ng-if="tray.obj.notes.length == 0"><em>No textual notes for this object</em></p>
               </div>
           </accordion-group>
           <accordion-group id="object-metadata">

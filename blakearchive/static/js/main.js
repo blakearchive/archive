@@ -36,7 +36,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
      * @param config
      */
 
-    parseObjectLines = function(object,array){
+    var parseObjectLines = function(object,array){
 
         if(angular.isArray(object)) {
             angular.forEach(object, function (objectSet, lineKey) {
@@ -69,7 +69,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
                 array.push({'indent': indent, 'text': object.l['#text']});
             }
         }
-    }
+    };
 
 
     var constructor = function (config) {
@@ -78,6 +78,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             obj.illustration_description = angular.fromJson(config.illustration_description);
             obj.characteristics = angular.fromJson(config.characteristics);
             obj.text = angular.fromJson(config.text);
+            obj.notes = angular.fromJson(config.notes);
             obj.lines = [];
             if(angular.isObject(obj.text)){
                 if(angular.isDefined(obj.text.texthead)){

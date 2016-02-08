@@ -143,6 +143,7 @@ class BlakeDocumentImporter(object):
                 bo.illustration_description = element_to_dict(desc)
                 break
             break
+        bo.notes = [note.xpath("string()") for note in obj.xpath("//note")]
         for phystext in obj.xpath("phystext"):
             bo.text = element_to_dict(phystext)["phystext"]
             break
@@ -205,13 +206,15 @@ class BlakeDocumentImporter(object):
             break
         copy.medium = root.get("type").encode("utf-8")
         self.copies[copy.bad_id] = copy
-        for obj in objects:
-            obj.copy_title = copy.title
-            obj.archive_copy_id = copy.archive_copy_id
-            obj.copy_institution = copy.institution
-            obj.copy_composition_date = copy.composition_date
-            obj.copy_bad_id = copy.bad_id
         print "added copy"
+
+    def denormalize_objects(self):
+        for obj in self.objects.values():
+            obj.copy_title = obj.copy.title
+            obj.archive_copy_id = obj.copy.archive_copy_id
+            obj.copy_institution = obj.copy.institution
+            obj.copy_composition_date = obj.copy.composition_date
+            obj.copy_bad_id = obj.copy.bad_id
 
 
 def main():
@@ -237,6 +240,7 @@ def main():
     importer.process_relationships()
     importer.process_motif_relationships()
     importer.populate_works()
+    importer.denormalize_objects()
     engine = models.db.create_engine(config.db_connection_string)
     session = sessionmaker(bind=engine)()
     models.BlakeObject.metadata.drop_all(bind=engine)

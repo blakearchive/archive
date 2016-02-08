@@ -15,9 +15,17 @@
 
         vm.init();
 
+        $scope.getObjectTitle = function (obj) {
+            try {
+                return obj.header.filedesc.titlestmt.title.main['#text'];
+            } catch (e) {
+                return obj.title;
+            }
+        };
+
         $scope.$on('update:copy',function(){
             vm.init();
-        });
+       });
 
     }
 
