@@ -11,33 +11,20 @@
         $rootScope.showSubMenu = 1;
 
         /*vm.updateCopyInfo = function (copyId, objectId) {
-            var copy_num = copyId.split('.')
-                .slice(0, 2)
-                .join('.');
+         var copy_num = copyId.split('.')
+         .slice(0, 2)
+         .join('.');
 
-            vm.copy = BlakeDataService.setSelectedCopy(copy_num, objectId);
-        };*/
+         vm.copy = BlakeDataService.setSelectedCopy(copy_num, objectId);
+         };*/
 
 
-        vm.viewerHeight =  ( WindowSize.height - 270 );
+        vm.viewerHeight =  ( WindowSize.height - 220 );
 
         $scope.$on('resize::resize',function(event,window){
-            vm.viewerHeight =  ( window.height - 270 );
+            vm.viewerHeight =  ( window.height - 220 );
         });
 
-        /*var compare_object_width = 0;
-        $('#object-view #compare .item').each(function() {
-            compare_object_width += Number( $(this).width() );
-        });
-
-        $('#object-view #compare .compare-inner').css('width', (compare_object_width + 10) + 'px');
-    }
-
-    if ( $('#object-view #compare').length ) {
-        setObjectCompare();
-        $(window).on('resize', response_change.waitForIdle(function() {
-            setObjectCompare();
-        }, 100));*/
 
         vm.trayOpen = false;
         vm.showTools = true;
@@ -47,6 +34,8 @@
         }
         vm.toggleTools = function(){
             vm.showTools = !vm.showTools;
+            vm.viewerHeight = vm.showTools == true ? vm.viewerHeight - 112 : vm.viewerHeight + 112;
+            $scope.$broadcast('compareCtrl::toggleTools',{tools:vm.showTools});
         }
 
 
@@ -61,54 +50,11 @@
         console.log(vm.comparisonObjects);
         vm.obj = BlakeDataService.selectedObject;
 
-        /*$scope.$on("update:comparison", function () {
-            vm.comparisonObjects = BlakeDataService.comparisonObjects;
-            console.log(vm.comparisonObjects)
-        });*/
 
         $scope.$on("update:object", function () {
             vm.obj = BlakeDataService.selectedObject;
         });
 
-        // Horizontal Scroll with fixed height/width images
-        //var response_change = UtilityServices.responseChange();
-
-        /*function setObjectCompare() {
-            var compare_object_width = 0;
-            $('#object-view #compare .item').each(function () {
-                compare_object_width += Number($(this).width());
-            });
-
-            $('#object-view #compare .compare-inner').css('width', (compare_object_width + 10) + 'px');
-        }
-
-        function objectCompareHeight() {
-            var set_object_compare_height = $(window).height() - 370;
-            $('#object-view #compare .featured-object img').css('height', set_object_compare_height + 'px');
-        }*/
-
-        /*angular.element(document).ready(function () {
-            $timeout(function () {
-                setObjectCompare();
-                objectCompareHeight();
-
-                var object_view = $("div.compare-inner");
-
-                // Set the max-height for the detail tray in object view.
-                if ($('#object-detail-tray').length) {
-                    //UtilityServices.trayHeight(object_view);
-
-                    object_view.resize(response_change.waitForIdle(function () {
-                        //UtilityServices.trayHeight(object_view);
-                    }, 10));
-                }
-            }, 0);
-        });*/
-
-        /*$(window).on('resize', response_change.waitForIdle(function () {
-            setObjectCompare();
-            objectCompareHeight();
-        }, 100));*/
     }
 
 

@@ -511,7 +511,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
     };*/
 
 
-    var imageText = function($scope, objLines) {
+    /*var imageText = function($scope, objLines) {
         $scope.obj.text.lg.forEach(function (lg) {
             if (lg.l.length) {
                 lg.l.forEach(function (l) {
@@ -523,7 +523,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         });
 
         return objLines;
-    };
+    };*/
 
     /*var imageViewerHeight = function() {
         var viewer_height = $(window).innerHeight();
@@ -568,7 +568,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         //responseChange: responseChange,
         //trayHeight: trayHeight,
         //getImageHeight: getImageHeight,
-        imageText: imageText,
+        //imageText: imageText,
         //imageViewerHeight: imageViewerHeight,
         fullScreen: fullScreen,
         resetPanelFromFullscreen: resetPanelFromFullscreen
@@ -643,24 +643,31 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
 .directive('comparisonImage', ['WindowSize', function(WindowSize){
     var link = function(scope, element, attrs) {
 
-        scope.setStyles = function(windowSize){
+        var baseAdjustment = 370;
+
+        scope.setStyles = function(windowSize, adjustment){
             var elementHeight = element.height(),
                 elementWidth = element.width(),
                 ratio = elementWidth / elementHeight,
-                newHeight = (windowSize.height - 370),
-                newWidth = newHeight * ratio;
+                newHeight = (windowSize.height - adjustment),
+                newWidth = Math.ceil(newHeight * ratio);
                 element.css('height',newHeight);
-                element.parent().css('width',newWidth)
-            //console.log('resize happened, height = '+elementHeight+' width = '+elementWidth+', newheight = '+ newHeight + ' newwidth='+newWidth);
+                element.parent().css('width',newWidth);
         }
 
         element.on('load',function(){
-            scope.setStyles(WindowSize);
+            scope.setStyles(WindowSize,baseAdjustment);
         })
 
         scope.$on('resize::resize', function(e,w) {
-            scope.setStyles(w)
+            scope.setStyles(w,baseAdjustment)
         });
+
+        scope.$on('compareCtrl::toggleTools',function(e,d){
+            var adjustment = d.tools == true ? baseAdjustment : baseAdjustment - 112 ;
+            scope.setStyles(WindowSize,adjustment)
+        })
+
     };
     return {
         restrict: 'A',
