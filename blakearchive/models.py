@@ -51,6 +51,7 @@ class BlakeObject(db.Model):
     title = db.Column(db.UnicodeText)
     header = db.Column(JSON)
     source = db.Column(JSON)
+    notes = db.Column(JSON)
     objects_from_same_matrix = db.relationship(
         "BlakeObject",
         secondary=matrix__object,
@@ -95,7 +96,8 @@ class BlakeObject(db.Model):
             "physical_description": self.physical_description,
             "title": self.title,
             "header": self.header,
-            "source": self.source
+            "source": self.source,
+            "notes": self.notes
         }
 
 

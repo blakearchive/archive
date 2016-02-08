@@ -3,15 +3,16 @@ import json
 import pysolr
 import config
 import models
+import unicodedata
 
 
 def main():
     from sqlalchemy.orm import sessionmaker
 
-    if config.solr == "lib_prod":
+    if hasattr(config, "solr") and config.solr == "lib_prod":
         blake_object_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake-object')
         blake_work_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake-work')
-    elif config.solr == "lib_dev":
+    elif hasattr(config, "solr") and config.solr == "lib_dev":
         blake_object_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-object')
         blake_work_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-work')
     else:
@@ -34,7 +35,9 @@ def main():
             "illustration_description": json.dumps(blake_object.illustration_description),
             "text": json.dumps(blake_object.text),
             "copy_title": blake_object.copy.title,
-            "copy_institution": blake_object.copy.institution
+            "copy_institution": blake_object.copy.institution,
+            # FIXME: properly convert unicode rather than stripping characters
+            "notes": json.dumps([unicodedata.normalize('NFKD', note).encode('ascii', 'ignore') for note in blake_object.notes])
         }
         if blake_object.copy.work:
             obj["work_title"] = blake_object.copy.work.title
