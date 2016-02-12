@@ -13,6 +13,7 @@
         $scope.search = function () {
             BlakeDataService.queryObjects($scope.searchConfig).then(function (results) {
                 $scope.results = results;
+                console.log($scope.results);
             });
         };
 
@@ -23,6 +24,11 @@
         $scope.searchConfig = {
             useCompDate: true,
             searchTitle: true,
+            searchText: true,
+            searchWorkInformation: true,
+            searchImageKeywords: true,
+            searchNotes: true,
+            searchImageDescriptions: true,
             searchIlluminatedBooks: true,
             searchCommercialBookIllustrations: true,
             searchSeparatePrints: true,
@@ -69,14 +75,39 @@
             return false;
         };
 
+        $scope.pagination = {
+            'title': [],
+            'text': [],
+            'notes': [],
+            'tag': [],
+            'description': [],
+            'worktitle': [],
+            'workinfo': []
+        };
+
+        $scope.setPagination = function(resultType,count){
+            $scope.pagination[resultType] = [];
+            var numPages = Math.ceil(count / 10), j;
+            if(numPages > 1){
+                for(j = 1; j <= numPages; j++){
+                   $scope.pagination[resultType].push(j);
+                }
+            }
+        }
+
         $scope.objectResultsMatchingFilter = function (resultType) {
-            var i, inRange = [], results;
+            var i, inRange = [], results, count;
             if ($scope.results) {
                 results = $scope.results.object_results[resultType].results;
+                count = $scope.results.object_results[resultType].count;
+                $scope.setPagination(resultType,count);
                 for (i = 0; i < results.length; i++) {
                     if (results[i].copy_composition_date >= $scope.searchConfig.minDate &&
                         results[i].copy_composition_date <= $scope.searchConfig.maxDate &&
                         objectMatchingMedium(results[i])) {
+                        if(!angular.isDefined(results[i].title)){
+                            results[i].title = results[i].copy_title + ' -- Bentley('+results[i].bentley_id+')';
+                        }
                         inRange.push(results[i]);
                     }
                 }
@@ -85,9 +116,11 @@
         };
 
         $scope.workResultsMatchingFilter = function (resultType) {
-            var i, inRange = [], results;
+            var i, inRange = [], results, count;
             if ($scope.results) {
                 results = $scope.results.work_results[resultType].results;
+                count = $scope.results.work_results[resultType].count;
+                $scope.setPagination('work'+resultType,count);
                 for (i = 0; i < results.length; i++) {
                     if (results[i].composition_date >= $scope.searchConfig.minDate &&
                         results[i].composition_date <= $scope.searchConfig.maxDate &&
@@ -98,6 +131,36 @@
             }
             return inRange;
         };
+
+        $scope.paginate = function (resultType,page){
+            switch(resultType){
+                case 'title':
+                    $scope.searchConfig.objectTitleOffset = (page - 1)  * 10;
+                    break;
+                case 'text':
+                    $scope.searchConfig.objectTextOffset = (page - 1)  * 10;
+                    break;
+                case 'tag':
+                    $scope.searchConfig.objectKeywordsOffset = (page - 1)  * 10;
+                    break;
+                case 'notes':
+                    $scope.searchConfig.objectNotesOffset = (page - 1)  * 10;
+                    break;
+                case 'description':
+                    $scope.searchConfig.objectDescriptionOffset = (page - 1)  * 10;
+                    break;
+                case 'worktitle':
+                    $scope.searchConfig.workTitleOffset = (page - 1)  * 10;
+                    break;
+                case 'workinfo':
+                    $scope.searchConfig.workInformationOffset = (page - 1)  * 10;
+                    break;
+                default:
+                    break;
+            }
+            console.log($scope.searchConfig);
+            $scope.search();
+        }
 
         if ($routeParams.search) {
             $scope.searchConfig.searchString = $routeParams.search;
