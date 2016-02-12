@@ -183,7 +183,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
      * @param config.searchImageKeywords - Perform an image keyword search
      * @param config.objectKeywordOffset - an optional offset to use for image keyword search results, for pagination
      * @param config.searchText - perform an object text search
-     * @param config.searchTextOffset - optional offset to use for text search results, for pagination
+     * @param config.objectTextOffset - optional offset to use for text search results, for pagination
      * @param config.searchImageDescription - perform an image description search
      * @param config.objectDescriptionOffset - an optional offset to use for description search results
      * @returns {*}
