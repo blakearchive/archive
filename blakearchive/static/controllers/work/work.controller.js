@@ -8,7 +8,28 @@
 
         var vm = this;
 
-        BlakeDataService.setSelectedWork($routeParams.workId);
+        BlakeDataService.setSelectedWork($routeParams.workId).then(function(){
+            vm.work = BlakeDataService.selectedWork;
+            var workVars = getWorkTypeVars(vm.work.medium);
+            vm.work.medium_pretty =  workVars.medium;
+            vm.work.probable = workVars.probable;
+            var data = BlakeDataService.selectedWorkCopies;
+
+            data.sort(function (a, b) {
+                return a.source.objdescid.compdate["@value"] - b.source.objdescid.compdate["@value"];
+            });
+
+            vm.copies = data;
+
+            vm.copyCount = vm.copies.length;
+            vm.rowCount = Math.ceil(vm.copyCount / 4);
+            vm.knownCopiesDiv3 = Math.ceil(vm.copyCount / 3);
+            vm.allKnownRelatedItemsDiv3 = Math.ceil(vm.work.related_works.length / 3);
+            vm.rows = [];
+            for(var i = 1; i <= vm.rowCount; i++){
+                vm.rows.push(i);
+            }
+        });
 
         vm.getCopyFirstObject = function (copy) {
             function workMedium(badMedium) {
@@ -113,34 +134,6 @@
                     return false;
             }
         };
-
-
-        $scope.$on("update:work", function () {
-            vm.work = BlakeDataService.selectedWork;
-            var workVars = getWorkTypeVars(vm.work.medium);
-            vm.work.medium_pretty =  workVars.medium;
-            vm.work.probable = workVars.probable;
-            var data = BlakeDataService.selectedWorkCopies;
-
-            data.sort(function (a, b) {
-                return a.source.objdescid.compdate["@value"] - b.source.objdescid.compdate["@value"];
-            });
-
-            vm.copies = data;
-
-            vm.copyCount = vm.copies.length;
-            vm.rowCount = Math.ceil(vm.copyCount / 4);
-            vm.knownCopiesDiv3 = Math.ceil(vm.copyCount / 3);
-            vm.allKnownRelatedItemsDiv3 = Math.ceil(vm.work.related_works.length / 3);
-            vm.rows = [];
-            for(var i = 1; i <= vm.rowCount; i++){
-                vm.rows.push(i);
-            }
-
-            console.log(vm.work);
-            console.log(vm.copies);
-
-        });
 
     }
 

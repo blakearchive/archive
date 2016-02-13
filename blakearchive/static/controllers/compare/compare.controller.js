@@ -4,9 +4,33 @@
 
 (function() {
 
-    var controller = function ($scope,UtilityServices,Fullscreen,BlakeDataService,$routeParams,WindowSize,$timeout,$rootScope) {
+    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$timeout,$rootScope,$localStorage) {
 
         var vm = this;
+
+        console.log($localStorage);
+
+        vm.comparisonObjects = $localStorage.comparisonObjects;
+        vm.obj = $localStorage.comparisonObjects[0];
+        if(angular.isUndefined(BlakeDataService.selectedCopy)){
+            BlakeDataService.setSelectedCopy(vm.obj.copy_bad_id).then(function(){
+                vm.copy = BlakeDataService.selectedCopy;
+                var copyBad = vm.copy.bad_id,
+                    workBadMatch = copyBad.indexOf('.'),
+                    workBad = workBadMatch > 0 ? copyBad.substring(0,workBadMatch) : copyBad;
+                if (angular.isUndefined(BlakeDataService.selectedWork)) {
+                    BlakeDataService.setWorkNoCopies(workBad).then(function(){
+                        vm.init();
+                    });
+                } else {
+                    vm.init();
+                }
+            })
+        }
+
+        vm.init = function(){
+            vm.work = BlakeDataService.selectedWork;
+        }
 
         $rootScope.showSubMenu = 1;
 
@@ -30,8 +54,8 @@
         vm.showTools = true;
 
         vm.toggleTray = function(){
-        }
             vm.trayOpen = !vm.trayOpen;
+        }
         vm.toggleTools = function(){
             vm.showTools = !vm.showTools;
             vm.viewerHeight = vm.showTools == true ? vm.viewerHeight - 112 : vm.viewerHeight + 112;
@@ -39,26 +63,14 @@
         }
 
 
-        // Open an info panel in fullscreen mode
-        vm.goFullscreen = function (panel_id) {
-            UtilityServices.fullScreen(Fullscreen, panel_id);
-        };
-        // Reset to previous panel dimensions, set by UtilityServices.trayHeight
-        UtilityServices.resetPanelFromFullscreen(Fullscreen);
-
-        vm.comparisonObjects = BlakeDataService.comparisonObjects;
-        console.log(vm.comparisonObjects);
-        vm.obj = BlakeDataService.selectedObject;
-
-
-        $scope.$on("update:object", function () {
+        /*$scope.$on("update:object", function () {
             vm.obj = BlakeDataService.selectedObject;
-        });
+        });*/
 
     }
 
 
-    controller.$inject = ['$scope','UtilityServices','Fullscreen','BlakeDataService','$routeParams','WindowSize','$timeout','$rootScope'];
+    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$timeout','$rootScope','$localStorage'];
 
     angular.module('blake').controller("CompareController", controller);
 
