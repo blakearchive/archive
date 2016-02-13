@@ -1,6 +1,6 @@
 <header class="page-header">
     <p class="subhead">Copy Information</p>
-    <h1>{{ info.copyHeader.filedesc.titlestmt.title.main['#text'] }}</h1>
+    <h1>{{ info.copy.header.filedesc.titlestmt.title.main['#text'] }}</h1>
 </header>
 
 <div class="row">
@@ -9,9 +9,9 @@
         <dl>
 
             <dt>Title:</dt>
-            <dd>{{ info.copyHeader.filedesc.titlestmt.title.main['#text'] }}</dd>
+            <dd>{{ info.copy.header.filedesc.titlestmt.title.main['#text'] }}</dd>
 
-            <div ng-repeat="origination in info.copySource.objdescid.origination">
+            <div ng-repeat="origination in info.copy.source.objdescid.origination track by $index">
                 <dt>Origination:</dt>
                 <dd>{{ origination['#text'] }}: {{ getOriginationRole(origination['role']) }}</dd>
                 <div ng-if="origination.note">
@@ -21,78 +21,78 @@
             </div>
 
             <dt>Publisher:</dt>
-            <dd>{{ info.copySource.objdescid.imprint.publisher['#text'] }}</dd>
-            <div ng-if="info.copySource.objdescid.imprint.publisher.note">
+            <dd>{{ info.copy.source.objdescid.imprint.publisher['#text'] }}</dd>
+            <div ng-if="info.copy.source.objdescid.imprint.publisher.note">
         <dt>Note:</dt>
-        <dd>{{ info.copySource.objdescid.imprint.publisher.note['#text'] }}</dd>
+        <dd>{{ info.copy.source.objdescid.imprint.publisher.note['#text'] }}</dd>
       </div>
       <dt>Place of Publication:</dt>
-      <dd>{{ info.copySource.objdescid.imprint.pubplace['#text'] }}</dd>
-      <div ng-if="info.copySource.objdescid.imprint.pubplace.note">
+      <dd>{{ info.copy.source.objdescid.imprint.pubplace['#text'] }}</dd>
+      <div ng-if="info.copy.source.objdescid.imprint.pubplace.note">
         <dt>Note:</dt>
-        <dd>{{ info.copySource.objdescid.imprint.pubplace.note['#text'] }}</dd>
+        <dd>{{ info.copy.source.objdescid.imprint.pubplace.note['#text'] }}</dd>
       </div>
       <dt>Date:</dt>
-      <dd>{{ info.copySource.objdescid.imprint.date['#text'] }}</dd>
+      <dd>{{ info.copy.source.objdescid.imprint.date['#text'] }}</dd>
       <dt>Composition Date:</dt>
-      <dd>{{ info.copySource.objdescid.compdate['#text'] }}</dd>
+      <dd>{{ info.copy.source.objdescid.compdate['#text'] }}</dd>
       <div ng-if="copy.print_date">
       <dt>Print Date:</dt>
       <dd>{{ copy.print_date }}</dd>
         </div>
       <dt>Number of Objects:</dt>
-      <dd>{{ info.copySource.objinfo.numberobj['#text'] }}</dd>
+      <dd>{{ info.copy.source.objinfo.numberobj['#text'] }}</dd>
       <dt>Object Order:</dt>
-      <dd>{{ info.copySource.objinfo.objorder['#text'] }}</dd>
+      <dd>{{ info.copy.source.objinfo.objorder['#text'] }}</dd>
       <dt>Object Size:</dt>
-      <dd>{{ info.copySource.objinfo.objsize['#text'] }}</dd>
+      <dd>{{ info.copy.source.objinfo.objsize['#text'] }}</dd>
       <dt>Number of Leaves:</dt>
-      <dd>{{ info.copySource.objinfo.numberleaves['#text'] }}</dd>
-      <div ng-if="info.copySource.objinfo.numberleaves.note">
+      <dd>{{ info.copy.source.objinfo.numberleaves['#text'] }}</dd>
+      <div ng-if="info.copy.source.objinfo.numberleaves.note">
         <dt>Note:</dt>
-        <dd>{{ info.copySource.objinfo.numberleaves.note['#text'] }}</dd>
+        <dd>{{ info.copy.source.objinfo.numberleaves.note['#text'] }}</dd>
       </div>
       <dt>Leaf Size:</dt>
-      <dd>{{ info.copySource.objinfo.leafsize['#text'] }}</dd>
+      <dd>{{ info.copy.source.objinfo.leafsize['#text'] }}</dd>
       <dt>Medium:</dt>
-      <dd>{{ info.copySource.objinfo.medium['#text'] }}</dd>
-      <div ng-if="info.copySource.objinfo.medium.note">
+      <dd>{{ info.copy.source.objinfo.medium['#text'] }}</dd>
+      <div ng-if="info.copy.source.objinfo.medium.note">
         <dt>Note:</dt>
-        <dd>{{ info.copySource.objinfo.medium.note['#text'] }}</dd>
+        <dd>{{ info.copy.source.objinfo.medium.note['#text'] }}</dd>
       </div>
       <dt>Printing Style:</dt>
-      <dd>{{ info.copySource.objinfo.printingstyle['#text'] }}</dd>
-      <div ng-if="info.copySource.objinfo.printingstyle.note">
+      <dd>{{ info.copy.source.objinfo.printingstyle['#text'] }}</dd>
+      <div ng-if="info.copy.source.objinfo.printingstyle.note">
         <dt>Note:</dt>
-        <dd>{{ info.copySource.objinfo.printingstyle.note['#text'] }}</dd>
+        <dd>{{ info.copy.source.objinfo.printingstyle.note['#text'] }}</dd>
       </div>
       <dt>Ink Color:</dt>
-      <dd>{{ info.copySource.objinfo.inkcolor['#text'] }}</dd>
-      <div ng-if="info.copySource.objinfo.inkcolor.note">
+      <dd>{{ info.copy.source.objinfo.inkcolor['#text'] }}</dd>
+      <div ng-if="info.copy.source.objinfo.inkcolor.note">
         <dt>Note:</dt>
-        <dd>{{ info.copySource.objinfo.inkcolor.note['#text'] }}</dd>
+        <dd>{{ info.copy.source.objinfo.inkcolor.note['#text'] }}</dd>
       </div>
       <dt>Support:</dt>
-      <dd>{{ info.copySource.objinfo.support['#text'] }}</dd>
+      <dd>{{ info.copy.source.objinfo.support['#text'] }}</dd>
       <dt>Watermark:</dt>
-      <dd>{{ info.copySource.objinfo.support['#text'] }}</dd>
+      <dd>{{ info.copy.source.objinfo.support['#text'] }}</dd>
       <dt>Etched Numbers:</dt>
-      <dd>{{ info.copySource.objinfo.etchednumbers['#text'] }}</dd>
+      <dd>{{ info.copy.source.objinfo.etchednumbers['#text'] }}</dd>
       <dt>Penned Numbers:</dt>
-      <dd>{{ info.copySource.objinfo.pennednumbers['#text'] }}</dd>
+      <dd>{{ info.copy.source.objinfo.pennednumbers['#text'] }}</dd>
       <dt>Frame Lines:</dt>
-      <dd>{{ info.copySource.objinfo.framelines['#text'] }}</dd>
+      <dd>{{ info.copy.source.objinfo.framelines['#text'] }}</dd>
       <dt>Binding:</dt>
-      <dd>{{ info.copySource.objinfo.binding['#text'] }}</dd>
-      <div ng-if="info.copySource.objinfo.binding.note">
+      <dd>{{ info.copy.source.objinfo.binding['#text'] }}</dd>
+      <div ng-if="info.copy.source.objinfo.binding.note">
         <dt>Note:</dt>
-        <dd>{{ info.copySource.objinfo.binding.note['#text'] }}</dd>
+        <dd>{{ info.copy.source.objinfo.binding.note['#text'] }}</dd>
       </div>
       <dt>Stab Holes:</dt>
-      <dd>{{ info.copySource.objinfo.stabholes['#text'] }}</dd>
-      <div ng-if="info.copySource.objinfo.binding.note">
+      <dd>{{ info.copy.source.objinfo.stabholes['#text'] }}</dd>
+      <div ng-if="info.copy.source.objinfo.binding.note">
         <dt>Note:</dt>
-        <dd>{{ info.copySource.objinfo.stabholes.note['#text'] }}</dd>
+        <dd>{{ info.copy.source.objinfo.stabholes.note['#text'] }}</dd>
       </div>
     </dl>
   </div>
@@ -101,41 +101,41 @@
     <h3>Provenance</h3>
     <dl class="dl-horizontal">
       <dt>Name:</dt>
-      <dd>{{ info.copySource.provenance.name['#text'] }}</dd>
+      <dd>{{ info.copy.source.provenance.name['#text'] }}</dd>
       <dt>Date:</dt>
-      <dd>{{ info.copySource.provenance.date['#text'] }}</dd>
+      <dd>{{ info.copy.source.provenance.date['#text'] }}</dd>
       <dt>Dealer:</dt>
-      <dd>{{ info.copySource.provenance.dealer['#text'] }}</dd>
+      <dd>{{ info.copy.source.provenance.dealer['#text'] }}</dd>
       <dt>Price:</dt>
-      <dd>{{ info.copySource.provenance.price['#text'] }}</dd>
-      <div ng-if="info.copySource.provenance.note">
+      <dd>{{ info.copy.source.provenance.price['#text'] }}</dd>
+      <div ng-if="info.copy.source.provenance.note">
         <dt>Note:</dt>
-        <dd>{{ info.copySource.provenance.note['#text'] }}</dd>
+        <dd>{{ info.copy.source.provenance.note['#text'] }}</dd>
       </div>
     </dl>
 
     <h3>Present Location</h3>
     <dl class="dl-horizontal">
       <dt>Mailing Address:</dt>
-      <dd>{{ info.copySource.repository.institution['#text'] }}<br>
-        {{ info.copySource.repository.addressline[0]['#text'] }}<br>
-        {{ info.copySource.repository.addressline[1]['#text'] }}<br>
-        {{ info.copySource.repository.addressline[2]['#text'] }}
+      <dd>{{ info.copy.source.repository.institution['#text'] }}<br>
+        {{ info.copy.source.repository.addressline[0]['#text'] }}<br>
+        {{ info.copy.source.repository.addressline[1]['#text'] }}<br>
+        {{ info.copy.source.repository.addressline[2]['#text'] }}
       </dd>
       <dt>Telephone:</dt>
-      <dd>{{ info.copySource.repository.addressline[3]['#text'].split(': ')[1] }}</dd>
+      <dd>{{ info.copy.source.repository.addressline[3]['#text'].split(': ')[1] }}</dd>
       <dt>Fax:</dt>
-      <dd>{{ info.copySource.repository.addressline[4]['#text'].split(': ')[1] }}</dd>
+      <dd>{{ info.copy.source.repository.addressline[4]['#text'].split(': ')[1] }}</dd>
       <dt>Email:</dt>
-      <dd>{{ info.copySource.repository.addressline[5]['#text'].split(': ')[1] }}</dd>
+      <dd>{{ info.copy.source.repository.addressline[5]['#text'].split(': ')[1] }}</dd>
       <dt>URL:</dt>
-      <dd>{{ info.copySource.repository.addressline[6]['#text'].split(': ')[1] }}</dd>
+      <dd>{{ info.copy.source.repository.addressline[6]['#text'].split(': ')[1] }}</dd>
       <dt>Department:</dt>
-      <dd>{{ info.copySource.repository.department['#text'] }}</dd>
+      <dd>{{ info.copy.source.repository.department['#text'] }}</dd>
       <dt>Collection:</dt>
-      <dd>{{ info.copySource.repository.collection['#text'] }}</dd>
-      <dt>{{ info.copySource.repository.repositoryid['@label'] }}:</dt>
-      <dd>{{ info.copySource.repository.repositoryid['#text'] }}</dd>
+      <dd>{{ info.copy.source.repository.collection['#text'] }}</dd>
+      <dt>{{ info.copy.source.repository.repositoryid['@label'] }}:</dt>
+      <dd>{{ info.copy.source.repository.repositoryid['#text'] }}</dd>
     </dl>
   </div>
 </div>

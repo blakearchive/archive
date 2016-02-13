@@ -13,7 +13,7 @@
 
                   <p><a href="#">[ n ]</a></p>
                   <ol>
-                      <li ng-repeat="line in tray.obj.lines"><span>{{ line.text }}</span></li>
+                      <li ng-repeat="line in tray.obj.lines track by $index"><span>{{ line.text }}</span></li>
                   </ol>
                   <p><a href="#">Color key for transcriptions</a></p>
               </div>
@@ -32,12 +32,12 @@
 
                   <p>{{ tray.obj.illustration_description.illusobjdesc['#text'] }}</p>
 
-                  <div ng-repeat="component in tray.obj.components">
+                  <div ng-repeat="component in tray.obj.components track by $index">
                     <p><strong>Component (Sector {{ component.component['@location'] }})</strong></p>
 
                     <p class="keywords">Keywords:
                     <ul class="list-inline">
-                      <li ng-repeat="characteristic in component.component.characteristic">{{ characteristic["#text"] }}</li>
+                      <li ng-repeat="characteristic in component.component.characteristic track by $index">{{ characteristic["#text"] }}</li>
                     </ul>
                     </p>
 
@@ -63,7 +63,7 @@
                   </div>
                   <p><strong>Textual Note(s):</strong></p>
                   <ul ng-if="tray.obj.notes.length > 0">
-                      <li ng-repeat="note in tray.obj.notes">{{ note }}</li>
+                      <li ng-repeat="note in tray.obj.notes track by $index">{{ note }}</li>
                   </ul>
                   <p ng-if="tray.obj.notes.length == 0"><em>No textual notes for this object</em></p>
               </div>
