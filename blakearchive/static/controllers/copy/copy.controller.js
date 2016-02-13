@@ -4,57 +4,63 @@
 
 (function () {
 
-    var controller = function ($scope,UtilityServices,Fullscreen,BlakeDataService,$routeParams,WindowSize,$rootScope) {
+    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$localStorage) {
 
         var vm = this;
 
         $rootScope.showSubMenu = 1;
 
         BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.objectId).then(function() {
-            BlakeDataService.setSelectedWork(BlakeDataService.selectedCopy.bad_id).then(function(){
-                vm.init();
-            });
+                vm.copy = BlakeDataService.selectedCopy;
 
-            // alternate solution to works not loading, need to investigate
-            //var copyBad = BlakeDataService.getSelectedCopy().bad_id,
-              //  workBadMatch = /(.*)\.\w*/.exec(copyBad),
-                //workBad = workBadMatch ? workBadMatch[0] : null;
-            //if (workBad) {
-              //  BlakeDataService.setSelectedWork(workBad);
-            //}
-
+                var copyBad = vm.copy.bad_id,
+                    workBadMatch = copyBad.indexOf('.'),
+                    workBad = workBadMatch > 0 ? copyBad.substring(0,workBadMatch) : copyBad;
+                if (angular.isUndefined(BlakeDataService.selectedWork)) {
+                    BlakeDataService.setWorkNoCopies(workBad).then(function(){
+                        vm.init();
+                    });
+                } else {
+                    vm.init();
+                }
         });
 
         vm.init = function(){
-            vm.copy = BlakeDataService.selectedCopy;
-            vm.objects = BlakeDataService.selectedCopyObjects;
-            vm.obj = BlakeDataService.selectedObject;
             vm.work = BlakeDataService.selectedWork;
+            vm.setSimilarObjects(vm.copy.selectedObject.object_id);
             vm.setObjectTitle();
             vm.getPreviousNextObjects();
         }
 
+        vm.setSimilarObjects = function(object_id){
+            BlakeDataService.getObjectsFromSameMatrix(object_id).then(function(data){
+                if (BlakeDataService.hasObjectsFromSameMatrix) {
+                    vm.copy.selectedObject.matrix = data;
+                }
+            });
 
+            BlakeDataService.getObjectsWithSameMotif(object_id).then(function(data){
+                if (BlakeDataService.hasObjectsWithSameMotif) {
+                    vm.copy.selectedObject.motif = data;
+                }
+            });
 
-        $scope.$on('update:copy',function(){
-            vm.init();
-        });
-
-        $scope.$on('update:work',function(){
-            vm.init();
-        });
+            BlakeDataService.getObjectsFromSameProductionSequence(object_id).then(function(data){
+                if (BlakeDataService.hasObjectsFromSameProductionSequence) {
+                    vm.copy.selectedObject.sequence = data;
+                }
+            })
+        }
 
         vm.changeObject = function(object){
-            BlakeDataService.setSelectedObject(object.object_id).then(function(){
-                vm.obj = BlakeDataService.selectedObject;
-                vm.getPreviousNextObjects();
-                vm.setObjectTitle();
-            });
+            vm.copy.selectedObject = object;
+            $scope.$broadcast('copyCtrl::changeObject');
+            vm.init();
         }
 
         vm.setObjectTitle = function(){
-            if(angular.isObject(vm.obj.header)){
-                vm.objectTitle = vm.obj.header.filedesc.titlestmt.title.main['#text'];
+            if(angular.isObject(vm.copy.selectedObject.header)){
+                vm.objectTitle = vm.copy.selectedObject.obj.header.filedesc.titlestmt.title.main['#text'];
             } else if (angular.isObject(vm.copy.header)){
                 vm.objectTitle = vm.copy.header.filedesc.titlestmt.title.main['#text'] + ', Copy ' + vm.copy.archive_copy_id;
             } else {
@@ -64,19 +70,19 @@
 
 
         vm.getPreviousNextObjects = function () {
-            if (vm.objects && vm.objects.length) {
-                for (var i = vm.objects.length; i--;) {
-                    if (vm.objects[i].object_id == vm.obj.object_id) {
+            if (vm.copy.objectsInCopy && vm.copy.objectsInCopy.length) {
+                for (var i = vm.copy.objectsInCopy.length; i--;) {
+                    if (vm.copy.objectsInCopy[i].object_id == vm.copy.selectedObject.object_id) {
                         // Extra code here to make the list circular
                         if (i - 1 < 0) {
-                            vm.previousObject = vm.objects[vm.objects.length - 1];
+                            vm.previousObject = vm.copy.objectsInCopy[vm.copy.objectsInCopy.length - 1];
                         } else {
-                            vm.previousObject = vm.objects[i - 1];
+                            vm.previousObject = vm.copy.objectsInCopy[i - 1];
                         }
-                        if (i + 1 >= vm.objects.length) {
-                            vm.nextObject = vm.objects[0];
+                        if (i + 1 >= vm.copy.objectsInCopy.length) {
+                            vm.nextObject = vm.copy.objectsInCopy[0];
                         } else {
-                            vm.nextObject = vm.objects[i + 1];
+                            vm.nextObject = vm.copy.objectsInCopy[i + 1];
                         }
                         break;
                     }
@@ -98,7 +104,7 @@
     };
 
 
-    controller.$inject = ['$scope','UtilityServices','Fullscreen','BlakeDataService','$routeParams','WindowSize','$rootScope'];
+    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$localStorage'];
 
     angular.module('blake').controller('CopyController', controller);
 
