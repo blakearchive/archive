@@ -1,5 +1,24 @@
-angular.module('blake').directive('navigationMenu', function() {
-    function link(scope, element, attrs) {
+(function(){
+
+    var controller = function($scope,BlakeDataService,$localStorage){
+
+        var vm = this;
+
+        $('nav.navbar ul.navbar-nav > li.dropdown').click(function() {
+            var viewport_width = $(window).width();
+            var element_position = $(this).offset().left;
+
+            $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
+        });
+
+        if(angular.isUndefined($localStorage.menus)){
+            BlakeDataService.getWorks().then(function (data) {
+                vm.organizeMenus(data);
+            });
+        } else {
+            vm.lists = $localStorage.menus;
+        }
+
         var category = function(item) {
             switch(item) {
                 case "illbk":
@@ -56,7 +75,7 @@ angular.module('blake').directive('navigationMenu', function() {
             }
         };
 
-        scope.organizeMenus = function(data) {
+        vm.organizeMenus = function(data) {
             if (!data) { return; }
             // Sort before nesting
             data.sort(function(a, b) { return a.composition_date - b.composition_date; });
@@ -106,29 +125,25 @@ angular.module('blake').directive('navigationMenu', function() {
                 }
             });
 
-            scope.menu_lists = menus;
+            vm.lists = menus;
+            $localStorage.menus = menus;
         }
+
 
     }
 
-    return {
-        restrict: 'E',
-        link: link,
-        controller: "MenuController",
-        templateUrl: '/blake/static/directives/menu/template.html'
-    };
-});
+    controller.$inject = ['$scope','BlakeDataService','$localStorage'];
 
-angular.module('blake').controller('MenuController', ['$scope', 'BlakeDataService', function($scope, BlakeDataService) {
+    var navMenu = function() {
+        return {
+            restrict: 'EA',
+            templateUrl: "/blake/static/directives/menu/template.html",
+            controller: controller,
+            controllerAs: 'menu',
+            bindToController: true,
+        }
+    }
 
-    $('nav.navbar ul.navbar-nav > li.dropdown').click(function() {
-      var viewport_width = $(window).width();
-      var element_position = $(this).offset().left;
+    angular.module('blake').directive('navMenu', navMenu);
 
-      $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
-    });
-
-    BlakeDataService.getWorks().then(function (data) {
-        $scope.organizeMenus(data);
-    });
-}]);
+}());

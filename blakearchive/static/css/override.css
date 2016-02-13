@@ -103,3 +103,27 @@ a.compare-selected-objects {
     opacity: 1;
     color: #91c054;
 }
+
+/*************
+* ANGULAR ANIMATIONS
+**************/
+.fadeinout.ng-hide {
+    opacity: 0;
+}
+
+.fadeinout.ng-hide-remove,
+.fadeinout.ng-hide-add {
+    display: block !important;
+}
+
+.fadeinout.ng-hide-remove {
+    -webkit-transition: opacity 0.15s linear;
+    -o-transition: opacity 0.15s linear;
+    transition: opacity 0.15s linear;
+}
+
+.fadeinout.ng-hide-add {
+    -webkit-transition: opacity 0.15s linear;
+    -o-transition: opacity 0.15s linear;
+    transition: opacity 0.15s linear;
+}

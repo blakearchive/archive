@@ -1,11 +1,3 @@
-<header class="page-header">
-    <p class="subhead">Objects from the Same Matrix</p>
-
-    <h1>
-        {{ matrix.copy.header.filedesc.titlestmt.title.main['#text'] }}
-        <span>Object {{ matrix.item.bentley_id }}</span>
-    </h1>
-</header>
 <div class="row">
     <div class="col-sm-12 action-items">
         <div class="action-items-wrapper matrix">
@@ -17,7 +9,7 @@
     </div>
 </div>
 <div class="row">
-    <div ng-repeat="obj in matrix.objects" class="col-sm-6 col-md-3">
+    <div ng-repeat="obj in matrix.objects track by $index" class="col-sm-6 col-md-3">
         <div class="handprint-block" ng-class="{'selected-for-comparison': obj.Selected == true}">
             <div class="select-for-compare-wrapper">
                 <span ng-class="{'glyphicon-unchecked': obj.Selected == undefined || obj.Selected == false, 'glyphicon-check':obj.Selected == true}" class="glyphicon select-for-compare" ng-click="matrix.selectOne(obj)"></span>
@@ -29,9 +21,6 @@
                     <strong>{{ obj.title }}</strong>, <span ng-if="obj.archive_copy_id != ''">Copy {{ obj.archive_copy_id }}</span>, {{ obj.copy_composition_date }} ({{ obj.copy_institution }}) {{ obj.full_object_id }}
                 </span>
             </a>
-            <!--<div class="selected-for-compare">
-                <input type="checkbox" class="selected-img" ng-model="obj.Selected" ng-click="matrix.selectOne(obj)">
-            </div>-->
         </div>
     </div>
 </div>

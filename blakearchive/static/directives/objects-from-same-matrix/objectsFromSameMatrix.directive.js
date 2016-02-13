@@ -4,49 +4,63 @@
 
 (function(){
 
-    var controller = function($scope,BlakeDataService){
+    var controller = function($scope,$localStorage){
 
         var vm = this;
 
-        vm.init = function(){
-            var obj = BlakeDataService.selectedObject;
-            if (obj) {
-                vm.item = obj;
-                vm.objects = BlakeDataService.sameMatrix;
+        vm.addComparisonObject = function (obj) {
+            var i, objInList = false;
+            // Don't add an object to the list twice
+            for (i = $localStorage.comparisonObjects.length; i--;) {
+                if ($localStorage.comparisonObjects[i].object_id == obj.object_id) {
+                    objInList = true;
+                    break;
+                }
             }
-            vm.copy = BlakeDataService.selectedCopy;
+            if (!objInList) {
+                $localStorage.comparisonObjects.push(obj);
+            }
+        };
 
-            // Add/remove all objects for comparison
-            vm.compareText = "Select All Objects";
-            vm.selectedAll = false;
-            BlakeDataService.clearComparisonObjects();
-        }
+        vm.removeComparisonObject = function (obj) {
+            var i;
+            for (i = $localStorage.comparisonObjects.length; i--;) {
+                if ($localStorage.comparisonObjects[i].object_id == obj.object_id) {
+                    $localStorage.comparisonObjects.splice(i, 1);
+                    break;
+                }
+            }
+        };
 
-        vm.init();
+        vm.clearComparisonObjects = function () {
+            $localStorage.comparisonObjects = [];
+        };
 
-        $scope.$on("update:object", function () {
-            vm.init();
-        });
-        $scope.$on("update:copy", function () {
-            vm.init();
-        });
+        vm.isComparisonObject = function (obj) {
+            for (var i = $localStorage.comparisonObjects.length; i--;) {
+                if ($localStorage.comparisonObjects[i].object_id == obj.object_id) {
+                    return true;
+                }
+            }
+            return false;
+        };
 
 
         vm.selectAll = function () {
             var obj_size = vm.objects.length;
-            BlakeDataService.clearComparisonObjects(); // Clear out old comparisons
+            vm.clearComparisonObjects(); // Clear out old comparisons
 
             if(!vm.selectedAll) {
                 vm.compareText = "Clear All Objects";
                 vm.selectedAll = true;
 
                 // Add main viewer img
-                BlakeDataService.addComparisonObject(vm.item);
+                vm.addComparisonObject(vm.item);
 
                 // Add imgs to compare main viewer img too.
                 for (var i = obj_size; i--;) {
                     vm.objects[i].Selected = true;
-                    BlakeDataService.addComparisonObject(vm.objects[i]);
+                    vm.addComparisonObject(vm.objects[i]);
                 }
             } else {
                 vm.compareText = "Select All Objects";
@@ -56,7 +70,7 @@
                     vm.objects[j].Selected = false;
                 }
 
-                BlakeDataService.clearComparisonObjects();
+                vm.clearComparisonObjects();
             }
         };
 
@@ -66,20 +80,30 @@
             if(!vm.objects[key].Selected) {
                 vm.objects[key].Selected = true;
                 //obj.Selected = false;
-                BlakeDataService.addComparisonObject(obj);
+                vm.addComparisonObject(obj);
             } else {
                 vm.objects[key].Selected = false;
-                BlakeDataService.removeComparisonObject(obj);
+                vm.removeComparisonObject(obj);
             }
 
             // Add main viewer img
-            if(BlakeDataService.getComparisonObjects) {
-                BlakeDataService.addComparisonObject(vm.item);
+            if(vm.getComparisonObjects) {
+                vm.addComparisonObject(vm.item);
             }
         };
+
+        vm.compareText = "Select All Objects";
+        vm.selectedAll = false;
+
+        $scope.$on('copyCtrl::changeObject',function(){
+            vm.compareText = "Select All Objects";
+            vm.selectedAll = false;
+            vm.clearComparisonObjects();
+        })
+
     }
 
-    controller.$inject = ['$scope','BlakeDataService'];
+    controller.$inject = ['$scope','$localStorage'];
 
     var objectsFromSameMatrix = function(){
         return {
@@ -87,6 +111,12 @@
             templateUrl: "/blake/static/directives/objects-from-same-matrix/objectsFromSameMatrix.html",
             controller: controller,
             controllerAs: 'matrix',
+            scope: {
+                objects: '=objects',
+                item: '=item',
+                copy: '=copy',
+                work: '=work',
+            },
             bindToController: true
         }
     }
