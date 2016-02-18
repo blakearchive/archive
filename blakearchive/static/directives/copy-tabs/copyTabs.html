@@ -2,7 +2,7 @@
         <div class="container">
             <ul class="nav nav-tabs objects" role="tablist">
                 <li role="presentation" ng-class="{active:tabs.selectedTab == '#objects-in-copy'}">
-                    <a href="" ng-click="tabs.showTab('#objects-in-copy')" role="tab">Objects in Copy</a>
+                    <a href="" ng-click="tabs.showTab('#objects-in-copy')" role="tab">Objects in {{ tabs.getCopyOrGroup() }}</a>
                 </li>
                 <li role="presentation" ng-if="tabs.copy.selectedObject.matrix.length > 0" ng-class="{active:tabs.selectedTab == '#objects-from-same-matrix'}">
                     <a href="" ng-click="tabs.showTab('#objects-from-same-matrix')" role="tab">Objects from same Matrix</a>
@@ -25,7 +25,7 @@
                 <!-- OBJECTS IN COPY -->
                 <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-in-copy'" id="objects-in-copy">
                     <header class="page-header">
-                        <p class="subhead">Objects In Copy</p>
+                        <p class="subhead">Objects In {{ tabs.getCopyOrGroup() }}</p>
                         <h1>{{ tabs.getHeader() }}
                             <span>{{ tabs.getOicSubheader() }}</span>
                         </h1>

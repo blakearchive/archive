@@ -17,7 +17,6 @@
                     workBad = workBadMatch > 0 ? copyBad.substring(0,workBadMatch) : copyBad;
                 if (angular.isUndefined(BlakeDataService.selectedWork)) {
                     BlakeDataService.setWorkNoCopies(workBad).then(function(){
-                        vm.work = BlakeDataService.selectedWork;
                         vm.init();
                     });
                 } else {
@@ -27,6 +26,7 @@
 
 
         vm.init = function(){
+            vm.work = BlakeDataService.selectedWork;
             vm.setSimilarObjects(vm.copy.selectedObject.object_id);
             vm.broadcastCopyInfo();
             vm.getPreviousNextObjects();
