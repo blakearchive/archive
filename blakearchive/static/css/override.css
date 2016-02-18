@@ -5,6 +5,10 @@
     #home.container-fluid.main .row div[class^="col-"] div.scrolling {
         display: block;
     }
+    #home.container-fluid.main .row div[class^="col-"] {
+        max-width: 300px;
+        max-height: 750px;
+    }
 }
 #home span.object-container a, #home span.object-container a img{
     min-width: 100%;
