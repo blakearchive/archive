@@ -11,12 +11,14 @@
                 <div ng-repeat="copy in workCtrl.copies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3">
                     <div class="handprint-block">
                         <a href="/blake/copy/{{ copy.bad_id }}">
-                            <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ copy.image.toLowerCase() }}.100.jpg);"></span>
-                            <span class="description">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date_string }} ({{ copy.institution }})</span>
+                            <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ copy.image }}.100.jpg);"></span>
+                            <span class="description" object-description object="copy" virtual="workCtrl.work.virtual" type="copyDesc" override="workCtrl.work.title" ></span>
                         </a>
                     </div>
                 </div>
             </div>
+
+
             <hr>
             <div class="section-group" ng-bind-html="workCtrl.work.info"></div>
         </div>

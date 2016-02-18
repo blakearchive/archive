@@ -13,24 +13,32 @@
             var workVars = getWorkTypeVars(vm.work.medium);
             vm.work.medium_pretty =  workVars.medium;
             vm.work.probable = workVars.probable;
-            var data = BlakeDataService.selectedWorkCopies;
 
-            data.sort(function (a, b) {
-                return a.source.objdescid.compdate["@value"] - b.source.objdescid.compdate["@value"];
-            });
-
-            vm.copies = data;
+            vm.copies = vm.work.copiesInWork;
+            vm.sortCopies(vm.copies);
 
             vm.copyCount = vm.copies.length;
             vm.rowCount = Math.ceil(vm.copyCount / 4);
             vm.knownCopiesDiv3 = Math.ceil(vm.copyCount / 3);
-            var relatedWorks = vm.work.related_works || [];
-            vm.allKnownRelatedItemsDiv3 = Math.ceil(relatedWorks.length / 3);
+            if(!angular.isUndefined(vm.work.related_works) && vm.work.related_works !== null){
+                vm.allKnownRelatedItemsDiv3 = Math.ceil(vm.work.related_works.length / 3);
+            }
             vm.rows = [];
             for(var i = 1; i <= vm.rowCount; i++){
                 vm.rows.push(i);
             }
         });
+
+        vm.sortCopies = function(copies){
+            //sort by copy
+            if(angular.isDefined(copies)){
+                copies.sort(function(a,b){
+                    if(a.archive_copy_id > b.archive_copy_id){return 1;}
+                    if(a.archive_copy_id < b.archive_copy_id){return -1;}
+                    return 0;
+                })
+            }
+        }
 
         vm.getCopyFirstObject = function (copy) {
             function workMedium(badMedium) {

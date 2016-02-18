@@ -17,9 +17,7 @@
             <a href="/blake/copy/{{ obj.copy_bad_id }}/{{ obj.object_id }}">
                 <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);">
                 </span>
-                <span class="description">
-                    <strong>{{ obj.title }}</strong>, <span ng-if="obj.archive_copy_id != ''">Copy {{ obj.archive_copy_id }}</span>, {{ obj.copy_composition_date }} ({{ obj.copy_institution }}) {{ obj.full_object_id }}
-                </span>
+                <span class="description" object-description object="obj" virtual="matrix.virtual" type="objectFull"></span>
             </a>
         </div>
     </div>
