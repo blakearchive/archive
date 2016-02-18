@@ -1,0 +1,8 @@
+
+<strong ng-if="objDesc.strongTitle">{{ objDesc.strongTitle }}<br></strong>
+<span ng-if="objDesc.title">{{ objDesc.title }}<span ng-if="objDesc.copyLtr">,</span> </span>
+<span ng-if="objDesc.copyLtr">{{ objDesc.copyLtr }}<span ng-if="objDesc.objNumber">,</span> </span>
+<span ng-if="objDesc.objNumber" class="text-capitalize">{{ objDesc.objNumber }}<span ng-if="objDesc.date">,</span> </span>
+<span ng-if="objDesc.date">{{ objDesc.date }} </span>
+<span ng-if="objDesc.institution">({{ objDesc.institution }})</span>
+

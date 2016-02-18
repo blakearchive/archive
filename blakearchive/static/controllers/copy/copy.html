@@ -5,13 +5,14 @@
         <div id="object-view" ng-class="copyCtrl.showTools ? 'show-tools' : 'hide-tools'" class="view-objects">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
                 <div class="featured-object">
-                    <p class="object-title">{{ copyCtrl.objectTitle }}</p>
+                    <p class="object-title">{{ copyCtrl.getOvpTitle() }}</p>
+                    <p class="object-subtitle" ng-if="copyCtrl.work.virtual">{{ copyCtrl.work.title }}</p>
                     <!-- Wrapper for slides -->
                     <!--<div class="carousel-inner" role="listbox" ng-style="{'height': viewerHeight}">-->
                     <div class="carousel-inner" role="listbox">
                         <div class="item active">
                             <img src="http://www.blakearchive.org/blake/images/{{ copyCtrl.copy.selectedObject.dbi }}.100.jpg" copy-image>
-                            <p class="object-subtitle"><span class="object-no">{{ copyCtrl.copy.selectedObject.full_object_id }}</span></p>
+                            <p class="object-subtitle"><span class="object-no text-capitalize">{{ copyCtrl.getOvpSubtitle() }}</span></p>
                         </div>
                     </div>
                 </div>

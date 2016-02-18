@@ -45,32 +45,33 @@
             return false;
         };
 
-
         vm.selectAll = function () {
-            var obj_size = vm.objects.length;
-            vm.clearComparisonObjects(); // Clear out old comparisons
+            if(angular.isDefined(vm.objects)){
+                var obj_size = vm.objects.length;
+                vm.clearComparisonObjects(); // Clear out old comparisons
 
-            if(!vm.selectedAll) {
-                vm.compareText = "Clear All Objects";
-                vm.selectedAll = true;
+                if(!vm.selectedAll) {
+                    vm.compareText = "Clear All Objects";
+                    vm.selectedAll = true;
 
-                // Add main viewer img
-                vm.addComparisonObject(vm.item);
+                    // Add main viewer img
+                    vm.addComparisonObject(vm.item);
 
-                // Add imgs to compare main viewer img too.
-                for (var i = obj_size; i--;) {
-                    vm.objects[i].Selected = true;
-                    vm.addComparisonObject(vm.objects[i]);
+                    // Add imgs to compare main viewer img too.
+                    for (var i = obj_size; i--;) {
+                        vm.objects[i].Selected = true;
+                        vm.addComparisonObject(vm.objects[i]);
+                    }
+                } else {
+                    vm.compareText = "Select All Objects";
+                    vm.selectedAll = false;
+
+                    for (var j = obj_size; j--;) {
+                        vm.objects[j].Selected = false;
+                    }
+
+                    vm.clearComparisonObjects();
                 }
-            } else {
-                vm.compareText = "Select All Objects";
-                vm.selectedAll = false;
-
-                for (var j = obj_size; j--;) {
-                    vm.objects[j].Selected = false;
-                }
-
-                vm.clearComparisonObjects();
             }
         };
 
@@ -114,8 +115,7 @@
             scope: {
                 objects: '=objects',
                 item: '=item',
-                copy: '=copy',
-                work: '=work',
+                virtual: '=virtual'
             },
             bindToController: true
         }

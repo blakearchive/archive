@@ -12,12 +12,12 @@
 
         BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.objectId).then(function() {
                 vm.copy = BlakeDataService.selectedCopy;
-
-                var copyBad = vm.copy.bad_id,
+                var copyBad = BlakeDataService.selectedCopy.bad_id,
                     workBadMatch = copyBad.indexOf('.'),
                     workBad = workBadMatch > 0 ? copyBad.substring(0,workBadMatch) : copyBad;
                 if (angular.isUndefined(BlakeDataService.selectedWork)) {
                     BlakeDataService.setWorkNoCopies(workBad).then(function(){
+                        vm.work = BlakeDataService.selectedWork;
                         vm.init();
                     });
                 } else {
@@ -25,31 +25,56 @@
                 }
         });
 
+
         vm.init = function(){
-            vm.work = BlakeDataService.selectedWork;
             vm.setSimilarObjects(vm.copy.selectedObject.object_id);
-            vm.setObjectTitle();
+            vm.broadcastCopyInfo();
             vm.getPreviousNextObjects();
+        }
+
+        vm.broadcastCopyInfo = function(){
+            var copyInfo = '';
+            if(vm.copy.virtual){
+                copyInfo = vm.copy.selectedObject;
+            } else {
+                copyInfo = vm.copy;
+            }
+            $scope.$broadcast('global::copyInfo',copyInfo);
         }
 
         vm.setSimilarObjects = function(object_id){
             BlakeDataService.getObjectsFromSameMatrix(object_id).then(function(data){
-                if (BlakeDataService.hasObjectsFromSameMatrix) {
-                    vm.copy.selectedObject.matrix = data;
-                }
+                vm.copy.selectedObject.matrix = data;
             });
 
             BlakeDataService.getObjectsWithSameMotif(object_id).then(function(data){
-                if (BlakeDataService.hasObjectsWithSameMotif) {
-                    vm.copy.selectedObject.motif = data;
-                }
+                vm.copy.selectedObject.motif = data;
             });
 
             BlakeDataService.getObjectsFromSameProductionSequence(object_id).then(function(data){
-                if (BlakeDataService.hasObjectsFromSameProductionSequence) {
-                    vm.copy.selectedObject.sequence = data;
-                }
+                vm.copy.selectedObject.sequence = data;
             })
+        }
+
+        vm.getOvpTitle = function(){
+            if(angular.isDefined(vm.copy)){
+                if(vm.copy.virtual == true){
+                    return vm.copy.selectedObject.title;
+                } else {
+                    var copyPhrase = vm.copy.archive_copy_id == null ? '' : ', Copy '+vm.copy.archive_copy_id;
+                    return vm.copy.header.filedesc.titlestmt.title['@reg']+copyPhrase;
+                }
+            }
+        }
+
+        vm.getOvpSubtitle = function(){
+            if(angular.isDefined(vm.copy)){
+                if(vm.copy.virtual == true){
+                    return 'Object '+vm.copy.selectedObject.object_number + vm.copy.selectedObject.full_object_id.replace(/object [\d]+/g,'');
+                } else {
+                    return vm.copy.selectedObject.full_object_id;
+                }
+            }
         }
 
         vm.changeObject = function(object){
@@ -57,17 +82,6 @@
             $scope.$broadcast('copyCtrl::changeObject');
             vm.init();
         }
-
-        vm.setObjectTitle = function(){
-            if(angular.isObject(vm.copy.selectedObject.header)){
-                vm.objectTitle = vm.copy.selectedObject.obj.header.filedesc.titlestmt.title.main['#text'];
-            } else if (angular.isObject(vm.copy.header)){
-                vm.objectTitle = vm.copy.header.filedesc.titlestmt.title.main['#text'] + ', Copy ' + vm.copy.archive_copy_id;
-            } else {
-                vm.objectTitle = vm.work.title;
-            }
-        }
-
 
         vm.getPreviousNextObjects = function () {
             if (vm.copy.objectsInCopy && vm.copy.objectsInCopy.length) {
