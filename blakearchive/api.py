@@ -9,11 +9,11 @@ else:
     api = Blueprint('api', __name__, url_prefix='/blake/api')
 
 
-@api.route('/query_objects', methods=["POST"])
+@api.route('/query', methods=["POST"])
 def query():
     config = request.get_json()
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
-    results = blake_data_service.query_objects(config)
+    results = blake_data_service.query(config)
     return json.dumps(results)
 
 
@@ -22,6 +22,14 @@ def get_object(object_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     results = blake_data_service.get_object(object_id)
     return jsonify(results.to_dict)
+
+
+@api.route('/object/')
+def get_objects():
+    selected_object_ids = request.args.get("object_ids", "").split(",")
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    results = blake_data_service.get_works(selected_object_ids)
+    return jsonify({"results": [r.to_dict for r in results]})
 
 
 @api.route('/object/<int:object_id>/objects_with_same_motif')
@@ -42,6 +50,14 @@ def get_objects_from_same_production_sequence(object_id):
 def get_objects_from_same_matrix(object_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     results = blake_data_service.get_objects_from_same_matrix(object_id)
+    return jsonify({"results": [r.to_dict for r in results]})
+
+
+@api.route('/copy/')
+def get_copies():
+    selected_bad_ids = request.args.get("bad_ids", "").split(",")
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    results = blake_data_service.get_copies(selected_bad_ids)
     return jsonify({"results": [r.to_dict for r in results]})
 
 
@@ -77,8 +93,9 @@ def get_work(work_id):
 
 @api.route('/work/')
 def get_works():
+    selected_bad_ids = request.args.get("bad_ids", "").split(",")
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
-    results = blake_data_service.get_works()
+    results = blake_data_service.get_works(selected_bad_ids)
     return jsonify({"results": [r.to_dict for r in results]})
 
 

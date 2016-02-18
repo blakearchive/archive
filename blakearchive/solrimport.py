@@ -41,6 +41,7 @@ def main():
         }
         if blake_object.copy.work:
             obj["work_title"] = blake_object.copy.work.title
+            obj["work_id"] = blake_object.copy.work.bad_id
             obj["copy_composition_date"] = blake_object.copy.work.composition_date
             obj["work_medium"] = blake_object.copy.work.medium
         blake_object_solr.add([obj])

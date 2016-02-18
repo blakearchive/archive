@@ -31,8 +31,8 @@
   <!-- general -->
   <field name="id"        type="long"   indexed="true"  stored="true"  multiValued="false" required="true"/>
   <field name="_version_" type="long"     indexed="true"  stored="true"/>
-  <field name="dbi" type="text" indexed="true" stored="true" multiValued="false"/>
-  <field name="desc_id" type="text" indexed="true" stored="true" multiValued="false"/>
+  <field name="dbi" type="string" indexed="true" stored="true" multiValued="false"/>
+  <field name="desc_id" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="title" type="text" indexed="true" stored="true" multiValued="false"/>
   <field name="bentley_id" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="components" type="text" indexed="true" stored="true" multiValued="false"/>
@@ -40,13 +40,14 @@
   <field name="notes" type="text" indexed="true" stored="true" multiValued="false"/>
   <field name="text" type="text" indexed="true" stored="true" multiValued="false"/>
   <field name="copy_title" type="text" indexed="true" stored="true" multiValued="false"/>
+  <field name="work_id" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="work_title" type="text" indexed="true" stored="true" multiValued="false"/>
   <field name="work_medium" type="text" indexed="true" stored="true" multiValued="false"/>
   <field name="copy_composition_date" type="long" indexed="true" stored="true" multiValued="false"/>
   <field name="copy_print_date" type="long" indexed="true" stored="true" multiValued="false"/>
   <field name="copy_header" type="text" indexed="true" stored="true" multiValued="false"/>
   <field name="copy_institution" type="text" indexed="true" stored="true" multiValued="false"/>
-  <field name="copy_id" type="text" indexed="true" stored="true" multiValued="false"/>
+  <field name="copy_id" type="string" indexed="true" stored="true" multiValued="false"/>
  <!--field to use to determine and enforce document uniqueness. -->
  <uniqueKey>id</uniqueKey>
 
@@ -56,4 +57,3 @@
  <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
  <solrQueryParser defaultOperator="OR"/>
 </schema>
-
