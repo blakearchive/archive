@@ -13,13 +13,29 @@
 
         vm.selectedTab = '#objects-in-copy';
 
-        vm.getObjectTitle = function (obj) {
-            try {
-                return obj.header.filedesc.titlestmt.title.main['#text'];
-            } catch (e) {
-                return obj.title;
+        vm.getHeader = function(){
+            if(angular.isDefined(vm.copy)){
+                if(vm.copy.virtual == true){
+                    if(angular.isDefined(vm.work)){
+                        return vm.work.title;
+                    }
+                } else {
+                    return vm.copy.header.filedesc.titlestmt.title.main['#text'];
+                }
             }
-        };
+        }
+        vm.getOicSubheader = function(){
+            if(angular.isDefined(vm.copy)){
+                if(vm.copy.virtual == true){
+                    return '';
+                } else {
+                    var copyPhrase = vm.copy.archive_copy_id == null ? '' : 'Copy '+vm.copy.archive_copy_id+', ';
+                    var printDate = angular.isDefined(vm.copy.source.objinfo.printdate) ? vm.copy.source.objinfo.printdate['#text'] + ' ' : '';
+                    var instPhrase = vm.copy.institutuion == null ? '' : '('+vm.copy.institution+')';
+                    return copyPhrase+printDate+instPhrase;
+                }
+            }
+        }
 
         $scope.$on('copyCtrl::changeObject',function(){
             vm.selectedTab = '#objects-in-copy';
@@ -37,9 +53,9 @@
             controllerAs: 'tabs',
             scope: {
                 copy: '=copy',
-                work: '=work',
+                work: '=work'
             },
-            bindToController: true,
+            bindToController: true
         }
     }
 
