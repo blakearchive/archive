@@ -41,9 +41,7 @@
             restrict: 'E',
             scope: {
                 toggle: '&',
-                copy: '=copy',
-                obj: '=obj'
-
+                copy: '=copy'
             },
             templateUrl: '/blake/static/directives/info-tray/infoTray.html',
             controller: controller,
