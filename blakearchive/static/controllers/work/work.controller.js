@@ -4,7 +4,7 @@
 
 (function(){
 
-    var controller = function($scope,$routeParams,BlakeDataService){
+    var controller = function($scope,$routeParams,$sanitize,BlakeDataService){
 
         var vm = this;
 
@@ -24,7 +24,8 @@
             vm.copyCount = vm.copies.length;
             vm.rowCount = Math.ceil(vm.copyCount / 4);
             vm.knownCopiesDiv3 = Math.ceil(vm.copyCount / 3);
-            vm.allKnownRelatedItemsDiv3 = Math.ceil(vm.work.related_works.length / 3);
+            var relatedWorks = vm.work.related_works || [];
+            vm.allKnownRelatedItemsDiv3 = Math.ceil(relatedWorks.length / 3);
             vm.rows = [];
             for(var i = 1; i <= vm.rowCount; i++){
                 vm.rows.push(i);
@@ -137,7 +138,7 @@
 
     }
 
-    controller.$inject = ['$scope','$routeParams','BlakeDataService'];
+    controller.$inject = ['$scope','$routeParams','$sanitize','BlakeDataService'];
 
     angular.module('blake').controller("WorkController", controller);
 

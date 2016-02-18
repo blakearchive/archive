@@ -175,22 +175,26 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
     /**
      *
      * @param config - The search configuration
-     * @param config.searchTitle - Perform a title search (both Object and Work)
+     * @param config.searchTitle - boolean, Perform a title search (both Object and Work)
      * @param config.workTitleOffset - An optional offset to use for work title search results, for pagination
-     * @param config.objectTitleOffset - An optional offset to use for work title search results, for pagination
-     * @param config.searchWorkInformation - Perform a work information search
+     * @param config.searchWorkInformation - boolean, Perform a work information search
      * @param config.workInformationOffset - An optional offset to use for work information search results, for pagination
-     * @param config.searchImageKeywords - Perform an image keyword search
-     * @param config.objectKeywordOffset - an optional offset to use for image keyword search results, for pagination
-     * @param config.searchText - perform an object text search
-     * @param config.objectTextOffset - optional offset to use for text search results, for pagination
-     * @param config.searchImageDescription - perform an image description search
-     * @param config.objectDescriptionOffset - an optional offset to use for description search results
+     * @param config.searchImageKeywords - boolean, Perform an image keyword search
+     * @param config.searchText - boolean, perform an object text search
+     * @param config.searchImageDescription - boolean, perform an image description search
+     * @param config.searchIlluminatedBooks - boolean, include this medium type in the query
+     * @param config.searchCommercialBookIllustrations - boolean, include this medium type in the query
+     * @param config.searchSeparatePrints - boolean, include this medium type in the query
+     * @param config.searchDrawingsPaintings - boolean, include this medium type in the query
+     * @param config.searchManuscripts - boolean, include this medium type in the query
+     * @param config.searchRelatedMaterials - boolean, include this medium type in the query
+     * @param config.minDate - number, the lower bound of date ranges to include
+     * @param config.maxDate - number, the upper bound of date ranges to include
      * @returns {*}
      */
 
-    dataFactory.queryObjects = function (config) {
-        var url = directoryPrefix + '/api/query_objects';
+    dataFactory.query = function (config) {
+        var url = directoryPrefix + '/api/query';
         return $q(function (resolve, reject) {
             $http.post(url, config).success(function (data) {
                 resolve(data);

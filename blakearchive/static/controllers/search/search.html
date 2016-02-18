@@ -69,143 +69,132 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-9 col-md-10">
-                <div ng-hide="workResultsMatchingFilter('title').length > 0 ||
-                              workResultsMatchingFilter('info').length > 0 ||
-                              objectResultsMatchingFilter('title').length > 0 ||
-                              objectResultsMatchingFilter('text').length > 0 ||
-                              objectResultsMatchingFilter('tag').length > 0 ||
-                              objectResultsMatchingFilter('notes').length > 0 ||
-                              objectResultsMatchingFilter('description').length > 0">
+                <div ng-hide="results.length > 0">
                     No results found
                 </div>
 
                 <!-- OBJECT TITLE RESULTS -->
                 <div ng-show="searchConfig.searchTitle == true">
-                    <h3>Objects with a matching title ({{ results.object_results.title.count}} results)</h3>
-                    <div ng-show="objectResultsMatchingFilter('title').length == 0">
+                    <h3>Objects with a matching title ({{ results.object_results.title.length}} works)</h3>
+                    <div ng-show="results.object_results.title.length == 0">
                         No results found
                     </div>
-                    <div class="row" ng-show="objectResultsMatchingFilter('title').length > 0">
+                    <div class="row" ng-show="results.object_results.title.length > 0">
                         <ul class="list-unstyled">
-                            <li ng-repeat="obj in objectResultsMatchingFilter('title')" class="col-sm-12 col-md-4 handprint-block">
-                                <a href="/blake/copy/{{ obj.copy_id }}/{{ obj.id }}">
-                                    <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
-                                    <span class="description"><strong>{{ obj.title }}</strong></span>
-                                </a>
+                            <li ng-repeat="work in results.object_results.title" class="col-sm-12 col-md-4 handprint-block">
+                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
+                                <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
                             </li>
                         </ul>
                     </div>
+                    <!--
                     <nav>
                         <ul class="pagination">
                             <li ng-repeat="i in pagination.title" ng-class="{'active': (searchConfig.objectTitleOffset + 10) / 10 == i }">
                                 <a ng-click="paginate('title',i)">{{i}}</a>
                             </li>
                         </ul>
-                    </nav>
+                    </nav> -->
                 </div>
 
                 <!-- OBJECT TEXT RESULTS -->
                 <div ng-show="searchConfig.searchText == true">
-                    <h3>Objects with matching text ({{ results.object_results.text.count}} results)</h3>
-                    <div ng-show="objectResultsMatchingFilter('text').length == 0">
+                    <h3>Objects with matching text ({{ results.object_results.text.length}} works)</h3>
+                    <div ng-show="results.object_results.text.length == 0">
                         No results found
                     </div>
 
-                    <div class="row" ng-show="objectResultsMatchingFilter('text').length > 0">
+                    <div class="row" ng-show="results.object_results.text.length > 0">
                         <ul class="list-unstyled">
-                            <li ng-repeat="obj in objectResultsMatchingFilter('text')" class="col-sm-12 col-md-4 handprint-block">
-                                <a href="/blake/copy/{{ obj.copy_id }}/{{ obj.id }}">
-                                    <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
-                                    <span class="description"><strong>{{ obj.title }}</strong></span>
-                                </a>
+                            <li ng-repeat="work in results.object_results.text" class="col-sm-12 col-md-4 handprint-block">
+                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
+                                <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
                             </li>
                         </ul>
                     </div>
+                    <!--
                     <nav>
                         <ul class="pagination">
                             <li ng-repeat="i in pagination.text" ng-class="{'active': (searchConfig.objectTextOffset + 10) / 10 == i }">
                                 <a ng-click="paginate('text',i)">{{i}}</a>
                             </li>
                         </ul>
-                    </nav>
+                    </nav> -->
                 </div>
 
                 <!-- OBJECT IMG TAG RESULTS -->
                 <div ng-show="searchConfig.searchImageKeywords == true">
-                    <h3>Objects with a matching image tag ({{ results.object_results.tag.count}} results)</h3>
-                    <div ng-show="objectResultsMatchingFilter('tag').length == 0">
+                    <h3>Objects with a matching image tag ({{ results.object_results.tag.length}} works)</h3>
+                    <div ng-show="results.object_results.tag.length == 0">
                         No results found
                     </div>
 
-                    <div class="row" ng-show="objectResultsMatchingFilter('tag').length > 0">
+                    <div class="row" ng-show="results.object_results.tag.length > 0">
                         <ul class="list-unstyled">
-                            <li ng-repeat="obj in objectResultsMatchingFilter('tag')" class="col-sm-12 col-md-4 handprint-block">
-                                <a href="/blake/copy/{{ obj.copy_id }}/{{ obj.id }}">
-                                    <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
-                                    <span class="description"><strong>{{ obj.title }}</strong></span>
-                                </a>
+                            <li ng-repeat="work in results.object_results.tag" class="col-sm-12 col-md-4 handprint-block">
+                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
+                                <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
                             </li>
                         </ul>
                     </div>
+                    <!--
                     <nav>
                         <ul class="pagination">
                             <li ng-repeat="i in pagination.tag" ng-class="{'active': (searchConfig.objectKeywordsOffset + 10) / 10 == i }">
                                 <a ng-click="paginate('tag',i)">{{i}}</a>
                             </li>
                         </ul>
-                    </nav>
+                    </nav> -->
                 </div>
 
                 <!-- OBJECT EDITOR NOTES -->
                 <div ng-show="searchConfig.searchNotes == true">
-                    <h3>Objects with matching editors' notes ({{ results.object_results.notes.count}} results)</h3>
-                    <div ng-show="objectResultsMatchingFilter('notes').length == 0">
+                    <h3>Objects with matching editors' notes ({{ results.object_results.notes.length}} works)</h3>
+                    <div ng-show="results.object_results.notes.length == 0">
                         No Results Found
                     </div>
 
-                    <div class="row" ng-show="objectResultsMatchingFilter('notes').length > 0">
+                    <div class="row" ng-show="results.object_results.notes.length > 0">
                         <ul class="list-unstyled">
-                            <li ng-repeat="obj in objectResultsMatchingFilter('notes')" class="col-sm-12 col-md-4 handprint-block">
-                                <a href="/blake/copy/{{ obj.copy_id }}/{{ obj.id }}">
-                                    <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
-                                    <span class="description"><strong>{{ obj.title }}</strong></span>
-                                </a>
+                            <li ng-repeat="work in results.object_results.notes" class="col-sm-12 col-md-4 handprint-block">
+                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
+                                <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
                             </li>
                         </ul>
                     </div>
+                    <!--
                     <nav>
                         <ul class="pagination">
                             <li ng-repeat="i in pagination.notes" ng-class="{'active': (searchConfig.objectNotesOffset + 10) / 10 == i }">
                                 <a ng-click="paginate('notes',i)">{{i}}</a>
                             </li>
                         </ul>
-                    </nav>
+                    </nav> -->
                 </div>
 
                 <!-- OBJECT ILLUSTRATION DESCRIPTIONS -->
                 <div ng-show="searchConfig.searchImageDescriptions == true">
-                    <h3>Objects with a matching illustration description ({{ results.object_results.description.count}} results)</h3>
-                    <div ng-show="objectResultsMatchingFilter('description').length == 0">
+                    <h3>Objects with a matching illustration description ({{ results.object_results.description.length}} works)</h3>
+                    <div ng-show="results.object_results.description.length == 0">
                         No Results Found
                     </div>
 
-                    <div class="row" ng-show="objectResultsMatchingFilter('description').length > 0">
+                    <div class="row" ng-show="results.object_results.description.length > 0">
                         <ul class="list-unstyled">
-                            <li ng-repeat="obj in objectResultsMatchingFilter('description')" class="col-sm-12 col-md-4 handprint-block">
-                                <a href="/blake/copy/{{ obj.copy_id }}/{{ obj.id }}">
-                                    <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
-                                    <span class="description"><strong>{{ obj.title }}</strong></span>
-                                </a>
+                            <li ng-repeat="work in results.object_results.description" class="col-sm-12 col-md-4 handprint-block">
+                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
+                                <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
                             </li>
                         </ul>
                     </div>
+                    <!--
                     <nav>
                         <ul class="pagination">
                             <li ng-repeat="i in pagination.description" ng-class="{'active': (searchConfig.objectDescriptionOffset + 10) / 10 == i }">
                                 <a ng-click="paginate('description',i)">{{i}}</a>
                             </li>
                         </ul>
-                    </nav>
+                    </nav> -->
                 </div>
 
                 <!-- WORK TITLE -->
