@@ -36,42 +36,6 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
          * @param config
          */
 
-        var parseObjectLines = function(object,array){
-
-            if(angular.isArray(object)) {
-                angular.forEach(object, function (objectSet, lineKey) {
-                    if (angular.isArray(objectSet.l)) {
-                        angular.forEach(objectSet.l, function (v, k) {
-                            var indent = angular.isDefined(v['@indent']) ? v['@indent'] : 0;
-                            array.push({'indent': indent, 'text': v['#text']})
-                        });
-                    } else {
-                        var indent = angular.isDefined(objectSet.l['@indent']) ? objectSet.l['@indent'] : 0;
-
-                        if (angular.isDefined(objectSet.l.physnumber)) {
-                            array.push({'indent': indent, 'text': objectSet.l.physnumber['#text']})
-                        } else {
-                            array.push({'indent': indent, 'text': objectSet.l['#text']})
-                        }
-                    }
-                });
-            } else if (angular.isArray(object.l)){
-                angular.forEach(object.l, function (v, k) {
-                    var indent = angular.isDefined(v['@indent']) ? v['@indent'] : 0;
-                    array.push({'indent': indent, 'text': v['#text']});
-                });
-            } else {
-                var indent = angular.isDefined(object.l['@indent']) ? object.l['@indent'] : 0;
-
-                if (angular.isDefined(object.l.physnumber)) {
-                    array.push({'indent': indent, 'text': object.l.physnumber['#text']});
-                } else {
-                    array.push({'indent': indent, 'text': object.l['#text']});
-                }
-            }
-        };
-
-
         var constructor = function (config) {
             var obj = angular.copy(config);
             if(obj){
@@ -79,17 +43,6 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
                 obj.characteristics = angular.fromJson(config.characteristics);
                 obj.text = angular.fromJson(config.text);
                 obj.notes = angular.fromJson(config.notes);
-                obj.lines = [];
-                if(angular.isObject(obj.text)){
-                    if(angular.isDefined(obj.text.texthead)){
-                        parseObjectLines(obj.text.texthead,obj.lines);
-                    }
-
-                    if(angular.isDefined(obj.text.lg)){
-                        parseObjectLines(obj.text.lg,obj.lines);
-                    }
-
-                }
                 obj.header = angular.fromJson(config.header);
                 obj.source = angular.fromJson(config.source);
 

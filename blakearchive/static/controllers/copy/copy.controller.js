@@ -28,8 +28,9 @@
         vm.init = function(){
             vm.work = BlakeDataService.selectedWork;
             vm.setSimilarObjects(vm.copy.selectedObject.object_id);
-            vm.broadcastCopyInfo();
             vm.getPreviousNextObjects();
+            vm.broadcastCopyInfo();
+            $scope.$broadcast('copyCtrl::changeObject');
         }
 
         vm.broadcastCopyInfo = function(){
@@ -79,7 +80,6 @@
 
         vm.changeObject = function(object){
             vm.copy.selectedObject = object;
-            $scope.$broadcast('copyCtrl::changeObject');
             vm.init();
         }
 

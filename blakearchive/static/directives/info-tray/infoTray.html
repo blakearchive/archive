@@ -12,9 +12,8 @@
                   <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.copy.archive_copy_id }}</p>
 
                   <p><a href="#">[ n ]</a></p>
-                  <ol>
-                      <li ng-repeat="line in tray.obj.lines track by $index"><span>{{ line.text }}</span></li>
-                  </ol>
+                  {{ tray.copy.selectedObject.bentley_id }}
+                  <span text-transcription object="tray.copy.selectedObject"></span>
                   <p><a href="#">Color key for transcriptions</a></p>
               </div>
           </accordion-group>
@@ -25,14 +24,14 @@
                   </accordion-heading>
                   <!--<a ng-click="tray.goFullscreen('illustration-description')" title="full screen" class="new-window full-screen"></a>
                   <a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
-                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.obj.full_object_id }}</p>
+                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.copy.selectedObject.full_object_id }}</p>
 
                   <p><strong>Sector CD<br>
                     Plate Illustration:</strong></p>
 
-                  <p>{{ tray.obj.illustration_description.illusobjdesc['#text'] }}</p>
+                  <p>{{ tray.copy.selectedObject.illustration_description.illusobjdesc['#text'] }}</p>
 
-                  <div ng-repeat="component in tray.obj.components track by $index">
+                  <div ng-repeat="component in tray.copy.selectedObject.components track by $index">
                     <p><strong>Component (Sector {{ component.component['@location'] }})</strong></p>
 
                     <p class="keywords">Keywords:
@@ -52,20 +51,20 @@
                   </accordion-heading>
                   <!--<a ng-click="tray.goFullscreen('editors-notes')" title="full screen" class="new-window full-screen"></a>
                   <a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
-                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.obj.full_object_id }}</p>
+                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.copy.selectedObject.full_object_id }}</p>
 
                   <p><strong>Object Note(s):</strong></p>
 
-                  <div ng-if="tray.obj.physical_description.objnote">
+                  <div ng-if="tray.copy.selectedObject.physical_description.objnote">
                     <p>Note:</p>
 
-                    <p>{{ tray.obj.physical_description.objnote['#text'] }}</p>
+                    <p>{{ tray.copy.selectedObject.physical_description.objnote['#text'] }}</p>
                   </div>
                   <p><strong>Textual Note(s):</strong></p>
-                  <ul ng-if="tray.obj.notes.length > 0">
-                      <li ng-repeat="note in tray.obj.notes track by $index">{{ note }}</li>
+                  <ul ng-if="tray.copy.selectedObject.notes.length > 0">
+                      <li ng-repeat="note in tray.copy.selectedObject.notes track by $index">{{ note }}</li>
                   </ul>
-                  <p ng-if="tray.obj.notes.length == 0"><em>No textual notes for this object</em></p>
+                  <p ng-if="tray.copy.selectedObject.notes.length == 0"><em>No textual notes for this object</em></p>
               </div>
           </accordion-group>
           <accordion-group id="object-metadata">
@@ -75,7 +74,7 @@
                   </accordion-heading>
                   <!--<a ng-click="tray.goFullscreen('object-metadata')" title="full screen" class="new-window full-screen"></a>
                   <a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
-                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.obj.full_object_id }}</p>
+                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.copy.selectedObject.full_object_id }}</p>
 
                   <p><em>Object Meta Data goes here...</em></p>
               </div>
@@ -87,7 +86,7 @@
                   </accordion-heading>
                     <!--<a ng-click="tray.goFullscreen('object-tei')" title="full screen" class="new-window full-screen"></a>
                   <a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
-                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.obj.full_object_id }}</p>
+                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.copy.selectedObject.full_object_id }}</p>
 
                   <p><em>Object Meta Data goes here...</em></p>
                 </div>
