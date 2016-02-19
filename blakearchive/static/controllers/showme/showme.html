@@ -1,0 +1,34 @@
+<div id="archive" class="container-fluid archive-top">
+    <a href="">Previous</a><a href="">Next</a>
+    <div class="container-fluid tabs">
+        <div class="container">
+            <ul class="nav nav-tabs objects" role="tablist">
+                <li role="presentation" ng-class="{active:showme.selectedTab == 'object-tab'}">
+                    <a href="" ng-click="showme.showTab('#object-tab')" role="tab">Object</a>
+                </li>
+                <li role="presentation" ng-class="{active:showme.selectedTab == 'text-tab'}">
+                    <a href="" ng-click="showme.showTab('#text-tab')" role="tab">Textual Transcription</a>
+                </li>
+                <li role="presentation" ng-class="{active:showme.selectedTab == 'desc-tab'}">
+                    <a href="" ng-click="showme.showTab('#desc-tab')" role="tab">Illustration Description</a>
+                </li>
+                <li role="presentation" ng-class="{active:showme.selectedTab == 'note-tab'}">
+                    <a href="" ng-click="showme.showTab('#note-tab')" role="tab">Editor's Notes</a>
+                </li>
+                <li role="presentation" ng-class="{active:showme.selectedTab == 'tei-tab'}">
+                    <a href="" ng-click="showme.showTab('#tei-tab')" role="tab">TEI Markup</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid main">
+        <div class="container">
+            <div class="tab-content">
+                <!-- Object -->
+                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="showme.selectedTab == 'object-tab'" id="object-tab">
+                    <img src="http://www.blakearchive.org/blake/images/{{ showme.copy.selectedObject.dbi }}.100.jpg">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,6 +3,7 @@
     var controller = function($scope,BlakeDataService,WindowSize){
         var vm = this;
 
+        vm.firstLine = 1;
 
         vm.trayPixels = ( WindowSize.height - 136 );
         if(WindowSize.width <= 992){
@@ -21,6 +22,9 @@
             window.open('http://www.blakearchive.org/blake/')
         };*/
 
+        /*$scope.$on('global::objectChanged',function(){
+           console.log(vm.copy.selectedObject);
+        });*/
 
         $scope.$on('resize::resize',function(event,window){
             vm.trayPixels = ( window.height - 136 );
