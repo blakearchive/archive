@@ -36,6 +36,42 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
          * @param config
          */
 
+        var parseObjectLines = function(object,array){
+
+            if(angular.isArray(object)) {
+                angular.forEach(object, function (objectSet, lineKey) {
+                    if (angular.isArray(objectSet.l)) {
+                        angular.forEach(objectSet.l, function (v, k) {
+                            var indent = angular.isDefined(v['@indent']) ? v['@indent'] : 0;
+                            array.push({'indent': indent, 'text': v['#text'], 'lineNum':v['@n']})
+                        });
+                    } else {
+                        var indent = angular.isDefined(objectSet.l['@indent']) ? objectSet.l['@indent'] : 0;
+
+                        if (angular.isDefined(objectSet.l.physnumber)) {
+                            array.push({'indent': indent, 'text': objectSet.l.physnumber['#text'], 'lineNum': objectSet.l['@n']});
+                        } else {
+                            array.push({'indent': indent, 'text': objectSet.l['#text'], 'lineNum': objectSet.l['@n']});
+                        }
+                    }
+                });
+            } else if (angular.isArray(object.l)){
+                angular.forEach(object.l, function (v, k) {
+                    var indent = angular.isDefined(v['@indent']) ? v['@indent'] : 0;
+                    array.push({'indent': indent, 'text': v['#text'], 'lineNum':v['@n']});
+                });
+            } else {
+                var indent = angular.isDefined(object.l['@indent']) ? object.l['@indent'] : 0;
+
+                if (angular.isDefined(object.l.physnumber)) {
+                    array.push({'indent': indent, 'text': object.l.physnumber['#text'], 'lineNum': object.l['@n']});
+                } else {
+                    array.push({'indent': indent, 'text': object.l['#text'], 'lineNum': object.l['@n']});
+                }
+            }
+        };
+
+
         var constructor = function (config) {
             var obj = angular.copy(config);
             if(obj){
@@ -43,6 +79,48 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
                 obj.characteristics = angular.fromJson(config.characteristics);
                 obj.text = angular.fromJson(config.text);
                 obj.notes = angular.fromJson(config.notes);
+                obj.lines = [];
+                if(angular.isObject(obj.text)){
+                    if(angular.isDefined(obj.text.texthead)){
+                        parseObjectLines(obj.text.texthead,obj.lines);
+                    }
+
+                    if(angular.isDefined(obj.text.columns)){
+                        //var inc = 1;
+                        angular.forEach(obj.text.columns.column, function (v,k){
+                            /*var columnArray = {
+                                'head':[],
+                                'body':[],
+                                'foot':[]
+                            };*/
+                            if(angular.isDefined(v.texthead)){
+                                parseObjectLines(v.texthead,obj.lines);
+                            }
+                            if(angular.isDefined(v.lg)){
+                                parseObjectLines(v.lg,obj.lines);
+                            }
+                            if(angular.isDefined(v.textfoot)){
+                                parseObjectLines(v.textfoot,obj.lines);
+                            }
+                            //obj.lines.columns.push({'num':inc,'column':columnArray});
+                            //inc++;
+                        });
+                    }
+
+                    if(angular.isDefined(obj.text.lg)){
+                        parseObjectLines(obj.text.lg,obj.lines);
+                    }
+
+                    if(angular.isDefined(obj.text.textfoot)){
+                        parseObjectLines(obj.text.textfoot,obj.lines);
+                    }
+
+                }
+                obj.lines.sort(function(a,b){
+                    if(a.lineNum > b.lineNum){return 1;}
+                    if(a.lineNum < b.lineNum){return -1;}
+                    return 0;
+                });
                 obj.header = angular.fromJson(config.header);
                 obj.source = angular.fromJson(config.source);
 
@@ -568,27 +646,6 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             });
         };
     })
-    /*.controller("HomeController", ['$rootScope', '$scope', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
-     $rootScope.showSubMenu = 0;
-     BlakeDataService.getFeaturedWorks().then(function (results) {
-     var i = 0,
-     sci = 1;
-     angular.forEach(results, function(value) {
-     value.column = sci;
-     ++i;
-     if(i == 4){
-     ++sci;
-     i = 0;
-     }
-     });
-     $scope.featured_works = results;
-     $rootScope.homePageOverride = true;
-     });
-     }])*/
-
-    /*.controller("WorkController", ['$scope', '$routeParams', 'BlakeDataService', function ($scope, $routeParams, BlakeDataService) {
-     BlakeDataService.setSelectedWork($routeParams.workId);
-     }])*/
 
     .controller("ObjectController", ['$scope', '$routeParams', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
         BlakeDataService.setSelectedWork($routeParams.objectId);
@@ -613,6 +670,12 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             templateUrl: directoryPrefix + '/static/controllers/copy/copy.html',
             controller: "CopyController",
             controllerAs: 'copyCtrl'
+
+        });
+        $routeProvider.when(directoryPrefix + '/enlargement/:copyId/:objectId/:what', {
+            templateUrl: directoryPrefix + '/static/controllers/showMe/showMe.html',
+            controller: "ShowMe",
+            controllerAs: 'showme'
 
         });
         $routeProvider.when(directoryPrefix + '/work/:workId', {
