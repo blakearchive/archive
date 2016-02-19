@@ -20,20 +20,18 @@
                 <div class="featured-object-controls">
                     <!-- Controls -->
                     <a class="left carousel-control" role="button" ng-click="copyCtrl.changeObject(copyCtrl.previousObject)" data-slide="prev">
-                        <span class="glyphicon chevron" aria-hidden="true"></span>
                         <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ copyCtrl.previousObject.dbi }}.100.jpg)"></span>
                         <span class="object-text">Object {{ copyCtrl.previousObject.object_number }}</span>
                         <span class="sr-only">Previous</span>
                     </a>
                     <a class="right carousel-control" ng-click="copyCtrl.changeObject(copyCtrl.nextObject)" role="button" data-slide="next">
-                        <span class="glyphicon chevron" aria-hidden="true"></span>
                         <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ copyCtrl.nextObject.dbi }}.100.jpg)"></span>
                         <span class="object-text">Object {{ copyCtrl.nextObject.object_number }}</span>
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
 
-                <object-tools toggle="copyCtrl.toggleTools()"></object-tools>
+                <object-tools toggle="copyCtrl.toggleTools()" copy="copyCtrl.copy"></object-tools>
 
             </div>
 

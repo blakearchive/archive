@@ -11,9 +11,38 @@
                   <!--<a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
                   <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.copy.archive_copy_id }}</p>
 
+                  <ol>
+                      <li value="{{line.lineNum}}" ng-repeat="line in tray.copy.selectedObject.lines track by $index">{{ line.text }}</li>
+                  </ol>
+
+                  <!-- if object has columns
+                  <div ng-if="tray.copy.selectedObject.lines.columns.length > 0">
+                      <ol>
+                          <li value="{{line.lineNum}}" ng-repeat="line in tray.copy.selectedObject.lines.head track by $index">{{ line.text }}</li>
+                      </ol>
+                      <div ng-repeat="col in tray.copy.selectedObject.lines.columns">
+                          <p>Column {{ col.num }}</p>
+                          <ol>
+                              <li value="{{line.lineNum}}" ng-repeat="line in col.column.head">{{ line.text }}</li>
+                              <li value="{{line.lineNum}}" ng-repeat="line in col.column.body">{{ line.text }}</li>
+                              <li value="{{line.lineNum}}" ng-repeat="line in col.column.foot">{{ line.text }}</li>
+                          </ol>
+                      </div>
+                      <ol>
+                          <li ng-repeat="line in tray.copy.selectedObject.lines.foot">{{ line.text }}</li>
+                      </ol>
+                  </div>
+
+                  <!-- no columns
+                  <ol ng-if="tray.copy.selectedObject.lines.columns.length == 0">
+                      <li value="{{line.lineNum}}" ng-repeat="line in tray.copy.selectedObject.lines.head">{{ line.text }}</li>
+                      <li value="{{line.lineNum}}" ng-repeat="line in tray.copy.selectedObject.lines.body">{{ line.text }}</li>
+                      <li value="{{line.lineNum}}" ng-repeat="line in tray.copy.selectedObject.lines.foot">{{ line.text }}</li>
+                  </ol>-->
+
+
                   <p><a href="#">[ n ]</a></p>
-                  {{ tray.copy.selectedObject.bentley_id }}
-                  <span text-transcription object="tray.copy.selectedObject"></span>
+
                   <p><a href="#">Color key for transcriptions</a></p>
               </div>
           </accordion-group>
