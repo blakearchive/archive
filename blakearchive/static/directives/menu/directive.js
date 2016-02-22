@@ -10,7 +10,7 @@
 
             $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
         });
-
+        //$localStorage.$reset();
         if(angular.isUndefined($localStorage.menus)){
             BlakeDataService.getWorks().then(function (data) {
                 vm.organizeMenus(data);
@@ -124,9 +124,10 @@
                     }
                 }
             });
+            console.log(menus);
 
             vm.lists = menus;
-            $localStorage.menus = menus;
+            //$localStorage.menus = menus;
         }
 
 

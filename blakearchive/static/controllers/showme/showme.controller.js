@@ -10,6 +10,8 @@
 
         $rootScope.showmePage = true;
 
+        vm.what = $routeParams.what;
+
         BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.objectId).then(function() {
             vm.copy = BlakeDataService.selectedCopy;
             var copyBad = BlakeDataService.selectedCopy.bad_id,
@@ -22,8 +24,6 @@
             } else {
                 vm.init();
             }
-            vm.selectedTab = $routeParams.what;
-
         });
 
 
@@ -73,6 +73,11 @@
                 }
             }
         };
+
+        vm.changeObject = function(object){
+            vm.copy.selectedObject = object;
+            vm.init();
+        }
 
     };
 

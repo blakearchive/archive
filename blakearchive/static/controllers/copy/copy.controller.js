@@ -4,14 +4,17 @@
 
 (function () {
 
-    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$localStorage) {
+    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location) {
 
         var vm = this;
 
         $rootScope.showSubMenu = 1;
-
+        console.log($routeParams);
         BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.objectId).then(function() {
                 vm.copy = BlakeDataService.selectedCopy;
+                if(!angular.isDefined($routeParams.objectId)){
+                    $location.search('objectId',vm.copy.selectedObject.object_id);
+                }
                 var copyBad = BlakeDataService.selectedCopy.bad_id,
                     workBadMatch = copyBad.indexOf('.'),
                     workBad = workBadMatch > 0 ? copyBad.substring(0,workBadMatch) : copyBad;
@@ -29,7 +32,7 @@
             vm.work = BlakeDataService.selectedWork;
             vm.setSimilarObjects(vm.copy.selectedObject.object_id);
             vm.getPreviousNextObjects();
-            $scope.$broadcast('global::objectChanged');
+            //$scope.$broadcast('global::objectChanged');
         }
 
         vm.setSimilarObjects = function(object_id){
@@ -65,12 +68,13 @@
                     return vm.copy.selectedObject.full_object_id;
                 }
             }
-        }
+        };
 
         vm.changeObject = function(object){
             vm.copy.selectedObject = object;
+            $location.search('objectId',object.object_id);
             vm.init();
-        }
+        };
 
         vm.getPreviousNextObjects = function () {
             if (vm.copy.objectsInCopy && vm.copy.objectsInCopy.length) {
@@ -107,7 +111,7 @@
     };
 
 
-    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$localStorage'];
+    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location'];
 
     angular.module('blake').controller('CopyController', controller);
 

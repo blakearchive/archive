@@ -1,6 +1,6 @@
 (function(){
 
-    var controller = function($scope,BlakeDataService,WindowSize){
+    var controller = function($scope,BlakeDataService,WindowSize,$window){
         var vm = this;
 
         vm.firstLine = 1;
@@ -17,14 +17,9 @@
         vm.panelCount = 5;
         vm.trayBodyHeight = (vm.trayPixels - (vm.panelCount * 53)) + 'px';
 
-        /*vm.openWindow = function(e) {
-            var full_text = e.target.innerHTML;
-            window.open('http://www.blakearchive.org/blake/')
-        };*/
-
-        /*$scope.$on('global::objectChanged',function(){
-           console.log(vm.copy.selectedObject);
-        });*/
+        vm.newWindow = function(copy,type){
+            $window.open('/blake/'+type+'/'+copy.bad_id+'/'+copy.selectedObject.object_id, '_blank','width=800, height=600');
+        }
 
         $scope.$on('resize::resize',function(event,window){
             vm.trayPixels = ( window.height - 136 );
@@ -38,7 +33,7 @@
 
     }
 
-    controller.$inject = ['$scope','BlakeDataService','WindowSize'];
+    controller.$inject = ['$scope','BlakeDataService','WindowSize','$window'];
 
     var infoTray = function(){
         return {
