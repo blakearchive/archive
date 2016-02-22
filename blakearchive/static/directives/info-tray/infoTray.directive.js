@@ -18,7 +18,7 @@
         vm.trayBodyHeight = (vm.trayPixels - (vm.panelCount * 53)) + 'px';
 
         vm.newWindow = function(copy,type){
-            $window.open('/blake/'+type+'/'+copy.bad_id+'/'+copy.selectedObject.object_id, '_blank','width=800, height=600');
+            $window.open('/blake/new-window/'+type+'/'+copy.bad_id+'?objectId='+copy.selectedObject.object_id, '_blank','width=800, height=600');
         }
 
         $scope.$on('resize::resize',function(event,window){
