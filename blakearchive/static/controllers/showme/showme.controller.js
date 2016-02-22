@@ -4,49 +4,32 @@
 
 (function () {
 
-    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location) {
+    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope) {
 
         var vm = this;
 
-        $rootScope.showSubMenu = 1;
-        console.log($routeParams);
+        $rootScope.showmePage = true;
+
+        vm.what = $routeParams.what;
+
         BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.objectId).then(function() {
-                vm.copy = BlakeDataService.selectedCopy;
-                if(!angular.isDefined($routeParams.objectId)){
-                    $location.search('objectId',vm.copy.selectedObject.object_id);
-                }
-                var copyBad = BlakeDataService.selectedCopy.bad_id,
-                    workBadMatch = copyBad.indexOf('.'),
-                    workBad = workBadMatch > 0 ? copyBad.substring(0,workBadMatch) : copyBad;
-                if (angular.isUndefined(BlakeDataService.selectedWork)) {
-                    BlakeDataService.setWorkNoCopies(workBad).then(function(){
-                        vm.init();
-                    });
-                } else {
+            vm.copy = BlakeDataService.selectedCopy;
+            var copyBad = BlakeDataService.selectedCopy.bad_id,
+                workBadMatch = copyBad.indexOf('.'),
+                workBad = workBadMatch > 0 ? copyBad.substring(0,workBadMatch) : copyBad;
+            if (angular.isUndefined(BlakeDataService.selectedWork)) {
+                BlakeDataService.setWorkNoCopies(workBad).then(function(){
                     vm.init();
-                }
+                });
+            } else {
+                vm.init();
+            }
         });
 
 
         vm.init = function(){
             vm.work = BlakeDataService.selectedWork;
-            vm.setSimilarObjects(vm.copy.selectedObject.object_id);
             vm.getPreviousNextObjects();
-            //$scope.$broadcast('global::objectChanged');
-        }
-
-        vm.setSimilarObjects = function(object_id){
-            BlakeDataService.getObjectsFromSameMatrix(object_id).then(function(data){
-                vm.copy.selectedObject.matrix = data;
-            });
-
-            BlakeDataService.getObjectsWithSameMotif(object_id).then(function(data){
-                vm.copy.selectedObject.motif = data;
-            });
-
-            BlakeDataService.getObjectsFromSameProductionSequence(object_id).then(function(data){
-                vm.copy.selectedObject.sequence = data;
-            })
         }
 
         vm.getOvpTitle = function(){
@@ -68,13 +51,7 @@
                     return vm.copy.selectedObject.full_object_id;
                 }
             }
-        };
-
-        vm.changeObject = function(object){
-            vm.copy.selectedObject = object;
-            $location.search('objectId',object.object_id);
-            vm.init();
-        };
+        }
 
         vm.getPreviousNextObjects = function () {
             if (vm.copy.objectsInCopy && vm.copy.objectsInCopy.length) {
@@ -97,22 +74,16 @@
             }
         };
 
-        vm.trayOpen = false;
-        vm.showTools = true;
-
-        vm.toggleTray = function(){
-            vm.trayOpen = !vm.trayOpen;
-        }
-        vm.toggleTools = function(){
-            vm.showTools = !vm.showTools;
-            $scope.$broadcast('copyCtrl::toggleTools',{tools:vm.showTools});
+        vm.changeObject = function(object){
+            vm.copy.selectedObject = object;
+            vm.init();
         }
 
     };
 
 
-    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location'];
+    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope'];
 
-    angular.module('blake').controller('CopyController', controller);
+    angular.module('blake').controller('ShowMe', controller);
 
 }());

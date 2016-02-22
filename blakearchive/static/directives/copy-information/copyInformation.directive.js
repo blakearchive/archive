@@ -7,7 +7,25 @@
     var controller = function ($scope, BlakeDataService) {
 
         var vm = this;
-        //console.log(vm.copy);
+
+        vm.getHeader = function(){
+            if(angular.isDefined(vm.copy)){
+                if(vm.copy.virtual){
+                    return vm.copy.selectedObject.header;
+                } else {
+                    return vm.copy.header;
+                }
+            }
+        }
+        vm.getSource = function(){
+            if(angular.isDefined(vm.copy)) {
+                if (vm.copy.virtual) {
+                    return vm.copy.selectedObject.source;
+                } else {
+                    return vm.copy.source;
+                }
+            }
+        }
 
         /*vm.init = function(){
             if(angular.isDefined(vm.copy)){
@@ -23,10 +41,10 @@
             }
         }*/
 
-        $scope.$on('global::copyInfo',function(event,data){
+        /*$scope.$on('global::copyInfo',function(event,data){
             vm.copySource = data.source;
             vm.copyHeader = data.header;
-        });
+        });*/
 
         vm.getOriginationRole = function (role) {
             if (role) {
@@ -51,7 +69,9 @@
             templateUrl: "/blake/static/directives/copy-information/copyInformation.html",
             controller: controller,
             controllerAs: 'info',
-            scope:{},
+            scope:{
+                copy: '=copy'
+            },
             bindToController: true
         }
     }

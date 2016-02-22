@@ -4,11 +4,12 @@
 
 (function(){
 
-    var controller = function($scope,$rootScope,BlakeDataService,$window){
+    var controller = function($scope,$rootScope,BlakeDataService,$window,$localStorage){
 
         var vm = this;
 
         $rootScope.showSubMenu = 0;
+        //$localStorage.$reset();
 
         vm.columns = {
             1:{'topOffset':'-90px'},
@@ -31,14 +32,19 @@
         })
 
         BlakeDataService.getFeaturedWorks().then(function (results) {
+            //console.log(results);
             var i = 0,
-                sci = 1;
+                sci = 1,
+                used = [];
             angular.forEach(results, function(value) {
-                value.column = sci;
-                ++i;
-                if(i == 4){
-                    ++sci;
-                    i = 0;
+                if(used.indexOf(value.bad_id) == -1){
+                    used.push(value.bad_id);
+                    value.column = sci;
+                    ++i;
+                    if(i == 4){
+                        ++sci;
+                        i = 0;
+                    }
                 }
             });
             vm.featured_works = results;
@@ -46,7 +52,7 @@
 
     }
 
-    controller.$inject = ['$scope','$rootScope','BlakeDataService','$window'];
+    controller.$inject = ['$scope','$rootScope','BlakeDataService','$window','$localStorage'];
 
     angular.module('blake').controller('HomeController',controller);
 
