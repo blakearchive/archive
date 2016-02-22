@@ -671,10 +671,10 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             controllerAs: 'copyCtrl',
             reloadOnSearch: false
         });
-        $routeProvider.when(directoryPrefix + '/copy/:copyId/:objectId', {
-            templateUrl: directoryPrefix + '/static/controllers/copy/copy.html',
-            controller: "CopyController",
-            controllerAs: 'copyCtrl',
+        $routeProvider.when(directoryPrefix + '/new-window/:what/:copyId', {
+            templateUrl: directoryPrefix + '/static/controllers/showme/showme.html',
+            controller: "ShowMeController",
+            controllerAs: 'showme',
             reloadOnSearch: false
         });
         $routeProvider.when(directoryPrefix + '/work/:workId', {

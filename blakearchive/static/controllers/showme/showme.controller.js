@@ -4,7 +4,7 @@
 
 (function () {
 
-    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope) {
+    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location) {
 
         var vm = this;
 
@@ -76,14 +76,15 @@
 
         vm.changeObject = function(object){
             vm.copy.selectedObject = object;
+            $location.search('objectId',object.object_id);
             vm.init();
         }
 
     };
 
 
-    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope'];
+    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location'];
 
-    angular.module('blake').controller('ShowMe', controller);
+    angular.module('blake').controller('ShowMeController', controller);
 
 }());

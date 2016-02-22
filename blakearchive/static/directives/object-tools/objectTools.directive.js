@@ -4,7 +4,7 @@
         var vm = this;
 
         vm.newWindow = function(copy){
-            $window.open('/blake/enlargement/'+copy.bad_id+'/'+copy.selectedObject.object_id, '_blank','width=800, height=600');
+            $window.open('/blake/new-window/enlargement/'+copy.bad_id+'?objectId='+copy.selectedObject.object_id, '_blank','width=800, height=600');
         }
     }
 
