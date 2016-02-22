@@ -1,125 +1,63 @@
 <div id="object-detail-tray" ng-style="{'min-height': tray.trayHeight}">
-      <div class="tray-toggle" ng-click="tray.toggle()">Open/Close Tray</div>
-      <div id="object-detail-tray-inner">
+    <div class="tray-toggle" ng-click="tray.toggle()">Open/Close Tray</div>
+    <div id="object-detail-tray-inner">
+
         <accordion close-others="true" id="object-detail-tray-accordion">
-          <accordion-group id="textual-transcription">
-              <div ng-style="{'max-height': tray.trayBodyHeight}">
-                  <accordion-heading>
-                      Textual Transcription
-                  </accordion-heading>
-                  <!--<a ng-click="tray.goFullscreen('tray-transcription')" title="full screen" class="new-window full-screen"></a>-->
-                  <!--<a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
-                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.copy.archive_copy_id }}</p>
+            <accordion-group id="textual-transcription">
+                <div ng-style="{'max-height': tray.trayBodyHeight}">
+                    <accordion-heading>
+                        Textual Transcription
+                        <a ng-click="tray.newWindow(tray.copy,'text')" class="new-window" title="new window">New Window</a>
+                    </accordion-heading>
+                    <text-transcription object="tray.copy.selectedObject"></text-transcription>
+                </div>
+            </accordion-group>
 
-                  <ol>
-                      <li value="{{line.lineNum}}" ng-repeat="line in tray.copy.selectedObject.lines track by $index">{{ line.text }}</li>
-                  </ol>
-
-                  <!-- if object has columns
-                  <div ng-if="tray.copy.selectedObject.lines.columns.length > 0">
-                      <ol>
-                          <li value="{{line.lineNum}}" ng-repeat="line in tray.copy.selectedObject.lines.head track by $index">{{ line.text }}</li>
-                      </ol>
-                      <div ng-repeat="col in tray.copy.selectedObject.lines.columns">
-                          <p>Column {{ col.num }}</p>
-                          <ol>
-                              <li value="{{line.lineNum}}" ng-repeat="line in col.column.head">{{ line.text }}</li>
-                              <li value="{{line.lineNum}}" ng-repeat="line in col.column.body">{{ line.text }}</li>
-                              <li value="{{line.lineNum}}" ng-repeat="line in col.column.foot">{{ line.text }}</li>
-                          </ol>
-                      </div>
-                      <ol>
-                          <li ng-repeat="line in tray.copy.selectedObject.lines.foot">{{ line.text }}</li>
-                      </ol>
-                  </div>
-
-                  <!-- no columns
-                  <ol ng-if="tray.copy.selectedObject.lines.columns.length == 0">
-                      <li value="{{line.lineNum}}" ng-repeat="line in tray.copy.selectedObject.lines.head">{{ line.text }}</li>
-                      <li value="{{line.lineNum}}" ng-repeat="line in tray.copy.selectedObject.lines.body">{{ line.text }}</li>
-                      <li value="{{line.lineNum}}" ng-repeat="line in tray.copy.selectedObject.lines.foot">{{ line.text }}</li>
-                  </ol>-->
-
-
-                  <p><a href="#">[ n ]</a></p>
-
-                  <p><a href="#">Color key for transcriptions</a></p>
-              </div>
-          </accordion-group>
-          <accordion-group id="illustration-description">
+            <accordion-group id="illustration-description">
               <div ng-style="{'max-height': tray.trayBodyHeight}">
                   <accordion-heading>
                       Illustration Description
+                      <a ng-click="tray.newWindow(tray.copy,'desc')" class="new-window" title="new window">New Window</a>
                   </accordion-heading>
-                  <!--<a ng-click="tray.goFullscreen('illustration-description')" title="full screen" class="new-window full-screen"></a>
-                  <a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
-                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.copy.selectedObject.full_object_id }}</p>
 
-                  <p><strong>Sector CD<br>
-                    Plate Illustration:</strong></p>
-
-                  <p>{{ tray.copy.selectedObject.illustration_description.illusobjdesc['#text'] }}</p>
-
-                  <div ng-repeat="component in tray.copy.selectedObject.components track by $index">
-                    <p><strong>Component (Sector {{ component.component['@location'] }})</strong></p>
-
-                    <p class="keywords">Keywords:
-                    <ul class="list-inline">
-                      <li ng-repeat="characteristic in component.component.characteristic track by $index">{{ characteristic["#text"] }}</li>
-                    </ul>
-                    </p>
-
-                    <p>{{ component.component.illusobjdesc['#text'] }}</p>
-                  </div>
+                  <illustration-description object="tray.copy.selectedObject"></illustration-description>
               </div>
-          </accordion-group>
-          <accordion-group id="editors-notes">
+            </accordion-group>
+
+            <accordion-group id="editors-notes">
               <div ng-style="{'max-height': tray.trayBodyHeight}">
                   <accordion-heading>
                       Editors’ Notes
+                      <a ng-click="tray.newWindow(tray.copy,'note')" class="new-window" title="new window">New Window</a>
                   </accordion-heading>
-                  <!--<a ng-click="tray.goFullscreen('editors-notes')" title="full screen" class="new-window full-screen"></a>
-                  <a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
-                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.copy.selectedObject.full_object_id }}</p>
 
-                  <p><strong>Object Note(s):</strong></p>
-
-                  <div ng-if="tray.copy.selectedObject.physical_description.objnote">
-                    <p>Note:</p>
-
-                    <p>{{ tray.copy.selectedObject.physical_description.objnote['#text'] }}</p>
-                  </div>
-                  <p><strong>Textual Note(s):</strong></p>
-                  <ul ng-if="tray.copy.selectedObject.notes.length > 0">
-                      <li ng-repeat="note in tray.copy.selectedObject.notes track by $index">{{ note }}</li>
-                  </ul>
-                  <p ng-if="tray.copy.selectedObject.notes.length == 0"><em>No textual notes for this object</em></p>
+                  <editor-notes object="tray.copy.selectedObject"></editor-notes>
               </div>
-          </accordion-group>
-          <accordion-group id="object-metadata">
+            </accordion-group>
+
+            <accordion-group id="object-metadata">
               <div ng-style="{'max-height': tray.trayBodyHeight}">
                   <accordion-heading>
                       Object Meta Data
+                      <a ng-click="tray.newWindow(tray.copy,'meta')" class="new-window" title="new window">New Window</a>
                   </accordion-heading>
-                  <!--<a ng-click="tray.goFullscreen('object-metadata')" title="full screen" class="new-window full-screen"></a>
-                  <a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
-                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.copy.selectedObject.full_object_id }}</p>
 
-                  <p><em>Object Meta Data goes here...</em></p>
+                  <object-metadata object="tray.copy.selectedObject"></object-metadata>
               </div>
-          </accordion-group>
+            </accordion-group>
+
             <accordion-group id="object-tei">
-                <div ng-style="{'max-height': tray.trayBodyHeight}">
+              <div ng-style="{'max-height': tray.trayBodyHeight}">
                   <accordion-heading>
                       TEI Markup
+                      <a ng-click="tray.newWindow(tray.copy,'tei')" class="new-window" title="new window">New Window</a>
                   </accordion-heading>
-                    <!--<a ng-click="tray.goFullscreen('object-tei')" title="full screen" class="new-window full-screen"></a>
-                  <a href="http://blakearchive.org/blake" target="_blank" title="new window" class="new-window"></a>-->
-                  <p class="object-title">{{ tray.copy.header.filedesc.titlestmt.title['@reg'] }}, {{ tray.copy.selectedObject.full_object_id }}</p>
 
-                  <p><em>Object Meta Data goes here...</em></p>
-                </div>
-          </accordion-group>
+                  <tei-markup object="tray.copy.selectedObject"></tei-markup>
+              </div>
+            </accordion-group>
+
         </accordion>
+
       </div>
 </div>

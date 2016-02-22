@@ -33,7 +33,7 @@
                     <div class="row">
                         <div ng-repeat="obj in tabs.copy.objectsInCopy track by $index" class="col-sm-6 col-md-3">
                             <div class="handprint-block">
-                                <a href="/blake/copy/{{ obj.copy_bad_id }}/{{ obj.object_id }}">
+                                <a ng-click="tabs.changeObject({object:obj})">
                                     <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
                                     <span class="description" object-description object="obj" virtual="tabs.copy.virtual" type="objectSimple"></span>
                                 </a>
@@ -64,7 +64,7 @@
                     <div class="row">
                         <div ng-repeat="obj in tabs.copy.selectedObject.sequence track by $index" class="col-sm-6 col-md-3">
                             <div class="handprint-block">
-                                <a href="/blake/copy/{{ obj.copy_bad_id }}/{{ obj.object_id }}">
+                                <a href="/blake/copy/{{ obj.copy_bad_id }}?objectId={{ obj.object_id }}">
                                     <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
                                     <span class="description" object-description object="obj" virtual="tabs.copy.virtual" type="objectFull"></span>
                                 </a>
@@ -84,7 +84,7 @@
                     <div class="row">
                         <div ng-repeat="obj in tabs.copy.selectedObject.motif track by $index" class="col-sm-6 col-md-3">
                             <div class="handprint-block">
-                                <a href="/blake/copy/{{ obj.copy_bad_id}}/{{ obj.object_id }}">
+                                <a href="/blake/copy/{{ obj.copy_bad_id}}?objectId={{ obj.object_id }}">
                                     <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
                                     <span class="description" object-description object="obj" virtual="tabs.copy.virtual" type="objectFull"></span>
                                 </a>

@@ -63,8 +63,12 @@
             controllerAs: 'tabs',
             scope: {
                 copy: '=copy',
-                work: '=work'
+                work: '=work',
+                changeObject: '&'
             },
+            /*link:function(scope,elem,attr){
+                scope.changeObject({object: object});
+            },*/
             bindToController: true
         }
     }
