@@ -1,0 +1,19 @@
+<ol>
+    <li class="line-type-{{line.type}}"
+        ng-class="{
+        'text-push-5': line.indent > 39,
+        'text-push-4': line.indent > 29 && line.indent <= 39,
+        'text-push-3': line.indent > 19 && line.indent <= 29,
+        'text-push-2': line.indent > 9 && line.indent <= 19,
+        'text-push-1': line.indent > 0 && line.indent <= 9,
+        'text-center': line.justify == 'center'}"
+        ng-repeat="line in textCtrl.object.lines track by $index">
+        {{ line.text }}
+    </li>
+</ol>
+
+
+<p><a href="#">[ n ]</a></p>
+
+<p><a href="#">Color key for transcriptions</a></p>
+

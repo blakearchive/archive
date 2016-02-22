@@ -1,6 +1,6 @@
 <div id="archive" class="container-fluid archive-top">
     <div id="object-container" class="row" ng-class="copyCtrl.trayOpen ? 'tray-open' : 'tray-closed'">
-        <info-tray toggle="copyCtrl.toggleTray()" copy="copyCtrl.copy" obj="copyCtrl.copy.selectedObject"></info-tray>
+        <info-tray toggle="copyCtrl.toggleTray()" copy="copyCtrl.copy"></info-tray>
 
         <div id="object-view" ng-class="copyCtrl.showTools ? 'show-tools' : 'hide-tools'" class="view-objects">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
@@ -20,20 +20,18 @@
                 <div class="featured-object-controls">
                     <!-- Controls -->
                     <a class="left carousel-control" role="button" ng-click="copyCtrl.changeObject(copyCtrl.previousObject)" data-slide="prev">
-                        <span class="glyphicon chevron" aria-hidden="true"></span>
                         <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ copyCtrl.previousObject.dbi }}.100.jpg)"></span>
                         <span class="object-text">Object {{ copyCtrl.previousObject.object_number }}</span>
                         <span class="sr-only">Previous</span>
                     </a>
                     <a class="right carousel-control" ng-click="copyCtrl.changeObject(copyCtrl.nextObject)" role="button" data-slide="next">
-                        <span class="glyphicon chevron" aria-hidden="true"></span>
                         <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ copyCtrl.nextObject.dbi }}.100.jpg)"></span>
                         <span class="object-text">Object {{ copyCtrl.nextObject.object_number }}</span>
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
 
-                <object-tools toggle="copyCtrl.toggleTools()"></object-tools>
+                <object-tools toggle="copyCtrl.toggleTools()" copy="copyCtrl.copy"></object-tools>
 
             </div>
 
@@ -41,5 +39,5 @@
     </div>
 </div>
 <div id="archive-tabs" role="tabpanel">
-    <copy-tabs copy="copyCtrl.copy" work="copyCtrl.work"></copy-tabs>
+    <copy-tabs copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)"></copy-tabs>
 </div>

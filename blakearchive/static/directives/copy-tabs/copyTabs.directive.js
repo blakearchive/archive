@@ -37,6 +37,16 @@
             }
         }
 
+        vm.getCopyOrGroup = function(){
+            if(angular.isDefined(vm.copy)){
+                if(vm.copy.virtual){
+                    return 'Group';
+                } else {
+                    return 'Copy';
+                }
+            }
+        }
+
         $scope.$on('copyCtrl::changeObject',function(){
             vm.selectedTab = '#objects-in-copy';
         });
@@ -53,8 +63,12 @@
             controllerAs: 'tabs',
             scope: {
                 copy: '=copy',
-                work: '=work'
+                work: '=work',
+                changeObject: '&'
             },
+            /*link:function(scope,elem,attr){
+                scope.changeObject({object: object});
+            },*/
             bindToController: true
         }
     }

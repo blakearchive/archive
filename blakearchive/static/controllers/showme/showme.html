@@ -1,0 +1,79 @@
+<div id="showme" class="container-fluid main">
+
+    <div class="row showme-nav">
+        <ul class="nav nav-pills nav-justified">
+            <li>
+                <a ng-click="showme.changeObject(showme.previousObject)">Previous</a>
+            </li>
+            <li><a ng-click="showme.changeObject(showme.nextObject)">Next</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <header class="page-header">
+            <h1>{{ showme.getOvpTitle() }}
+                <span ng-if="showme.work.virtual">{{ showme.work.title }}</span>
+            </h1>
+            <p class="subhead">{{ showme.copy.selectedObject.full_object_id }}</p>
+        </header>
+    </div>
+
+    <!-- Object -->
+    <div class="row" id="objectImg" ng-if="showme.what == 'enlargement'">
+        <div class="col-xs-12 text-center img-enlarge-container">
+            <img class="img-enlarge" ng-src="http://www.blakearchive.org/blake/images/{{ showme.copy.selectedObject.dbi }}.300.jpg">
+        </div>
+    </div>
+
+    <!-- Text Transcription -->
+    <div class="container">
+        <div class="row" id="textTranscription" ng-if="showme.what == 'text'">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                <text-transcription object="showme.copy.selectedObject"></text-transcription>
+            </div>
+        </div>
+
+        <!-- Illustration Description -->
+        <div class="row" id="illustrationDescription" ng-if="showme.what == 'desc'">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                <illustration-description object="showme.copy.selectedObject"></illustration-description>
+            </div>
+        </div>
+
+        <!-- Editor's notes -->
+        <div class="row" id="editorNotes" ng-if="showme.what == 'note'">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                <editor-notes object="tray.copy.selectedObject"></editor-notes>
+            </div>
+        </div>
+
+        <!-- Metadata -->
+        <div class="row" id="objectMetadata" ng-if="showme.what == 'meta'">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                <object-metadata object="tray.copy.selectedObject"></object-metadata>
+            </div>
+        </div>
+
+        <!-- TEI Markup -->
+        <div class="row" id="teiMarkup" ng-if="showme.what == 'tei'">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                <tei-markup object="tray.copy.selectedObject"></tei-markup>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row showme-nav">
+        <ul class="nav nav-pills nav-justified">
+            <li>
+                <a ng-click="showme.changeObject(showme.previousObject)">Previous</a>
+            </li>
+            <li><a ng-click="showme.changeObject(showme.nextObject)">Next</a></li>
+        </ul>
+    </div>
+
+
+</div>

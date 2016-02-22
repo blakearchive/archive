@@ -7,7 +7,6 @@
     var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$timeout,$rootScope,$localStorage) {
 
         var vm = this;
-
         console.log($localStorage);
 
         vm.comparisonObjects = $localStorage.comparisonObjects;
