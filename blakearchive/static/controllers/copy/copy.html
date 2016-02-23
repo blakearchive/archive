@@ -3,39 +3,16 @@
         <info-tray toggle="copyCtrl.toggleTray()" copy="copyCtrl.copy"></info-tray>
 
         <div id="object-view" ng-class="copyCtrl.showTools ? 'show-tools' : 'hide-tools'" class="view-objects">
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
-                <div class="featured-object">
-                    <p class="object-title">{{ copyCtrl.getOvpTitle() }}</p>
-                    <p class="object-subtitle" ng-if="copyCtrl.work.virtual">{{ copyCtrl.work.title }}</p>
-                    <!-- Wrapper for slides -->
-                    <!--<div class="carousel-inner" role="listbox" ng-style="{'height': viewerHeight}">-->
-                    <div class="carousel-inner" role="listbox">
-                        <div class="item active">
-                            <img src="http://www.blakearchive.org/blake/images/{{ copyCtrl.copy.selectedObject.dbi }}.100.jpg" copy-image>
-                            <p class="object-subtitle"><span class="object-no text-capitalize">{{ copyCtrl.getOvpSubtitle() }}</span></p>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="featured-object-controls" ng-if="showme.copy.objectsInCopy.length > 1">
-                    <!-- Controls -->
-                    <a class="left carousel-control" role="button" ng-click="copyCtrl.changeObject(copyCtrl.previousObject)" data-slide="prev">
-                        <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ copyCtrl.previousObject.dbi }}.100.jpg)"></span>
-                        <span class="object-text">Object {{ copyCtrl.previousObject.object_number }}</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" ng-click="copyCtrl.changeObject(copyCtrl.nextObject)" role="button" data-slide="next">
-                        <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ copyCtrl.nextObject.dbi }}.100.jpg)"></span>
-                        <span class="object-text">Object {{ copyCtrl.nextObject.object_number }}</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
+            <object-viewer copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)" ng-if="copyCtrl.$storage.view.mode == 'object'"></object-viewer>
 
-                <object-tools toggle="copyCtrl.toggleTools()" copy="copyCtrl.copy"></object-tools>
+            <object-compare copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)" ng-if="copyCtrl.$storage.view.mode == 'compare'"></object-compare>
 
-            </div>
+            <object-tools toggle="copyCtrl.toggleTools()" copy="copyCtrl.copy"></object-tools>
 
         </div>
+
+
     </div>
 </div>
 <div id="archive-tabs" role="tabpanel">

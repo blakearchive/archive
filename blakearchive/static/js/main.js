@@ -375,8 +375,6 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             var url = directoryPrefix + '/api/work/';
             return $q(function (resolve, reject) {
                 $http.get(url).success(function (data) {
-                    console.log('return from api');
-                    console.log(data);
                     resolve(BlakeWork.create(data.results));
                 }).error(function (data, status) {
                     reject(data, status);
@@ -561,7 +559,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         }
 
     }])
-    .directive('copyImage', ['WindowSize', function(WindowSize){
+    .directive('copyImage', ['WindowSize', '$rootScope', function(WindowSize){
         var link = function(scope, element, attrs) {
 
             scope.setStyles = function(windowSize){
@@ -589,7 +587,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
     .directive('comparisonImage', ['WindowSize', function(WindowSize){
         var link = function(scope, element, attrs) {
 
-            var baseAdjustment = 370;
+            var baseAdjustment = 270;
 
             scope.setStyles = function(windowSize, adjustment){
                 var elementHeight = element.height(),
@@ -682,11 +680,11 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             controller: "WorkController",
             controllerAs: 'workCtrl'
         });
-        $routeProvider.when(directoryPrefix + '/compare/', {
+        /*$routeProvider.when(directoryPrefix + '/compare/', {
             templateUrl: directoryPrefix + '/static/controllers/compare/compare.html',
             controller: "CompareController",
             controllerAs: 'compareCtrl'
-        });
+        });*/
         $routeProvider.when(directoryPrefix + '/search/', {
             templateUrl: directoryPrefix + '/static/controllers/search/search.html',
             controller: "SearchController"
