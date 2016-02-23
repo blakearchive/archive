@@ -47,7 +47,7 @@
             }
         }
 
-        $scope.$on('copyCtrl::changeObject',function(){
+        $scope.$on('copyCtrl::objectChanged',function(){
             vm.selectedTab = '#objects-in-copy';
         });
 
