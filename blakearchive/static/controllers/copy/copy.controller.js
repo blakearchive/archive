@@ -31,7 +31,9 @@
         vm.init = function(){
             vm.work = BlakeDataService.selectedWork;
             vm.setSimilarObjects(vm.copy.selectedObject.object_id);
-            vm.getPreviousNextObjects();
+            if(vm.copy.objectsInCopy.length > 1){
+                vm.getPreviousNextObjects();
+            }
             //$scope.$broadcast('global::objectChanged');
         }
 

@@ -17,7 +17,7 @@
                     </div>
                 </div>
 
-                <div class="featured-object-controls">
+                <div class="featured-object-controls" ng-if="showme.copy.objectsInCopy.length > 1">
                     <!-- Controls -->
                     <a class="left carousel-control" role="button" ng-click="copyCtrl.changeObject(copyCtrl.previousObject)" data-slide="prev">
                         <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ copyCtrl.previousObject.dbi }}.100.jpg)"></span>
