@@ -29,7 +29,9 @@
 
         vm.init = function(){
             vm.work = BlakeDataService.selectedWork;
-            vm.getPreviousNextObjects();
+            if(vm.copy.objectsInCopy.length > 1){
+                vm.getPreviousNextObjects();
+            }
         }
 
         vm.getOvpTitle = function(){
