@@ -1,0 +1,55 @@
+<div class="object-view-menu">
+    <div class="btn-group" role="group" dropdown>
+        <button type="button" class="btn btn-xs dropdown-toggle" ng-class="{active: viewSubMenu.$storage.view.mode == 'object'}" dropdown-toggle>
+            Object View
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li ng-class="{active: viewSubMenu.$storage.view.scope == 'image' && viewSubMenu.$storage.view.mode == 'object'}">
+                <a href="#" ng-click="viewSubMenu.changeView('object','image')">Show Only Object(s)</a>
+            </li>
+            <li>
+                <a href="#" ng-click="viewSubMenu.changeView('object','text')">Show Only Transcriptions(s)</a>
+            </li>
+            <li>
+                <a href="#" ng-click="viewSubMenu.changeView('object','both')">Show Object(s) and Transcriptions(s)</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="btn-group" role="group" dropdown>
+        <button type="button" class="btn btn-xs dropdown-toggle" ng-class="{active: viewSubMenu.$storage.view.mode == 'read'}" dropdown-toggle>
+            Reading View
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li ng-class="{active: viewSubMenu.$storage.view.scope == 'image' && viewSubMenu.$storage.view.mode == 'read'}">
+                <a href="#" ng-click="viewSubMenu.changeView('read','image')">Show Only Object(s)</a>
+            </li>
+            <li>
+                <a href="#" ng-click="viewSubMenu.changeView('read','text')">Show Only Transcriptions(s)</a>
+            </li>
+            <li>
+                <a href="#" ng-click="viewSubMenu.changeView('read','both')">Show Object(s) and Transcriptions(s)</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="btn-group" role="group" dropdown>
+        <button type="button" class="btn btn-xs dropdown-toggle" ng-class="{active: viewSubMenu.$storage.view.mode == 'compare'}" dropdown-toggle>
+            Compare View
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li ng-class="{active: viewSubMenu.$storage.view.scope == 'image' && viewSubMenu.$storage.view.mode == 'compare'}">
+                <a href="#" ng-click="viewSubMenu.changeView('compare','image')">Show Only Object(s)</a>
+            </li>
+            <li>
+                <a href="#" ng-click="viewSubMenu.changeView('compare','text')">Show Only Transcriptions(s)</a>
+            </li>
+            <li>
+                <a href="#" ng-click="viewSubMenu.changeView('compare','both')">Show Object(s) and Transcriptions(s)</a>
+            </li>
+        </ul>
+    </div>
+</div>
