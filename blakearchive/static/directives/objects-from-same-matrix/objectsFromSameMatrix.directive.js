@@ -4,41 +4,42 @@
 
 (function(){
 
-    var controller = function($scope,$localStorage){
+    var controller = function($scope,$sessionStorage){
 
         var vm = this;
 
         vm.addComparisonObject = function (obj) {
             var i, objInList = false;
             // Don't add an object to the list twice
-            for (i = $localStorage.comparisonObjects.length; i--;) {
-                if ($localStorage.comparisonObjects[i].object_id == obj.object_id) {
+            for (i = $sessionStorage.comparisonObjects.length; i--;) {
+                if ($sessionStorage.comparisonObjects[i].object_id == obj.object_id) {
                     objInList = true;
                     break;
                 }
             }
             if (!objInList) {
-                $localStorage.comparisonObjects.push(obj);
+                $sessionStorage.comparisonObjects.push(obj);
             }
         };
 
         vm.removeComparisonObject = function (obj) {
             var i;
-            for (i = $localStorage.comparisonObjects.length; i--;) {
-                if ($localStorage.comparisonObjects[i].object_id == obj.object_id) {
-                    $localStorage.comparisonObjects.splice(i, 1);
+            for (i = $sessionStorage.comparisonObjects.length; i--;) {
+                if ($sessionStorage.comparisonObjects[i].object_id == obj.object_id) {
+                    $sessionStorage.comparisonObjects.splice(i, 1);
                     break;
                 }
             }
         };
 
         vm.clearComparisonObjects = function () {
-            $localStorage.comparisonObjects = [];
+            $sessionStorage.comparisonObjects = [];
+            $sessionStorage.comparisonObjects.unshift(vm.copy.selectedObject);
         };
 
         vm.isComparisonObject = function (obj) {
-            for (var i = $localStorage.comparisonObjects.length; i--;) {
-                if ($localStorage.comparisonObjects[i].object_id == obj.object_id) {
+            for (var i = $sessionStorage.comparisonObjects.length; i--;) {
+                if ($sessionStorage.comparisonObjects[i].object_id == obj.object_id) {
                     return true;
                 }
             }
@@ -46,28 +47,26 @@
         };
 
         vm.selectAll = function () {
-            if(angular.isDefined(vm.objects)){
-                var obj_size = vm.objects.length;
+            if(angular.isDefined(vm.copy.selectedObject.matrix)){
+                var obj_size = vm.copy.selectedObject.matrix.length;
                 vm.clearComparisonObjects(); // Clear out old comparisons
 
                 if(!vm.selectedAll) {
                     vm.compareText = "Clear All Objects";
                     vm.selectedAll = true;
 
-                    // Add main viewer img
-                    vm.addComparisonObject(vm.item);
-
                     // Add imgs to compare main viewer img too.
                     for (var i = obj_size; i--;) {
-                        vm.objects[i].Selected = true;
-                        vm.addComparisonObject(vm.objects[i]);
+                        vm.copy.selectedObject.matrix[i].Selected = true;
+                        vm.addComparisonObject(vm.copy.selectedObject.matrix[i]);
                     }
+
                 } else {
                     vm.compareText = "Select All Objects";
                     vm.selectedAll = false;
 
                     for (var j = obj_size; j--;) {
-                        vm.objects[j].Selected = false;
+                        vm.copy.selectedObject.matrix[j].Selected = false;
                     }
 
                     vm.clearComparisonObjects();
@@ -77,26 +76,32 @@
 
         // Add/remove single object for comparison
         vm.selectOne = function(obj) {
-            var key = vm.objects.indexOf(obj);
-            if(!vm.objects[key].Selected) {
-                vm.objects[key].Selected = true;
-                //obj.Selected = false;
-                vm.addComparisonObject(obj);
-            } else {
-                vm.objects[key].Selected = false;
-                vm.removeComparisonObject(obj);
-            }
+            var key = vm.copy.selectedObject.matrix.indexOf(obj);
 
-            // Add main viewer img
-            if(vm.getComparisonObjects) {
-                vm.addComparisonObject(vm.item);
+            if(!vm.copy.selectedObject.matrix[key].Selected) {
+
+                vm.copy.selectedObject.matrix[key].Selected = true;
+                vm.addComparisonObject(obj);
+
+            } else {
+
+                vm.copy.selectedObject.matrix[key].Selected = false;
+                vm.removeComparisonObject(obj);
+
             }
         };
+
+        vm.activateCompare = function(){
+            $sessionStorage.view = {
+                mode: 'compare',
+                scope: 'image'
+            }
+        }
 
         vm.compareText = "Select All Objects";
         vm.selectedAll = false;
 
-        $scope.$on('copyCtrl::changeObject',function(){
+        $scope.$on('copyCtrl::objectChanged',function(){
             vm.compareText = "Select All Objects";
             vm.selectedAll = false;
             vm.clearComparisonObjects();
@@ -104,7 +109,7 @@
 
     }
 
-    controller.$inject = ['$scope','$localStorage'];
+    controller.$inject = ['$scope','$sessionStorage'];
 
     var objectsFromSameMatrix = function(){
         return {
@@ -113,9 +118,7 @@
             controller: controller,
             controllerAs: 'matrix',
             scope: {
-                objects: '=objects',
-                item: '=item',
-                virtual: '=virtual'
+                copy: '=copy'
             },
             bindToController: true
         }
