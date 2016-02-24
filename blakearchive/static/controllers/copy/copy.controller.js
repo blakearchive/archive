@@ -4,12 +4,14 @@
 
 (function () {
 
-    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location) {
+    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location,$sessionStorage) {
 
         var vm = this;
 
         $rootScope.showSubMenu = 1;
-        console.log($routeParams);
+
+        vm.$storage = $sessionStorage;
+
         BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.objectId).then(function() {
                 vm.copy = BlakeDataService.selectedCopy;
                 if(!angular.isDefined($routeParams.objectId)){
@@ -27,14 +29,13 @@
                 }
         });
 
-
         vm.init = function(){
             vm.work = BlakeDataService.selectedWork;
             vm.setSimilarObjects(vm.copy.selectedObject.object_id);
-            if(vm.copy.objectsInCopy.length > 1){
+            /*if(vm.copy.objectsInCopy.length > 1){
                 vm.getPreviousNextObjects();
-            }
-            //$scope.$broadcast('global::objectChanged');
+            }*/
+            $rootScope.$broadcast('copyCtrl::objectChanged');
         }
 
         vm.setSimilarObjects = function(object_id){
@@ -51,52 +52,10 @@
             })
         }
 
-        vm.getOvpTitle = function(){
-            if(angular.isDefined(vm.copy)){
-                if(vm.copy.virtual == true){
-                    return vm.copy.selectedObject.title;
-                } else {
-                    var copyPhrase = vm.copy.archive_copy_id == null ? '' : ', Copy '+vm.copy.archive_copy_id;
-                    return vm.copy.header.filedesc.titlestmt.title['@reg']+copyPhrase;
-                }
-            }
-        }
-
-        vm.getOvpSubtitle = function(){
-            if(angular.isDefined(vm.copy)){
-                if(vm.copy.virtual == true){
-                    return 'Object '+vm.copy.selectedObject.object_number + vm.copy.selectedObject.full_object_id.replace(/object [\d]+/g,'');
-                } else {
-                    return vm.copy.selectedObject.full_object_id;
-                }
-            }
-        };
-
         vm.changeObject = function(object){
             vm.copy.selectedObject = object;
             $location.search('objectId',object.object_id);
             vm.init();
-        };
-
-        vm.getPreviousNextObjects = function () {
-            if (vm.copy.objectsInCopy && vm.copy.objectsInCopy.length) {
-                for (var i = vm.copy.objectsInCopy.length; i--;) {
-                    if (vm.copy.objectsInCopy[i].object_id == vm.copy.selectedObject.object_id) {
-                        // Extra code here to make the list circular
-                        if (i - 1 < 0) {
-                            vm.previousObject = vm.copy.objectsInCopy[vm.copy.objectsInCopy.length - 1];
-                        } else {
-                            vm.previousObject = vm.copy.objectsInCopy[i - 1];
-                        }
-                        if (i + 1 >= vm.copy.objectsInCopy.length) {
-                            vm.nextObject = vm.copy.objectsInCopy[0];
-                        } else {
-                            vm.nextObject = vm.copy.objectsInCopy[i + 1];
-                        }
-                        break;
-                    }
-                }
-            }
         };
 
         vm.trayOpen = false;
@@ -105,6 +64,7 @@
         vm.toggleTray = function(){
             vm.trayOpen = !vm.trayOpen;
         }
+
         vm.toggleTools = function(){
             vm.showTools = !vm.showTools;
             $scope.$broadcast('copyCtrl::toggleTools',{tools:vm.showTools});
@@ -113,7 +73,7 @@
     };
 
 
-    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location'];
+    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location','$sessionStorage'];
 
     angular.module('blake').controller('CopyController', controller);
 
