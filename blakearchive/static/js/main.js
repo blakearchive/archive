@@ -8,7 +8,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
 }]);
 
 
-angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage'])
+angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage'])
 
     .factory("GenericService", function () {
         return function (constructor) {
@@ -36,40 +36,96 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
          * @param config
          */
 
-        var parseObjectLines = function(object,array,type,colnum){
-            if(angular.isArray(object)) {
+        var parseObjectLines = function (object, array, type, colnum) {
+            if (angular.isArray(object)) {
                 angular.forEach(object, function (objectSet, lineKey) {
                     if (angular.isArray(objectSet.l)) {
                         angular.forEach(objectSet.l, function (v, k) {
                             var indent = angular.isDefined(v['@indent']) ? v['@indent'] : 0;
-                            array.push({'indent': indent, 'text': v['#text'], 'lineNum':v['@n'], 'justify': v['@justify'], 'type':type, 'colnum':colnum})
+                            array.push({
+                                'indent': indent,
+                                'text': v['#text'],
+                                'lineNum': v['@n'],
+                                'justify': v['@justify'],
+                                'type': type,
+                                'colnum': colnum
+                            })
                         });
                     } else {
                         var indent = angular.isDefined(objectSet.l['@indent']) ? objectSet.l['@indent'] : 0;
 
                         if (angular.isDefined(objectSet.l.physnumber)) {
-                            array.push({'indent': indent, 'text': objectSet.l.physnumber['#text'], 'lineNum': objectSet.l['@n'], 'justify': objectSet.l['@justify'], 'type':type, 'colnum':colnum});
-                        } else if (angular.isDefined(objectSet.l.catchword)){
-                            array.push({'indent': indent, 'text': objectSet.l.catchword['#text'], 'lineNum': objectSet.l['@n'], 'justify': objectSet.l['@justify'], 'type':type, 'colnum':colnum});
+                            array.push({
+                                'indent': indent,
+                                'text': objectSet.l.physnumber['#text'],
+                                'lineNum': objectSet.l['@n'],
+                                'justify': objectSet.l['@justify'],
+                                'type': type,
+                                'colnum': colnum
+                            });
+                        } else if (angular.isDefined(objectSet.l.catchword)) {
+                            array.push({
+                                'indent': indent,
+                                'text': objectSet.l.catchword['#text'],
+                                'lineNum': objectSet.l['@n'],
+                                'justify': objectSet.l['@justify'],
+                                'type': type,
+                                'colnum': colnum
+                            });
                         } else {
-                            array.push({'indent': indent, 'text': objectSet.l['#text'], 'lineNum': objectSet.l['@n'], 'justify': objectSet.l['@justify'], 'type':type, 'colnum':colnum});
+                            array.push({
+                                'indent': indent,
+                                'text': objectSet.l['#text'],
+                                'lineNum': objectSet.l['@n'],
+                                'justify': objectSet.l['@justify'],
+                                'type': type,
+                                'colnum': colnum
+                            });
                         }
                     }
                 });
-            } else if (angular.isArray(object.l)){
+            } else if (angular.isArray(object.l)) {
                 angular.forEach(object.l, function (v, k) {
                     var indent = angular.isDefined(v['@indent']) ? v['@indent'] : 0;
-                    array.push({'indent': indent, 'text': v['#text'], 'lineNum':v['@n'], 'justify': v['@justify'], 'type':type, 'colnum':colnum});
+                    array.push({
+                        'indent': indent,
+                        'text': v['#text'],
+                        'lineNum': v['@n'],
+                        'justify': v['@justify'],
+                        'type': type,
+                        'colnum': colnum
+                    });
                 });
             } else {
                 var indent = angular.isDefined(object.l['@indent']) ? object.l['@indent'] : 0;
 
                 if (angular.isDefined(object.l.physnumber)) {
-                    array.push({'indent': indent, 'text': object.l.physnumber['#text'], 'lineNum': object.l['@n'], 'justify': object.l['@justify'], 'type':type, 'colnum':colnum});
+                    array.push({
+                        'indent': indent,
+                        'text': object.l.physnumber['#text'],
+                        'lineNum': object.l['@n'],
+                        'justify': object.l['@justify'],
+                        'type': type,
+                        'colnum': colnum
+                    });
                 } else if (angular.isDefined(object.l.catchword)) {
-                    array.push({'indent': indent, 'text': object.l.catchword['#text'], 'lineNum': object.l['@n'], 'justify': object.l['@justify'], 'type':type, 'colnum':colnum});
+                    array.push({
+                        'indent': indent,
+                        'text': object.l.catchword['#text'],
+                        'lineNum': object.l['@n'],
+                        'justify': object.l['@justify'],
+                        'type': type,
+                        'colnum': colnum
+                    });
                 } else {
-                    array.push({'indent': indent, 'text': object.l['#text'], 'lineNum': object.l['@n'], 'justify': object.l['@justify'], 'type':type, 'colnum':colnum});
+                    array.push({
+                        'indent': indent,
+                        'text': object.l['#text'],
+                        'lineNum': object.l['@n'],
+                        'justify': object.l['@justify'],
+                        'type': type,
+                        'colnum': colnum
+                    });
                 }
             }
         };
@@ -77,46 +133,50 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
 
         var constructor = function (config) {
             var obj = angular.copy(config);
-            if(obj){
+            if (obj) {
                 obj.illustration_description = angular.fromJson(config.illustration_description);
                 obj.characteristics = angular.fromJson(config.characteristics);
                 obj.text = angular.fromJson(config.text);
                 obj.notes = angular.fromJson(config.notes);
                 obj.lines = [];
-                if(angular.isObject(obj.text)){
-                    if(angular.isDefined(obj.text.texthead)){
-                        parseObjectLines(obj.text.texthead,obj.lines,'header',0);
+                if (angular.isObject(obj.text)) {
+                    if (angular.isDefined(obj.text.texthead)) {
+                        parseObjectLines(obj.text.texthead, obj.lines, 'header', 0);
                     }
 
-                    if(angular.isDefined(obj.text.columns)){
+                    if (angular.isDefined(obj.text.columns)) {
                         var inc = 1;
-                        angular.forEach(obj.text.columns.column, function (v,k){
-                            if(angular.isDefined(v.texthead)){
-                                parseObjectLines(v.texthead,obj.lines,'header',inc);
+                        angular.forEach(obj.text.columns.column, function (v, k) {
+                            if (angular.isDefined(v.texthead)) {
+                                parseObjectLines(v.texthead, obj.lines, 'header', inc);
                             }
-                            if(angular.isDefined(v.lg)){
-                                parseObjectLines(v.lg,obj.lines,'body',inc);
+                            if (angular.isDefined(v.lg)) {
+                                parseObjectLines(v.lg, obj.lines, 'body', inc);
                             }
-                            if(angular.isDefined(v.textfoot)){
-                                parseObjectLines(v.textfoot,obj.lines,'footer',inc);
+                            if (angular.isDefined(v.textfoot)) {
+                                parseObjectLines(v.textfoot, obj.lines, 'footer', inc);
                             }
                             //obj.lines.columns.push({'num':inc,'column':columnArray});
                             inc++;
                         });
                     }
 
-                    if(angular.isDefined(obj.text.lg)){
-                        parseObjectLines(obj.text.lg,obj.lines,'body',0);
+                    if (angular.isDefined(obj.text.lg)) {
+                        parseObjectLines(obj.text.lg, obj.lines, 'body', 0);
                     }
 
-                    if(angular.isDefined(obj.text.textfoot)){
-                        parseObjectLines(obj.text.textfoot,obj.lines,inc);
+                    if (angular.isDefined(obj.text.textfoot)) {
+                        parseObjectLines(obj.text.textfoot, obj.lines, inc);
                     }
 
                 }
-                obj.lines.sort(function(a,b){
-                    if(a.lineNum > b.lineNum){return 1;}
-                    if(a.lineNum < b.lineNum){return -1;}
+                obj.lines.sort(function (a, b) {
+                    if (a.lineNum > b.lineNum) {
+                        return 1;
+                    }
+                    if (a.lineNum < b.lineNum) {
+                        return -1;
+                    }
                     return 0;
                 });
                 obj.header = angular.fromJson(config.header);
@@ -147,7 +207,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
              copy.objects.push(BlakeObject.create(config.objects[i]));
              }
              }*/
-            switch(copy.archive_copy_id){
+            switch (copy.archive_copy_id) {
                 case 'biblicalwc':
                 case 'biblicaltemperas':
                 case 'but543':
@@ -169,7 +229,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         return GenericService(constructor);
     }])
 
-    .factory("BlakeWork", ['BlakeCopy','GenericService', function (BlakeCopy, GenericService) {
+    .factory("BlakeWork", ['BlakeCopy', 'GenericService', function (BlakeCopy, GenericService) {
         /**
          * Constructor takes a config object and creates a BlakeWork, with child objects transformed into the
          * BlakeCopies.
@@ -187,17 +247,17 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
 
             //Create an alternative work title for virtual works
             work.menuTitle = work.title;
-            switch(work.bad_id){
+            switch (work.bad_id) {
                 case 'biblicalwc':
                     work.title = 'Water Color Drawings Illustrating the Bible';
                     work.virtual = true;
                     break;
                 case 'biblicaltemperas':
-                    work.title  = 'Paintings Illustrating the Bible';
+                    work.title = 'Paintings Illustrating the Bible';
                     work.virtual = true;
                     break;
                 case 'but543':
-                    work.title  = 'Illustrations to Milton\'s "On the Morning of Christ\'s Nativity"';
+                    work.title = 'Illustrations to Milton\'s "On the Morning of Christ\'s Nativity"';
                     work.virtual = true;
                     break;
                 case 'letters':
@@ -231,7 +291,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         return GenericService(constructor);
     }])
 
-    .factory("BlakeDataService", ['$http', '$q', '$rootScope', 'BlakeWork', 'BlakeCopy', 'BlakeObject', 'BlakeFeaturedWork','$localStorage', function ($http, $q, $rootScope, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork, $localStorage) {
+    .factory("BlakeDataService", ['$http', '$q', '$rootScope', 'BlakeWork', 'BlakeCopy', 'BlakeObject', 'BlakeFeaturedWork', '$localStorage', function ($http, $q, $rootScope, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork, $localStorage) {
         /**
          * For the time being, all data accessor functions should be placed here.  This service should mirror the API
          * of the back-end BlakeDataService.
@@ -245,37 +305,37 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
          clearComparisonObjects, isComparisonObject, comparisonObjects = [], hasObjectsWithSameMotif = false,
          hasObjectsFromSameMatrix = false, hasObjectsFromSameProductionSequence = false, objectSelectionChange;*/
 
-    /**
-     *
-     * @param config - The search configuration
-     * @param config.searchTitle - boolean, Perform a title search (both Object and Work)
-     * @param config.workTitleOffset - An optional offset to use for work title search results, for pagination
-     * @param config.searchWorkInformation - boolean, Perform a work information search
-     * @param config.workInformationOffset - An optional offset to use for work information search results, for pagination
-     * @param config.searchImageKeywords - boolean, Perform an image keyword search
-     * @param config.searchText - boolean, perform an object text search
-     * @param config.searchImageDescription - boolean, perform an image description search
-     * @param config.searchIlluminatedBooks - boolean, include this medium type in the query
-     * @param config.searchCommercialBookIllustrations - boolean, include this medium type in the query
-     * @param config.searchSeparatePrints - boolean, include this medium type in the query
-     * @param config.searchDrawingsPaintings - boolean, include this medium type in the query
-     * @param config.searchManuscripts - boolean, include this medium type in the query
-     * @param config.searchRelatedMaterials - boolean, include this medium type in the query
-     * @param config.minDate - number, the lower bound of date ranges to include
-     * @param config.maxDate - number, the upper bound of date ranges to include
-     * @returns {*}
-     */
+        /**
+         *
+         * @param config - The search configuration
+         * @param config.searchTitle - boolean, Perform a title search (both Object and Work)
+         * @param config.workTitleOffset - An optional offset to use for work title search results, for pagination
+         * @param config.searchWorkInformation - boolean, Perform a work information search
+         * @param config.workInformationOffset - An optional offset to use for work information search results, for pagination
+         * @param config.searchImageKeywords - boolean, Perform an image keyword search
+         * @param config.searchText - boolean, perform an object text search
+         * @param config.searchImageDescription - boolean, perform an image description search
+         * @param config.searchIlluminatedBooks - boolean, include this medium type in the query
+         * @param config.searchCommercialBookIllustrations - boolean, include this medium type in the query
+         * @param config.searchSeparatePrints - boolean, include this medium type in the query
+         * @param config.searchDrawingsPaintings - boolean, include this medium type in the query
+         * @param config.searchManuscripts - boolean, include this medium type in the query
+         * @param config.searchRelatedMaterials - boolean, include this medium type in the query
+         * @param config.minDate - number, the lower bound of date ranges to include
+         * @param config.maxDate - number, the upper bound of date ranges to include
+         * @returns {*}
+         */
 
-    dataFactory.query = function (config) {
-        var url = directoryPrefix + '/api/query';
-        return $q(function (resolve, reject) {
-            $http.post(url, config).success(function (data) {
-                resolve(data);
-            }).error(function (data, status) {
-                reject(data, status);
+        dataFactory.query = function (config) {
+            var url = directoryPrefix + '/api/query';
+            return $q(function (resolve, reject) {
+                $http.post(url, config).success(function (data) {
+                    resolve(data);
+                }).error(function (data, status) {
+                    reject(data, status);
+                });
             });
-        });
-    };
+        };
 
         dataFactory.getObject = function (objectId) {
             console.log('getting object');
@@ -307,7 +367,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             //console.log('getting motif');
             return $q(function (resolve, reject) {
                 $http.get(url).success(function (data) {
-                    if(angular.isDefined(data.results)){
+                    if (angular.isDefined(data.results)) {
                         resolve(BlakeObject.create(data.results));
                     }
                 }).error(function (data, status) {
@@ -322,7 +382,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             //console.log('getting matrix');
             return $q(function (resolve, reject) {
                 $http.get(url).success(function (data) {
-                    if(angular.isDefined(data.results)){
+                    if (angular.isDefined(data.results)) {
                         resolve(BlakeObject.create(data.results));
                     }
                 }).error(function (data, status) {
@@ -336,7 +396,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             var url = directoryPrefix + '/api/object/' + objectId + '/objects_from_same_production_sequence';
             return $q(function (resolve, reject) {
                 $http.get(url).success(function (data) {
-                    if(angular.isDefined(data.results)){
+                    if (angular.isDefined(data.results)) {
                         resolve(BlakeObject.create(data.results));
                     }
                 }).error(function (data, status) {
@@ -434,22 +494,22 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             return $q.all([
                 dataFactory.getWork(workId),
                 dataFactory.getCopiesForWork(workId),
-            ]).then(function(data){
+            ]).then(function (data) {
                 dataFactory.selectedWork = data[0];
                 dataFactory.selectedWork.copiesInWork = data[1];
                 console.log(dataFactory.selectedWork);
                 //dataFactory.selectedWorkCopies = data[1];
                 //console.log(dataFactory.selectedWorkCopies);
-            }).catch(function(){
+            }).catch(function () {
                 dataFactory.selectedWork = {};
             });
         };
 
         dataFactory.setWorkNoCopies = function (workId) {
             console.log('setting work no copies');
-            return dataFactory.getWork(workId).then(function(data){
+            return dataFactory.getWork(workId).then(function (data) {
                 dataFactory.selectedWork = data;
-            }).catch(function(){
+            }).catch(function () {
                 dataFactory.selectedWork = {};
             });
         };
@@ -459,15 +519,15 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             return $q.all([
                 dataFactory.getCopy(copyId),
                 dataFactory.getObjectsForCopy(copyId),
-            ]).then(function(data){
+            ]).then(function (data) {
                 dataFactory.selectedCopy = data[0];
                 dataFactory.selectedCopy.objectsInCopy = data[1];
                 console.log(dataFactory.selectedCopy);
 
                 //Programatically order objects if "copy" is a virtual group
-                if(dataFactory.selectedCopy.virtual){
+                if (dataFactory.selectedCopy.virtual) {
                     var inc = 1;
-                    data[1].forEach(function(obj){
+                    data[1].forEach(function (obj) {
                         obj.object_number = inc;
                         inc++;
                     });
@@ -528,21 +588,21 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
     }])
 
     .factory("FormatService", function () {
-        var cap = function(full_text) {
-            if(/\s+copy\s+/.test(full_text)) {
+        var cap = function (full_text) {
+            if (/\s+copy\s+/.test(full_text)) {
                 return full_text.replace(/copy/, 'Copy');
             }
             return false;
         };
 
         return {
-            cap: function() {
+            cap: function () {
                 return cap();
             }
         }
     })
 
-    .factory('WindowSize',['$window',function($window){
+    .factory('WindowSize', ['$window', function ($window) {
         var windowSize = {},
             w = angular.element($window);
 
@@ -551,7 +611,7 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
 
         return windowSize;
     }])
-    .directive('resize', ['$window', '$timeout', 'WindowSize', function($window, $timeout, WindowSize ) {
+    .directive('resize', ['$window', '$timeout', 'WindowSize', function ($window, $timeout, WindowSize) {
         return function (scope, element) {
             var w = angular.element($window);
             scope.getWindowDimensions = function () {
@@ -567,10 +627,10 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
                 $timeout.cancel(scope.resizing);
 
                 // Add a timeout to not call the resizing function every pixel
-                scope.resizing = $timeout( function() {
+                scope.resizing = $timeout(function () {
                     WindowSize.height = newValue.h;
                     WindowSize.width = newValue.w;
-                    scope.$broadcast('resize::resize', { height: WindowSize.height, width : WindowSize.width });
+                    scope.$broadcast('resize::resize', {height: WindowSize.height, width: WindowSize.width});
                 }, 300);
 
 
@@ -582,23 +642,23 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
         }
 
     }])
-    .directive('copyImage', ['WindowSize', '$rootScope', function(WindowSize){
-        var link = function(scope, element, attrs) {
+    .directive('copyImage', ['WindowSize', '$rootScope', function (WindowSize) {
+        var link = function (scope, element, attrs) {
 
-            scope.setStyles = function(windowSize){
+            scope.setStyles = function (windowSize) {
                 var newHeight = (windowSize.height - 270);
                 element.height(newHeight);
             }
 
-            element.on('load',function(){
+            element.on('load', function () {
                 scope.setStyles(WindowSize);
             })
 
-            scope.$on('resize::resize', function(e,w) {
+            scope.$on('resize::resize', function (e, w) {
                 scope.setStyles(w)
             });
-            scope.$on('copyCtrl::toggleTools',function(e,d){
-                var adjustment = d.tools == true ? -50 : 50 ;
+            scope.$on('copyCtrl::toggleTools', function (e, d) {
+                var adjustment = d.tools == true ? -50 : 50;
                 element.height(element.height() + adjustment);
             })
         };
@@ -607,32 +667,33 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             link: link
         };
     }])
-    .directive('comparisonImage', ['WindowSize', function(WindowSize){
-        var link = function(scope, element, attrs) {
+
+    .directive('comparisonImage', ['WindowSize', function (WindowSize) {
+        var link = function (scope, element, attrs) {
 
             var baseAdjustment = 270;
 
-            scope.setStyles = function(windowSize, adjustment){
+            scope.setStyles = function (windowSize, adjustment) {
                 var elementHeight = element.height(),
                     elementWidth = element.width(),
                     ratio = elementWidth / elementHeight,
                     newHeight = (windowSize.height - adjustment),
                     newWidth = Math.ceil(newHeight * ratio);
-                element.css('height',newHeight);
-                element.parent().css('width',newWidth);
+                element.css('height', newHeight);
+                element.parent().css('width', newWidth);
             }
 
-            element.on('load',function(){
-                scope.setStyles(WindowSize,baseAdjustment);
+            element.on('load', function () {
+                scope.setStyles(WindowSize, baseAdjustment);
             })
 
-            scope.$on('resize::resize', function(e,w) {
-                scope.setStyles(w,baseAdjustment)
+            scope.$on('resize::resize', function (e, w) {
+                scope.setStyles(w, baseAdjustment)
             });
 
-            scope.$on('compareCtrl::toggleTools',function(e,d){
-                var adjustment = d.tools == true ? baseAdjustment : baseAdjustment - 112 ;
-                scope.setStyles(WindowSize,adjustment)
+            scope.$on('compareCtrl::toggleTools', function (e, d) {
+                var adjustment = d.tools == true ? baseAdjustment : baseAdjustment - 112;
+                scope.setStyles(WindowSize, adjustment)
             })
 
         };
@@ -665,9 +726,9 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
      ***/
 
     .directive('parallax', function ($window) {
-        return function(scope, element, attrs) {
-            angular.element($window).bind("scroll", function() {
-                scope.$broadcast('scroll::scroll', {'offset':this.pageYOffset});
+        return function (scope, element, attrs) {
+            angular.element($window).bind("scroll", function () {
+                scope.$broadcast('scroll::scroll', {'offset': this.pageYOffset});
             });
         };
     })
@@ -704,10 +765,10 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             controllerAs: 'workCtrl'
         });
         /*$routeProvider.when(directoryPrefix + '/compare/', {
-            templateUrl: directoryPrefix + '/static/controllers/compare/compare.html',
-            controller: "CompareController",
-            controllerAs: 'compareCtrl'
-        });*/
+         templateUrl: directoryPrefix + '/static/controllers/compare/compare.html',
+         controller: "CompareController",
+         controllerAs: 'compareCtrl'
+         });*/
         $routeProvider.when(directoryPrefix + '/search/', {
             templateUrl: directoryPrefix + '/static/controllers/search/search.html',
             controller: "SearchController"
