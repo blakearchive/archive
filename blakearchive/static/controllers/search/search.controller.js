@@ -59,7 +59,7 @@
                    $scope.pagination[resultType].push(j);
                 }
             }
-        }
+        };
 
         $scope.paginate = function (resultType,page){
             switch(resultType){
@@ -89,13 +89,74 @@
             }
             console.log($scope.searchConfig);
             $scope.search();
-        }
+        };
 
         if ($routeParams.search) {
             $scope.searchConfig.searchString = $routeParams.search;
             $scope.search();
         }
 
+        $scope.populateWorkCopies = function (resultType, index) {
+            var copyBads = [];
+            var copyBadMap = {};
+
+            if ($scope.selectedObjectSearchWork[resultType] != index) {
+                $scope.results.object_results[resultType][index][2].forEach(function (copyResults) {
+                    if (typeof copyResults[0] === "string") {
+                        copyBads.push(copyResults[0]);
+                        // We're storing a map from bad_id to its results container to simplify updating the results
+                        // with retrieved copies.
+                        copyBadMap[copyResults[0]] = copyResults;
+                    }
+                });
+
+                if (copyBads.length > 0) {
+                    BlakeDataService.getCopies(copyBads).then(function (results) {
+                        results.forEach(function (result) {
+                            // Doing an in-place substitution of the bad_id with the relevant object
+                            copyBadMap[result.bad_id][0] = result;
+                        });
+                    });
+                }
+
+                $scope.selectedObjectSearchWork[resultType] = index;
+            } else {
+                delete $scope.selectedObjectSearchWork[resultType];
+            }
+        };
+
+        $scope.populateCopyObjects = function (resultType, workIndex, copyIndex) {
+            var objectIds = [];
+            var objectIdMap = {};
+
+            if ($scope.selectedObjectSearchCopy[resultType][workIndex] != copyIndex) {
+
+                $scope.results.object_results[resultType][workIndex][2][copyIndex][2].forEach(function (objResults) {
+                    if (typeof objResults[0] === "number") {
+                        objectIds.push(objResults[0]);
+                        // We're storing a map from bad_id to its results container to simplify updating the results
+                        // with retrieved copies.
+                        objectIdMap[objResults[0]] = objResults;
+                    }
+                });
+
+                if (objectIds.length > 0) {
+                    BlakeDataService.getObjects(objectIds).then(function (results) {
+                        results.forEach(function (result) {
+                            // Doing an in-place substitution of the bad_id with the relevant object
+                            objectIdMap[result.object_id][0] = result;
+                        });
+                    });
+                }
+
+                $scope.selectedObjectSearchCopy[resultType][workIndex] = copyIndex;
+            } else {
+                delete $scope.selectedObjectSearchCopy[resultType][workIndex];
+            }
+        };
+
+        $scope.selectedObjectSearchCopy = {};
+        $scope.selectedObjectSearchWork = {};
         $scope.showWorks = true;
         $scope.showCopies = true;
         $scope.showObjects = true;

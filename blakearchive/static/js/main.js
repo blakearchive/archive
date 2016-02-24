@@ -289,6 +289,17 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
             });
         };
 
+        dataFactory.getObjects = function (objectIds) {
+            console.log('getting objects');
+            var url = directoryPrefix + '/api/object/';
+            return $q(function (resolve, reject) {
+                $http.get(url, {params: {object_ids: objectIds.join()}}).success(function (data) {
+                    resolve(BlakeObject.create(data.results));
+                }).error(function (data, status) {
+                    reject(data, status);
+                })
+            });
+        };
 
         dataFactory.getObjectsWithSameMotif = function (objectId) {
             console.log('getting same motif');
@@ -343,6 +354,18 @@ angular.module('blake',['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap
                 }).error(function (data, status) {
                     reject(data, status);
                 })
+            });
+        };
+
+        dataFactory.getCopies = function (copyIds) {
+            console.log('getting copies');
+            var url = directoryPrefix + '/api/copy/';
+            return $q(function (resolve, reject) {
+                $http.get(url, {params: {bad_ids: copyIds.join()}}).success(function (data) {
+                    resolve(BlakeCopy.create(data.results));
+                }).error(function (data, status) {
+                    reject(data, status);
+                });
             });
         };
 

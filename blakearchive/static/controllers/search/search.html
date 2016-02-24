@@ -9,20 +9,25 @@
                     <form ng-submit="search()">
                         <div class="form-group">
                             <label for="searchString">Search Term:</label>
-                            <input type="text" class="form-control" id="searchString" placeholder="Search the Blake Archive" ng-model="searchConfig.searchString">
+                            <input type="text" class="form-control" id="searchString"
+                                   placeholder="Search the Blake Archive" ng-model="searchConfig.searchString">
                         </div>
                         <div class="form-group">
                             <h3>Restrict date range:</h3>
 
-                            <div range-slider min="1772" max="1827" show-values="true" model-min="searchConfig.minDate" model-max="searchConfig.maxDate"></div>
+                            <div range-slider min="1772" max="1827" show-values="true" model-min="searchConfig.minDate"
+                                 model-max="searchConfig.maxDate"></div>
                             <ul class="list-inline">
-                                <li style="padding-bottom: 10px"><input type="checkbox" ng-model="searchConfig.useCompDate">Composition date
+                                <li style="padding-bottom: 10px"><input type="checkbox"
+                                                                        ng-model="searchConfig.useCompDate">Composition
+                                    date
                                 </li>
                                 <li><input type="checkbox" ng-model="searchConfig.usePrintDate">Printing date</li>
                             </ul>
                         </div>
                         <div class="form-group">
                             <label>Search Type</label>
+
                             <div class="checkbox">
                                 <input type="checkbox" ng-model="searchConfig.searchTitle"> Title
                             </div>
@@ -36,7 +41,8 @@
                                 <input type="checkbox" ng-model="searchConfig.searchNotes"> Editors' notes
                             </div>
                             <div class="checkbox">
-                                <input type="checkbox" ng-model="searchConfig.searchImageDescriptions"> Illustration descriptions
+                                <input type="checkbox" ng-model="searchConfig.searchImageDescriptions"> Illustration
+                                descriptions
                             </div>
                             <div class="checkbox">
                                 <input type="checkbox" ng-model="searchConfig.searchWorkInformation"> Work information
@@ -44,20 +50,24 @@
                         </div>
                         <div class="form-group">
                             <label>Search Medium</label>
+
                             <div class="checkbox">
                                 <input type="checkbox" ng-model="searchConfig.searchIlluminatedBooks"> Illuminated books
                             </div>
                             <div class="checkbox">
-                                <input type="checkbox" ng-model="searchConfig.searchCommercialBookIllustrations"> Commercial book illustrations
+                                <input type="checkbox" ng-model="searchConfig.searchCommercialBookIllustrations">
+                                Commercial book illustrations
                             </div>
                             <div class="checkbox">
                                 <input type="checkbox" ng-model="searchConfig.searchSeparatePrints"> Separate prints
                             </div>
                             <div class="checkbox">
-                                <input type="checkbox" ng-model="searchConfig.searchDrawingsPaintings"> Drawings and paintings
+                                <input type="checkbox" ng-model="searchConfig.searchDrawingsPaintings"> Drawings and
+                                paintings
                             </div>
                             <div class="checkbox">
-                                <input type="checkbox" ng-model="searchConfig.searchManuscripts"> Manuscripts and typographic editions
+                                <input type="checkbox" ng-model="searchConfig.searchManuscripts"> Manuscripts and
+                                typographic editions
                             </div>
                             <div class="checkbox">
                                 <input type="checkbox" ng-model="searchConfig.searchRelatedMaterials"> Related materials
@@ -76,14 +86,19 @@
                 <!-- OBJECT TITLE RESULTS -->
                 <div ng-show="searchConfig.searchTitle == true">
                     <h3>Objects with a matching title ({{ results.object_results.title.length}} works)</h3>
+
                     <div ng-show="results.object_results.title.length == 0">
                         No results found
                     </div>
                     <div class="row" ng-show="results.object_results.title.length > 0">
                         <ul class="list-unstyled">
-                            <li ng-repeat="work in results.object_results.title" class="col-sm-12 col-md-4 handprint-block">
-                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
-                                <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
+                            <li ng-repeat="work in results.object_results.title"
+                                class="col-sm-12 col-md-4 handprint-block">
+                                <a ng-click="populateWorkCopies('title', $index)">
+                                    <span class="object-img"
+                                          style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
+                                    <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -100,15 +115,20 @@
                 <!-- OBJECT TEXT RESULTS -->
                 <div ng-show="searchConfig.searchText == true">
                     <h3>Objects with matching text ({{ results.object_results.text.length}} works)</h3>
+
                     <div ng-show="results.object_results.text.length == 0">
                         No results found
                     </div>
 
                     <div class="row" ng-show="results.object_results.text.length > 0">
                         <ul class="list-unstyled">
-                            <li ng-repeat="work in results.object_results.text" class="col-sm-12 col-md-4 handprint-block">
-                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
-                                <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
+                            <li ng-repeat="work in results.object_results.text"
+                                class="col-sm-12 col-md-4 handprint-block">
+                                <a ng-click="populateWorkCopies('text', $index)">
+                                    <span class="object-img"
+                                          style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
+                                    <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -125,15 +145,20 @@
                 <!-- OBJECT IMG TAG RESULTS -->
                 <div ng-show="searchConfig.searchImageKeywords == true">
                     <h3>Objects with a matching image tag ({{ results.object_results.tag.length}} works)</h3>
+
                     <div ng-show="results.object_results.tag.length == 0">
                         No results found
                     </div>
 
                     <div class="row" ng-show="results.object_results.tag.length > 0">
                         <ul class="list-unstyled">
-                            <li ng-repeat="work in results.object_results.tag" class="col-sm-12 col-md-4 handprint-block">
-                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
-                                <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
+                            <li ng-repeat="work in results.object_results.tag"
+                                class="col-sm-12 col-md-4 handprint-block">
+                                <a ng-click="populateWorkCopies('tag', $index)">
+                                    <span class="object-img"
+                                          style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
+                                    <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -150,15 +175,20 @@
                 <!-- OBJECT EDITOR NOTES -->
                 <div ng-show="searchConfig.searchNotes == true">
                     <h3>Objects with matching editors' notes ({{ results.object_results.notes.length}} works)</h3>
+
                     <div ng-show="results.object_results.notes.length == 0">
                         No Results Found
                     </div>
 
                     <div class="row" ng-show="results.object_results.notes.length > 0">
                         <ul class="list-unstyled">
-                            <li ng-repeat="work in results.object_results.notes" class="col-sm-12 col-md-4 handprint-block">
-                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
-                                <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
+                            <li ng-repeat="work in results.object_results.notes"
+                                class="col-sm-12 col-md-4 handprint-block">
+                                <a ng-click="populateWorkCopies('notes', $index)">
+                                    <span class="object-img"
+                                          style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
+                                    <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -174,16 +204,22 @@
 
                 <!-- OBJECT ILLUSTRATION DESCRIPTIONS -->
                 <div ng-show="searchConfig.searchImageDescriptions == true">
-                    <h3>Objects with a matching illustration description ({{ results.object_results.description.length}} works)</h3>
+                    <h3>Objects with a matching illustration description ({{ results.object_results.description.length}}
+                        works)</h3>
+
                     <div ng-show="results.object_results.description.length == 0">
                         No Results Found
                     </div>
 
                     <div class="row" ng-show="results.object_results.description.length > 0">
                         <ul class="list-unstyled">
-                            <li ng-repeat="work in results.object_results.description" class="col-sm-12 col-md-4 handprint-block">
-                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
-                                <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
+                            <li ng-repeat="work in results.object_results.description"
+                                class="col-sm-12 col-md-4 handprint-block">
+                                <a ng-click="populateWorkCopies('description', $index)">
+                                    <span class="object-img"
+                                          style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[0].image }}.100.jpg);"></span>
+                                    <span class="description"><strong>{{ work[0].title }}</strong> ({{ work[1] }} results)</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -200,14 +236,17 @@
                 <!-- WORK TITLE -->
                 <div ng-show="searchConfig.searchTitle == true">
                     <h3>Works with a matching title ({{ results.work_results.title.count}} results)</h3>
-                    <div ng-show="workResultsMatchingFilter('title').length == 0">
+
+                    <div ng-show="results.work_results.title.count == 0">
                         No Results Found
                     </div>
-                    <div class="row" ng-show="workResultsMatchingFilter('title').length > 0">
+                    <div class="row" ng-show="results.work_results.title.count > 0">
                         <ul class="list-unstyled">
-                            <li ng-repeat="work in workResultsMatchingFilter('title')" class="col-sm-6 col-md-3 handprint-block">
+                            <li ng-repeat="work in results.work_results.title.results"
+                                class="col-sm-6 col-md-3 handprint-block">
                                 <a href="/blake/work/{{ work.bad_id }}">
-                                    <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work.image }}.100.jpg);"></span>
+                                    <span class="object-img"
+                                          style="background-image: url(http://www.blakearchive.org/blake/images/{{ work.image }}.100.jpg);"></span>
                                     <span class="description"><strong>{{ work.title }}</strong></span>
                                 </a>
                             </li>
@@ -215,7 +254,8 @@
                     </div>
                     <nav>
                         <ul class="pagination">
-                            <li ng-repeat="i in pagination.worktitle" ng-class="{'active': (searchConfig.workTitleOffset + 10) / 10 == i }">
+                            <li ng-repeat="i in pagination.worktitle"
+                                ng-class="{'active': (searchConfig.workTitleOffset + 10) / 10 == i }">
                                 <a ng-click="paginate('worktitle',i)">{{i}}</a>
                             </li>
                         </ul>
@@ -224,16 +264,20 @@
 
                 <!-- WORK INFO -->
                 <div ng-show="searchConfig.searchWorkInformation == true">
-                    <h3>Works with matching work information or notes ({{ results.work_results.info.count}} results)</h3>
-                    <div ng-show="workResultsMatchingFilter('info').length == 0">
+                    <h3>Works with matching work information or notes ({{ results.work_results.info.count}}
+                        results)</h3>
+
+                    <div ng-show="results.work_results.info.count == 0">
                         No Results Found
                     </div>
 
-                    <div class="row" ng-show="workResultsMatchingFilter('info').length > 0">
+                    <div class="row" ng-show="results.work_results.info.count > 0">
                         <ul class="list-unstyled">
-                            <li ng-repeat="work in workResultsMatchingFilter('info')" class="col-sm-6 col-md-3 handprint-block">
+                            <li ng-repeat="work in results.work_results.title.results"
+                                class="col-sm-6 col-md-3 handprint-block">
                                 <a href="/blake/work/{{ work.bad_id }}">
-                                    <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work.image }}.100.jpg);"></span>
+                                    <span class="object-img"
+                                          style="background-image: url(http://www.blakearchive.org/blake/images/{{ work.image }}.100.jpg);"></span>
                                     <span class="description"><strong>{{ work.title }}</strong></span>
                                 </a>
                             </li>
@@ -241,7 +285,8 @@
                     </div>
                     <nav>
                         <ul class="pagination">
-                            <li ng-repeat="i in pagination.workinfo" ng-class="{'active': (searchConfig.workInformationOffset + 10) / 10 == i }">
+                            <li ng-repeat="i in pagination.workinfo"
+                                ng-class="{'active': (searchConfig.workInformationOffset + 10) / 10 == i }">
                                 <a ng-click="paginate('workinfo',i)">{{i}}</a>
                             </li>
                         </ul>
