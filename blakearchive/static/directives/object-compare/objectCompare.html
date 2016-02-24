@@ -1,0 +1,16 @@
+
+<!-- compare -->
+<div id="compare" class="scrollbar">
+<!--<div id="compare" class="scrollbar" style="height: {{compare.viewerHeight}}px">-->
+    <div class="featured-object">
+        <div class="compare-inner" ng-sortable="{ group: 'o', animation: 150 }">
+            <div class="item" ng-repeat="o in compare.$storage.comparisonObjects">
+                <p class="object-title">{{ o.title }}, Copy {{ o.archive_copy_id }}</p>
+                <img ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" copy-image>
+                <p class="object-subtitle">{{ o.copy_composition_date }} ({{ o.copy_institution }}) {{ o.full_object_id }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/.compare-->

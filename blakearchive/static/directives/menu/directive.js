@@ -1,6 +1,6 @@
 (function(){
 
-    var controller = function($scope,BlakeDataService,$localStorage){
+    var controller = function($scope,BlakeDataService,$sessionStorage){
 
         var vm = this;
 
@@ -10,13 +10,12 @@
 
             $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
         });
-        //$localStorage.$reset();
-        if(angular.isUndefined($localStorage.menus)){
+        if(angular.isUndefined($sessionStorage.menus)){
             BlakeDataService.getWorks().then(function (data) {
                 vm.organizeMenus(data);
             });
         } else {
-            vm.lists = $localStorage.menus;
+            vm.lists = $sessionStorage.menus;
         }
 
         var category = function(item) {
@@ -124,16 +123,15 @@
                     }
                 }
             });
-            console.log(menus);
 
             vm.lists = menus;
-            //$localStorage.menus = menus;
+            $sessionStorage.menus = menus;
         }
 
 
     }
 
-    controller.$inject = ['$scope','BlakeDataService','$localStorage'];
+    controller.$inject = ['$scope','BlakeDataService','$sessionStorage'];
 
     var navMenu = function() {
         return {
