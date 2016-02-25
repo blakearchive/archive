@@ -1,17 +1,13 @@
 <!-- William Blake Archive transcription.xsl Last Modified 2005-03-20 Aziza Technology Associates,LLC
 transforms transcriptions
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exist="http://exist.sourceforge.net/NS/exist" xmlns:xalan="http://xml.apache.org/xalan" version="1.0">
-    <xsl:include href="includes.xsl"/>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0">
+    <!--<xsl:include href="includes.xsl"/>-->
     <xsl:include href="wba_ms_test.xsl"/>
     <xsl:template match="/">
-        <html>
-            <xsl:call-template name="htmlhead"/>
-            <body>
-                <xsl:apply-templates select="//body"/>
-                <xsl:call-template name="datestamp"/>
-            </body>
-        </html>
+        <div>
+            <xsl:apply-templates/>
+        </div>
     </xsl:template>
     <xsl:template match="@*|node()">
         <xsl:copy>
@@ -21,20 +17,8 @@ transforms transcriptions
     <xsl:template match="lb">
         <br/>
     </xsl:template>
-    <xsl:template match="phystext">
-        <center>
-            <table width="90%" border="0">
-                <TR>
-                    <TD align="center">
-                        <xsl:apply-templates/>
-                    </TD>
-                </TR>
-            </table>
-        </center>
-        <p>&#160;</p>
-    </xsl:template>
     <xsl:template match="columns">
-        <table border="0" width="90%">
+        <table class="tei-columns-table">
             <tr>
                 <xsl:apply-templates/>
             </tr>
@@ -44,9 +28,10 @@ transforms transcriptions
         <xsl:variable name="colwidth">
             <xsl:value-of select="round(100 div count(../column))"/>
         </xsl:variable>
-        <td valign="top">
+        <td class="tei-columns-table-data"> <!-- valign="top" -->
             <xsl:attribute name="width">
-                <xsl:value-of select="$colwidth"/>%</xsl:attribute>
+                <xsl:value-of select="$colwidth"/>%
+            </xsl:attribute>
             <xsl:apply-templates/>
         </td>
     </xsl:template>
@@ -62,8 +47,8 @@ transforms transcriptions
         <xsl:copy-of select="."/>
     </xsl:template>
     <xsl:template match="vspace">
-        <div>
-            <xsl:attribute name="style">font-size:15pt;padding-bottom:<xsl:value-of select="@extent"/>em</xsl:attribute>
+        <div class="tei-vspace"> <!-- font-size: 15pt -->
+            <xsl:attribute name="style">padding-bottom:<xsl:value-of select="@extent"/>em</xsl:attribute>
         </div>
     </xsl:template>
     <xsl:template match="linespan"/>
@@ -73,20 +58,21 @@ transforms transcriptions
                 <xsl:value-of select="last()"/>
             </xsl:for-each>
         </xsl:param>
-        <!-- p><b><xsl:value-of select="$colnum"/></b></p -->
         <xsl:choose>
             <xsl:when test="ancestor::columns">
                 <xsl:choose>
                     <xsl:when test="$colnum='333'">
-                        <table width="266">
-                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/>
+                        <table class="tei-table-extra-small"><!-- width="266" -->
+                            <xsl:attribute name="style">text-align:
+                                <xsl:value-of select="@justify"/>
                             </xsl:attribute>
                             <xsl:apply-templates/>
                         </table>
                     </xsl:when>
                     <xsl:otherwise>
-                        <table width="360">
-                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/>
+                        <table class="tei-table-small"> <!-- width="360" -->
+                            <xsl:attribute name="style">text-align:
+                                <xsl:value-of select="@justify"/>
                             </xsl:attribute>
                             <xsl:apply-templates/>
                         </table>
@@ -100,14 +86,16 @@ transforms transcriptions
                             <xsl:attribute name="width">
                                 <xsl:value-of select="substring-after(@rend, 'width:')"/>
                             </xsl:attribute>
-                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/>
+                            <xsl:attribute name="style">text-align:
+                                <xsl:value-of select="@justify"/>
                             </xsl:attribute>
                             <xsl:apply-templates/>
                         </table>
                     </xsl:when>
                     <xsl:otherwise>
-                        <table width="850">
-                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/>;</xsl:attribute>
+                        <table class="tei-table"> <!-- width="850" -->
+                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/>;
+                            </xsl:attribute>
                             <xsl:apply-templates/>
                         </table>
                     </xsl:otherwise>
@@ -121,20 +109,21 @@ transforms transcriptions
                 <xsl:value-of select="last()"/>
             </xsl:for-each>
         </xsl:param>
-  <!-- p><b><xsl:value-of select="$colnum"/></b></p -->
         <xsl:choose>
             <xsl:when test="ancestor::columns">
                 <xsl:choose>
                     <xsl:when test="$colnum='333'">
-                        <table width="266">
-                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/>
+                        <table class="tei-table-extra-small">
+                            <xsl:attribute name="style">text-align:
+                                <xsl:value-of select="@justify"/>
                             </xsl:attribute>
                             <xsl:apply-templates/>
                         </table>
                     </xsl:when>
                     <xsl:otherwise>
-                        <table width="360">
-                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/>
+                        <table class="tei-table-small">
+                            <xsl:attribute name="style">text-align:
+                                <xsl:value-of select="@justify"/>
                             </xsl:attribute>
                             <xsl:apply-templates/>
                         </table>
@@ -148,14 +137,16 @@ transforms transcriptions
                             <xsl:attribute name="width">
                                 <xsl:value-of select="substring-after(@rend, 'width:')"/>
                             </xsl:attribute>
-                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/>
+                            <xsl:attribute name="style">text-align:
+                                <xsl:value-of select="@justify"/>
                             </xsl:attribute>
                             <xsl:apply-templates/>
                         </table>
                     </xsl:when>
                     <xsl:otherwise>
-                        <table width="850">
-                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/>;</xsl:attribute>
+                        <table class="tei-table">
+                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/>;
+                            </xsl:attribute>
                             <xsl:apply-templates/>
                         </table>
                     </xsl:otherwise>
@@ -168,20 +159,18 @@ transforms transcriptions
             <xsl:value-of select="local-name(..)"/>
         </xsl:variable>
         <xsl:choose>
-	<!-- This is pretty bad practice.  We need a better way to deal with this problem in notes... no guarantee that we'll always use
-	   the HTML rendering tag b for note formatting. -->
+            <!-- This is pretty bad practice.  We need a better way to deal with this problem in notes... no guarantee that we'll always use
+               the HTML rendering tag b for note formatting. -->
             <xsl:when test="$parentType = 'b' or $parentType = 'note'">
                 <xsl:value-of select="."/>
             </xsl:when>
             <xsl:when test="preceding::substSpan/@spanto=following::anchor/@xml:id">
-                <span style="background-color:#ffff99;">
-                    <span style="text-decoration:line-through;">
-                        <xsl:value-of select="."/>
-                    </span>
+                <span class="tei-preceding-delspan-substspan"> <!-- background-color:#ffff99; text-decoration:line-through; -->
+                    <xsl:value-of select="."/>
                 </span>
             </xsl:when>
             <xsl:otherwise>
-                <span style="text-decoration:line-through;">
+                <span class="tei-preceding-delspan">
                     <xsl:value-of select="."/>
                 </span>
             </xsl:otherwise>
@@ -196,55 +185,34 @@ transforms transcriptions
                 <xsl:value-of select="."/>
             </xsl:when>
             <xsl:when test="preceding::substSpan/@spanto=following::anchor/@xml:id">
-                <span style="background-color:#ffff99">
-                    <font color="#00ccff">
-                        <xsl:value-of select="."/>
-                    </font>
+                <span class="tei-preceding-addspan-substspan"> <!-- style="color: #00ccff; background-color:#ffff99" -->
+                    <xsl:value-of select="."/>
                 </span>
             </xsl:when>
             <xsl:otherwise>
-                <font color="#00ccff">
+                <span class="tei-preceding-addspan"><!-- color="#00ccff" -->
                     <xsl:value-of select="."/>
-                </font>
+                </span>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
-<!--
-<xsl:template match="anchor">
-[ anchor <xsl:value-of select="@xml:id"/> ] 
-</xsl:template>
-
-<xsl:template match="addSpan">
-[ addSpan <xsl:value-of select="@spanto"/> ]
-</xsl:template>
-
-<xsl:template match="substSpan">
-[ substSpan <xsl:value-of select="@spanto"/> ]
-</xsl:template>
-
-<xsl:template match="delSpan">
-[ delSpan <xsl:value-of select="@spanto"/> ]
-</xsl:template>
--->
     <xsl:template match="l">
         <tr>
-            <td width="5%" style="font-family:Times New Roman;font-size:8pt;color:gray;">
+            <td class="tei-line-number"> <!-- "width: 5%; font-family:Times New Roman;font-size:8pt;color:gray;" -->
                 <xsl:choose>
                     <xsl:when test="not(contains(@n, 'XX'))">
-                        <xsl:value-of select="xalan:tokenize(@n, '.')[position() = last()]"/>
+                        <xsl:value-of select="number(substring(@n, string-length(@n) - 1))"/>
                     </xsl:when>
                     <xsl:otherwise>
-&#160;
-</xsl:otherwise>
+                        &#160;
+                    </xsl:otherwise>
                 </xsl:choose>
             </td>
-            <td width="5%">
+            <td class="tei-line-note"> <!-- width: 5% -->
                 <xsl:apply-templates select="note"/>
             </td>
-            <td>
-                <xsl:attribute name="width">90%</xsl:attribute>
-                <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/>;font-family:Times New Roman;font-size:12pt</xsl:attribute>
+            <td class="tei-line-text"> <!-- width: 90%; font-family:Times New Roman; font-size:12pt -->
+                <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/></xsl:attribute>
                 <span>
                     <xsl:choose>
                         <xsl:when test="@justify ='left'">
@@ -262,8 +230,9 @@ transforms transcriptions
                         </xsl:when>
                         <xsl:otherwise/>
                     </xsl:choose>
-<!-- excludes note from display -->
-                    <xsl:apply-templates select="vspace|space|physnumber|text()|foreign|hi|catchword|exist:match|add|del|subst|choose|sic|corr|hspace|orig|rep|instr|unclear|hr|choice|gap"/>
+                    <!-- excludes note from display -->
+                    <xsl:apply-templates
+                            select="vspace|space|physnumber|text()|foreign|hi|catchword|exist:match|add|del|subst|choose|sic|corr|hspace|orig|rep|instr|unclear|hr|choice|gap"/>
                 </span>
             </td>
         </tr>
@@ -281,9 +250,15 @@ transforms transcriptions
         <xsl:apply-templates/>
     </xsl:template>
     <xsl:template match="note">
-        <a>
-            <xsl:attribute name="href">javascript:START('<xsl:value-of select="$blakeroot"/>archive/editornotes.xq?objectid=<xsl:value-of select="/document/@objectid"/>&amp;lineno=<xsl:value-of select="xalan:tokenize(ancestor::l/@n, '.')[position() = last()]"/>', 
-'ednote')</xsl:attribute>n</a>
+        <!-- Probably going to need to review this in the future to enable editor's notes -->
+        <!--<a>-->
+            <!--<xsl:attribute name="href">javascript:START('<xsl:value-of select="$blakeroot"/>-->
+                <!--archive/editornotes.xq?objectid=<xsl:value-of select="/document/@objectid"/>&amp;lineno=<xsl:value-of-->
+                        <!--select="xalan:tokenize(ancestor::l/@n, '.')[position() = last()]"/>',-->
+                <!--'ednote')-->
+            <!--</xsl:attribute>-->
+            <!--n-->
+        <!--</a>-->
     </xsl:template>
     <xsl:template match="p">
         <p>
@@ -298,31 +273,13 @@ transforms transcriptions
     <xsl:template name="spacemaker">
         <xsl:param name="spaces"/>
         <xsl:choose>
-            <xsl:when test="$spaces &gt; 0">&#160;<xsl:call-template name="spacemaker">
+            <xsl:when test="$spaces &gt; 0">&#160;
+                <xsl:call-template name="spacemaker">
                     <xsl:with-param name="spaces" select="$spaces -1"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
-      </xsl:otherwise>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-</xsl:stylesheet><!-- Stylus Studio meta-information - (c)1998-2004. Sonic Software Corporation. All rights reserved.
-<metaInformation>
-<scenarios/><MapperMetaTag><MapperInfo srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/><MapperBlockPosition></MapperBlockPosition></MapperMetaTag>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</metaInformation>
--->
+</xsl:stylesheet>

@@ -46,6 +46,16 @@ class BlakeDocumentImporter(object):
                 all_but_current_id = matching_ids_set ^ set([matching_id])
                 self.motif_relationships_expanded[matching_id].update(all_but_current_id)
         xslt_xml = etree.parse(open("static/xslt/transcription.xsl"))
+
+        # We need to define a custom token fuction here to replace the functionality provided by xalan
+        def custom_tokenize(context, string, split_token):
+            if type(string) is list:
+                string = string[0]
+            return string.split(split_token)
+
+        ns = etree.FunctionNamespace(None)
+        ns['custom_tokenize'] = custom_tokenize
+
         self.transform = etree.XSLT(xslt_xml)
 
     def process_info_file(self, document):
@@ -62,6 +72,7 @@ class BlakeDocumentImporter(object):
                 title = {"text": "".join(i.xpath("string()").encode("utf-8").strip() for i in rel.xpath("i"))}
             result = {"title": title, "info": "<br />".join(rt.encode("utf-8").strip() for rt in rel_text)}
             return result
+
         root = etree.parse(document).getroot()
         document_name = os.path.split(document)[1]
         self.work_info_map[document_name] = [transform_relationship(r) for r in root.xpath("./related/relationship")]
@@ -85,7 +96,8 @@ class BlakeDocumentImporter(object):
             self.works.append(work)
             if int(virtual) == 1:
                 # Virtual works need to have a special copy created just for them
-                objects = list(itertools.chain.from_iterable(self.copies[copy_id].objects for copy_id in virtual_objects.split(",")))
+                objects = list(itertools.chain.from_iterable(
+                    self.copies[copy_id].objects for copy_id in virtual_objects.split(",")))
                 virtual_work_copy = models.BlakeCopy(work_id=bad_id, title=title.encode('utf-8'), image=cover_image,
                                                      bad_id=bad_id, archive_copy_id=bad_id,
                                                      composition_date=composition_date,
@@ -146,6 +158,8 @@ class BlakeDocumentImporter(object):
         bo.notes = [note.xpath("string()") for note in obj.xpath("//note")]
         for phystext in obj.xpath("phystext"):
             bo.text = element_to_dict(phystext)["phystext"]
+            bo.markup_text = str(self.transform(phystext))
+            # print etree.tostring(phystext, pretty_print=True)
             break
         for objid in obj.xpath("objtitle/objid"):
             bo.full_object_id = objid.xpath("string()").encode("utf-8")
@@ -166,7 +180,6 @@ class BlakeDocumentImporter(object):
             bo.title = title.xpath("string()").encode("utf-8")
             break
         bo.physical_description = element_to_dict(obj.xpath("physdesc")[0])["physdesc"]
-        bo.markup_text = str(self.transform(obj))
         return bo
 
     def process(self, document):
