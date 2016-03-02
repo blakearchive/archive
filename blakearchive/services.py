@@ -122,15 +122,15 @@ class BlakeDataService(object):
                 results["notes"] = search(search_string)
             return results
 
-        def add_object_query_works(results):
-            works = {w.bad_id: w for w in cls.get_works([r[0] for r in results])}
-            return [[works[w].to_dict, c, r] for (w, c, r) in results]
+        # def add_object_query_works(results):
+            # works = {w.bad_id: w for w in cls.get_works([r[0] for r in results])}
+            # return [[works[w].to_dict, c, r] for (w, c, r) in results]
 
         # updated search
-        obj_results = {k: add_object_query_works(v) for (k, v) in object_query(config).items()}
-        work_results = work_query(config)
+        # obj_results = {k: add_object_query_works(v) for (k, v) in object_query(config).items()}
+        # work_results = work_query(config)
         # We will probably have to knit together results from several queries
-        return {"object_results": obj_results, "work_results": work_results}
+        # return {"object_results": obj_results, "work_results": work_results}
 
     @classmethod
     def get_objects(cls, object_ids=None):
