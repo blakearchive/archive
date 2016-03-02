@@ -25,8 +25,8 @@ namespace :deploy do
         on roles(:app) do |h|
             info 'Symlinking solr schema files'
 
-            execute :ln, '-nfs', "#{current_path}/blake-object/schema.xml","/data/solr/data/blake_object/schema.xml"
-            execute :ln, '-nfs', "#{current_path}/blake-work/schema.xml","/data/solr/data/blake_work/schema.xml"
+            # execute :ln, '-nfs', "#{current_path}/blake-object/schema.xml","/data/solr/data/blake_object/schema.xml"
+            # execute :ln, '-nfs', "#{current_path}/blake-work/schema.xml","/data/solr/data/blake_work/schema.xml"
 
         end
     end
