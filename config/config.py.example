@@ -1,0 +1,4 @@
+app_secret_key = ""
+db_connection_string = 'postgresql://[username]:[password]@[host]/[dbname]'
+production = False
+solr = 'local'
