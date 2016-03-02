@@ -1,3 +1,8 @@
+set :stage, :prod
+
+server 'london.lib.unc.edu', roles: [:app], user: 'swallow', group: 'webadmin'
+
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
