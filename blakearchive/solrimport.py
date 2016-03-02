@@ -15,6 +15,9 @@ def main():
     elif hasattr(config, "solr") and config.solr == "lib_dev":
         blake_object_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-object')
         blake_work_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-work')
+    elif hasattr(config,"solr") and config.solr == "local":
+        blake_object_solr = pysolr.Solr('http://localhost:8983/solr/blake_object')
+        blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake_work')
     else:
         blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-object')
         blake_work_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-work')
@@ -39,6 +42,7 @@ def main():
             # FIXME: properly convert unicode rather than stripping characters
             "notes": json.dumps([unicodedata.normalize('NFKD', note).encode('ascii', 'ignore') for note in blake_object.notes])
         }
+        print obj["id"]
         if blake_object.copy.work:
             obj["work_title"] = blake_object.copy.work.title
             obj["work_id"] = blake_object.copy.work.bad_id
