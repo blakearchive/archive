@@ -7,4 +7,4 @@ server 'localhost', roles: [:local], user: 'yourusername', group: 'webadmin', no
 set :solr_path, 'path/to/your/solr/server'
 
 # set path to your code base
-set :code_path, path/to/your/code'
+set :code_path, 'path/to/your/code'

@@ -2,7 +2,7 @@
 
 ### Setup (for MAC)
 
-#### Setting up postgres
+#### Postgres
 1. Install [Postgresql](http://postgresapp.com/)
 2. Start the postgres service
     * Find and click the "Postgres" Elephant icon in you applications, then click "open psql"
@@ -11,7 +11,7 @@
 3. Setup your blake database
     * In the postgres terminal, run ```CREATE DATABASE databasename;```
 
-#### Setting up solr
+#### Solr
 1. (Download and install solr)[https://cwiki.apache.org/confluence/display/solr/Installing+Solr]
     * (We're currently uses 5.3.0)
 2. Make your solr cores
@@ -23,7 +23,10 @@
     mkdir blake_work
     ```
 
-#### Setup app locally
+#### Capistrano
+```gem install capistrano #install capistrano```
+
+#### Code Base
 ```bash
 easy_install pip #install pip
 pip install virtualenv #install virtualenv
@@ -37,6 +40,23 @@ pip install -r requirements.txt #install the python requirements
 npm install #install gulp and gulp modules, need to have node.js installed locally, see below
 ```
 
+#### Config Files
+1. Copy ```config/config.py.example``` to ```blakearchive/```
+2. Rename the file ```config.py```
+3. Edit db_connection_string with your postgres info
+    * the postgres app uses ```postgres``` as the default username with no password, unless you've set your postgres up differently.
+    * keep the ```:``` if you have no password
+    * ```[host]``` should be ```localhost```
+    * ```[dbname]``` should be the database name you created in step 3 of the postgres instructions
+4. Make a of ```config/deploy/local.rb.example``` in the same directory, named ```local.rb```
+5. Edit the file, setting:
+    * your username for you mac
+    * path to your solr instance (e.g. ```~/solr.5.3.0```)
+    * path to the local repo (e.g. ```~/Sites/blake/archive```)
+
+#### Final steps
+In the repo directory (```archive/```):
+1. Seed the database and solr by running ```cap local setup:start```
 
 ### Running Gulp
 You'll need to have [Node.js](https://nodejs.org/en/) installed on your local machine.
