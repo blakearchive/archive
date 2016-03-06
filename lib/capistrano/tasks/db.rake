@@ -4,7 +4,7 @@ namespace :db do
     task :seed do
         run_locally do
             info 'pulling latest blake data'
-            execute "git submodule update --remote --merge"
+            execute "git submodule update --init; git submodule update --remote --merge"
         end
 
         on roles(:local) do |h|
