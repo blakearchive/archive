@@ -17,21 +17,44 @@ set :branch, 'capistrano'
 set :keep_releases, 5
 
 set :deploy_to, "/net/deploy/#{fetch(:stage)}/#{fetch(:application)}"
+set :solr_path, '/data'
 
 namespace :deploy do
 
-    desc 'Symlink the solr schema files'
-    task :symlinkSolr do
+    desc 'Symlink the config and current'
+    task :symlink do
         on roles(:app) do |h|
-            info 'Symlinking solr schema files'
+            info 'symlinking config'
+            execute :ln, '-nfs', "#{shared_path}/config_#{fetch(:stage)}.py", "#{current_path}/blakearchive/config.py"
 
-            # execute :ln, '-nfs', "#{current_path}/blake-object/schema.xml","/data/solr/data/blake_object/schema.xml"
-            # execute :ln, '-nfs', "#{current_path}/blake-work/schema.xml","/data/solr/data/blake_work/schema.xml"
-
+            info 'symlinking code to current release'
+            execute :ln, '-nfs', "#{current_path}", "/htdocs/webdata/blake"
         end
     end
+
+    desc 'Restart python'
+    task :restart do
+        on roles(:app) do |h|
+            info 'restarting application'
+            execute "/usr/local/bin/bounce-webserver.sh graceful"
+        end
+    end
+
+
+    #######
+    # this won't work because cap would need to push the minified files to the remote repo
+    # desc 'Run Gulp tasks'
+    # task :gulp do
+        # run_locally do
+            # info 'Minifying scripts'
+            # execute :gulp
+        # end
+    # end
+    ########
+
 end
 
-
-after 'deploy:finishing', 'deploy:symlinkSolr'
+# before 'deploy:starting', 'deploy:gulp'
+after 'deploy:finishing', 'deploy:symlink'
+after 'deploy:finishing', 'deploy:restart'
 after 'deploy:finishing', 'deploy:cleanup'

@@ -1,0 +1,10 @@
+set :stage, :local
+
+# set your username
+server 'localhost', roles: [:local], user: 'yourusername', group: 'webadmin', no_release:true
+
+# set the path to your local solr server
+set :solr_path, 'path/to/your/solr/server'
+
+# set path to your code base
+set :code_path, path/to/your/code'
