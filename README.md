@@ -57,6 +57,8 @@ npm install #install gulp and gulp modules, need to have node.js installed local
 #### Final steps
 In the repo directory (```archive/```):
 1. Seed the database and solr by running ```cap local setup:start```
+2. Run the python server ```python run.py```
+3. You can now view the site at http://localhost:8200/blake
 
 ### Running Gulp
 You'll need to have [Node.js](https://nodejs.org/en/) installed on your local machine.
