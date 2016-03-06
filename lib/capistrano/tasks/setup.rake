@@ -1,8 +1,8 @@
 namespace :setup do
 
     task :start do
-        invoke 'db:seed'
         invoke 'solr:update'
+        invoke 'db:seed'
     end
 
 end
