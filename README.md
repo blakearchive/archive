@@ -12,16 +12,16 @@
     * In the postgres terminal, run ```CREATE DATABASE databasename;```
 
 #### Solr
-1. (Download and install solr)[https://cwiki.apache.org/confluence/display/solr/Installing+Solr]
+1. [Download and install solr](https://cwiki.apache.org/confluence/display/solr/Installing+Solr)
     * (We're currently uses 5.3.0)
 2. Make your solr cores
-    ```bash
-    cd ~/path/to/solr/instance # if you followed the apache install instructions, it's likely at ~/solr-5.3.0
-    bin/solr start
-    cd server/solr
-    mkdir blake_object
-    mkdir blake_work
-    ```
+```bash
+cd ~/path/to/solr/instance # if you followed the apache install instructions, it's likely at ~/solr-5.3.0
+bin/solr start
+cd server/solr
+mkdir blake_object
+mkdir blake_work
+```
 
 #### Capistrano
 ```gem install capistrano #install capistrano```
@@ -55,7 +55,7 @@ npm install #install gulp and gulp modules, need to have node.js installed local
     * path to the local repo (e.g. ```~/Sites/blake/archive```)
 
 #### Final steps
-In the repo directory (```archive/```):
+In the repo directory ```archive/```:
 1. Seed the database and solr by running ```cap local setup:start```
 2. Run the python server ```python run.py```
 3. You can now view the site at http://localhost:8200/blake
