@@ -5,4 +5,5 @@
 node_modules
 fab_settings.py
 config.py
-config_prod.py
+config/deploy/config.py
+config/deploy/local.rb
