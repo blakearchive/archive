@@ -67,27 +67,9 @@ a.compare-selected-objects {
     }
 }
 
-/*
- * Compare objects
- */
-#compare .featured-objects{
-    float:left;
-}
-#compare .compare-inner {
-    white-space: nowrap;
-    overflow-y: hidden;
-}
-
-#archive #object-view #compare .compare-inner .item{
-    margin: 0;
-    padding-left:15px;
-    float:none;
-    display: inline-block;
-    white-space: normal;
-}
-#archive #object-view #compare.scrollbar .compare-inner .item img{
-    opacity:1;
-}
+/********
+ * Compare object selection
+ **********/
 
 .select-for-compare-wrapper{
     width: 220px;
@@ -109,6 +91,7 @@ a.compare-selected-objects {
     opacity: 1;
     color: #F7FF00;
 }
+
 
 /*************
 * ANGULAR ANIMATIONS
@@ -165,24 +148,69 @@ a.compare-selected-objects {
 }
 
 /*****************
-* text transcriptions
+* Object View
 *******************/
-li.line-type-header{
-    padding-top: 15px !important;
-    padding-bottom: 15px !important;
+
+
+/*************
+* Reading View
+**************/
+
+@media (min-width: 768px) {
+    #archive #object-view.reading-view #compare .featured-objects{
+        float:left;
+    }
+    #archive #object-view.reading-view #compare .compare-inner {
+        white-space: nowrap;
+        overflow-y: hidden;
+    }
+
+    #archive #object-view.reading-view #compare.scrollbar .compare-inner .item{
+        margin: 0;
+        padding-left:15px;
+        float:none;
+        display: inline-block;
+        white-space: normal;
+    }
+    #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy .reading-copy-inner{
+        min-width: 400px;
+    }
+    #archive #object-view.reading-view #compare.scrollbar .compare-inner .item img{
+        max-height: 100%;
+        width: auto;
+    }
+    #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy{
+        max-height: 100%;
+    }
 }
-li.text-push-5{
-    padding-left: 60% !important;
+#archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy ol li span{
+    display: inline;
 }
-li.text-push-4{
-    padding-left: 48% !important;
+#archive #object-view.reading-view #compare .compare-inner .item img{
+    opacity:1;
 }
-li.text-push-3{
-    padding-left: 36% !important;
+
+/************
+* Compare View
+**************/
+@media (min-width: 768px) {
+    #archive #object-view.compare-objects #compare .featured-objects{
+        float:left;
+    }
+    #archive #object-view.compare-objects #compare .compare-inner {
+        white-space: nowrap;
+        overflow-y: hidden;
+    }
+
+    #archive #object-view.compare-objects #compare .compare-inner .item{
+        margin: 0;
+        padding-left:15px;
+        float:none;
+        display: inline-block;
+        white-space: normal;
+    }
+
 }
-li.text-push-2{
-    padding-left: 24% !important;
-}
-li.text-push-1{
-    padding-left: 12% !important;
+#archive #object-view.compare-objects #compare .compare-inner .item img{
+    opacity:1;
 }
