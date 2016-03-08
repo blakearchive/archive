@@ -2,6 +2,10 @@
 
     var controller = function(){
         var vm = this;
+
+        vm.getNumber = function(num){
+            return new Array(parseInt(num));
+        }
     }
 
     var textTranscription = function(){

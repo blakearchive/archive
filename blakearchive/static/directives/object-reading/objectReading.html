@@ -1,0 +1,20 @@
+<p class="object-title">{{ read.getOvpTitle() }}</p>
+<!-- compare -->
+<div id="compare" class="scrollbar">
+    <div class="featured-object">
+        <div class="compare-inner">
+            <div class="item" ng-repeat="o in read.copy.objectsInCopy">
+                <div class="reading-wrapper" reading-wrapper>
+                    <img ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg">
+                    <div class="reading-copy">
+                        <div class="reading-copy-inner" reading-wrapper>
+                            <text-transcription object="o"></text-transcription>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/.compare-->
+
