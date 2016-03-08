@@ -1,7 +1,9 @@
 (function(){
 
-    var controller = function(){
+    var controller = function($scope,$sessionStorage){
         var vm = this;
+
+        vm.$storage = $sessionStorage;
 
         vm.getOvpTitle = function(){
             if(angular.isDefined(vm.copy)){
@@ -56,7 +58,7 @@
 
     }
 
-    //controller.$inject = ['$window'];
+    controller.$inject = ['$scope', '$sessionStorage'];
 
     var objectViewer = function(){
         return {

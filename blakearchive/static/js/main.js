@@ -667,6 +667,25 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             link: link
         };
     }])
+    .directive('readingWrapper', ['WindowSize', '$rootScope', function (WindowSize) {
+        var link = function (scope, element, attrs) {
+
+            scope.setStyles = function (windowSize) {
+                var newHeight = (windowSize.height - 200);
+                element.height(newHeight);
+            }
+
+            scope.setStyles(WindowSize);
+
+            scope.$on('resize::resize', function (e, w) {
+                scope.setStyles(w)
+            });
+        };
+        return {
+            restrict: 'A',
+            link: link
+        };
+    }])
 
     .directive('comparisonImage', ['WindowSize', function (WindowSize) {
         var link = function (scope, element, attrs) {
