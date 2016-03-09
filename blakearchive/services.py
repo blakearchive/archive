@@ -123,11 +123,11 @@ class BlakeDataService(object):
             return results
 
         def add_object_query_works(results):
-            works = dict((w.bad_id, w) for w in cls.get_works([r[0] for r in results]))
+            works = {w.bad_id: w for w in cls.get_works([r[0] for r in results])}
             return [[works[w].to_dict, c, r] for (w, c, r) in results]
 
         # updated search
-        obj_results = dict((k, add_object_query_works(v)) for (k, v) in object_query(config).items())
+        obj_results = {k: add_object_query_works(v) for (k, v) in object_query(config).items()}
         work_results = work_query(config)
         # We will probably have to knit together results from several queries
         return {"object_results": obj_results, "work_results": work_results}
@@ -192,11 +192,9 @@ class BlakeDataService(object):
         return models.BlakeWork.query.filter(models.BlakeWork.bad_id == bad_id).first()
 
     @classmethod
-    def get_works(clis, bad_ids=None):
+    def get_works(cls, bad_ids=None):
         if bad_ids:
-           results = models.BlakeWork.query.filter(models.BlakeWork.bad_id.in_(bad_ids)).all()
-           if not results:
-              results = models.BlakeWork.query.all()
+            results = models.BlakeWork.query.filter(models.BlakeWork.bad_id.in_(bad_ids)).all()
         else:
             results = models.BlakeWork.query.all()
         return results
