@@ -158,7 +158,7 @@ class BlakeDocumentImporter(object):
         bo.notes = [note.xpath("string()") for note in obj.xpath("//note")]
         for phystext in obj.xpath("phystext"):
             bo.text = element_to_dict(phystext)["phystext"]
-            bo.markup_text = str(self.transform(phystext))
+            bo.markup_text = etree.tostring(self.transform(phystext))
             # print etree.tostring(phystext, pretty_print=True)
             break
         for objid in obj.xpath("objtitle/objid"):
