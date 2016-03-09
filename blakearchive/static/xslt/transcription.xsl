@@ -94,8 +94,7 @@ transforms transcriptions
                     </xsl:when>
                     <xsl:otherwise>
                         <table class="tei-table"> <!-- width="850" -->
-                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/>;
-                            </xsl:attribute>
+                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/></xsl:attribute>
                             <xsl:apply-templates/>
                         </table>
                     </xsl:otherwise>
@@ -145,8 +144,7 @@ transforms transcriptions
                     </xsl:when>
                     <xsl:otherwise>
                         <table class="tei-table">
-                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/>;
-                            </xsl:attribute>
+                            <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/></xsl:attribute>
                             <xsl:apply-templates/>
                         </table>
                     </xsl:otherwise>
@@ -273,13 +271,8 @@ transforms transcriptions
     <xsl:template name="spacemaker">
         <xsl:param name="spaces"/>
         <xsl:choose>
-            <xsl:when test="$spaces &gt; 0">&#160;
-                <xsl:call-template name="spacemaker">
-                    <xsl:with-param name="spaces" select="$spaces -1"/>
-                </xsl:call-template>
-            </xsl:when>
-            <xsl:otherwise>
-            </xsl:otherwise>
+            <xsl:when test="$spaces &gt; 0">&#160;<xsl:call-template name="spacemaker"><xsl:with-param name="spaces" select="$spaces -1"/></xsl:call-template></xsl:when>
+            <xsl:otherwise/>
         </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>

@@ -31,7 +31,7 @@ def get_objects():
     else:
         selected_object_ids = []
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
-    results = blake_data_service.get_works(selected_object_ids)
+    results = blake_data_service.get_object(selected_object_ids)
     return jsonify({"results": [r.to_dict for r in results]})
 
 

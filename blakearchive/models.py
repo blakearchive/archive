@@ -46,7 +46,7 @@ class BlakeObject(db.Model):
     illustration_description = db.Column(JSON)
     components = db.Column(JSON)
     text = db.Column(JSON)
-    markup_text = db.Column(db.Text)
+    markup_text = db.Column(db.UnicodeText)
     physical_description = db.Column(JSON)
     title = db.Column(db.UnicodeText)
     header = db.Column(JSON)
