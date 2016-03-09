@@ -26,7 +26,10 @@ def get_object(object_id):
 
 @api.route('/object/')
 def get_objects():
-    selected_object_ids = request.args.get("object_ids", "").split(",")
+    if "object_ids" in request.args:
+        selected_object_ids = request.args.get("bad_ids", "").split(",")
+    else:
+        selected_object_ids = []
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     results = blake_data_service.get_works(selected_object_ids)
     return jsonify({"results": [r.to_dict for r in results]})
@@ -55,7 +58,10 @@ def get_objects_from_same_matrix(object_id):
 
 @api.route('/copy/')
 def get_copies():
-    selected_bad_ids = request.args.get("bad_ids", "").split(",")
+    if "bad_ids" in request.args:
+        selected_bad_ids = request.args.get("bad_ids", "").split(",")
+    else:
+        selected_bad_ids = []
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     results = blake_data_service.get_copies(selected_bad_ids)
     return jsonify({"results": [r.to_dict for r in results]})
@@ -93,7 +99,10 @@ def get_work(work_id):
 
 @api.route('/work/')
 def get_works():
-    selected_bad_ids = request.args.get("bad_ids", "").split(",")
+    if "bad_ids" in request.args:
+        selected_bad_ids = request.args.get("bad_ids", "").split(",")
+    else:
+        selected_bad_ids = []
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     results = blake_data_service.get_works(selected_bad_ids)
     return jsonify({"results": [r.to_dict for r in results]})
