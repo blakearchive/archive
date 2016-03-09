@@ -163,6 +163,7 @@ a.compare-selected-objects {
     #archive #object-view.reading-view #compare .compare-inner {
         white-space: nowrap;
         overflow-y: hidden;
+        padding-bottom: 30px;
     }
 
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item{
@@ -177,10 +178,13 @@ a.compare-selected-objects {
     }
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item img{
         max-height: 100%;
+        min-height: 100%;
         width: auto;
     }
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy{
         max-height: 100%;
+        display: flex;
+        float: none;
     }
 }
 #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy ol li span{
