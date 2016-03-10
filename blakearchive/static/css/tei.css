@@ -92,6 +92,7 @@
 
 .tei-vspace {
     font-size: 15pt;
+    height: 3em;
 }
 
 .tei-table-extra-small {
@@ -103,7 +104,13 @@
 }
 
 .tei-table {
-    width: 850px;
+    white-space: pre-wrap;
+    border-collapse: separate;
+    text-align: left;
+    width: 650px;
+}
+.tei-wrapper .tei-table:nth-child(1){
+    width: 575px;
 }
 
 .tei-preceding-delspan-substspan {

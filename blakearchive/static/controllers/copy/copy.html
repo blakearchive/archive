@@ -1,14 +1,15 @@
 <div id="archive" class="container-fluid archive-top">
     <div id="object-container" class="row" ng-class="copyCtrl.trayOpen ? 'tray-open' : 'tray-closed'">
-        <info-tray toggle="copyCtrl.toggleTray()" copy="copyCtrl.copy"></info-tray>
-
-        <div id="object-view" ng-class="copyCtrl.showTools ? 'show-tools' : 'hide-tools'" class="view-objects">
+        <info-tray toggle="copyCtrl.toggleTray()" copy="copyCtrl.copy" ng-if="copyCtrl.$storage.view.mode != 'read'"></info-tray>
+        <div id="object-view" ng-class="{'show-tools': copyCtrl.showTools, 'hide-tools': !copyCtrl.showTools,'view-objects': copyCtrl.$storage.view.mode == 'object','reading-view': copyCtrl.$storage.view.mode == 'read','compare-objects': copyCtrl.$storage.view.mode == 'compare'}">
 
             <object-viewer copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)" ng-if="copyCtrl.$storage.view.mode == 'object'"></object-viewer>
 
             <object-compare copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)" ng-if="copyCtrl.$storage.view.mode == 'compare'"></object-compare>
 
-            <object-tools toggle="copyCtrl.toggleTools()" copy="copyCtrl.copy"></object-tools>
+            <object-reading copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)" ng-if="copyCtrl.$storage.view.mode == 'read'"></object-reading>
+
+            <object-tools toggle="copyCtrl.toggleTools()" copy="copyCtrl.copy" ng-if="copyCtrl.$storage.view.mode != 'read'"></object-tools>
 
         </div>
 
