@@ -39,6 +39,8 @@ cd archive #cd into the repo
 pip install -r requirements.txt #install the python requirements
 npm install #install gulp and gulp modules, need to have node.js installed locally, see below
 ```
+##### Note:
+Virtualenv needs to be active for any python or cap scripts to work. To instantiate virtualenv, run ```source bin/activate``` in the blake/ directory
 
 #### Config Files
 1. Copy ```config/config.py.example``` to ```blakearchive/```
@@ -51,7 +53,7 @@ npm install #install gulp and gulp modules, need to have node.js installed local
 4. Make a of ```config/deploy/local.rb.example``` in the same directory, named ```local.rb```
 5. Edit the file, setting:
     * your username for you mac
-    * path to your solr instance (e.g. ```~/solr.5.3.0```)
+    * path to your solr instance (e.g. ```~/solr-5.3.0```)
     * path to the local repo (e.g. ```~/Sites/blake/archive```)
 
 #### Final steps
@@ -59,7 +61,7 @@ In the repo directory ```archive/```:
 
 1. Seed the database and solr by running ```cap local setup:start```
 2. Run the python server ```python run.py```
-3. You can now view the site at http://localhost:8200/blake
+3. You can now view the site at http://localhost:8002/blake
 
 ### Running Gulp
 You'll need to have [Node.js](https://nodejs.org/en/) installed on your local machine.

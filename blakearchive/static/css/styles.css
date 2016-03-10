@@ -8163,14 +8163,14 @@ a.new-window:hover {
   text-align: center;
 }
 @media (min-width: 768px) {
-  #archive #object-view.compare-objects #object-tools-inner {
+  /*#archive #object-view.compare-objects #object-tools-inner {
     height: 112px;
     overflow: hidden;
-  }
+  }*/
 }
 #archive #object-view.compare-objects .edit-object.btn-group {
-  margin: 0;
-  padding: 15px 0 0;
+  /*margin: 0;
+  padding: 15px 0 0;*/
 }
 @media (min-width: 768px) {
   #archive #object-view.compare-objects .edit-object.btn-group {
