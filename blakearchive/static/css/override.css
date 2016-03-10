@@ -147,10 +147,36 @@ a.compare-selected-objects {
     padding-left: 10px;
 }
 
+.flex{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    -webkit-flex-flow: nowrap;
+    flex-flow: nowrap;
+    justify-content: space-around;
+}
+
 /*****************
 * Object View
 *******************/
-
+@media (min-width: 768px) {
+    #archive #object-view.view-objects .item .object-img-container{
+        height: 100%;
+        min-width: 500px;
+        overflow-x: auto;
+    }
+    #archive #object-view.view-objects .item .object-img-container img{
+        max-height: 100%;
+    }
+    #archive #object-view.view-objects .item .reading-copy .reading-copy-inner{
+        min-width: 400px;
+    }
+    #archive #object-view.view-objects .item .reading-copy{
+        max-height: 100%;
+        min-width: 500px;
+        overflow-x: auto;
+    }
+}
 
 /*************
 * Reading View

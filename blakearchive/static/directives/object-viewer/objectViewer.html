@@ -4,13 +4,17 @@
         <p class="object-subtitle" ng-if="viewer.work.virtual">{{ viewer.work.title }}</p>
 
         <div class="carousel-inner" role="listbox">
-            <div class="item" ng-repeat="obj in viewer.copy.objectsInCopy track by $index" ng-class="{active: obj == viewer.copy.selectedObject}">
-                <div class="object-img-container" ng-class="{hidden: viewer.$storage.view.scope == 'text'}">
-                    <img src="http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg" copy-image>
+            <div class="item col-xs-12 col-md-8 col-md-offset-2" ng-repeat="obj in viewer.copy.objectsInCopy track by $index" ng-class="{active: obj == viewer.copy.selectedObject}">
+                <div class="object-view-wrapper flex" copy-image>
+                    <div class="object-img-container" ng-class="{hidden: viewer.$storage.view.scope == 'text'}">
+                        <img src="http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg">
+                    </div>
+                    <div class="reading-copy" ng-class="{hidden: viewer.$storage.view.scope == 'image'}">
+                        <div class="reading-copy-inner">
+                            <text-transcription object="viewer.copy.selectedObject"></text-transcription>
+                        </div>
+                    </div>
                 </div>
-                <!--<div class="reading-copy" ng-class="{hidden: viewer.$storage.view.scope == 'image'}" copy-image>
-                    <text-transcription object="viewer.copy.selectedObject"></text-transcription>
-                </div>-->
                 <p class="object-subtitle"><span class="object-no text-capitalize">{{ viewer.getOvpSubtitle(obj) }}</span></p>
             </div>
         </div>
