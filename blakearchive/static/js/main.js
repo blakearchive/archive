@@ -790,7 +790,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
          });*/
         $routeProvider.when(directoryPrefix + '/search/', {
             templateUrl: directoryPrefix + '/static/controllers/search/search.html',
-            controller: "SearchController"
+            controller: "SearchController",
+            controllerAs: 'searchCtrl'
         });
 
         $routeProvider.otherwise({redirectTo: directoryPrefix + '/'});
