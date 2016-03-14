@@ -244,3 +244,146 @@ a.compare-selected-objects {
 #archive #object-view.compare-objects #compare .compare-inner .item img{
     opacity:1;
 }
+
+/***********
+* Search Controller
+*************/
+.ngrs-range-slider .ngrs-runner {
+    margin: 2px 9px;
+}
+@media (min-width: 768px){
+    /*#search .search-result-container{
+        white-space: nowrap;
+        overflow-y: hidden;
+        padding-bottom: 30px;
+    }
+    #search .search-result-item{
+        margin: 0;
+        padding-left:15px;
+        float:none;
+        display: inline-block;
+        white-space: normal;
+    }*/
+}
+
+#search .search-result-item .copy-container {
+    width: 0;
+    display: none;
+    transition: 1s;
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+
+}
+#search .search-result-item.show-copies .copy-container {
+    width: 100%;
+    display: block;
+}
+
+.slide-box-viewport{
+    position: relative;
+    overflow: hidden;
+    height: 320px;
+}
+
+.slide-box-wrapper{
+    white-space: nowrap;
+    padding-bottom: 30px;
+    position:absolute;
+    -webkit-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) left;
+    -moz-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) left;
+    -ms-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) left;
+    -o-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) left;
+    transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) left;
+}
+.slide-box-wrapper .search-result-item{
+    margin: 0;
+    padding-left:15px;
+    display: inline-flex;
+    white-space: normal;
+}
+
+#search .search-result-row .scroller .glyphicon{
+    color: #eee;
+    min-height: 320px;
+    line-height: 320px;
+    font-size: 35px;
+    width: 1em;
+    display: block;
+    margin: -0.5em auto 0px;
+    opacity: 0;
+    -webkit-transition: all 200ms;
+    -moz-transition: all 200ms;
+    -ms-transition: all 200ms;
+    -o-transition: all 200ms;
+    transition: all 200ms;
+}
+#search .search-result-row .scroller:hover .glyphicon{
+    opacity: 1;
+}
+
+#search .search-result-row .scroller-right{
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 40px;
+    background: rgba(51,51,51,1);
+    background: -moz-linear-gradient(left, rgba(51,51,51,0) 0%, rgba(51,51,51,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(51,51,51,0)), color-stop(100%, rgba(51,51,51,1)));
+    background: -webkit-linear-gradient(left, rgba(51,51,51,0) 0%, rgba(51,51,51,1) 100%);
+    background: -o-linear-gradient(left, rgba(51,51,51,0) 0%, rgba(51,51,51,1) 100%);
+    background: -ms-linear-gradient(left, rgba(51,51,51,0) 0%, rgba(51,51,51,1) 100%);
+    background: linear-gradient(to right, rgba(51,51,51,0) 0%, rgba(51,51,51,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#627d4d', endColorstr='#333333', GradientType=1 );
+}
+
+#search .search-result-row .scroller-left {
+    position:absolute;
+    left: 0;
+    height: 100%;
+    width: 40px;
+    background: rgba(51,51,51,1);
+    background: -moz-linear-gradient(left, rgba(51,51,51,1) 0%, rgba(51,51,51,0) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(51,51,51,1)), color-stop(100%, rgba(51,51,51,0)));
+    background: -webkit-linear-gradient(left, rgba(51,51,51,1) 0%, rgba(51,51,51,0) 100%);
+    background: -o-linear-gradient(left, rgba(51,51,51,1) 0%, rgba(51,51,51,0) 100%);
+    background: -ms-linear-gradient(left, rgba(51,51,51,1) 0%, rgba(51,51,51,0) 100%);
+    background: linear-gradient(to right, rgba(51,51,51,1) 0%, rgba(51,51,51,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#627d4d', GradientType=1 );
+}
+
+#search .copy-container {
+    max-height: 0;
+    -webkit-transition: max-height 1s;
+    -moz-transition: max-height 1s;
+    -ms-transition: max-height 1s;
+    -o-transition: max-height 1s;
+    transition: max-height 1s;
+    overflow: hidden;
+}
+
+#search .copy-container.show-copies{
+    max-height: 20000px;
+    /*-webkit-transition: max-height 1s;
+    -moz-transition: max-height 1s;
+    -ms-transition: max-height 1s;
+    -o-transition: max-height 1s;
+    transition: max-height 1s;*/
+}
+
+#search .copy-container .close-copies{
+    border: none;
+    background: transparent;
+    position: absolute;
+    right: 35px;
+    top: 20px;
+    font-size: 2em;
+    opacity: 0;
+}
+#search .copy-container.show-copies .close-copies{
+    opacity: 1;
+}
+#search .copy-container .objects-in-copy h4{
+    margin-top: 0px;
+    padding-left: 20px;
+}
