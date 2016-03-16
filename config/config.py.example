@@ -1,4 +1,4 @@
-app_secret_key = "not_so_secret_key"
+app_secret_key = "[secret_key_for_your_app]"
 db_connection_string = 'postgresql://[username]:[password]@[host]/[dbname]'
 production = False
 solr = 'local'
