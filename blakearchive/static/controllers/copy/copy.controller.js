@@ -10,9 +10,10 @@
 
         $rootScope.showSubMenu = 1;
 
-        vm.$storage = $sessionStorage;
-
-        BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.objectId).then(function() {
+        vm.changeCopy = function(copy_bad_id,object_id){
+            console.log(copy_bad_id);
+            console.log(object_id);
+            BlakeDataService.setSelectedCopy(copy_bad_id,object_id).then(function() {
                 vm.copy = BlakeDataService.selectedCopy;
                 if(!angular.isDefined($routeParams.objectId)){
                     $location.search('objectId',vm.copy.selectedObject.object_id);
@@ -27,15 +28,47 @@
                 } else {
                     vm.init();
                 }
-        });
+            });
+        }
+
+        vm.changeCopy($routeParams.copyId,$routeParams.objectId);
+
+        vm.$storage = $sessionStorage;
+
+        /*BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.objectId).then(function() {
+                vm.copy = BlakeDataService.selectedCopy;
+                if(!angular.isDefined($routeParams.objectId)){
+                    $location.search('objectId',vm.copy.selectedObject.object_id);
+                }
+                var copyBad = BlakeDataService.selectedCopy.bad_id,
+                    workBadMatch = copyBad.indexOf('.'),
+                    workBad = workBadMatch > 0 ? copyBad.substring(0,workBadMatch) : copyBad;
+                if (angular.isUndefined(BlakeDataService.selectedWork)) {
+                    BlakeDataService.setWorkNoCopies(workBad).then(function(){
+                        vm.init();
+                    });
+                } else {
+                    vm.init();
+                }
+        });*/
 
         vm.init = function(){
             vm.work = BlakeDataService.selectedWork;
             vm.setSimilarObjects(vm.copy.selectedObject.object_id);
+            if(angular.isDefined(vm.$storage.comparisonObjects)){
+                if(vm.$storage.comparisonObjects[0].object_id != vm.copy.selectedObject.object_id){
+                    vm.$storage.comparisonObjects = [];
+                    vm.$storage.comparisonObjects.push(vm.copy.selectedObject);
+                }
+            } else {
+                vm.$storage.comparisonObjects = [];
+                vm.$storage.comparisonObjects.push(vm.copy.selectedObject);
+            }
             /*if(vm.copy.objectsInCopy.length > 1){
                 vm.getPreviousNextObjects();
             }*/
-            $rootScope.$broadcast('copyCtrl::objectChanged');
+            console.log(vm.$storage.comparisonObjects);
+            $rootScope.$broadcast('copyCtrl::objectChanged',vm.copy.selectedObject);
         }
 
         vm.setSimilarObjects = function(object_id){

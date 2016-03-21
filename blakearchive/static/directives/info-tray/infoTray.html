@@ -7,9 +7,9 @@
                 <div ng-style="{'max-height': tray.trayBodyHeight}">
                     <accordion-heading>
                         Textual Transcription
-                        <a ng-click="tray.newWindow(tray.copy,'text')" class="new-window" title="new window">New Window</a>
+                        <a ng-click="tray.newWindow(tray.object,'text')" class="new-window" title="new window">New Window</a>
                     </accordion-heading>
-                    <text-transcription object="tray.copy.selectedObject"></text-transcription>
+                    <text-transcription object="tray.object"></text-transcription>
                 </div>
             </accordion-group>
 
@@ -17,10 +17,10 @@
               <div ng-style="{'max-height': tray.trayBodyHeight}">
                   <accordion-heading>
                       Illustration Description
-                      <a ng-click="tray.newWindow(tray.copy,'desc')" class="new-window" title="new window">New Window</a>
+                      <a ng-click="tray.newWindow(tray.object,'desc')" class="new-window" title="new window">New Window</a>
                   </accordion-heading>
 
-                  <illustration-description object="tray.copy.selectedObject"></illustration-description>
+                  <illustration-description object="tray.object"></illustration-description>
               </div>
             </accordion-group>
 
@@ -28,10 +28,10 @@
               <div ng-style="{'max-height': tray.trayBodyHeight}">
                   <accordion-heading>
                       Editors’ Notes
-                      <a ng-click="tray.newWindow(tray.copy,'note')" class="new-window" title="new window">New Window</a>
+                      <a ng-click="tray.newWindow(tray.object,'note')" class="new-window" title="new window">New Window</a>
                   </accordion-heading>
 
-                  <editor-notes object="tray.copy.selectedObject"></editor-notes>
+                  <editor-notes object="tray.object"></editor-notes>
               </div>
             </accordion-group>
 
@@ -39,10 +39,10 @@
               <div ng-style="{'max-height': tray.trayBodyHeight}">
                   <accordion-heading>
                       Object Meta Data
-                      <a ng-click="tray.newWindow(tray.copy,'meta')" class="new-window" title="new window">New Window</a>
+                      <a ng-click="tray.newWindow(tray.object,'meta')" class="new-window" title="new window">New Window</a>
                   </accordion-heading>
 
-                  <object-metadata object="tray.copy.selectedObject"></object-metadata>
+                  <object-metadata object="tray.object"></object-metadata>
               </div>
             </accordion-group>
 
@@ -50,10 +50,10 @@
               <div ng-style="{'max-height': tray.trayBodyHeight}">
                   <accordion-heading>
                       TEI Markup
-                      <a ng-click="tray.newWindow(tray.copy,'tei')" class="new-window" title="new window">New Window</a>
+                      <a ng-click="tray.newWindow(tray.object,'tei')" class="new-window" title="new window">New Window</a>
                   </accordion-heading>
 
-                  <tei-markup object="tray.copy.selectedObject"></tei-markup>
+                  <tei-markup object="tray.object"></tei-markup>
               </div>
             </accordion-group>
 

@@ -1,6 +1,6 @@
 (function() {
 
-    var controller = function ($scope, $sessionStorage) {
+    var controller = function ($scope, $sessionStorage,$rootScope) {
 
         var vm = this;
 
@@ -21,7 +21,7 @@
 
     }
 
-    controller.$inject = ['$scope', '$sessionStorage'];
+    controller.$inject = ['$scope', '$sessionStorage','$rootScope'];
 
     var viewSubMenu = function () {
 

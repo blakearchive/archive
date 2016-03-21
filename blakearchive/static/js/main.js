@@ -667,11 +667,11 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             link: link
         };
     }])
-    .directive('readingWrapper', ['WindowSize', '$rootScope', function (WindowSize) {
+    .directive('objectWindow', ['WindowSize', '$rootScope', function (WindowSize) {
         var link = function (scope, element, attrs) {
 
             scope.setStyles = function (windowSize) {
-                var newHeight = (windowSize.height - 200);
+                var newHeight = (windowSize.height - scope.adjust);
                 element.height(newHeight);
             }
 
@@ -683,7 +683,10 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         };
         return {
             restrict: 'A',
-            link: link
+            link: link,
+            scope: {
+                'adjust': '@'
+            }
         };
     }])
 

@@ -5,7 +5,7 @@
 
         vm.firstLine = 1;
 
-        vm.trayPixels = ( WindowSize.height - 136 );
+        vm.trayPixels = ( WindowSize.height - 186 );
         if(WindowSize.width <= 992){
             vm.trayHeight = 0
         } else {
@@ -17,12 +17,12 @@
         vm.panelCount = 5;
         vm.trayBodyHeight = (vm.trayPixels - (vm.panelCount * 53)) + 'px';
 
-        vm.newWindow = function(copy,type){
-            $window.open('/blake/new-window/'+type+'/'+copy.bad_id+'?objectId='+copy.selectedObject.object_id, '_blank','width=800, height=600');
+        vm.newWindow = function(object,type){
+            $window.open('/blake/new-window/'+type+'/'+object.copy_bad_id+'?objectId='+object.object_id, '_blank','width=800, height=600');
         }
 
         $scope.$on('resize::resize',function(event,window){
-            vm.trayPixels = ( window.height - 136 );
+            vm.trayPixels = ( window.height - 186 );
             if(WindowSize.width <= 992){
                 vm.trayHeight = 0
             } else {
@@ -30,6 +30,14 @@
             }
             vm.trayBodyHeight = (vm.trayPixels - (vm.panelCount * 53)) + 'px';
         });
+
+        $scope.$on('copyCtrl::objectChanged',function(e,d){
+            vm.object = d;
+        });
+        $scope.$on('compareCtrl::objectChanged',function(e,d){
+            vm.object = d;
+        });
+
 
     }
 
@@ -40,7 +48,6 @@
             restrict: 'E',
             scope: {
                 toggle: '&',
-                copy: '=copy'
             },
             templateUrl: '/blake/static/directives/info-tray/infoTray.html',
             controller: controller,
