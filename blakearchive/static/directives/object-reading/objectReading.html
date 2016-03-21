@@ -4,11 +4,13 @@
     <div class="featured-object">
         <div class="compare-inner">
             <div class="item" ng-repeat="o in read.copy.objectsInCopy">
-                <div class="reading-wrapper" reading-wrapper>
-                    <img ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" ng-class="{hidden:read.$storage.view.scope == 'text'}">
+                <div class="reading-wrapper flex" object-window adjust="270">
+                    <div class="object-img-container" ng-class="{hidden: compare.$storage.view.scope == 'text'}">
+                        <img ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" ng-class="{hidden:read.$storage.view.scope == 'text'}">
+                    </div>
                     <div class="reading-copy" ng-class="{hidden:read.$storage.view.scope == 'image'}">
-                        <div class="reading-copy-inner" reading-wrapper>
-                            <h4>{{ read.getOvpSubtitle(o) }}</h4>
+                        <div class="reading-copy-inner">
+                            <h4 class="text-capitalize">{{ read.getOvpSubtitle(o) }}</h4>
                             <text-transcription object="o"></text-transcription>
                         </div>
                     </div>
