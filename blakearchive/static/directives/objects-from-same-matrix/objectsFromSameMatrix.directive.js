@@ -92,19 +92,31 @@
         };
 
         vm.activateCompare = function(){
+            $sessionStorage.comparisonObjects[0].isActive = true;
             $sessionStorage.view = {
                 mode: 'compare',
                 scope: 'image'
             }
         }
 
+        vm.checkSelected = function(obj){
+            angular.forEach($sessionStorage.comparisonObjects,function(v,k){
+                if(angular.isDefined(obj)){
+                    if(v.object_id ==obj.object_id){
+                        obj.Selected = true;
+                    }
+                }
+            })
+        }
+
         vm.compareText = "Select All Objects";
         vm.selectedAll = false;
+        //vm.checkSelected();
 
         $scope.$on('copyCtrl::objectChanged',function(){
             vm.compareText = "Select All Objects";
             vm.selectedAll = false;
-            vm.clearComparisonObjects();
+            vm.checkSelected();
         })
 
     }

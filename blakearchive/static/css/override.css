@@ -91,7 +91,13 @@ a.compare-selected-objects {
     opacity: 1;
     color: #F7FF00;
 }
+a.select-all-objects:hover, a.compare-selected-objects:hover{
+    background-color: #F7FF00;
+}
 
+a.select-all-objects{
+    cursor: pointer;
+}
 
 /*************
 * ANGULAR ANIMATIONS
@@ -166,7 +172,7 @@ a.compare-selected-objects {
         overflow-x: auto;
     }
     #archive #object-view.view-objects .item .object-img-container img{
-        max-height: 100%;
+        height: 100%;
     }
     #archive #object-view.view-objects .item .reading-copy .reading-copy-inner{
         min-width: 400px;
@@ -183,13 +189,10 @@ a.compare-selected-objects {
 **************/
 
 @media (min-width: 768px) {
-    #archive #object-view.reading-view #compare .featured-objects{
-        float:left;
-    }
-    #archive #object-view.reading-view #compare .compare-inner {
+    #archive #object-view.reading-view #compare .compare-inner{
         white-space: nowrap;
-        overflow-y: hidden;
         padding-bottom: 30px;
+        float:left;
     }
 
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item{
@@ -202,9 +205,12 @@ a.compare-selected-objects {
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy .reading-copy-inner{
         min-width: 400px;
     }
+    #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .object-img-container{
+        height: 100%;
+        max-width:75%;
+    }
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item img{
-        max-height: 100%;
-        min-height: 100%;
+        height: 100%;
         width: auto;
     }
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy{
@@ -224,14 +230,10 @@ a.compare-selected-objects {
 * Compare View
 **************/
 @media (min-width: 768px) {
-    #archive #object-view.compare-objects #compare .featured-objects{
-        float:left;
-    }
     #archive #object-view.compare-objects #compare .compare-inner {
         white-space: nowrap;
-        overflow-y: hidden;
+        float: left;
     }
-
     #archive #object-view.compare-objects #compare .compare-inner .item{
         margin: 0;
         padding-left:15px;
@@ -239,10 +241,59 @@ a.compare-selected-objects {
         display: inline-block;
         white-space: normal;
     }
+    #archive #object-view.compare-objects #compare.scrollbar .compare-inner .item .object-img-container{
+        height: 100%;
+    }
+    #archive #object-view.compare-objects #compare.scrollbar .compare-inner .item img{
+        height: 100%;
+        width: auto;
+    }
+    #archive #object-view.compare-objects #compare.scrollbar .compare-inner .item .reading-copy{
+        max-height: 100%;
+        display: flex;
+        float: none;
+        color: #ccc;
+        font-size: 13px;
+        line-height: 18px;
+        text-align: left;
+    }
+    #archive #object-view.compare-objects #compare.scrollbar .compare-inner .item .reading-copy .reading-copy-inner{
+        min-width: 400px;
+        width: 100%;
+        padding: 0 80px 0 30px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        scrollbar-face-color: #666666;
+        scrollbar-arrow-color: #666666;
+        scrollbar-track-color: #0a0a0a;
+        scrollbar-shadow-color: #0a0a0a;
+        scrollbar-highlight-color: #0a0a0a;
+        scrollbar-3dlight-color: #0a0a0a;
+        scrollbar-darkshadow-color: #0a0a0a;
+    }
+    #archive #object-view.compare-objects #compare.scrollbar .compare-inner .item .reading-copy .reading-copy-inner::-webkit-scrollbar {
+        background-color: #0a0a0a;
+        border-radius: 17px;
+        width: 9px;
+        height: 9px;
+    }
+    #archive #object-view.compare-objects #compare.scrollbar .compare-inner .item .reading-copy .reading-copy-inner::-webkit-scrollbar-corner {
+        background-color: transparent;
+    }
+    #archive #object-view.compare-objects #compare.scrollbar .compare-inner .item .reading-copy .reading-copy-inner::-webkit-scrollbar-thumb {
+        background-color: #404040;
+        border-radius: 17px;
+    }
 
 }
 #archive #object-view.compare-objects #compare .compare-inner .item img{
     opacity:1;
+}
+#archive .object-subtitle a{
+    color: #999;
+}
+#archive .object-title a{
+    color: #fff;
 }
 
 /***********

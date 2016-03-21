@@ -10,7 +10,7 @@
 </div>
 <div class="row">
     <div ng-repeat="obj in matrix.copy.selectedObject.matrix track by $index" class="col-sm-6 col-md-3">
-        <div class="handprint-block" ng-class="{'selected-for-comparison': obj.Selected == true}">
+        <div ng-init="matrix.checkSelected(obj)" class="handprint-block" ng-class="{'selected-for-comparison': obj.Selected == true}">
             <div class="select-for-compare-wrapper">
                 <span ng-class="{'glyphicon-unchecked': obj.Selected == undefined || obj.Selected == false, 'glyphicon-check':obj.Selected == true}" class="glyphicon select-for-compare" ng-click="matrix.selectOne(obj)"></span>
             </div>

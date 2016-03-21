@@ -92,7 +92,7 @@
 
 .tei-vspace {
     font-size: 15pt;
-    height: 3em;
+    height: 2em;
 }
 
 .tei-table-extra-small {
@@ -104,13 +104,9 @@
 }
 
 .tei-table {
-    white-space: pre-wrap;
     border-collapse: separate;
     text-align: left;
-    width: 650px;
-}
-.tei-wrapper .tei-table:nth-child(1){
-    width: 575px;
+    min-width: 400px;
 }
 
 .tei-preceding-delspan-substspan {
@@ -133,8 +129,6 @@
 
 .tei-line-number {
     width: 5%;
-    font-family: "Times New Roman";
-    font-size:8pt;
     color:gray;
 }
 
@@ -144,6 +138,11 @@
 
 .tei-line-text {
     width: 90%;
-    font-family: "Times New Roman";
-    font-size:12pt;
+    color: #eee;
+}
+#showme .tei-line-text{
+    color: #1d1d1d;
+}
+.tei-line-text span{
+    white-space: normal;
 }
