@@ -6665,7 +6665,7 @@ nav.navbar ul.navbar-nav {
   width: 100%;
   position: fixed;
   margin-top: 53px;
-  z-index: 999;
+  z-index: 998;
 }
 @media (max-width: 767px) {
   nav.navbar ul.navbar-nav {
