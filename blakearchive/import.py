@@ -155,7 +155,14 @@ class BlakeDocumentImporter(object):
                 bo.illustration_description = element_to_dict(desc)
                 break
             break
-        bo.notes = [note.xpath("string()") for note in obj.xpath("//note")]
+        bo.notes = [note.xpath("string()") for note in obj.xpath(".//note") + obj.xpath(".//objnote")]
+        for title in obj.xpath(".//title"):
+            bo.title = title.xpath("string()")
+        if not getattr(bo, "title"):
+            for objnumber in obj.xpath(".//objnumber"):
+                if objnumber.attrib.get("code") == "A1":
+                    bo.title = objnumber.xpath("text()")
+                    break
         for phystext in obj.xpath("phystext"):
             bo.text = element_to_dict(phystext)["phystext"]
             bo.markup_text = etree.tostring(self.transform(phystext))
@@ -192,11 +199,15 @@ class BlakeDocumentImporter(object):
         copy_id = root.get("id").lower()
         for cd in root.xpath("//compdate"):
             comp_date_string = cd.xpath("string()").encode("utf-8")
-            comp_date = re.match("\D*(\d{4})", comp_date_string).group(1)
+            comp_date = int(re.match("\D*(\d{4})", comp_date_string).group(1))
             break
         print_date = None
+        print_date_string = None
         for pd in root.xpath("//printdate"):
-            print_date = pd.attrib["value"]
+            print_date_string = pd.attrib["value"]
+            print_date_match = re.match("\D*(\d{4})", print_date_string)
+            if print_date_match:
+                print_date = int(print_date_match.group(1))
             break
         archive_copy_id = root.get("copy")
         header_xml = etree.tostring(root.xpath("header")[0], encoding='utf8', method='xml')
@@ -206,7 +217,8 @@ class BlakeDocumentImporter(object):
         objects = [self.process_object(o) for o in root.xpath("objdesc/desc")]
         copy = models.BlakeCopy(bad_id=copy_id, header=header_json, source=source_json, objects=objects,
                                 composition_date=comp_date, composition_date_string=comp_date_string,
-                                print_date=print_date, archive_copy_id=archive_copy_id)
+                                print_date=print_date, print_date_string=print_date_string,
+                                archive_copy_id=archive_copy_id)
         if copy_id in self.copy_handprint_map:
             copy.image = self.copy_handprint_map[copy_id]
         else:
