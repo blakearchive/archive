@@ -9,11 +9,13 @@ import unicodedata
 def main():
     from sqlalchemy.orm import sessionmaker
 
-    if hasattr(config,"solr") and config.solr == "local":
+    if hasattr(config, "solr") and config.solr == "local":
         blake_object_solr = pysolr.Solr('http://localhost:8983/solr/blake_object')
+        blake_copy_solr = pysolr.Solr('http://localhost:8983/solr/blake_copy')
         blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake_work')
     else:
         blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-object')
+        blake_copy_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-copy')
         blake_work_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-work')
 
     engine = models.db.create_engine(config.db_connection_string)
@@ -44,6 +46,25 @@ def main():
             obj["work_medium"] = blake_object.copy.work.medium
         blake_object_solr.add([obj])
     blake_object_solr.optimize()
+
+    copies = session.query(models.BlakeCopy).all()
+    blake_copy_solr.delete(q='*:*')
+    for blake_copy in copies:
+        copy_ = {
+            "id": blake_copy.copy_id,
+            "bad_id": blake_copy.bad_id,
+            "source": blake_copy.source,
+            "title": blake_copy.title,
+            "institution": blake_copy.institution,
+            "header": blake_copy.header,
+            "composition_date": blake_copy.composition_date,
+            "print_date": blake_copy.print_date
+        }
+        if blake_copy.work:
+            copy_["work_medium"] = blake_copy.work.medium
+        blake_copy_solr.add([copy_])
+    blake_copy_solr.optimize()
+
     works = session.query(models.BlakeWork).all()
     blake_work_solr.delete(q='*:*')
     for blake_work in works:

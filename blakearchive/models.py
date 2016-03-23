@@ -115,7 +115,8 @@ class BlakeCopy(db.Model):
     image = db.Column(db.UnicodeText)
     composition_date = db.Column(db.Integer)
     composition_date_string = db.Column(db.UnicodeText)
-    print_date = db.Column(db.UnicodeText)
+    print_date_string = db.Column(db.UnicodeText)
+    print_date = db.Column(db.Integer)
 
     def __init__(self, *args, **kwargs):
         super(BlakeCopy, self).__init__(*args, **kwargs)
@@ -134,6 +135,7 @@ class BlakeCopy(db.Model):
             "header": self.header,
             "composition_date": self.composition_date,
             "composition_date_string": self.composition_date_string,
+            "print_date_string": self.print_date_string,
             "print_date": self.print_date
         }
 
