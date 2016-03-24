@@ -50,9 +50,10 @@ Virtualenv needs to be active for any python or cap scripts to work. To instanti
     * keep the ```:``` if you have no password
     * ```[host]``` should be ```localhost```
     * ```[dbname]``` should be the database name you created in step 3 of the postgres instructions
-4. Make a of ```config/deploy/local.rb.example``` in the same directory, named ```local.rb```
+4. Make a of ```config/cap_config.yml.example`` in the same directory, named ```cap_config.yml```
 5. Edit the file, setting:
-    * your username for you mac
+    * your username
+    * your group
     * path to your solr instance (e.g. ```~/solr-5.3.0```)
     * path to the local repo (e.g. ```~/Sites/blake/archive```)
 
