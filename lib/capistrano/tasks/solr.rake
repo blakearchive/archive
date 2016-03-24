@@ -5,15 +5,13 @@ namespace :solr do
         on roles(:local) do |h|
             info 'Symlinking solr conf files'
             run_locally do
-                solr_conf_path = "#{fetch(:solr_path)}/server/solr"
-                execute :ln, '-nfs', "#{fetch(:code_path)}/solr/blake-object/conf","#{solr_conf_path}/blake_object/conf"
-                execute :ln, '-nfs', "#{fetch(:code_path)}/solr/blake-work/conf","#{solr_conf_path}/blake_work/conf"
+                execute :ln, '-nfs', "#{fetch(:code_path)}/solr/blake-object/conf","#{fetch(:solr_dir)}/blake_object/conf"
+                execute :ln, '-nfs', "#{fetch(:code_path)}/solr/blake-work/conf","#{fetch(:solr_dir)}/blake_work/conf"
             end
         end
 
         on roles(:app) do |h|
             info 'Symlinking solr conf files'
-            solr_conf_path = "#{fetch(:solr_path)}/solr/data"
             execute :ln, '-nfs', "#{current_path}/solr/blake-object/conf","#{fetch(solr_conf_path)}/blake_object/conf"
             execute :ln, '-nfs', "#{current_path}/solr/blake-work/conf","#{fetch(solr_conf_path)}/blake_work/conf"
         end
@@ -24,7 +22,7 @@ namespace :solr do
         on roles(:local) do |h|
             info 'restarting solr service'
             run_locally do
-                execute "cd #{fetch(:solr_path)}; bin/solr restart;"
+                # need command
             end
         end
 
