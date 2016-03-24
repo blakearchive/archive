@@ -6323,7 +6323,6 @@ body {
 .container-fluid.main {
   background-color: #fff;
   padding-bottom: 3em;
-  padding-top:40px;
 }
 *:focus {
   outline: 0 !important;
@@ -6367,9 +6366,6 @@ h3 {
 }
 .site-header-container {
   background-color: #f8f8f8;
-  z-index: 999;
-  width: 100%;
-  position: fixed;
 }
 .site-header-container a.navbar-brand {
   font-size: 17px;
@@ -6662,10 +6658,6 @@ nav.navbar ul.navbar-nav {
   -webkit-transition: max-height 0.2s ease-out, opacity 0.6s ease-out;
   -o-transition: max-height 0.2s ease-out, opacity 0.6s ease-out;
   transition: max-height 0.2s ease-out, opacity 0.6s ease-out;
-  width: 100%;
-  position: fixed;
-  margin-top: 53px;
-  z-index: 998;
 }
 @media (max-width: 767px) {
   nav.navbar ul.navbar-nav {
@@ -7631,7 +7623,7 @@ a.new-window:hover {
   text-align: center;
 }
 #archive #object-view.view-objects .featured-object {
-  padding: 80px 0 0;
+  padding: 10px 0 0;
 }
 #archive #object-view.view-objects .featured-object:before,
 #archive #object-view.view-objects .featured-object:after {
