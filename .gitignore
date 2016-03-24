@@ -6,4 +6,4 @@ node_modules
 fab_settings.py
 config.py
 config/deploy/config.py
-config/deploy/local.rb
+config/cap_config.yml
