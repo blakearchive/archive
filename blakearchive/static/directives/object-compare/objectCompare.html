@@ -4,7 +4,7 @@
 <!--<div id="compare" class="scrollbar" style="height: {{compare.viewerHeight}}px">-->
     <div class="featured-object">
         <div class="compare-inner" ng-sortable="{ group: 'o', animation: 150 }">
-            <div class="item" ng-repeat="o in compare.$storage.comparisonObjects" ng-class="{active:o.isActive}" ng-click="compare.setActive(o)">
+            <div class="item" ng-repeat="o in compare.$storage.comparisonObjects" ng-class="{active:o.isActive}" ng-click="compare.setActive(o);compare.changeCopy({copy_bad_id:o.copy_bad_id,object_id:o.object_id,reset:false})">
                 <!--<p class="object-title text-capitalize"><a href="/blake/copy/{{o.copy_bad_id}}?objectId={{o.object_id}}">{{ o.copy_title }}</a></p>-->
                 <p class="object-title text-capitalize"><a href="/blake/copy/{{o.copy_bad_id}}">{{ o.copy_title }}</a></p>
                 <div class="compare-wrapper flex" object-window adjust="315">
