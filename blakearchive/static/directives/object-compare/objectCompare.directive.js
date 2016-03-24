@@ -1,7 +1,7 @@
 (function(){
 
 
-    var controller = function ($scope, WindowSize, $timeout, $rootScope, $sessionStorage) {
+    var controller = function ($scope, WindowSize, $timeout, $rootScope, $sessionStorage, $location) {
         var vm = this;
 
         vm.getOvpTitle = function(){
@@ -31,7 +31,7 @@
 
     }
 
-    controller.$inject = ['$scope','WindowSize','$timeout','$rootScope','$sessionStorage'];
+    controller.$inject = ['$scope','WindowSize','$timeout','$rootScope','$sessionStorage','$location'];
 
     var objectCompare = function(){
         return {
