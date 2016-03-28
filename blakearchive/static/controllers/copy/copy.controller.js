@@ -17,18 +17,12 @@
 
                 if(copy_bad_id != $routeParams.copyId){
                     var newpath = '/blake/copy/'+copy_bad_id;
-                    //console.log(newpath);
                     $location.path(newpath, false);
                     $routeParams.copyId = copy_bad_id;
-                    if(angular.isDefined(object_id)){
-                        vm.setObject(object_id);
-                        $location.search('objectId',object_id);
-                    }
+                    $location.search('objectId',object_id);
                 }
 
-                if(!angular.isDefined(object_id)){
-                    $location.search('objectId',vm.copy.selectedObject.object_id);
-                }
+                vm.setObject(object_id,resetComparison);
 
                 var copyBad = BlakeDataService.selectedCopy.bad_id,
                     workBadMatch = copyBad.indexOf('.'),
@@ -42,25 +36,16 @@
                     vm.work = BlakeDataService.selectedWork;
                 }
 
-                if(resetComparison){
-                    vm.resetComparisonObjects();
-                }
-
             });
         }
 
         vm.changeCopy($routeParams.copyId,$routeParams.objectId,true);
 
         vm.resetComparisonObjects = function(){
-            if(angular.isDefined(vm.$storage.comparisonObjects)){
-                if(vm.$storage.comparisonObjects[0].object_id != vm.copy.selectedObject.object_id){
-                    vm.$storage.comparisonObjects = [];
-                    vm.$storage.comparisonObjects.push(vm.copy.selectedObject);
-                }
-            } else {
-                vm.$storage.comparisonObjects = [];
-                vm.$storage.comparisonObjects.push(vm.copy.selectedObject);
-            }
+            var selectedObject = vm.copy.selectedObject;
+            selectedObject.isActive = true;
+            vm.$storage.comparisonObjects = [];
+            vm.$storage.comparisonObjects.push(selectedObject);
         }
 
         vm.setSimilarObjects = function(object_id){
@@ -79,25 +64,30 @@
 
         vm.changeObject = function(object){
             $location.search('objectId',object.object_id);
-            //var newpath = '/blake/copy/'+object.copy_bad_id+'/objectId/'+object.object_id;
-            //console.log(newpath);
-            //$location.path(newpath, false);
         };
 
-        vm.setObject = function(object_id){
+        vm.setObject = function(object_id,resetComparison){
             angular.forEach(vm.copy.objectsInCopy,function(v){
                 if(object_id == v.object_id){
                     vm.copy.selectedObject  = v;
+                    vm.setSimilarObjects(v.object_id);
                     return;
                 }
             });
-            vm.setSimilarObjects(vm.copy.selectedObject.object_id);
+            if(resetComparison){
+                vm.resetComparisonObjects();
+            }
             $rootScope.$broadcast('copyCtrl::objectChanged',vm.copy.selectedObject);
         }
 
         $scope.$on('$routeUpdate',function(e,v) {
+            console.log(v);
             vm.setObject(v.params.objectId);
         });
+
+        vm.changeToObjectView = function(){
+            vm.$storage.view.mode = 'object';
+        }
 
         vm.trayOpen = false;
         vm.showTools = true;
