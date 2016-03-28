@@ -34,9 +34,6 @@
         $scope.$on('copyCtrl::objectChanged',function(e,d){
             vm.object = d;
         });
-        $scope.$on('compareCtrl::objectChanged',function(e,d){
-            vm.object = d;
-        });
 
 
     }

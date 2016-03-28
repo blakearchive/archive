@@ -81,7 +81,6 @@
         }
 
         $scope.$on('$routeUpdate',function(e,v) {
-            console.log(v);
             vm.setObject(v.params.objectId);
         });
 
