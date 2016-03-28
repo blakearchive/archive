@@ -22,12 +22,12 @@
                 v.isActive = false;
             });
             obj.isActive = true;
-            $rootScope.$broadcast('compareCtrl::objectChanged',obj);
+            //$rootScope.$broadcast('compareCtrl::objectChanged',obj);
         }
 
-        $scope.$on('copyCtrl::objectChanged',function(){
+        /*$scope.$on('copyCtrl::objectChanged',function(){
             vm.$storage.comparisonObjects[0].isActive = true;
-        });
+        });*/
 
     }
 
@@ -41,8 +41,8 @@
             scope: {
                 copy: '=copy',
                 work: '=work',
-                changeObject: '&',
-                changeCopy: '&'
+                changeCopy: '&',
+                changeView: '&'
             },
             controllerAs: 'compare',
             bindToController: true
