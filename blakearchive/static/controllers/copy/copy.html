@@ -3,13 +3,25 @@
         <info-tray toggle="copyCtrl.toggleTray()" ng-if="copyCtrl.$storage.view.mode != 'read'"></info-tray>
         <div id="object-view" ng-class="{'show-tools': copyCtrl.showTools, 'hide-tools': !copyCtrl.showTools,'view-objects': copyCtrl.$storage.view.mode == 'object','reading-view': copyCtrl.$storage.view.mode == 'read','compare-objects': copyCtrl.$storage.view.mode == 'compare'}">
 
-            <object-viewer copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)" ng-if="copyCtrl.$storage.view.mode == 'object'"></object-viewer>
+            <object-viewer copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)"  ng-if="copyCtrl.$storage.view.mode == 'object'"></object-viewer>
 
-            <object-compare copy="copyCtrl.copy" work="copyCtrl.work" ng-if="copyCtrl.$storage.view.mode == 'compare'"></object-compare>
+            <object-compare copy="copyCtrl.copy" work="copyCtrl.work" change-copy="copyCtrl.changeCopy(copy_bad_id,object_id,reset)" change-view="copyCtrl.changeToObjectView()" ng-if="copyCtrl.$storage.view.mode == 'compare'"></object-compare>
 
             <object-reading copy="copyCtrl.copy" work="copyCtrl.work" ng-if="copyCtrl.$storage.view.mode == 'read'"></object-reading>
 
-            <object-tools toggle="copyCtrl.toggleTools()" ng-if="copyCtrl.$storage.view.mode != 'read'"></object-tools>
+            <!--Edit buttons-->
+            <div id="object-tools">
+                <div id="object-tools-inner">
+                    <div class="btn-group edit-object" role="group">
+                        <button type="button" class="btn btn-default add-lightbox"><span class="edit-icon"></span> Add To Lightbox</button>
+                        <button type="button" class="btn btn-default rotate" ng-click="copyCtrl.rotate()"><span class="edit-icon"></span> Rotate</button>
+                        <button type="button" class="btn btn-default zoom"><span class="edit-icon"></span> Zoom</button>
+                        <button type="button" class="btn btn-default true-size"><span class="edit-icon"></span> True Size</button>
+                        <button type="button" class="btn btn-default new-window" ng-click="copyCtrl.newWindow(copyCtrl.copy.selectedObject)"><span class="edit-icon"></span> New Window</button>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="show-hide-tools" ng-click="objTools.toggle()"><span>+</span></div>-->
 
         </div>
 
