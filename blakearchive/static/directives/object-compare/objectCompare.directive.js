@@ -1,7 +1,7 @@
 (function(){
 
 
-    var controller = function ($scope, WindowSize, $timeout, $rootScope, $sessionStorage) {
+    var controller = function ($scope, WindowSize, $timeout, $rootScope, $sessionStorage, $location) {
         var vm = this;
 
         vm.getOvpTitle = function(){
@@ -22,16 +22,16 @@
                 v.isActive = false;
             });
             obj.isActive = true;
-            $rootScope.$broadcast('compareCtrl::objectChanged',obj);
+            //$rootScope.$broadcast('compareCtrl::objectChanged',obj);
         }
 
-        $scope.$on('copyCtrl::objectChanged',function(){
+        /*$scope.$on('copyCtrl::objectChanged',function(){
             vm.$storage.comparisonObjects[0].isActive = true;
-        });
+        });*/
 
     }
 
-    controller.$inject = ['$scope','WindowSize','$timeout','$rootScope','$sessionStorage'];
+    controller.$inject = ['$scope','WindowSize','$timeout','$rootScope','$sessionStorage','$location'];
 
     var objectCompare = function(){
         return {
@@ -41,8 +41,8 @@
             scope: {
                 copy: '=copy',
                 work: '=work',
-                changeObject: '&',
-                changeCopy: '&'
+                changeCopy: '&',
+                changeView: '&'
             },
             controllerAs: 'compare',
             bindToController: true

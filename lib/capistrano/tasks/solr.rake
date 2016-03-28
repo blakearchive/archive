@@ -7,13 +7,15 @@ namespace :solr do
             run_locally do
                 execute :ln, '-nfs', "#{fetch(:code_path)}/solr/blake-object/conf","#{fetch(:solr_dir)}/blake_object/conf"
                 execute :ln, '-nfs', "#{fetch(:code_path)}/solr/blake-work/conf","#{fetch(:solr_dir)}/blake_work/conf"
+                execute :ln, '-nfs', "#{fetch(:code_path)}/solr/blake-copy/conf","#{fetch(:solr_dir)}/blake_copy/conf"
             end
         end
 
         on roles(:app) do |h|
             info 'Symlinking solr conf files'
-            execute :ln, '-nfs', "#{current_path}/solr/blake-object/conf","#{fetch(solr_conf_path)}/blake_object/conf"
-            execute :ln, '-nfs', "#{current_path}/solr/blake-work/conf","#{fetch(solr_conf_path)}/blake_work/conf"
+            execute :ln, '-nfs', "#{current_path}/solr/blake-object/conf","#{fetch(:solr_dir)}/blake_object/conf"
+            execute :ln, '-nfs', "#{current_path}/solr/blake-work/conf","#{fetch(:solr_dir)}/blake_work/conf"
+            execute :ln, '-nfs', "#{current_path}/solr/blake-copy/conf","#{fetch(:solr_dir)}/blake_copy/conf"
         end
     end
 
