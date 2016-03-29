@@ -21,6 +21,7 @@ bin/solr start
 cd server/solr
 mkdir blake_object
 mkdir blake_work
+mkdir blake_copy
 ```
 
 #### Capistrano
@@ -54,8 +55,8 @@ Virtualenv needs to be active for any python or cap scripts to work. To instanti
 5. Edit the file, setting:
     * your username
     * your group
-    * path to your solr instance (e.g. ```~/solr-5.3.0```)
-    * path to the local repo (e.g. ```~/Sites/blake/archive```)
+    * path to your solr instance (e.g. ```path/to/solr-5.3.0/server/solr```)
+    * path to the local repo (e.g. ```path/to/blake/archive```)
 
 #### Final steps
 In the repo directory ```archive/```:
