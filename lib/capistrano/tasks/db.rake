@@ -7,7 +7,7 @@ namespace :db do
             execute "git submodule update --init; git submodule update --remote --merge"
         end
 
-        python roles(:local) do |h|
+        on roles(:local) do |h|
             info 'Seeding Postgres DB'
             run_locally do
                 execute "cd #{fetch(:code_path)}/blakearchive/; python import.py '../data/works/*.xml' '../data/info/*.xml'; python solrimport.py; python homepageimport.py;"
