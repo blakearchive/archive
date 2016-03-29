@@ -11,6 +11,9 @@
         $rootScope.showSubMenu = 1;
         vm.$storage = $sessionStorage;
 
+        /*
+         * Object and Copy selection
+         */
         vm.changeCopy = function(copy_bad_id,object_id,resetComparison){
             BlakeDataService.setSelectedCopy(copy_bad_id,object_id).then(function() {
                 vm.copy = BlakeDataService.selectedCopy;
@@ -20,6 +23,10 @@
                     $location.path(newpath, false);
                     $routeParams.copyId = copy_bad_id;
                     $location.search('objectId',object_id);
+                }
+
+                if(!angular.isDefined(object_id)){
+                    object_id = vm.copy.selectedObject.object_id;
                 }
 
                 vm.setObject(object_id,resetComparison);
@@ -84,10 +91,17 @@
             vm.setObject(v.params.objectId);
         });
 
+        /*
+         * View Manipulation
+         */
+
         vm.changeToObjectView = function(){
             vm.$storage.view.mode = 'object';
         }
 
+        /*
+         * Toolbar manipulation
+         */
         vm.trayOpen = false;
         vm.showTools = true;
 
@@ -100,12 +114,48 @@
             $scope.$broadcast('copyCtrl::toggleTools',{tools:vm.showTools});
         }
 
+
+
+        /*
+         * Image Manipulation
+         */
+        vm.getObjectToTransform = function(){
+
+            var object = {};
+
+            if(vm.$storage.view.mode == 'object'){
+                object =  vm.copy.selectedObject;
+            }
+            if(vm.$storage.view.mode == 'compare'){
+                angular.forEach(vm.$storage.comparisonObjects, function(obj){
+                    if(obj.isActive){
+                        object = obj;
+                    }
+                });
+            }
+
+            return object;
+        }
         vm.newWindow = function(object){
             $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?objectId='+object.object_id, '_blank','width=800, height=600');
         }
 
-        vm.rotate = function(){
+        vm.rotate = function(object){
+            console.log(object);
+            object.transform.rotate = object.transform.rotate + 90;
+            vm.transformStyle(object);
+        }
 
+        vm.transformStyle = function(object){
+            var tranformString = 'rotate('+object.transform.rotate+'deg)';
+            object.transform.style = {
+                '-webkit-transform':tranformString,
+                '-moz-tranform':tranformString,
+                '-o-transform':tranformString,
+                '-ms-transform':tranformString,
+                'transform':tranformString
+            };
+            //object.transform.style =
         }
 
     };

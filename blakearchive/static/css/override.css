@@ -438,3 +438,13 @@ a.select-all-objects{
     margin-top: 0px;
     padding-left: 20px;
 }
+
+/***********
+* Image Manipulation
+*************/
+.ovp-image{
+    -webkit-transition: 300ms ease all;
+    -moz-transition: 300ms ease all;
+    -o-transition: 300ms ease all;
+    transition: 300ms ease all;
+}
