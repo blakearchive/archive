@@ -9,11 +9,27 @@ else:
     api = Blueprint('api', __name__, url_prefix='/blake/api')
 
 
-@api.route('/query', methods=["POST"])
-def query():
+@api.route('/query_objects', methods=["POST"])
+def query_objects():
     config = request.get_json()
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
-    results = blake_data_service.query(config)
+    results = blake_data_service.query_objects(config)
+    return json.dumps(results)
+
+
+@api.route('/query_copies', methods=["POST"])
+def query_copies():
+    config = request.get_json()
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    results = blake_data_service.query_copies(config)
+    return json.dumps(results)
+
+
+@api.route('/query_works', methods=["POST"])
+def query_works():
+    config = request.get_json()
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    results = blake_data_service.query_works(config)
     return json.dumps(results)
 
 
