@@ -4,8 +4,11 @@
         <h1>{{ workCtrl.work.title }} ({{ workCtrl.work.composition_date_string }})</h1>
     </header>
 
-    <article class="catrgories">
+    <article class="categories">
+
         <div class="container">
+            <div class="section-group" ng-bind-html="workCtrl.work.info"></div>
+            <hr>
             <p class="text-center"><em>Dates are the probable dates of {{ workCtrl.work.probable }}.</em></p>
             <div class="row" ng-repeat="increment in workCtrl.rows">
                 <div ng-repeat="copy in workCtrl.copies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3">
@@ -17,10 +20,7 @@
                     </div>
                 </div>
             </div>
-
-
-            <hr>
-            <div class="section-group" ng-bind-html="workCtrl.work.info"></div>
+            
         </div>
     </article>
 </div>
