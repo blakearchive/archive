@@ -7,7 +7,9 @@
                           <img class="lazy-load" src="/blake/static/img/featured/{{ work.dbi }}.100.jpg">
                       </a>
                       <span class="object-description">
-                            <span class="category">{{ work.title }}</span><span class="object-no text-capitalize"><span class="copy-object">{{ work.byline }}</span></span>
+                            <a href="/blake/copy/{{ work.bad_id }}">
+                            <span class="category">{{ work.title }}</span><div class="clearfix"></div><span class="object-no text-capitalize"><span class="copy-object">{{ work.byline }}</span></span>
+                            </a>
                       </span>
                 </span>
             </div>

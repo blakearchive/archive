@@ -1,3 +1,7 @@
+.handprint-block a:hover span.object-img {
+  border: 2px solid black;
+}
+
 /*
  * Image Waterfall
  */
