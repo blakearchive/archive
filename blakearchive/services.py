@@ -10,15 +10,19 @@ import models
 
 if hasattr(config, "solr") and config.solr == "lib_prod":
     blake_object_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake-object')
+    blake_copy_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake-copy')
     blake_work_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake-work')
 elif hasattr(config, "solr") and config.solr == "lib_dev":
     blake_object_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-object')
+    blake_copy_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-copy')
     blake_work_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-work')
 elif hasattr(config, "solr") and config.solr == "local":
      blake_object_solr = pysolr.Solr('http://localhost:8983/solr/blake_object')
+     blake_copy_solr = pysolr.Solr('http://localhost:8983/solr/blake-copy')
      blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake_work')
 else:
     blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-object')
+    blake_copy_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-copy')
     blake_work_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-work')
 
 
@@ -29,111 +33,121 @@ class BlakeDataService(object):
     """
 
     @classmethod
-    def query(cls, config):
+    def generate_medium_filter(cls, config):
+        mediums = []
+        if config["searchIlluminatedBooks"]:
+            mediums.append("illbk")
+        if config["searchCommercialBookIllustrations"]:
+            mediums.extend(["comb", "comdes", "comeng"])
+        if config["searchSeparatePrints"]:
+            mediums.extend(["spb", "spdes", "speng"])
+        if config["searchDrawingsPaintings"]:
+            mediums.extend(["cprint", "penc", "penink", "mono", "wc", "paint"])
+        if config["searchManuscripts"]:
+            mediums.extend(["ms", "ltr", "te"])
+        if config["searchRelatedMaterials"]:
+            mediums.extend(["rmb", "rmoth"])
+        return "(" + " OR ".join("medium: '%s'" % medium for medium in mediums) + ")"
 
-        def generate_medium_filter(config, work=False):
-            mediums = []
-            if config["searchIlluminatedBooks"]:
-                mediums.append("illbk")
-            if config["searchCommercialBookIllustrations"]:
-                mediums.extend(["comb", "comdes", "comeng"])
-            if config["searchSeparatePrints"]:
-                mediums.extend(["spb", "spdes", "speng"])
-            if config["searchDrawingsPaintings"]:
-                mediums.extend(["cprint", "penc", "penink", "mono", "wc", "paint"])
-            if config["searchManuscripts"]:
-                mediums.extend(["ms", "ltr", "te"])
-            if config["searchRelatedMaterials"]:
-                mediums.extend(["rmb", "rmoth"])
-            if work:
-                field = "medium"
-            else:
-                field = "work_medium"
-            return "(" + " OR ".join("%s: '%s'" % (field, medium) for medium in mediums) + ")"
+    @classmethod
+    def generate_date_filter(cls, config):
+        min_date = config.get("minDate", "*")
+        max_date = config.get("maxDate", "*")
+        return "composition_date: [%s TO %s]" % (min_date, max_date)
 
-        def generate_date_filter(config, work=False):
-            mindate = config.get("minDate", "*")
-            maxdate = config.get("maxDate", "*")
-            if work:
-                return "composition_date: [%s TO %s]" % (mindate, maxdate)
-            else:
-                return "copy_composition_date: [%s TO %s]" % (mindate, maxdate)
+    @classmethod
+    def generate_element_part(cls, prefix, part_text):
+        if part_text.lower() in ("and", "or"):
+            return part_text.lower()
+        else:
+            return "%s:'%s'" % (prefix, part_text)
 
-        def generate_search_element(prefix, config, work=False):
-            def generate_element_part(part_text):
-                if part_text.lower() in ("and", "or"):
-                    return part_text.lower()
-                else:
-                    return "%s:'%s'" % (prefix, part_text)
+    @classmethod
+    def generate_search_element(cls, prefix, config):
+        regex = re.compile(r"\s+(and|or)\s+", re.IGNORECASE)
+        search_string_parts = re.split(regex, config["searchString"])
+        mediums = cls.generate_medium_filter(config)
+        dates = cls.generate_date_filter(config)
+        element_parts = " ".join(cls.generate_element_part(prefix, p) for p in search_string_parts)
+        return "(" + element_parts + ") AND %s AND %s" % (mediums, dates)
 
-            regx = re.compile(r"\s+(and|or)\s+", re.IGNORECASE)
-            search_string_parts = re.split(regx, config["searchString"])
-            mediums = generate_medium_filter(config, work)
-            dates = generate_date_filter(config, work)
-            return "(" + " ".join(generate_element_part(p) for p in search_string_parts) + ") AND %s AND %s" % (mediums, dates)
+    @classmethod
+    def solr_object_query(cls, query):
+        def object_results(objects):
+            return [[o["value"], o["count"]] for o in objects]
 
-        def work_query(config):
-            results = {
-                "title": {"count": 0, "results": []},
-                "info": {"count": 0, "results": []}
-            }
-            if config.get("searchTitle"):
-                offset = config.get("workTitleOffset", 0)
-                search_string = generate_search_element("title", config, work=True)
-                solr_results = blake_work_solr.search(search_string, start=offset)
-                results["title"]["results"] = list(solr_results)
-                results["title"]["count"] = solr_results.hits
-            if config.get("searchWorkInformation"):
-                offset = config.get("workInformationOffset", 0)
-                search_string = generate_search_element("info", config, work=True)
-                solr_results = blake_work_solr.search(search_string, start=offset)
-                results["info"]["results"] = list(solr_results)
-                results["info"]["count"] = solr_results.hits
-            return results
+        def copy_results(copies):
+            return [[c["value"], c["count"], object_results(c["pivot"])] for c in copies]
 
-        def object_query(config):
-            def search(query):
+        def work_results(works):
+            return [[w["value"], w["count"], copy_results(w["pivot"])] for w in works]
 
-                def object_results(objects):
-                    return [[o["value"], o["count"]] for o in objects]
+        search_parameters = {"facet": "on", "facet.pivot": "work_id,copy_id,id"}
+        facets = blake_object_solr.search(query, **search_parameters).facets['facet_pivot'].values()[0]
+        return work_results(facets)
 
-                def copy_results(copies):
-                    return [[c["value"], c["count"], object_results(c["pivot"])] for c in copies]
+    @classmethod
+    def query_objects(cls, config):
+        results = {"title": [], "tag": [], "text": [], "description": [], "notes": []}
+        if config.get("searchTitle"):
+            search_string = cls.generate_search_element("title", config)
+            results["title"] = cls.solr_object_query(search_string)
+        if config.get("searchImageKeywords"):
+            search_string = cls.generate_search_element("components", config)
+            results["tag"] = cls.solr_object_query(search_string)
+        if config.get("searchText"):
+            search_string = cls.generate_search_element("text", config)
+            results["text"] = cls.solr_object_query(search_string)
+        if config.get("searchImageDescriptions"):
+            search_string = cls.generate_search_element("illustration_description", config)
+            results["description"] = cls.solr_object_query(search_string)
+        if config.get("searchNotes"):
+            search_string = cls.generate_search_element("notes", config)
+            results["notes"] = cls.solr_object_query(search_string)
 
-                def work_results(works):
-                    return [[w["value"], w["count"], copy_results(w["pivot"])] for w in works]
+        def add_object_query_works(results_):
+            works = {w.bad_id: w for w in cls.get_works([r[0] for r in results_])}
+            return [[works[w].to_dict, c, r] for (w, c, r) in results_]
 
-                search_parameters = {"facet": "on", "facet.pivot": "work_id,copy_id,id"}
-                facets = blake_object_solr.search(query, **search_parameters).facets['facet_pivot'].values()[0]
-                return work_results(facets)
+        return {k: add_object_query_works(v) for (k, v) in results.items()}
 
-            results = {"title": [], "tag": [], "text": [], "description": [], "notes": []}
-            if config.get("searchTitle"):
-                search_string = generate_search_element("title", config, work=False)
-                results["title"] = search(search_string)
-            if config.get("searchImageKeywords"):
-                search_string = generate_search_element("components", config, work=False)
-                results["tag"] = search(search_string)
-            if config.get("searchText"):
-                search_string = generate_search_element("text", config, work=False)
-                results["text"] = search(search_string)
-            if config.get("searchImageDescriptions"):
-                search_string = generate_search_element("illustration_description", config, work=False)
-                results["description"] = search(search_string)
-            if config.get("searchNotes"):
-                search_string = generate_search_element("notes", config, work=False)
-                results["notes"] = search(search_string)
-            return results
+    @classmethod
+    def query_copies(cls, config):
+        results = {"title": [], "copy_information": []}
+        if config.get("searchTitle"):
+            offset = config.get("copyTitleOffset", 0)
+            search_string = cls.generate_search_element("title", config)
+            solr_results = blake_copy_solr.search(search_string, start=offset)
+            results["title"]["results"] = list(solr_results)
+            results["title"]["count"] = solr_results.hits
+        if config.get("searchCopyInformation"):
+            offset = config.get("copyInformationOffset", 0)
+            search_string = cls.generate_search_element("source", config)
+            solr_results = blake_copy_solr.search(search_string, start=offset)
+            results["copy_information"]["results"] = list(solr_results)
+            results["copy_information"]["count"] = solr_results.hits
+        return results
 
-        def add_object_query_works(results):
-            works = {w.bad_id: w for w in cls.get_works([r[0] for r in results])}
-            return [[works[w].to_dict, c, r] for (w, c, r) in results]
 
-        # updated search
-        obj_results = {k: add_object_query_works(v) for (k, v) in object_query(config).items()}
-        work_results = work_query(config)
-        # We will probably have to knit together results from several queries
-        return {"object_results": obj_results, "work_results": work_results}
+    @classmethod
+    def query_works(cls, config):
+        results = {
+            "title": {"count": 0, "results": []},
+            "info": {"count": 0, "results": []}
+        }
+        if config.get("searchTitle"):
+            offset = config.get("workTitleOffset", 0)
+            search_string = cls.generate_search_element("title", config)
+            solr_results = blake_work_solr.search(search_string, start=offset)
+            results["title"]["results"] = list(solr_results)
+            results["title"]["count"] = solr_results.hits
+        if config.get("searchWorkInformation"):
+            offset = config.get("workInformationOffset", 0)
+            search_string = cls.generate_search_element("info", config)
+            solr_results = blake_work_solr.search(search_string, start=offset)
+            results["info"]["results"] = list(solr_results)
+            results["info"]["count"] = solr_results.hits
+        return results
 
     @classmethod
     def get_objects(cls, object_ids=None):

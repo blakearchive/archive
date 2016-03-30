@@ -326,8 +326,30 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
          * @returns {*}
          */
 
-        dataFactory.query = function (config) {
-            var url = directoryPrefix + '/api/query';
+        dataFactory.queryObjects = function (config) {
+            var url = directoryPrefix + '/api/query_objects';
+            return $q(function (resolve, reject) {
+                $http.post(url, config).success(function (data) {
+                    resolve(data);
+                }).error(function (data, status) {
+                    reject(data, status);
+                });
+            });
+        };
+
+        dataFactory.queryCopies = function (config) {
+            var url = directoryPrefix + '/api/query_copies';
+            return $q(function (resolve, reject) {
+                $http.post(url, config).success(function (data) {
+                    resolve(data);
+                }).error(function (data, status) {
+                    reject(data, status);
+                });
+            });
+        };
+
+        dataFactory.queryWorks = function (config) {
+            var url = directoryPrefix + '/api/query_works';
             return $q(function (resolve, reject) {
                 $http.post(url, config).success(function (data) {
                     resolve(data);
@@ -493,7 +515,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             console.log('setting work');
             return $q.all([
                 dataFactory.getWork(workId),
-                dataFactory.getCopiesForWork(workId),
+                dataFactory.getCopiesForWork(workId)
             ]).then(function (data) {
                 dataFactory.selectedWork = data[0];
                 dataFactory.selectedWork.copiesInWork = data[1];

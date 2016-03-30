@@ -10,18 +10,18 @@
 
         $rootScope.showSubMenu = 0;
 
-        $scope.results = [];
+        $scope.objectResults = [];
 
         $scope.search = function () {
-            BlakeDataService.query($scope.searchConfig).then(function (results) {
-                $scope.results = results;
-                angular.forEach(results.object_results, function(works,type){
+            BlakeDataService.queryObjects($scope.searchConfig).then(function (results) {
+                $scope.objectResults = results;
+                angular.forEach(results, function(works,type){
                     angular.forEach(works, function(work,index){
                         $scope.getFirstImage(type,index);
                        //$scope.populateWorkCopies(type,index);
                     });
                 });
-                console.log($scope.results);
+                console.log($scope.objectResults);
             });
         };
 
@@ -133,14 +133,14 @@
                 objectIdMap = {};
 
             if ($scope.selectedObjectSearchWork[resultType] != index) {
-                $scope.results.object_results[resultType][index][2].forEach(function (copyResults,copyKey) {
+                $scope.objectResults[resultType][index][2].forEach(function (copyResults,copyKey) {
                     if (typeof copyResults[0] === "string") {
                         copyBads.push(copyResults[0]);
                         // We're storing a map from bad_id to its results container to simplify updating the results
                         // with retrieved copies.
                         copyBadMap[copyResults[0]] = copyResults;
 
-                        $scope.results.object_results[resultType][index][2][copyKey][2].forEach(function (objResults) {
+                        $scope.objectResults[resultType][index][2][copyKey][2].forEach(function (objResults) {
                             if (typeof objResults[0] === "number") {
                                 objectIds.push(objResults[0]);
                                 // We're storing a map from bad_id to its results container to simplify updating the results
@@ -176,8 +176,8 @@
         };
 
         $scope.getFirstImage = function(resultType,workIndex){
-            BlakeDataService.getObject($scope.results.object_results[resultType][workIndex][2][0][2][0][0]).then(function (results) {
-                $scope.results.object_results[resultType][workIndex][2][0][2][0][0] = results;
+            BlakeDataService.getObject($scope.objectResults[resultType][workIndex][2][0][2][0][0]).then(function (results) {
+                $scope.objectResults[resultType][workIndex][2][0][2][0][0] = results;
             });
         }
 
@@ -187,7 +187,7 @@
 
             if ($scope.selectedObjectSearchCopy[resultType] != workIndex) {
 
-                $scope.results.object_results[resultType][workIndex][2][copyIndex][2].forEach(function (objResults) {
+                $scope.objectResults[resultType][workIndex][2][copyIndex][2].forEach(function (objResults) {
                     if (typeof objResults[0] === "number") {
                         objectIds.push(objResults[0]);
                         // We're storing a map from bad_id to its results container to simplify updating the results
