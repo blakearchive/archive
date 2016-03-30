@@ -42,8 +42,9 @@ def main():
         if blake_object.copy.work:
             obj["work_title"] = blake_object.copy.work.title
             obj["work_id"] = blake_object.copy.work.bad_id
-            obj["copy_composition_date"] = blake_object.copy.work.composition_date
-            obj["work_medium"] = blake_object.copy.work.medium
+            obj["composition_date"] = blake_object.copy.composition_date
+            obj["print_date"] = blake_object.copy.print_date
+            obj["medium"] = blake_object.copy.work.medium
         blake_object_solr.add([obj])
     blake_object_solr.optimize()
 
@@ -61,7 +62,7 @@ def main():
             "print_date": blake_copy.print_date
         }
         if blake_copy.work:
-            copy_["work_medium"] = blake_copy.work.medium
+            copy_["medium"] = blake_copy.work.medium
         blake_copy_solr.add([copy_])
     blake_copy_solr.optimize()
 
