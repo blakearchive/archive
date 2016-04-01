@@ -11,7 +11,7 @@
         $rootScope.showSubMenu = 1;
         vm.$storage = $sessionStorage;
 
-        vm.changeCopy = function(copy_bad_id,object_id,resetComparison){
+        vm.changeCopy = function(copy_bad_id,object_id,reset){
             BlakeDataService.setSelectedCopy(copy_bad_id,object_id).then(function() {
                 vm.copy = BlakeDataService.selectedCopy;
 
@@ -22,7 +22,15 @@
                     $location.search('objectId',object_id);
                 }
 
-                vm.setObject(object_id,resetComparison);
+                if(!object_id){
+                    object_id = vm.copy.selectedObject.object_id;
+                }
+
+                vm.setObject(object_id);
+
+                if(reset){
+                    vm.resetComparisonObjects();
+                }
 
                 var copyBad = BlakeDataService.selectedCopy.bad_id,
                     workBadMatch = copyBad.indexOf('.'),
@@ -41,8 +49,9 @@
 
         vm.changeCopy($routeParams.copyId,$routeParams.objectId,true);
 
-        vm.resetComparisonObjects = function(){
-            var selectedObject = vm.copy.selectedObject;
+
+        vm.resetComparisonObjects = function(newObject){
+            var selectedObject = angular.isDefined(newObject) ? newObject : vm.copy.selectedObject;
             selectedObject.isActive = true;
             vm.$storage.comparisonObjects = [];
             vm.$storage.comparisonObjects.push(selectedObject);
@@ -66,7 +75,7 @@
             $location.search('objectId',object.object_id);
         };
 
-        vm.setObject = function(object_id,resetComparison){
+        vm.setObject = function(object_id){
             angular.forEach(vm.copy.objectsInCopy,function(v){
                 if(object_id == v.object_id){
                     vm.copy.selectedObject  = v;
@@ -74,19 +83,12 @@
                     return;
                 }
             });
-            if(resetComparison){
-                vm.resetComparisonObjects();
-            }
             $rootScope.$broadcast('copyCtrl::objectChanged',vm.copy.selectedObject);
         }
 
         $scope.$on('$routeUpdate',function(e,v) {
             vm.setObject(v.params.objectId);
         });
-
-        vm.changeToObjectView = function(){
-            vm.$storage.view.mode = 'object';
-        }
 
         vm.trayOpen = false;
         vm.showTools = true;
@@ -104,9 +106,12 @@
             $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?objectId='+object.object_id, '_blank','width=800, height=600');
         }
 
-        vm.rotate = function(){
-
+        vm.resetView = function(){
+            console.log('change view');
+            vm.$storage.view.mode = 'object';
+            vm.$storage.view.scope = 'image';
         }
+        vm.resetView();
 
     };
 
