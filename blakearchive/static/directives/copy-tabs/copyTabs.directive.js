@@ -64,7 +64,9 @@
             scope: {
                 copy: '=copy',
                 work: '=work',
-                changeObject: '&'
+                changeObject: '&',
+                resetView: '&',
+                resetCompare: '&'
             },
             /*link:function(scope,elem,attr){
                 scope.changeObject({object: object});

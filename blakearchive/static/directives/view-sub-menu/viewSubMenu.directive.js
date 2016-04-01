@@ -5,7 +5,6 @@
         var vm = this;
 
         if(!angular.isDefined($sessionStorage.view)){
-            console.log('no session storage view');
             $sessionStorage.view = {
                 mode: 'object',
                 scope: 'image'
