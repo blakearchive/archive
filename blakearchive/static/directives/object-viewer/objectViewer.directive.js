@@ -68,7 +68,8 @@
             scope: {
                 copy: '=copy',
                 work: '=work',
-                changeObject: '&'
+                changeObject: '&',
+                resetCompare: '&'
             },
             controllerAs: 'viewer',
             bindToController: true
