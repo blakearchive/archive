@@ -42,7 +42,7 @@
                 copy: '=copy',
                 work: '=work',
                 changeCopy: '&',
-                changeView: '&'
+                resetView: '&'
             },
             controllerAs: 'compare',
             bindToController: true
