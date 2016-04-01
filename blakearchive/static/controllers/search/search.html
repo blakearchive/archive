@@ -82,25 +82,25 @@
 
             <div class="col-xs-12 col-sm-9 col-md-10">
 
-                <div ng-if="results.work_results == 0 && results.object_results == 0">
+                <div ng-if="objectResults.length == 0">
                     No results found
                 </div>
 
                 <div ng-repeat="(type,vars) in searchCtrl.types.object track by $index">
                     <!-- OBJECT {{ type | uppercase }} RESULTS -->
                     <div ng-show="searchConfig[vars.config] == true">
-                        <h3>{{ vars.text }} ({{ results.object_results[type].length}} works)</h3>
+                        <h3>{{ vars.text }} ({{ objectResults[type].length}} works)</h3>
 
-                        <div ng-show="results.object_results[type].length == 0">
+                        <div ng-show="objectResults[type].length == 0">
                             No results found
                         </div>
 
 
-                        <div class="row search-result-row" ng-show="results.object_results[type].length > 0">
+                        <div class="row search-result-row" ng-show="objectResults[type].length > 0">
                             <div class="col-xs-12">
                                 <slide-box>
-                                    <div ng-repeat="work in results.object_results[type]" class="search-result-item">
-                                        <div class="handprint-block" ng-class="{'selected':work== results.object_results[type].selectedWork}">
+                                    <div ng-repeat="work in objectResults[type]" class="search-result-item">
+                                        <div class="handprint-block" ng-class="{'selected':work== objectResults[type].selectedWork}">
                                             <a href="#" ng-click="searchCtrl.showCopies(type,$index); slideBox.scrollToResult($index)">
                                                 <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[2][0][2][0][0].dbi }}.100.jpg);"></span>
                                                 <span class="description"><strong>{{ work[0].title }}</strong><br><span ng-if="work[1] > 1">({{ work[1] }} results<span ng-if="work[2].length > 1"> in {{ work[2].length }} copies</span>)</span></span>
@@ -113,10 +113,10 @@
                                 <div class="copy-container" ng-class="{'show-copies':searchCtrl.types.object[type].showCopies}">
                                     <div class="well well-sm">
                                         <header class="page-header">
-                                            <h1>{{results.object_results[type][searchCtrl.types.object[type].selectedWork][0].title}}</h1>
+                                            <h1>{{objectResults[type][searchCtrl.types.object[type].selectedWork][0].title}}</h1>
                                             <button class="close-copies"><span class="glyphicon glyphicon-remove" ng-click="searchCtrl.closeCopies(type)"></span></button>
                                         </header>
-                                        <div class="row" ng-repeat="copy in results.object_results[type][searchCtrl.types.object[type].selectedWork][2]">
+                                        <div class="row" ng-repeat="copy in objectResults[type][searchCtrl.types.object[type].selectedWork][2]">
                                             <div class="col-xs-12 objects-in-copy">
                                                     <h4>
                                                         <a href="/blake/copy/{{copy[0].bad_id}}">Copy {{copy[0].archive_copy_id}}, {{copy[0].composition_date}}</a>
@@ -150,15 +150,15 @@
 
                 <!-- WORK TITLE -->
                 <div ng-show="searchConfig.searchTitle == true">
-                    <h3>Works with a matching title ({{ results.work_results.title.count}} results)</h3>
+                    <h3>Works with a matching title ({{ workResults.title.count}} results)</h3>
 
-                    <div ng-show="results.work_results.title.count == 0">
+                    <div ng-show="workResults.title.count == 0">
                         No Results Found
                     </div>
                     <div class="row search-result-row">
                         <div class="col-xs-12">
                             <slide-box>
-                                <div ng-repeat="work in results.work_results.title.results" class="search-result-item">
+                                <div ng-repeat="work in workResults.title.results" class="search-result-item">
                                     <div class="handprint-block">
                                         <a href="/blake/work/{{ work.bad_id }}">
                                             <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work.image }}.100.jpg);"></span>
@@ -181,17 +181,17 @@
 
                 <!-- WORK INFO -->
                 <div ng-show="searchConfig.searchWorkInformation == true">
-                    <h3>Works with matching work information or notes ({{ results.work_results.info.count}}
+                    <h3>Works with matching work information or notes ({{ workResults.info.count}}
                         results)</h3>
 
-                    <div ng-show="results.work_results.info.count == 0">
+                    <div ng-show="workResults.info.count == 0">
                         No Results Found
                     </div>
 
                     <div class="row search-result-row">
                         <div class="col-xs-12">
                             <slide-box>
-                                <div ng-repeat="work in results.work_results.info.results" class="search-result-item">
+                                <div ng-repeat="work in workResults.info.results" class="search-result-item">
                                     <div class="handprint-block">
                                         <a href="/blake/work/{{ work.bad_id }}">
                                             <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work.image }}.100.jpg);"></span>
