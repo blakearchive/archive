@@ -37,7 +37,9 @@
             scope: {
                 copy: '=copy',
                 work: '=work',
-                changeObject: '&'
+                changeObject: '&',
+                resetView: '&',
+                resetCompare: '&'
             },
             controllerAs: 'read',
             bindToController: true

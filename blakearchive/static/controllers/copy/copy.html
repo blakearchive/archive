@@ -3,11 +3,11 @@
         <info-tray toggle="copyCtrl.toggleTray()" ng-if="copyCtrl.$storage.view.mode != 'read'"></info-tray>
         <div id="object-view" ng-class="{'show-tools': copyCtrl.showTools, 'hide-tools': !copyCtrl.showTools,'view-objects': copyCtrl.$storage.view.mode == 'object','reading-view': copyCtrl.$storage.view.mode == 'read','compare-objects': copyCtrl.$storage.view.mode == 'compare'}">
 
-            <object-viewer copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)"  ng-if="copyCtrl.$storage.view.mode == 'object'"></object-viewer>
+            <object-viewer copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)" reset-compare="copyCtrl.resetComparisonObjects(object)" ng-if="copyCtrl.$storage.view.mode == 'object'"></object-viewer>
 
-            <object-compare copy="copyCtrl.copy" work="copyCtrl.work" change-copy="copyCtrl.changeCopy(copy_bad_id,object_id,reset)" change-view="copyCtrl.changeToObjectView()" ng-if="copyCtrl.$storage.view.mode == 'compare'"></object-compare>
+            <object-compare copy="copyCtrl.copy" work="copyCtrl.work" change-copy="copyCtrl.changeCopy(copy_bad_id,object_id,reset)" reset-view="copyCtrl.resetView()" ng-if="copyCtrl.$storage.view.mode == 'compare'"></object-compare>
 
-            <object-reading copy="copyCtrl.copy" work="copyCtrl.work" ng-if="copyCtrl.$storage.view.mode == 'read'"></object-reading>
+            <object-reading copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)"  reset-view="copyCtrl.resetView()" reset-compare="copyCtrl.resetComparisonObjects(object)" ng-if="copyCtrl.$storage.view.mode == 'read'"></object-reading>
 
             <!--Edit buttons-->
             <div id="object-tools">
@@ -29,5 +29,5 @@
     </div>
 </div>
 <div id="archive-tabs" role="tabpanel">
-    <copy-tabs copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)"></copy-tabs>
+    <copy-tabs copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)" reset-view="copyCtrl.resetView()" reset-compare="copyCtrl.resetComparisonObjects(object)"></copy-tabs>
 </div>
