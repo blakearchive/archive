@@ -10,7 +10,7 @@
             <object-reading copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)"  reset-view="copyCtrl.resetView()" reset-compare="copyCtrl.resetComparisonObjects(object)" ng-if="copyCtrl.$storage.view.mode == 'read'"></object-reading>
 
             <!--Edit buttons-->
-            <div id="object-tools">
+            <div id="object-tools" toggle="copyCtrl.toggleTools()" ng-if="copyCtrl.$storage.view.mode != 'read'">
                 <div id="object-tools-inner">
                     <div class="btn-group edit-object" role="group">
                         <button type="button" class="btn btn-default add-lightbox"><span class="edit-icon"></span> Add To Lightbox</button>
@@ -28,6 +28,6 @@
 
     </div>
 </div>
-<div id="archive-tabs" role="tabpanel">
+<div id="archive-tabs" role="tabpanel" toggle="copyCtrl.toggleArchiveTabs()" ng-if="copyCtrl.$storage.view.mode != 'read'" class="ng-hide" ng-hide="hideArchiveTabs">
     <copy-tabs copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)" reset-view="copyCtrl.resetView()" reset-compare="copyCtrl.resetComparisonObjects(object)"></copy-tabs>
 </div>
