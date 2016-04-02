@@ -5,13 +5,13 @@
                     <a href="" ng-click="tabs.showTab('#objects-in-copy')" role="tab">Objects in {{ tabs.getCopyOrGroup() }}</a>
                 </li>
                 <li role="presentation" ng-if="tabs.copy.selectedObject.matrix.length > 0" ng-class="{active:tabs.selectedTab == '#objects-from-same-matrix'}">
-                    <a href="" ng-click="tabs.showTab('#objects-from-same-matrix')" role="tab">Objects from same Matrix</a>
+                    <a href="" ng-click="tabs.showTab('#objects-from-same-matrix')" role="tab">Objects from the Same Matrix</a>
                 </li>
                 <li role="presentation" ng-if="tabs.copy.selectedObject.sequence.length > 0" ng-class="{active:tabs.selectedTab == '#objects-from-same-production-sequence'}">
-                    <a href="" ng-click="tabs.showTab('#objects-from-same-production-sequence')" role="tab">Objects from same Production Sequence</a>
+                    <a href="" ng-click="tabs.showTab('#objects-from-same-production-sequence')" role="tab">Objects from the Same Production Sequence</a>
                 </li>
                 <li role="presentation" ng-if="tabs.copy.selectedObject.motif.length > 0" ng-class="{active:tabs.selectedTab == '#objects-with-same-motif'}">
-                    <a href="" ng-click="tabs.showTab('#objects-with-same-motif')" role="tab">Objects from same Motif</a>
+                    <a href="" ng-click="tabs.showTab('#objects-with-same-motif')" role="tab">Objects with the Same Motif</a>
                 </li>
                 <li role="presentation" ng-class="{active:tabs.selectedTab == '#copy-info'}">
                     <a href="" ng-click="tabs.showTab('#copy-info')" role="tab">Copy Information</a>
