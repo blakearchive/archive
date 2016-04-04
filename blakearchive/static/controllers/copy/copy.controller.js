@@ -92,7 +92,6 @@
 
         vm.trayOpen = false;
         vm.showTools = true;
-        vm.hideArchiveTabs = true;
 
         vm.toggleTray = function(){
             vm.trayOpen = !vm.trayOpen;
@@ -103,9 +102,6 @@
             $scope.$broadcast('copyCtrl::toggleTools',{tools:vm.showTools});
         }
 
-        vm.toggleArchiveTabs = function(){
-            vm.showArchiveTabs = !vm.showArchiveTabs;
-        }
 
         vm.newWindow = function(object){
             $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?objectId='+object.object_id, '_blank','width=800, height=600');
