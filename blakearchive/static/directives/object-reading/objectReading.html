@@ -6,11 +6,11 @@
             <div class="item" ng-repeat="o in read.copy.objectsInCopy">
                 <div class="reading-wrapper flex" object-window adjust="270">
                     <div class="object-img-container" ng-class="{hidden: read.$storage.view.scope == 'text'}">
-                        <img ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" ng-dblclick="read.changeObject({object:o}); read.resetView(); read.resetCompare({object:o})">
+                        <img ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" ng-click="read.changeObject({object:o}); read.resetView(); read.resetCompare({object:o})">
                     </div>
                     <div class="reading-copy" ng-class="{hidden:read.$storage.view.scope == 'image'}">
                         <div class="reading-copy-inner">
-                            <h4 class="text-capitalize">{{ read.getOvpSubtitle(o) }}</h4>
+                            <h4 class="text-capitalize" ng-click="read.changeObject({object:o}); read.resetView(); read.resetCompare({object:o})">{{ read.getOvpSubtitle(o) }}</h4>
                             <text-transcription object="o"></text-transcription>
                         </div>
                     </div>
