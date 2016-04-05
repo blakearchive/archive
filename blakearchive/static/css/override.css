@@ -492,7 +492,7 @@ a.select-all-objects{
         margin-top: 35px;
     }
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
     #object-detail-tray{
         margin-top: 0;
     }

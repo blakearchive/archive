@@ -5,7 +5,7 @@
 
         <div class="carousel-inner" role="listbox">
             <div class="item col-xs-12 col-md-8 col-md-offset-2" ng-repeat="obj in viewer.copy.objectsInCopy track by $index" ng-class="{active: obj == viewer.copy.selectedObject}">
-                <div class="flex" object-window adjust="320">
+                <div class="flex" object-window adjust="270">
                     <div class="object-img-container" ng-class="{hidden: viewer.$storage.view.scope == 'text'}">
                         <img src="http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg" class="ovp-image" ng-style="obj.transform.style">
                     </div>
