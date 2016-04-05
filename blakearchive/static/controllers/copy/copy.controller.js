@@ -73,6 +73,9 @@
 
         vm.changeObject = function(object){
             $location.search('objectId',object.object_id);
+            $('html, body').animate({
+                scrollTop: 0
+            }, 'slow');
         };
 
         vm.setObject = function(object_id){
