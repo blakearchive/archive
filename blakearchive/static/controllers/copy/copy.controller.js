@@ -90,7 +90,7 @@
             vm.setObject(v.params.objectId);
         });
 
-        vm.trayOpen = false;
+        vm.trayOpen = angular.isDefined($routeParams.open) ? true : false;
         vm.showTools = true;
 
         vm.toggleTray = function(){
