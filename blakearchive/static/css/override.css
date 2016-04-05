@@ -12,6 +12,9 @@ body {
   background-color: #222222;
   padding-top:50px;
 }
+#archive #object-view .btn-group.edit-object .btn.btn-default.generateCitation .edit-icon {
+    background-position: center -250px;
+}
 
 /*
  * Image Waterfall
@@ -458,4 +461,39 @@ a.select-all-objects{
 #search .copy-container .objects-in-copy h4{
     margin-top: 0px;
     padding-left: 20px;
+}
+.highlighted{
+    font-size: 1.5em;
+    background-color: #F7FF00;
+    color: #000;
+}
+
+/***********
+* Image Manipulation
+*************/
+.ovp-image{
+    -webkit-transition: 300ms ease all;
+    -moz-transition: 300ms ease all;
+    -o-transition: 300ms ease all;
+    transition: 300ms ease all;
+}
+.ovp-image{
+    max-width: 100%;
+}
+
+/***************
+* Responsive Fixes
+*****************/
+#object-detail-tray{
+    margin-top: 108px;
+}
+@media (min-width: 601px) {
+    #object-detail-tray{
+        margin-top: 35px;
+    }
+}
+@media (min-width: 992px) {
+    #object-detail-tray{
+        margin-top: 0;
+    }
 }

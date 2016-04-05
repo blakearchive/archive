@@ -8,6 +8,8 @@
 
         var vm = this;
 
+        vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
+
         BlakeDataService.setSelectedWork($routeParams.workId).then(function(){
             vm.work = BlakeDataService.selectedWork;
             var workVars = getWorkTypeVars(vm.work.medium);
