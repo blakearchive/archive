@@ -9,90 +9,90 @@
         <dl>
 
             <dt>Title:</dt>
-            <dd>{{ info.getHeader().filedesc.titlestmt.title.main['#text'] }}</dd>
+            <dd ng-bind-html=" info.getHeader().filedesc.titlestmt.title.main['#text'] | highlight:info.searchTerm"></dd>
 
             <div ng-repeat="origination in info.getSource().objdescid.origination track by $index">
                 <dt>Origination:</dt>
-                <dd>{{ origination['#text'] }}: {{ getOriginationRole(origination['role']) }}</dd>
+                <dd><span ng-bind-html="origination['#text'] | highlight:info.searchTerm"></span>: <span ng-bind-html="getOriginationRole(origination['role']) | highlight:info.searchTerm"></span></dd>
                 <div ng-if="origination.note">
                     <dt>Note:</dt>
-                    <dd>{{ origination.note['#text'] }}</dd>
+                    <dd ng-bind-html="origination.note['#text'] | highlight:info.searchTerm"></dd>
                 </div>
             </div>
 
             <dt>Publisher:</dt>
-            <dd>{{ info.getSource().objdescid.imprint.publisher['#text'] }}</dd>
+            <dd ng-bind-html="info.getSource().objdescid.imprint.publisher['#text'] | highlight:info.searchTerm"></dd>
             <div ng-if="info.getSource().objdescid.imprint.publisher.note">
         <dt>Note:</dt>
-        <dd>{{ info.getSource().objdescid.imprint.publisher.note['#text'] }}</dd>
+        <dd ng-bind-html="info.getSource().objdescid.imprint.publisher.note['#text'] | highlight:info.searchTerm"></dd>
       </div>
       <dt>Place of Publication:</dt>
-      <dd>{{ info.getSource().objdescid.imprint.pubplace['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objdescid.imprint.pubplace['#text'] | highlight:info.searchTerm"></dd>
       <div ng-if="info.getSource().objdescid.imprint.pubplace.note">
         <dt>Note:</dt>
-        <dd>{{ info.getSource().objdescid.imprint.pubplace.note['#text'] }}</dd>
+        <dd ng-bind-html="info.getSource().objdescid.imprint.pubplace.note['#text'] | highlight:info.searchTerm"></dd>
       </div>
       <dt>Date:</dt>
-      <dd>{{ info.getSource().objdescid.imprint.date['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objdescid.imprint.date['#text'] | highlight:info.searchTerm"></dd>
       <dt>Composition Date:</dt>
-      <dd>{{ info.getSource().objdescid.compdate['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objdescid.compdate['#text'] | highlight:info.searchTerm"></dd>
       <div ng-if="copy.print_date">
       <dt>Print Date:</dt>
-      <dd>{{ copy.print_date }}</dd>
+      <dd ng-bind-html="copy.print_date | highlight:info.searchTerm"></dd>
         </div>
       <dt>Number of Objects:</dt>
-      <dd>{{ info.getSource().objinfo.numberobj['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.numberobj['#text'] | highlight:info.searchTerm"></dd>
       <dt>Object Order:</dt>
-      <dd>{{ info.getSource().objinfo.objorder['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.objorder['#text'] | highlight:info.searchTerm"></dd>
       <dt>Object Size:</dt>
-      <dd>{{ info.getSource().objinfo.objsize['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.objsize['#text'] | highlight:info.searchTerm"></dd>
       <dt>Number of Leaves:</dt>
-      <dd>{{ info.getSource().objinfo.numberleaves['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.numberleaves['#text'] | highlight:info.searchTerm"></dd>
       <div ng-if="info.getSource().objinfo.numberleaves.note">
         <dt>Note:</dt>
-        <dd>{{ info.getSource().objinfo.numberleaves.note['#text'] }}</dd>
+        <dd ng-bind-html="info.getSource().objinfo.numberleaves.note['#text'] | highlight:info.searchTerm"></dd>
       </div>
       <dt>Leaf Size:</dt>
-      <dd>{{ info.getSource().objinfo.leafsize['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.leafsize['#text'] | highlight:info.searchTerm"></dd>
       <dt>Medium:</dt>
-      <dd>{{ info.getSource().objinfo.medium['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.medium['#text'] | highlight:info.searchTerm"></dd>
       <div ng-if="info.getSource().objinfo.medium.note">
         <dt>Note:</dt>
-        <dd>{{ info.getSource().objinfo.medium.note['#text'] }}</dd>
+        <dd ng-bind-html="info.getSource().objinfo.medium.note['#text'] | highlight:info.searchTerm"></dd>
       </div>
       <dt>Printing Style:</dt>
-      <dd>{{ info.getSource().objinfo.printingstyle['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.printingstyle['#text'] | highlight:info.searchTerm"></dd>
       <div ng-if="info.getSource().objinfo.printingstyle.note">
         <dt>Note:</dt>
-        <dd>{{ info.getSource().objinfo.printingstyle.note['#text'] }}</dd>
+        <dd ng-bind-html="info.getSource().objinfo.printingstyle.note['#text'] | highlight:info.searchTerm"></dd>
       </div>
       <dt>Ink Color:</dt>
-      <dd>{{ info.getSource().objinfo.inkcolor['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.inkcolor['#text'] | highlight:info.searchTerm"></dd>
       <div ng-if="info.getSource().objinfo.inkcolor.note">
         <dt>Note:</dt>
-        <dd>{{ info.getSource().objinfo.inkcolor.note['#text'] }}</dd>
+        <dd ng-bind-html="info.getSource().objinfo.inkcolor.note['#text'] | highlight:info.searchTerm"></dd>
       </div>
       <dt>Support:</dt>
-      <dd>{{ info.getSource().objinfo.support['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.support['#text'] | highlight:info.searchTerm"></dd>
       <dt>Watermark:</dt>
-      <dd>{{ info.getSource().objinfo.support['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.support['#text'] | highlight:info.searchTerm"></dd>
       <dt>Etched Numbers:</dt>
-      <dd>{{ info.getSource().objinfo.etchednumbers['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.etchednumbers['#text'] | highlight:info.searchTerm"></dd>
       <dt>Penned Numbers:</dt>
-      <dd>{{ info.getSource().objinfo.pennednumbers['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.pennednumbers['#text'] | highlight:info.searchTerm"></dd>
       <dt>Frame Lines:</dt>
-      <dd>{{ info.getSource().objinfo.framelines['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.framelines['#text'] | highlight:info.searchTerm"></dd>
       <dt>Binding:</dt>
-      <dd>{{ info.getSource().objinfo.binding['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.binding['#text'] | highlight:info.searchTerm"></dd>
       <div ng-if="info.getSource().objinfo.binding.note">
         <dt>Note:</dt>
-        <dd>{{ info.getSource().objinfo.binding.note['#text'] }}</dd>
+        <dd ng-bind-html="info.getSource().objinfo.binding.note['#text'] | highlight:info.searchTerm"></dd>
       </div>
       <dt>Stab Holes:</dt>
-      <dd>{{ info.getSource().objinfo.stabholes['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().objinfo.stabholes['#text'] | highlight:info.searchTerm"></dd>
       <div ng-if="info.getSource().objinfo.binding.note">
         <dt>Note:</dt>
-        <dd>{{ info.getSource().objinfo.stabholes.note['#text'] }}</dd>
+        <dd ng-bind-html="info.getSource().objinfo.stabholes.note['#text'] | highlight:info.searchTerm"></dd>
       </div>
     </dl>
   </div>
@@ -101,41 +101,42 @@
     <h3>Provenance</h3>
     <dl class="dl-horizontal">
       <dt>Name:</dt>
-      <dd>{{ info.getSource().provenance.name['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().provenance.name['#text'] | highlight:info.searchTerm"></dd>
       <dt>Date:</dt>
-      <dd>{{ info.getSource().provenance.date['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().provenance.date['#text'] | highlight:info.searchTerm"></dd>
       <dt>Dealer:</dt>
-      <dd>{{ info.getSource().provenance.dealer['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().provenance.dealer['#text'] | highlight:info.searchTerm"></dd>
       <dt>Price:</dt>
-      <dd>{{ info.getSource().provenance.price['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().provenance.price['#text'] | highlight:info.searchTerm"></dd>
       <div ng-if="info.getSource().provenance.note">
         <dt>Note:</dt>
-        <dd>{{ info.getSource().provenance.note['#text'] }}</dd>
+        <dd ng-bind-html="info.getSource().provenance.note['#text'] | highlight:info.searchTerm"></dd>
       </div>
     </dl>
 
     <h3>Present Location</h3>
     <dl class="dl-horizontal">
       <dt>Mailing Address:</dt>
-      <dd>{{ info.getSource().repository.institution['#text'] }}<br>
-        {{ info.getSource().repository.addressline[0]['#text'] }}<br>
-        {{ info.getSource().repository.addressline[1]['#text'] }}<br>
-        {{ info.getSource().repository.addressline[2]['#text'] }}
+      <dd>
+        <span ng-bind-html="info.getSource().repository.institution['#text'] | highlight:info.searchTerm"></span><br>
+        <span ng-bind-html="info.getSource().repository.addressline[0]['#text']| highlight:info.searchTerm"></span><br>
+        <span ng-bind-html="info.getSource().repository.addressline[1]['#text'] | highlight:info.searchTerm"></span><br>
+        <span ng-bind-html="info.getSource().repository.addressline[2]['#text'] | highlight:info.searchTerm"></span>
       </dd>
       <dt>Telephone:</dt>
-      <dd>{{ info.getSource().repository.addressline[3]['#text'].split(': ')[1] }}</dd>
+      <dd ng-bind-html="info.getSource().repository.addressline[3]['#text'].split(': ')[1] | highlight:info.searchTerm"></dd>
       <dt>Fax:</dt>
-      <dd>{{ info.getSource().repository.addressline[4]['#text'].split(': ')[1] }}</dd>
+      <dd ng-bind-html="info.getSource().repository.addressline[4]['#text'].split(': ')[1] | highlight:info.searchTerm"></dd>
       <dt>Email:</dt>
-      <dd>{{ info.getSource().repository.addressline[5]['#text'].split(': ')[1] }}</dd>
+      <dd ng-bind-html="info.getSource().repository.addressline[5]['#text'].split(': ')[1] | highlight:info.searchTerm"></dd>
       <dt>URL:</dt>
-      <dd>{{ info.getSource().repository.addressline[6]['#text'].split(': ')[1] }}</dd>
+      <dd ng-bind-html="info.getSource().repository.addressline[6]['#text'].split(': ')[1] | highlight:info.searchTerm"></dd>
       <dt>Department:</dt>
-      <dd>{{ info.getSource().repository.department['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().repository.department['#text'] | highlight:info.searchTerm"></dd>
       <dt>Collection:</dt>
-      <dd>{{ info.getSource().repository.collection['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().repository.collection['#text'] | highlight:info.searchTerm"></dd>
       <dt>{{ info.getSource().repository.repositoryid['@label'] }}:</dt>
-      <dd>{{ info.getSource().repository.repositoryid['#text'] }}</dd>
+      <dd ng-bind-html="info.getSource().repository.repositoryid['#text'] | highlight:info.searchTerm"></dd>
     </dl>
   </div>
 </div>

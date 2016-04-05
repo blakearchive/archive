@@ -102,7 +102,7 @@
         vm.checkSelected = function(obj){
             angular.forEach($sessionStorage.comparisonObjects,function(v,k){
                 if(angular.isDefined(obj)){
-                    if(v.object_id ==obj.object_id){
+                    if(v.object_id == obj.object_id){
                         obj.Selected = true;
                     }
                 }

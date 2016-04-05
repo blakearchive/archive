@@ -181,6 +181,11 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 });
                 obj.header = angular.fromJson(config.header);
                 obj.source = angular.fromJson(config.source);
+                obj.transform = {
+                    'rotate':0,
+                    'scale':1,
+                    'style': {}
+                }
 
                 return obj;
             }
@@ -664,37 +669,16 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         }
 
     }])
-    .directive('copyImage', ['WindowSize', '$rootScope', function (WindowSize) {
-        var link = function (scope, element, attrs) {
-
-            scope.setStyles = function (windowSize) {
-                var newHeight = (windowSize.height - 270);
-                element.height(newHeight);
-            }
-
-            element.on('load', function () {
-                scope.setStyles(WindowSize);
-            })
-
-            scope.$on('resize::resize', function (e, w) {
-                scope.setStyles(w)
-            });
-            scope.$on('copyCtrl::toggleTools', function (e, d) {
-                var adjustment = d.tools == true ? -50 : 50;
-                element.height(element.height() + adjustment);
-            })
-        };
-        return {
-            restrict: 'A',
-            link: link
-        };
-    }])
     .directive('objectWindow', ['WindowSize', '$rootScope', function (WindowSize) {
         var link = function (scope, element, attrs) {
 
             scope.setStyles = function (windowSize) {
-                var newHeight = (windowSize.height - scope.adjust);
-                element.height(newHeight);
+                if(WindowSize.width <= 992){
+                    element.height('auto');
+                } else {
+                    var newHeight = (windowSize.height - scope.adjust);
+                    element.height(newHeight);
+                }
             }
 
             scope.setStyles(WindowSize);
@@ -709,41 +693,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             scope: {
                 'adjust': '@'
             }
-        };
-    }])
-
-    .directive('comparisonImage', ['WindowSize', function (WindowSize) {
-        var link = function (scope, element, attrs) {
-
-            var baseAdjustment = 270;
-
-            scope.setStyles = function (windowSize, adjustment) {
-                var elementHeight = element.height(),
-                    elementWidth = element.width(),
-                    ratio = elementWidth / elementHeight,
-                    newHeight = (windowSize.height - adjustment),
-                    newWidth = Math.ceil(newHeight * ratio);
-                element.css('height', newHeight);
-                element.parent().css('width', newWidth);
-            }
-
-            element.on('load', function () {
-                scope.setStyles(WindowSize, baseAdjustment);
-            })
-
-            scope.$on('resize::resize', function (e, w) {
-                scope.setStyles(w, baseAdjustment)
-            });
-
-            scope.$on('compareCtrl::toggleTools', function (e, d) {
-                var adjustment = d.tools == true ? baseAdjustment : baseAdjustment - 112;
-                scope.setStyles(WindowSize, adjustment)
-            })
-
-        };
-        return {
-            restrict: 'A',
-            link: link
         };
     }])
 
@@ -770,11 +719,50 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
      ***/
 
     .directive('parallax', function ($window) {
-        return function (scope, element, attrs) {
+        return function (scope, element, attr) {
             angular.element($window).bind("scroll", function () {
                 scope.$broadcast('scroll::scroll', {'offset': this.pageYOffset});
             });
         };
+    })
+    .directive('scrollToTop',function(){
+        var link = function(scope,element,attr) {
+            element.on('click',function(){
+                $('html, body').animate({scrollTop: 0}, 'slow');
+            })
+        }
+        return{
+            restrict: 'A',
+            link: link
+        }
+    })
+    .directive('toTopButton',function($window){
+        var link = function(scope,element,attr){
+            angular.element($window).bind("scroll",function(){
+                if(this.pageYOffset > 50){
+                    element.addClass('scrolling')
+                } else {
+                    element.removeClass('scrolling')
+                }
+            })
+        }
+        return{
+            restrict: 'A',
+            link: link
+        }
+    })
+
+    .filter('highlight',function($sce){
+        return function(text,phrase){
+            if(angular.isDefined(text)){
+                if(phrase){
+                    text = text.replace(new RegExp('('+phrase+')','gi'),'<span class="highlighted">$1</span>');
+                    return $sce.trustAsHtml(text);
+                } else {
+                    return $sce.trustAsHtml(text);
+                }
+            }
+        }
     })
 
     .controller("ObjectController", ['$scope', '$routeParams', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
