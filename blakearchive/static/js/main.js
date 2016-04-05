@@ -181,6 +181,11 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 });
                 obj.header = angular.fromJson(config.header);
                 obj.source = angular.fromJson(config.source);
+                obj.transform = {
+                    'rotate':0,
+                    'scale':1,
+                    'style': {}
+                }
 
                 return obj;
             }

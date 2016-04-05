@@ -6,6 +6,9 @@ body {
   background-color: #222222;
   padding-top:50px;
 }
+#archive #object-view .btn-group.edit-object .btn.btn-default.generateCitation .edit-icon {
+    background-position: center -250px;
+}
 
 /*
  * Image Waterfall
@@ -459,6 +462,18 @@ a.select-all-objects{
     color: #000;
 }
 
+/***********
+* Image Manipulation
+*************/
+.ovp-image{
+    -webkit-transition: 300ms ease all;
+    -moz-transition: 300ms ease all;
+    -o-transition: 300ms ease all;
+    transition: 300ms ease all;
+}
+.ovp-image{
+    max-width: 100%;
+}
 
 /***************
 * Responsive Fixes
