@@ -4,7 +4,7 @@
         var vm = this;
 
         vm.firstLine = 1;
-        vm.adjust = 194;
+        vm.adjust = 150;
         vm.panelAdjust = 53;
         vm.scrollBarHeight = 7;
 
