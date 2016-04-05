@@ -21,7 +21,6 @@
         }
 
         vm.trayPixels = ( WindowSize.height - vm.adjust );
-        console.log(WindowSize.height);
         if(WindowSize.width <= 992){
             vm.trayHeight = 0
         } else {
