@@ -1,4 +1,4 @@
-<div id="archive" class="container-fluid archive-top">
+<div id="archive" class="container-fluid archive-top" object-window adjust="193">
     <div id="object-container" class="row" ng-class="copyCtrl.trayOpen ? 'tray-open' : 'tray-closed'">
         <info-tray toggle="copyCtrl.toggleTray()" ng-if="copyCtrl.$storage.view.mode != 'read'"></info-tray>
         <div id="object-view" ng-class="{'show-tools': copyCtrl.showTools, 'hide-tools': !copyCtrl.showTools,'view-objects': copyCtrl.$storage.view.mode == 'object','reading-view': copyCtrl.$storage.view.mode == 'read','compare-objects': copyCtrl.$storage.view.mode == 'compare'}">

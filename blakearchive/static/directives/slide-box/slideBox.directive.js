@@ -10,7 +10,7 @@
 
 (function(){
 
-    var controller = function($scope,$element,$attrs){
+    var controller = function($scope,$element,$attrs,$timeout){
 
         var vm = this;
 
@@ -34,6 +34,7 @@
         };
 
         var widthOfHidden = function(){
+            vm.viewport = $element.children('.slide-box-viewport');
             return ((vm.viewport.outerWidth())-widthOfList()-vm.leftOffset)-vm.scrollBarWidths;
         };
 
@@ -56,6 +57,10 @@
         reAdjust();
 
         $scope.$on('resize::resize', function (e, w) {
+            reAdjust();
+        });
+
+        $scope.$on('searchCtrl::newSearch', function (e, w) {
             reAdjust();
         });
 
@@ -88,7 +93,6 @@
     }
 
     var link = function (scope, element, attrs) {
-        //console.log(element.children('.slidebox-test').children());
 
     }
 
@@ -97,7 +101,7 @@
                 //replace: true,
                 transclude: true,
                 restrict: 'AE',
-                //scope: false,
+                scope: false,
                 controller: controller,
                 controllerAs: 'slideBox',
                 bindToController: true,

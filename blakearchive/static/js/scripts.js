@@ -192,7 +192,7 @@
     // Set the scroller and reset on browser resize.
     // -------------------------------------------------------------------
 
-    $('.scrollbar').scroller({
+    /*$('.scrollbar').scroller({
       customClass: 'advanced',
       trackMargin: 10,
       // handleSize: 40,
@@ -201,12 +201,12 @@
 
     $(window).on('resize', response_change.waitForIdle(function() {
       $('.scrollbar').scroller('reset');
-    }, 100));
+    }, 100));*/
 
 
     // Back to top scroll arrow.
     // -------------------------------------------------------------------
-    var back_top = $('.back-top');
+    /*var back_top = $('.back-top');
 
     if ( back_top.length ) {
       back_top.on('click', function() {
@@ -223,7 +223,7 @@
           back_top.removeClass('scrolling');
         }
       });
-    }
+    }*/
 
 
     // Parallax scroll the homepage panels.
