@@ -139,7 +139,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 obj.text = angular.fromJson(config.text);
                 obj.notes = angular.fromJson(config.notes);
                 obj.lines = [];
-                if (angular.isObject(obj.text)) {
+                /*if (angular.isObject(obj.text)) {
                     if (angular.isDefined(obj.text.texthead)) {
                         parseObjectLines(obj.text.texthead, obj.lines, 'header', 0);
                     }
@@ -178,7 +178,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                         return -1;
                     }
                     return 0;
-                });
+                });*/
                 obj.header = angular.fromJson(config.header);
                 obj.source = angular.fromJson(config.source);
                 obj.transform = {
