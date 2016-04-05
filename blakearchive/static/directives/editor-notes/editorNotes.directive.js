@@ -1,8 +1,12 @@
 (function(){
 
-    var controller = function(){
+    var controller = function($routeParams){
         var vm = this;
+
+        vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
     }
+
+    controller.$inject = ['$routeParams'];
 
     var editorNotes = function(){
         return {

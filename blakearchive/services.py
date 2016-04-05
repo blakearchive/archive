@@ -18,7 +18,7 @@ elif hasattr(config, "solr") and config.solr == "lib_dev":
     blake_work_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-work')
 elif hasattr(config, "solr") and config.solr == "local":
      blake_object_solr = pysolr.Solr('http://localhost:8983/solr/blake_object')
-     blake_copy_solr = pysolr.Solr('http://localhost:8983/solr/blake-copy')
+     blake_copy_solr = pysolr.Solr('http://localhost:8983/solr/blake_copy')
      blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake_work')
 else:
     blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-object')
@@ -113,7 +113,11 @@ class BlakeDataService(object):
 
     @classmethod
     def query_copies(cls, config):
-        results = {"title": [], "copy_information": []}
+        # results = {"title": [], "copy_information": []}
+        results = {
+            "title": {"count": 0, "results": []},
+            "copy_information": {"count": 0, "results": []}
+        }
         if config.get("searchTitle"):
             offset = config.get("copyTitleOffset", 0)
             search_string = cls.generate_search_element("title", config)
