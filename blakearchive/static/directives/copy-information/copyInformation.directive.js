@@ -4,9 +4,11 @@
 
 (function() {
 
-    var controller = function ($scope, BlakeDataService) {
+    var controller = function ($scope, BlakeDataService, $routeParams) {
 
         var vm = this;
+
+        vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
 
         vm.getHeader = function(){
             if(angular.isDefined(vm.copy)){
@@ -61,7 +63,7 @@
         }
     }
 
-    controller.$inject = ['$scope', 'BlakeDataService'];
+    controller.$inject = ['$scope', 'BlakeDataService', '$routeParams'];
 
     var copyInformation = function(){
         return {

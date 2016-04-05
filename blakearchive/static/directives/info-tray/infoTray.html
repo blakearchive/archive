@@ -3,7 +3,7 @@
     <div id="object-detail-tray-inner">
 
         <accordion close-others="true" id="object-detail-tray-accordion">
-            <accordion-group id="textual-transcription">
+            <accordion-group id="textual-transcription" is-open="tray.open.text">
                 <div ng-style="{'max-height': tray.trayBodyHeight}">
                     <accordion-heading>
                         Textual Transcription
@@ -13,7 +13,7 @@
                 </div>
             </accordion-group>
 
-            <accordion-group id="illustration-description">
+            <accordion-group id="illustration-description" is-open="tray.open.desc">
               <div ng-style="{'max-height': tray.trayBodyHeight}">
                   <accordion-heading>
                       Illustration Description
@@ -24,7 +24,7 @@
               </div>
             </accordion-group>
 
-            <accordion-group id="editors-notes">
+            <accordion-group id="editors-notes" is-open="tray.open.notes">
               <div ng-style="{'max-height': tray.trayBodyHeight}">
                   <accordion-heading>
                       Editors’ Notes
@@ -35,7 +35,7 @@
               </div>
             </accordion-group>
 
-            <accordion-group id="object-metadata">
+            <accordion-group id="object-metadata" is-open="tray.open.meta">
               <div ng-style="{'max-height': tray.trayBodyHeight}">
                   <accordion-heading>
                       Object Meta Data
@@ -46,7 +46,7 @@
               </div>
             </accordion-group>
 
-            <accordion-group id="object-tei">
+            <accordion-group id="object-tei" is-open="tray.open.tei">
               <div ng-style="{'max-height': tray.trayBodyHeight}">
                   <accordion-heading>
                       TEI Markup
