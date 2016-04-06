@@ -8,7 +8,7 @@
 
         var vm = this;
 
-        $rootScope.showSubMenu = 1;
+        $rootScope.showSubMenu = 0;
         //$localStorage.$reset();
 
         vm.columns = {

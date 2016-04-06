@@ -3,15 +3,13 @@
  */
 (function () {
 
-    var controller = function ($scope, $localStorage, BlakeDataService) {
+    var controller = function ($scope, $localStorage, BlakeDataService,$routeParams) {
 
         var vm = this;
 
         vm.showTab = function (id) {
             vm.selectedTab = id;
         }
-
-        vm.selectedTab = '#objects-in-copy';
 
         vm.getHeader = function(){
             if(angular.isDefined(vm.copy)){
@@ -48,12 +46,13 @@
         }
 
         $scope.$on('copyCtrl::objectChanged',function(){
+            vm.selectedTab = angular.isDefined($routeParams.tab) ? '#'+$routeParams.tab : '#objects-in-copy';
             vm.selectedTab = '#objects-in-copy';
         });
 
     }
 
-    controller.$inject = ['$scope','$localStorage', 'BlakeDataService'];
+    controller.$inject = ['$scope','$localStorage', 'BlakeDataService','$routeParams'];
 
     var copyTabs = function() {
         return {
