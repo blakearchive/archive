@@ -1,16 +1,16 @@
 <p><strong>Sector CD<br>
     Plate Illustration:</strong></p>
 
-<p>{{ descCtrl.object.illustration_description.illusobjdesc['#text'] }}</p>
+<p ng-bind-html="descCtrl.object.illustration_description.illusobjdesc['#text'] | highlight:descCtrl.searchTerm"></p>
 
 <div ng-repeat="component in descCtrl.object.components track by $index">
     <p><strong>Component (Sector {{ component.component['@location'] }})</strong></p>
 
     <p class="keywords">Keywords:
     <ul class="list-inline">
-        <li ng-repeat="characteristic in component.component.characteristic track by $index">{{ characteristic["#text"] }}</li>
+        <li ng-repeat="characteristic in component.component.characteristic track by $index"><span ng-bind-html="characteristic['#text'] | highlight:descCtrl.searchTerm"></span></li>
     </ul>
     </p>
 
-    <p>{{ component.component.illusobjdesc['#text'] }}</p>
+    <p ng-bind-html="component.component.illusobjdesc['#text'] | highlight:descCtrl.searchTerm"></p>
 </div>
