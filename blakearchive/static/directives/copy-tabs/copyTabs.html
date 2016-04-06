@@ -33,7 +33,7 @@
                     <div class="row">
                         <div ng-repeat="obj in tabs.copy.objectsInCopy track by $index" class="col-sm-6 col-md-3">
                             <div class="handprint-block">
-                                <a ng-click="tabs.changeObject({object:obj}); tabs.resetView(); tabs.resetCompare({object:obj})">
+                                <a ng-click="tabs.changeObject({object:obj}); tabs.resetView(); tabs.resetCompare({object:obj})" scroll-to-top>
                                     <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
                                     <span class="description" object-description object="obj" virtual="tabs.copy.virtual" type="objectSimple"></span>
                                 </a>

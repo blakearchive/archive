@@ -776,6 +776,33 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             });
         };
     })
+    .directive('scrollToTop',function(){
+        var link = function(scope,element,attr) {
+            element.on('click',function(){
+                $('html, body').animate({scrollTop: 0}, 'slow');
+            })
+        }
+        return{
+            restrict: 'A',
+            link: link
+        }
+    })
+    .directive('toTopButton',function($window){
+        var link = function(scope,element,attr){
+            angular.element($window).bind("scroll",function(){
+                if(this.pageYOffset > 50){
+                    element.addClass('scrolling')
+                } else {
+                    element.removeClass('scrolling')
+                }
+            })
+        }
+        return{
+            restrict: 'A',
+            link: link
+        }
+    })
+
 
     .controller("ObjectController", ['$scope', '$routeParams', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
         BlakeDataService.setSelectedWork($routeParams.objectId);
