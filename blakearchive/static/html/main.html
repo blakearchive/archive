@@ -66,13 +66,22 @@
 <!-- This div is the viewport where all views will be loaded, so css for individual pages should
        be based on elements below this point in the DOM -->
 <div ng-view autoscroll></div>
-<span class="back-top" ng-class="{'scrolling': showToTop}">Back to top</span>
+<span class="back-top" scroll-to-top to-top-button>Back to top</span>
 
 <div class="container" ng-class="{hidden:showmePage}">
 
   <footer>
     <div class="row">
+      <div class="span12 text-center">
+      <ul class="nav nav-pills">
+      <li><a href="https://blakearchive.wordpress.com/">Blog</a></li>
+      <li><a href="http://blake.lib.rochester.edu/blakeojs/index.php/blake"><i>Blake/An Illustrated Quarterly</i></a></li>
+      </ul>
+      </div>
+    </div>
 
+    <div class="row">
+      <div class="span12 text-center">
       <ul class="nav nav-pills">
         <li><a href="#">About Blake</a></li>
         <li><a href="#">Resources for Further Research</a></li>
@@ -83,7 +92,7 @@
         <li><a href="#">Contact the Archive</a></li>
         <li><a href="#">Related Sites</a></li>
       </ul>
-
+      </div>
     </div>
 
     <hr>
@@ -96,16 +105,15 @@
       </div>
 
       <div class="col-sm-12 col-md-7 subscribe">
-        <p>Subscribe to the William Blake Archive Newsletter</p>
 
         <form class="form-inline" role="form">
           <div class="form-group">
             <div class="input-group">
               <label class="sr-only" for="inputEmail">Subscribe</label>
-              <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
+              <input type="email" class="form-control" id="inputEmail" placeholder="Enter email address.">
             </div>
           </div>
-          <button type="submit" class="btn btn-default">Sign in</button>
+          <button type="submit" class="btn btn-default">Subscribe</button><p> to the William Blake Archive Newsletter.</p>
         </form>
       </div>
 
