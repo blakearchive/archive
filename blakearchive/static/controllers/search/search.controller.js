@@ -4,25 +4,40 @@
 
 (function(){
 
-    var controller = function($rootScope,$scope,$location,$routeParams,BlakeDataService,$log){
+    var controller = function($rootScope,$scope,$location,$routeParams,BlakeDataService,$q){
 
         var objectMatchingMedium, workMatchingMedium, vm = this;
 
         $rootScope.showSubMenu = 0;
 
+        vm.showTab = function (id) {
+            vm.selectedTab = id;
+        }
+
+        vm.selectedTab = '#object-results';
+
         $scope.objectResults = [];
+        $scope.copyResults = [];
+        $scope.workResults = [];
 
         $scope.search = function () {
-            BlakeDataService.queryObjects($scope.searchConfig).then(function (results) {
-                $scope.objectResults = results;
-                angular.forEach(results, function(works,type){
+            var objectSearch = BlakeDataService.queryObjects($scope.searchConfig),
+                copySearch = BlakeDataService.queryCopies($scope.searchConfig),
+                workSearch = BlakeDataService.queryWorks($scope.searchConfig);
+            return $q.all([objectSearch,copySearch,workSearch]).then(function(results){
+                $scope.objectResults = results[0];
+                angular.forEach($scope.objectResults, function(works,type){
                     angular.forEach(works, function(work,index){
                         $scope.getFirstImage(type,index);
-                       //$scope.populateWorkCopies(type,index);
+                        //$scope.populateWorkCopies(type,index);
                     });
                 });
-                console.log($scope.objectResults);
+                $scope.copyResults = results[1];
+                $scope.workResults = results[2];
+                $rootScope.$broadcast('searchCtrl::newSearch');
+                $location.search('search',encodeURIComponent($scope.searchConfig.searchString));
             });
+
         };
 
         $scope.loadSearchPage = function () {
@@ -34,6 +49,7 @@
             searchTitle: true,
             searchText: true,
             searchWorkInformation: true,
+            searchCopyInformation: true,
             searchImageKeywords: true,
             searchNotes: true,
             searchImageDescriptions: true,
@@ -53,31 +69,58 @@
                     'config': 'searchTitle',
                     'text': 'Objects with a matching title',
                     'showCopies': false,
-                    'selectedWork': ''
+                    'selectedWork': '',
+                    'highlight': ''
                 },
                 'text': {
                     'config': 'searchText',
                     'text': 'Objects with matching text',
                     'showCopies': false,
-                    'selectedWork': ''
+                    'selectedWork': '',
+                    'highlight': 'open=text'
                 },
                 'notes': {
                     'config': 'searchNotes',
                     'text': 'Objects with matching editors\' notes',
                     'showCopies': false,
-                    'selectedWork': ''
+                    'selectedWork': '',
+                    'highlight': 'open=notes'
                 },
                 'tag': {
                     'config': 'searchImageKeywords',
                     'text': 'Objects with a matching image tag',
                     'showCopies': false,
-                    'selectedWork': ''
+                    'selectedWork': '',
+                    'highlight': 'open=desc'
                 },
                 'description': {
                     'config': 'searchImageDescription',
                     'text': 'Objects with a matching illustration description',
                     'showCopies': false,
-                    'selectedWork': ''
+                    'selectedWork': '',
+                    'highlight': 'open=desc'
+                }
+            },
+            'copy':{
+                'title':{
+                    'config':'searchTitle',
+                    'text': 'Copies with a matching title',
+                    'highlight': ''
+                },
+                'copy_information':{
+                    'config':'searchCopyInformation',
+                    'text': 'Copies with matching work information or notes',
+                    'highlight': 'tab=copy-info'
+                }
+            },
+            'work':{
+                'title':{
+                    'config':'searchTitle',
+                    'text': 'Works with a matching title'
+                },
+                'info':{
+                    'config':'searchWorkInformation',
+                    'text': 'Works with matching work information or notes'
                 }
             }
         };
@@ -229,7 +272,7 @@
 
     };
 
-    controller.$inject = ['$rootScope','$scope','$location','$routeParams','BlakeDataService','$log'];
+    controller.$inject = ['$rootScope','$scope','$location','$routeParams','BlakeDataService','$q'];
 
     angular.module('blake').controller('SearchController',controller);
 
