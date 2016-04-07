@@ -1,16 +1,24 @@
 (function(){
 
-    var controller = function($routeParams){
+    var controller = function($routeParams, $modal){
         var vm = this;
 
         vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
+
+        vm.colorKeyOpen = function(size){
+            var colorKeyModalInstance = $modal.open({
+                templateUrl: '/blake/static/controllers/modal/colorKeyModal.html',
+                controller: 'ModalController',
+                size: size
+            });
+        }
 
         vm.getNumber = function(num){
             return new Array(parseInt(num));
         }
     }
 
-    controller.$inject = ['$routeParams'];
+    controller.$inject = ['$routeParams','$modal'];
 
     var textTranscription = function(){
         return {
