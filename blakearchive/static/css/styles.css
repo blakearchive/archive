@@ -7095,22 +7095,22 @@ a.compare-selected-objects:hover {
   background-color: #91c054;
 }
 a.select-all-objects {
-  background-image: url("/img/global/select-icon.png");
+  background-image: url("../img/global/select-icon.png");
   padding-left: 38px;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   a.select-all-objects {
-    background-image: url("/img/global/select-icon@2x.png");
+    background-image: url("../img/global/select-icon@2x.png");
     background-size: 16px 16px;
   }
 }
 a.compare-selected-objects {
-  background-image: url("/img/global/compare-icon.png");
+  background-image: url("../img/global/compare-icon.png");
   padding-left: 65px;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   a.compare-selected-objects {
-    background-image: url("/img/global/compare-icon@2x.png");
+    background-image: url("../img/global/compare-icon@2x.png");
     background-size: 42px 20px;
   }
 }
@@ -7135,7 +7135,7 @@ a.compare-selected-objects {
   overflow: hidden;
 }
 .selected.handprint-block a span.object-img span.selected {
-  background: transparent url(/img/global/selected-object-icon.png) no-repeat 0 0;
+  background: transparent url("../img/global/selected-object-icon.png") no-repeat 0 0;
   display: block;
   width: 68px;
   height: 68px;
