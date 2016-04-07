@@ -35,28 +35,6 @@
               </div>
             </accordion-group>
 
-            <accordion-group id="object-metadata" is-open="tray.open.meta">
-              <div ng-style="{'max-height': tray.trayBodyHeight}">
-                  <accordion-heading>
-                      Object Meta Data
-                      <a ng-click="tray.newWindow(tray.object,'meta')" class="new-window" title="new window">New Window</a>
-                  </accordion-heading>
-
-                  <object-metadata object="tray.object"></object-metadata>
-              </div>
-            </accordion-group>
-
-            <accordion-group id="object-tei" is-open="tray.open.tei">
-              <div ng-style="{'max-height': tray.trayBodyHeight}">
-                  <accordion-heading>
-                      TEI Markup
-                      <a ng-click="tray.newWindow(tray.object,'tei')" class="new-window" title="new window">New Window</a>
-                  </accordion-heading>
-
-                  <tei-markup object="tray.object"></tei-markup>
-              </div>
-            </accordion-group>
-
         </accordion>
 
       </div>
