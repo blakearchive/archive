@@ -1,7 +1,6 @@
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
     <div class="featured-object">
         <p class="object-title">{{ viewer.getOvpTitle() }}</p>
-        <p class="object-subtitle" ng-if="viewer.work.virtual">{{ viewer.work.title }}</p>
 
         <div class="carousel-inner" role="listbox">
             <div class="item col-xs-12 col-md-8 col-md-offset-2" ng-repeat="obj in viewer.copy.objectsInCopy track by $index" ng-class="{active: obj == viewer.copy.selectedObject}">
@@ -15,7 +14,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="object-subtitle"><span class="object-no text-capitalize">{{ viewer.getOvpSubtitle(obj) }}</span></p>
+                <p class="object-subtitle"><span class="object-no text-capitalize" ng-if="viewer.work.virtual">{{ viewer.work.title }}, </span><span class="object-no text-capitalize">{{ viewer.getOvpSubtitle(obj) }}</span></p>
             </div>
         </div>
     </div>
