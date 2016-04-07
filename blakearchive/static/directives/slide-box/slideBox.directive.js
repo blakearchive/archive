@@ -54,14 +54,14 @@
             }
         }
 
-        reAdjust();
-
         $scope.$on('resize::resize', function (e, w) {
             reAdjust();
         });
 
         $scope.$on('searchCtrl::newSearch', function (e, w) {
-            reAdjust();
+            $timeout(function() {
+                reAdjust();
+            }, 0);
         });
 
         vm.scrollRight = function(){
