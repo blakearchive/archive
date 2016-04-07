@@ -3,7 +3,7 @@
  */
 (function () {
 
-    var controller = function ($scope, $localStorage, BlakeDataService,$routeParams) {
+    var controller = function ($scope, $localStorage, BlakeDataService,$routeParams,$timeout) {
 
         var vm = this;
 
@@ -50,15 +50,19 @@
                 vm.selectedTab = '#objects-in-copy';
             } else {
                 vm.selectedTab = angular.isDefined($routeParams.tab) ? '#'+$routeParams.tab : '#objects-in-copy';
-                $('html, body').animate({
-                    scrollTop: $('#archive-tabs').offset().top
-                }, 'slow');
             }
         });
 
+        if($routeParams.tab) {
+            $timeout(function () {
+                $('html, body').animate({
+                    scrollTop: $('#archive-tabs').offset().top
+                }, 'slow')
+            }, 0);
+        }
     }
 
-    controller.$inject = ['$scope','$localStorage', 'BlakeDataService','$routeParams'];
+    controller.$inject = ['$scope','$localStorage', 'BlakeDataService','$routeParams','$timeout'];
 
     var copyTabs = function() {
         return {
