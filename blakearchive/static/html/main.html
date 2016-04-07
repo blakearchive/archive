@@ -24,17 +24,16 @@
 </head>
 <body ng-app="blake" resize scroll>
 <nav class="navbar navbar-default navbar-fixed-top">
-<div class="site-header-container" ng-class="{hidden:showmePage}">
+<div class="site-header-container">
   <div class="container-fluid site-header">
-        <a class="navbar-brand" href="/"><span class="name">The William Blake Archive</span><span
-            class="sig"></span></a>
-        <button type="button" class="collapse-archive menu-closed">
+        <a class="navbar-brand" href="/"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
+        <button type="button" class="collapse-archive menu-closed" ng-class="{'hidden':showmePage}">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <div class="lightbox"><a class="lb-amount" href="#">3</a></div>
+        <div class="lightbox" ng-class="{'hidden':showmePage}"><a class="lb-amount" href="#">3</a></div>
         <view-sub-menu ng-if="showSubMenu == 1"></view-sub-menu>
   </div>
 </div>
