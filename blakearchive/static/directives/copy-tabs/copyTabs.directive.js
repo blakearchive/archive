@@ -45,9 +45,15 @@
             }
         }
 
-        $scope.$on('copyCtrl::objectChanged',function(){
-            vm.selectedTab = angular.isDefined($routeParams.tab) ? '#'+$routeParams.tab : '#objects-in-copy';
-            vm.selectedTab = '#objects-in-copy';
+        $scope.$on('copyCtrl::objectChanged',function(object){
+            if($routeParams.objectId){
+                vm.selectedTab = '#objects-in-copy';
+            } else {
+                vm.selectedTab = angular.isDefined($routeParams.tab) ? '#'+$routeParams.tab : '#objects-in-copy';
+                $('html, body').animate({
+                    scrollTop: $('#archive-tabs').offset().top
+                }, 'slow');
+            }
         });
 
     }
