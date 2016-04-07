@@ -10,8 +10,6 @@
 
         $rootScope.showSubMenu = 1;
         vm.$storage = $sessionStorage;
-        vm.$storage.view.mode = 'object';
-        vm.$storage.view.scope = 'image';
 
         /*
          * Object and Copy selection
@@ -120,8 +118,10 @@
          */
         vm.resetView = function(){
             console.log('change view');
-            vm.$storage.view.mode = 'object';
-            vm.$storage.view.scope = 'image';
+            if(angular.isDefined(vm.$storage.view)){
+                vm.$storage.view.mode = 'object';
+                vm.$storage.view.scope = 'image';
+            }
         }
         vm.resetView();
 
