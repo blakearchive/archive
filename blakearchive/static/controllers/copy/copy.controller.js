@@ -10,6 +10,8 @@
 
         $rootScope.showSubMenu = 1;
         vm.$storage = $sessionStorage;
+        vm.$storage.view.mode = 'object';
+        vm.$storage.view.scope = 'image';
 
         /*
          * Object and Copy selection
