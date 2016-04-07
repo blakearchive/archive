@@ -756,8 +756,12 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         return function(text,phrase){
             if(angular.isDefined(text)){
                 if(phrase){
-                    text = text.replace(new RegExp('('+phrase+')','gi'),'<span class="highlighted">$1</span>');
-                    return $sce.trustAsHtml(text);
+                    if(text){
+                        text = text.replace(new RegExp('('+phrase+')','gi'),'<span class="highlighted">$1</span>');
+                        return $sce.trustAsHtml(text);
+                    } else {
+                        return '';
+                    }
                 } else {
                     return $sce.trustAsHtml(text);
                 }
