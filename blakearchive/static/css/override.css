@@ -95,33 +95,21 @@ a.compare-selected-objects {
 /********
  * Compare object selection
  **********/
+.selected.handprint-block span.selected,.handprint-block:hover span.selected {
+    background: transparent url("../img/global/selected-object-icon.png") no-repeat 0 0;
+    display: block;
+    width: 68px;
+    height: 68px;
+    position: absolute;
+    right: 0;
 
+}
+#objects-from-same-matrix .handprint-block:hover span.object-img {
+    border: 2px solid black;
+}
 .select-for-compare-wrapper{
     width: 220px;
     position: relative;
-}
-.select-for-compare{
-    position: absolute;
-    right: 0;
-    font-size: 2em;
-    opacity: 0;
-    color: #fff;
-    background-color: rgba(1,1,1,0.5);
-    padding: 2px 2px 4px 4px;
-}
-.handprint-block:hover .select-for-compare{
-    opacity:1;
-}
-.handprint-block.selected-for-comparison .select-for-compare{
-    opacity: 1;
-    color: #F7FF00;
-}
-a.select-all-objects:hover, a.compare-selected-objects:hover{
-    background-color: #F7FF00;
-}
-
-a.select-all-objects{
-    cursor: pointer;
 }
 
 /*************
