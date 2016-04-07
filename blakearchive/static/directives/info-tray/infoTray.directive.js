@@ -5,7 +5,7 @@
 
         vm.firstLine = 1;
         vm.adjust = 150;
-        vm.panelAdjust = 53;
+        vm.panelAdjust = 60;
         vm.scrollBarHeight = 7;
 
         vm.open = {
@@ -29,7 +29,7 @@
 
 
         //panelCount is a fake number that should be replace by the actual number of panels i we get the actual number
-        vm.panelCount = 5;
+        vm.panelCount = 3;
         vm.trayBodyHeight = (vm.trayPixels - vm.scrollBarHeight - (vm.panelCount * vm.panelAdjust)) + 'px';
 
         vm.newWindow = function(object,type){
