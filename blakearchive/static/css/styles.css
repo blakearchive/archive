@@ -7960,18 +7960,18 @@ a.new-window:hover {
   }
 }
 #archive-tabs ul.nav-tabs.objects > li {
-  width: inherit;
+  /*width: inherit;*/
   float: none;
 }
 @media (min-width: 768px) {
   #archive-tabs ul.nav-tabs.objects > li {
-    width: 50%;
+    /*width: 50%;*/
     float: left;
   }
 }
 @media (min-width: 992px) {
   #archive-tabs ul.nav-tabs.objects > li {
-    width: 16.65%;
+    /*width: 16.65%;*/
   }
 }
 #archive-tabs ul.nav-tabs.objects > li > a {
