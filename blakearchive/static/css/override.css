@@ -1,3 +1,11 @@
+.container-fluid .container ul {
+position:relative;left:50%;float:left;margin-right:0;margin-left:0;
+}
+
+.container-fluid .container li {
+position:relative;right:50%;float:left;margin:0;list-style:none
+}
+
 [ng-click],
 [data-ng-click],
 [x-ng-click] {
