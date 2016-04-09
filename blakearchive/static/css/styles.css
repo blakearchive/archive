@@ -7880,8 +7880,8 @@ a.new-window:hover {
 }
 @media (min-width: 768px) {
   #archive #object-view .show-hide-tools {
-    right: 31px;
-    bottom: 21px;
+    /*right: 31px;
+    bottom: 21px;*/
   }
 }
 #archive #object-view .show-hide-tools span {
