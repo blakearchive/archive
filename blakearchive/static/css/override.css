@@ -1,3 +1,23 @@
+@media (min-width: 992px) {
+  #archive .tray-closed .tray-toggle {
+    background-position: center -93px;
+    top: auto;
+    right: -33px;
+    bottom: 0px;
+    left: auto;
+  }
+}
+
+@media (min-width: 992px) {
+  #archive .tray-open .tray-toggle {
+    background-position: center 7px;
+    top: auto;
+    right: -27px;
+    bottom: 0px;
+    left: auto;
+  }
+}
+
 .container-fluid .container ul {
 position:relative;left:50%;float:left;margin-right:0;margin-left:0;
 }
