@@ -31,11 +31,13 @@
         }
 
         vm.getOrigination = function(){
-            var origination = vm.getSource().objdescid.origination;
-            if(angular.isArray(vm.getSource().objdescid.origination)){
-                return origination;
-            } else {
-                return [origination];
+            if(angular.isDefined(vm.copy)) {
+                var origination = vm.getSource().objdescid.origination;
+                if(angular.isArray(vm.getSource().objdescid.origination)){
+                    return origination;
+                } else {
+                    return [origination];
+                }
             }
         }
 
