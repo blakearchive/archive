@@ -4,8 +4,8 @@
         var vm = this;
 
         vm.firstLine = 1;
-        vm.adjust = 150;
-        vm.panelAdjust = 60;
+        vm.adjust = 145;
+        vm.panelAdjust = 55;
         vm.scrollBarHeight = 7;
 
         vm.open = {
