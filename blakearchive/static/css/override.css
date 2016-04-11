@@ -1,4 +1,23 @@
 @media (min-width: 992px) {
+  footer .subscribe form.form-inline {
+    float: left;
+  }
+}
+
+footer ul.nav.nav-pills {
+  font-size: 12px;
+  margin: auto;
+  width: 90%;
+}
+@media (min-width: 992px) {
+  footer ul.nav.nav-pills {
+    padding-bottom: 7px;
+    margin: auto;
+    width: 90%;
+  }
+}
+
+@media (min-width: 992px) {
   #archive .tray-closed .tray-toggle {
     background-position: center -93px;
     top: auto;
