@@ -203,6 +203,16 @@ a.compare-selected-objects {
     justify-content: space-around;
 }
 
+/******************
+* All Views
+********************/
+.object-img-container{
+    -webkit-transition: 300ms ease all;
+    -moz-transition: 300ms ease all;
+    -o-transition: 300ms ease all;
+    transition: 300ms ease all;
+}
+
 /*****************
 * Object View
 *******************/
@@ -482,19 +492,6 @@ a.compare-selected-objects {
     font-size: 1.5em;
     background-color: #F7FF00;
     color: #000;
-}
-
-/***********
-* Image Manipulation
-*************/
-.ovp-image{
-    -webkit-transition: 300ms ease all;
-    -moz-transition: 300ms ease all;
-    -o-transition: 300ms ease all;
-    transition: 300ms ease all;
-}
-.ovp-image{
-    max-width: 100%;
 }
 
 /***************
