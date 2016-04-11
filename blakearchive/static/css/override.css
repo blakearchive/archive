@@ -36,6 +36,10 @@ position:relative;right:50%;float:left;margin:0;list-style:none
   border: 2px solid black;
 }
 
+#copy-info dd {
+    min-height: 27px;
+}
+
 body {
   background-color: #222222;
   padding-top:50px;
