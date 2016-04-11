@@ -751,6 +751,57 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             link: link
         }
     })
+    .directive('ovpImage',function(){
+        var link = function(scope,element,attr){
+
+            scope.height = 0;
+            scope.width = 0;
+            scope.image = element.children('img');
+
+            angular.element(scope.image).on('load',function(){
+                scope.height = element.height();
+                scope.width = element.width();
+            })
+
+            scope.transformRotate = function(){
+                if(scope.width > scope.height){
+                    if((scope.transform.rotate % 180) != 0){
+                        scope.transform.style.width = '100%';
+                        scope.transform.style.height = 'auto';
+                    } else {
+                        scope.transform.style.width = 'auto';
+                        scope.transform.style.height = '100%';
+                    }
+                }
+            }
+
+            scope.setStyles = function(){
+                var tranformString = 'rotate('+scope.transform.rotate+'deg)';
+                scope.transform.style['-webkit-transform'] = tranformString;
+                scope.transform.style['-moz-tranform'] = tranformString;
+                scope.transform.style['-o-transform'] = tranformString;
+                scope.transform.style['-ms-transform'] = tranformString;
+                scope.transform.style['transform'] = tranformString;
+                element.css(scope.transform.style);
+            }
+
+
+
+
+            scope.$watch(function(){return scope.transform;}, function(){
+                scope.transformRotate();
+                scope.setStyles();
+            },true);
+
+        }
+        return{
+            restrict: 'A',
+            link:link,
+            scope:{
+                transform:'='
+            }
+        }
+    })
 
     .filter('highlight',function($sce){
         return function(text,phrase){

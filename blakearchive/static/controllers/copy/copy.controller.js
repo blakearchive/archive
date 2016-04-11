@@ -152,26 +152,8 @@
 
         vm.rotate = function(object){
             object.transform.rotate = object.transform.rotate + 90;
-            /*if((object.transform.rotate % 180) != 0){
-                object.transform.style.width = '100%';
-                object.transform.style.height = 'auto';
-            } else {
-                object.transform.style.width = 'auto';
-                object.transform.style.height = '100%';
-            }*/
-            vm.transformStyle(object);
         }
 
-        vm.transformStyle = function(object){
-            var tranformString = 'rotate('+object.transform.rotate+'deg)';
-            object.transform.style['-webkit-transform'] = tranformString;
-            object.transform.style['-moz-tranform'] = tranformString;
-            object.transform.style['-o-transform'] = tranformString;
-            object.transform.style['-ms-transform'] = tranformString;
-            object.transform.style['transform'] = tranformString;
-            console.log(object);
-            //object.transform.style =
-        }
 
     };
 
