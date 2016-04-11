@@ -10,10 +10,9 @@
 
             <dt>Title:</dt>
             <dd ng-bind-html=" info.getHeader().filedesc.titlestmt.title.main['#text'] | highlight:info.searchTerm"></dd>
-
-            <div ng-repeat="origination in info.getSource().objdescid.origination track by $index">
+            <div ng-repeat="origination in info.getOrigination() track by $index">
                 <dt>Origination:</dt>
-                <dd><span ng-bind-html="origination['#text'] | highlight:info.searchTerm"></span>: <span ng-bind-html="getOriginationRole(origination['role']) | highlight:info.searchTerm"></span></dd>
+                <dd><span ng-bind-html="origination['#text'] | highlight:info.searchTerm"></span>: <span ng-bind-html="info.getOriginationRole(origination.role) | highlight:info.searchTerm"></span></dd>
                 <div ng-if="origination.note">
                     <dt>Note:</dt>
                     <dd ng-bind-html="origination.note['#text'] | highlight:info.searchTerm"></dd>
@@ -23,79 +22,98 @@
             <dt>Publisher:</dt>
             <dd ng-bind-html="info.getSource().objdescid.imprint.publisher['#text'] | highlight:info.searchTerm"></dd>
             <div ng-if="info.getSource().objdescid.imprint.publisher.note">
-        <dt>Note:</dt>
-        <dd ng-bind-html="info.getSource().objdescid.imprint.publisher.note['#text'] | highlight:info.searchTerm"></dd>
-      </div>
-      <dt>Place of Publication:</dt>
-      <dd ng-bind-html="info.getSource().objdescid.imprint.pubplace['#text'] | highlight:info.searchTerm"></dd>
-      <div ng-if="info.getSource().objdescid.imprint.pubplace.note">
-        <dt>Note:</dt>
-        <dd ng-bind-html="info.getSource().objdescid.imprint.pubplace.note['#text'] | highlight:info.searchTerm"></dd>
-      </div>
-      <dt>Date:</dt>
-      <dd ng-bind-html="info.getSource().objdescid.imprint.date['#text'] | highlight:info.searchTerm"></dd>
-      <dt>Composition Date:</dt>
-      <dd ng-bind-html="info.getSource().objdescid.compdate['#text'] | highlight:info.searchTerm"></dd>
-      <div ng-if="copy.print_date">
-      <dt>Print Date:</dt>
-      <dd ng-bind-html="copy.print_date | highlight:info.searchTerm"></dd>
-        </div>
-      <dt>Number of Objects:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.numberobj['#text'] | highlight:info.searchTerm"></dd>
-      <dt>Object Order:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.objorder['#text'] | highlight:info.searchTerm"></dd>
-      <dt>Object Size:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.objsize['#text'] | highlight:info.searchTerm"></dd>
-      <dt>Number of Leaves:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.numberleaves['#text'] | highlight:info.searchTerm"></dd>
-      <div ng-if="info.getSource().objinfo.numberleaves.note">
-        <dt>Note:</dt>
-        <dd ng-bind-html="info.getSource().objinfo.numberleaves.note['#text'] | highlight:info.searchTerm"></dd>
-      </div>
-      <dt>Leaf Size:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.leafsize['#text'] | highlight:info.searchTerm"></dd>
-      <dt>Medium:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.medium['#text'] | highlight:info.searchTerm"></dd>
-      <div ng-if="info.getSource().objinfo.medium.note">
-        <dt>Note:</dt>
-        <dd ng-bind-html="info.getSource().objinfo.medium.note['#text'] | highlight:info.searchTerm"></dd>
-      </div>
-      <dt>Printing Style:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.printingstyle['#text'] | highlight:info.searchTerm"></dd>
-      <div ng-if="info.getSource().objinfo.printingstyle.note">
-        <dt>Note:</dt>
-        <dd ng-bind-html="info.getSource().objinfo.printingstyle.note['#text'] | highlight:info.searchTerm"></dd>
-      </div>
-      <dt>Ink Color:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.inkcolor['#text'] | highlight:info.searchTerm"></dd>
-      <div ng-if="info.getSource().objinfo.inkcolor.note">
-        <dt>Note:</dt>
-        <dd ng-bind-html="info.getSource().objinfo.inkcolor.note['#text'] | highlight:info.searchTerm"></dd>
-      </div>
-      <dt>Support:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.support['#text'] | highlight:info.searchTerm"></dd>
-      <dt>Watermark:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.support['#text'] | highlight:info.searchTerm"></dd>
-      <dt>Etched Numbers:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.etchednumbers['#text'] | highlight:info.searchTerm"></dd>
-      <dt>Penned Numbers:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.pennednumbers['#text'] | highlight:info.searchTerm"></dd>
-      <dt>Frame Lines:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.framelines['#text'] | highlight:info.searchTerm"></dd>
-      <dt>Binding:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.binding['#text'] | highlight:info.searchTerm"></dd>
-      <div ng-if="info.getSource().objinfo.binding.note">
-        <dt>Note:</dt>
-        <dd ng-bind-html="info.getSource().objinfo.binding.note['#text'] | highlight:info.searchTerm"></dd>
-      </div>
-      <dt>Stab Holes:</dt>
-      <dd ng-bind-html="info.getSource().objinfo.stabholes['#text'] | highlight:info.searchTerm"></dd>
-      <div ng-if="info.getSource().objinfo.binding.note">
-        <dt>Note:</dt>
-        <dd ng-bind-html="info.getSource().objinfo.stabholes.note['#text'] | highlight:info.searchTerm"></dd>
-      </div>
-    </dl>
-  </div>
+                <dt>Note:</dt>
+                <dd ng-bind-html="info.getSource().objdescid.imprint.publisher.note['#text'] | highlight:info.searchTerm"></dd>
+            </div>
+
+            <dt>Place of Publication:</dt>
+            <dd ng-bind-html="info.getSource().objdescid.imprint.pubplace['#text'] | highlight:info.searchTerm"></dd>
+            <div ng-if="info.getSource().objdescid.imprint.pubplace.note">
+                <dt>Note:</dt>
+                <dd ng-bind-html="info.getSource().objdescid.imprint.pubplace.note['#text'] | highlight:info.searchTerm"></dd>
+            </div>
+
+            <dt>Date:</dt>
+            <dd ng-bind-html="info.getSource().objdescid.imprint.date['#text'] | highlight:info.searchTerm"></dd>
+
+            <dt>Composition Date:</dt>
+            <dd ng-bind-html="info.getSource().objdescid.compdate['#text'] | highlight:info.searchTerm"></dd>
+
+            <div ng-if="copy.print_date">
+                <dt>Print Date:</dt>
+                <dd ng-bind-html="copy.print_date | highlight:info.searchTerm"></dd>
+            </div>
+
+            <dt>Number of Objects:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.numberobj['#text'] | highlight:info.searchTerm"></dd>
+
+            <dt>Object Order:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.objorder['#text'] | highlight:info.searchTerm"></dd>
+
+            <dt>Object Size:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.objsize['#text'] | highlight:info.searchTerm"></dd>
+
+            <dt>Number of Leaves:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.numberleaves['#text'] | highlight:info.searchTerm"></dd>
+            <div ng-if="info.getSource().objinfo.numberleaves.note">
+                <dt>Note:</dt>
+                <dd ng-bind-html="info.getSource().objinfo.numberleaves.note['#text'] | highlight:info.searchTerm"></dd>
+            </div>
+
+            <dt>Leaf Size:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.leafsize['#text'] | highlight:info.searchTerm"></dd>
+
+            <dt>Medium:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.medium['#text'] | highlight:info.searchTerm"></dd>
+            <div ng-if="info.getSource().objinfo.medium.note">
+                <dt>Note:</dt>
+                <dd ng-bind-html="info.getSource().objinfo.medium.note['#text'] | highlight:info.searchTerm"></dd>
+            </div>
+
+            <dt>Printing Style:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.printingstyle['#text'] | highlight:info.searchTerm"></dd>
+            <div ng-if="info.getSource().objinfo.printingstyle.note">
+                <dt>Note:</dt>
+                <dd ng-bind-html="info.getSource().objinfo.printingstyle.note['#text'] | highlight:info.searchTerm"></dd>
+            </div>
+
+            <dt>Ink Color:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.inkcolor['#text'] | highlight:info.searchTerm"></dd>
+            <div ng-if="info.getSource().objinfo.inkcolor.note">
+                <dt>Note:</dt>
+                <dd ng-bind-html="info.getSource().objinfo.inkcolor.note['#text'] | highlight:info.searchTerm"></dd>
+            </div>
+
+            <dt>Support:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.support['#text'] | highlight:info.searchTerm"></dd>
+
+            <dt>Watermark:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.support['#text'] | highlight:info.searchTerm"></dd>
+
+            <dt>Etched Numbers:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.etchednumbers['#text'] | highlight:info.searchTerm"></dd>
+
+            <dt>Penned Numbers:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.pennednumbers['#text'] | highlight:info.searchTerm"></dd>
+
+            <dt>Frame Lines:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.framelines['#text'] | highlight:info.searchTerm"></dd>
+
+            <dt>Binding:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.binding['#text'] | highlight:info.searchTerm"></dd>
+            <div ng-if="info.getSource().objinfo.binding.note">
+                <dt>Note:</dt>
+                <dd ng-bind-html="info.getSource().objinfo.binding.note['#text'] | highlight:info.searchTerm"></dd>
+            </div>
+
+            <dt>Stab Holes:</dt>
+            <dd ng-bind-html="info.getSource().objinfo.stabholes['#text'] | highlight:info.searchTerm"></dd>
+            <div ng-if="info.getSource().objinfo.binding.note">
+                <dt>Note:</dt>
+                <dd ng-bind-html="info.getSource().objinfo.stabholes.note['#text'] | highlight:info.searchTerm"></dd>
+            </div>
+        </dl>
+    </div>
 
   <div class="col-sm-6">
     <h3>Provenance</h3>

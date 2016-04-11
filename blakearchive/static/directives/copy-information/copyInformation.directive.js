@@ -19,6 +19,7 @@
                 }
             }
         }
+
         vm.getSource = function(){
             if(angular.isDefined(vm.copy)) {
                 if (vm.copy.virtual) {
@@ -26,6 +27,15 @@
                 } else {
                     return vm.copy.source;
                 }
+            }
+        }
+
+        vm.getOrigination = function(){
+            var origination = vm.getSource().objdescid.origination;
+            if(angular.isArray(vm.getSource().objdescid.origination)){
+                return origination;
+            } else {
+                return [origination];
             }
         }
 
