@@ -224,22 +224,44 @@ a.compare-selected-objects {
     -webkit-flex-flow: nowrap;
     flex-flow: nowrap;
     justify-content: space-around;
-}
-
-/******************
-* All Views
-********************/
-.object-img-container{
     -webkit-transition: 300ms ease all;
     -moz-transition: 300ms ease all;
     -o-transition: 300ms ease all;
     transition: 300ms ease all;
 }
 
+/******************
+* All Views
+********************/
+.object-img-container{
+    -webkit-transition: 0ms;
+    -moz-transition: 0ms;
+    -o-transition: 0ms;
+    -ms-transition: 0ms;
+    transition: 0ms;
+}
+.object-img-container.rotated{
+    -webkit-transition: 300ms ease all;
+    -moz-transition: 300ms ease all;
+    -o-transition: 300ms ease all;
+    -ms-transition: 300ms ease all;
+    transition: 300ms ease all;
+}
+#archive #object-detail-tray{
+    -webkit-transition: left 0.3s ease-out, min-height 300ms ease;
+    -moz-transition: left 0.3s ease-out, min-height 300ms ease;
+    -ms-transition: left 0.3s ease-out, min-height 300ms ease;
+    -o-transition: left 0.3s ease-out, min-height 300ms ease;
+    transition: left 0.3s ease-out, min-height 300ms ease;
+}
+
 /*****************
 * Object View
 *******************/
 @media (min-width: 768px) {
+    #archive #object-view.view-objects .featured-object{
+        margin-bottom: 14px;
+    }
     #archive #object-view.view-objects .item .object-img-container{
         height: 100%;
         min-width: 500px;
@@ -303,6 +325,10 @@ a.compare-selected-objects {
 * Compare View
 **************/
 @media (min-width: 768px) {
+    #archive #object-view #compare.scrollbar{
+        overflow-x: scroll;
+        margin-bottom: 10px;
+    }
     #archive #object-view.compare-objects #compare .compare-inner {
         white-space: nowrap;
         float: left;
