@@ -181,11 +181,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 });*/
                 obj.header = angular.fromJson(config.header);
                 obj.source = angular.fromJson(config.source);
-                obj.transform = {
-                    'rotate':0,
-                    'scale':1,
-                    'style': {}
-                }
 
                 return obj;
             }
@@ -696,28 +691,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         };
     }])
 
-    /***
-     * this is an attempt to angularize the scroll to top button. Two problems
-     *      1. it only works on the homepage....ummm....?
-     *      2. angular doesn't have anyway to smooth scroll to the top without running a shit ton of math and timeouts...
-     *      so we're just going to use jquery for now
-
-     .directive('scroll', function ($window) {
-    return function(scope, element, attrs) {
-        angular.element($window).bind("scroll", function() {
-            if (this.pageYOffset >= 50) {
-
-                scope.showToTop = true;
-            } else {
-                scope.showToTop = false;
-            }
-            scope.test = this.pageYOffset;
-        });
-    };
-})
-
-     ***/
-
     .directive('parallax', function ($window) {
         return function (scope, element, attr) {
             angular.element($window).bind("scroll", function () {
@@ -751,56 +724,102 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             link: link
         }
     })
-    .directive('ovpImage',function(){
+    .directive('ovpImage',function(imageManipulation,$rootScope){
         var link = function(scope,element,attr){
 
-            scope.height = 0;
-            scope.width = 0;
-            scope.image = element.children('img');
+            var image = angular.element(element.children()),
+                container = angular.element(element.parent()),
+                height = 0,
+                width = 0,
+                originalHeight = 0;
 
-            angular.element(scope.image).on('load',function(){
-                scope.height = element.height();
-                scope.width = element.width();
+            image.on('load',function(){
+                height = image.height();
+                width = image.width();
+                originalHeight = container.height();
+                console.log(height+'-'+width+'-'+originalHeight);
             })
 
             scope.transformRotate = function(){
-                if(scope.width > scope.height){
-                    if((scope.transform.rotate % 180) != 0){
-                        scope.transform.style.width = '100%';
-                        scope.transform.style.height = 'auto';
+                if(width > height){
+                    var padding = (width - height) / 2;
+                    if((imageManipulation.transform.rotate % 180) != 0){
+                        container.height(width);
+                        element.width(width);
+                        image.css({'height':'auto','width':'100%','margin-top':padding+'px'});
+                        $rootScope.$broadcast('ovpImage::ovpIncrease',width-originalHeight);
                     } else {
-                        scope.transform.style.width = 'auto';
-                        scope.transform.style.height = '100%';
+                        container.height(originalHeight);
+                        image.css({'height':'100%','width':'auto','margin-top':'0'});
+                        $rootScope.$broadcast('ovpImage::ovpIncrease',0);
                     }
+                }
+                if(imageManipulation.transform.rotate == 0){
+                    element.removeClass('rotated');
+                } else {
+                    element.addClass('rotated');
                 }
             }
 
             scope.setStyles = function(){
-                var tranformString = 'rotate('+scope.transform.rotate+'deg)';
-                scope.transform.style['-webkit-transform'] = tranformString;
-                scope.transform.style['-moz-tranform'] = tranformString;
-                scope.transform.style['-o-transform'] = tranformString;
-                scope.transform.style['-ms-transform'] = tranformString;
-                scope.transform.style['transform'] = tranformString;
-                element.css(scope.transform.style);
+                var tranformString = 'rotate('+imageManipulation.transform.rotate+'deg)';
+                imageManipulation.transform.style['-webkit-transform'] = tranformString;
+                imageManipulation.transform.style['-moz-tranform'] = tranformString;
+                imageManipulation.transform.style['-o-transform'] = tranformString;
+                imageManipulation.transform.style['-ms-transform'] = tranformString;
+                imageManipulation.transform.style['transform'] = tranformString;
+                element.css(imageManipulation.transform.style);
             }
 
 
+            scope.$watch(function(){return imageManipulation.transform},function(){
+                //if(imageManipulation.objectId == scope.objectId) {
+                    scope.transformRotate();
+                    scope.setStyles();
+                //}
+            },true);
 
-
-            scope.$watch(function(){return scope.transform;}, function(){
+            scope.$on('resize::resize',function(){
                 scope.transformRotate();
                 scope.setStyles();
-            },true);
+            });
+
 
         }
         return{
             restrict: 'A',
-            link:link,
-            scope:{
-                transform:'='
-            }
+            scope: {
+                objectId: '@objectId'
+            },
+            link:link
         }
+    })
+
+    .factory('imageManipulation',function(){
+        var imageManipulation = {};
+
+        imageManipulation.transform = {
+            'rotate':0,
+            'scale':1,
+            'style': {}
+        }
+
+        imageManipulation.objectId = 0;
+
+        imageManipulation.rotate = function(){
+            imageManipulation.transform.rotate = imageManipulation.transform.rotate + 90;
+        }
+
+        imageManipulation.reset = function(object_id){
+            imageManipulation.transform = {
+                'rotate':0,
+                'scale':1,
+                'style': {}
+            }
+            imageManipulation.objectId = object_id;
+        }
+
+        return imageManipulation;
     })
 
     .filter('highlight',function($sce){
