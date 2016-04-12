@@ -58,6 +58,7 @@
             selectedObject.isActive = true;
             vm.$storage.comparisonObjects = [];
             vm.$storage.comparisonObjects.push(selectedObject);
+            $rootScope.$broadcast('copyCtrl::resetCompare');
         }
 
         vm.setSimilarObjects = function(object_id){
@@ -83,7 +84,7 @@
                 if(object_id == v.object_id){
                     vm.copy.selectedObject  = v;
                     vm.setSimilarObjects(v.object_id);
-                    //imageManipulation.reset(v.object_id);
+                    imageManipulation.reset();
                     return;
                 }
             });
