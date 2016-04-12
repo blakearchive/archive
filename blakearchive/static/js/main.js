@@ -737,7 +737,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 height = image.height();
                 width = image.width();
                 originalHeight = container.height();
-                console.log(height+'-'+width+'-'+originalHeight);
             })
 
             scope.transformRotate = function(){
@@ -773,10 +772,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
 
             scope.$watch(function(){return imageManipulation.transform},function(){
-                //if(imageManipulation.objectId == scope.objectId) {
-                    scope.transformRotate();
-                    scope.setStyles();
-                //}
+                scope.transformRotate();
+                scope.setStyles();
             },true);
 
             scope.$on('resize::resize',function(){
@@ -803,9 +800,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             'scale':1,
             'style': {}
         }
-
-        imageManipulation.objectId = 0;
-
+        
         imageManipulation.rotate = function(){
             imageManipulation.transform.rotate = imageManipulation.transform.rotate + 90;
         }
@@ -816,7 +811,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 'scale':1,
                 'style': {}
             }
-            imageManipulation.objectId = object_id;
         }
 
         return imageManipulation;
