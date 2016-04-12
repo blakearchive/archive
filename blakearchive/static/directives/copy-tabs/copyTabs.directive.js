@@ -3,7 +3,7 @@
  */
 (function () {
 
-    var controller = function ($scope, $localStorage, BlakeDataService,$routeParams,$timeout) {
+    var controller = function ($scope, BlakeDataService,$routeParams,$timeout) {
 
         var vm = this;
 
@@ -62,7 +62,7 @@
         }
     }
 
-    controller.$inject = ['$scope','$localStorage', 'BlakeDataService','$routeParams','$timeout'];
+    controller.$inject = ['$scope', 'BlakeDataService','$routeParams','$timeout'];
 
     var copyTabs = function() {
         return {
