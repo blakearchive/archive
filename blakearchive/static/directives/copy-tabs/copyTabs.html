@@ -2,16 +2,16 @@
         <div class="container">
             <ul class="nav nav-tabs objects" role="tablist">
                 <li role="presentation" ng-class="{active:tabs.selectedTab == '#objects-in-copy'}">
-                    <a href="" ng-click="tabs.showTab('#objects-in-copy')" role="tab">Objects in {{ tabs.getCopyOrGroup() }}</a>
+                    <a href="" ng-click="tabs.showTab('#objects-in-copy'); tabs.resetCompare()" role="tab">Objects in {{ tabs.getCopyOrGroup() }}</a>
                 </li>
                 <li role="presentation" ng-if="tabs.copy.selectedObject.matrix.length > 0" ng-class="{active:tabs.selectedTab == '#objects-from-same-matrix'}">
-                    <a href="" ng-click="tabs.showTab('#objects-from-same-matrix')" role="tab">Objects from the Same Matrix</a>
+                    <a href="" ng-click="tabs.showTab('#objects-from-same-matrix'); tabs.resetCompare()" role="tab">Objects from the Same Matrix</a>
                 </li>
                 <li role="presentation" ng-if="tabs.copy.selectedObject.sequence.length > 0" ng-class="{active:tabs.selectedTab == '#objects-from-same-production-sequence'}">
-                    <a href="" ng-click="tabs.showTab('#objects-from-same-production-sequence')" role="tab">Objects from the Same Production Sequence</a>
+                    <a href="" ng-click="tabs.showTab('#objects-from-same-production-sequence'); tabs.resetCompare()" role="tab">Objects from the Same Production Sequence</a>
                 </li>
                 <li role="presentation" ng-if="tabs.copy.selectedObject.motif.length > 0" ng-class="{active:tabs.selectedTab == '#objects-with-same-motif'}">
-                    <a href="" ng-click="tabs.showTab('#objects-with-same-motif')" role="tab">Objects with the Same Motif</a>
+                    <a href="" ng-click="tabs.showTab('#objects-with-same-motif'); tabs.resetCompare()" role="tab">Objects with the Same Motif</a>
                 </li>
                 <li role="presentation" ng-class="{active:tabs.selectedTab == '#copy-info'}">
                     <a href="" ng-click="tabs.showTab('#copy-info')" role="tab">Copy Information</a>
@@ -51,7 +51,8 @@
                         </h1>
                     </header>
                     <!--<objects-from-same-matrix objects="tabs.copy.selectedObject.matrix" item="tabs.copy.selectedObject" virtual="tabs.copy.virtual"></objects-from-same-matrix>-->
-                    <objects-from-same-matrix copy="tabs.copy"></objects-from-same-matrix>
+                    <objects-from-same copy="tabs.copy" objects="tabs.copy.selectedObject.matrix"></objects-from-same>
+                    <!--<objects-from-same-matrix copy="tabs.copy"></objects-from-same-matrix>-->
                 </div>
 
                 <!-- SAME SEQUENCE -->
@@ -62,7 +63,8 @@
                             <span style="text-transform: capitalize">{{ tabs.getObjectTitle(tabs.copy.selectedObject) }}</span>
                         </h1>
                     </header>
-                    <div class="row">
+                    <objects-from-same copy="tabs.copy" objects="tabs.copy.selectedObject.sequence"></objects-from-same>
+                    <!--<div class="row">
                         <div ng-repeat="obj in tabs.copy.selectedObject.sequence track by $index" class="col-sm-6 col-md-3">
                             <div class="handprint-block">
                                 <a href="/blake/copy/{{ obj.copy_bad_id }}?objectId={{ obj.object_id }}">
@@ -71,7 +73,7 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
 
                 <!-- SAME MOTIF -->
@@ -82,7 +84,8 @@
                             <span style="text-transform: capitalize">{{ tabs.getObjectTitle(tabs.copy.selectedObject) }}</span>
                         </h1>-->
                     </header>
-                    <div class="row">
+                    <objects-from-same copy="tabs.copy" objects="tabs.copy.selectedObject.motif"></objects-from-same>
+                    <!--<div class="row">
                         <div ng-repeat="obj in tabs.copy.selectedObject.motif track by $index" class="col-sm-6 col-md-3">
                             <div class="handprint-block">
                                 <a href="/blake/copy/{{ obj.copy_bad_id}}?objectId={{ obj.object_id }}">
@@ -91,7 +94,7 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
 
                 <!-- COPY INFO -->
