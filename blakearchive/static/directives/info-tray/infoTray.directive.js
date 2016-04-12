@@ -4,7 +4,6 @@
         var vm = this;
 
         vm.firstLine = 1;
-        vm.adjust = 145;
         vm.panelAdjust = 55;
         vm.scrollBarHeight = 7;
 
@@ -20,31 +19,40 @@
             vm.open[$routeParams.open] = true;
         }
 
-        vm.trayPixels = ( WindowSize.height - vm.adjust );
-        if(WindowSize.width <= 992){
-            vm.trayHeight = 0
-        } else {
-            vm.trayHeight = vm.trayPixels + 'px';
+        vm.resize = function(adjust){
+            var adjust = angular.isDefined(adjust) ? 131 - adjust : 131;
+            vm.trayPixels = ( WindowSize.height - adjust );
+            if(WindowSize.width <= 992){
+                vm.trayHeight = 0
+            } else {
+                vm.trayHeight = vm.trayPixels + 'px';
+            }
+            vm.panelCount = 3;
+            vm.trayBodyHeight = (vm.trayPixels - vm.scrollBarHeight - (vm.panelCount * vm.panelAdjust)) + 'px';
+
         }
 
-
-        //panelCount is a fake number that should be replace by the actual number of panels i we get the actual number
-        vm.panelCount = 3;
-        vm.trayBodyHeight = (vm.trayPixels - vm.scrollBarHeight - (vm.panelCount * vm.panelAdjust)) + 'px';
+        vm.resize();
 
         vm.newWindow = function(object,type){
             $window.open('/blake/new-window/'+type+'/'+object.copy_bad_id+'?objectId='+object.object_id, '_blank','width=800, height=600');
         }
 
         $scope.$on('resize::resize',function(event,window){
-            vm.trayPixels = ( window.height - vm.adjust );
-            if(WindowSize.width <= 992){
-                vm.trayHeight = 0
-            } else {
-                vm.trayHeight = vm.trayPixels + 'px';
-            }
-            vm.trayBodyHeight = (vm.trayPixels - vm.scrollBarHeight - (vm.panelCount * vm.panelAdjust)) + 'px';
+            vm.resize();
         });
+        $scope.$on('ovpImage::ovpIncrease',function(event,adjust){
+            console.log(adjust);
+            vm.resize(adjust);
+        });
+        $scope.$on('copyCtrl::toggleTools',function(e,tools){
+            console.log(tools);
+            if(tools){
+                vm.resize();
+            } else {
+                vm.resize(-50);
+            }
+        })
 
         $scope.$on('copyCtrl::objectChanged',function(e,d){
             vm.object = d;
