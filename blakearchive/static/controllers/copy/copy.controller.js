@@ -4,7 +4,7 @@
 
 (function () {
 
-    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location,$sessionStorage,$window) {
+    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location,$sessionStorage,$window,imageManipulation) {
 
         var vm = this;
 
@@ -83,6 +83,7 @@
                 if(object_id == v.object_id){
                     vm.copy.selectedObject  = v;
                     vm.setSimilarObjects(v.object_id);
+                    //imageManipulation.reset(v.object_id);
                     return;
                 }
             });
@@ -105,7 +106,7 @@
 
         vm.toggleTools = function(){
             vm.showTools = !vm.showTools;
-            $scope.$broadcast('copyCtrl::toggleTools',{tools:vm.showTools});
+            $scope.$broadcast('copyCtrl::toggleTools',vm.showTools);
         }
 
 
@@ -150,15 +151,14 @@
             $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?objectId='+object.object_id, '_blank','width=800, height=600');
         }
 
-        vm.rotate = function(object){
-            object.transform.rotate = object.transform.rotate + 90;
+        vm.rotate = function(){
+            imageManipulation.rotate();
         }
-
 
     };
 
 
-    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location','$sessionStorage','$window'];
+    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location','$sessionStorage','$window','imageManipulation'];
 
     angular.module('blake').controller('CopyController', controller);
 
