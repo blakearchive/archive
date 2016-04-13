@@ -3,12 +3,13 @@
  */
 (function () {
 
-    var controller = function ($scope, BlakeDataService,$routeParams,$timeout) {
+    var controller = function ($scope, BlakeDataService,$routeParams,$timeout,$rootScope) {
 
         var vm = this;
 
         vm.showTab = function (id) {
             vm.selectedTab = id;
+            $rootScope.$broadcast('copyTabs::changeTab');
         }
 
         vm.getHeader = function(){
@@ -62,7 +63,7 @@
         }
     }
 
-    controller.$inject = ['$scope', 'BlakeDataService','$routeParams','$timeout'];
+    controller.$inject = ['$scope', 'BlakeDataService','$routeParams','$timeout','$rootScope'];
 
     var copyTabs = function() {
         return {
