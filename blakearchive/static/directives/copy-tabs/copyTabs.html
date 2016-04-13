@@ -26,9 +26,9 @@
                 <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-in-copy'" id="objects-in-copy">
                     <header class="page-header">
                         <p class="subhead">Objects In {{ tabs.getCopyOrGroup() }}</p>
-                        <h1>{{ tabs.getHeader() }}
+                        <!--<h1>{{ tabs.getHeader() }}
                             <span>{{ tabs.getOicSubheader() }}</span>
-                        </h1>
+                        </h1>-->
                     </header>
                     <div class="row">
                         <div ng-repeat="obj in tabs.copy.objectsInCopy track by $index" class="col-sm-6 col-md-3">
@@ -46,9 +46,9 @@
                 <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-from-same-matrix'"  id="objects-from-same-matrix">
                     <header class="page-header">
                         <p class="subhead">Objects from the Same Matrix</p>
-                        <h1>{{ tabs.getHeader() }}
+                        <!--<h1>{{ tabs.getHeader() }}
                             <span style="text-transform: capitalize">{{ tabs.getObjectTitle(tabs.copy.selectedObject) }}</span>
-                        </h1>
+                        </h1>-->
                     </header>
                     <!--<objects-from-same-matrix objects="tabs.copy.selectedObject.matrix" item="tabs.copy.selectedObject" virtual="tabs.copy.virtual"></objects-from-same-matrix>-->
                     <objects-from-same copy="tabs.copy" objects="tabs.copy.selectedObject.matrix" type="matrix"></objects-from-same>
@@ -59,9 +59,9 @@
                 <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-from-same-production-sequence'"  id="objects-from-same-production-sequence">
                     <header class="page-header">
                         <p class="subhead">Objects from the Same Production Sequence</p>
-                        <h1>{{ tabs.getHeader() }}
+                        <!--<h1>{{ tabs.getHeader() }}
                             <span style="text-transform: capitalize">{{ tabs.getObjectTitle(tabs.copy.selectedObject) }}</span>
-                        </h1>
+                        </h1>-->
                     </header>
                     <objects-from-same copy="tabs.copy" objects="tabs.copy.selectedObject.sequence" type="sequence"></objects-from-same>
                     <!--<div class="row">
