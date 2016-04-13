@@ -76,6 +76,9 @@
 
         // Add/remove single object for comparison
         vm.selectOne = function(obj) {
+            /*if($sessionStorage.comparisonType != vm.type){
+                vm.clearComparisonObjects();
+            }*/
             var key = vm.objects.indexOf(obj);
 
             if(!vm.objects[key].Selected) {
@@ -99,18 +102,6 @@
             }
         }
 
-        /*vm.checkSelected = function(obj){
-            angular.forEach(vm.objects,function(obj,k){
-                angular.forEach($sessionStorage.comparisonObjects,function(v,k){
-                    if(angular.isDefined(obj)){
-                        if(v.object_id == obj.object_id){
-                            obj.Selected = true;
-                        }
-                    }
-                })
-            })
-        }*/
-
         vm.compareText = "Select All Objects";
         vm.selectedAll = false;
         //vm.checkSelected();
@@ -121,13 +112,23 @@
             //vm.checkSelected();
         })
 
-        $scope.$on('copyCtrl::resetCompare',function(){
-            vm.compareText = "Select All Objects";
-            vm.selectedAll = false;
-            angular.forEach(vm.objects,function(obj,k){
-                obj.Selected = false;
-            });
-        })
+        $scope.$on('copyTabs::changeTab',function(){
+            var count = 0;
+            angular.forEach($sessionStorage.comparisonObjects,function(comparisonObj){
+               angular.forEach(vm.objects, function(obj){
+                   if(comparisonObj.object_id == obj.object_id){
+                       obj.Selected = true;
+                       count++;
+                   } else {
+                       obj.Selected = false;
+                   }
+               })
+           })
+           if(count == 0){
+               vm.compareText = "Select All Objects";
+               vm.selectedAll = false;
+           }
+        });
 
     }
 
@@ -142,7 +143,8 @@
             controllerAs: 'fromSame',
             scope: {
                 copy: '=copy',
-                objects: '=objects'
+                objects: '=objects',
+                type: '@type'
             },
             bindToController: true
         }
