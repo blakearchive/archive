@@ -1,3 +1,8 @@
+.handprint-block span.description {
+  font-size: 9px;
+  display: block;
+}
+
 @media (min-width: 992px) {
   footer .subscribe form.form-inline {
     float: left;
