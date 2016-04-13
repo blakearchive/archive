@@ -47,6 +47,7 @@
         };
 
         vm.selectAll = function () {
+            vm.checkCompareType();
             if(angular.isDefined(vm.objects)){
                 var obj_size = vm.objects.length;
                 vm.clearComparisonObjects(); // Clear out old comparisons
@@ -76,9 +77,7 @@
 
         // Add/remove single object for comparison
         vm.selectOne = function(obj) {
-            /*if($sessionStorage.comparisonType != vm.type){
-                vm.clearComparisonObjects();
-            }*/
+            vm.checkCompareType();
             var key = vm.objects.indexOf(obj);
 
             if(!vm.objects[key].Selected) {
@@ -93,6 +92,13 @@
 
             }
         };
+
+        vm.checkCompareType = function(){
+            if($sessionStorage.comparisonType != vm.type){
+                vm.clearComparisonObjects();
+                $sessionStorage.comparisonType = vm.type;
+            }
+        }
 
         vm.activateCompare = function(){
             $sessionStorage.comparisonObjects[0].isActive = true;
