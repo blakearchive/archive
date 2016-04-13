@@ -800,7 +800,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             'scale':1,
             'style': {}
         }
-        
+
         imageManipulation.rotate = function(){
             imageManipulation.transform.rotate = imageManipulation.transform.rotate + 90;
         }
