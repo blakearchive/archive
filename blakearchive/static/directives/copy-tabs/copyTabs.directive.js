@@ -9,7 +9,6 @@
 
         vm.showTab = function (id) {
             vm.selectedTab = id;
-            $rootScope.$broadcast('copyTabs::changeTab');
         }
 
         vm.getHeader = function(){

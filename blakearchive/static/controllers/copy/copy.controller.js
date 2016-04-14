@@ -118,7 +118,6 @@
          * View Manipulation
          */
         vm.resetView = function(){
-            console.log('change view');
             if(angular.isDefined(vm.$storage.view)){
                 vm.$storage.view.mode = 'object';
                 vm.$storage.view.scope = 'image';
