@@ -58,19 +58,13 @@
 
                     // Add imgs to compare main viewer img too.
                     for (var i = obj_size; i--;) {
-                        vm.objects[i].Selected = true;
+                        //vm.objects[i].Selected = true;
                         vm.addComparisonObject(vm.objects[i]);
                     }
 
                 } else {
                     vm.compareText = "Select All Objects";
                     vm.selectedAll = false;
-
-                    for (var j = obj_size; j--;) {
-                        vm.objects[j].Selected = false;
-                    }
-
-                    vm.clearComparisonObjects();
                 }
             }
         };
@@ -78,17 +72,15 @@
         // Add/remove single object for comparison
         vm.selectOne = function(obj) {
             vm.checkCompareType();
-            var key = vm.objects.indexOf(obj);
+            if(vm.isComparisonObject(obj)) {
 
-            if(!vm.objects[key].Selected) {
-
-                vm.objects[key].Selected = true;
-                vm.addComparisonObject(obj);
+                //vm.objects[key].Selected = true;
+                vm.removeComparisonObject(obj);
 
             } else {
 
-                vm.objects[key].Selected = false;
-                vm.removeComparisonObject(obj);
+                vm.addComparisonObject(obj);
+                //vm.objects[key].Selected = false;
 
             }
         };
@@ -118,23 +110,12 @@
             //vm.checkSelected();
         })
 
-        $scope.$on('copyTabs::changeTab',function(){
-            var count = 0;
-            angular.forEach($sessionStorage.comparisonObjects,function(comparisonObj){
-               angular.forEach(vm.objects, function(obj){
-                   if(comparisonObj.object_id == obj.object_id){
-                       obj.Selected = true;
-                       count++;
-                   } else {
-                       obj.Selected = false;
-                   }
-               })
-           })
-           if(count == 0){
-               vm.compareText = "Select All Objects";
-               vm.selectedAll = false;
-           }
-        });
+        $scope.$watch(function(){return $sessionStorage.comparisonType},function(newVal){
+            if(newVal != vm.type){
+                vm.compareText = "Select All Objects";
+                vm.selectedAll = false;
+            }
+        })
 
     }
 
