@@ -347,6 +347,7 @@ a.compare-selected-objects {
     }
     #archive #object-view.compare-objects #compare.scrollbar .compare-inner .item .object-img-container{
         height: 100%;
+        text-align: center;
     }
     #archive #object-view.compare-objects #compare.scrollbar .compare-inner .item img{
         height: 100%;
