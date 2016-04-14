@@ -724,19 +724,23 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             link: link
         }
     })
-    .directive('ovpImage',function(imageManipulation,$rootScope){
+    .directive('ovpImage',function(imageManipulation,$rootScope, $sessionStorage){
         var link = function(scope,element,attr){
+
+            scope.$storage = $sessionStorage;
 
             var image = angular.element(element.children()),
                 container = angular.element(element.parent()),
                 height = 0,
                 width = 0,
-                originalHeight = 0;
+                originalHeight = 0,
+                originalWidth = 0;
 
             image.on('load',function(){
                 height = image.height();
                 width = image.width();
                 originalHeight = container.height();
+                originalWidth = container.width();
             })
 
             scope.transformRotate = function(){
@@ -753,6 +757,15 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                         $rootScope.$broadcast('ovpImage::ovpIncrease',0);
                     }
                 }
+
+                if(height > width && scope.$storage.view.mode == 'compare'){
+                    if((imageManipulation.transform.rotate % 180) != 0){
+                        container.width(height);
+                    } else {
+                        container.width(originalWidth);
+                    }
+                }
+
                 if(imageManipulation.transform.rotate == 0){
                     element.removeClass('rotated');
                 } else {
