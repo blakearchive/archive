@@ -32,7 +32,7 @@
                 vm.setObject(object_id);
 
                 if(reset){
-                    vm.resetComparisonObjects();
+                    vm.resetView();
                 }
 
                 var copyBad = BlakeDataService.selectedCopy.bad_id,
@@ -122,9 +122,8 @@
                 vm.$storage.view.mode = 'object';
                 vm.$storage.view.scope = 'image';
             }
+            vm.resetComparisonObjects();
         }
-        vm.resetView();
-
 
         /*
          * Image Manipulation
