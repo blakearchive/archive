@@ -1,0 +1,94 @@
+/**
+ * Created by lukeluke on 1/21/16.
+ *
+ * Based on http://dpi.lv
+ */
+(function () {
+
+    var controller = function ($http,$sessionStorage) {
+
+        var vm = this;
+        vm.$storage = $sessionStorage
+
+        vm.common = {
+            'resolutions':[
+                {'x':1920,'y':1080},
+                {'x':1680,'y':1050},
+                {'x':1440,'y':900},
+                {'x':1366,'y':768},
+                {'x':1280,'y':800},
+                {'x':1386,'y':768},
+                {'x':1024,'y':768},
+                {'x':800,'y':600}
+            ],
+            'diagonals':[7,11.6,13.3,14,15.6,17.3,21,27]
+        }
+
+        vm.screens = {};
+
+        vm.calculatePpi = function() {
+            var x = vm.config.x,
+                y = vm.config.y,
+                d = vm.config.d;
+            // Calculate PPI/DPI
+            var dpi = Math.sqrt(x*x + y*y) / d;
+            return dpi>0 ? Math.round(dpi) : 0;
+
+        }
+
+        if(angular.isDefined(vm.$storage.clientPpi)){
+            vm.config = vm.$storage.clientPpi;
+        } else {
+            vm.config = {
+                'x': 1680,
+                'y': 1050,
+                'd': 13.3,
+                'ppi': 0
+            }
+        }
+
+
+        vm.testLine = {
+            'background-color':'red',
+            'height': '5px',
+            'width': vm.calculatePpi()+'px'
+        }
+
+        vm.updateConfig = function(x,y,d) {
+            vm.config.x = x > 0 ? x : vm.config.x;
+            vm.config.y = y > 0 ? y : vm.config.y;
+            vm.config.d = d > 0 ? d : vm.config.d;
+            vm.testLine.width = vm.calculatePpi() + 'px';
+        }
+
+        vm.savePpi = function(){
+            vm.config.ppi = vm.calculatePpi();
+            vm.$storage.clientPpi = vm.config;
+        }
+
+        $http.get('/blake/static/directives/client-ppi/screens.json').success(function(data){
+           vm.screens = data;
+            console.log(vm.screens);
+        });
+
+        vm.screenQuery = '';
+
+
+
+    }
+
+    controller.$inject = ['$http','$sessionStorage'];
+
+    var clientPpi = function() {
+        return {
+            restrict: 'EA',
+            templateUrl: "/blake/static/directives/client-ppi/clientPpi.html",
+            controller: controller,
+            controllerAs: 'ppi',
+            bindToController: true
+        }
+    }
+
+    angular.module('blake').directive('clientPpi', clientPpi);
+
+}());
