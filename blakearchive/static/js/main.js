@@ -740,7 +740,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 height = image.height();
                 width = image.width();
                 originalHeight = container.height();
-                originalWidth = container.width();
+                originalWidth = element.width();
             })
 
             scope.transformRotate = function(){
@@ -760,9 +760,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
                 if(height > width && scope.$storage.view.mode == 'compare'){
                     if((imageManipulation.transform.rotate % 180) != 0){
-                        container.width(height);
+                        element.width(height).css({'text-align':'center'});
                     } else {
-                        container.width(originalWidth);
+                        element.width(originalWidth);
                     }
                 }
 

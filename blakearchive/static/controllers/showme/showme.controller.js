@@ -4,9 +4,10 @@
 
 (function () {
 
-    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location) {
+    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location,$sessionStorage,$modal) {
 
         var vm = this;
+        vm.$storage = $sessionStorage;
 
         $rootScope.showmePage = true;
 
@@ -82,10 +83,37 @@
             vm.init();
         }
 
+        vm.trueSize = function(){
+            if(angular.isDefined(vm.$storage.clientPpi) && angular.isDefined((vm.copy))){
+                var size = vm.copy.selectedObject.physical_description.objsize['#text'].split(' '),
+                    x = size[2],
+                    y = size[0],
+                    unit = size[3],
+                    width = x / 2.54 * vm.$storage.clientPpi.ppi,
+                    height = y / 2.54 * vm.$storage.clientPpi.ppi;
+                console.log('x='+x+'  y='+y+'  unit='+unit+'  ppi='+vm.$storage.clientPpi.ppi);
+                if(unit == 'mm.'){
+                    width = width * 10;
+                    height = height * 10;
+                }
+
+                 return {'height':height+'px','width':width+'px'}
+
+            }
+        }
+
+        vm.clientPpiOpen = function(){
+            var clientDpiModalInstance = $modal.open({
+                template: '<client-ppi></client-ppi>',
+                controller: 'ModalController',
+                size: 'lg'
+            });
+        }
+
     };
 
 
-    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location'];
+    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location','$sessionStorage','$modal'];
 
     angular.module('blake').controller('ShowMeController', controller);
 
