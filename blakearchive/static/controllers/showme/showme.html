@@ -49,17 +49,14 @@
             </div>
         </div>
 
-        <!-- Metadata -->
-        <div class="row" id="objectMetadata" ng-if="showme.what == 'meta'">
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-                <object-metadata object="tray.copy.selectedObject"></object-metadata>
+        <!-- True Size -->
+        <div class="row" id="trueSize" ng-if="showme.what == 'truesize'">
+            <div class="col-xs-12 text-center">
+                <p>{{ showme.copy.selectedObject.physical_description.objsize['#text'] }}</p>
+                <img ng-src="http://www.blakearchive.org/blake/images/{{ showme.copy.selectedObject.dbi }}.100.jpg" ng-style="showme.trueSize()">
             </div>
-        </div>
-
-        <!-- TEI Markup -->
-        <div class="row" id="teiMarkup" ng-if="showme.what == 'tei'">
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-                <tei-markup object="tray.copy.selectedObject"></tei-markup>
+            <div class="col-xs-12 text-center">
+                <button ng-click="showme.clientPpiOpen()" class="btn btn-default">Adjust Monitor PPI</button>
             </div>
         </div>
     </div>
