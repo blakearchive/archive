@@ -559,6 +559,17 @@ a.compare-selected-objects {
     }
 }
 
+/**************
+* True Size
+****************/
+.test-line{
+    margin: 0 auto;
+}
+#known-devices{
+    max-height: 450px;
+    overflow-y:scroll;
+}
+
 /***************
 * Responsive Fixes
 *****************/

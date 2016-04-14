@@ -4,7 +4,7 @@
 
 (function () {
 
-    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location,$sessionStorage,$window,imageManipulation) {
+    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location,$sessionStorage,$window,$modal,imageManipulation) {
 
         var vm = this;
 
@@ -126,7 +126,7 @@
         }
 
         /*
-         * Image Manipulation
+         * OVP Toolbar
          */
         vm.getObjectToTransform = function(){
 
@@ -149,6 +149,19 @@
             $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?objectId='+object.object_id, '_blank','width=800, height=600');
         }
 
+        vm.trueSizeOpen = function(object){
+            if(!angular.isDefined(vm.$storage.clientPpi)){
+                var clientDpiModalInstance = $modal.open({
+                    template: '<client-ppi></client-ppi>',
+                    controller: 'ModalController',
+                    size: 'lg'
+                });
+            } else {
+                $window.open('/blake/new-window/truesize/'+object.copy_bad_id+'?objectId='+object.object_id, '_blank', 'width=800, height=600');
+            }
+        }
+
+
         vm.rotate = function(){
             imageManipulation.rotate();
         }
@@ -156,7 +169,7 @@
     };
 
 
-    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location','$sessionStorage','$window','imageManipulation'];
+    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location','$sessionStorage','$window','$modal','imageManipulation'];
 
     angular.module('blake').controller('CopyController', controller);
 
