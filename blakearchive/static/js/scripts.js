@@ -41,7 +41,7 @@
     // Remeber if the archive menu is open or closed by using local storage.
     // -------------------------------------------------------------------
 
-    var $archive_btn = $('button.collapse-archive');
+    /*var $archive_btn = $('button.collapse-archive');
     var $archive_menu = $('nav.navbar');
 
     // If the menu hasn't been dismissed, show it.
@@ -66,7 +66,7 @@
         $archive_btn.addClass('menu-open').removeClass('menu-closed');
         localStorage.setItem('archive_menu_dismissed', 'true');
       }
-    });
+    });*/
 
 
     // Get the height of the object view carousel.

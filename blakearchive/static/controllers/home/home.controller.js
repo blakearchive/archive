@@ -9,7 +9,8 @@
         var vm = this;
 
         $rootScope.showSubMenu = 0;
-        //$localStorage.$reset();
+        $rootScope.worksNavState = true;
+        //$localStorage.$reset()
 
         vm.columns = {
             1:{'topOffset':'-90px'},
