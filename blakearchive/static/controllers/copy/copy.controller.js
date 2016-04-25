@@ -89,6 +89,7 @@
                 }
             });
             $rootScope.$broadcast('copyCtrl::objectChanged',vm.copy.selectedObject);
+            $rootScope.worksNavState = false;
         }
 
         $scope.$on('$routeUpdate',function(e,v) {

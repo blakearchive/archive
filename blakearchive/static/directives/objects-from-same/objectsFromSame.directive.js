@@ -4,7 +4,7 @@
 
 (function(){
 
-    var controller = function($scope,$sessionStorage){
+    var controller = function($scope,$sessionStorage,$rootScope){
 
         var vm = this;
 
@@ -94,6 +94,7 @@
 
         vm.activateCompare = function(){
             $sessionStorage.comparisonObjects[0].isActive = true;
+            $rootScope.worksNavState = false;
             $sessionStorage.view = {
                 mode: 'compare',
                 scope: 'image'
@@ -119,7 +120,7 @@
 
     }
 
-    controller.$inject = ['$scope','$sessionStorage'];
+    controller.$inject = ['$scope','$sessionStorage','$rootScope'];
 
 
     var objectsFromSame = function(){
