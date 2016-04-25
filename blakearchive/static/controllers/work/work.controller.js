@@ -4,9 +4,10 @@
 
 (function(){
 
-    var controller = function($scope,$routeParams,$sanitize,BlakeDataService){
+    var controller = function($scope,$routeParams,$rootScope,$sanitize,BlakeDataService){
 
         var vm = this;
+        $rootScope.worksNavState = false;
 
         vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
 
@@ -148,7 +149,7 @@
 
     }
 
-    controller.$inject = ['$scope','$routeParams','$sanitize','BlakeDataService'];
+    controller.$inject = ['$scope','$routeParams','$rootScope','$sanitize','BlakeDataService'];
 
     angular.module('blake').controller("WorkController", controller);
 

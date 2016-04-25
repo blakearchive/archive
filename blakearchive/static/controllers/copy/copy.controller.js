@@ -9,6 +9,7 @@
         var vm = this;
 
         $rootScope.showSubMenu = 1;
+        $rootScope.worksNavState = false;
         vm.$storage = $sessionStorage;
 
         /*
@@ -101,6 +102,7 @@
         vm.showTools = true;
 
         vm.toggleTray = function(){
+            $rootScope.worksNavState = false;
             vm.trayOpen = !vm.trayOpen;
         }
 
