@@ -804,6 +804,22 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             link:link
         }
     })
+    
+    .directive('blakeMenu', function($scope,$rootScope){
+        return {
+            restrict: 'A',
+            constoller: function($scope,$rootScope){
+                $scope.worksNavState = $rootScope.worksNavState;
+            },
+            /*link: function(scope,el,attr){
+                el.on('click',function(){
+                    console.log('menu clicked');
+                    el.toggleClass('menu-open').toggleClass('menu-closed');
+                    scope.worksNavState = !scope.worksNavState;
+                })
+            }*/
+        }
+    })
 
     .factory('imageManipulation',function(){
         var imageManipulation = {};

@@ -23,11 +23,11 @@
     <![endif]-->
 </head>
 <body ng-app="blake" resize scroll>
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top" blake-menu ng-class="{'menu-open':worksNavState, 'menu-closed': !worksNavState}">
 <div class="site-header-container">
   <div class="container-fluid site-header">
         <a class="navbar-brand" href="/"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
-        <button type="button" class="collapse-archive menu-closed" ng-class="{'hidden':showmePage}">
+        <button ng-click="worksNavState = !worksNavState" type="button" class="collapse-archive" ng-class="{'hidden':showmePage, 'menu-open':worksNavState, 'menu-closed': !worksNavState}">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -38,7 +38,7 @@
   </div>
 </div>
 <!-- /.container -->
-<nav class="navbar navbar-default menu-closed" role="navigation" ng-class="{hidden:showmePage}">
+<nav class="navbar navbar-default" role="navigation" ng-class="{'hidden':showmePage}">
   <div class="container-fluid">
     <form ng-controller="SearchController" class="navbar-form" role="search" ng-submit="loadSearchPage()">
       <div class="input-group">

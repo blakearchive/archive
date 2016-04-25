@@ -16,6 +16,7 @@
         vm.changeView = function(mode,scope){
             vm.$storage.view.mode = mode;
             vm.$storage.view.scope = scope;
+            $rootScope.worksNavState = false;
         }
 
     }
