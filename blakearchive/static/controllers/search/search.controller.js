@@ -9,6 +9,7 @@
         var objectMatchingMedium, workMatchingMedium, vm = this;
 
         $rootScope.showSubMenu = 0;
+        $rootScope.worksNavState = false;
 
         vm.showTab = function (id) {
             vm.selectedTab = id;

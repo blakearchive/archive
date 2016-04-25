@@ -1,5 +1,3 @@
-# config valid only for current version of Capistrano
-lock '3.4.0'
 require 'yaml'
 
 set :cap_config, YAML.load_file('config/cap_config.yml')
