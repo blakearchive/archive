@@ -59,7 +59,8 @@ def main():
             "institution": blake_copy.institution,
             "header": blake_copy.header,
             "composition_date": blake_copy.composition_date,
-            "print_date": blake_copy.print_date
+            "print_date": blake_copy.print_date,
+            "virtual_container_id": blake_copy.virtual_container_id
         }
         if blake_copy.work:
             copy_["medium"] = blake_copy.work.medium
