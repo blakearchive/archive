@@ -46,16 +46,6 @@ class BlakeDocumentImporter(object):
                 all_but_current_id = matching_ids_set ^ set([matching_id])
                 self.motif_relationships_expanded[matching_id].update(all_but_current_id)
         xslt_xml = etree.parse(open("static/xslt/transcription.xsl"))
-
-        # We need to define a custom token fuction here to replace the functionality provided by xalan
-        def custom_tokenize(context, string, split_token):
-            if type(string) is list:
-                string = string[0]
-            return string.split(split_token)
-
-        ns = etree.FunctionNamespace(None)
-        ns['custom_tokenize'] = custom_tokenize
-
         self.transform = etree.XSLT(xslt_xml)
 
     def process_info_file(self, document):
@@ -108,8 +98,8 @@ class BlakeDocumentImporter(object):
                     obj.header = old_copy.header
                     obj.source = old_copy.source
                     obj.copy = virtual_work_copy
-                    if old_copy.bad_id in self.copies:
-                        del self.copies[old_copy.bad_id]
+                    obj.object_group = old_copy.title
+                    old_copy.virtual_container_id = virtual_work_copy.bad_id
                 work.copies.append(virtual_work_copy)
                 self.copies[bad_id] = virtual_work_copy
             else:
@@ -136,58 +126,107 @@ class BlakeDocumentImporter(object):
             obj.objects_from_same_matrix.extend(same_matrix)
             obj.objects_from_same_production_sequence.extend(same_production_sequence)
 
-    def process_object(self, obj):
-
-        def element_to_dict(o):
-            element_xml = etree.tostring(o, encoding='utf8', method='xml')
-            return xmltodict.parse(element_xml, force_cdata=True)
-
-        bo = models.BlakeObject()
-
-        bo.desc_id = obj.attrib.get("id").lower()
-        bo.dbi = obj.attrib.get("dbi").lower()
-        self.objects[bo.desc_id] = bo
-        # We need to pull out the illusdesc and store it separately
-        for illustration_description in obj.xpath("illusdesc"):
-            components = illustration_description.xpath("illustration/component")
-            bo.components = [element_to_dict(c) for c in components]
-            for desc in illustration_description.xpath("illustration/illusobjdesc"):
-                bo.illustration_description = element_to_dict(desc)
-                break
-            break
-        bo.notes = [note.xpath("string()") for note in obj.xpath(".//note") + obj.xpath(".//objnote")]
-        for title in obj.xpath(".//title"):
-            bo.title = title.xpath("string()")
-        if not getattr(bo, "title"):
+    def get_object_title(self, obj):
+        for title in obj.xpath("objtitle/title"):
+            return title.xpath("string()")
+        else:
             for objnumber in obj.xpath(".//objnumber"):
                 if objnumber.attrib.get("code") == "A1":
-                    bo.title = objnumber.xpath("text()")
-                    break
+                    return objnumber.xpath("text()")
+
+    def element_to_dict(self, obj):
+            element_xml = etree.tostring(obj, encoding='utf8', method='xml')
+            return xmltodict.parse(element_xml, force_cdata=True)
+
+    def get_text(self, obj):
         for phystext in obj.xpath("phystext"):
-            bo.text = element_to_dict(phystext)["phystext"]
-            bo.markup_text = etree.tostring(self.transform(phystext))
-            # print etree.tostring(phystext, pretty_print=True)
-            break
+            return self.element_to_dict(phystext)["phystext"]
+
+    def get_markuptext(self, obj):
+        for phystext in obj.xpath("phystext"):
+            return etree.tostring(self.transform(phystext))
+
+    def get_components(self, obj):
+        components = obj.xpath(".//illusdesc/illustration/component")
+        return [self.element_to_dict(c) for c in components]
+
+    def get_illustration_description(self, obj):
+        for description in obj.xpath("illusdesc/illustration/illusobjdesc"):
+            return self.element_to_dict(description)
+
+    def get_full_object_id(self, obj):
         for objid in obj.xpath("objtitle/objid"):
-            bo.full_object_id = objid.xpath("string()").encode("utf-8")
-            break
+            return objid.xpath("string()").encode("utf-8")
+
+    def get_object_number(self, obj):
         for objnumber in obj.xpath("objtitle/objid/objnumber"):
             obj_number = objnumber.get("code").encode("utf-8").upper()
             obj_number_value = re.search(r'\d+', obj_number)
             if obj_number_value:
-                bo.object_number = int(obj_number_value.group(0))
+                return int(obj_number_value.group(0))
+
+    def get_bentley_id(self, obj):
         for objcode in obj.xpath("objtitle/objid/objcode"):
             obj_id = objcode.get("code").encode("utf-8").upper()
             if obj_id.startswith("B"):
                 bentley_id = re.search(r'\d+', obj_id)
                 if bentley_id:
-                    bo.bentley_id = int(bentley_id.group(0))
-                    break
-        for title in obj.xpath("objtitle/title"):
-            bo.title = title.xpath("string()").encode("utf-8")
-            break
-        bo.physical_description = element_to_dict(obj.xpath("physdesc")[0])["physdesc"]
+                    return int(bentley_id.group(0))
+
+    def get_object_notes(self, obj):
+        return [note.xpath("string()") for note in obj.xpath(".//note") + obj.xpath(".//objnote")]
+
+    def get_physical_description(self, obj):
+        for physdesc in obj.xpath("physdesc"):
+            return self.element_to_dict(physdesc)["physdesc"]
+
+    def process_object(self, obj):
+        bo = models.BlakeObject()
+        bo.desc_id = obj.attrib.get("id").lower()
+        bo.dbi = obj.attrib.get("dbi").lower()
+
+        self.objects[bo.desc_id] = bo
+        bo.components = self.get_components(obj)
+        bo.illustration_description = self.get_illustration_description(obj)
+        bo.notes = self.get_object_notes(obj)
+        bo.title = self.get_object_title(obj)
+        bo.text = self.get_text(obj)
+        bo.full_object_id = self.get_full_object_id(obj)
+        bo.object_number = self.get_object_number(obj)
+        bo.bentley_id = self.get_bentley_id(obj)
+        bo.physical_description = self.get_physical_description(obj)
         return bo
+
+    def extract_date(self, date_string):
+        date_match = re.match("\D*(\d{4})", date_string)
+        if date_match:
+            return int(date_match.group(1))
+
+    def get_compdate_string(self, document):
+        for cd in document.xpath("//compdate"):
+            return cd.xpath("string()").encode("utf-8")
+
+    def get_printdate_string(self, document):
+        for pd in document.xpath("//printdate"):
+            return pd.attrib["value"]
+
+    def get_header(self, document):
+        for header in document.xpath("header"):
+            header_xml = etree.tostring(header, encoding='utf8', method='xml')
+            return json.dumps(xmltodict.parse(header_xml, force_cdata=True)["header"])
+
+    def get_source(self, document):
+        for source in document.xpath("objdesc/source"):
+            source_xml = etree.tostring(source, encoding='utf8', method='xml')
+            return json.dumps(xmltodict.parse(source_xml, force_cdata=True)["source"])
+
+    def get_copy_title(self, document):
+        for title in document.xpath("header/filedesc/titlestmt/title"):
+            return title.xpath("string()").encode("utf-8")
+
+    def get_copy_institution(self, document):
+        for institution in document.xpath("//institution"):
+            return institution.xpath("string()").encode("utf-8")
 
     def process(self, document):
         if os.path.isfile(document):
@@ -197,38 +236,20 @@ class BlakeDocumentImporter(object):
         if not root.tag == "bad":
             raise ValueError("Document is not a blake archive xml document")
         copy_id = root.get("id").lower()
-        for cd in root.xpath("//compdate"):
-            comp_date_string = cd.xpath("string()").encode("utf-8")
-            comp_date = int(re.match("\D*(\d{4})", comp_date_string).group(1))
-            break
-        print_date = None
-        print_date_string = None
-        for pd in root.xpath("//printdate"):
-            print_date_string = pd.attrib["value"]
-            print_date_match = re.match("\D*(\d{4})", print_date_string)
-            if print_date_match:
-                print_date = int(print_date_match.group(1))
-            break
+        comp_date_string = self.get_compdate_string(root)
+        comp_date = self.extract_date(comp_date_string)
+        print_date_string = self.get_printdate_string(root)
+        print_date = self.extract_date(print_date_string)
         archive_copy_id = root.get("copy")
-        header_xml = etree.tostring(root.xpath("header")[0], encoding='utf8', method='xml')
-        header_json = json.dumps(xmltodict.parse(header_xml, force_cdata=True)["header"])
-        source_xml = etree.tostring(root.xpath("objdesc/source")[0], encoding='utf8', method='xml')
-        source_json = json.dumps(xmltodict.parse(source_xml, force_cdata=True)["source"])
+        header = self.get_header(root)
+        source = self.get_source(root)
         objects = [self.process_object(o) for o in root.xpath("objdesc/desc")]
-        copy = models.BlakeCopy(bad_id=copy_id, header=header_json, source=source_json, objects=objects,
+        copy = models.BlakeCopy(bad_id=copy_id, header=header, source=source, objects=objects,
                                 composition_date=comp_date, composition_date_string=comp_date_string,
                                 print_date=print_date, print_date_string=print_date_string,
-                                archive_copy_id=archive_copy_id)
-        if copy_id in self.copy_handprint_map:
-            copy.image = self.copy_handprint_map[copy_id]
-        else:
-            print "No handprint for ", copy_id
-        for title in root.xpath("header/filedesc/titlestmt/title"):
-            copy.title = title.xpath("string()").encode("utf-8")
-            break
-        for institution in root.xpath("//institution"):
-            copy.institution = institution.xpath("string()").encode("utf-8")
-            break
+                                archive_copy_id=archive_copy_id, image=self.copy_handprint_map.get(copy_id))
+        copy.title = self.get_copy_title(root)
+        copy.institution = self.get_copy_institution(root)
         copy.medium = root.get("type").encode("utf-8")
         self.copies[copy.bad_id] = copy
         print "added copy"
