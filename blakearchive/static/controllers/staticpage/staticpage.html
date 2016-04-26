@@ -1,0 +1,70 @@
+<div class="container-fluid main">
+
+  <header class="page-header">
+    <h1>About the William Blake Archive</h1>
+  </header>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm-2 menu-left-column">
+
+        <ul class="nav nav-sidebar">
+          <li id="whatsnew"><a href="#">What's New?</a></li>
+          <li id="aboutblake"><a href="#">About Blake</a></li>
+          <li id="resources"><a href="#">Resources for Further Research</a></li>
+          <li id="aboutthearchive"><a href="#">About the Archive</a></li>
+          <li id="usingthearchive"><a href="#">Using the Archive</a></li>
+          <li id="copyright"><a href="#">Copyright and Permissions</a></li>
+          <li id="contact"><a href="#">Contact the Archive</a></li>
+          <li id="related"><a href="#">Related Sites</a></li>
+        </ul>
+
+      </div>
+
+      <div class="col-sm-9 content-right-column">
+
+        <div class="row">
+          <div id="content" class="col-sm-12">
+
+               <ng-include src="'/blake/static/html/' + staticpage.initialSelection + '.html'"></ng-include>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /.container -->
+
+</div><!-- /.container.main -->
+
+
+<script> 
+
+  $("#whatsnew").on("click",function(){
+      $("#content").load("/blake/static/html/update.html");
+  });
+  $("#aboutblake").on("click",function(){
+      $("#content").load("/blake/static/html/biography.html");
+  });
+  $("#resources").on("click",function(){
+      $("#content").load("/blake/static/html/resources.html");
+  });
+  $("#aboutthearchive").on("click",function(){
+      $("#content").load("/blake/static/html/archiveataglance.html");
+  });
+  $("#usingthearchive").on("click",function(){
+      $("#content").load("/blake/static/html/help.html");
+  });
+  $("#copyright").on("click",function(){
+      $("#content").load("/blake/static/html/permissions.html");
+  });
+  $("#contact").on("click",function(){
+      $("#content").load("/blake/static/html/comment.html");
+  });
+  $("#related").on("click",function(){
+      $("#content").load("/blake/static/html/related.html");
+  });
+
+</script>
