@@ -52,6 +52,7 @@ class BlakeObject(db.Model):
     header = db.Column(JSON)
     source = db.Column(JSON)
     notes = db.Column(JSON)
+    object_group = db.Column(db.UnicodeText)
     objects_from_same_matrix = db.relationship(
         "BlakeObject",
         secondary=matrix__object,
@@ -97,7 +98,8 @@ class BlakeObject(db.Model):
             "title": self.title,
             "header": self.header,
             "source": self.source,
-            "notes": self.notes
+            "notes": self.notes,
+            "object_group": self.object_group
         }
 
 
@@ -117,6 +119,7 @@ class BlakeCopy(db.Model):
     composition_date_string = db.Column(db.UnicodeText)
     print_date_string = db.Column(db.UnicodeText)
     print_date = db.Column(db.Integer)
+    virtual_container_id = db.Column(db.UnicodeText, index=True)
 
     def __init__(self, *args, **kwargs):
         super(BlakeCopy, self).__init__(*args, **kwargs)
