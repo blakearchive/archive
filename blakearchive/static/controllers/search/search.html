@@ -176,7 +176,7 @@
                                     <slide-box>
                                         <div ng-repeat="copy in copyResults[type].results" class="search-result-item">
                                             <div class="handprint-block">
-                                                <a href="/blake/copy/{{ copy.bad_id }}?searchTerm={{searchConfig.searchString}}&{{vars.highlight}}">
+                                                <a href="/blake/copy/{{ copy.virtual_container_id }}?searchTerm={{searchConfig.searchString}}&{{vars.highlight}}">
                                                     <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ copy.bad_id }}.p1.100.jpg);"></span>
                                                     <span class="description"><strong>{{ copy.title }}</strong></span>
                                                 </a>
