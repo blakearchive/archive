@@ -60,7 +60,7 @@ def main():
             "header": blake_copy.header,
             "composition_date": blake_copy.composition_date,
             "print_date": blake_copy.print_date,
-            "virtual_container_id": blake_copy.virtual_container_id
+            "effective_copy_id": blake_copy.effective_copy_id
         }
         if blake_copy.work:
             copy_["medium"] = blake_copy.work.medium
