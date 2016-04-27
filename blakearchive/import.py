@@ -99,7 +99,7 @@ class BlakeDocumentImporter(object):
                     obj.source = old_copy.source
                     obj.copy = virtual_work_copy
                     obj.object_group = old_copy.title
-                    old_copy.virtual_container_id = virtual_work_copy.bad_id
+                    old_copy.effective_copy_id = virtual_work_copy.bad_id
                 work.copies.append(virtual_work_copy)
                 self.copies[bad_id] = virtual_work_copy
             else:
@@ -128,11 +128,11 @@ class BlakeDocumentImporter(object):
 
     def get_object_title(self, obj):
         for title in obj.xpath("objtitle/title"):
-            return title.xpath("string()")
+            return title.xpath("string()").encode("utf-8")
         else:
             for objnumber in obj.xpath(".//objnumber"):
                 if objnumber.attrib.get("code") == "A1":
-                    return objnumber.xpath("text()")
+                    return objnumber.xpath("string()").encode("utf-8")
 
     def element_to_dict(self, obj):
             element_xml = etree.tostring(obj, encoding='utf8', method='xml')
@@ -198,9 +198,10 @@ class BlakeDocumentImporter(object):
         return bo
 
     def extract_date(self, date_string):
-        date_match = re.match("\D*(\d{4})", date_string)
-        if date_match:
-            return int(date_match.group(1))
+        if date_string:
+            date_match = re.match("\D*(\d{4})", date_string)
+            if date_match:
+                return int(date_match.group(1))
 
     def get_compdate_string(self, document):
         for cd in document.xpath("//compdate"):
@@ -228,13 +229,17 @@ class BlakeDocumentImporter(object):
         for institution in document.xpath("//institution"):
             return institution.xpath("string()").encode("utf-8")
 
-    def process(self, document):
+    def get_document_tree(self, document):
         if os.path.isfile(document):
             root = etree.parse(document).getroot()
         else:
             root = etree.fromstring(document).getroot()
         if not root.tag == "bad":
             raise ValueError("Document is not a blake archive xml document")
+        return root
+
+    def process(self, document):
+        root = self.get_document_tree(document)
         copy_id = root.get("id").lower()
         comp_date_string = self.get_compdate_string(root)
         comp_date = self.extract_date(comp_date_string)
@@ -248,6 +253,7 @@ class BlakeDocumentImporter(object):
                                 composition_date=comp_date, composition_date_string=comp_date_string,
                                 print_date=print_date, print_date_string=print_date_string,
                                 archive_copy_id=archive_copy_id, image=self.copy_handprint_map.get(copy_id))
+        copy.effective_copy_id = copy_id
         copy.title = self.get_copy_title(root)
         copy.institution = self.get_copy_institution(root)
         copy.medium = root.get("type").encode("utf-8")
