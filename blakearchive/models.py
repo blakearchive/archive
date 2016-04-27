@@ -119,7 +119,7 @@ class BlakeCopy(db.Model):
     composition_date_string = db.Column(db.UnicodeText)
     print_date_string = db.Column(db.UnicodeText)
     print_date = db.Column(db.Integer)
-    virtual_container_id = db.Column(db.UnicodeText, index=True)
+    effective_copy_id = db.Column(db.UnicodeText, index=True)
 
     def __init__(self, *args, **kwargs):
         super(BlakeCopy, self).__init__(*args, **kwargs)
@@ -139,7 +139,8 @@ class BlakeCopy(db.Model):
             "composition_date": self.composition_date,
             "composition_date_string": self.composition_date_string,
             "print_date_string": self.print_date_string,
-            "print_date": self.print_date
+            "print_date": self.print_date,
+            "effective_copy_id": self.effective_copy_id
         }
 
 
