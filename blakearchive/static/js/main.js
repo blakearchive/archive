@@ -805,7 +805,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         }
     })
     
-    .directive('blakeMenu', function($scope,$rootScope){
+    .directive('blakeMenu', function($rootScope){
         return {
             restrict: 'A',
             constoller: function($scope,$rootScope){
