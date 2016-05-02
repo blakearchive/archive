@@ -8,7 +8,12 @@
         $rootScope.worksNavState = false;
         //$localStorage.$reset()
 
-        vm.initialSelection = $routeParams.initialPage;    
+        vm.initialSelection = $routeParams.initialPage;
+        vm.subSelection = vm.initialSelection;
+
+        vm.changeContent = function(page){
+            vm.subSelection = page;
+        }
 
     }
 
