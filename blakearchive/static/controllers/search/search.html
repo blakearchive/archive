@@ -29,7 +29,7 @@
                                 <input type="checkbox" ng-model="searchConfig.searchTitle"> Title
                             </div>
                             <div class="checkbox">
-                                <input type="checkbox" ng-model="searchConfig.searchText"> Transcriptions
+                                <input type="checkbox" ng-model="searchConfig.searchString"> Transcriptions
                             </div>
                             <div class="checkbox">
                                 <input type="checkbox" ng-model="searchConfig.searchImageKeywords"> Image tags
@@ -89,120 +89,13 @@
         <div ng-if="objectResults.length == 0 && copyResults.count == 0 && workResults.count == 0">
             No results found
         </div>
-
-        <div ng-repeat="(type,vars) in searchCtrl.types.object track by $index">
-            <div ng-show="searchConfig[vars.config] == true"><!-- start: OBJECT {{ type | uppercase }} RESULTS -->
-                <h3>{{ vars.text }} ({{ objectResults[type].length}} works)</h3>
-
-                <div ng-show="objectResults[type].length == 0">
-                    No results found
-                </div>
-
-
-                <div class="row search-result-row" ng-show="objectResults[type].length > 0">
-                    <div class="col-xs-12 full-width">
-                        <slide-box id="{{type}}-object-results">
-                            <div ng-repeat="(k,work) in objectResults[type]" class="search-result-item">
-                                <div class="handprint-block" ng-class="{selected:k == searchCtrl.types.object[type].selectedWork}">
-                                    <a href="#" ng-click="searchCtrl.showCopies(type,$index); slideBox.scrollToResult($index)">
-                                        <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work[2][0][2][0][0].dbi }}.100.jpg);"></span>
-                                        <span class="description"><strong>{{ work[0].title }}</strong><br><span ng-if="work[1] > 1">({{ work[1] }} results<span ng-if="work[2].length > 1"> in {{ work[2].length }} copies</span>)</span></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </slide-box>
-                    </div>
-                    <div class="col-xs-12 full-width">
-                        <div class="copy-container" ng-style="searchCtrl.types.object[type].showCopies ? searchCtrl.copy_container: {'height':0}">
-                            <header class="page-header">
-                                <h1>{{objectResults[type][searchCtrl.types.object[type].selectedWork][0].title}}</h1>
-                                <button class="close-copies"><span class="glyphicon glyphicon-remove" ng-click="searchCtrl.closeCopies(type)"></span></button>
-                            </header>
-                            <div class="flex" ng-style="searchCtrl.copy_container_flex">
-                                <div class="copies-in-work" ng-style="searchCtrl.search_grid">
-                                    <div class="flex-wrap">
-                                        <div class="handprint-block-small" 
-                                            ng-repeat="copy in objectResults[type][searchCtrl.types.object[type].selectedWork][2] track by $index"
-                                            ng-class="{selected: searchCtrl.types.object[type].selectedCopy == $index}"
-                                            >
-                                            <a ng-click="searchCtrl.showObjects(type,$index)">
-                                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ copy[0].image }}.100.jpg);"></span>
-                                                <span class="description text-capitalize">
-                                                    Copy {{copy[0].archive_copy_id}}, {{copy[0].composition_date}}<br>
-                                                    <small>({{ copy[2].length }} object<span ng-if="copy[2].length > 1">s</span>)</small>
-                                                </span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="objects-in-copy" ng-style="searchCtrl.search_grid" ng-class="{'hidden':searchCtrl.types.object[type].selectedCopy == -1}">
-                                    <div class="object-img-container text-centered" ng-style="searchCtrl.object_image_container">
-                                        <img ng-src="http://www.blakearchive.org/blake/images/{{ objectResults[type][searchCtrl.types.object[type].selectedWork][2][searchCtrl.types.object[type].selectedCopy][2][searchCtrl.types.object[type].selectedObject][0].dbi }}.100.jpg">
-                                    </div>
-                                    <div class="flex-wrap">
-                                        <div class="handprint-block-small" 
-                                             ng-repeat="object in objectResults[type][searchCtrl.types.object[type].selectedWork][2][searchCtrl.types.object[type].selectedCopy][2] track by $index"
-                                             ng-class="{selected: searchCtrl.types.object[type].selectedObject == $index}"
-                                            >
-                                            <a ng-click="searchCtrl.showHighlight(type,$index)">
-                                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ object[0].dbi }}.100.jpg);"></span>
-                                                <span class="description text-capitalize">{{object[0].full_object_id}}</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="object-result-highlight" ng-style="searchCtrl.search_grid" ng-class="{'hidden':searchCtrl.types.object[type].selectedObject == -1}">
-                                    <div ng-if="type == 'title'" class="text-center">
-                                        <span ng-bind-html="objectResults[type][searchCtrl.types.object[type].selectedWork][2][searchCtrl.types.object[type].selectedCopy][2][searchCtrl.types.object[type].selectedObject][0].title | highlight:searchConfig.searchString"></span>
-                                    </div>
-                                    <div ng-if="type == 'text'">
-                                        <text-transcription 
-                                            object="objectResults[type][searchCtrl.types.object[type].selectedWork][2][searchCtrl.types.object[type].selectedCopy][2][searchCtrl.types.object[type].selectedObject][0]"
-                                            highlight="{{searchConfig.searchString}}"
-                                            ></text-transcription>
-                                    </div>
-                                    <div ng-if="type == 'description'">
-                                        <illustration-description 
-                                            object="objectResults[type][searchCtrl.types.object[type].selectedWork][2][searchCtrl.types.object[type].selectedCopy][2][searchCtrl.types.object[type].selectedObject][0]"
-                                            highlight="{{searchConfig.searchString}}"
-                                            ></illustration-description>
-                                    </div>
-                                    <div ng-if="type == 'notes'">
-                                        <editor-notes 
-                                            object="objectResults[type][searchCtrl.types.object[type].selectedWork][2][searchCtrl.types.object[type].selectedCopy][2][searchCtrl.types.object[type].selectedObject][0]"
-                                            highlight="{{searchConfig.searchString}}"
-                                            ></editor-notes>
-                                    </div>
-                                    <div ng-if="type == 'tag'">
-                                        <illustration-description 
-                                            object="objectResults[type][searchCtrl.types.object[type].selectedWork][2][searchCtrl.types.object[type].selectedCopy][2][searchCtrl.types.object[type].selectedObject][0]"
-                                            highlight="{{searchConfig.searchString}}"
-                                            keywords="true"
-                                            ></illustration-description>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--<div class="row" ng-repeat="copy in objectResults[type][searchCtrl.types.object[type].selectedWork][2]">
-                                <div class="col-xs-12 objects-in-copy">
-                                        <h4>
-                                            <a href="/blake/copy/{{copy[0].bad_id}}">Copy {{copy[0].archive_copy_id}}, {{copy[0].composition_date}}</a>
-                                            <small>({{ copy[2].length }} object<span ng-if="copy[2].length > 1">s</span>)</small>
-                                        </h4>
-                                    <div ng-repeat="object in copy[2]" class="col-xs-12 col-sm-3 col-md-4">
-                                        <div class="handprint-block">
-                                            <a href="/blake/copy/{{copy[0].bad_id}}?objectId={{object[0].object_id}}&searchTerm={{searchConfig.searchString}}&{{vars.highlight}}">
-                                                <span class="object-img"></span>
-                                                <span class="description text-capitalize">{{object[0].full_object_id}}</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
-                        </div>
-                    </div>
-                </div>
-            </div><!-- end: OBJECT {{ type | uppercase }} RESULTS -->
-        </div>
+        
+        <search-results label="Objects with matching title" results="objectResults['title']" highlight="{{searchConfig.searchString}}" type="title"></search-results>
+        <search-results label="Objects with matching text" results="objectResults['text']" highlight="{{searchConfig.searchString}}" type="text"></search-results>
+        <search-results label="Objects with matching illustration description" results="objectResults['description']" highlight="{{searchConfig.searchString}}" type="description"></search-results>
+        <search-results label="Objects with matching keywords" results="objectResults['tags']" highlight="{{searchConfig.searchString}}" type="tags"></search-results>
+        <search-results label="Objects with matching editors' notes" results="objectResults['notes']" highlight="{{searchConfig.searchString}}" type="notes"></search-results>
+        
 
         <div ng-repeat="(type,vars) in searchCtrl.types.copy track by $index">
             <div ng-show="searchConfig[vars.config] == true"><!-- start: COPY {{ type }} RESULTS -->
