@@ -1,7 +1,20 @@
 <div class="container-fluid main">
 
   <header class="page-header">
-    <h1>About the William Blake Archive</h1>
+    <h1>
+      
+      <div ng-switch on="staticpage.initialSelection">
+      <div ng-switch-when="update">What's New?</div>
+      <div ng-switch-when="biography">About Blake</div>
+      <div ng-switch-when="generalbib">Resources for Further Research</div>
+      <div ng-switch-when="archiveataglance">About the Archive</div>
+      <div ng-switch-when="help">Using the Archive</div>
+      <div ng-switch-when="permissions">Copyright and Permissions</div>
+      <div ng-switch-when="comment">Contact the Archive</div>
+      <div ng-switch-when="relatedsites">Related Sites</div>
+      </div>
+
+    </h1>
   </header>
 
   <div class="container">
@@ -9,25 +22,72 @@
 
       <div class="col-sm-2 menu-left-column">
 
-        <ul class="nav nav-sidebar">
-          <li id="whatsnew"><a href="#">What's New?</a></li>
-          <li id="aboutblake"><a href="#">About Blake</a></li>
-          <li id="resources"><a href="#">Resources for Further Research</a></li>
-          <li id="aboutthearchive"><a href="#">About the Archive</a></li>
-          <li id="usingthearchive"><a href="#">Using the Archive</a></li>
-          <li id="copyright"><a href="#">Copyright and Permissions</a></li>
-          <li id="contact"><a href="#">Contact the Archive</a></li>
-          <li id="related"><a href="#">Related Sites</a></li>
+        <div ng-switch on="staticpage.initialSelection">
+
+        <ul class="nav nav-sidebar" ng-switch-when="update">
+          <li ng-click="staticpage.changeContent('update')"><a href="#">Update</a></li>
+          <li ng-click="staticpage.changeContent('all-updates')"><a href="#">Past Updates</a></li>
+          <li ng-click="staticpage.changeContent('presentations')"><a href="#">Upcoming Presentations</a></li>
+          <li ng-click="staticpage.changeContent('subscribe')"><a href="#">Subscribe to blake-update</a></li>
         </ul>
+        
+        <ul class="nav nav-sidebar" ng-switch-when="biography">
+          <li ng-click="staticpage.changeContent('biography')"><a href="#">Biography</a></li>
+          <li ng-click="staticpage.changeContent('glossary')"><a href="#">Glossary</a></li>
+          <li ng-click="staticpage.changeContent('chronology')"><a href="#">Chronology</a></li>
+          <li ng-click="staticpage.changeContent('illuminatedprinting')"><a href="#">Illuminated Printing</a></li>
+        </ul>
+
+        <ul class="nav nav-sidebar" ng-switch-when="generalbib">
+          <li ng-click="staticpage.changeContent('generalbib')"><a href="#">General Bibliography</a></li>
+          <li ng-click="staticpage.changeContent('specificbib')"><a href="#">Specific Bibliography</a></li>
+          <li ng-click="staticpage.changeContent('collectionlists')"><a href="#">Collection Lists</a></li>
+        </ul>
+
+        <ul class="nav nav-sidebar" ng-switch-when="archiveataglance">
+          <li ng-click="staticpage.changeContent('archiveataglance')"><a href="#">Archive at a Glance</a></li>
+          <li ng-click="staticpage.changeContent('editorialprinciples')"><a href="#">Editorial Principles</a></li>
+          <li ng-click="staticpage.changeContent('projectteam')"><a href="#">Project Staff</a></li>
+          <li ng-click="staticpage.changeContent('abouteditors')"><a href="#">About the Editors</a></li>
+          <li ng-click="staticpage.changeContent('credits')"><a href="#">Complete Credits</a></li>
+          <li ng-click="staticpage.changeContent('advisoryboard')"><a href="#">Advisory Board</a></li>
+          <li ng-click="staticpage.changeContent('contributingcollections')"><a href="#">Contributing Collections</a></li>
+          <li ng-click="staticpage.changeContent('standardrefs')"><a href="#">Standard References and Abbreviations</a></li>
+          <li ng-click="staticpage.changeContent('articles')"><a href="#">Articles About the Archive</a></li>
+          <li ng-click="staticpage.changeContent('plan')"><a href="#">Plan of the Archive</a></li>
+          <li ng-click="staticpage.changeContent('sponsorsandsupporters')"><a href="#">Sponsors and Supporters</a></li>
+          <li ng-click="staticpage.changeContent('faqs')"><a href="#">Frequently Asked Questions</a></li>
+        </ul>
+
+        <ul class="nav nav-sidebar" ng-switch-when="help">
+          <li ng-click="staticpage.changeContent('help')"><a href="#">How to Use the Archive</a></li>
+          <li ng-click="staticpage.changeContent('techsummary')"><a href="#">Technical Summary</a></li>
+        </ul>
+
+        <ul class="nav nav-sidebar" ng-switch-when="permissions">
+          
+        </ul>
+
+        <ul class="nav nav-sidebar" ng-switch-when="comment">
+          
+        </ul>
+
+        <ul class="nav nav-sidebar" ng-switch-when="relatedsites">
+          
+        </ul>
+
+        </ul>
+
+        </div>
 
       </div>
 
       <div class="col-sm-9 content-right-column">
 
         <div class="row">
-          <div id="content" class="col-sm-12">
+          <div id="content" class="col-sm-12" ng-switch on="subSelection">
 
-               <ng-include src="'/blake/static/html/' + staticpage.initialSelection + '.html'"></ng-include>
+               <ng-include src="'/blake/static/html/' + staticpage.subSelection + '.html'"></ng-include>
 
           </div>
         </div>
@@ -38,33 +98,3 @@
   </div><!-- /.container -->
 
 </div><!-- /.container.main -->
-
-
-<script> 
-
-  $("#whatsnew").on("click",function(){
-      $("#content").load("/blake/static/html/update.html");
-  });
-  $("#aboutblake").on("click",function(){
-      $("#content").load("/blake/static/html/biography.html");
-  });
-  $("#resources").on("click",function(){
-      $("#content").load("/blake/static/html/resources.html");
-  });
-  $("#aboutthearchive").on("click",function(){
-      $("#content").load("/blake/static/html/archiveataglance.html");
-  });
-  $("#usingthearchive").on("click",function(){
-      $("#content").load("/blake/static/html/help.html");
-  });
-  $("#copyright").on("click",function(){
-      $("#content").load("/blake/static/html/permissions.html");
-  });
-  $("#contact").on("click",function(){
-      $("#content").load("/blake/static/html/comment.html");
-  });
-  $("#related").on("click",function(){
-      $("#content").load("/blake/static/html/related.html");
-  });
-
-</script>
