@@ -11,12 +11,6 @@
         $rootScope.showSubMenu = 0;
         $rootScope.worksNavState = false;
 
-        vm.showTab = function (id) {
-            vm.selectedTab = id;
-        }
-
-        vm.selectedTab = '#object-results';
-
         $scope.objectResults = [];
         $scope.copyResults = [];
         $scope.workResults = [];
@@ -33,6 +27,7 @@
                         //$scope.populateWorkCopies(type,index);
                     });
                 });
+                console.log($scope.objectResults);
                 $scope.copyResults = results[1];
                 $scope.workResults = results[2];
                 $rootScope.$broadcast('searchCtrl::newSearch');
@@ -70,48 +65,58 @@
                     'config': 'searchTitle',
                     'text': 'Objects with a matching title',
                     'showCopies': false,
-                    'selectedWork': '',
-                    'highlight': ''
+                    'selectedWork': '-1',
+                    'selectedCopy': '-1',
+                    'selectedObject': '-1',
+                    //'highlight': ''
                 },
                 'text': {
                     'config': 'searchText',
                     'text': 'Objects with matching text',
                     'showCopies': false,
-                    'selectedWork': '',
-                    'highlight': 'open=text'
+                    'selectedWork': '-1',
+                    'selectedCopy': '-1',
+                    'selectedObject': '-1',
+                    //'highlight': 'open=text'
                 },
                 'notes': {
                     'config': 'searchNotes',
                     'text': 'Objects with matching editors\' notes',
                     'showCopies': false,
-                    'selectedWork': '',
-                    'highlight': 'open=notes'
+                    'selectedWork': '-1',
+                    'selectedCopy': '-1',
+                    'selectedObject': '-1',
+                    //'highlight': 'open=notes'
                 },
                 'tag': {
                     'config': 'searchImageKeywords',
                     'text': 'Objects with a matching image tag',
                     'showCopies': false,
-                    'selectedWork': '',
-                    'highlight': 'open=desc'
+                    'selectedWork': '-1',
+                    'selectedCopy': '-1',
+                    'selectedObject': '-1',
+                    //'highlight': 'open=desc'
                 },
                 'description': {
-                    'config': 'searchImageDescription',
+                    'config': 'searchImageDescriptions',
                     'text': 'Objects with a matching illustration description',
                     'showCopies': false,
-                    'selectedWork': '',
-                    'highlight': 'open=desc'
+                    'selectedWork': '-1',
+                    'selectedCopy': '-1',
+                    'selectedObject': '-1',
+                    //'highlight': 'open=desc'
                 }
             },
             'copy':{
                 'title':{
                     'config':'searchTitle',
                     'text': 'Copies with a matching title',
-                    'highlight': ''
+                    //'highlight': ''
                 },
                 'copy_information':{
                     'config':'searchCopyInformation',
                     'text': 'Copies with matching work information or notes',
-                    'highlight': 'tab=copy-info'
+                    //'highlight': 'tab=copy-info'
                 }
             },
             'work':{
@@ -259,11 +264,40 @@
             $scope.populateWorkCopies(resultType,workIndex);
             vm.types.object[resultType].showCopies = true;
             vm.types.object[resultType].selectedWork = workIndex;
+            if($scope.objectResults[resultType][workIndex][1] == 1){
+                vm.types.object[resultType].selectedCopy = 0;
+                if($scope.objectResults[resultType][workIndex][2][0][1] == 1){
+                    vm.types.object[resultType].selectedObject = 0;
+                }
+            }
+        }
+        
+        vm.showObjects = function(resultType,copyIndex){
+            vm.types.object[resultType].selectedCopy = copyIndex;
+            if($scope.objectResults[resultType][vm.types.object[resultType].selectedWork][2][copyIndex][1] == 1){
+                vm.types.object[resultType].selectedObject = 0;
+            }
+        }
+        
+        vm.showHighlight = function(resultType,objectIndex){
+            vm.types.object[resultType].selectedObject = objectIndex;
         }
 
         vm.closeCopies = function(resultType){
             vm.types.object[resultType].showCopies = false;
+            vm.types.object[resultType].selectedWork = -1;
+            vm.types.object[resultType].selectedCopy = -1;
+            vm.types.object[resultType].selectedObject = -1;
         }
+        
+        $scope.$on('resize::resize',function(e,w){
+            if(w.width > 992){
+               vm.search_grid = {'width':(w.width - 80) / 3+'px'};
+               vm.copy_container = {'height':(w.height - 100)+'px'};
+               vm.copy_container_flex = {'height':(w.height - 250)+'px'};
+               vm.object_image_container = {'height':(w.height - 400)+'px'};
+            } 
+        });
 
         $scope.selectedObjectSearchCopy = {};
         $scope.selectedObjectSearchWork = {};
