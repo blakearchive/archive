@@ -1,0 +1,700 @@
+<div class="col-sm-9 content-right-column">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="title">The William Blake Archive: XML Encoding Documentation</h2>
+      
+     <p>
+ <i>In an effort to make our editorial procedures more transparent, the Archive is making available excerpts from our internal project documentation. This excerpt  detail the procedures for constructing and editing BADs. This documentation has been created and maintained over time by the Archive's editors, project managers, and staff; the version included here is current as of August 2012. Users can view the XML BAD for any edition in the Archive by clicking on the link provided on the work's Electronic Edition Information page.</i>
+ <p>
+  
+  <UL>
+   
+   <LI>
+    <A href="#instructions">Instructions for Filling Out BAD Files</A>
+    <UL>
+    
+     <LI>
+      <A href="#element">The BAD Element</A>
+     </LI>
+     
+     <LI>
+      <A href="#header">The Header</A>
+     </LI>
+     <LI>
+      <A href="#object_descriptions">Object Descriptions</A>
+     </LI>
+     <ul>
+     <LI>
+      <A href="#biblio_info">Bibliographic Information</A>
+     </LI>
+     <LI>
+      <A href="#illus_descriptions">Illustration Descriptions</A>
+     </LI>
+    
+    <LI>
+     <A href="#transcriptions">Textual Transcriptions</A>
+    </LI>
+    </ul>
+    </UL>
+ </p>
+  
+
+ <A name="instructions" id="instructions"><b>Instructions for Filling out an XML BAD File</b></A>
+
+
+   <br/><br/>
+   This document aims to provide detailed instructions for completing a Blake Archive Description (BAD) document for a new publication in the Blake Archive. Because BAD files record a wealth of detail--material, documentary, commentary, metadata, etc.--and serve as the "source files" that drive the Archive as a scholarly resource, the demands for and processes of filling out a BAD file are much more complicated than those for other components of published works (e.g., BODs, IP records, etc.). Thus, this document provides a step-by-step narrative of the process, including the elements occurring in the BAD file and the methods by which the proper information is encoded.
+        <br/><br/>
+       
+        This document concentrates on the process of actually filling out a BAD file using the XML template (or using an existing BAD file <i>as</i> a template). This process does not include the invention/execution of codes, all of which are already in the template. Thus, the technical aspects of XML encoding will not be at issue here and the concentration will be on "mere content" and how that content is acquired and supplied--the former through old-fashioned scholarly procedures, the latter according to set rules required by XML encoding.
+ <br/><br/>
+The BAD template can be found in the WBA's archive of files on extranet in the /DTD/ directory; additionally, existing XML BAD files can be used as templates during markup. The Project Manager should check the template regularly for any necessary updates.
+ <br/><br/>
+The content for a new BAD file must be supplied by someone conversant with the standard catalogues and bibliographies that record basic information about Blake's works. These include, as a minimum, the "Standard References" listed on the public site (http://www.blakearchive.org/blake/public/about/standard/index.html). If at all possible, these standard works should be supplemented, as needed, by G. E. Bentley, Jr., <i>Blake Books Supplement</i>, auction and dealers' catalogues, the annual sales reviews in <i>Blake/An Illustrated Quarterly</i> (1971 to present), and other resources that can be used to both double-check the standard reference works and update them. It may also be necessary to contact the curatorial staff at the owning institution to check on a specific work; often, the standard reference works fail to include details about size, watermarks, paper type, accession number, etc. A good way to make sure that the template is being filled out accurately is to compare, step by step, the BAD under production with a corrected BAD for a roughly similar work already published.
+ <br/><br/>
+In recent years, it has been standard practice to create the BAD for an illuminated book not from a raw template, but from an existing BAD for another copy of the same work; for instance, one might use the BAD for <i>Songs of Innocence and of Experience</i> copy Z to create the new BAD for copy AA. This simplifies the process, although this approach of course requires considerable revision of most elements; close attention should be paid to every aspect of the original file vis-a-vis the copy being marked up, and the new copy revised accordingly. The BAD chosen for such revision should be from a copy as similar as possible to the "new" copy being encoded. (In most cases, this means a copy with the same printing/coloring date.) 
+   <br/><br/>       
+         
+The following numbered steps trace the step-by-step completion of the BAD template. In most cases, each numbered step is followed by the "prompt"--that is, the code which initiates the particular information to be supplied. In many of these elements, a note (&lt;note&gt;&lt;/note&gt;) can be added within the element to explain matters. This is frequently done with topics such as size of an object, dating issues, and anything in the description of the work that needs explanation.
+
+  <br/><br/>
+  
+  <b>First Things First</b>
+  <br/><br/>
+
+BADs must always begin with a doctype definition. This piece of code tells web browsers where to find instructions for displaying our electronic editions properly. A BAD that does not include a doctype definition will not validate and cannot be loaded into the eXist database that makes the testing and public sites possible. The doctype definition for WBA BADs is:
+
+<br/><br/>
+ &lt;!DOCTYPE bad PUBLIC "-//University of North Carolina at Chapel Hill::Carolina Digital Library and Archives//DTD bad.dtd (Blake Archive Description) 2005//EN//XML" "http://www.blakearchive.org/blake/bad.dtd"&gt;
+
+<br/><br/>
+  
+         <A name="element" id="element"><b>A. The BAD Element &lt;bad&gt;</b></A>
+  </p>
+ <p>The BAD element now contains the bibliographic information that we once included in the filenames. Below you'll find a sample (fictitious) element followed by a list of all attributes and, if defined, allowable values.
+  <br/><br/>
+  &lt;bad id="BUT397.1" type="painting" work="The Lamb" copy="v" copyid="2" institution="britishmuseum" state="third" value="proof" value="recto" catalog="Butlin" catid="397" oldid="but397.01-proof.3.bl" mode="preview" hidden="false"&gt;   
+  <br/><br/>
+  List of Attributes:
+ </p>
+ 
+ <ol>
+  <li><span style="color:#ff0000;">id</span>: current id<br/><br/></li>
+  
+  <li><span style="color:#ff0000;">type</span>: "genre" of item (including sub-genre when applicable). <b>Options:</b><br/><br/>
+   <ul>
+    <li>illbk (illuminated book)</li>
+    <li>comb (commercial book illustration--designed &amp; engraved by Blake)</li>
+    <li>comdes (commercial book illustration--designed by Blake)</li>
+    <li>comeng (commercial book illustration--engraved by Blake)</li>
+    <li>spb (separate print--designed &amp; engraved by Blake)</li>
+    <li>spdes (separate print--designed by Blake)</li>
+    <li>speng (separate print--engraved by Blake)</li>
+    <li> cprint (color-printed drawing)</li>
+    <li>penc (pencil sketch)</li>
+    <li> penink (pen and ink drawing)</li>
+    <li>mono (monochrome wash drawing)</li>
+    <li>wc (water color drawing)</li>
+    <li> paint (painting)</li>
+    <li>ms (manuscript)</li>
+    <li>ltr (letter)</li>
+    <li>te (typographic edition)</li>
+    <li> rmb (related materials by Blake)</li>
+    <li> rmoth (related materials not by Blake)
+     <br/><br/> </li>
+   </ul>
+  </li>     
+  
+  
+  <li><span style="color:#ff0000;">work</span>: title in quotes, e.g. 
+   "Illustrations of the Book of Job", content not restricted<br/><br/></li>
+  
+  <li><span style="color:#ff0000;">copy</span>: copy designation accepted by bibliographic community (usually <i>Blake Books</i> or <i>Blake Books Supplement</i>), e.g. "A" for the copy of <i>America a Prophecy</i> designated by Bentley as copy A.<br/><br/></li>
+  
+  <li><span style="color:#ff0000;">copyid</span>: The WBA copy designation. Usually the same as the "copy," above, but may occasionally be different. For example, the set of <i>Paradise Lost</i> illustrations owned by Joseph Thomas has "The Thomas Set" as the copy and "1" as the copyid.<br/><br/></li>
+  
+  
+  <li><span style="color:#ff0000;">institution</span>: <b>options:</b><br/><br/>
+   <ul>
+    <li>ackland</li>
+    <li>ashmolean</li>
+    <li>birmingham</li>
+    <li>bodley</li>
+    <li>boston</li>
+    <li>britishmuseum</li>
+    <li>britishlibrary</li>
+    <li>cornwall</li>
+    <li>essick</li>
+    <li>fitzwilliam</li>
+    <li>fogg</li>
+    <li>getty</li>
+    <li>glasgow</li>
+    <li>houghton</li>
+    <li>huntington</li>
+    <li>lc</li>
+    <li>louvre</li>
+    <li>met</li>
+    <li>minneapolis</li>
+    <li>morgan</li>
+    <li>ngadc</li>
+    <li>ngs</li>
+    <li>ngvic</li>
+    <li>nypl</li>
+    <li>philadelphia</li>
+    <li>private</li>
+    <li>risd</li>
+    <li>rosenbach</li>
+    <li>tate</li>
+    <li>vanda</li>
+    <li>victoria</li>
+    <li>whitworth</li>
+    <li>ycba<br/><br/></li>
+   </ul>
+  </li>     
+  
+  <li><span style="color:#ff0000;">state</span>: state of engraving, e.g. "third" for an impression that's in 3rd state. <b>options:</b><br/><br/>
+   <ul>
+    <li>first</li>
+    <li>second</li>
+    <li>third</li>
+    <li>fourth</li>
+    <li>fifth</li>
+    <li>sixth<br/><br/></li>
+   </ul>
+  </li> 
+  
+  <li><span style="color:#ff0000;">value</span>: <b>options:</b><br/><br/>
+   <ul>
+    <li>posthumous</li>
+    <li>proof</li>
+    <li>recto</li>
+    <li>verso<br/><br/></li>
+   </ul>
+  </li> 
+  
+  <li><span style="color:#ff0000;">catalog</span>: choose primary catalog. <b>options:</b><br/><br/>
+   <ul>
+    <li>butlin</li>
+    <li>bentley</li>
+    <li>keynes</li>
+    <li>erdman</li>
+    <li>essick</li>
+    <li>wba<br/><br/></li>
+   </ul>
+  </li> 
+  
+  <li><span style="color:#ff0000;">catid</span>: ID used by catalog chosen for catalog attribute, e.g. "550" for Twenty-One Illustrations to the Book of Job: Butts Set<br/><br/></li>
+  
+  <li><span style="color:#ff0000;">oldid</span>: old file names (this attribute is rarely used anymore)<br/><br/></li>
+  
+  <li><span style="color:#ff0000;">mode</span>: for works that are to be published without illustration markup, add the attribute <b>mode="preview"</b>. 
+   <p>
+    This attribute prevents the "Illustration Description" option from appearing in the Show Me menu on the OVP. If this attribute is present illustration descriptions will not be available to users of the Archive <i>even if those descriptions are present in the BAD file.</i> So include this attrbitue only when there are no illustration descriptions present in the BAD file, or when there are descriptions but you don't want users to see them.
+    <p>
+     
+     <li><span style="color:#ff0000;">hidden</span>: <b>options:</b><br/><br/>
+      <ul>
+       <li>false</li>
+       <li>true</li>
+      </ul>
+      <p>
+       This attribute determines whether a link to the work appears in the Copy Index list on Info pages. The default value is "false": the vast majority of works we publish should appear in copy TOCs. The "true" value should be used only in the case of proofs or related materials that we want to have available in the database but do not want to appear on copy TOCs. 
+    
+       
+ </ol>         
+  
+  <p><A name="header" id="header"><b>B. The Header &lt;header&gt;</b></A>
+  <p>
+  The following 15 elements, #14-28, occur within the &lt;filedesc&gt; element</p>
+  
+  <p>
+   The following nine elements, #14-22, occur within the &lt;titlestmt&gt; element.</p>
+  
+  <ol start="14">
+ 
+	<li>&lt;title&gt;. The title of the work, as in the work attribute (#3, above). The &lt;title&gt; 
+	element in the header must include the reg attribute with the regularized form of the work 
+	title (i.e., with any initial definite or indefinite article transferred to the end of the 
+	title, following a comma): e.g., &lt;title reg="Book of Thel, The"&gt;.<br/><br/>
+	
+	The following four elements (#15-18) can occur within the &lt;title&gt; element, but not all will be used in every work/copy.<br/><br/>
+	</li>
+  	
+  	<li>&lt;main&gt;. The (non-regularized) title of the work, as in the attribute (#3, above). This element needs to occur in every work/copy.<br/><br/></li>
+  	
+  	<li>&lt;author&gt;. Use this element for any author other than Blake who appears in the title of the work, such as Robert Blair for <i>The Grave</i>. It will need to be included within the &lt;main&gt; tags: e.g., &lt;title&gt;&lt;main&gt;&lt;author&gt;Robert Blair&lt;/author&gt;, The Grave&lt;/main&gt;. (Note here that the comma and space occur outside of the &lt;author&gt; tags.) If there is no author, then do not use this element.<br/><br/></li>
+  	
+  	<li>&lt;copy&gt;.  The copy identification--see #4, above.  Use the &lt;copy&gt; tag only for works that need to have the copy specified--i.e., illuminated books--but do not use it for most non-illuminated materials that are simply catalogued as "copy 1."  The &lt;copy&gt; tags occur outside of the &lt;main&gt; tags; additionally, within the &lt;copy&gt; tag, include the comma that will separate the work title from the copy designation.  E.g., &lt;title&gt;&lt;main&gt;Songs of Innocence and of Experience&lt;/main&gt;&lt;copy&gt;, copy Z&lt;/copy&gt;&lt;/title&gt;.<br/><br/></li>
+  	
+    <li>&lt;set&gt;.  This element functions the same as the &lt;copy&gt; element but is used for non-illuminated "sets," such as the Thomas Set for the "Nativity Ode" water color illustrations.  Thus, it follows the same rules as &lt;copy&gt;, #17, above.  E.g.,
+&lt;title&gt;&lt;main&gt;Illustrations to Milton's Ode "On the Morning of Christ's Nativity"&lt;/main&gt;&lt;set&gt;, The Thomas Set&lt;/set&gt;.  If there is no set, then do not use this element.<br/><br/></li>
+  	
+  	<li>&lt;principal&gt;.  This element and its sub-elements (&lt;resp&gt; and &lt;name&gt;) identify the editors; &lt;resp&gt; tags include "Editors:" and then a &lt;name&gt; tag for each editor's name, followed by the editor's institution.  This portion of the BAD will never change unless the editorial team changes. Example: <br/><br/>
+&lt;principal&gt;<br/>
+
+&lt;resp&gt;Editors: &lt;/resp&gt;<br/>
+&lt;name&gt;Morris Eaves&lt;/name&gt;, University of Rochester; <br/>
+&lt;name&gt;Robert Essick&lt;/name&gt;, University of California, Riverside; and <br/>
+&lt;name&gt;Joseph Viscomi&lt;/name&gt;, University of North Carolina at Chapel Hill<br/>
+
+&lt;/principal&gt;<br/><br/>
+</li>
+  	  	 	
+	<li>&lt;respstmt&gt;.  This element is usually empty.<br/><br/></li>
+	
+	
+	<li>&lt;sponsor&gt;.  This identifies the "sponsor" for the Archive.  This element should not need to be changed unless the Archive's host/location changes. It is currently "The Library of Congress, the University of North Carolina at Chapel Hill and the University of Rochester"<br/><br/></li>
+	
+	
+	<li>&lt;funder&gt;.  This element identifies current funders of the Archive. In the past it has included such groups as Sun Microsystems and the Getty Gratn Program, but as of May 2012 this element is empty. <br/><br/></li>
+	
+	<li>&lt;editionstmt&gt;.  This identifies the version of the DTD under which the work was published.  The DTD was most recently updated in 2005; hence this date will NOT match the publication date.<br/><br/></li>
+	
+	<li>&lt;extent&gt;.  This element includes information about the size of the BAD and JPEG files that make up a work. <br/><br/></li>
+
+	<li>&lt;publicationstmt&gt;.  Contains the location at which the work was published, the last names of the editors, and the the name of the publishing institution (Charlottesville and IATH for works prior to 2006, Chapel Hill and CDLA for works published after 2006.)<br/><br/></li>
+	
+	<li>&lt;date&gt; (within publicationstmt.)  Contains the month and year in which the work was published.<br/><br/></li>
+	
+	<li>&lt;seriesstmt&gt;.  This is always "William Blake Archive." <br/><br/></li>
+	
+	<li>&lt;updatestmt&gt;.  This tag contains the "HTML update" (the text written by the editors and posted under "What's New in the Archive" when the work is published).  One of the editors will write the update; you should paste that text into the BAD.  Line and paragraph breaks should be created using the &lt;lb/&gt; tag, and text rendering (bold, italics, etc.) should use the TEI "hi" tag: &lt;hi rend="b"&gt;, &lt;hi rend="i"&gt;.<br/><br/></li>
+	
+	<li>&lt;userestrict&gt;. This tag contains the copyright information about the electronic edition. Everything remains the same except for the &lt;date&gt; element (see #26, above), and the name of the copyright holder. For works in the Essick Collection or Library of Congress, use "William Blake Archive"; for all others, use the institution name.  (Note here the use of the &amp;#169; entity for the &copy; symbol.)<br/><br/>
+	
+	<li>&lt;date&gt; within the &lt;userestrict&gt; element.  This is the year that the electronic edition was published.  Note that the date is given both at the beginning and near the end of &lt;userestrict&gt;.
+
+<br/><br/></li>
+The following 4 elements (#31-34) occur within the &lt;revisiondesc&gt; element.<br/><br/>
+
+<li>&lt;changestmt&gt;. Each change statement describes a step in the process of preparing an electronic edition for publication and provides information about when that task was completed and who was on the Archive staff at the time. There is no limit to the number of &lt;changestmt&gt; elements that can be included in a BAD (though only major steps in the publication process should be documented.)<br/><br/></li>
+
+<li>&lt;change&gt;. A description of a step in the publication process, i.e. "BAD created" or "Images scanned."<br/><br/></li>
+
+<li>&lt;date&gt;. The dates during which this process was completed, i.e. "June 2011" or "Summer-Fall 2009."<br/><br/></li>
+
+<li>&lt;respstmt&gt;. Includes the names of everyone who was employed by the Archive when that step was completed. (We make no effort to identify who did what; the WBA is a collaborative project.) It looks similar to the &lt;principal&gt; element (#19, above). Here is an example:</li>
+<br/>
+&lt;respstmt&gt;<br/>
+&lt;resp&gt;Editors: &lt;/resp&gt;<br/>
+ &lt;name&gt;Morris Eaves, &lt;/name&gt;University of Rochester; <br/>
+ &lt;name&gt;Robert Essick,
+               &lt;/name&gt;University of California, Riverside; <br/>
+               and &lt;name&gt;Joseph Viscomi, &lt;/name&gt;University of North Carolina at Chapel Hill<br/>
+&lt;resp&gt;Technical Editor: &lt;/resp&gt;<br/>
+&lt;name&gt;William Shaw&lt;/name&gt;<br/>
+&lt;resp&gt;Project Manager: &lt;/resp&gt;<br/>
+&lt;name&gt;Ashley Reed&lt;/name&gt;<br/>
+
+&lt;resp&gt;Project Assistants: &lt;/resp&gt;<br/>
+&lt;name&gt;Esther Arnold, &lt;/name&gt;<br/>
+
+&lt;name&gt;Kate Attkisson, &lt;/name&gt;<br/>
+&lt;name&gt;Lauren Cameron, &lt;/name&gt;<br/>
+&lt;name&gt;Joseph Fletcher, &lt;/name&gt;<br/>
+&lt;name&gt;Sarah Tolf&lt;/name&gt;<br/>
+&lt;/respstmt&gt;<br/> <br/>
+
+The following six elements (#35-40) appear within the &lt;objdescid&gt; element. Some of these elements are optional, depending on the nature of the work. For example, the publisher and place of publication do not pertain to drawings or paintings and thus can be omitted.<br/><br/></li>
+	
+	
+	<li>&lt;title&gt; (within &lt;objtitle&gt;).  The title of the work.  Formatting tags should be used here to render the title in italics for display: e.g., &lt;title&gt;&lt;hi rend="i"&gt;Songs of Innocence and of Experience&lt;/hi&gt;&lt;/title&gt;.<br/><br/></li>
+	
+	
+	
+	<li>&lt;origination&gt;.  This element begins with a name (William Blake in most cases) and then can include the following designations to specify the nature of the named person's contribution to the work, as these pertain to the work at hand: 
+<ul>
+<li>author (for written works)
+</li><li>inventor (if the named person wrote or designed the work, even if he/she did not execute it)
+</li><li>delineator (the named person executed the work in its present medium)
+</li><li>etcher
+</li><li>printer
+</li><li>colorist<br/><br/></li></ul>Only those designations relevant to the work being encoded are used.  All designations must occur within &lt;role&gt; tags, and these should include spaces and commas as appropriate: e.g., &lt;role&gt;author, &lt;/role&gt;&lt;role&gt;inventor&lt;/role&gt;.  The &lt;origination&gt; element can be repeated when more than one person was involved in the creation of the work--for example, Catherine Blake as the printer of an illuminated book, or Henry Fuseli as the inventor of an image engraved by Blake.<br/><br/>
+
+The following three elements (#37-39) occur within &lt;imprint&gt;, which is an optional element. Water colors and sketches, for instance, do not have imprints. <br/><br/></li>
+
+	<li>&lt;publisher&gt;.  The publisher of a printed work, either as given in the work or known from some other documentary source.  For the illuminated books, William Blake is always recorded as the publisher even if the book in question does not record him as such.<br/><br/></li>
+	<li>&lt;pubplace&gt;.  The city where the work was published, either as given in the work or known from some other documentary source.  For the illuminated books, the place of publication is Blake's place of residence (London for all but three years of his life) at the time the work was printed.  For London and New York, no country need be given.  For lesser cities, the county (in the case of British towns only) and the country can be added (e.g., "Felpham, Sussex" or "Boston, Massachusetts").  This additional information should be given when there might be confusion between American and British towns (e.g., Boston).  This element is of course skipped when the work being encoded, such as a drawing or painting, was never "published."<br/><br/></li>
+	
+	<li>&lt;date&gt;.  This is generally the date in which the work was first composed or executed in the medium of the work being encoded (not the date printed, or the date of finishing or retouching, or some hypothetical date when the artist first imagined the image without executing it).  Frequently, this is a date range (e.g., 1810-12) or a "circa" (use "c.") date.  The second dates in date ranges are abbreviated, only the last two digits of the year being given (as in the example in the last sentence).<br/><br/></li>
+	
+	<li>&lt;compdate&gt;.  The purpose of this element is to record the date the work was composed. In the case of works with multiple copies, like illuminated books and commercial book illustrations, the compdate value will be the same for every copy (since the work was only "composed" once, regardless of how many times it was printed).  
+<ul>
+<li>When there is only one date of composition/execution, that date is given as the value: e.g., &lt;compdate value="1821"&gt;1821&lt;/compdate&gt;. 
+</li><li>If there is a "c." date, the value is the date without the "c.":  
+&lt;compdate value="1821"&gt;c. 1821&lt;/compdate&gt;.  
+</li><li>If there is a date range, the value is the earlier of the two dates: 
+&lt;compdate value="1821"&gt;1821-22&lt;/compdate&gt;.
+<br/><br/></li>
+
+</li></ul>The following twenty elements, #41-60, appear within the &lt;objinfo&gt; element.  Some of these elements are optional, depending on the nature of the work.  For example, &lt;printingstyle&gt; would not pertain to paintings and drawings.  It is frequently not possible to find all the necessary information from standard reference sources.  Sometimes one of the editors can fill gaps, but in many cases it is necessary to contact a curator at the owning institution to ask a few questions.  (Joe Viscomi has good contacts with curators at most of the owning institutions and can supply names and e-mail addresses.)<br/><br/></li>
+
+
+	<li>&lt;printdate&gt;.  This records the date when the work or copy was printed (if it was printed at all; sketches, for instance, do not need the &lt;printdate&gt; element). The printing date is generally taken from the title page of a letterpress book, from the publisher's information statement in a book, or from some other documentary source.  For Blake's illuminated books, the printing dates recorded in Joseph Viscomi, <i>Blake and the Idea of the Book</i>, are generally followed (see particularly the chart, pages 375-81).  It is sometimes necessary to consult with Viscomi to confirm or refine such dates. The formatting of value attributes is similar to that for &lt;compdate&gt; (#40, above), with one important addition. Works with more than one copy are automatically sorted in copy TOCs on Work Index pages according to their printdates. For works in which several copies were printed in the same year, it is necessary to add an upper-case letter to the value attribute to indicate the order in which the copy should be sorted among all copies printed that year. The proper format is &lt;printdate value="1804.A"&gt;1804&lt;/printdate&gt; for the first copy printed in 1804, value="1804.B" for the second, etc.<br/><br/></li>
+
+
+	<li>&lt;numberobj&gt;.  The number of objects that constitute this work/copy.  This number should equal the number of object view pages for the work/copy, and thus does not include objects (e.g., blank flyleaves or free endpapers in a book) that are not included in the Archive.  For works/copies constituted by a single object, enter "1".<br/><br/></li>
+	
+	<li>&lt;objorder&gt;.  The order of objects is recorded in relation to the relevant reference source, but the information recorded here comes directly from the work/copy in question. (This element can be excluded for single-object works.) 
+<ul> 
+<li>For Blake's illuminated books, the standard (Bentley) plate numbers should be given in the sequence that they appear in this copy (e.g., 2, 1, 3, 19, 21, 20-38).  It is a good idea to add a note here or elsewhere in the copy header indicating that Bentley's plate numbers are being used in such sequences.  
+</li><li>For letterpress books, the page sequence should be given (e.g., pages i-xii, 1-543).  
+</li><li>For series of prints (e.g., the Job engravings), the normal sequence arranged by Blake himself should be used (e.g., for the Job engravings, the title page and the plates numbered 1-21). 
+</li><li>For series of water colors or drawings, the arrangement in the WBA always accords with what we believe to be the proper sequence, and thus something like "objects 1-###" is all that is needed here.  The sequence for drawings and water colors in series usually accords with the sequence given in Butlin, although there are exceptions that need special care and notation (e.g., the Dante water colors).  Complexities and alternative sequences can be indicated in a note.
+</li></ul><br/></li>
+
+
+	<li>&lt;objsize&gt;.  The size of the created image (not the full size of the support (paper, canvas, etc.) on which the work is executed). Sizes are always given in centimeters and tenths of centimeters, height first, then an "x", then width.  All measurements are followed by "cm."  If a measurement is an exact centimeter without tenths, then record "0" for the tenth (e.g., 18.0).  If the work is constituted by more than one object, then the size of each object should be given, although this can be done in abbreviated form (e.g., "ranging in size from 18.0 x 12.3 to 18.6 x 13.5 cm."). Sometimes there is no record of the size (as defined above) of a drawing or manuscript.  In these cases Dr. Viscomi can often determine the size of the object using the tools available in Photoshop. Special circumstances can be recorded in a &lt;note&gt;. Some general object size guidelines:
+<ul>
+<li>For the illuminated books, the size is the plate mark measurement recorded in Bentley, <i>Blake Books</i>.  Note, however, that Bentley gives width before height, and thus the sequence of his numbers must be reversed for the Archive.
+<li>Many of the commercial book illustrations include Blake's design and, below it, a publisher's imprint not created by Blake. In this case the object size is the size of the Blakean design, not including the imprint.
+<li>For objects that do not have plate marks, like sketches and paintings, the object size is the size of the entire design (not just the core image).
+</li><li>For manuscripts, the object size is often the same as the leaf size (#46, below). 
+</li></ul><br/></li>
+	
+	
+	<li>&lt;numberleaves&gt;.  The number of leaves bearing the work in a printed book, or the number of supports bearing drawings, paintings, or manuscripts.  This number often accords with the number of objects (#42, above), particularly for drawings and paintings.  But for works printed recto and verso, as in most letterpress books and many of Blake's illuminated books, as well as in many manuscripts written both back and front, the number of leaves is of course considerably lower (roughly half) than the number of objects.<br/><br/></li>
+	
+	
+ 	<li>&lt;leafsize&gt;.  The size of the leaf or sheet of paper or canvas on which the work is executed, measured in centimeters (see #44, above, for how measurements are recorded).  Leaf sizes for Blake's illuminated books are recorded in Bentley, <i>Blake Books</i> and <i>Blake Books Supplement</i>; leaf sizes for specific impressions of the separate plates are in Essick's catalogue.  However, it can sometimes be difficult to find a record of a sheet size for a drawing or commercial book illustration.  Butlin is inconsistent in recording sheet size for drawings; other catalogues, such as specific collection or exhibition catalogues, need to be consulted.  It is sometimes necessary to contact the owning institution and ask them to measure the leaves themselves. As a last resort, Dr. Viscomi can sometimes determine the leaf size using Photoshop.<br/><br/></li>
+ 	
+	<li>&lt;medium&gt;.  The medium in which the work is executed.  For the illuminated books, this is generally "relief etching" or "intaglio etching," in some cases with "white-line etching" as well. There is no set vocabulary for this element; medium designations should reflect the specific work, including of course those in several media (i.e., relief and white-line etching with hand coloring).  If different objects in a multi-object work were executed in different media, this should be specified, possibly in a note in complex cases.<br/><br/></li>
+	
+	<li>&lt;printingstyle&gt;.  For etchings and engravings, either "relief" or "intaglio" is the usual term.  The words "with color printing" can also be added for illuminated books that include that medium.  For letterpress books, "letterpress" is the proper term.  This element is excluded for non-printed works like sketches and paintings.<br/><br/></li>
+	<li>&lt;inkcolor&gt;.  For Blake's illuminated books, the ink colors are recorded in Bentley, <i>Blake Books</i>.  However, Bentley's colors are not terribly precise (e.g., "reddish brown"), and thus Viscomi, <i>Blake and the Idea of the Book</i>, should be consulted (although obtaining this information takes a good deal of searching through chapters).  For letterpress books this is almost always "black."  This element is excluded for works that do not make use of ink.<br/><br/></li>
+	<li>&lt;support&gt;.  A brief description of the material on which the work is executed.  This is "paper" in the vast majority of cases.  Whenever possible, the "paper" designation should state whether it is "laid" or "wove."  To determine this last fact, it may be necessary to consult with the editors or a curator at the owning institution.<br/><br/></li>
+	<li>&lt;watermark&gt;.  This element records any watermark in a paper support.  Try to mimic the typography (capital letters, slashes, etc.) when possible. For the illuminated books, Bentley, <i>Blake Books</i>, can supply watermarks.  This element (possibly in a note, in complex cases) should also record the leaves on which the watermark appears.  For watermarks that include designs, a very brief description should be given (e.g., "crown and Britannia watermark").  If there is no watermark, then "none" should be stated.  Use quotation marks around the transcription only when there are multiple watermarks. If the paper is pasted to a backing mat and thus any watermark is not visible, explain that situation.<br/><br/></li>
+	
+	<li>&lt;etchednumbers&gt;.  This element is intended for use with Blake's illuminated books.  If present, such etched numbers should be recorded in sequence and coordinated with the standard (Bentley) plate numbers--thus, "Objects 2, 1-5, 7, 6-20 [the standard Bentley numbers] are numbered 1-20".<br/><br/></li>
+	
+	
+	<li>&lt;pennednumbers&gt;.  This element records any numbers written by the original artist who executed the work.  Usually, number sequences added by some later collector or curator are not shown in the view of the object (Object View Page) and are not recorded here, particularly in the case of such inscriptions on versos.  In some cases, such as the Dante water colors, such later numbers, when deemed significant, can be indicated in an object note (see #72, below).<br/><br/></li>
+
+	<li>&lt;framelines&gt;.  This element is used to record framing lines, added by Blake or his wife, in the illuminated books.  Simply the number of framing lines is given; such additional features as colored washes between lines can be indicated within this element or explained in a note.  For other works, this can be problematic and should be explained in a note.  Many drawings are mounted on backing mats that include framing lines added by a framer or curator.  These are not normally shown in the view of the object and need not be recorded.  But one must be flexible here and note such later framing devices when deemed important, particularly if added to the original mount.<br/><br/></li>
+	
+	<li>&lt;binding&gt;.  Recorded here is a brief, non-technical description of the present binding of a printed book or bound manuscript (e.g. "full red morocco").  Use "disbound" if the work was previously bound but is presently kept as loose leaves or mounted prints.  Details of possible interest (e.g., the name of the binder, when known) and brief descriptions of prior bindings can be added in a note.<br/><br/></li>
+	
+	<li>&lt;stabholes&gt;.  This element is of little significance for all but the illuminated books.  Record the number of holes and the distances between them--e.g., "3 holes, 2.8 and 3.8 cm. apart".  The distance between the top edge of the sheet and the uppermost hole can also be recorded, although this is not generally recorded by Bentley.  This element can be excluded for commercial book illustrations, paintings, and all but a few drawings.<br/><br/>
+	
+	The following four elements, #57-60, apply only to letters.<br/><br/></li>
+	
+	<li>&lt;postmark&gt;. Transcribe the postmark using slashes between "rows" of text. Note the space on either side of the slash. Use quotation marks around the transcription only when there are multiple marks. Example: &lt;postmark&gt;hand written "3", stamped "T.P / StrandCO", "8.MORN.8 / 12.OC / 1825", and "10.F.NO[remainder obscured] / OC.12 / 1825"&lt;/postmark&gt;<br/><br/></li>
+
+<li>&lt;sealDesc&gt;. Based on Bentley, we use "wafer" to describe seals: "remnant present" ("remnant" could refer to the stain of wax, or pieces still adhered), "red wafer", "cut away", and "none". Additionally, you may describe the seal if the seal is viewable. Descriptions would be included in a note to &lt;sealDesc&gt;.
+<br/><br/></li>
+
+<li>&lt;addressee&gt;. Indicates the addressee of the letter. Example: &lt;addressee name="Linnell Mrs John"&gt;Mrs. John Linnell&lt;/addressee&gt;.<br/><br/></li>
+
+<li>&lt;placeLet&gt;. The place in which the letter was written. Document the city name or "unknown" if the location is unknown or not confirmed through a postmark.<br/><br/>
+
+	The following five elements, #61-65, appear within the &lt;provenance&gt; element.  (Note: the &lt;provenance&gt; element requires an n attribute with value "1", thus: 
+&lt;provenance n="1"&gt;.)<br/><br/></li>
+
+	<li>&lt;name&gt;.  The name of the current owning institution or private individual.  The names and contact information of all owners from whom we have acquired images are listed on the public and testing sites on the <a href="https://blake-dev.lib.unc.edu/blake/public/institutions.html">Contributing Collections</a> page. Some private owners do not wish to be identified in the Archive; in these cases the name should be "Private Collector."<br/><br/></li>
+	
+	<li>&lt;date&gt;.  The date here records the acquisition date (year only) of the work by the present owner.  These dates are often given in standard reference works, such as Bentley and Butlin, and are sometimes part of the accession number (e.g., the "1940" in a number such as 1940.11.23).<br/><br/></li>
+	
+	<li>&lt;dealer&gt;.  The full name of the dealer from whom the work was acquired by the present owner.   For gifts and bequests, just say "none" (such gifts are indicated in the note on provenance--see #65 below).<br/><br/></li>
+	
+	<li>&lt;price&gt;.  The price paid to a dealer or auction house by the present owner.  If not recorded in standard catalogues and bibliographies, then "unknown" can be written here.  In the case of gifts and bequests, that should be indicated--"gift" or "by bequest."<br/><br/></li>
+	
+	<li>&lt;note&gt;.  This is the place to record the provenance (history of ownership) of the work, usually in a single sentence with each change in ownership separated by a semi-colon from the other parts of the provenance "string." Provenance information can be found in the standard catalogues used throughout the Archive; 
+Bentley, Butlin, and Essick are the main sources.  Some gaps can be filled, or errors 
+corrected, through research in dealers' catalogues, individual collection catalogues, exhibition 
+catalogues that give the names of lenders, and auction catalogues.  Robert Essick has an extensive 
+collection of such subsidiary works, as well as annotated, updated copies of Bentley, Butlin, and 
+Essick that contain a good deal of additional information. It is a good idea to consult various examples of these provenances already in the Archive and use them as loose models. Some guidelines for recording provenance:
+	<ul>
+	<li>The record should extend from the first recorded owner to the present owner, giving dates whenever possible.  If we think it likely that the first owner acquired the work directly from Blake, indicate as much (e.g., "Acquired, probably directly from Blake, by Frederick Tatham c. 1821;...").  
+	<li>Give full names of all individuals and institutions whenever this is known, except in the case of present owners who wish to remain anonymous.
+	<li>For auction sales, record the auction house, its location (London, New York, etc.), the date of the sale (day first, then month, then year), lot number, and (in parentheses) the price (in pounds or dollars), and the purchaser.  
+	<li>For dealers' catalogues, begin with "offered in...", then the dealer's name and comma, then the date (usually only the year is known, but sometimes also the month), then "catalogue" and the catalogue number and comma, then "item" and the item number, then in parentheses the offering price (pounds or dollars). 
+	<li>In multi-object works with divided ownership, the parts that have different histories should be indicated separately and clearly.
+	<li>The object is of course completeness and clarity, although frequently some speculation is involved.  All such speculation should be so indicated with words such as "possibly," "probably," a question mark, etc.
+	</ul><br/></li>
+
+
+	<li>&lt;repository&gt;.  This element includes sub-elements that record
+	information about the present owner of a work, beginning with the name and the address, 
+	using the &lt;institution&gt; element for the owner name and then &lt;addressline&gt; 
+	elements for contact information. (Multiple &lt;addressline&gt; elements can be used as
+	needed to record these data).  For owners' names and  
+	contact information see the 
+	<a href="https://blake-dev.lib.unc.edu/blake/public/institutions.html">Contributing Collections</a> page.  Note: Names and contact information
+	for private owners should not be given unless you are specifically authorized to do so. Some considerations:
+
+<ol type="a">
+ 
+</li><li>The &lt;department&gt; element can be difficult to determine, depending on how an institution divides its collection.  Collection catalogues can be useful for discovering these departmental designations.
+</li><li>A &lt;collection&gt; element can be added after &lt;department&gt; when a specific, named collection holds the work--e.g., the Keynes Collection at the Fitzwilliam Museum or the Lessing J. Rosenwald Collection at the Library of Congress.
+</li><li>Finally, the &lt;repositoryid&gt; element records bibliographical identification information for the work/copy.  It has a label attribute with the value "Call number" (or sometimes "Accession number"), which is the accession or inventory or shelf number the owning institution uses to identify the specific work.  These numbers are often not recorded in the standard bibliographies and catalogues and must be sought out in collection-specific catalogues (such as the one for the British Museum published in <i>The Blake Newsletter</i> in 1972).  Online catalogues, such as the one for the Morgan Library (http://corsair.morganlibrary.org/), can also be useful.
+
+</li></ol>
+
+</li>
+</ol>
+
+
+   <p><A name="object_descriptions" id="object_descriptions"><b>C. Object Descriptions</b></A><br/><br/>
+
+The above items complete the general information about a work and its owner. All of the following elements are specific to each object constituting the work/copy and can be repeated as many times as necessary for a multi-object work. For unique works, such as drawings and paintings, or single prints, only one of these bundles of information is needed. 
+
+    <br/><br/><A name="biblio_info" id="biblio_info"><b>C.1. Bibliographic and Cataloguing/Reference Information</b></A>
+
+</p>
+
+<ol start="67">
+
+	<li>&lt;desc&gt;.  This is the main element that contains all of the "descriptive" information about the object.  The &lt;desc&gt; element itself has two essential attributes, id and dbi, which identify the object.  Note that the components of each are the same but occur in different orders and use different capitalization conventions.<br/><br/>
+<ol type="a">
+<li>
+id.  Fill in the value for id with:
+<ul>
+<li>The standard BAD identification used to identify the work, as in #1, above, using all lowercase letters followed by a period: e.g., "songsie." or "bb125."
+</li><li>The copy number (or letter), as in #4, above, using lowercase letters or numbers (without a preceding "0" before 1-9) followed by a period: e.g., "y." or "1."
+</li><li>The genre designation, as in #2, above, using all lowercase letters and followed by a period; the genres here follow those listed in the BAD Element guidelines and used for the type attribute in the &lt;bad&gt; element, <b>not</b> those used in Blake Archive filenames: e.g., "illbk."
+
+</li><li>The object number, beginning with 01 for the first and so on thereafter (always use the "0" before 1-9).  All multi-object works in the Archive are numbered in the sequence in which they are to be displayed on the Object View Pages, which should in most cases also be the order in which they appear in the physical object.
+</li><li>Examples of completed id attribute: "songsie.y.illbk.01" or "bb125.1.ms.01".<br/><br/>
+</li></ul>
+</li><li>
+dbi. The dbi identifies the particular image associated with the object. As such, it consists of all elements of the image filename except for resolution and filetype. It contains these elements:  
+<ul>
+<li>The standard BAD identification used to identify the image, as in the WBA filename (whether upper- or lowercase), followed by a period: e.g., "america." or "BB421." or "lt11oct1825."
+</li><li>The copy letter or number, as in the WBA filename (whether upper- and lowercase), followed by a period: e.g., "Y." or "a-proof." or "1."
+</li><li>The object number as it appears in the WBA filename for the image corresponding to the object: e.g. "5." (for non-illuminated works) or "P (for illuminated works)
+</li><li>The genre, as in the WBA filename (whether upper- and lowercase): e.g., "MS" or "COM". No genre indication is needed for the illuminated books
+</li>
+<li>Examples of completed dbi attribute: "songsie.Y.P1" or "BB125.1.1.MS".<br/><br/></li>
+
+<li>&lt;compwith&gt;. The &lt;desc&gt; element has one optional attribute, &lt;compwith&gt;.  Normally the Archive's Compare feature works automatically, using BAD ids, to display objects from multiple copies of the same illuminated book in one window.  In rare cases, however, objects printed from the same matrix occur in works with different BAD ids.  In order to make these items display properly in the Compare window, the compwith attribute must be added to the &lt;desc&gt; element in the form "badid.Bentleynumber".<br/></br></li>
+</ul>
+</ol>
+Examples of completed &lt;desc&gt; element: 
+<ul>
+<li>&lt;desc id="songsie.y.illbk.01" dbi="songsie.Y.P1"&gt;</li> 
+<li>&lt;desc id="bb125.1.ms.01" dbi="BB125.1.1.MS"&gt;</li> 
+<li>&lt;desc id="gates-child.d.illbk.03" dbi="gates-child.D.P3" compwith="gates-sexes.B3"&gt;</li>
+</ul>
+<br/>
+The following three elements, #68-70, occur within the &lt;objtitle&gt; element.<br/><br/></li>
+
+
+	<li>&lt;title&gt;.  This element records the title for the object; multiple &lt;title&gt; elements are possible, using different type attributes, depending upon the number of titles attributed to a specific object.   The attributes, each used with a separate &lt;title&gt; tag, are:
+<ul>
+<li>&lt;title type="transcribed"&gt;.  This is the main title for the object that will be displayed on the Object View Page; in many cases it will be the only &lt;title&gt; element required, but not in all--see the following item.  Thus, in this first &lt;title&gt; element enter the title for this object--for example, the title of one of the individual Songs (e.g., "The Tyger") in <i>Songs of Innocence and of Experience.</i>  For works of one object, enter the work title, as in #14, above.  This title can be worded in a variety of ways depending on the nature of the object (e.g., the page number can be included for letterpress books).
+
+</li><li>&lt;title type="alt"&gt;.  This records any alternative titles for the object--for example, "The Tiger" for the transcribed title "The Tyger."  These alternative titles are not displayed, but are searchable.  As many alternative titles as necessary may be added, with a separate tag for each.
+</li></ul>
+Note that the closing tag needs to be followed directly by a comma; if there are any alternative titles, the comma should follow the last one: e.g.,
+<ul>
+<li>&lt;title type="transcribed"&gt;London&lt;/title&gt;,
+</li><li>&lt;title type="transcribed"&gt;The Tyger&lt;/title&gt;<br/>
+
+&lt;title type="alt"&gt;The Tiger&lt;/title&gt;,<br/><br/></li>
+</ul>
+
+The following two elements, #69-70, occur within the &lt;objid&gt; element, still within &lt;objtitle&gt;.
+<br/><br/>
+
+
+	<li>&lt;objnumber&gt;.  This element records the number of the object as assigned in the Archive sequence for the work/copy.  This element uses the attribute code to record the number, followed by an "A" that designates this entry as the main number.  In the element field itself, the object number is recorded as "object # "; do not use the initial zero for numbers 1-9, and be sure to leave a space after the number.  Thus: &lt;objnumber code="A1"&gt;object 1 &lt;/objnumber&gt;<br/><br/></li>
+	<li>&lt;objcode&gt;.  Following the Archive number is at least one reference number to the standard bibliography or catalogue used to identify the object, recorded with the element &lt;objcode&gt;; multiple &lt;objcode&gt; elements can be used as needed.  As with &lt;objnumber&gt;, &lt;objcode&gt; uses a code attribute to denote the specific reference source being cited.  The possible catalogues and bibliographies are Bentley (his <i>Blake Books</i>, for writings--including plate numbers of the illuminated books, prints in series, and commercial book illustrations), Erdman (his edition of Blake's writings, for illuminated book plate numbers), Keynes (the Keynes and Wolf <i>Census</i> of the illuminated books, for their plate numbers), Butlin (for drawings and paintings), and Essick (for the separate plates).  These are assigned the code values "B", "E", "K", "U", and "ES".  Within the element field itself, record the expanded form of the reference name (Bentley, Erdman, Keynes, Butlin, Essick) and the number assigned to this object by that source.  Because these catalogue references are displayed on the object view page, they require specific formatting:<br/><br/>
+
+<ul>
+<li>For the <b>first</b> reference source, the name must be preceded by an opening parenthesis.  If it is the only source being cited, then a closing parenthesis can follow the object number within the tag: <br>
+e.g., &lt;objcode code="U1"&gt;(Butlin 1)&lt;/objcode&gt;. <br/><br/> 
+</li><li>If there are multiple reference sources, however, the number for the first must be followed by a comma and a space; each subsequent &lt;objcode&gt; value should follow the same format, with the final one including a closing parenthesis instead of a final space: <br/><br/>
+&lt;objcode code="B1"&gt;(Bentley 1, &lt;/objcode&gt;<br/>
+
+&lt;objcode code="Ei"&gt;Erdman i, &lt;/objcode&gt;<br/>
+&lt;objcode code="Ki"&gt;Keynes i)&lt;/objcode&gt;<br/><br/>
+
+On the Object View Page, these examples (including the &lt;objnumber&gt; value as recorded in #69, above) would appear as follows:
+<ul>
+<li>object 1 (Butlin 1)
+</li><li>object 1 (Bentley 1, Erdman i, Keynes i)<br/><br/>
+</li>
+</ul></li>
+
+<li>
+Note that "K", which is used in &lt;objcode&gt; above, is used in Archive <b>filenames</b> as the abbreviation for Keynes' catalogue of portraits of Blake and his wife (e.g., K35.1.1.WD).  This "K" <b>should not</b> be followed here by the expanded form "Keynes" (which refers to his <i>Census</i>), but by "Keynes Portraits" (or some other citation to differentiate the two).  <br>
+[Note: The catalogue of portraits should be added to the list of Standard References and Abbreviations on the public site.]<br/><br/>
+
+</li><li>
+The Erdman and Keynes <i>Census</i> numbers do not appear for each object on the tracking sheets; the other catalogue and bibliography designations are used on the tracking sheets.  Thus, it is necessary to have copies of the Erdman edition of Blake's writings (revised ed.) and the Keynes <i>Census</i> at hand to look up these numbers, coordinated with the Archive and Bentley numbers for the illuminated books.  For the illuminated books, the Bentley, Erdman, and Keynes plate numbers are given.  For all other works, only one catalogue (used throughout the Archive to identify the object) is generally sufficient.
+</li><br/>
+</ul>
+The following three elements, #71-73, occur within the &lt;physdesc&gt; element.<br/><br/>
+</ol>
+
+	<ol start="71">
+	<li>&lt;objsize&gt;.  Enter the actual size of the object in centimeters.  For guidelines, see #44, above.<br/><br/></li>
+	<li>&lt;objnote&gt;.  This optional element can be used to make any comments, usually of a factual nature, about the object.  This commentary must occur within &lt;p&gt;&lt;/p&gt; tags, so the proper code for such notes is &lt;objnote&gt;&lt;p&gt;&lt;/p&gt;&lt;/objnote&gt;.  These object notes should not be confused with textual notes (see #87, below).<br/><br/></li>
+	<li>&lt;windowsize&gt;. This element controls the size of the ImageSizer window on the OVP. It is measured in pixels, and should be approximately 125% of the pixel size of the inline image.<br/><br/></li>
+	<li>&lt;related&gt;. This optional element creates a link between related objects in the Archive. (The editors determine what objects are related.) When included in a BAD, it creates an extra option in the "Show Me" menu for "Related Works in the Archive." You can link to an individual object or to the Compare feature for an illuminated book design. (You may add an aditional attribute, ovp="noindex", if you wish the related work's OVP to omit the pull-down menu that returns users to the index of objects, copies, or the Archive.) The appropriate codes are:
+	<ul>
+	<li>&lt;related objectid="but244.1.wd.04" ovp="noindex"/&gt;. This creates a link to object 4 of Butlin 244 (the Wollstonecraft wash drawings.)</li>
+	<li>&lt;related objectid="urizen.a.illbk.18" type="compare" copyid="urizen.a" bentley="B21"/&gt;. This creates a link to the compare feature for Urizen object (Bentley) 21.</li>
+	</ol>
+	 
+	 <p><A name="illus_descriptions" id="illus_descriptions"><b>C.2. The Illustration Description</b></A><br/><br/>
+	The following four elements, #75-78, occur within the &lt;illusdesc&gt; element; they are not used in "preview" mode, since they are used for Illustration Descriptions.</p>
+	
+	<ol start="75">
+	<li>&lt;illustration&gt;.  This element contains the commentary and encoding for the Illustration Descriptions.  It and its attendant sub-elements should be repeated for every illustration (say, a "plate" design and a border design) on a specific object.  More than one of these &lt;illustration&gt; elements and its sub-elements can be used when an object contains more than one illustration--e.g., both a headpiece and a tailpiece (each given a different location), or both a central ("plate") design and a border design. The &lt;illustration&gt; tag itself requires two attributes, type and location:  
+<ul>
+<li>type.  There are two possible values for the type: "plate" (indicating that the design is not a marginal or framing design) and "borderdesign" (indicating that the design is a marginal or framing design).  The "plate" designation is used even for drawings, paintings, and manuscripts.
+</li><li>location.  The value here is the location of the design according to the grid used throughout the Archive.  The image is divided into quadrants: A is upper left, B upper right, C lower left, D lower right; E designates the entire object/image.  Two-quadrant designations can be used, but only vertically or horizontally and not diagonally.  The possible combinations are AB, AC, BD, and CD.  Any full-page (or "full-object") design is designated as E.  If almost all of a design is in any one quadrant, then the adjacent quadrant (into which just a fraction of the design projects) is not recorded.
+<br/><br/>
+</li></ul>The following three elements, #76-78, occur within the &lt;illustration&gt; element, still within the &lt;illusdesc&gt; element.<br/><br/></li>
+
+	<li>&lt;illusobjdesc&gt;.  This element contains the commentary proper as it appears in the Illustration Description.  The description should be a complete, straightforward, and "objective" description of the illustration.    Normal, declarative prose is used, but other than that there are no firm rules.  Customarily, we have (over the years that these descriptions have evolved) often used terms from the set list of characteristics (see #78, below), but this is not essential since the search engine operates on the list of characteristics, not this illustration description.  The set list of characteristics, however, can be a good guide to the level of specificity and detail required of a good illustration description.  Most descriptions begin with the largest, most prominent or most central motifs, such as the major human figures in a design, and then work towards minor motifs.  The best way to learn how to describe illustrations is to read some of the many examples in the Archive (Object View Page, pull-down menu on the lower left [Show Me...], Illustration Description).<br/><br/></li>
+	
+Elements #77 and #78 deal not with the whole design, but with each individual "component" or motif in each design. A sense of what constitutes such a component/motif can be gained by studying the terms on the image search menu. Basically, a component is constituted by a pictorial image that represents some object in space, although that component can also be analyzed into constituent parts (e.g., not just a "tree," but also leaves, branches, trunk, etc.). Here again, the Image Search menu offers a guide to how far one should carry an analysis of a component into its constituent components. See also the many examples throughout the BAD files for the Archive to get a sense of how the Archive's editors have defined "component" over the years. Note that the analysis of human figures, including postures and gestures, is far more detailed than what we do for vegetation, animals, and objects.<br/><br/></li>
+
+
+	<li>&lt;component&gt;.  As discussed above, a &lt;component&gt; is any individual element of an object's design(s).  This element, like &lt;illustration&gt; (#75, above), requires two attributes, type and location.
+<ul>
+<li>type.  One of five classifications: Figure, Animal, Vegetation, Object, and Structure.
+</li><li>location.  The value of this attribute specifies the location of the component (or motif) under consideration, according to the quadrant grid explained under #75, above.  As with the location of the entire design, only one quadrant is given if only a very small fraction of the component/motif extends into another quadrant.
+</li></ul>
+Example of a complete opening &lt;component&gt; tag: &lt;component value="Figure" location="AB"&gt;<br/><br/></li>
+	<li>&lt;characteristic&gt;.  This element, which occurs within the &lt;component&gt; element tags (directly after the opening tag), is repeated as many times as is necessary to fully describe the minute particulars of each component according to the set vocabulary on the image search menu; use one set of &lt;characteristic&gt; tags per characteristic.  There can be no exceptions to the set vocabulary since the search engine operates on these lists (often quite long, particularly for figures) of characteristics.  Thus, choosing the appropriate characteristic values requires familiarity with the set vocabulary.  Some of the terms overlap (e.g., "snake" and "serpent"); it has been the practice in recent years to list both if applicable. Example of a &lt;characteristic&gt; list:<br/><br/>
+
+&lt;component value="Figure" location="AB"&gt;<br/>
+&lt;characteristic&gt;female&lt;/characteristic&gt;<br/>
+&lt;characteristic&gt;nude&lt;/characteristic&gt;<br/>
+&lt;characteristic&gt;Eve&lt;/characteristic&gt;<br/>
+&lt;characteristic&gt;long hair&lt;/characteristic&gt;<br/>
+&lt;characteristic&gt;bending forward&lt;/characteristic&gt;
+<br/><br/>
+After the opening &lt;component&gt; tag and the list of characteristics, an additional commentary provides a verbal description of the component, similar to the general illustration description, #76, above.  Thus, the commentary needs to be tagged using &lt;illusobjdesc&gt; element; it follows directly after the list of characteristics.  After the &lt;illusobjdesc&gt;, the component description is complete and so the &lt;component&gt; element can be closed.  Again, this general format/process applies to every individual component of an object's design(s).
+</li>
+</ol>
+
+  <p><A name="transcriptions" id="transcriptions"><b>C.3. The Textual Transcription</b></A></p>
+
+<ol start="79">
+
+	<li>&lt;phystext&gt;.  This element contains the transcription of any text on the object attributable to Blake as either the author or as the person who executed the text (e.g., someone else's words etched or engraved by Blake).  Text attributable to other people as both author and executor is not transcribed, but can be quoted (and the location noted) in an object note (see #72, above).  The original text on the object is followed to the letter, including upper- and lowercase, punctuation even if very odd, and all other features of the text except letter size.  You should also attempt to roughly duplicate vertical and horizontal spacing between lines and words. All transcriptions are in roman, even though many of Blake's handwritten texts in such works look like italic script.  In the transcription proper, missing letters (e.g., the word "enough" misspelled "enogh") are simply left missing, without any addition of bracketed letters (as in some scholarly text).  In such cases, a brief textual note can be added to indicate that the "error" is in the original (see #87, below).<br/><br/>
+	
+	Included in this section are the basic tags for transcribing etched and letterpress text; transcribing Blake's manuscripts requires a more detailed set of tags that can be found in the Manuscript Markup Instructions and Tagset document.<br/><br/>
+	
+	The following nineteen elements, #80-98, all occur within &lt;phystext&gt;.<br/><br/></li>
+
+
+	<li>&lt;texthead&gt;.  This element is used for plate numbers and other similar portions of text that are not part of the main transcription proper.  It can include two attributes for placement of the text: justify (always "left") and indent (with a numeric value for the number of spaces to indent).  For an example, see  &lt;physnumber&gt; (#81, below).<br/><br/></li>
+	<li>&lt;physnumber&gt;.  This element, which occurs within &lt;texthead&gt;, is used for plate/object numbers that appear on the physical object.  It includes a type attribute to identify the instrument used--usually "pen-and-ink". Example: &lt;physnumber type="pen-and-ink"&gt;1&lt;/physnumber&gt;. Only numbers written or etched by Blake himself should be transcribed; if numbers were added later in someone else's hand, you may include an object note (see #72, above) or text note (see #87, below) to indicate that.<br/><br/></li>
+	<li>&lt;columns&gt; and &lt;column&gt;.  Use these elements together for any text that appears in columns, such as in <i>The [First] Book of Urizen</i> or <i>The Book of Ahania</i>.  The &lt;columns&gt; tags include the &lt;column&gt; tag and the ensuing text, with one &lt;column&gt; tag set/element for each individual column on the object.<br/><br/></li>
+	<li>&lt;vspace/&gt;.  The vertical space element is used to insert blank spaces between consecutive lines of text; use the extent attribute to identify the amount of space between lines: e.g., &lt;vspace extent="4"/&gt;.  Note that this is an empty element and so must have the "/" at the end.<br/><br/></li>
+	<li>&lt;lg&gt;.  This element identifies line groups--i.e., blocks of text on the object, such as stanzas or paragraphs.  For verse, simply use &lt;lg&gt;, but for prose text (i.e., not poetry), use the type with value "prose": e.g., &lt;lg type="prose"&gt;.<br/><br/></li>
+	<li>&lt;l&gt;.  The line element, used within &lt;lg&gt;, one for each line. 
+<ol type="a"> 
+<li>This element must include the attribute n, for the line number.  The value of n has to follow exactly the value of the &lt;desc&gt; id (i.e., work, copy, genre, object number--all lowercase) with the line number added at the end after a period (and including a "0" for 1-9).  E.g.,:
+<ul>
+<li>&lt;l n="bb125.1.ms.01.01"&gt;...&lt;/l&gt;
+
+</li><li>&lt;l n="songsie.y.illbk.54.03"&gt;...&lt;/l&gt;
+</li></ul>
+</li><li>As with &lt;texthead&gt; (#80, above), the &lt;l&gt; element can also include the justify and indent attributes (after the n attribute value) for placement/display purposes: e.g., &lt;l n="bb125.1.ms.01.01" justify="left" indent="5"&gt;. 
+
+</li></ol><br/></li>
+
+	<li>&lt;space/&gt;.  This element is used to insert blank horizontal space into a line of transcription.  As with &lt;vspace/&gt; (#83, above), use the extent attribute to designate the amount of horizontal space, e.g. &lt;space extent="3"/&gt;. (This usually involves some trial and error; fiddle with the value of the extent attribute until what you see in the transcription window looks roughly like what you see on the image.) Note that this is an empty element and so must have the "/" at the end.<br/><br/></li>
+	
+	<li>&lt;note&gt;.  A note (&lt;note&gt;) can be added to any line of text; it must occur within the &lt;l&gt; tags but after any text.  Such notes are of a textual nature, and can refer to such matters as difficult readings, ambiguities, palimpsests, the medium of an inscription, its odd configuration (e.g., vertically in the margin), and other matters.<br/><br/></li>
+	<li>&lt;hi rend="i"&gt;.  Use this element for any text that needs to be italicized in the transcription display. This tag should rarely, if ever, be used since, as noted in the introduction to this section, Blake's cursive handwriting or etched italic text does not need to be rendered as italic.<br/><br/></li>
+	<li>&lt;hi rend="superscript"&gt;.  Use this element for superscripts within the transcription (as, for instance, when Blake signs his work "W<sup>m</sup> Blake".)<br/><br/></li>
+	<li>&lt;textfoot&gt;.  Whereas &lt;texthead&gt; (#80, above) was used for text above/before the main text on an object, &lt;textfoot&gt; is used for any similarly "secondary" text below/after the main text being transcribed; this usually occurs with catchwords (see #91, below).  As with &lt;texthead&gt;, &lt;textfoot&gt; can include the justify and indent attributes.<br/><br/></li>
+	<li>&lt;catchword&gt;.  Use this element to specify when text is a catchword.
+<br/><br/>
+
+The following seven elements, #92-98, are used exclusively with manuscript transcriptions at present (though they may be retroactively applied to previous transcriptions in the future).<br/><br/></li>
+
+
+	<li>Additions: <b>&lt;add&gt;</b>
+<ol type="a">
+<li>Attributes:
+<ol>
+<li><b>type</b>: insertion, overwrite.
+</li><li><b>place</b>: inline (addition within the line), supralinear (above line), infralinear (below line), interlinear (for new lines inserted between other lines), over (over earlier text), margintop, marginbot, marginleft, marginright.
+</li><li><b>symbol</b>: caret, asterisk, insertion line, other.
+</li></ol>
+</li><li>Example: &lt;add type="insertion" place="supralinear" symbol="caret"&gt;...&lt;/add&gt;.
+
+</li></ol><br/></li>
+
+
+	<li>Cancellations (a.k.a. "deletions") that are <b>recoverable/legible: &lt;del&gt;</b>
+<ol type="a">
+<li>Attributes:
+<ol>
+<li><b>type</b>: overstrike (a line or lines drawn through the text, horizontal or vertical, or a <b>simple</b> looping scrawl), erasure, overwrite (text that has been replaced by text written directly over it), obscured (for washes, charcoal, crayon, etc. used to cancel text by obscuring it heavily).
+</li></ol>
+</li><li>Example: &lt;del type="overstrike"&gt;...&lt;/del&gt;.
+
+</li></ol><br/></li>
+
+	<li>Missing/Unrecoverable Text: <b>&lt;gap/&gt;</b>
+<ol type="a">
+<li>Attributes:
+<ol>
+<li><b>type</b>: cut away (torn/cut page); cancellation (illegible due to intentional cancellation of some sort); illegible (handwriting cannot be made out); erasure; overwrite (original text cannot be made out underneath added text); obscured (illegible due to some sort of obscuration, maybe not intentional; includes <b>heavily</b> struck through text).
+</li><li><b>extent</b>: the approximate length of the gap.
+</li><li><b>unit</b>: character, line.
+</li></ol>
+</li><li>Example: The dog b&lt;gap reason="illegible"/&gt; and then bit my leg.
+
+</li><li>Note: &lt;gap/&gt; is an empty element and so must end with "/".
+</li></ol><br/><br/></li>
+
+	<li>Semi-Legible/Conjectural Text <b>&lt;unclear&gt;</b>:
+<ol type="a">
+<li>Attributes:
+<ol>
+	<li><b>resp</b>: the transcriber's initials.
+	</li></ol>
+</li><li>There will not be any <b>reason</b> indicated for text marked as &lt;unclear&gt;.
+</li><li>Example: The dog &lt;unclear reason="illegible" resp="jsvk"&gt;barked&lt;/unclear&gt;.
+
+</li></ol><br/></li>
+
+	<li>Non-Standard Spelling: <b>&lt;orig&gt;</b>
+<ol type="a">
+	<li>Attributes:
+	<ol>
+		<li><b>reg</b>: the regularized/standard form of the word.
+		</li></ol>
+</li><li>Example: &lt;orig reg="received"&gt;recievd&lt;/orig&gt;.
+</li><li>Note: this would be the usual tag used, since we are not in the habit of regularizing; if we decided to, we would reverse the element and attribute here to &lt;reg orig="[original spelling]"&gt;[regularized spelling]&lt;/reg&gt;.
+
+</li></ol><br/></li>
+
+
+	<li>Clear Mistakes: <b>&lt;sic&gt;</b>
+<ol type="a">
+	<li>Attributes:
+	<ol>
+		<li><b>corr</b>: the correction for the mistake.
+		</li></ol>
+</li><li>Example: &lt;sic corr="woods"&gt;wodds&lt;/sic&gt;.
+</li><li>Note: as with orig/reg above, if we decided to start correcting texts then we could make corr the element, &lt;corr sic="[mistake]"&gt;[corrected form]&lt;/corr&gt;.
+
+</li></ol><br/></li>
+
+	<li>Instrument: <b>&lt;instr&gt;</b>
+<ol type="a">
+<li>Attributes:
+<ol>
+		<li><b>type</b>: pen, pencil, crayon, "pen over pencil" (for text first written in pencil and then gone over with a pen).
+		</li><li><b>color</b>: specify as necessary.
+		</li></ol>
+</li><li>Note: this tag would be used for specific portions of text that are different from the <b>"default"</b> instrument, which can probably be defined in the work information/header in a note of some sort. 
+<br/></li></ol></li>
+</ol>
+  </p>
+      
+    </div>
+  </div>
+</div>

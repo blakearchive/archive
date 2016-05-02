@@ -872,6 +872,11 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             controller: "HomeController",
             controllerAs: 'home'
         });
+        $routeProvider.when(directoryPrefix + '/staticpage/:initialPage', {
+            templateUrl: directoryPrefix + '/static/controllers/staticpage/staticpage.html',
+            controller: "StaticpageController",
+            controllerAs: 'staticpage'
+        });
         $routeProvider.when(directoryPrefix + '/object/:objectId', {
             templateUrl: directoryPrefix + '/static/html/object.html',
             controller: "ObjectController"
