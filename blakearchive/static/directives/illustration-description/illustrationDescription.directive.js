@@ -2,8 +2,8 @@
 
     var controller = function($routeParams){
         var vm = this;
-
-        vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
+        
+        //vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
 
     }
 
@@ -16,6 +16,8 @@
             controller: controller,
             scope: {
                 object: '=object',
+                highlight: '@highlight',
+                keywords: '@keywords'
             },
             controllerAs: 'descCtrl',
             bindToController: true
