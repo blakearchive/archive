@@ -3,7 +3,7 @@
     var controller = function($routeParams, $modal){
         var vm = this;
 
-        vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
+        //vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : vm.searchTerm;
 
         vm.colorKeyOpen = function(size){
             var colorKeyModalInstance = $modal.open({
@@ -27,6 +27,7 @@
             controller: controller,
             scope: {
                 object: '=object',
+                highlight: '@highlight'
             },
             controllerAs: 'textCtrl',
             bindToController: true
