@@ -1,0 +1,234 @@
+<div class="col-sm-9 content-right-column">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="title">The William Blake Archive: XML Encoding Documentation</h2>
+    
+      <p>
+        <i>In an effort to make our editorial procedures more transparent, the Archive is making available excerpts from our internal project documentation. This excerpt explains the rationale and procedures for creating the illustration descriptions that support the Archive's image search function. This documentation has been created and maintained over time by the Archive's editors, project managers, and staff; the version included here is current as of August 2012.</i>
+      </p>
+      
+      
+      <p>
+        <b>Preliminaries: A Theoretical Preface by Robert N. Essick</b>
+        <p>
+          Although there is no such thing as an "objective" description of a picture, and all such descriptions have interpretive implications, the descriptions in an illustration description generally tend toward the "purely descriptive" rather than the "intensively interpretive" end of the spectrum.  Thus, the descriptions concentrate on the naming of motifs (called "components" in a BAD file) rather than the interpretation of the symbolic/iconographic implications of such motifs.  For example, a description would indicate that there is a "sheep standing on the right" in a pictorial composition, but it would generally not indicate that this sheep may be a symbol of Christ.  This is not a hard and fast rule but a rule-of-thumb.  The one clearly interpretive feature of these descriptions is the identification of represented human figures, whether traditional/historical (e.g., Christ, Job) or unique to Blake's own mythology (e.g., Orc, Urizen).  Such identifications are made only when we are reasonably certain of such identifications, although alternative identifications (e.g., "this may be either Milton or Los") are permitted.
+          <p>
+            The verbal descriptions are divided into two types: a general description of an entire pictorial composition, and the description of each "component" or motif within a composition.  For example, the general description would note all the human figures (whether identifiable by name or not) in a composition.  This is followed by the description of each human figure as a separate "component."
+            The component descriptions usually repeat the contents of the general description for that component, but the component descriptions can be (and often are) more detailed.  In many cases, the composition described is constituted by interlinear motifs, scattered throughout the text area in one of Blake's illuminated books, rather than a single composition as traditionally defined by art historians.
+            <p>
+              Illustration descriptions also involve listing the individual "characteristics" for each component of a pictorial composition.  These lists of characteristic enable the "image search" feature of the Archive to function.  Each component must have at least one characteristic to make it searchable.  The characteristics are limited to a set menu, arranged alphabetically (within general categories) on the <a href="http://www.blakearchive.org/blake/search.html?java=yes">image search page</a> of the Archive.  Any one component/motif may have a long list of characteristics; this is particularly true of human figures since these are intensively described in the Archive.  The component descriptions often make use of the same vocabulary as the characteristics, but need not be identical in wording. Only the list of characteristics is searched.
+              <p>
+                It is true that the image search system operates as a verbal filter that converts a pictorial image into a word or sequence of words.  Image searching is in fact a form of text searching, the "text" being the list of characteristics for each component.  This does not, however, constitute a criticism of the Archive, nor is it unique to computer search systems for pictures.  A motif (or what we call a "component") is a verbal entity as much as a visual representation.  The iconographic/symbolic interpretation of images depends upon the conversion of pictures into words.  That is, a particular visual shape must first be recognized as a "sheep" before the iconographic/symbolic meanings of sheep can be explored.  The conversion of picture into word has a long history in art criticism, a history pre-dating the Blake Archive by centuries.  Although shape recognition is necessary for the human eye and brain to recognize a particular shape as an identifiable motif, the Archive search feature does not itself deploy shape recognition.
+                <p>
+                  
+                  <b>The Basics of Illustration Description</b>
+                  
+                  <ol type="1">
+                    <li><b>Main Illustration Description.</b>  This description deals with the general design elements <b>of the object as a whole</b> that are (mostly) independent of or delineated from the textual area(s) of the object, though some textual areas may be pictorial elements of that main design as well (e.g., clouds or sky backing portions of text, etc.).  
+                      <ol type="a">
+                        <li>If the design covers the entire object, it will receive a single comprehensive description (as identified in the &lt;illusdesc&gt; tag in the <b>type</b> and <b>location</b> attribute values).  If it is broken up into different or independent sections, each will generally receive its own description (also indicated by "plate" in each &lt;illusdesc&gt; type attribute but with a different location).
+                          <li>The main description has two elements: the description itself and the separate component descriptions. Each component of the main object design (e.g., a human figure, a mountain, a tree, a lake, a bird, etc.) will receive its own separate component description. As part of the component entities, descriptive entities called "characteristics" are included with the component description.  These come from the available search terms and are what the search engine uses to find hits.<br/>
+                            
+                            
+                            <li>Markup:
+                              <ol type="1">
+                                <li>The main description comes in the &lt;illustration&gt; element (and, within that, &lt;illusobjdesc&gt;) as follows:
+                                  <ol type="a">
+                                    <li>&lt;illustration type="plate" location="X"&gt;
+                                      &lt;illusobjdesc&gt;[main design description here]&lt;/illusobjdesc&gt;
+                                      <li>Here, the description <b>type</b> is indicated by "plate"; "X" indicates the location by quadrant sector(s) in which the design occurs: "E" for the entire plate, "A" for upper left, "B" for upper right," "C" for lower left, "D" for lower right, or a combination ("AB," "AC") of these quadrants.  
+                                        <ol type="1">
+                                          <li>"L" shaped combinations are not possible (e.g., no "BDC" designation). Neither are diagonal designations ("AD").
+                                            <li>These quadrant sectors pertain to the entire object, including text areas, and <b>not</b> just to an illustration (unless that illustration covers the entire object).
+                                        </ol>
+                                  </ol>
+                                  <li>The component descriptions come after the general description's closing &lt;/illusobjdesc&gt; tag, in &lt;component&gt;, &lt;characteristic&gt;, and &lt;illusobjdesc&gt; tags as follows:
+                                    <ol type="a">
+                                      <li>&lt;component type="[Search term <b>type</b>, such as "figure"]" location="X"&gt;
+                                        &lt;characteristic&gt;[Search <b>term</b>, such as "child", as needed]&lt;/characteristic&gt;
+                                        &lt;illusobjdesc&gt;[Component description here]&lt;/illusobjdesc&gt;
+                                        &lt;/component&gt;
+                                        <li>As above, "X" indicates the sector location(s) for the component.
+                                          <li>The "type" designations correspond to the categories of search terms.
+                                            <li>Use as many &lt;characteristic&gt; tags as there are individual characteristics&#8212;one tag set per characteristic.
+                                    </ol>
+                                    <li>Be sure to close the general description &lt;illustration&gt; tag after the final component with &lt;/illustration&gt;.
+                                      
+                              </ol>
+                            </li>
+                            
+                      </ol>
+                      <p>
+                        <li><b>Interlinear Description.</b>  Interlinear design elements are those that either occur within/between lines of text or are textual elements themselves (e.g., birds flying between lines or letters turning into vines, respectively).  Although they may at times overlap spatially with the "main" design, interlinear and textual elements are <b>usually</b> described separately.  "Text" in this context refers to texts that are incorporated into designs, not simply printed text&#8212;e.g., a picture of a book with text on it, or an inscribed scroll, or something written on a wall or stone tablet. 
+                          <ol type="a">       
+                            <li>As with the plate descriptions, interlinear descriptions can be broken up into multiple sections if textual areas are separated&#8212;say, in three text panels.  Most often, however, there will only be one interlinear description to cover this part of the design.
+                              <li>Similarly, there is an overall interlinear description and its corresponding component descriptions.  Follow the procedure outlined above for the main plate description.
+                                <li>Markup.
+                                  <ol type="1">
+                                    <li>The interlinear description usually follows the plate description, overall and/or by sector.  It follows the same markup format, but with a few minor changes.
+                                      <ol type="a">
+                                        <li>&lt;illustration type="interlinear" location="X"&gt;
+                                          &lt;illusobjdesc&gt;[Interlinear description here]&lt;/illusobjdesc&gt;
+                                      </ol>
+                                      <li>The component markup is the same as for the plate description outlined above.
+                                        <li>Again, be sure to close the interlinear description with a &lt;/illustration&gt; tag.<br/><br/>
+                                  </ol>
+                          </ol>
+                          <li><b>Border Description.</b>  Border design elements are generally rare&#8212;examples include Songs copy Y and the Job engravings.  These are designs that have been added outside of the plate or other main visual area.  (Note: etching borders [briefly, impressions from raised copper left on the edges of the plate by wax] are not considered border designs and generally are not described unless Blake made it a point to embellish them (as in some copies of <i>Marriage</i>)).  
+                            <ol type="a">
+                              <li>Border descriptions probably will not be broken up into separate chunks, but it could happen if required&#8212;just create multiple tag sets.
+                                <li>As above, there is an overall border description encompassing everything and then its corresponding component descriptions.
+                                  <li>Markup.
+                                    <ol type="1">
+                                      <li>The format is the same as above except for the type:
+                                        <ol type="a">
+                                          <li>&lt;illustration type="borderdesign" location="X"&gt;
+                                            &lt;illusobjdesc&gt;[Border description here]&lt;/illusobjdesc&gt;
+                                        </ol>
+                                        <li>Component markup is the same as above.
+                                          <li>Be sure to close the tags with &lt;/illustration&gt;.<br/><br/>
+                                    </ol>
+                            </ol>
+                  </ol>
+                  
+                  <b>Procedures for Template and Non-Template Markup</b>
+                  
+                  <p>
+                    <b>Procedure, Part 1: Works with Other Copies Previously Published.</b> This includes illuminated books, commercial book engravings, and separate prints and prints in series, but may also occasionally apply to color printed drawings, water color drawings or even (rarely) sketches.
+                    <ol type="A">
+                      
+                      <li><b>Retrieve or Create a BAD.</b>  If the work for which you are creating illustration descriptions already has a BAD, retrieve that BAD from extranet.  If the work does not already have a BAD, choose the BAD file of a <b>published</b> copy to use as a template.  You should consider the following factors when choosing a BAD to use as a template:
+                        <ol type="a">
+                          <li>Proximity of composition/publication dates.  For the actual dates of printing, consult the charts in Joseph Viscomi's <i>Blake and the Idea of the Book.</i>
+                            <li>Similar plate order.  Because plate orders in illuminated books often vary between copies of the same work, and because the BAD requires a proper order of plate descriptions, it is often helpful to use a published copy that has the same or a close plate order.  This factor is secondary to copy designations and printing dates.  
+                              <li>Similarity of design.  If a published copy is similar in respect to number, types, and arrangements of motifs, as well as in other aesthetic/design elements, this will often save time in editing the illustration descriptions so that they accord with the copy being marked up.  This factor is less important than those listed above.
+                        </ol>
+                        <li><b>Adapt the template BAD so it fits the new copy.</b> The danger with using an existing BAD as a template is that information/artifacts from the "old" copy will end up in the "new" copy. You must carefully change the new BAD to make sure that all of the information it contains (including the BAD element, the copyheader information, and programming elements like object IDs and line numbers, as well as all of the textual transcriptions and illustration descriptions) reflect the "new" copy you are working with. Some things to remember:
+                          <ul>
+                            <li>If the object order in this "new" copy is different from that in the "old" copy, you must reorder the objects in the BAD and change the relevant tags (dbi, desc id, line numbers, etc.)
+                              <li>Often you can send the new BAD to Dr. Essick and he can change the copyheader
+                                <li>You or another project assistant will need to revise the textual transcriptions so they also reflect this "new" copy (rather than the template copy); speak to the Project Manager about who will be assigned this task
+                                  <li>If you are having trouble revising elements of the BAD, refer to the instructions for <a href="http://blakearchive.org/blake/public/about/tech/XML_tagset.html">Filling out an XML BAD File</a> and ask the Project Manager for help.
+                          </ul>
+                          
+                          <li><b>Revise the Illustration Descriptions.</b>  Since you are using a BAD that already contains illustration descriptions for one copy of the work you are marking up, your task is to revise the existing illustration descriptions (the ones that describe the template copy) so that they describe the illustrations in the "new" copy. (Sometimes it helps to open the "old" and "new" objects side by side and visually scan for differences between them.) Keep a running list of changes you make while adapting the markup to the new copy. You will send this list of changes to one of the editors along with your finished descriptions.
+                            <li><b>Check Line Number References in the Markup.</b>  Because copies often have different textual details and order of objects, line and/or object references made within the illustration description must be double-checked to make sure that they refer to the right things in this "new" copy. (This step usually requires that the textual transcriptions be revised; if someone else is responsible for revising the textual transcriptions, make sure one of you completes this step.)  
+                              
+                              
+                              <li><b>Send the BAD file to an Editor.</b>  Once you have finished revising the illustration description for the new copy, send (or ask the Project Manager to send) the entire BAD file as an attachment to the editor who will be checking it (usually Robert Essick).  Send your list of changes (see step C) as well.
+                                
+                                <li><b>Re-Revise Illustration Descriptions.</b>  After checking over the new illustration description, the editor will return it with any corrections that need to be made or further questions that need to be considered.  Implement the editor's changes and/or answer his questions and return the BAD to him once more.
+                                  <li><b>Make "All Copies" Changes (if applicable).</b> The dark side of template markup is "back revision" to already existing copies.  As time progresses, as new terms and procedures come to be, as editorial views change, and as people stumble across things in new copies, certain elements in the BAD file (everything from terms used to interpretations of a design feature) will need to be revised for <b>all copies</b> of the work in question.  
+                                    
+                    </ol>     
+                    <p>
+                      
+                      <b>Procedure, Part II: Works with No Copies Previously Published.</b>  If a work has no other copies already published, and if the Project Manager has not already created a BAD file for the work you want to mark up, a new BAD will need to be made.  Usually the easiest way to do this is to choose a BAD from an already-published work in the same genre as the new work, and rename and adapt this already-existing BAD to the new work you want to mark up.  In this case you will encounter many of the same issues listed in Step B, above. Be sure to follow the procedures outlined in <a href="http://blakearchive.org/blake/public/about/tech/XML_tagset.html">Filling out an XML BAD File</a>.  For the markup, the procedure is similar to that for existing-copy markup, except that instead of adapting an existing set of illustration descriptions, you will write new descriptions "from scratch." Otherwise the set of procedures is largely the same:  
+                      <ol type="A">
+                        <li><b>Retrieve or create the BAD.</b>
+                          <li><b>Establish the textual transcription.</b> (This task may be assigned to another assistant; see the Project Manager.)
+                            <li><b>Prepare the illustration descriptions.</b> Because you are not adapting existing illustrations, you will not keep a list of "changes" for the editor, though you may wish to keep track of questions that occur to you, designations you're not sure about (is that a sheep or a dog?), etc.   
+                              <li><b>Send the BAD to an editor with your list of questions.</b>
+                                <li><b>Re-revise according to the editor's instructions.</b>
+                                  <li><b>Check any text references once an editor has approved the textual transcriptions and the markup has been completed.</b><br/><br/>
+                      </ol>
+                      <p>
+                        <b>Tags/Terms Used in Illustration Descriptions (Metadata)</b>
+                        <p> Note: the following list is arranged from the most general to the most specific elements.
+                          
+                          <p>
+                            
+                            <b> &lt;illustration&gt;</b>
+                            <p>
+                              Description: this element encloses all of the illustration description information and individual elements (e.g., &lt;component&gt;, &lt;characteristic&gt;, etc.) according to their appearance on an object, including illustrations and text that is integrated into elements of non-textual design (when applicable).  For illuminated books and other objects that combine illustrations with text, the description is broken down into three types: 
+                              <ol type="1">
+                                <li>"plate" deals with a main design/illustration as distinguished from the area of text; 
+                                  <li>"interlinear" deals with elements of the design that occur within the area of text; 
+                                    <li>"borderdesign" deals with elements around the borders of the object.  
+                              </ol>
+                              <p>
+                                The prose description contained within &lt;illustration&gt; precedes &lt;component&gt; descriptions and treats all the appropriate components; it then appears in the Illustration Description feature.  Multiple &lt;illustration&gt; fields may occur for a single object.
+                                <p>
+                                  May contain: characteristic, component, head, illusobjdesc, transcription
+                                  <p>
+                                    May occur within: illusdesc
+                                    <p>
+                                      Attributes:<br/>
+                                      id                  #IMPLIED, ID<br/>
+                                      lang                #IMPLIED, CDATA<br/>
+                                      location            #IMPLIED, CDATA<br/>
+                                      n                   #IMPLIED, CDATA<br/>
+                                      rend                #IMPLIED, CDATA<br/>
+                                      type                #IMPLIED, interlinear, plate, borderdesign<br/><br/>
+                                    </p>
+                                    <p>                                                       
+                                      
+                                      
+                                      <b>&lt;illusdesc&gt;</b> (i.e., illustration description)<br/><br/>
+                                      Description: &lt;illusdesc&gt; encloses all description information for the overall design of a particular object; this commentary then appears in the Illustration Description and Virtual Lightbox features.  &lt;illusdesc&gt; also demarcates illustration from textual elements so that they may be used by the search engine during image searches.  A single &lt;illusdesc&gt; occurs per object.
+                                      <p>
+                                        May contain: head, illustration, component, characteristic, illusobjdesc
+                                        <p>
+                                          May occur within: desc
+                                          <p>
+                                            Attributes:<br/>
+                                            id                   #IMPLIED, ID<br/>
+                                            lang               #IMPLIED, CDATA<br/>
+                                            n                    #IMPLIED, CDATA<br/>
+                                            rend               #IMPLIED, CDATA<br/><br/>
+                                            
+                                          </p>
+                                          
+                                          <p>               
+                                            <b>   &lt;illusobjdesc&gt; </b>(i.e., illustration object description)<br/><br/>
+                                            Description: the illustration object description is the prose description of a component of an object design, allowing for more specific and focused treatment of individual components.  Information contained within &lt;illusobjdesc&gt; provides and/or incorporates the search terms ("characteristics," contained within &lt;characteristic&gt;) appropriate to that component.  The prose description appears in the Virtual Lightbox feature, based on the component's location on the object.  Each &lt;component&gt; will contain a single &lt;illusobjdesc&gt; field.<br/>
+                                            <p>        
+                                              May contain: #pcdata, cit, foreign, hi, lb, note, ptr, quote, ref, xptr, xref
+                                              <p>    
+                                                May occur within: component, illustration
+                                                <p>     
+                                                  Attributes:<br/>
+                                                  id                  #IMPLIED, ID<br/>
+                                                  lang                #IMPLIED, CDATA<br/>
+                                                  n                   #IMPLIED, CDATA<br/>
+                                                  rend                #IMPLIED, CDATA<br/><br/>
+                                                </p>
+                                                <p>     
+                                                  
+                                                  
+                                                  <p>
+                                                    
+                                                    <b> &lt;component&gt;</b><br/><br/>
+                                                    Description: a component tag encloses the information describing a particular element ("motif") of an object design according to the <b>categories</b> of available search terms: figure, animal, vegetation, object, and structure.  Components are assigned to quadrants of the object&#8212;(upper left quadrant), B (upper right), C (lower left), and D (lower right)&#8212;and provide the corresponding annotations for the Virtual Lightbox.  Component elements are thus meant to focus and, if necessary, expand the general description of an object design (contained within &lt;illustration&gt;).  Multiple components can appear within &lt;illustration&gt;.
+                                                    <p>                  
+                                                      May contain: characteristic, component, illusobjdesc, transcription
+                                                      <p>                 
+                                                        May occur within: component, illustration
+                                                        <p>                 
+                                                          Attributes:<br/>
+                                                          id                   #IMPLIED, ID<br/>
+                                                          lang               #IMPLIED, CDATA<br/>
+                                                          location         #IMPLIED, CDATA<br/>
+                                                          n                    #IMPLIED, CDATA<br/>
+                                                          rend               #IMPLIED, CDATA<br/>
+                                                          type               figure, structure, animal, object, vegetation, text<br/><br/>
+                                                        </p>
+                                                        
+                                                        <p>      
+                                                          <b> &lt;characteristic&gt;</b><br/><br/>
+                                                          Description: a characteristic is used to more specifically describe one element of an object "component."  ("Object" is here used to refer to a single side of a plate, drawing, page, etc.; "component" is used to refer to a specific identifiable pictorial entity or motif appearing on an object.)  Characteristics are based on the list of available search terms (i.e., characteristics), such as "child," "nude," "Los," "arms at side," and so forth.  Every element of the object treated in the illustration description receives a corresponding characteristic or set of characteristics.  These characteristics in turn are used by the search engine during image searches.
+                                                          <p>                  
+                                                            May contain: #pcdata, date, foreign, hi, lb, note, ptr, ref, xptr, xref
+                                                            <p>                 
+                                                              May occur within: component, illustration
+                                                              <p>                 
+                                                                Attributes:<br/>
+                                                                id                   #IMPLIED, ID<br/>
+                                                                lang               #IMPLIED, CDATA<br/>
+                                                                n                    #IMPLIED, CDATA<br/>
+                                                                rend               #IMPLIED, CDATA<br/><br/>
+                                                              </p>      
+    
+    </div>
+  </div>
+</div>
