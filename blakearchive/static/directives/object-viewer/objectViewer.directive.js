@@ -1,9 +1,17 @@
 (function(){
 
-    var controller = function($scope,$sessionStorage){
+    var controller = function($scope,$sessionStorage,$modal){
         var vm = this;
 
         vm.$storage = $sessionStorage;
+
+        vm.userestrictOpen = function(size){
+            var userestrictModalInstance = $modal.open({
+                templateUrl: '/blake/static/controllers/modal/colorKeyModal.html',
+                controller: 'ModalController',
+                size: size
+            });
+        }
 
         vm.getOvpTitle = function(){
             if(angular.isDefined(vm.copy)){
@@ -58,7 +66,7 @@
 
     }
 
-    controller.$inject = ['$scope', '$sessionStorage'];
+    controller.$inject = ['$scope', '$sessionStorage', '$modal'];
 
     var objectViewer = function(){
         return {
