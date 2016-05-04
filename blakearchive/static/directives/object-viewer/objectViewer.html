@@ -14,7 +14,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="object-subtitle"><span class="object-no text-capitalize" ng-if="viewer.work.virtual">{{ viewer.work.title }}, </span><span class="object-no text-capitalize">{{ viewer.getOvpSubtitle(viewer.copy.selectedObject) }}</span></p>
+                <p class="object-subtitle"><span class="object-no text-capitalize" ng-if="viewer.work.virtual">{{ viewer.work.title }}, </span><span class="object-no text-capitalize">{{ viewer.getOvpSubtitle(viewer.copy.selectedObject) }}, </span><span>{{ viewer.copy.selectedObject.physical_description.objsize['#text'] }} </span><a style="color:#168bc1" ng-click="viewer.userestrictOpen()">&#169;</a></p>
             </div>
         </div>
     </div>
