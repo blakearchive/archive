@@ -664,14 +664,17 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         }
 
     }])
-    .directive('objectWindow', ['WindowSize', '$rootScope', function (WindowSize) {
+    .directive('autoHeight', ['WindowSize', '$rootScope', function (WindowSize) {
         var link = function (scope, element, attrs) {
 
             scope.setStyles = function (windowSize) {
-                if(WindowSize.width <= 992){
+                if(WindowSize.width <= scope.breakpoint){
                     element.height('auto');
                 } else {
                     var newHeight = (windowSize.height - scope.adjust);
+                    if(scope.divide){
+                        newHeight = newHeight / scope.divide;
+                    }
                     element.height(newHeight);
                 }
             }
@@ -686,7 +689,41 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             restrict: 'A',
             link: link,
             scope: {
-                'adjust': '@'
+                'adjust': '@adjust',
+                'breakpoint': '@breakpoint',
+                'divide': '@divide'
+            }
+        };
+    }])
+
+    .directive('autoWidth', ['WindowSize', '$rootScope', function (WindowSize) {
+        var link = function (scope, element, attrs) {
+
+            scope.setStyles = function (windowSize) {
+                if(WindowSize.width <= scope.breakpoint){
+                    element.width('auto');
+                } else {
+                    var newWidth = (windowSize.width - scope.adjust);
+                    if(scope.divide){
+                        newWidth = newWidth / scope.divide;
+                    }
+                    element.width(newWidth);
+                }
+            }
+
+            scope.setStyles(WindowSize);
+
+            scope.$on('resize::resize', function (e, w) {
+                scope.setStyles(w)
+            });
+        };
+        return {
+            restrict: 'A',
+            link: link,
+            scope: {
+                'adjust': '@adjust',
+                'breakpoint': '@breakpoint',
+                'divide': '@divide'
             }
         };
     }])
