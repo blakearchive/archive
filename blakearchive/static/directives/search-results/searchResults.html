@@ -19,13 +19,13 @@
         </slide-box>
     </div>
     <div class="col-xs-12 full-width">
-        <div class="copy-container" ng-style="esr.selectedWork != -1 ? esr.copy_container: {'height':0}">
+        <div class="copy-container" ng-class="{hidden: esr.selectedWork == -1}" auto-height adjust="100" breakpoint="992">
             <header class="page-header">
                 <h1>{{esr.resultTree[esr.selectedWork][0].title}}</h1>
                 <button class="close-copies"><span class="glyphicon glyphicon-remove" ng-click="esr.closeCopies()"></span></button>
             </header>
-            <div class="flex" ng-style="esr.copy_container_flex">
-                <div class="copies-in-work" ng-style="esr.search_grid">
+            <div class="flex" auto-height adjust="250" breakpoint="992">
+                <div class="copies-in-work" auto-width adjust="100" breakpoint="992" divide="3">
                     <div class="flex-wrap">
                         <div class="handprint-block-small" 
                             ng-repeat="copy in esr.resultTree[esr.selectedWork][2] track by $index"
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="objects-in-copy" ng-style="esr.search_grid" ng-class="{'hidden':esr.selectedCopy == -1}">
-                    <div class="object-img-container text-center" ng-style="esr.object_image_container" ng-class="{'hidden':esr.selectedObject == -1}">
+                    <div class="object-img-container text-center" ng-class="{'hidden':esr.selectedObject == -1}" auto-height adjust="400" breakpoint="992">
                         <img ng-src="http://www.blakearchive.org/blake/images/{{ esr.resultTree[esr.selectedWork][2][esr.selectedCopy][2][esr.selectedObject][0].dbi }}.100.jpg">
                     </div>
                     <div class="flex-wrap">
