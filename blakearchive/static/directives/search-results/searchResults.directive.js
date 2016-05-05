@@ -88,9 +88,9 @@
         
         $scope.$on('resize::resize',function(e,w){
             if(w.width > 992){
-               vm.search_grid = {'width':(w.width - 80) / 3+'px'};
-               vm.copy_container = {'height':(w.height - 100)+'px'};
-               vm.copy_container_flex = {'height':(w.height - 250)+'px'};
+               //vm.search_grid = {'width':(w.width - 80) / 3+'px'};
+               //vm.copy_container = {'height':(w.height - 100)+'px'};
+               //vm.copy_container_flex = {'height':(w.height - 250)+'px'};
                vm.object_image_container = {'height':(w.height - 400)+'px'};
             } 
         });
