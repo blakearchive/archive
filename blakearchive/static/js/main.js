@@ -624,6 +624,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         }
     })
 
+    // TODO: resize directive should not need to broadcast if the factory is properly formatted
     .factory('WindowSize', ['$window', function ($window) {
         var windowSize = {},
             w = angular.element($window);
@@ -704,6 +705,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                     element.width('auto');
                 } else {
                     var newWidth = (windowSize.width - scope.adjust);
+                    if(scope.percent){
+                        newWidth = newWidth * scope.percent;
+                    }
                     if(scope.divide){
                         newWidth = newWidth / scope.divide;
                     }
@@ -723,7 +727,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             scope: {
                 'adjust': '@adjust',
                 'breakpoint': '@breakpoint',
-                'divide': '@divide'
+                'divide': '@divide',
+                'percent': '@percent'
             }
         };
     }])
@@ -746,6 +751,23 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             link: link
         }
     })
+    //TODO make this a true scroll to element, rather than simple offset of current element
+    .directive('scrollToElement',['$timeout',function($timeout){
+        var link = function(scope,element,attr) {
+            element.on('click',function(){
+                $timeout(function () {
+                    var offset = element.offset();
+                    if(offset.top > 75){
+                        $('html, body').animate({scrollTop: (offset.top + parseInt(attr.scrollToElement))}, 'slow');
+                    }
+                }, 300);
+            })
+        }
+        return{
+            restrict: 'A',
+            link: link,
+        }
+    }])
     .directive('toTopButton',function($window){
         var link = function(scope,element,attr){
             angular.element($window).bind("scroll",function(){

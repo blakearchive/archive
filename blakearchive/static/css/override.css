@@ -620,9 +620,6 @@ a.compare-selected-objects {
     right: 35px;
     top: 20px;
     font-size: 2em;
-    opacity: 0;
-}
-#search .copy-container.show-copies .close-copies{
     opacity: 1;
 }
 .highlighted{
@@ -633,6 +630,10 @@ a.compare-selected-objects {
 
 #search .object-img-container{
     margin-bottom: 20px;
+}
+
+#search .dropdown-menu{
+    left: 50%
 }
 
 @media (min-width:992px){
@@ -664,6 +665,7 @@ a.compare-selected-objects {
         height: 100%;
         width: auto;
     }
+
 }
 
 
