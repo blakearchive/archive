@@ -1,11 +1,11 @@
 (function(){
 
-    var controller = function($scope,BlakeDataService){
+    var controller = function($scope,$rootScope,BlakeDataService){
         var vm = this;
         
         vm.selectedWork = -1;
-        vm.selectedCopy = -1;
-        vm.selectedObject = -1;
+        vm.selectedCopy = 0;
+        vm.selectedObject = 0;
         
         vm.populateTree = function (index) {
             var copyBads = [],
@@ -51,28 +51,25 @@
 
         };
 
-        vm.reset = function(){
-            vm.selectedCopy = -1;
-            vm.selectedObject = -1;
-        }
         vm.showCopies = function(workIndex){
-            vm.reset();
+            vm.selectedCopy = 0;
+            vm.selectedObject = 0;
             vm.populateTree(workIndex);
             vm.selectedWork = workIndex;
-            console.log(vm.resultTree[workIndex][2].length)
-            if(vm.resultTree[workIndex][2].length == 1){
+            $rootScope.$broadcast('searchResultDirective::showCopies',{type:vm.type});
+            /*if(vm.resultTree[workIndex][2].length == 1){
                 vm.selectedCopy = 0;
                 if(vm.resultTree[workIndex][2][0][2].length == 1){
                     vm.selectedObject = 0;
                 }
-            }
+            }*/
         }
         
         vm.showObjects = function(copyIndex){
             vm.selectedCopy = copyIndex;
-            if(vm.resultTree[vm.selectedWork][2][copyIndex][2].length == 1){
+            /*if(vm.resultTree[vm.selectedWork][2][copyIndex][2].length == 1){
                 vm.selectedObject = 0;
-            }
+            }*/
         }
         
         vm.showHighlight = function(objectIndex){
@@ -95,15 +92,16 @@
             } 
         });
 
-        $scope.selectedObjectSearchCopy = {};
-        $scope.selectedObjectSearchWork = {};
-        /*$scope.showWorks = true;
-        $scope.showCopies = true;
-        $scope.showObjects = true;*/
+        $scope.$on('searchResultDirective::showCopies',function(e,d){
+            if(d.type !== vm.type){
+                vm.selectedWork = -1;
+            }
+        })
+
 
     }
 
-    controller.$inject = ['$scope','BlakeDataService'];
+    controller.$inject = ['$scope','$rootScope','BlakeDataService'];
 
     var searchResults = function(){
         return {
