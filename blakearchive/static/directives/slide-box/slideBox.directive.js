@@ -22,6 +22,7 @@
         vm.scrollerRight = false;
         vm.leftOffset = 0;
         vm.scrollBy = 660;
+        vm.windowWidth = 0;
 
 
         var widthOfList = function(){
@@ -55,6 +56,7 @@
         }
 
         $scope.$on('resize::resize', function (e, w) {
+            vm.windowWidth = w.width;
             reAdjust();
         });
 
@@ -86,7 +88,19 @@
         }
 
         vm.scrollToResult = function(objectIndex){
-            vm.leftOffset = (objectIndex) * -220;
+            vm.leftOffset = objectIndex * -220;
+            /*console.log(vm.leftOffset);
+            console.log(objectIndex * 220);
+            console.log(vm.windowWidth);
+            var newOffset = (objectIndex * 220);
+            if(newOffset > (vm.windowWidth - 220)){
+                vm.leftOffset = newOffset * -1;
+            }
+            if((newOffset * -1) > vm.leftOffset){
+                newOffset = (newOffset - 660) * -1;
+                newOffset = newOffset > 0 ? 0 : newOffset;
+                vm.leftOffset = newOffset;
+            }*/
             reAdjust();
         }
 
