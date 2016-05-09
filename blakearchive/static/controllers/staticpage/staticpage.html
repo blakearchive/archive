@@ -6,7 +6,7 @@
       <div ng-switch on="staticpage.initialSelection">
       <div ng-switch-when="update">What's New?</div>
       <div ng-switch-when="biography">About Blake</div>
-      <div ng-switch-when="gennew2NEW">Resources for Further Research</div>
+      <div ng-switch-when="generalbib">Resources for Further Research</div>
       <div ng-switch-when="archiveataglance">About the Archive</div>
       <div ng-switch-when="help">Using the Archive</div>
       <div ng-switch-when="permissions">Copyright and Permissions</div>
@@ -27,7 +27,7 @@
         <ul class="nav nav-sidebar" ng-switch-when="update">
           <li ng-click="staticpage.changeContent('update')"><a href="#">Latest Update</a></li>
           <li ng-click="staticpage.changeContent('all-updates')"><a href="#">All Updates</a></li>
-          <li ng-click="staticpage.changeContent('presentationsNEW')"><a href="#">Upcoming Presentations</a></li>
+          <li ng-click="staticpage.changeContent('presentations')"><a href="#">Upcoming Presentations</a></li>
           <li ng-click="staticpage.changeContent('subscribe')"><a href="#">Subscribe to blake-update</a></li>
         </ul>
         
@@ -38,9 +38,9 @@
           <li ng-click="staticpage.changeContent('illuminatedprinting')"><a href="#">Illuminated Printing</a></li>
         </ul>
 
-        <ul class="nav nav-sidebar" ng-switch-when="gennew2NEW">
-          <li ng-click="staticpage.changeContent('gennew2NEW')"><a href="#">General Bibliography</a></li>
-          <li ng-click="staticpage.changeContent('specnew2NEW')"><a href="#">Specific Bibliography</a></li>
+        <ul class="nav nav-sidebar" ng-switch-when="generalbib">
+          <li ng-click="staticpage.changeContent('generalbib')"><a href="#">General Bibliography</a></li>
+          <li ng-click="staticpage.changeContent('specificbib')"><a href="#">Specific Bibliography</a></li>
           <li ng-click="staticpage.changeContent('collectionlists')"><a href="#">Collection Lists</a></li>
         </ul>
 
@@ -53,7 +53,7 @@
           <li ng-click="staticpage.changeContent('advisoryboard')"><a href="#">Advisory Board</a></li>
           <li ng-click="staticpage.changeContent('contributingcollections')"><a href="#">Contributing Collections</a></li>
           <li ng-click="staticpage.changeContent('standardrefs')"><a href="#">Standard References and Abbreviations</a></li>
-          <li ng-click="staticpage.changeContent('articlesindexNEW')"><a href="#">Articles About the Archive</a></li>
+          <li ng-click="staticpage.changeContent('articlesindex')"><a href="#">Articles About the Archive</a></li>
           <li ng-click="staticpage.changeContent('plan')"><a href="#">Plan of the Archive</a></li>
           <li ng-click="staticpage.changeContent('sponsorsandsupporters')"><a href="#">Sponsors and Supporters</a></li>
           <li ng-click="staticpage.changeContent('faqs')"><a href="#">Frequently Asked Questions</a></li>
