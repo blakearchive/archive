@@ -7947,7 +7947,7 @@ a.new-window:hover {
   background-color: #eee;
 }
 #archive-tabs .container-fluid.tabs {
-  border-bottom: 1px solid #ddd;
+  /*border-bottom: 1px solid #ddd;*/
 }
 #archive-tabs ul.nav-tabs.objects {
   border-bottom: none;
