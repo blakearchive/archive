@@ -13,23 +13,31 @@
                 objectIds = [],
                 objectIdMap = {};
 
-            vm.resultTree[index][2].forEach(function (copyResults,copyKey) {
-                if (typeof copyResults[0] === "string") {
-                    copyBads.push(copyResults[0]);
-                    // We're storing a map from bad_id to its results container to simplify updating the results
-                    // with retrieved copies.
-                    copyBadMap[copyResults[0]] = copyResults;
+            if(angular.isArray(vm.resultTree[index][2])){
 
-                    vm.resultTree[index][2][copyKey][2].forEach(function (objResults) {
-                        if (typeof objResults[0] === "number") {
-                            objectIds.push(objResults[0]);
-                            // We're storing a map from bad_id to its results container to simplify updating the results
-                            // with retrieved copies.
-                            objectIdMap[objResults[0]] = objResults;
+                vm.resultTree[index][2].forEach(function (copyResults,copyKey) {
+                    if (typeof copyResults[0] === "string") {
+                        copyBads.push(copyResults[0]);
+                        // We're storing a map from bad_id to its results container to simplify updating the results
+                        // with retrieved copies.
+                        copyBadMap[copyResults[0]] = copyResults;
+
+                        if(angular.isArray(vm.resultTree[index][2][copyKey][2])){
+
+                            vm.resultTree[index][2][copyKey][2].forEach(function (objResults) {
+                                if (typeof objResults[0] === "number") {
+                                    objectIds.push(objResults[0]);
+                                    // We're storing a map from bad_id to its results container to simplify updating the results
+                                    // with retrieved copies.
+                                    objectIdMap[objResults[0]] = objResults;
+                                }
+                            });
+
                         }
-                    });
-                }
-            });
+                    }
+                });
+
+            }
 
             if (copyBads.length > 0) {
                 BlakeDataService.getCopies(copyBads).then(function (results) {
@@ -74,6 +82,9 @@
         
         vm.showHighlight = function(objectIndex){
             vm.selectedObject = objectIndex;
+            if(vm.tree == 'copy'){
+                vm.selectedCopy = objectIndex;
+            }
         }
 
         vm.closeCopies = function(resultType){
@@ -98,6 +109,72 @@
             }
         })
 
+        //TODO: Directive has become too large with too many ng-ifs because of the variations between work,copy,object
+        //Need to bust these out into more directives or figure out a better way to handle them
+
+        vm.getWork = function(workIndex){
+            switch(vm.tree){
+                case 'work':
+                    return vm.resultTree[workIndex];
+                default:
+                    return vm.resultTree[workIndex][0];
+            }
+        }
+        vm.getPreviewHref = function(){
+            if(vm.selectedWork == -1){
+                return;
+            }
+            switch(vm.tree){
+                case 'object':
+                    var copyBad = vm.resultTree[vm.selectedWork][2][vm.selectedCopy][0].bad_id,
+                        objectId = vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].object_id;
+                    return copyBad+'?objectId='+objectId;
+                case 'copy':
+                    return vm.resultTree[vm.selectedWork][2][vm.selectedCopy][0].bad_id;
+                case 'work':
+                    return
+            }
+        }
+
+        vm.getPreviewImage = function(){
+            if(vm.selectedWork == -1){
+                return;
+            }
+            switch(vm.tree){
+                case 'object':
+                    return vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].dbi
+                case 'copy':
+                    return vm.resultTree[vm.selectedWork][2][vm.selectedCopy][0].image;
+                case 'work':
+                    return
+            }
+        }
+
+        vm.getWorkImage = function(workIndex){
+            switch(vm.tree){
+                case 'object':
+                    return vm.resultTree[workIndex][2][0][2][0][0].dbi;
+                case 'copy':
+                    return vm.resultTree[workIndex][2][0][0].image;
+                case 'work':
+                    return vm.resultTree[workIndex].image;
+            }
+        }
+
+        vm.getPreviewLabel = function(){
+            if(vm.selectedWork == -1){
+                return;
+            }
+            switch(vm.tree){
+                case 'object':
+                    return vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].full_object_id
+                case 'copy':
+                    return 'Copy '+vm.resultTree[vm.selectedWork][2][vm.selectedCopy][0].archive_copy_id;
+                case 'work':
+                    return
+            }
+        }
+
 
     }
 
@@ -112,7 +189,8 @@
                 resultTree: '=results',
                 highlight: '@highlight',
                 label: '@label',
-                type: '@type'
+                type: '@type',
+                tree: '@tree'
             },
             controllerAs: 'esr',
             bindToController: true
