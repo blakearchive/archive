@@ -29,7 +29,7 @@
                                 <input type="checkbox" ng-model="searchConfig.searchTitle"> Title
                             </div>
                             <div class="checkbox">
-                                <input type="checkbox" ng-model="searchConfig.searchString"> Transcriptions
+                                <input type="checkbox" ng-model="searchConfig.searchText"> Transcriptions
                             </div>
                             <div class="checkbox">
                                 <input type="checkbox" ng-model="searchConfig.searchImageKeywords"> Image tags
@@ -90,65 +90,15 @@
             No results found
         </div>
         
-        <search-results label="Objects with matching title" results="objectResults['title']" highlight="{{searchConfig.searchString}}" type="title"></search-results>
-        <search-results label="Objects with matching text" results="objectResults['text']" highlight="{{searchConfig.searchString}}" type="text"></search-results>
-        <search-results label="Objects with matching illustration description" results="objectResults['description']" highlight="{{searchConfig.searchString}}" type="description"></search-results>
-        <search-results label="Objects with matching keywords" results="objectResults['tag']" highlight="{{searchConfig.searchString}}" type="tags"></search-results>
-        <search-results label="Objects with matching editors' notes" results="objectResults['notes']" highlight="{{searchConfig.searchString}}" type="notes"></search-results>
-        
+        <search-results label="Objects with matching title" results="objectResults['title']" highlight="{{searchConfig.searchString}}" type="title" tree="object"></search-results>
+        <search-results label="Objects with matching text" results="objectResults['text']" highlight="{{searchConfig.searchString}}" type="text" tree="object"></search-results>
+        <search-results label="Objects with matching illustration description" results="objectResults['description']" highlight="{{searchConfig.searchString}}" type="description" tree="object"></search-results>
+        <search-results label="Objects with matching keywords" results="objectResults['tag']" highlight="{{searchConfig.searchString}}" type="tag" tree="object"></search-results>
+        <search-results label="Objects with matching editors' notes" results="objectResults['notes']" highlight="{{searchConfig.searchString}}" type="notes" tree="object"></search-results>
+        <search-results label="Copies with matching titles" results="copyResults['copy-title']" highlight="{{searchConfig.searchString}}" type="copy-title" tree="copy"></search-results>
+        <search-results label="Copies with matching information" results="copyResults['copy-info']" highlight="{{searchConfig.searchString}}" type="copy-info" tree="copy"></search-results>
+        <search-results label="Works with matching titles" results="workResults['title']['results']" highlight="{{searchConfig.searchString}}" type="work-title" tree="work"></search-results>
+        <search-results label="Works with matching information" results="workResults['info']['results']" highlight="{{searchConfig.searchString}}" type="work-info" tree="work"></search-results>
 
-        <div ng-repeat="(type,vars) in searchCtrl.types.copy track by $index">
-            <div ng-show="searchConfig[vars.config] == true"><!-- start: COPY {{ type }} RESULTS -->
-                <h3>{{ vars.text }} ({{ copyResults[type].count}} copies)</h3>
-
-                <div ng-show="copyResults[type].count == 0">
-                    No results found
-                </div>
-
-
-                <div class="row search-result-row" ng-show="copyResults[type].count > 0">
-                    <div class="col-xs-12">
-                        <slide-box>
-                            <div ng-repeat="copy in copyResults[type].results" class="search-result-item">
-                                <div class="handprint-block">
-                                    <a href="/blake/copy/{{ copy.virtual_container_id }}?searchTerm={{searchConfig.searchString}}&{{vars.highlight}}">
-                                        <!--<span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ copy.bad_id }}.p1.100.jpg);"></span>-->
-                                        <span class="object-img"></span>
-                                        <span class="description"><strong>{{ copy.title }}</strong></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </slide-box>
-                    </div>
-                </div>
-            </div><!-- end: COPY {{ type }} RESULTS -->
-        </div>
-
-        <div ng-repeat="(type,vars) in searchCtrl.types.work track by $index">
-            <div ng-show="searchConfig[vars.config] == true"><!-- start: WORK {{ type }} RESULTS -->
-                <h3>{{ vars.text }} ({{ workResults[type].count}} works)</h3>
-
-                <div ng-show="workResults[type].count == 0">
-                    No results found
-                </div>
-
-
-                <div class="row search-result-row" ng-show="workResults[type].count > 0">
-                    <div class="col-xs-12">
-                        <slide-box>
-                            <div ng-repeat="work in workResults[type].results" class="search-result-item">
-                                <div class="handprint-block">
-                                    <a href="/blake/work/{{ work.bad_id }}?searchTerm={{searchConfig.searchString}}">
-                                        <!--<span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ work.bad_id }}.p1.100.jpg);"></span>-->
-                                        <span class="object-img"></span>
-                                        <span class="description"><strong>{{ work.title }}</strong></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </slide-box>
-                    </div>
-                </div>
-            </div><!-- end: WORK {{ type }} RESULTS -->
-        </div>
     </div>
 </div>

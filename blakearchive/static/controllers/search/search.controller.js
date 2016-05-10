@@ -29,9 +29,17 @@
                         });
                     });
                 });
-                console.log($scope.objectResults);
                 $scope.copyResults = results[1];
+                angular.forEach($scope.copyResults, function(works,type){
+                    angular.forEach(works, function(work,index){
+                        //$scope.populateWorkCopies(type,index);
+                        BlakeDataService.getCopy($scope.copyResults[type][index][2][0][0]).then(function (results) {
+                            $scope.copyResults[type][index][2][0][0] = results;
+                        });
+                    });
+                });
                 $scope.workResults = results[2];
+                console.log($scope.workResults);
                 $rootScope.$broadcast('searchCtrl::newSearch');
                 $location.search('search',encodeURIComponent($scope.searchConfig.searchString));
             });
