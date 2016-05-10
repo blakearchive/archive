@@ -757,9 +757,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             element.on('click',function(){
                 $timeout(function () {
                     var offset = element.offset();
-                    if(offset.top > 75){
-                        $('html, body').animate({scrollTop: (offset.top + parseInt(attr.scrollToElement))}, 'slow');
-                    }
+                    $('html, body').animate({scrollTop: (offset.top + parseInt(attr.scrollToElement))}, 'slow');
                 }, 300);
             })
         }
