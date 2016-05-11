@@ -42,6 +42,7 @@
                 <!-- objects in copy -->
                 <div class="objects-in-copy text-center" auto-width adjust="200" breakpoint="992" divide="3" ng-if="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][1] > 1 && esr.tree == 'object'">
                     <h4>Matching Objects</h4>
+                    <br>
                     <div class="flex-wrap">
                         <div class="handprint-block-small" 
                              ng-repeat="object in esr.resultTree[esr.selectedWork][2][esr.selectedCopy][2] track by $index"
@@ -57,6 +58,7 @@
                 <!-- copies in work -->
                 <div class="copies-in-work text-center" auto-width adjust="200" breakpoint="992" divide="3" ng-if="esr.resultTree[esr.selectedWork][1] > 1 && esr.tree == 'copy'">
                     <h4>Matching Copies</h4>
+                    <br>
                     <div class="flex-wrap">
                         <div class="handprint-block-small"
                              ng-repeat="copy in esr.resultTree[esr.selectedWork][2] track by $index"
@@ -75,6 +77,7 @@
                     <div class="object-img-container text-center" auto-height adjust="350" breakpoint="992">
                         <a ng-href="/blake/copy/{{esr.getPreviewHref()}}">
                             <img ng-src="http://www.blakearchive.org/blake/images/{{ esr.getPreviewImage() }}.100.jpg">
+                            <p></p>
                             <p class="object-subtitle"><span class="object-no text-capitalize">{{esr.getPreviewLabel()}}</span></p>
                         </a>
                     </div>
@@ -82,30 +85,45 @@
 
 
                 <div class="object-result-highlight" auto-width adjust="100" breakpoint="992" divide="3" ng-if="esr.tree != 'work'">
-                    <div ng-if="esr.type == 'title'" class="text-center">
+    
+                    <div ng-if="esr.type == 'title'">
+                        <h4 class="text-center">Title</h4>
                         <span ng-bind-html="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][2][esr.selectedObject][0].title | highlight:esr.highlight"></span>
                     </div>
+                   
                     <div ng-if="esr.type == 'text'">
+                        <h4 class="text-center">Transcription</h4>
                         <text-transcription object="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][2][esr.selectedObject][0]" highlight="{{esr.highlight}}"></text-transcription>
                     </div>
+                    
                     <div ng-if="esr.type == 'description'">
+                        <h4 class="text-center">Illustration Description</h4>
                         <illustration-description object="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][2][esr.selectedObject][0]" highlight="{{esr.highlight}}" keywords="hidden"></illustration-description>
                     </div>
+                    
                     <div ng-if="esr.type == 'notes'">
+                        <h4 class="text-center">Editors' Notes</h4>
                         <editor-notes object="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][2][esr.selectedObject][0]" highlight="{{esr.highlight}}"></editor-notes>
                     </div>
+                    
                     <div ng-if="esr.type == 'tag'">
+                        <h4 class="text-center">Image Tags</h4>
                         <illustration-description object="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][2][esr.selectedObject][0]" highlight="{{esr.highlight}}" keywords="only"></illustration-description>
                     </div>
+                    
                     <div ng-if="esr.type == 'copy-title'">
+                        <h4 class="text-center">Copy Title</h4>
                         <span ng-bind-html="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][0].title | highlight:esr.highlight"></span>
                     </div>
+                   
                     <div ng-if="esr.type == 'copy-info'">
+                         <h4 class="text-center">Copy Information</h4>
                         <copy-information copy="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][0]" highlight="{{esr.highlight}}"></copy-information>
                     </div>
                 </div>
 
-                <div class="work-info-highlight" auto-width adjust="100" breakpoint="992" ng-if="esr.tree == 'work'">
+                <div class="work-info-highlight" auto-width adjust="100" breakpoint="992" ng-if="esr.tree == 'work'" class="text-center">
+                    <h4 class="text-center">Work Information</h4>
                     <div ng-bind-html="esr.getWork(esr.selectedWork).info | highlight:esr.highlight"></div>
                 </div>
 
