@@ -87,6 +87,19 @@ class BlakeDataService(object):
         return work_results(facets)
 
     @classmethod
+    def solr_copy_query(cls, query):
+        def copy_results(copies):
+            return [[c["value"], c["count"]] for c in copies]
+
+        def work_results(works):
+            return [[w["value"], w["count"], copy_results(w["pivot"])] for w in works]
+
+        search_parameters = {"facet": "on", "facet.pivot": "work_id,bad_id"}
+        facets = blake_copy_solr.search(query, **search_parameters).facets['facet_pivot'].values()[0]
+        # print work_results(facets)
+        return work_results(facets)
+
+    @classmethod
     def query_objects(cls, config):
         results = {"title": [], "tag": [], "text": [], "description": [], "notes": []}
         if config.get("searchTitle"):
@@ -113,24 +126,19 @@ class BlakeDataService(object):
 
     @classmethod
     def query_copies(cls, config):
-        # results = {"title": [], "copy_information": []}
-        results = {
-            "title": {"count": 0, "results": []},
-            "copy_information": {"count": 0, "results": []}
-        }
+        results = {"copy-title": [], "copy-info": []}
         if config.get("searchTitle"):
-            offset = config.get("copyTitleOffset", 0)
             search_string = cls.generate_search_element("title", config)
-            solr_results = blake_copy_solr.search(search_string, start=offset)
-            results["title"]["results"] = list(solr_results)
-            results["title"]["count"] = solr_results.hits
+            results["copy-title"] = cls.solr_copy_query(search_string)
         if config.get("searchCopyInformation"):
-            offset = config.get("copyInformationOffset", 0)
             search_string = cls.generate_search_element("source", config)
-            solr_results = blake_copy_solr.search(search_string, start=offset)
-            results["copy_information"]["results"] = list(solr_results)
-            results["copy_information"]["count"] = solr_results.hits
-        return results
+            results["copy-info"] = cls.solr_copy_query(search_string)
+
+        def add_copy_query_works(results_):
+            works = {w.bad_id: w for w in cls.get_works([r[0] for r in results_])}
+            return [[works[w].to_dict, c, r] for (w, c, r) in results_]
+
+        return {k: add_copy_query_works(v) for (k, v) in results.items()}
 
 
     @classmethod

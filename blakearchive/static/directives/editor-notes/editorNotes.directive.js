@@ -3,7 +3,7 @@
     var controller = function($routeParams){
         var vm = this;
 
-        vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
+        //vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
     }
 
     controller.$inject = ['$routeParams'];
@@ -15,6 +15,7 @@
             controller: controller,
             scope: {
                 object: '=object',
+                highlight: '@highlight'
             },
             controllerAs: 'noteCtrl',
             bindToController: true
