@@ -191,6 +191,7 @@ class BlakeDocumentImporter(object):
         bo.notes = self.get_object_notes(obj)
         bo.title = self.get_object_title(obj)
         bo.text = self.get_text(obj)
+        bo.markup_text = self.get_markuptext(obj)
         bo.full_object_id = self.get_full_object_id(obj)
         bo.object_number = self.get_object_number(obj)
         bo.bentley_id = self.get_bentley_id(obj)

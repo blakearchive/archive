@@ -8,7 +8,7 @@
 
         var vm = this;
 
-        vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
+        //vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
 
         vm.getHeader = function(){
             if(angular.isDefined(vm.copy)){
@@ -84,7 +84,8 @@
             controller: controller,
             controllerAs: 'info',
             scope:{
-                copy: '=copy'
+                copy: '=copy',
+                highlight: '@highlight'
             },
             bindToController: true
         }
