@@ -3,10 +3,10 @@
 <div ng-if="noteCtrl.object.physical_description.objnote">
     <p>Note:</p>
 
-    <p ng-bind-html="noteCtrl.object.physical_description.objnote.p['#text'] |  highlight:noteCtrl.searchTerm"></p>
+    <p ng-bind-html="noteCtrl.object.physical_description.objnote.p['#text'] |  highlight:noteCtrl.highlight"></p>
 </div>
 <p><strong>Textual Note(s):</strong></p>
 <ul ng-if="noteCtrl.object.notes.length > 0">
-    <li ng-repeat="note in noteCtrl.object.notes track by $index"><span ng-bind-html=" note |  highlight:noteCtrl.searchTerm"></span></li>
+    <li ng-repeat="note in noteCtrl.object.notes track by $index"><span ng-bind-html=" note |  highlight:noteCtrl.highlight"></span></li>
 </ul>
 <p ng-if="noteCtrl.object.notes.length == 0"><em>No textual notes for this object</em></p>
