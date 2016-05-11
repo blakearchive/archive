@@ -64,6 +64,7 @@ def main():
         }
         if blake_copy.work:
             copy_["medium"] = blake_copy.work.medium
+            copy_["work_id"] = blake_copy.work.bad_id
         blake_copy_solr.add([copy_])
     blake_copy_solr.optimize()
 

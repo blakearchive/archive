@@ -15,9 +15,9 @@
             'tei':false
         };
 
-        if(angular.isDefined($routeParams.open)){
+        /*if(angular.isDefined($routeParams.open)){
             vm.open[$routeParams.open] = true;
-        }
+        }*/
 
         vm.resize = function(adjust){
             var adjust = angular.isDefined(adjust) ? 131 - adjust : 131;

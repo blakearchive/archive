@@ -624,6 +624,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         }
     })
 
+    // TODO: resize directive should not need to broadcast if the factory is properly formatted
     .factory('WindowSize', ['$window', function ($window) {
         var windowSize = {},
             w = angular.element($window);
@@ -664,14 +665,17 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         }
 
     }])
-    .directive('objectWindow', ['WindowSize', '$rootScope', function (WindowSize) {
+    .directive('autoHeight', ['WindowSize', '$rootScope', function (WindowSize) {
         var link = function (scope, element, attrs) {
 
             scope.setStyles = function (windowSize) {
-                if(WindowSize.width <= 992){
+                if(WindowSize.width <= scope.breakpoint){
                     element.height('auto');
                 } else {
                     var newHeight = (windowSize.height - scope.adjust);
+                    if(scope.divide){
+                        newHeight = newHeight / scope.divide;
+                    }
                     element.height(newHeight);
                 }
             }
@@ -686,7 +690,45 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             restrict: 'A',
             link: link,
             scope: {
-                'adjust': '@'
+                'adjust': '@adjust',
+                'breakpoint': '@breakpoint',
+                'divide': '@divide'
+            }
+        };
+    }])
+
+    .directive('autoWidth', ['WindowSize', '$rootScope', function (WindowSize) {
+        var link = function (scope, element, attrs) {
+
+            scope.setStyles = function (windowSize) {
+                if(WindowSize.width <= scope.breakpoint){
+                    element.width('auto');
+                } else {
+                    var newWidth = (windowSize.width - scope.adjust);
+                    if(scope.percent){
+                        newWidth = newWidth * scope.percent;
+                    }
+                    if(scope.divide){
+                        newWidth = newWidth / scope.divide;
+                    }
+                    element.width(newWidth);
+                }
+            }
+
+            scope.setStyles(WindowSize);
+
+            scope.$on('resize::resize', function (e, w) {
+                scope.setStyles(w)
+            });
+        };
+        return {
+            restrict: 'A',
+            link: link,
+            scope: {
+                'adjust': '@adjust',
+                'breakpoint': '@breakpoint',
+                'divide': '@divide',
+                'percent': '@percent'
             }
         };
     }])
@@ -709,6 +751,21 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             link: link
         }
     })
+    //TODO make this a true scroll to element, rather than simple offset of current element
+    .directive('scrollToElement',['$timeout',function($timeout){
+        var link = function(scope,element,attr) {
+            element.on('click',function(){
+                $timeout(function () {
+                    var offset = element.offset();
+                    $('html, body').animate({scrollTop: (offset.top + parseInt(attr.scrollToElement))}, 'slow');
+                }, 300);
+            })
+        }
+        return{
+            restrict: 'A',
+            link: link,
+        }
+    }])
     .directive('toTopButton',function($window){
         var link = function(scope,element,attr){
             angular.element($window).bind("scroll",function(){

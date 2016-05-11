@@ -1,16 +1,15 @@
 <p><strong>Sector CD<br>
     Plate Illustration:</strong></p>
-
-<p ng-bind-html="descCtrl.object.illustration_description.illusobjdesc['#text'] | highlight:descCtrl.searchTerm"></p>
+<p ng-if="descCtrl.keywords != 'only'" ng-bind-html="descCtrl.object.illustration_description.illusobjdesc['#text'] | highlight:descCtrl.highlight"></p>
 
 <div ng-repeat="component in descCtrl.object.components track by $index">
     <p><strong>Component (Sector {{ component.component['@location'] }})</strong></p>
-
-    <p class="keywords">Keywords:
-    <ul class="list-inline">
-        <li ng-repeat="characteristic in component.component.characteristic track by $index"><span ng-bind-html="characteristic['#text'] | highlight:descCtrl.searchTerm"></span></li>
+    
+    <p ng-if="descCtrl.keywords != 'hidden'" class="keywords">Keywords:
+    <ul class="list-inline" ng-if="descCtrl.keywords != 'hidden'">
+        <li ng-repeat="characteristic in component.component.characteristic track by $index"><span ng-bind-html="characteristic['#text'] | highlight:descCtrl.highlight"></span></li>
     </ul>
     </p>
 
-    <p ng-bind-html="component.component.illusobjdesc['#text'] | highlight:descCtrl.searchTerm"></p>
+    <p ng-if="descCtrl.keywords != 'only'" ng-bind-html="component.component.illusobjdesc['#text'] | highlight:descCtrl.highlight"></p>
 </div>
