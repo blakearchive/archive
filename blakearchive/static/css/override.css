@@ -1,3 +1,13 @@
+h4,
+.h4 {
+  font-size: 18px;
+    border-bottom: solid;
+    border-color: gray;
+    border-width: 1px;
+    padding-bottom: 10px;
+    border-radius: 100%;
+}
+
 .handprint-block span.description {
   font-size: 9px;
   display: block;
@@ -624,7 +634,7 @@ a.compare-selected-objects {
     border: none;
     background: transparent;
     position: absolute;
-    right: 35px;
+    right: 18px;
     top: 20px;
     font-size: 2em;
     opacity: 1;
@@ -650,7 +660,8 @@ a.compare-selected-objects {
     display: block;
 }
 #search .object-preview a {
-    color: #eee;
+    color: #999;
+    font-size: 11px;
 }
 
 @media (min-width:992px){
