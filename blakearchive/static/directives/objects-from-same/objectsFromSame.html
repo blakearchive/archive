@@ -10,15 +10,14 @@
 </div>
 <div class="row">
     <div ng-repeat="obj in fromSame.objects track by $index" class="col-sm-6 col-md-3">
-        <div class="handprint-block" ng-class="{'selected': fromSame.isComparisonObject(obj)}">
-            <div class="select-for-compare-wrapper">
-                <span class="selected" ng-click="fromSame.selectOne(obj)"></span>
-            </div>
-            <a href="/blake/copy/{{ obj.copy_bad_id }}?objectId={{ obj.object_id }}">
-                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);">
-                </span>
-                <span class="description" object-description object="obj" virtual="fromSame.virtual" type="objectFull"></span>
-            </a>
+        <div class="select-for-compare-wrapper" ng-class="{'selected': fromSame.isComparisonObject(obj)}">
+            <span class="selected" ng-click="fromSame.selectOne(obj)"></span>
+            <handprint-block
+                    link="/blake/copy/{{ obj.copy_bad_id }}?objectId={{ obj.object_id }}"
+                    image="{{ obj.dbi }}.100.jpg"
+                    footer="{{obj.full_object_id}}"
+                >
+            </handprint-block>
         </div>
     </div>
 </div>

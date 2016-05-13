@@ -10,15 +10,31 @@
             <div class="section-group" ng-bind-html="workCtrl.work.info | highlight:workCtrl.searchTerm"></div>
             <hr>
             <p class="text-center"><em>Dates are the probable dates of {{ workCtrl.work.probable }}.</em></p>
+
             <div class="row" ng-repeat="increment in workCtrl.rows">
-                <div ng-repeat="copy in workCtrl.copies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3">
-                    <div class="handprint-block">
-                        <a href="/blake/copy/{{ copy.bad_id }}">
-                            <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ copy.image }}.100.jpg);"></span>
-                            <span class="description" object-description object="copy" virtual="workCtrl.work.virtual" type="copyDesc" override="workCtrl.work.title" ></span>
-                        </a>
-                    </div>
+
+                <!-- For Non virtual groups -->
+                <div ng-repeat="copy in workCtrl.copies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCtrl.work.virtual == false">
+                    <handprint-block
+                            link="/blake/copy/{{copy.bad_id}}"
+                            image="{{ copy.image }}.100.jpg"
+                            footer="Copy {{copy.archive_copy_id}} {{copy.source.objinfo.printdate['#text']}}, ({{copy.institution}})">
+                    </handprint-block>
+                 </div>
+
+                <div ng-repeat="obj in workCtrl.objects | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCtrl.work.virtual == true">
+                    <handprint-block
+                            link="/blake/copy/{{obj.archive_copy_id}}?objectId={{obj.object_id}}"
+                            image="{{ obj.dbi }}.100.jpg"
+                            footer="{{obj.title}}, ({{obj.source.objinfo.printdate['#text']}})">
+                    </handprint-block>
                 </div>
+
+            </div>
+
+            <!-- For Virtual Groups -->
+            <div class="row">
+
             </div>
             
         </div>

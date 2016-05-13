@@ -46,16 +46,6 @@
             }
         }
 
-        vm.getOvpSubtitle = function(){
-            if(angular.isDefined(vm.copy)){
-                if(vm.copy.virtual == true){
-                    return 'Object '+vm.copy.selectedObject.object_number + vm.copy.selectedObject.full_object_id.replace(/object [\d]+/g,'');
-                } else {
-                    return vm.copy.selectedObject.full_object_id;
-                }
-            }
-        }
-
         vm.getPreviousNextObjects = function () {
             if (vm.copy.objectsInCopy && vm.copy.objectsInCopy.length) {
                 for (var i = vm.copy.objectsInCopy.length; i--;) {
