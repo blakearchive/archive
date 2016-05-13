@@ -12,6 +12,12 @@ h4,
   font-size: 9px;
   display: block;
 }
+.handprint-block .handprint-title{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 80px;
+}
 
 @media (min-width: 992px) {
   footer .subscribe form.form-inline {
@@ -161,7 +167,7 @@ a.compare-selected-objects {
 /********
  * Compare object selection
  **********/
-.selected.handprint-block span.selected,.handprint-block:hover span.selected {
+.selected.select-for-compare-wrapper span.selected,.select-for-compare-wrapper:hover span.selected {
     background: transparent url("../img/global/selected-object-icon.png") no-repeat 0 0;
     display: block;
     width: 68px;
@@ -548,11 +554,11 @@ a.compare-selected-objects {
 #search .search-result-row .scroller:hover {
     opacity: 1;
 }
-#search .handprint-block {
+#search .search-result-item .handprint-block {
     min-height: 100%;
     position: relative;
 }
-#search .handprint-block.selected::after {
+#search .search-result-item.selected .handprint-block::after {
     content:'';
     position: absolute;
     top: 100%;

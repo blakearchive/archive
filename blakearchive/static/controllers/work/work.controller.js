@@ -11,33 +11,69 @@
 
         vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
 
+        /*
+            TODO: It's worth exploring the data models of work/copy/object for better efficiencies.
+            Currently there are 4 possibilities:
+            - Work -> Copies -> Objects
+            - Work -> Copies -> "Object Groups" -> Objects
+            - Work -> "Copy" -> Objects (should be Work -> Objects)
+            - Work -> "Copy" -> "Object Groups" -> Objects
+         */
+
+
         BlakeDataService.setSelectedWork($routeParams.workId).then(function(){
             vm.work = BlakeDataService.selectedWork;
             var workVars = getWorkTypeVars(vm.work.medium);
             vm.work.medium_pretty =  workVars.medium;
             vm.work.probable = workVars.probable;
 
-            vm.copies = vm.work.copiesInWork;
-            vm.sortCopies(vm.copies);
-
-            vm.copyCount = vm.copies.length;
-            vm.rowCount = Math.ceil(vm.copyCount / 4);
-            vm.knownCopiesDiv3 = Math.ceil(vm.copyCount / 3);
-            if(!angular.isUndefined(vm.work.related_works) && vm.work.related_works !== null){
-                vm.allKnownRelatedItemsDiv3 = Math.ceil(vm.work.related_works.length / 3);
+            if(vm.work.virtual == true){
+                BlakeDataService.setSelectedCopy(vm.work.copiesInWork[0].bad_id).then(function(){
+                    vm.objects = BlakeDataService.selectedCopy.objectsInCopy;
+                    vm.sortObjects(vm.objects);
+                    vm.copyCount = vm.objects.length;
+                    vm.setRows();
+                });
+            } else {
+                vm.copies = vm.work.copiesInWork;
+                vm.sortCopies(vm.copies);
+                vm.copyCount = vm.copies.length;
+                vm.setRows();
             }
+
+        });
+
+
+        vm.setRows = function(){
+            vm.rowCount = Math.ceil(vm.copyCount / 4);
             vm.rows = [];
             for(var i = 1; i <= vm.rowCount; i++){
                 vm.rows.push(i);
             }
-        });
 
+            vm.knownCopiesDiv3 = Math.ceil(vm.copyCount / 3);
+            if(!angular.isUndefined(vm.work.related_works) && vm.work.related_works !== null){
+                vm.allKnownRelatedItemsDiv3 = Math.ceil(vm.work.related_works.length / 3);
+            }
+
+        }
         vm.sortCopies = function(copies){
             //sort by copy
             if(angular.isDefined(copies)){
                 copies.sort(function(a,b){
                     if(a.archive_copy_id > b.archive_copy_id){return 1;}
                     if(a.archive_copy_id < b.archive_copy_id){return -1;}
+                    return 0;
+                })
+            }
+        }
+
+        vm.sortObjects = function(objects){
+            //sort by object
+            if(angular.isDefined(objects)){
+                objects.sort(function(a,b){
+                    if(a.title > b.title){return 1;}
+                    if(a.title < b.title){return -1;}
                     return 0;
                 })
             }
