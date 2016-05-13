@@ -8,13 +8,20 @@
 <div class="row search-result-row" ng-show="esr.resultTree.length > 0">
     <div class="col-xs-12 full-width">
         <slide-box id="{{esr.type}}-slide-box">
-            <div ng-repeat="(k,work) in esr.resultTree" class="search-result-item">
-                <div class="handprint-block" ng-class="{selected:k == esr.selectedWork}">
-                    <a ng-click="esr.showCopies($index); slideBox.scrollToResult($index);" scroll-to-element="125">
-                        <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ esr.getWorkImage($index) }}.100.jpg);"></span>
-                        <span class="description"><strong>{{ esr.getWork($index).title }}</strong><br><span ng-if="work[1] > 1">({{ work[1] }} results<span ng-if="work[2].length > 1"> in {{ work[2].length }} copies</span>)</span></span>
-                    </a>
-                </div>
+            <div ng-repeat="(k,work) in esr.resultTree" class="search-result-item" ng-class="{selected:k == esr.selectedWork}">
+                <handprint-block
+                    action="esr.showCopies($index); slideBox.scrollToResult($index);"
+                    image="{{ esr.getWorkImage($index) }}.100.jpg"
+                    scroll-to-element="125"
+                    footer="{{ esr.getHandprintDescription($index) }}"
+                    ng-if="esr.tree != 'work'"></handprint-block>
+
+                <handprint-block
+                        action="esr.showCopies($index); slideBox.scrollToResult($index);"
+                        scroll-to-element="125"
+                        footer="{{ esr.getHandprintDescription($index) }}"
+                        title="{{ work[0].title }}"
+                        ng-if="esr.tree == 'work'"></handprint-block>
             </div>
         </slide-box>
     </div>
@@ -22,7 +29,7 @@
         <div class="copy-container" ng-class="{hidden: esr.selectedWork == -1}" auto-height adjust="175" breakpoint="992">
             <header class="page-header">
                 <h1>
-                    {{esr.getWork(esr.selectedWork).title}}&nbsp;
+                    {{work.title}}&nbsp;
                     <span dropdown class="dropdown" ng-if="esr.resultTree[esr.selectedWork][2].length > 1 && esr.tree == 'object'">
                         <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">
                             <span>Copy {{esr.resultTree[esr.selectedWork][2][esr.selectedCopy][0].archive_copy_id}}</span>&nbsp;
@@ -124,7 +131,7 @@
 
                 <div class="work-info-highlight" auto-width adjust="100" breakpoint="992" ng-if="esr.tree == 'work'" class="text-center">
                     <h4 class="text-center">Work Information</h4>
-                    <div ng-bind-html="esr.getWork(esr.selectedWork).info | highlight:esr.highlight"></div>
+                    <div ng-bind-html="esr.resultTree[esr.selectedWork][0].info | highlight:esr.highlight"></div>
                 </div>
 
             </div>

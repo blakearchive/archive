@@ -24,16 +24,6 @@
             }
         }
 
-        vm.getOvpSubtitle = function(object){
-            if(angular.isDefined(vm.copy)){
-                if(vm.copy.virtual == true){
-                    return 'Object '+object.object_number + object.full_object_id.replace(/object [\d]+/g,'');
-                } else {
-                    return object.full_object_id;
-                }
-            }
-        };
-
         vm.getPreviousObject = function(){
             if(angular.isDefined(vm.copy.objectsInCopy)){
                 for (var i = vm.copy.objectsInCopy.length; i--;) {

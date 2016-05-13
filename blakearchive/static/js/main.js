@@ -246,6 +246,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
              }*/
 
             //Create an alternative work title for virtual works
+            console.log('creating work');
             work.menuTitle = work.title;
             switch (work.bad_id) {
                 case 'biblicalwc':
@@ -546,13 +547,15 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 dataFactory.selectedCopy.objectsInCopy = data[1];
                 console.log(dataFactory.selectedCopy);
 
-                //Programatically order objects if "copy" is a virtual group
+                //Programatically order objects if "copy" is a virtual group, then replace number in full object id
                 if (dataFactory.selectedCopy.virtual) {
                     var inc = 1;
                     data[1].forEach(function (obj) {
-                        obj.object_number = inc;
+                        //obj.object_number = inc;
+                        obj.full_object_id  = obj.title + ', Object '+inc+ obj.full_object_id.replace(/object [\d]+/g,'');
                         inc++;
                     });
+
                 }
 
                 //Set the selected object
@@ -681,6 +684,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             }
 
             scope.setStyles(WindowSize);
+
 
             scope.$on('resize::resize', function (e, w) {
                 scope.setStyles(w)
