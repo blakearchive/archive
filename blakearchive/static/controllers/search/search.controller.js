@@ -39,6 +39,15 @@
                     });
                 });
                 $scope.workResults = results[2];
+                angular.forEach($scope.workResults, function(results,type){
+                    var arrayedResults = [];
+                    angular.forEach(results.results,function(work){
+                        var array = [work,1];
+                        arrayedResults.push(array);
+                    });
+                    $scope.workResults[type] = arrayedResults;
+                });
+                console.log($scope.objectResults);
                 console.log($scope.workResults);
                 $rootScope.$broadcast('searchCtrl::newSearch');
                 $location.search('search',encodeURIComponent($scope.searchConfig.searchString));

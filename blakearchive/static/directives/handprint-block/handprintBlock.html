@@ -1,0 +1,10 @@
+<div class="handprint-block">
+    <a ng-href="{{handprint.link}}" ng-click="handprint.action()">
+        <span class="handprint-header">{{handprint.header}}</span>
+        <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{handprint.image}});">
+            <span class="handprint-title" ng-if="!handprint.image">{{handprint.title}}</span>
+        </span>
+        <span class="description text-capitalize" ng-bind-html="handprint.footer"></span>
+    </a>
+</div>
+
