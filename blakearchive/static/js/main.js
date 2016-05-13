@@ -760,13 +760,17 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         var link = function(scope,element,attr) {
             element.on('click',function(){
                 $timeout(function () {
-                    var offset = element.offset();
-                    $('html, body').animate({scrollTop: (offset.top + parseInt(attr.scrollToElement))}, 'slow');
+                    var offset = scope.target ? $(scope.target).offset() : element.offset(),
+                        adjust = attr.scrollToElement ? parseInt(attr.scrollToElement) : 0;
+                    $('html, body').animate({scrollTop: (offset.top + adjust)}, 'slow');
                 }, 300);
             })
         }
         return{
             restrict: 'A',
+            scope:{
+                target: '@target'
+            },
             link: link,
         }
     }])
