@@ -5,11 +5,20 @@
 
         vm.$storage = $sessionStorage;
 
-        vm.userestrictOpen = function(size){
-            var userestrictModalInstance = $modal.open({
-                templateUrl: '/blake/static/controllers/modal/colorKeyModal.html',
+        vm.userestrictOpen = function(copy){
+            var header = copy.header ? copy.header.userestrict['#text'] : copy.selectedObject.header.userestrict['#text'];
+            var template = '<div class="modal-header">'
+                +'<button type="button" class="close" ng-click="close()" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+                +'<h4 class="modal-title">Use Restriction</h4>'
+                +'</div>'
+                +'<div class="modal-body">'
+                +'<div>'+header+'</div>'
+                +'</div>';
+
+            var useRestrictionModalInstance = $modal.open({
+                template: template,
                 controller: 'ModalController',
-                size: size
+                size: 'lg'
             });
         }
 
