@@ -29,7 +29,7 @@
         <div class="copy-container" ng-class="{hidden: esr.selectedWork == -1}" auto-height adjust="175" breakpoint="992" id="{{esr.type}}">
             <header class="page-header">
                 <h1>
-                    {{work.title}}&nbsp;
+                    {{esr.resultTree[esr.selectedWork][0].title}}&nbsp;
                     <span dropdown class="dropdown" ng-if="esr.resultTree[esr.selectedWork][2].length > 1 && esr.tree == 'object'">
                         <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">
                             <span>Copy {{esr.resultTree[esr.selectedWork][2][esr.selectedCopy][0].archive_copy_id}}</span>&nbsp;
