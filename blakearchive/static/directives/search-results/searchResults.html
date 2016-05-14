@@ -5,14 +5,15 @@
         <slide-box id="{{esr.type}}-slide-box">
             <div ng-repeat="(k,work) in esr.resultTree" class="search-result-item" ng-class="{selected:k == esr.selectedWork}">
                 <div scroll-to-element="#{{esr.type}}" offset="100">
+                    <!--to slide, put slideBox.scrollToResult($index); into action for handprint-blocks-->
                     <handprint-block
-                        action="esr.showCopies($index); slideBox.scrollToResult($index);"
+                        action="esr.showCopies($index);"
                         image="{{ esr.getWorkImage($index) }}.100.jpg"
                         footer="{{ esr.getHandprintDescription($index) }}"
                         ng-if="esr.tree != 'work'"></handprint-block>
-
+                    <!--to slide, put slideBox.scrollToResult($index); into action for handprint-blocks-->
                     <handprint-block
-                            action="esr.showCopies($index); slideBox.scrollToResult($index);"
+                            action="esr.showCopies($index);"
                             footer="{{ esr.getHandprintDescription($index) }}"
                             title="{{ work[0].title }}"
                             ng-if="esr.tree == 'work'"></handprint-block>
