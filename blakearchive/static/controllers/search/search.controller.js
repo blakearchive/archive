@@ -11,6 +11,7 @@
         $rootScope.showSubMenu = 0;
         $rootScope.worksNavState = false;
 
+
         $scope.objectResults = [];
         $scope.copyResults = [];
         $scope.workResults = [];
