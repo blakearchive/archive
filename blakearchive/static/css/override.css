@@ -431,6 +431,24 @@ a.compare-selected-objects {
 }
 
 /***********
+* Search Bar
+*************/
+#searchOptions.navbar{
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+#searchOptions .dropdown-menu {
+    padding: 10px 20px;
+}
+#searchOptions .dropdown-menu li {
+    white-space: nowrap;
+}
+#searchOptions .ngrs-range-slider{
+    min-width: 300px;
+}
+
+/***********
 * Search Controller
 *************/
 .ngrs-range-slider .ngrs-runner {
