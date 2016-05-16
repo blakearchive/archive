@@ -914,15 +914,21 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         return function(text,phrase){
             if(angular.isDefined(text)){
                 if(phrase){
-                    if(text){
-                        text = text.replace(new RegExp('('+phrase+')','gi'),'<span class="highlighted">$1</span>');
+                    if(phrase.indexOf(' ')){
+                        phraseArray = phrase.split(' ');
+                        angular.forEach(phraseArray,function(ph){
+                            text = text.replace(new RegExp('('+ph+')','gi'),'<span class="highlighted">$1</span>');
+                        });
                         return $sce.trustAsHtml(text);
                     } else {
-                        return '';
+                        text = text.replace(new RegExp('('+phrase+')','gi'),'<span class="highlighted">$1</span>');
+                        return $sce.trustAsHtml(text);
                     }
                 } else {
                     return $sce.trustAsHtml(text);
                 }
+            } else {
+                return $sce.trustAsHtml('');
             }
         }
     })
