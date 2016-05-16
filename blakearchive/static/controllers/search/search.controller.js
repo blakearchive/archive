@@ -50,7 +50,7 @@
                 console.log($scope.objectResults);
                 console.log($scope.workResults);
                 $rootScope.$broadcast('searchCtrl::newSearch');
-                $location.search('search',encodeURIComponent($scope.searchConfig.searchString));
+                //$location.search('search',encodeURIComponent($scope.searchConfig.searchString));
             });
 
         };
