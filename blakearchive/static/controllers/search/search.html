@@ -1,7 +1,7 @@
-<div class="navbar navbar-default" id="searchOptions">
-    <div class="container-fluid">
+<div class="navbar navbar-default" id="searchOptions" style="border-color:black;">
+    <div class="container-fluid" style="background-color:#303030;">
         <div class="collapse navbar-collapse">
-            <form class="navbar-form navbar-left" role="search" ng-submit="search()">
+            <!--<form class="navbar-form navbar-left" role="search" ng-submit="search()">
                 <div class="form-group">
                     <div class="input-group">
                         <input ng-model="searchConfig.searchString" id="searchString" type="text" class="form-control" placeholder="Search">
@@ -10,12 +10,12 @@
                     </span>
                     </div>
                 </div>
-            </form>
+            </form>-->
             <ul class="nav navbar-nav">
                 <!-- date -->
                 <li dropdown class="dropdown">
                     <a dropdown-toggle role="button" aria-expanded="false">Date <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
+                    <ul class="dropdown-menu" role="menu" style="background-color:rgb(231, 231, 231);">
                         <li class="list-header">Restrict date range:</li>
                         <li>
                             <div range-slider min="1772" max="1827" show-values="true" model-min="searchConfig.minDate" model-max="searchConfig.maxDate"></div>
@@ -33,7 +33,7 @@
                 <!-- search field -->
                 <li dropdown class="dropdown">
                     <a dropdown-toggle role="button" aria-expanded="false">Search Type <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
+                    <ul class="dropdown-menu" role="menu" style="background-color:rgb(231, 231, 231);>
                         <li>
                             <input type="checkbox" ng-model="searchConfig.searchTitle"> Title
                         </li>
@@ -62,7 +62,7 @@
                 <!-- type -->
                 <li dropdown class="dropdown">
                     <a dropdown-toggle role="button" aria-expanded="false">Medium <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
+                    <ul class="dropdown-menu" role="menu" style="background-color:rgb(231, 231, 231);>
                         <li>
                             <input type="checkbox" ng-model="searchConfig.searchIlluminatedBooks"> Illuminated books
                         </li>
