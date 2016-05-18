@@ -10,7 +10,7 @@ h5,
     border-color: gray;
     border-width: 1px;
     padding-bottom: 10px;
-    border-radius: 100%;
+    border-radius: 0%;
 }
 
 .handprint-block span.description {
