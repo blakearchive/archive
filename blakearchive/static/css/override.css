@@ -1,3 +1,19 @@
+@media (min-width: 768px) {
+  nav.navbar ul.navbar-nav {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 767px) {
+  nav.navbar ul.navbar-nav {
+    max-height: inherit;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+  }
+}
+
 a {
   background-color: transparent;
   cursor:pointer;
@@ -109,7 +125,7 @@ body {
 @media (min-width: 1200px){
     #home.container-fluid.main .row div[class^="col-"] {
         max-width: 450px;
-        max-height: 850px;
+        max-height: 1000px;
     }
 }
 #home span.object-container a, #home span.object-container a img{
