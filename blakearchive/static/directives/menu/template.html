@@ -26,7 +26,8 @@
       <li ng-repeat="menu_list in menu.lists.prints[0].designed_engraved"><a href="/blake/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
         ({{ menu_list.composition_date }})</a></li>
       <li role="presentation" class="dropdown-header">Designed by Blake and Engraved by Other Engravers</li>
-      <li class="empty-subcat" ng-repeat="menu_list in menu.lists.prints[1].designed">—</li>
+      <!--<li class="empty-subcat" ng-repeat="menu_list in menu.lists.prints[1].designed">—</li>-->
+      <li class="empty-subcat">—</li>
       <li role="presentation" class="dropdown-header">Engraved by Blake After Designs by Other Artists</li>
       <li ng-repeat="menu_list in menu.lists.prints[0].engraved"><a href="/blake/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
         ({{ menu_list.composition_date }})</a></li>
@@ -35,8 +36,7 @@
         ({{ menu_list.composition_date }})</a></li>
     </ul>
   </li>
-  <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">Drawings and
-    <span>Paintings</span></a>
+  <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">Drawings and <span>Paintings</span></a>
     <ul class="dropdown-menu" role="menu">
       <li role="presentation" class="dropdown-header">Pencil Sketches</li>
       <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].pencil"><a href="/blake/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
