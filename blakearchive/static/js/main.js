@@ -917,6 +917,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                     if(phrase.indexOf(' ')){
                         phraseArray = phrase.split(' ');
                         angular.forEach(phraseArray,function(ph){
+                            ph = ph.replace('"','');
                             text = text.replace(new RegExp('('+ph+')','gi'),'<span class="highlighted">$1</span>');
                         });
                         return $sce.trustAsHtml(text);
