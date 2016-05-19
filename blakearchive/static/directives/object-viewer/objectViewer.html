@@ -16,7 +16,8 @@
                 </div>
                 <p class="object-subtitle">
                     <span class="object-no text-capitalize" ng-if="viewer.work.virtual">{{ viewer.work.title }}, </span>
-                    <span class="object-no text-capitalize">{{ viewer.copy.selectedObject.full_object_id }}, </span>
+                    <span class="object-no text-capitalize" ng-if="viewer.copy.bad_id != 'letters'">{{ viewer.copy.selectedObject.full_object_id }}, </span>
+                    <span class="object-no text-capitalize" ng-if="viewer.copy.bad_id == 'letters'">{{ viewer.copy.selectedObject.object_group }}, </span>
                     <span>{{ viewer.copy.selectedObject.physical_description.objsize['#text'] }} </span>
                     <a style="color:#168bc1" ng-click="viewer.userestrictOpen(viewer.copy)">&#169;</a>
                 </p>
@@ -24,17 +25,38 @@
         </div>
     </div>
 
-    <div class="featured-object-controls" ng-if="viewer.copy.objectsInCopy.length > 1">
-        <a class="left carousel-control" role="button" ng-click="viewer.changeObject({object:viewer.getPreviousObject()}); viewer.resetCompare({object:viewer.getPreviousObject()})" role="button">
-            <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ viewer.getPreviousObject().dbi }}.100.jpg)"></span>
-            <span class="object-text">Object {{ viewer.getPreviousObject().object_number }}</span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" ng-click="viewer.changeObject({object:viewer.getNextObject()}); viewer.resetCompare({object:viewer.getNextObject()})" role="button">
-            <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ viewer.getNextObject().dbi }}.100.jpg)"></span>
-            <span class="object-text">Object {{ viewer.getNextObject().object_number }}</span>
-            <span class="sr-only">Next</span>
-        </a>
+    <!-- For letters -->
+    <div ng-if="viewer.copy.bad_id == 'letters'">
+        <div class="featured-object-controls" ng-if="viewer.copy.selectedObject.objectsInGroup.length > 1">
+            <a class="left carousel-control" role="button" ng-click="viewer.changeObject({object:viewer.getPreviousObject()}); viewer.resetCompare({object:viewer.getPreviousObject()})" role="button">
+                <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ viewer.getPreviousObject().dbi }}.100.jpg)"></span>
+                <span class="object-text">{{ viewer.getPreviousObject().title }}</span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" ng-click="viewer.changeObject({object:viewer.getNextObject()}); viewer.resetCompare({object:viewer.getNextObject()})" role="button">
+                <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ viewer.getNextObject().dbi }}.100.jpg)"></span>
+                <span class="object-text">{{ viewer.getNextObject().title }}</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
     </div>
+
+
+    <!-- For everything else -->
+    <div ng-if="viewer.copy.bad_id != 'letters'">
+        <div class="featured-object-controls" ng-if="viewer.copy.objectsInCopy.length > 1">
+            <a class="left carousel-control" role="button" ng-click="viewer.changeObject({object:viewer.getPreviousObject()}); viewer.resetCompare({object:viewer.getPreviousObject()})" role="button">
+                <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ viewer.getPreviousObject().dbi }}.100.jpg)"></span>
+                <span class="object-text">Object {{ viewer.getPreviousObject().object_number }}</span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" ng-click="viewer.changeObject({object:viewer.getNextObject()}); viewer.resetCompare({object:viewer.getNextObject()})" role="button">
+                <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ viewer.getNextObject().dbi }}.100.jpg)"></span>
+                <span class="object-text">Object {{ viewer.getNextObject().object_number }}</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
 </div>
 
