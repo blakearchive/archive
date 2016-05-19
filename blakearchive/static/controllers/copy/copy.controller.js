@@ -15,22 +15,22 @@
         /*
          * Object and Copy selection
          */
-        vm.changeCopy = function(copy_bad_id,object_id,reset){
-            BlakeDataService.setSelectedCopy(copy_bad_id,object_id).then(function() {
+        vm.changeCopy = function(copy_bad_id,desc_id,reset){
+            BlakeDataService.setSelectedCopy(copy_bad_id,desc_id).then(function() {
                 vm.copy = BlakeDataService.selectedCopy;
 
                 if(copy_bad_id != $routeParams.copyId){
                     var newpath = '/blake/copy/'+copy_bad_id;
                     $location.path(newpath, false);
                     $routeParams.copyId = copy_bad_id;
-                    $location.search('objectId',object_id);
+                    $location.search('descId',desc_id);
                 }
 
-                if(!object_id){
-                    object_id = vm.copy.selectedObject.object_id;
+                if(!desc_id){
+                    desc_id = vm.copy.selectedObject.desc_id;
                 }
 
-                vm.setObject(object_id);
+                vm.setObject(desc_id);
 
                 if(reset){
                     vm.resetView();
@@ -51,7 +51,7 @@
             });
         }
 
-        vm.changeCopy($routeParams.copyId,$routeParams.objectId,true);
+        vm.changeCopy($routeParams.copyId,$routeParams.descId,true);
 
 
         vm.resetComparisonObjects = function(newObject){
@@ -61,29 +61,29 @@
             vm.$storage.comparisonObjects.push(selectedObject);
         }
 
-        vm.setSimilarObjects = function(object_id){
-            BlakeDataService.getObjectsFromSameMatrix(object_id).then(function(data){
+        vm.setSimilarObjects = function(desc_id){
+            BlakeDataService.getObjectsFromSameMatrix(desc_id).then(function(data){
                 vm.copy.selectedObject.matrix = data;
             });
 
-            BlakeDataService.getObjectsWithSameMotif(object_id).then(function(data){
+            BlakeDataService.getObjectsWithSameMotif(desc_id).then(function(data){
                 vm.copy.selectedObject.motif = data;
             });
 
-            BlakeDataService.getObjectsFromSameProductionSequence(object_id).then(function(data){
+            BlakeDataService.getObjectsFromSameProductionSequence(desc_id).then(function(data){
                 vm.copy.selectedObject.sequence = data;
             })
         }
 
         vm.changeObject = function(object){
-            $location.search('objectId',object.object_id);
+            $location.search('descId',object.desc_id);
         };
 
-        vm.setObject = function(object_id){
+        vm.setObject = function(desc_id){
             angular.forEach(vm.copy.objectsInCopy,function(v){
-                if(object_id == v.object_id){
+                if(desc_id == v.desc_id){
                     vm.copy.selectedObject  = v;
-                    vm.setSimilarObjects(v.object_id);
+                    vm.setSimilarObjects(v.desc_id);
                     imageManipulation.reset();
                     return;
                 }
@@ -93,7 +93,7 @@
         }
 
         $scope.$on('$routeUpdate',function(e,v) {
-            vm.setObject(v.params.objectId);
+            vm.setObject(v.params.descId);
         });
 
         /*
@@ -114,7 +114,7 @@
 
 
         vm.newWindow = function(object){
-            $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?objectId='+object.object_id, '_blank','width=800, height=600');
+            $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?descId='+object.desc_id, '_blank','width=800, height=600');
         }
 
         /*
@@ -149,7 +149,7 @@
             return object;
         }
         vm.newWindow = function(object){
-            $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?objectId='+object.object_id, '_blank','width=800, height=600');
+            $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?descId='+object.desc_id, '_blank','width=800, height=600');
         }
 
         vm.trueSizeOpen = function(object){
@@ -160,7 +160,7 @@
                     size: 'lg'
                 });
             } else {
-                $window.open('/blake/new-window/truesize/'+object.copy_bad_id+'?objectId='+object.object_id, '_blank', 'width=800, height=600');
+                $window.open('/blake/new-window/truesize/'+object.copy_bad_id+'?descId='+object.desc_id, '_blank', 'width=800, height=600');
             }
         }
 

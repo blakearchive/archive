@@ -360,9 +360,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             });
         };
 
-        dataFactory.getObject = function (objectId) {
+        dataFactory.getObject = function (descId) {
             console.log('getting object');
-            var url = directoryPrefix + '/api/object/' + objectId;
+            var url = directoryPrefix + '/api/object/' + descId;
             return $q(function (resolve, reject) {
                 $http.get(url).success(function (data) {
                     resolve(BlakeObject.create(data));
@@ -372,11 +372,11 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             });
         };
 
-        dataFactory.getObjects = function (objectIds) {
+        dataFactory.getObjects = function (descIds) {
             console.log('getting objects');
             var url = directoryPrefix + '/api/object/';
             return $q(function (resolve, reject) {
-                $http.get(url, {params: {object_ids: objectIds.join()}}).success(function (data) {
+                $http.get(url, {params: {desc_ids: descIds.join()}}).success(function (data) {
                     resolve(BlakeObject.create(data.results));
                 }).error(function (data, status) {
                     reject(data, status);
@@ -384,9 +384,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             });
         };
 
-        dataFactory.getObjectsWithSameMotif = function (objectId) {
+        dataFactory.getObjectsWithSameMotif = function (descId) {
             console.log('getting same motif');
-            var url = directoryPrefix + '/api/object/' + objectId + '/objects_with_same_motif';
+            var url = directoryPrefix + '/api/object/' + descId + '/objects_with_same_motif';
             //console.log('getting motif');
             return $q(function (resolve, reject) {
                 $http.get(url).success(function (data) {
@@ -399,9 +399,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             });
         };
 
-        dataFactory.getObjectsFromSameMatrix = function (objectId) {
+        dataFactory.getObjectsFromSameMatrix = function (descId) {
             console.log('getting same matrix');
-            var url = directoryPrefix + '/api/object/' + objectId + '/objects_from_same_matrix';
+            var url = directoryPrefix + '/api/object/' + descId + '/objects_from_same_matrix';
             //console.log('getting matrix');
             return $q(function (resolve, reject) {
                 $http.get(url).success(function (data) {
@@ -414,9 +414,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             });
         };
 
-        dataFactory.getObjectsFromSameProductionSequence = function (objectId) {
+        dataFactory.getObjectsFromSameProductionSequence = function (descId) {
             console.log('getting same production');
-            var url = directoryPrefix + '/api/object/' + objectId + '/objects_from_same_production_sequence';
+            var url = directoryPrefix + '/api/object/' + descId + '/objects_from_same_production_sequence';
             return $q(function (resolve, reject) {
                 $http.get(url).success(function (data) {
                     if (angular.isDefined(data.results)) {
@@ -537,7 +537,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             });
         };
 
-        dataFactory.setSelectedCopy = function (copyId, objectId) {
+        dataFactory.setSelectedCopy = function (copyId, descId) {
             console.log('setting copy');
             return $q.all([
                 dataFactory.getCopy(copyId),
@@ -559,9 +559,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 }
 
                 //Set the selected object
-                if (objectId) {
+                if (descId) {
                     data[1].forEach(function (obj) {
-                        if (obj.object_id == objectId) {
+                        if (obj.desc_id == descId) {
                             dataFactory.selectedCopy.selectedObject = obj;
                         }
                     })
@@ -586,9 +586,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
          }
          }*/
 
-        dataFactory.setSelectedObject = function (objectId) {
+        dataFactory.setSelectedObject = function (descId) {
             console.log('setting an object');
-            return dataFactory.getObject(objectId).then(function (obj) {
+            return dataFactory.getObject(descId).then(function (obj) {
                 dataFactory.selectedObject = obj;
                 console.log(dataFactory.selectedObject);
                 //dataFactory.objectSelectionChange();
@@ -864,7 +864,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         return{
             restrict: 'A',
             scope: {
-                objectId: '@objectId'
+                descId: '@descId'
             },
             link:link
         }
@@ -899,7 +899,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             imageManipulation.transform.rotate = imageManipulation.transform.rotate + 90;
         }
 
-        imageManipulation.reset = function(object_id){
+        imageManipulation.reset = function(){
             imageManipulation.transform = {
                 'rotate':0,
                 'scale':1,
@@ -934,7 +934,10 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
     })
 
     .controller("ObjectController", ['$scope', '$routeParams', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
-        BlakeDataService.setSelectedWork($routeParams.objectId);
+        /* FIXME: though object controller is basically not used, this is still a bug as you are setting the selected
+         * work based on the object/desc Id.
+         */
+        BlakeDataService.setSelectedWork($routeParams.descId);
     }])
 
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -948,7 +951,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             controller: "StaticpageController",
             controllerAs: 'staticpage'
         });
-        $routeProvider.when(directoryPrefix + '/object/:objectId', {
+        $routeProvider.when(directoryPrefix + '/object/:descId', {
             templateUrl: directoryPrefix + '/static/html/object.html',
             controller: "ObjectController"
         });
