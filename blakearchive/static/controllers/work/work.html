@@ -20,20 +20,25 @@
                             image="{{ copy.image }}.100.jpg"
                             footer="Copy {{copy.archive_copy_id}} {{copy.source.objinfo.printdate['#text']}}, ({{copy.institution}})">
                     </handprint-block>
-                 </div>
+                </div>
 
-                <div ng-repeat="obj in workCtrl.objects | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCtrl.work.virtual == true">
+                <!-- For Virtual Groups, except letters -->
+                <div ng-repeat="obj in workCtrl.objects | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCtrl.work.virtual == true && workCtrl.work.bad_id != 'letters'">
                     <handprint-block
-                            link="/blake/copy/{{obj.archive_copy_id}}?descId={{obj.object_id}}"
+                            link="/blake/copy/{{obj.archive_copy_id}}?descId={{obj.desc_id}}"
                             image="{{ obj.dbi }}.100.jpg"
                             footer="{{obj.title}}, ({{obj.source.objinfo.printdate['#text']}})">
                     </handprint-block>
                 </div>
 
-            </div>
-
-            <!-- For Virtual Groups -->
-            <div class="row">
+                <!-- For Letters -->
+                <div ng-repeat="obj in workCtrl.objects | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCtrl.work.bad_id == 'letters'">
+                    <handprint-block
+                            link="/blake/copy/{{obj.archive_copy_id}}?descId={{obj.desc_id}}"
+                            image="{{ obj.dbi }}.100.jpg"
+                            footer="{{obj.object_group}}">
+                    </handprint-block>
+                </div>
 
             </div>
             
