@@ -21,6 +21,15 @@
          */
 
 
+        vm.isValidTitle = function (title) {
+            return title.match(/\w+/) ? true : false;
+        };
+
+        vm.objectCopyId = function (descId) {
+            var descIdElements = descId.split(".");
+            return descIdElements[0] + "." + descIdElements[1];
+        };
+        
         BlakeDataService.setSelectedWork($routeParams.workId).then(function(){
             vm.work = BlakeDataService.selectedWork;
             var workVars = getWorkTypeVars(vm.work.medium);

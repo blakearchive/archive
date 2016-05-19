@@ -13,7 +13,7 @@
 
         vm.what = $routeParams.what;
 
-        BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.objectId).then(function() {
+        BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.descId).then(function() {
             vm.copy = BlakeDataService.selectedCopy;
             var copyBad = BlakeDataService.selectedCopy.bad_id,
                 workBadMatch = copyBad.indexOf('.'),
@@ -69,7 +69,7 @@
 
         vm.changeObject = function(object){
             vm.copy.selectedObject = object;
-            $location.search('objectId',object.object_id);
+            $location.search('descId',object.object_id);
             vm.init();
         }
 

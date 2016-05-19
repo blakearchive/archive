@@ -137,8 +137,8 @@
             switch(vm.tree){
                 case 'object':
                     var copyBad = vm.resultTree[vm.selectedWork][2][vm.selectedCopy][0].bad_id,
-                        objectId = vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].object_id;
-                    return copyBad+'?objectId='+objectId;
+                        objectId = vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].desc_id;
+                    return copyBad+'?descId='+descId;
                 case 'copy':
                     return vm.resultTree[vm.selectedWork][2][vm.selectedCopy][0].bad_id;
                 case 'work':

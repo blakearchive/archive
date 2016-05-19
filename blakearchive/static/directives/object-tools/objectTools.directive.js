@@ -4,7 +4,7 @@
         var vm = this;
 
         vm.newWindow = function(object){
-            $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?objectId='+object.object_id, '_blank','width=800, height=600');
+            $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?descId='+object.desc_id, '_blank','width=800, height=600');
         }
         $scope.$on('copyCtrl::objectChanged',function(e,d){
             vm.object = d;

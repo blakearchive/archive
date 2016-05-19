@@ -87,7 +87,7 @@ class BlakeDocumentImporter(object):
             if int(virtual) == 1:
                 # Virtual works need to have a special copy created just for them
                 objects = list(itertools.chain.from_iterable(
-                    self.copies[copy_id].objects for copy_id in virtual_objects.split(",")))
+                    self.copies[copy_id].objects for copy_id in virtual_objects.split(",") if copy_id in self.copies))
                 virtual_work_copy = models.BlakeCopy(work_id=bad_id, title=title.encode('utf-8'), image=cover_image,
                                                      bad_id=bad_id, archive_copy_id=bad_id,
                                                      composition_date=composition_date,
@@ -224,7 +224,8 @@ class BlakeDocumentImporter(object):
 
     def get_copy_title(self, document):
         for title in document.xpath("header/filedesc/titlestmt/title"):
-            return title.xpath("string()").encode("utf-8")
+            title_text = title.xpath("string()")
+            return re.match(r"(?:(.*):|(.*))", title_text, flags=re.DOTALL).group(1).encode("utf-8")
 
     def get_copy_institution(self, document):
         for institution in document.xpath("//institution"):
