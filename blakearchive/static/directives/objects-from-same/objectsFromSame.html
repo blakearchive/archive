@@ -13,7 +13,7 @@
         <div class="select-for-compare-wrapper" ng-class="{'selected': fromSame.isComparisonObject(obj)}">
             <span class="selected" ng-click="fromSame.selectOne(obj)"></span>
             <handprint-block
-                    link="/blake/copy/{{ obj.copy_bad_id }}?objectId={{ obj.object_id }}"
+                    link="/blake/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
                     image="{{ obj.dbi }}.100.jpg"
                     footer="{{obj.full_object_id}}"
                 >

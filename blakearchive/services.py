@@ -2,8 +2,6 @@ from multiprocessing.pool import worker
 import re
 import pysolr
 from sqlalchemy.sql import func
-import copy
-import json
 import config
 import models
 
@@ -162,37 +160,37 @@ class BlakeDataService(object):
         return results
 
     @classmethod
-    def get_objects(cls, object_ids=None):
-        if object_ids:
-            results = models.BlakeObject.query.filter(models.BlakeObject.object_id.in_(object_ids)).all()
+    def get_objects(cls, desc_ids=None):
+        if desc_ids:
+            results = models.BlakeObject.query.filter(models.BlakeObject.desc_id.in_(desc_ids)).all()
         else:
             results = models.BlakeObject.query.all()
         return results
 
     @classmethod
-    def get_object(cls, object_id):
-        return models.BlakeObject.query.filter(models.BlakeObject.object_id == object_id).first()
+    def get_object(cls, desc_id):
+        return models.BlakeObject.query.filter(models.BlakeObject.desc_id == desc_id).first()
 
     @classmethod
-    def get_objects_with_same_motif(cls, object_id):
+    def get_objects_with_same_motif(cls, desc_id):
         object_ = models.BlakeObject.query\
-            .filter(models.BlakeObject.object_id == object_id)\
+            .filter(models.BlakeObject.desc_id == desc_id)\
             .order_by(models.BlakeObject.bentley_id)\
             .first()
         return object_.objects_with_same_motif
 
     @classmethod
-    def get_objects_from_same_production_sequence(cls, object_id):
+    def get_objects_from_same_production_sequence(cls, desc_id):
         object_ = models.BlakeObject.query\
-            .filter(models.BlakeObject.object_id == object_id)\
+            .filter(models.BlakeObject.desc_id == desc_id)\
             .order_by(models.BlakeObject.bentley_id)\
             .first()
         return object_.objects_from_same_production_sequence
 
     @classmethod
-    def get_objects_from_same_matrix(cls, object_id):
+    def get_objects_from_same_matrix(cls, desc_id):
         object_ = models.BlakeObject.query\
-            .filter(models.BlakeObject.object_id == object_id)\
+            .filter(models.BlakeObject.desc_id == desc_id)\
             .order_by(models.BlakeObject.bentley_id)\
             .first()
         return object_.objects_from_same_matrix

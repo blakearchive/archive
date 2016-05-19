@@ -46,7 +46,7 @@
         }
 
         $scope.$on('copyCtrl::objectChanged',function(object){
-            if($routeParams.objectId){
+            if($routeParams.descId){
                 vm.selectedTab = '#objects-in-copy';
             } else {
                 vm.selectedTab = angular.isDefined($routeParams.tab) ? '#'+$routeParams.tab : '#objects-in-copy';

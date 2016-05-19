@@ -33,17 +33,17 @@ def query_works():
     return json.dumps(results)
 
 
-@api.route('/object/<int:object_id>')
-def get_object(object_id):
+@api.route('/object/<desc_id>')
+def get_object(desc_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
-    results = blake_data_service.get_object(object_id)
+    results = blake_data_service.get_object(desc_id)
     return jsonify(results.to_dict)
 
 
 @api.route('/object/')
 def get_objects():
-    if "object_ids" in request.args:
-        selected_object_ids = request.args.get("object_ids", "").split(",")
+    if "desc_ids" in request.args:
+        selected_object_ids = request.args.get("desc_ids", "").split(",")
     else:
         selected_object_ids = []
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
@@ -51,24 +51,24 @@ def get_objects():
     return jsonify({"results": [r.to_dict for r in results]})
 
 
-@api.route('/object/<int:object_id>/objects_with_same_motif')
-def get_objects_with_same_motif(object_id):
+@api.route('/object/<desc_id>/objects_with_same_motif')
+def get_objects_with_same_motif(desc_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
-    results = blake_data_service.get_objects_with_same_motif(object_id)
+    results = blake_data_service.get_objects_with_same_motif(desc_id)
     return jsonify({"results": [r.to_dict for r in results]})
 
 
-@api.route('/object/<int:object_id>/objects_from_same_production_sequence')
-def get_objects_from_same_production_sequence(object_id):
+@api.route('/object/<desc_id>/objects_from_same_production_sequence')
+def get_objects_from_same_production_sequence(desc_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
-    results = blake_data_service.get_objects_from_same_production_sequence(object_id)
+    results = blake_data_service.get_objects_from_same_production_sequence(desc_id)
     return jsonify({"results": [r.to_dict for r in results]})
 
 
-@api.route('/object/<int:object_id>/objects_from_same_matrix')
-def get_objects_from_same_matrix(object_id):
+@api.route('/object/<desc_id>/objects_from_same_matrix')
+def get_objects_from_same_matrix(desc_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
-    results = blake_data_service.get_objects_from_same_matrix(object_id)
+    results = blake_data_service.get_objects_from_same_matrix(desc_id)
     return jsonify({"results": [r.to_dict for r in results]})
 
 
