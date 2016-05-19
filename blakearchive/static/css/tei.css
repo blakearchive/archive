@@ -107,6 +107,7 @@
     border-collapse: separate;
     text-align: left;
     min-width: 400px;
+    padding: 10px;
 }
 
 .tei-preceding-delspan-substspan {
@@ -144,7 +145,7 @@
     color: #1d1d1d;
 }
 .tei-line-text span{
-    white-space: normal;
+    white-space: nowrap;
 }
 #colorKeyTable, #colorKeyTable tbody tr, #colorKeyTable tbody tr td{
     border: none;

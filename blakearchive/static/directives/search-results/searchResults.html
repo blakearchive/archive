@@ -4,7 +4,7 @@
     <div class="col-xs-12 full-width">
         <slide-box id="{{esr.type}}-slide-box">
             <div ng-repeat="(k,work) in esr.resultTree" class="search-result-item" ng-class="{selected:k == esr.selectedWork}">
-                <div scroll-to-element="#{{esr.type}}" offset="100">
+                <div scroll-to-element="#{{esr.type}}" offset="125">
                     <!--to slide, put slideBox.scrollToResult($index); into action for handprint-blocks-->
                     <handprint-block
                         action="esr.showCopies($index);"

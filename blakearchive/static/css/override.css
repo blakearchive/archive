@@ -1,3 +1,19 @@
+@media (min-width: 768px) {
+  nav.navbar ul.navbar-nav {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 767px) {
+  nav.navbar ul.navbar-nav {
+    max-height: inherit;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+  }
+}
+
 a {
   background-color: transparent;
   cursor:pointer;
@@ -10,7 +26,7 @@ h5,
     border-color: gray;
     border-width: 1px;
     padding-bottom: 10px;
-    border-radius: 100%;
+    border-radius: 0%;
 }
 
 .handprint-block span.description {
@@ -108,8 +124,8 @@ body {
 
 @media (min-width: 1200px){
     #home.container-fluid.main .row div[class^="col-"] {
-        max-width: 400px;
-        max-height: 850px;
+        max-width: 450px;
+        max-height: 1000px;
     }
 }
 #home span.object-container a, #home span.object-container a img{
