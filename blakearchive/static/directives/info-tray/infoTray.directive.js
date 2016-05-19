@@ -35,7 +35,7 @@
         vm.resize();
 
         vm.newWindow = function(object,type){
-            $window.open('/blake/new-window/'+type+'/'+object.copy_bad_id+'?descId='+object.object_id, '_blank','width=800, height=600');
+            $window.open('/blake/new-window/'+type+'/'+object.copy_bad_id+'?descId='+object.desc_id, '_blank','width=800, height=600');
         }
 
         $scope.$on('resize::resize',function(event,window){
