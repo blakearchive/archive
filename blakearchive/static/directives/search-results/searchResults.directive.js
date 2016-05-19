@@ -25,12 +25,10 @@
                         if(angular.isArray(vm.resultTree[index][2][copyKey][2])){
 
                             vm.resultTree[index][2][copyKey][2].forEach(function (objResults) {
-                                if (typeof objResults[0] === "number") {
-                                    objectIds.push(objResults[0]);
-                                    // We're storing a map from bad_id to its results container to simplify updating the results
-                                    // with retrieved copies.
-                                    objectIdMap[objResults[0]] = objResults;
-                                }
+                                objectIds.push(objResults[0]);
+                                // We're storing a map from bad_id to its results container to simplify updating the results
+                                // with retrieved copies.
+                                objectIdMap[objResults[0]] = objResults;
                             });
 
                         }
@@ -47,12 +45,11 @@
                     });
                 });
             }
-
             if (objectIds.length > 0) {
                 BlakeDataService.getObjects(objectIds).then(function (results) {
                     results.forEach(function (result) {
                         // Doing an in-place substitution of the bad_id with the relevant object
-                        objectIdMap[result.object_id][0] = result;
+                        objectIdMap[result.desc_id][0] = result;
                     });
                 });
             }
@@ -137,7 +134,7 @@
             switch(vm.tree){
                 case 'object':
                     var copyBad = vm.resultTree[vm.selectedWork][2][vm.selectedCopy][0].bad_id,
-                        objectId = vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].desc_id;
+                        descId = vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].desc_id;
                     return copyBad+'?descId='+descId;
                 case 'copy':
                     return vm.resultTree[vm.selectedWork][2][vm.selectedCopy][0].bad_id;
