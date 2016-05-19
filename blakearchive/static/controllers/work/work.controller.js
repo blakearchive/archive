@@ -38,7 +38,12 @@
 
             if(vm.work.virtual == true){
                 BlakeDataService.setSelectedCopy(vm.work.copiesInWork[0].bad_id).then(function(){
-                    vm.objects = BlakeDataService.selectedCopy.objectsInCopy;
+                    if(vm.work.bad_id == 'letters'){
+                        vm.objects = BlakeDataService.selectedCopy.objectGroups;
+                    } else {
+                        vm.objects = BlakeDataService.selectedCopy.objectsInCopy;
+                    }
+                    console.log(vm.objects);
                     vm.sortObjects(vm.objects);
                     vm.copyCount = vm.objects.length;
                     vm.setRows();
