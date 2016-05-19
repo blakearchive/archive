@@ -31,11 +31,21 @@
                         </h1>-->
                     </header>
                     <div class="row">
-                        <div ng-repeat="obj in tabs.copy.objectsInCopy track by $index" class="col-sm-6 col-md-3">
+                        <!-- for letters (multi object groups) -->
+                        <div ng-repeat="obj in tabs.copy.selectedObject.objectsInGroup track by $index" class="col-sm-6 col-md-3" ng-if="tabs.copy.bad_id == 'letters'">
                             <handprint-block scroll-to-top
-                                action="tabs.changeObject({object:obj}); tabs.resetView(); tabs.resetCompare({object:obj})"
-                                image="{{ obj.dbi }}.100.jpg"
-                                footer="{{ obj.full_object_id }}">
+                                             action="tabs.changeObject({object:obj}); tabs.resetView(); tabs.resetCompare({object:obj})"
+                                             image="{{ obj.dbi }}.100.jpg"
+                                             footer="{{ obj.title }}">
+                            </handprint-block>
+                        </div>
+
+                        <!-- for everything else -->
+                        <div ng-repeat="obj in tabs.copy.objectsInCopy track by $index" class="col-sm-6 col-md-3" ng-if="tabs.copy.bad_id != 'letters'">
+                            <handprint-block scroll-to-top
+                                             action="tabs.changeObject({object:obj}); tabs.resetView(); tabs.resetCompare({object:obj})"
+                                             image="{{ obj.dbi }}.100.jpg"
+                                             footer="{{ obj.full_object_id }}">
                             </handprint-block>
                         </div>
                     </div>
