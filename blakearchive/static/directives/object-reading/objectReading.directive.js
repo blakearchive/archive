@@ -8,7 +8,11 @@
         vm.getOvpTitle = function(){
             if(angular.isDefined(vm.copy)){
                 if(vm.copy.virtual == true){
-                    return vm.work.title;
+                    if(vm.copy.bad_id == 'letters'){
+                        return vm.copy.selectedObject.object_group;
+                    } else {
+                        return vm.work.title;
+                    }
                 } else {
                     var copyPhrase = vm.copy.archive_copy_id == null ? '' : ', Copy '+vm.copy.archive_copy_id;
                     return vm.copy.header.filedesc.titlestmt.title['@reg']+copyPhrase;

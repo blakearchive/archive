@@ -38,7 +38,11 @@
         vm.getCopyOrGroup = function(){
             if(angular.isDefined(vm.copy)){
                 if(vm.copy.virtual){
-                    return 'Group';
+                    if(vm.copy.bad_id == 'letters'){
+                        return 'Letter';
+                    } else {
+                        return 'Group';
+                    }
                 } else {
                     return 'Copy';
                 }

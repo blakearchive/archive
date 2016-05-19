@@ -34,14 +34,30 @@
         }
 
         vm.getPreviousObject = function(){
-            if(angular.isDefined(vm.copy.objectsInCopy)){
-                for (var i = vm.copy.objectsInCopy.length; i--;) {
-                    if (vm.copy.objectsInCopy[i].object_id == vm.copy.selectedObject.object_id) {
-                        // Extra code here to make the list circular
-                        if (i - 1 < 0) {
-                            return vm.copy.objectsInCopy[vm.copy.objectsInCopy.length - 1];
-                        } else {
-                            return vm.copy.objectsInCopy[i - 1];
+
+            if(vm.copy.bad_id == 'letters'){
+                if(angular.isDefined(vm.copy.selectedObject.objectsInGroup)){
+                    for (var i = vm.copy.selectedObject.objectsInGroup.length; i--;) {
+                        if (vm.copy.selectedObject.objectsInGroup[i].object_id == vm.copy.selectedObject.object_id) {
+                            // Extra code here to make the list circular
+                            if (i - 1 < 0) {
+                                return vm.copy.selectedObject.objectsInGroup[vm.copy.selectedObject.objectsInGroup.length - 1];
+                            } else {
+                                return vm.copy.selectedObject.objectsInGroup[i - 1];
+                            }
+                        }
+                    }
+                }
+            } else {
+                if(angular.isDefined(vm.copy.objectsInCopy)){
+                    for (var i = vm.copy.objectsInCopy.length; i--;) {
+                        if (vm.copy.objectsInCopy[i].object_id == vm.copy.selectedObject.object_id) {
+                            // Extra code here to make the list circular
+                            if (i - 1 < 0) {
+                                return vm.copy.objectsInCopy[vm.copy.objectsInCopy.length - 1];
+                            } else {
+                                return vm.copy.objectsInCopy[i - 1];
+                            }
                         }
                     }
                 }
@@ -49,14 +65,30 @@
         }
 
         vm.getNextObject = function(){
-            if(angular.isDefined(vm.copy.objectsInCopy)) {
-                for (var i = vm.copy.objectsInCopy.length; i--;) {
-                    if (vm.copy.objectsInCopy[i].object_id == vm.copy.selectedObject.object_id) {
-                        // Extra code here to make the list circular
-                        if (i + 1 >= vm.copy.objectsInCopy.length) {
-                            return vm.copy.objectsInCopy[0];
-                        } else {
-                            return vm.copy.objectsInCopy[i + 1];
+
+            if(vm.copy.bad_id == 'letters'){
+                if(angular.isDefined(vm.copy.selectedObject.objectsInGroup)){
+                    for (var i = vm.copy.selectedObject.objectsInGroup.length; i--;) {
+                        if (vm.copy.selectedObject.objectsInGroup[i].object_id == vm.copy.selectedObject.object_id) {
+                            // Extra code here to make the list circular
+                            if (i + 1 >= vm.copy.selectedObject.objectsInGroup.length) {
+                                return vm.copy.selectedObject.objectsInGroup[0];
+                            } else {
+                                return vm.copy.selectedObject.objectsInGroup[i + 1];
+                            }
+                        }
+                    }
+                }
+            } else {
+                if (angular.isDefined(vm.copy.objectsInCopy)) {
+                    for (var i = vm.copy.objectsInCopy.length; i--;) {
+                        if (vm.copy.objectsInCopy[i].object_id == vm.copy.selectedObject.object_id) {
+                            // Extra code here to make the list circular
+                            if (i + 1 >= vm.copy.objectsInCopy.length) {
+                                return vm.copy.objectsInCopy[0];
+                            } else {
+                                return vm.copy.objectsInCopy[i + 1];
+                            }
                         }
                     }
                 }

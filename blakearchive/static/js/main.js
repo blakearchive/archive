@@ -558,6 +558,11 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
                 }
 
+                //deal with multi object groups
+                if(copyId == 'letters'){
+                    dataFactory.selectedCopy.objectGroups = dataFactory.multiObjectGroup(dataFactory.selectedCopy.objectsInCopy);
+                }
+
                 //Set the selected object
                 if (descId) {
                     data[1].forEach(function (obj) {
@@ -574,6 +579,30 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 console.log('copy set');
             })
         };
+
+        // TODO: Each object group should be programmatically synonymous as a copy...should probably revisit this
+        // IF we can get the service working correctly, we could fake the selected copy?
+        dataFactory.multiObjectGroup = function(objects){
+            var originalObjects = angular.copy(objects);
+            if(angular.isArray(objects)){
+                var objectGroupArray = [];
+
+                angular.forEach(objects,function(obj){
+                    obj.objectsInGroup = [];
+                    if(obj.object_number == 1){
+                        //probably don't need to push the entire object
+                        objectGroupArray.push(obj);
+                    }
+                    angular.forEach(originalObjects, function(compObj){
+                        if(obj.object_group == compObj.object_group){
+                            obj.objectsInGroup.push(compObj);
+                        }
+                    })
+                });
+
+            }
+            return objectGroupArray;
+        }
 
         /*dataFactory.setCurrentObject = function(objectId){
          console.log('setting current object');
