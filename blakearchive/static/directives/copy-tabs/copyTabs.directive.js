@@ -41,7 +41,7 @@
                     if(vm.copy.bad_id == 'letters'){
                         return 'Letter';
                     } else {
-                        return 'Group';
+                        return 'Work';
                     }
                 } else {
                     return 'Copy';
