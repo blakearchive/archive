@@ -14,7 +14,7 @@
                     <a href="" ng-click="tabs.showTab('#objects-with-same-motif');" role="tab">Objects with a Similar Design</a>
                 </li>
                 <li role="presentation" ng-class="{active:tabs.selectedTab == '#copy-info'}">
-                    <a href="" ng-click="tabs.showTab('#copy-info')" role="tab">Copy Information</a>
+                    <a href="" ng-click="tabs.showTab('#copy-info')" role="tab">{{ tabs.getCopyOrGroup() }} Information</a>
                 </li>
                 <li role="presentation" ng-class="{active:tabs.selectedTab == '#ee-info'}">
                     <a href="" ng-click="tabs.showTab('#ee-info')" role="tab">Electronic Edition Information</a>
@@ -111,6 +111,12 @@
 
                 <!-- COPY INFO -->
                 <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#copy-info'" id="copy-info">
+                    <header class="page-header">
+                        <p class="subhead">{{ tabs.getCopyOrGroup() }} Information</p>
+                        <!--<h1>{{ tabs.getHeader() }}
+                            <span>{{ tabs.getOicSubheader() }}</span>
+                        </h1>-->
+                    </header>
                     <copy-information copy="tabs.copy"></copy-information>
                 </div>
 
