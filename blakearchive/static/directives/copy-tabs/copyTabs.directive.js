@@ -35,7 +35,7 @@
             }
         }
 
-        vm.getCopyOrGroup = function(){
+        vm.getCopyOrWork = function(){
             if(angular.isDefined(vm.copy)){
                 if(vm.copy.virtual){
                     if(vm.copy.bad_id == 'letters'){
@@ -48,6 +48,21 @@
                 }
             }
         }
+
+        vm.getCopyOrGroup = function(){
+            if(angular.isDefined(vm.copy)){
+                if(vm.copy.virtual){
+                    if(vm.copy.bad_id == 'letters'){
+                        return 'Letter';
+                    } else {
+                        return 'Group';
+                    }
+                } else {
+                    return 'Copy';
+                }
+            }
+        }
+
 
         $scope.$on('copyCtrl::objectChanged',function(object){
             if($routeParams.descId){
