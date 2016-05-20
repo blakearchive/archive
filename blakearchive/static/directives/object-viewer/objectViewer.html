@@ -1,6 +1,7 @@
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
     <div class="featured-object">
-        <p class="object-title">{{ viewer.getOvpTitle() }}</p>
+        <p class="object-title" ng-if="viewer.copy.bad_id == 'letters'">{{ viewer.copy.selectedObject.object_group }}</p>
+        <p class="object-title" ng-if="viewer.copy.bad_id != 'letters'">{{ viewer.getOvpTitle() }}</p>
 
         <div class="carousel-inner" role="listbox">
             <div class="item col-xs-12 col-md-8 col-md-offset-2 active">
@@ -15,9 +16,9 @@
                     </div>
                 </div>
                 <p class="object-subtitle">
-                    <span class="object-no text-capitalize" ng-if="viewer.work.virtual">{{ viewer.work.title }}, </span>
+                    <!--<span class="object-no text-capitalize" ng-if="viewer.work.virtual">{{ viewer.work.title }}, </span>-->
                     <span class="object-no text-capitalize" ng-if="viewer.copy.bad_id != 'letters'">{{ viewer.copy.selectedObject.full_object_id }}, </span>
-                    <span class="object-no text-capitalize" ng-if="viewer.copy.bad_id == 'letters'">{{ viewer.copy.selectedObject.object_group }}, </span>
+                    <span class="object-no text-capitalize" ng-if="viewer.copy.bad_id == 'letters'">{{ viewer.getOvpTitle() }}, </span>
                     <span>{{ viewer.copy.selectedObject.physical_description.objsize['#text'] }} </span>
                     <a style="color:#168bc1" ng-click="viewer.userestrictOpen(viewer.copy)">&#169;</a>
                 </p>
