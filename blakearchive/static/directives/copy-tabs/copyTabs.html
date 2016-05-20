@@ -16,6 +16,9 @@
                 <li role="presentation" ng-class="{active:tabs.selectedTab == '#copy-info'}">
                     <a href="" ng-click="tabs.showTab('#copy-info')" role="tab">Copy Information</a>
                 </li>
+                <li role="presentation" ng-class="{active:tabs.selectedTab == '#ee-info'}">
+                    <a href="" ng-click="tabs.showTab('#ee-info')" role="tab">Electronic Edition Information</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -110,6 +113,12 @@
                 <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#copy-info'" id="copy-info">
                     <copy-information copy="tabs.copy"></copy-information>
                 </div>
+
+                <!-- Electronic Edition Info-->
+                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#ee-info'" id="ee-info">
+                    {{tabs.copy.header}}
+                </div>
+
             </div>
         </div>
     </div>
