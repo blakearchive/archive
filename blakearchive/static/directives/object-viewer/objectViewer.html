@@ -1,7 +1,14 @@
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
     <div class="featured-object">
         <p class="object-title" ng-if="viewer.copy.bad_id == 'letters'">{{ viewer.copy.selectedObject.object_group }}</p>
-        <p class="object-title" ng-if="viewer.copy.bad_id == 'biblicalwc' || 'cpd' || 'gravepd' || 'gravewc' || 'gravewd' || 'miltons' || 'allegropenseroso' || 'biblicaltemperas'">{{ viewer.copy.title }}</p>
+        <p class="object-title" ng-if="viewer.copy.bad_id == 'biblicalwc' || 
+        viewer.copy.bad_id == 'cpd' || 
+        viewer.copy.bad_id == 'gravepd' || 
+        viewer.copy.bad_id == 'gravewc' || 
+        viewer.copy.bad_id == 'gravewd' || 
+        viewer.copy.bad_id == 'miltons' || 
+        viewer.copy.bad_id == 'allegropenseroso' || 
+        viewer.copy.bad_id == 'biblicaltemperas'">{{ viewer.copy.title }}</p>
         <p class="object-title" ng-if="viewer.copy.bad_id != 'letters' && 
         viewer.copy.bad_id != 'biblicalwc' &&
         viewer.copy.bad_id != 'cpd' && 
@@ -27,7 +34,14 @@
                 <p class="object-subtitle">
                     <!--<span class="object-no text-capitalize" ng-if="viewer.work.virtual">{{ viewer.work.title }}, </span>-->
                     <span class="object-no text-capitalize" ng-if="viewer.copy.bad_id == 'letters'">{{ viewer.getOvpTitle() }}, </span>
-                     <span class="object-no text-capitalize" ng-if="viewer.copy.bad_id == 'biblicalwc' || 'cpd' || 'gravepd' || 'gravewc' || 'gravewd' || 'miltons' || 'allegropenseroso' || 'biblicaltemperas'">{{ viewer.copy.selectedObject.title }}, </span>
+                     <span class="object-no text-capitalize" ng-if="viewer.copy.bad_id == 'biblicalwc' || 
+                     viewer.copy.bad_id == 'cpd' || 
+                     viewer.copy.bad_id == 'gravepd' || 
+                     viewer.copy.bad_id == 'gravewc' || 
+                     viewer.copy.bad_id == 'gravewd' || 
+                     viewer.copy.bad_id == 'miltons' || 
+                     viewer.copy.bad_id == 'allegropenseroso' || 
+                     viewer.copy.bad_id == 'biblicaltemperas'">{{ viewer.copy.selectedObject.title }}, </span>
                     <span class="object-no text-capitalize" ng-if="viewer.copy.bad_id != 'letters' && 
                         viewer.copy.bad_id != 'biblicalwc' &&
                         viewer.copy.bad_id != 'cpd' && 
@@ -60,7 +74,14 @@
         </div>
     </div>
 
-    <div ng-if="viewer.copy.bad_id == 'biblicalwc' || 'cpd' || 'gravepd' || 'gravewc' || 'gravewd' || 'miltons' || 'allegropenseroso' || 'biblicaltemperas'">
+    <div ng-if="viewer.copy.bad_id == 'biblicalwc' || 
+    viewer.copy.bad_id == 'cpd' || 
+    viewer.copy.bad_id == 'gravepd' || 
+    viewer.copy.bad_id == 'gravewc' || 
+    viewer.copy.bad_id == 'gravewd' || 
+    viewer.copy.bad_id == 'miltons' || 
+    viewer.copy.bad_id == 'allegropenseroso' || 
+    viewer.copy.bad_id == 'biblicaltemperas'">
          <div class="featured-object-controls" ng-if="viewer.copy.objectsInCopy.length > 1">
             <a class="left carousel-control" role="button" ng-click="viewer.changeObject({object:viewer.getPreviousObject()}); viewer.resetCompare({object:viewer.getPreviousObject()})" role="button">
                 <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ viewer.getPreviousObject().dbi }}.100.jpg)"></span>
