@@ -51,9 +51,9 @@
 
         <!-- True Size -->
         <div class="row" id="trueSize" ng-if="showme.what == 'truesize'">
-            <div class="col-xs-12 text-center">
+            <div class="col-xs-12 text-center img-enlarge-container">
                 <p>{{ showme.copy.selectedObject.physical_description.objsize['#text'] }}</p>
-                <img ng-src="http://www.blakearchive.org/blake/images/{{ showme.copy.selectedObject.dbi }}.100.jpg" ng-style="showme.trueSize()">
+                <img class="img-enlarge" ng-src="http://www.blakearchive.org/blake/images/{{ showme.copy.selectedObject.dbi }}.100.jpg" ng-style="showme.trueSize()">
             </div>
             <div class="col-xs-12 text-center">
                 <p></p>

@@ -5,10 +5,9 @@
  */
 (function () {
 
-    var controller = function ($http,$sessionStorage) {
+    var controller = function ($http,$rootScope,$cookies) {
 
         var vm = this;
-        vm.$storage = $sessionStorage
 
         vm.common = {
             'resolutions':[
@@ -36,8 +35,8 @@
 
         }
 
-        if(angular.isDefined(vm.$storage.clientPpi)){
-            vm.config = vm.$storage.clientPpi;
+        if(angular.isDefined($cookies.getObject('clientPpi'))){
+            vm.config = $cookies.getObject('clientPpi');
         } else {
             vm.config = {
                 'x': 1680,
@@ -63,12 +62,12 @@
 
         vm.savePpi = function(){
             vm.config.ppi = vm.calculatePpi();
-            vm.$storage.clientPpi = vm.config;
+            $cookies.putObject('clientPpi',vm.config);
+            $rootScope.$broadcast('clientPpi::savedPpi');
         }
 
         $http.get('/blake/static/directives/client-ppi/screens.json').success(function(data){
            vm.screens = data;
-            console.log(vm.screens);
         });
 
         vm.screenQuery = '';
@@ -77,7 +76,7 @@
 
     }
 
-    controller.$inject = ['$http','$sessionStorage'];
+    controller.$inject = ['$http','$rootScope','$cookies'];
 
     var clientPpi = function() {
         return {
