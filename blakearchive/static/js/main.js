@@ -214,6 +214,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 case 'letters':
                 case 'gravepd':
                 case 'gravewc':
+                case 'gravewd':
                 case 'cpd':
                 case 'allegropenseroso':
                     copy.virtual = true;
@@ -264,6 +265,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 case 'letters':
                 case 'gravepd':
                 case 'gravewc':
+                case 'gravewd':
                 case 'cpd':
                 case 'allegropenseroso':
                     work.virtual = true;
