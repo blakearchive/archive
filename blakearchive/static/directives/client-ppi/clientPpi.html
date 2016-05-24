@@ -16,11 +16,12 @@
                     <strong>Resolution:</strong>
                 </div>
                 <div class="col-xs-12 col-sm-5">
-                    <input type="text" class="form-control" ng-model="ppi.config.x">
+                    <input type="text" class="form-control" ng-model="ppi.config.x" ng-change="ppi.updateConfig()">
                 </div>
+                {{ ppi.config.x }}
                 <div class="col-xs-12 col-sm-1">X</div>
                 <div class="col-xs-12 col-sm-5">
-                    <input type="text" class="form-control" ng-model="ppi.config.y">
+                    <input type="text" class="form-control" ng-model="ppi.config.y" ng-change="ppi.updateConfig()">
                 </div>
             </div>
             <p>
