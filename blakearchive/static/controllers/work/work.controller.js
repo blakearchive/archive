@@ -44,7 +44,7 @@
                         vm.objects = BlakeDataService.selectedCopy.objectsInCopy;
                     }
                     console.log(vm.objects);
-                    vm.sortObjects(vm.objects);
+                    //vm.sortObjects(vm.objects);
                     vm.copyCount = vm.objects.length;
                     vm.setRows();
                 });
