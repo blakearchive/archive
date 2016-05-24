@@ -4,7 +4,7 @@
 
 (function () {
 
-    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location,$sessionStorage,$modal) {
+    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location,$sessionStorage,$modal,$cookies) {
 
         var vm = this;
         vm.$storage = $sessionStorage;
@@ -74,14 +74,15 @@
         }
 
         vm.trueSize = function(){
-            if(angular.isDefined(vm.$storage.clientPpi) && angular.isDefined((vm.copy))){
+            if(angular.isDefined($cookies.getObject('clientPpi')) && angular.isDefined((vm.copy))){
                 var size = vm.copy.selectedObject.physical_description.objsize['#text'].split(' '),
+                    clientPpi = $cookies.getObject('clientPpi'),
                     x = size[2],
                     y = size[0],
                     unit = size[3],
-                    width = x / 2.54 * vm.$storage.clientPpi.ppi,
-                    height = y / 2.54 * vm.$storage.clientPpi.ppi;
-                console.log('x='+x+'  y='+y+'  unit='+unit+'  ppi='+vm.$storage.clientPpi.ppi);
+                    width = x / 2.54 * clientPpi.ppi,
+                    height = y / 2.54 * clientPpi.ppi;
+                //console.log('x='+x+'  y='+y+'  unit='+unit+'  ppi='+clientPpi.ppi);
                 if(unit == 'mm.'){
                     width = width * 10;
                     height = height * 10;
@@ -103,7 +104,7 @@
     };
 
 
-    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location','$sessionStorage','$modal'];
+    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location','$sessionStorage','$modal','$cookies'];
 
     angular.module('blake').controller('ShowMeController', controller);
 
