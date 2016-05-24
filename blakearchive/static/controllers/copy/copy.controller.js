@@ -4,7 +4,7 @@
 
 (function () {
 
-    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location,$sessionStorage,$window,$modal,imageManipulation) {
+    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location,$sessionStorage,$window,$modal,imageManipulation,$cookies) {
 
         var vm = this;
 
@@ -153,9 +153,9 @@
         }
 
         vm.trueSizeOpen = function(object){
-            if(!angular.isDefined(vm.$storage.clientPpi)){
+            if(!angular.isDefined($cookies.getObject('clientPpi'))){
                 var clientDpiModalInstance = $modal.open({
-                    template: '<client-ppi></client-ppi>',
+                    template: '<client-ppi object="{{object}}"></client-ppi>',
                     controller: 'ModalController',
                     size: 'lg'
                 });
@@ -163,6 +163,11 @@
                 $window.open('/blake/new-window/truesize/'+object.copy_bad_id+'?descId='+object.desc_id, '_blank', 'width=800, height=600');
             }
         }
+
+        $scope.$on('clientPpi::savedPpi',function(){
+            console.log('cppiherd');
+            $window.open('/blake/new-window/truesize/'+vm.copy.selectedObject.copy_bad_id+'?descId='+vm.copy.selectedObject.desc_id, '_blank', 'width=800, height=600');
+        });
 
 
         vm.rotate = function(){
@@ -172,7 +177,7 @@
     };
 
 
-    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location','$sessionStorage','$window','$modal','imageManipulation'];
+    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location','$sessionStorage','$window','$modal','imageManipulation','$cookies'];
 
     angular.module('blake').controller('CopyController', controller);
 
