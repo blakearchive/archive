@@ -4,7 +4,7 @@
     <div class="featured-object">
         <div class="compare-inner">
             <!-- for letters -->
-            <div class="item" ng-repeat="o in read.copy.selectedObject.objectsInGroup" ng-if="read.copy.bad_id == 'letters'">
+            <div class="item" ng-repeat="o in read.bds.object.objectsInGroup" ng-if="read.bds.copy.bad_id == 'letters'">
                 <div class="reading-wrapper flex" auto-height adjust="270" breakpoint="992">
                     <div class="object-img-container" ng-class="{hidden: read.$storage.view.scope == 'text'}">
                         <img ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" ng-click="read.changeObject({object:o}); read.resetView(); read.resetCompare({object:o})">
@@ -20,7 +20,7 @@
 
 
             <!-- for everything else -->
-            <div class="item" ng-repeat="o in read.copy.objectsInCopy" ng-if="read.copy.bad_id != 'letters'">
+            <div class="item" ng-repeat="o in read.bds.copyObjects" ng-if="read.bds.copy.bad_id != 'letters'">
                 <div class="reading-wrapper flex" auto-height adjust="270" breakpoint="992">
                     <div class="object-img-container" ng-class="{hidden: read.$storage.view.scope == 'text'}">
                         <img ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" ng-click="read.changeObject({object:o}); read.resetView(); read.resetCompare({object:o})">
