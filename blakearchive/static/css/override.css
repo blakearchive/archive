@@ -1,3 +1,8 @@
+.worktitle {
+    background-color: #1D1D1D; 
+    color: white;
+}
+
 @media (min-width: 768px) {
   nav.navbar ul.navbar-nav {
     width: 100%;
