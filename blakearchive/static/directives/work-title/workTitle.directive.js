@@ -7,7 +7,6 @@
         vm.$storage = $sessionStorage;
 
         vm.getOvpTitle = function(){
-            return "adlksadf"
             if(angular.isDefined(vm.copy)){
                 if(vm.copy.virtual == true){
                     if(vm.copy.bad_id == 'letters'){
@@ -33,8 +32,8 @@
             templateUrl: '/blake/static/directives/work-title/workTitle.html',
             controller: controller,
             scope: {
-                copy: '=copy',
-                work: '=work',
+                copy: '=copyObject',
+                work: '=workObject',
             },
             controllerAs: 'workTitle',
             bindToController: true
