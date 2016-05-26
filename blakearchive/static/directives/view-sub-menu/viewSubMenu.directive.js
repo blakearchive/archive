@@ -1,6 +1,6 @@
 (function() {
 
-    var controller = function ($scope, $sessionStorage,$rootScope) {
+    var controller = function ($scope,$sessionStorage,$rootScope) {
 
         var vm = this;
 

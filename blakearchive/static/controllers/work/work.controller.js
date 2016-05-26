@@ -7,8 +7,23 @@
     var controller = function($scope,$routeParams,$rootScope,$sanitize,BlakeDataService){
 
         var vm = this;
-        $rootScope.worksNavState = false;
 
+        vm.bds = BlakeDataService;
+
+        vm.bds.setSelectedWork($routeParams.workId).then(function(){
+            var workVars = getWorkTypeVars(vm.bds.work.medium);
+            vm.bds.work.medium_pretty =  workVars.medium;
+            vm.bds.work.probable = workVars.probable;
+            vm.sortCopies(vm.bds.workCopies);
+            vm.copyCount = vm.bds.workCopies.length;
+            console.log(vm.bds.workCopies);
+            vm.setRows();
+        })
+
+
+
+
+        $rootScope.worksNavState = false;
         vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
 
         /*
@@ -29,33 +44,6 @@
             var descIdElements = descId.split(".");
             return descIdElements[0] + "." + descIdElements[1];
         };
-        
-        BlakeDataService.setSelectedWork($routeParams.workId).then(function(){
-            vm.work = BlakeDataService.selectedWork;
-            var workVars = getWorkTypeVars(vm.work.medium);
-            vm.work.medium_pretty =  workVars.medium;
-            vm.work.probable = workVars.probable;
-
-            if(vm.work.virtual == true){
-                BlakeDataService.setSelectedCopy(vm.work.copiesInWork[0].bad_id).then(function(){
-                    if(vm.work.bad_id == 'letters'){
-                        vm.objects = BlakeDataService.selectedCopy.objectGroups;
-                    } else {
-                        vm.objects = BlakeDataService.selectedCopy.objectsInCopy;
-                    }
-                    console.log(vm.objects);
-                    //vm.sortObjects(vm.objects);
-                    vm.copyCount = vm.objects.length;
-                    vm.setRows();
-                });
-            } else {
-                vm.copies = vm.work.copiesInWork;
-                vm.sortCopies(vm.copies);
-                vm.copyCount = vm.copies.length;
-                vm.setRows();
-            }
-
-        });
 
 
         vm.setRows = function(){
@@ -66,8 +54,8 @@
             }
 
             vm.knownCopiesDiv3 = Math.ceil(vm.copyCount / 3);
-            if(!angular.isUndefined(vm.work.related_works) && vm.work.related_works !== null){
-                vm.allKnownRelatedItemsDiv3 = Math.ceil(vm.work.related_works.length / 3);
+            if(!angular.isUndefined(vm.bds.work.related_works) && vm.bds.work.related_works !== null){
+                vm.allKnownRelatedItemsDiv3 = Math.ceil(vm.bds.work.related_works.length / 3);
             }
 
         }
@@ -148,12 +136,12 @@
                 }
             }
 
-            if (vm.work) {
-                if (vm.work.medium == 'illbk') {
+            if (wm.bds.work) {
+                if (wm.bds.work.medium == 'illbk') {
                     return "http://www.blakearchive.org/blake/images/" + copy.bad_id + ".p1.100.jpg";
                 }
                 else {
-                    return "http://www.blakearchive.org/blake/images/" + copy.bad_id + ".1." + workMedium(vm.work.medium) + ".100.jpg";
+                    return "http://www.blakearchive.org/blake/images/" + copy.bad_id + ".1." + workMedium(wm.bds.work.medium) + ".100.jpg";
                 }
             }
         };

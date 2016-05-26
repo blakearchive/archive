@@ -210,7 +210,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             switch (copy.archive_copy_id) {
                 case 'biblicalwc':
                 case 'biblicaltemperas':
-                case 'but543':
+                case 'miltons':
                 case 'letters':
                 case 'gravepd':
                 case 'gravewc':
@@ -247,7 +247,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
              }*/
 
             //Create an alternative work title for virtual works
-            console.log('creating work');
             work.menuTitle = work.title;
             switch (work.bad_id) {
                 case 'biblicalwc':
@@ -260,7 +259,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                     break;
                 case 'but543':
                     work.title = 'Illustrations to Milton\'s "On the Morning of Christ\'s Nativity"';
-                    work.virtual = true;
+                    work.virtual = false;
                     break;
                 case 'letters':
                 case 'gravepd':
@@ -268,6 +267,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 case 'gravewd':
                 case 'cpd':
                 case 'allegropenseroso':
+                case 'miltons':
                     work.virtual = true;
                     break;
                 default:
@@ -294,19 +294,20 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         return GenericService(constructor);
     }])
 
-    .factory("BlakeDataService", ['$http', '$q', '$rootScope', 'BlakeWork', 'BlakeCopy', 'BlakeObject', 'BlakeFeaturedWork', '$localStorage', function ($http, $q, $rootScope, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork, $localStorage) {
+    .factory("BlakeDataService", ['$log', '$http', '$q', '$location', 'BlakeWork', 'BlakeCopy', 'BlakeObject', 'BlakeFeaturedWork', function ($log, $http, $q, $location, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
         /**
          * For the time being, all data accessor functions should be placed here.  This service should mirror the API
          * of the back-end BlakeDataService.
          */
 
-        var dataFactory = {};
-        /*var selectedWork, selectedCopy, selectedObject, selectedWorkCopies, selectedCopyObjects, queryObjects,
-         getObject, getObjectsWithSameMotif, getObjectsFromSameMatrix, getObjectsFromSameProductionSequence,
-         getCopy, getObjectsForCopy, getWork, getWorks, getCopiesForWork, getFeaturedWorks, setSelectedWork,
-         setSelectedCopy, setSelectedObject, addComparisonObject, removeComparisonObject,
-         clearComparisonObjects, isComparisonObject, comparisonObjects = [], hasObjectsWithSameMotif = false,
-         hasObjectsFromSameMatrix = false, hasObjectsFromSameProductionSequence = false, objectSelectionChange;*/
+        var blakeData = {
+            featured: {},
+            work: {},
+            workCopies: {},
+            copy: {},
+            copyObjects: {},
+            object: {}
+        };
 
         /**
          *
@@ -329,265 +330,372 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
          * @returns {*}
          */
 
-        dataFactory.queryObjects = function (config) {
+        blakeData.queryObjects = function (config) {
             var url = directoryPrefix + '/api/query_objects';
-            return $q(function (resolve, reject) {
-                $http.post(url, config).success(function (data) {
-                    resolve(data);
-                }).error(function (data, status) {
-                    reject(data, status);
-                });
-            });
+
+            $log.info('query objects in solr');
+
+            return $http.post(url, config)
+                .then(queryObjectsComplete)
+                .catch(queryObjectsFailed);
+
+            function queryObjectsComplete(response){
+                return response.data;
+            }
+
+            function queryObjectsFailed(error){
+                $log.error('XHR Failed for queryObjects.\n' + angular.toJson(error.data, true));
+            }
         };
 
-        dataFactory.queryCopies = function (config) {
+        blakeData.queryCopies = function (config) {
             var url = directoryPrefix + '/api/query_copies';
-            return $q(function (resolve, reject) {
-                $http.post(url, config).success(function (data) {
-                    resolve(data);
-                }).error(function (data, status) {
-                    reject(data, status);
-                });
-            });
+
+            $log.info('query copies in solr');
+
+            return $http.post(url, config)
+                .then(queryCopiesComplete)
+                .catch(queryCopiesFailed);
+
+            function queryCopiesComplete(response){
+                return response.data;
+            }
+
+            function queryCopiesFailed(error){
+                $log.error('XHR Failed for queryCopies.\n' + angular.toJson(error.data, true));
+            }
         };
 
-        dataFactory.queryWorks = function (config) {
+        blakeData.queryWorks = function (config) {
             var url = directoryPrefix + '/api/query_works';
-            return $q(function (resolve, reject) {
-                $http.post(url, config).success(function (data) {
-                    resolve(data);
-                }).error(function (data, status) {
-                    reject(data, status);
-                });
-            });
+
+            $log.info('query works in solr');
+
+            return $http.post(url, config)
+                .then(queryWorksComplete)
+                .catch(queryWorksFailed);
+
+            function queryWorksComplete(response){
+                return response.data;
+            }
+
+            function queryWorksFailed(error){
+                $log.error('XHR Failed for queryWorks.\n' + angular.toJson(error.data, true));
+            }
         };
 
-        dataFactory.getObject = function (descId) {
-            console.log('getting object');
+        blakeData.getObject = function (descId) {
             var url = directoryPrefix + '/api/object/' + descId;
-            return $q(function (resolve, reject) {
-                $http.get(url).success(function (data) {
-                    resolve(BlakeObject.create(data));
-                }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
+
+            $log.info('getting object');
+
+            return $http.get(url)
+                .then(getObjectComplete)
+                .catch(getObjectFailed);
+
+            function getObjectComplete(response){
+                return BlakeObject.create(response.data);
+            }
+
+            function getObjectFailed(error){
+                $log.error('XHR Failed for getObject.\n' + angular.toJson(error.data, true));
+            }
         };
 
-        dataFactory.getObjects = function (descIds) {
-            console.log('getting objects');
+        blakeData.getObjects = function (descIds) {
             var url = directoryPrefix + '/api/object/';
-            return $q(function (resolve, reject) {
-                $http.get(url, {params: {desc_ids: descIds.join()}}).success(function (data) {
-                    resolve(BlakeObject.create(data.results));
-                }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
+
+            $log.info('getting objects: multi');
+
+            return $http.get(url, {params: {desc_ids: descIds.join()}})
+                .then(getObjectsComplete)
+                .catch(getObjectsFailed);
+
+            function getObjectsComplete(response){
+                return BlakeObject.create(response.data.results);
+            }
+
+            function getObjectsFailed(error){
+                $log.error('XHR Failed for getObjects: multi.\n' + angular.toJson(error.data, true));
+            }
         };
 
-        dataFactory.getObjectsWithSameMotif = function (descId) {
-            console.log('getting same motif');
+        blakeData.getObjectsWithSameMotif = function (descId) {
             var url = directoryPrefix + '/api/object/' + descId + '/objects_with_same_motif';
-            //console.log('getting motif');
-            return $q(function (resolve, reject) {
-                $http.get(url).success(function (data) {
-                    if (angular.isDefined(data.results)) {
-                        resolve(BlakeObject.create(data.results));
-                    }
-                }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
+
+            $log.info('getting objects w/ same motif');
+
+            return $http.get(url)
+                .then(getObjectsWithSameMotifComplete)
+                .catch(getObjectsWithSameMotifFailed);
+
+            function getObjectsWithSameMotifComplete(response){
+                return BlakeObject.create(response.data.results);
+            }
+
+            function getObjectsWithSameMotifFailed(error){
+                $log.error('XHR Failed for getObjectsWithSameMotif.\n' + angular.toJson(error.data, true));
+            }
+
         };
 
-        dataFactory.getObjectsFromSameMatrix = function (descId) {
-            console.log('getting same matrix');
+        blakeData.getObjectsFromSameMatrix = function (descId) {
             var url = directoryPrefix + '/api/object/' + descId + '/objects_from_same_matrix';
-            //console.log('getting matrix');
-            return $q(function (resolve, reject) {
-                $http.get(url).success(function (data) {
-                    if (angular.isDefined(data.results)) {
-                        resolve(BlakeObject.create(data.results));
-                    }
-                }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
+
+            $log.info('getting objects from same matrix');
+
+            return $http.get(url)
+                .then(getObjectsFromSameMatrixComplete)
+                .catch(getObjectsFromSameMatrixFailed);
+
+            function getObjectsFromSameMatrixComplete(response){
+                return BlakeObject.create(response.data.results);
+            }
+
+            function getObjectsFromSameMatrixFailed(error){
+                $log.error('XHR Failed for getObjectsFromSameMatrix.\n' + angular.toJson(error.data, true));
+            }
         };
 
-        dataFactory.getObjectsFromSameProductionSequence = function (descId) {
-            console.log('getting same production');
+        blakeData.getObjectsFromSameProductionSequence = function (descId) {
             var url = directoryPrefix + '/api/object/' + descId + '/objects_from_same_production_sequence';
-            return $q(function (resolve, reject) {
-                $http.get(url).success(function (data) {
-                    if (angular.isDefined(data.results)) {
-                        resolve(BlakeObject.create(data.results));
-                    }
-                }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
+
+            $log.info('getting objects from same production sequence');
+
+            return $http.get(url)
+                .then(getObjectsFromSameSequenceComplete)
+                .catch(getObjectsFromSameSequenceFailed);
+
+            function getObjectsFromSameSequenceComplete(response){
+                return BlakeObject.create(response.data.results);
+            }
+
+            function getObjectsFromSameSequenceFailed(error){
+                $log.error('XHR Failed for getObjectsFromSameProductionSequence.\n' + angular.toJson(error.data, true));
+            }
         };
 
-        dataFactory.getCopy = function (copyId) {
-            console.log('getting copy');
+        blakeData.getCopy = function (copyId) {
             var url = directoryPrefix + '/api/copy/' + copyId;
-            return $q(function (resolve, reject) {
-                $http.get(url).success(function (data) {
-                    resolve(BlakeCopy.create(data));
-                }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
+
+            $log.info('getting copy');
+
+            return $http.get(url)
+                .then(getCopyComplete)
+                .catch(getCopyFailed);
+
+            function getCopyComplete(response){
+                return BlakeCopy.create(response.data);
+            }
+
+            function getCopyFailed(error){
+                $log.error('XHR Failed for getCopy.\n' + angular.toJson(error.data, true));
+            }
         };
 
-        dataFactory.getCopies = function (copyIds) {
-            console.log('getting copies');
+        blakeData.getCopies = function (copyIds) {
             var url = directoryPrefix + '/api/copy/';
-            return $q(function (resolve, reject) {
-                $http.get(url, {params: {bad_ids: copyIds.join()}}).success(function (data) {
-                    resolve(BlakeCopy.create(data.results));
-                }).error(function (data, status) {
-                    reject(data, status);
-                });
-            });
+
+            $log.info('getting copies: multi');
+
+            return $http.get(url, {params: {bad_ids: copyIds.join()}})
+                .then(getCopiesComplete)
+                .catch(getCopiesFailed);
+
+            function getCopiesComplete(response){
+                return BlakeCopy.create(response.data.results);
+            }
+
+            function getCopiesFailed(error){
+                $log.error('XHR Failed for getCopies: multi.\n' + angular.toJson(error.data, true));
+            }
+
         };
 
-        dataFactory.getObjectsForCopy = function (copyId) {
-            console.log('getting objects in copy');
+        blakeData.getObjectsForCopy = function (copyId) {
             var url = directoryPrefix + '/api/copy/' + copyId + '/objects';
-            return $q(function (resolve, reject) {
-                $http.get(url).success(function (data) {
-                    resolve(BlakeObject.create(data.results));
-                }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
+
+            $log.info('getting objects in copy');
+
+            return $http.get(url)
+                .then(getObjectsForCopyComplete)
+                .catch(getObjectsForCopyFailed);
+
+            function getObjectsForCopyComplete(response){
+                return BlakeObject.create(response.data.results);
+            }
+
+            function getObjectsForCopyFailed(error){
+                $log.error('XHR Failed for getObjectsForCopy.\n' + angular.toJson(error.data, true));
+            }
+
         };
 
-        dataFactory.getWork = function (workId) {
-            console.log('getting work');
+        blakeData.getWork = function (workId) {
             var url = directoryPrefix + '/api/work/' + workId;
-            return $q(function (resolve, reject) {
-                $http.get(url).success(function (data) {
-                    resolve(BlakeWork.create(data));
-                }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
+
+            $log.info('getting work');
+
+            return $http.get(url)
+                .then(getWorkComplete)
+                .catch(getWorkFailed);
+
+            function getWorkComplete(response){
+                return BlakeWork.create(response.data);
+            }
+
+            function getWorkFailed(error){
+                $log.error('XHR Failed for getWork.\n' + angular.toJson(error.data, true));
+            }
         };
 
-        dataFactory.getWorks = function () {
-            console.log('getting work (multiple)');
+        blakeData.getWorks = function () {
             var url = directoryPrefix + '/api/work/';
-            return $q(function (resolve, reject) {
-                $http.get(url).success(function (data) {
-                    resolve(BlakeWork.create(data.results));
-                }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
+
+            $log.info('getting works: multi');
+
+            return $http.get(url)
+                .then(getWorksComplete)
+                .catch(getWorksFailed);
+
+            function getWorksComplete(response){
+                return BlakeWork.create(response.data.results);
+            }
+
+            function getWorksFailed(error){
+                $log.error('XHR Failed for getWorks: multi.\n' + angular.toJson(error.data, true));
+            }
         };
 
-        dataFactory.getCopiesForWork = function (workId) {
-            console.log('getting copies in work');
+        blakeData.getCopiesForWork = function (workId) {
             var url = directoryPrefix + '/api/work/' + workId + '/copies';
-            return $q(function (resolve, reject) {
-                $http.get(url).success(function (data) {
-                    resolve(BlakeCopy.create(data.results));
-                }).error(function (data, status) {
-                    reject(data, status);
-                })
-            });
+
+            $log.info('getting copies in work');
+
+            return $http.get(url)
+                .then(getCopiesForWorkComplete)
+                .catch(getCopiesForWorkFailed);
+
+            function getCopiesForWorkComplete(response){
+                return BlakeCopy.create(response.data.results);
+            }
+
+            function getCopiesForWorkFailed(error){
+                $log.error('XHR Failed for getCopies: multi.\n' + angular.toJson(error.data, true));
+            }
         };
 
-        dataFactory.getFeaturedWorks = function () {
-            console.log('getting featured works');
+        blakeData.getFeaturedWorks = function () {
             var url = directoryPrefix + '/api/featured_work/';
-            return $q(function (resolve, reject) {
-                $http.get(url).success(function (data) {
-                    resolve(BlakeFeaturedWork.create(data.results));
-                }).error(function (data, status) {
-                    reject(data, status)
-                })
-            });
+
+            $log.info('getting featured works');
+
+            return $http.get(url)
+                .then(getFeaturedWorksComplete)
+                .catch(getFeaturedWorksFailed);
+
+            function getFeaturedWorksComplete(response){
+                return BlakeWork.create(response.data.results);
+            }
+
+            function getFeaturedWorksFailed(error){
+                $log.error('XHR Failed for getWorks: multi.\n' + angular.toJson(error.data, true));
+            }
+
         };
 
-        dataFactory.setSelectedWork = function (workId) {
-            console.log('setting work');
+        blakeData.setSelectedWork = function (workId) {
             return $q.all([
-                dataFactory.getWork(workId),
-                dataFactory.getCopiesForWork(workId)
-            ]).then(function (data) {
-                dataFactory.selectedWork = data[0];
-                dataFactory.selectedWork.copiesInWork = data[1];
-                console.log(dataFactory.selectedWork);
-                //dataFactory.selectedWorkCopies = data[1];
-                //console.log(dataFactory.selectedWorkCopies);
-            }).catch(function () {
-                dataFactory.selectedWork = {};
+                blakeData.getWork(workId),
+                blakeData.getCopiesForWork(workId)
+            ]).then(function(data){
+                blakeData.work = data[0];
+                blakeData.workCopies = data[1];
+                if(blakeData.work.virtual == true){
+                    return blakeData.getObjectsForCopy(blakeData.workCopies[0].bad_id).then(function(data){
+                        if(blakeData.work.bad_id == 'letters'){
+                            blakeData.workCopies = blakeData.multiObjectGroup(data);
+                        } else {
+                            blakeData.workCopies = blakeData.numberVirtualWorkObjects(data);
+                        }
+                    });
+                }
             });
         };
 
-        dataFactory.setWorkNoCopies = function (workId) {
-            console.log('setting work no copies');
-            return dataFactory.getWork(workId).then(function (data) {
-                dataFactory.selectedWork = data;
-            }).catch(function () {
-                dataFactory.selectedWork = {};
+        blakeData.setWorkNoCopies = function (workId) {
+            return blakeData.getWork(workId).then(function (data) {
+                blakeData.work = data;
             });
         };
 
-        dataFactory.setSelectedCopy = function (copyId, descId) {
-            console.log('setting copy');
+
+        blakeData.setSelectedCopy = function (copyId, descId) {
+
+            var workBadMatch = copyId.indexOf('.'),
+                workId = workBadMatch > 0 ? copyId.substring(0,workBadMatch) : copyId;
+
             return $q.all([
-                dataFactory.getCopy(copyId),
-                dataFactory.getObjectsForCopy(copyId),
+                blakeData.getCopy(copyId),
+                blakeData.getObjectsForCopy(copyId),
+                blakeData.getWork(workId)
             ]).then(function (data) {
-                dataFactory.selectedCopy = data[0];
-                dataFactory.selectedCopy.objectsInCopy = data[1];
-                console.log(dataFactory.selectedCopy);
+                blakeData.copy = data[0];
+                blakeData.copyObjects = data[1];
+                blakeData.work = data[2];
 
                 //Programatically order objects if "copy" is a virtual group, then replace number in full object id
-                if (dataFactory.selectedCopy.virtual) {
-                    var inc = 1;
-                    data[1].forEach(function (obj) {
-                        //obj.object_number = inc;
-                        obj.full_object_id  = obj.title + ', Object '+inc+ obj.full_object_id.replace(/object [\d]+/g,'');
-                        inc++;
-                    });
-
+                if (blakeData.work.virtual == true) {
+                    blakeData.copyObjects = blakeData.numberVirtualWorkObjects(blakeData.copyObjects);
                 }
 
                 //deal with multi object groups
-                if(copyId == 'letters'){
-                    dataFactory.selectedCopy.objectGroups = dataFactory.multiObjectGroup(dataFactory.selectedCopy.objectsInCopy);
+                if(blakeData.work.bad_id == 'letters'){
+                    blakeData.multiObjectGroup(blakeData.copyObjects);
                 }
 
                 //Set the selected object
                 if (descId) {
-                    data[1].forEach(function (obj) {
+                    blakeData.copyObjects.forEach(function (obj) {
                         if (obj.desc_id == descId) {
-                            dataFactory.selectedCopy.selectedObject = obj;
+                            return (blakeData.setFromSameX(obj)).then(function(){
+                                blakeData.object = obj;
+                            })
                         }
                     })
                 } else {
-                    dataFactory.selectedCopy.selectedObject = data[1][0]
+                    blakeData.changeObject(blakeData.copyObjects[0]);
                 }
-                //$rootScope.$broadcast("update:copy");
-                //console.log('update copy fired');
-                //dataFactory.objectSelectionChange();
-                console.log('copy set');
+
             })
         };
 
+        blakeData.numberVirtualWorkObjects = function(objects){
+            var inc = 1;
+            objects.forEach(function (obj) {
+                //obj.object_number = inc;
+                obj.full_object_id  = obj.title + ', Object '+inc+ obj.full_object_id.replace(/object [\d]+/g,'');
+                inc++;
+            });
+            return objects;
+        }
+
         // TODO: Each object group should be programmatically synonymous as a copy...should probably revisit this
         // IF we can get the service working correctly, we could fake the selected copy?
-        dataFactory.multiObjectGroup = function(objects){
-            var originalObjects = angular.copy(objects);
+        blakeData.multiObjectGroup = function(objects){
+            var copyOfObjects = angular.copy(objects);
             if(angular.isArray(objects)){
                 var objectGroupArray = [];
+
+                //First load all associations into an objectsInGroup array on the copy
+                angular.forEach(copyOfObjects, function(cObject){
+                    cObject.objectsInGroup = [];
+                    angular.forEach(objects, function(obj){
+                        if(obj.object_group == cObject.object_group){
+                            cObject.objectsInGroup.push(obj);
+                        }
+                    })
+                });
 
                 angular.forEach(objects,function(obj){
                     obj.objectsInGroup = [];
@@ -595,9 +703,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                         //probably don't need to push the entire object
                         objectGroupArray.push(obj);
                     }
-                    angular.forEach(originalObjects, function(compObj){
-                        if(obj.object_group == compObj.object_group){
-                            obj.objectsInGroup.push(compObj);
+                    angular.forEach(copyOfObjects, function(cObject){
+                        if(obj.object_group == cObject.object_group){
+                            obj.objectsInGroup.push(cObject);
                         }
                     })
                 });
@@ -606,41 +714,43 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             return objectGroupArray;
         }
 
-        /*dataFactory.setCurrentObject = function(objectId){
-         console.log('setting current object');
-         if (objectId) {
-         $localStorage.selectedCopy.forEach(function (obj) {
-         if (obj.object_id == objectId) {
-         $localStorage.currentObject = obj;
-         }
-         });
-         }
-         }*/
 
-        dataFactory.setSelectedObject = function (descId) {
-            console.log('setting an object');
-            return dataFactory.getObject(descId).then(function (obj) {
-                dataFactory.selectedObject = obj;
-                console.log(dataFactory.selectedObject);
-                //dataFactory.objectSelectionChange();
+        blakeData.setSelectedObject = function (descId) {
+            return blakeData.getObject(descId).then(function (obj) {
+                blakeData.changeObject(obj);
             })
         };
 
-        /*dataFactory.objectSelectionChange = function () {
-         return $q.all([
-         dataFactory.getObjectsFromSameMatrix($localStorage.currentObject.object_id),
-         dataFactory.getObjectsFromSameProductionSequence($localStorage.currentObject.object_id),
-         dataFactory.getObjectsWithSameMotif($localStorage.currentObject.object_id)
-         ]).then(function(data){
-         $localStorage.sameMatrix = data[0];
-         $localStorage.sameSequence = data[1];
-         $localStorage.sameMotif = data[2];
-         //$rootScope.$broadcast("update:object");
-         //console.log('update:object fired');
-         })
-         };*/
+        blakeData.setFromSameX = function(object){
 
-        return dataFactory;
+            if(angular.isDefined(object.matrix)){
+                return $q.all();
+            }
+
+            object.matrix = {};
+            object.sequence = {};
+            object.motif = {};
+
+            return $q.all([
+                blakeData.getObjectsFromSameMatrix(object.desc_id),
+                blakeData.getObjectsFromSameProductionSequence(object.desc_id),
+                blakeData.getObjectsWithSameMotif(object.desc_id)
+            ]).then(function (data) {
+                object.matrix = BlakeObject.create(data[0]);
+                object.sequence = BlakeObject.create(data[1]);
+                object.motif = BlakeObject.create(data[2]);
+
+            });
+        }
+
+        blakeData.changeObject = function(object){
+            blakeData.setFromSameX(object).then(function(){
+                blakeData.object = object;
+                $location.search('descId',blakeData.object.desc_id);
+            });
+        }
+
+        return blakeData;
     }])
 
     .factory("FormatService", function () {
@@ -668,6 +778,36 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
         return windowSize;
     }])
+
+    .factory('imageManipulation',function(){
+        var imageManipulation = {};
+
+        imageManipulation.transform = {
+            'rotate':0,
+            'scale':1,
+            'style': {}
+        }
+
+        imageManipulation.rotate = function(){
+            imageManipulation.transform.rotate = imageManipulation.transform.rotate + 90;
+        }
+
+        imageManipulation.reset = function(){
+            imageManipulation.transform = {
+                'rotate':0,
+                'scale':1,
+                'style': {}
+            }
+        }
+
+        return imageManipulation;
+    })
+
+    .factory('CompareObjectsService',['$sessionStorage', function($sessionStorage){
+
+    }])
+
+
     .directive('resize', ['$window', '$timeout', 'WindowSize', function ($window, $timeout, WindowSize) {
         return function (scope, element) {
             var w = angular.element($window);
@@ -917,28 +1057,18 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         }
     })
 
-    .factory('imageManipulation',function(){
-        var imageManipulation = {};
-
-        imageManipulation.transform = {
-            'rotate':0,
-            'scale':1,
-            'style': {}
-        }
-
-        imageManipulation.rotate = function(){
-            imageManipulation.transform.rotate = imageManipulation.transform.rotate + 90;
-        }
-
-        imageManipulation.reset = function(){
-            imageManipulation.transform = {
-                'rotate':0,
-                'scale':1,
-                'style': {}
+    .directive('showMe',function($window){
+        return{
+            restrict: 'A',
+            link: function(scope,ele,attr){
+                ele.on('click',function(){
+                    $window.open('/blake/new-window/'+attr.showMe+'/'+scope.object.copy_bad_id+'?descId='+scope.object.desc_id, '_blank','width=800, height=600');
+                })
+            },
+            scope:{
+                object: '='
             }
         }
-
-        return imageManipulation;
     })
 
     .filter('highlight',function($sce){
@@ -965,12 +1095,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         }
     })
 
-    .controller("ObjectController", ['$scope', '$routeParams', 'BlakeDataService', function ($rootScope, $scope, BlakeDataService) {
-        /* FIXME: though object controller is basically not used, this is still a bug as you are setting the selected
-         * work based on the object/desc Id.
-         */
-        BlakeDataService.setSelectedWork($routeParams.descId);
-    }])
 
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider.when(directoryPrefix + '/', {

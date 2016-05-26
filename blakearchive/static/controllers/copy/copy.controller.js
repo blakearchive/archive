@@ -4,6 +4,7 @@
 
 (function () {
 
+    /** @ngInject */
     var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location,$sessionStorage,$window,$modal,imageManipulation,$cookies) {
 
         var vm = this;
@@ -11,11 +12,14 @@
         $rootScope.showSubMenu = 1;
         $rootScope.worksNavState = false;
         vm.$storage = $sessionStorage;
+        vm.bds = BlakeDataService;
+
+        BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.descId);
 
         /*
          * Object and Copy selection
          */
-        vm.changeCopy = function(copy_bad_id,desc_id,reset){
+        /*vm.changeCopy = function(copy_bad_id,desc_id,reset){
             BlakeDataService.setSelectedCopy(copy_bad_id,desc_id).then(function() {
                 vm.copy = BlakeDataService.selectedCopy;
 
@@ -94,7 +98,7 @@
 
         $scope.$on('$routeUpdate',function(e,v) {
             vm.setObject(v.params.descId);
-        });
+        });*/
 
         /*
          * Toolbar manipulation
@@ -113,9 +117,9 @@
         }
 
 
-        vm.newWindow = function(object){
+        /*vm.newWindow = function(object){
             $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?descId='+object.desc_id, '_blank','width=800, height=600');
-        }
+        }*/
 
         /*
          * View Manipulation
@@ -148,9 +152,9 @@
 
             return object;
         }
-        vm.newWindow = function(object){
+        /*vm.newWindow = function(object){
             $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?descId='+object.desc_id, '_blank','width=800, height=600');
-        }
+        }*/
 
         vm.trueSizeOpen = function(object){
             if(!angular.isDefined($cookies.getObject('clientPpi'))){
@@ -175,9 +179,6 @@
         }
 
     };
-
-
-    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location','$sessionStorage','$window','$modal','imageManipulation','$cookies'];
 
     angular.module('blake').controller('CopyController', controller);
 
