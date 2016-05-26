@@ -3,11 +3,11 @@
         <info-tray toggle="copyCtrl.toggleTray()" ng-if="copyCtrl.$storage.view.mode != 'read'"></info-tray>
         <div id="object-view" ng-class="{'show-tools': copyCtrl.showTools, 'hide-tools': !copyCtrl.showTools,'view-objects': copyCtrl.$storage.view.mode == 'object','reading-view': copyCtrl.$storage.view.mode == 'read','compare-objects': copyCtrl.$storage.view.mode == 'compare'}">
 
-            <object-viewer copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)" reset-compare="copyCtrl.resetComparisonObjects(object)" ng-if="copyCtrl.$storage.view.mode == 'object'"></object-viewer>
+            <object-viewer ng-if="copyCtrl.$storage.view.mode == 'object'"></object-viewer>
 
-            <object-compare copy="copyCtrl.copy" work="copyCtrl.work" change-copy="copyCtrl.changeCopy(copy_bad_id,object_id,reset)" reset-view="copyCtrl.resetView()" ng-if="copyCtrl.$storage.view.mode == 'compare'"></object-compare>
+            <object-compare ng-if="copyCtrl.$storage.view.mode == 'compare'"></object-compare>
 
-            <object-reading copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)"  reset-view="copyCtrl.resetView()" reset-compare="copyCtrl.resetComparisonObjects(object)" ng-if="copyCtrl.$storage.view.mode == 'read'"></object-reading>
+            <object-reading ng-if="copyCtrl.$storage.view.mode == 'read'"></object-reading>
 
             <!--Edit buttons-->
             <div id="object-tools" ng-if="copyCtrl.$storage.view.mode != 'read'">
@@ -17,7 +17,7 @@
                         <button type="button" class="btn btn-default rotate" ng-click="copyCtrl.rotate(copyCtrl.getObjectToTransform())"><span class="edit-icon"></span> Rotate</button>
                         <button type="button" class="btn btn-default zoom"><span class="edit-icon"></span> Zoom</button>
                         <button type="button" class="btn btn-default true-size" ng-click="copyCtrl.trueSizeOpen(copyCtrl.getObjectToTransform())"><span class="edit-icon"></span> True Size</button>
-                        <button type="button" class="btn btn-default new-window" ng-click="copyCtrl.newWindow(copyCtrl.getObjectToTransform())"><span class="edit-icon"></span> Enlargement</button>
+                        <button type="button" class="btn btn-default new-window" show-me="enlargement" object="copyCtrl.bds.object"><span class="edit-icon"></span> Enlargement</button>
                         <button type="button" class="btn btn-default cite"><span class="edit-icon"></span> Generate Citation</button>
                     </div>
                     <div class="show-hide-tools" ng-click="copyCtrl.toggleTools()"><span>+</span></div>
@@ -30,5 +30,5 @@
     </div>
 </div>
 <div id="archive-tabs" role="tabpanel" ng-if="copyCtrl.$storage.view.mode != 'read'">
-    <copy-tabs copy="copyCtrl.copy" work="copyCtrl.work" change-object="copyCtrl.changeObject(object)" reset-view="copyCtrl.resetView()" reset-compare="copyCtrl.resetComparisonObjects(object)"></copy-tabs>
+    <copy-tabs></copy-tabs>
 </div>
