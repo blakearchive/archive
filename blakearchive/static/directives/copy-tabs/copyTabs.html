@@ -4,13 +4,13 @@
                 <li role="presentation" ng-class="{active:tabs.selectedTab == '#objects-in-copy'}">
                     <a href="" ng-click="tabs.showTab('#objects-in-copy');" role="tab">Objects in {{ tabs.getCopyOrGroup() }}</a>
                 </li>
-                <li role="presentation" ng-if="tabs.copy.selectedObject.matrix.length > 0" ng-class="{active:tabs.selectedTab == '#objects-from-same-matrix'}">
+                <li role="presentation" ng-if="tabs.bds.object.matrix.length > 0" ng-class="{active:tabs.selectedTab == '#objects-from-same-matrix'}">
                     <a href="" ng-click="tabs.showTab('#objects-from-same-matrix');" role="tab">Objects from the Same Matrix</a>
                 </li>
-                <li role="presentation" ng-if="tabs.copy.selectedObject.sequence.length > 0" ng-class="{active:tabs.selectedTab == '#objects-from-same-production-sequence'}">
+                <li role="presentation" ng-if="tabs.bds.object.sequence.length > 0" ng-class="{active:tabs.selectedTab == '#objects-from-same-production-sequence'}">
                     <a href="" ng-click="tabs.showTab('#objects-from-same-production-sequence');" role="tab">Objects from the Same Production Sequence</a>
                 </li>
-                <li role="presentation" ng-if="tabs.copy.selectedObject.motif.length > 0" ng-class="{active:tabs.selectedTab == '#objects-with-same-motif'}">
+                <li role="presentation" ng-if="tabs.bds.object.motif.length > 0" ng-class="{active:tabs.selectedTab == '#objects-with-same-motif'}">
                     <a href="" ng-click="tabs.showTab('#objects-with-same-motif');" role="tab">Objects with a Similar Design</a>
                 </li>
                 <li role="presentation" ng-class="{active:tabs.selectedTab == '#copy-info'}">
@@ -29,24 +29,21 @@
                 <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-in-copy'" id="objects-in-copy">
                     <header class="page-header">
                         <p class="subhead">Objects In {{ tabs.getCopyOrGroup() }}</p>
-                        <!--<h1>{{ tabs.getHeader() }}
-                            <span>{{ tabs.getOicSubheader() }}</span>
-                        </h1>-->
                     </header>
                     <div class="row">
                         <!-- for letters (multi object groups) -->
-                        <div ng-repeat="obj in tabs.copy.selectedObject.objectsInGroup track by $index" class="col-sm-6 col-md-3" ng-if="tabs.copy.bad_id == 'letters'">
+                        <div ng-repeat="obj in tabs.bds.object.objectsInGroup track by $index" class="col-sm-6 col-md-3" ng-if="tabs.bds.copy.bad_id == 'letters'">
                             <handprint-block scroll-to-top
-                                             action="tabs.changeObject({object:obj}); tabs.resetView(); tabs.resetCompare({object:obj})"
+                                             action="tabs.changeObject(obj)"
                                              image="{{ obj.dbi }}.100.jpg"
                                              footer="{{ obj.title }}">
                             </handprint-block>
                         </div>
 
                         <!-- for everything else -->
-                        <div ng-repeat="obj in tabs.copy.objectsInCopy track by $index" class="col-sm-6 col-md-3" ng-if="tabs.copy.bad_id != 'letters'">
+                        <div ng-repeat="obj in tabs.bds.copyObjects track by $index" class="col-sm-6 col-md-3" ng-if="tabs.bds.copy.bad_id != 'letters'">
                             <handprint-block scroll-to-top
-                                             action="tabs.changeObject({object:obj}); tabs.resetView(); tabs.resetCompare({object:obj})"
+                                             action="tabs.changeObject(obj)"
                                              image="{{ obj.dbi }}.100.jpg"
                                              footer="{{ obj.full_object_id }}">
                             </handprint-block>
@@ -58,71 +55,37 @@
                 <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-from-same-matrix'"  id="objects-from-same-matrix">
                     <header class="page-header">
                         <p class="subhead">Objects from the Same Matrix</p>
-                        <!--<h1>{{ tabs.getHeader() }}
-                            <span style="text-transform: capitalize">{{ tabs.getObjectTitle(tabs.copy.selectedObject) }}</span>
-                        </h1>-->
                     </header>
-                    <!--<objects-from-same-matrix objects="tabs.copy.selectedObject.matrix" item="tabs.copy.selectedObject" virtual="tabs.copy.virtual"></objects-from-same-matrix>-->
-                    <objects-from-same copy="tabs.copy" objects="tabs.copy.selectedObject.matrix" type="matrix"></objects-from-same>
-                    <!--<objects-from-same-matrix copy="tabs.copy"></objects-from-same-matrix>-->
+                    <objects-from-same type="matrix"></objects-from-same>
                 </div>
 
                 <!-- SAME SEQUENCE -->
                 <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-from-same-production-sequence'"  id="objects-from-same-production-sequence">
                     <header class="page-header">
                         <p class="subhead">Objects from the Same Production Sequence</p>
-                        <!--<h1>{{ tabs.getHeader() }}
-                            <span style="text-transform: capitalize">{{ tabs.getObjectTitle(tabs.copy.selectedObject) }}</span>
-                        </h1>-->
                     </header>
-                    <objects-from-same copy="tabs.copy" objects="tabs.copy.selectedObject.sequence" type="sequence"></objects-from-same>
-                    <!--<div class="row">
-                        <div ng-repeat="obj in tabs.copy.selectedObject.sequence track by $index" class="col-sm-6 col-md-3">
-                            <div class="handprint-block">
-                                <a href="/blake/copy/{{ obj.copy_bad_id }}?objectId={{ obj.object_id }}">
-                                    <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
-                                    <span class="description" object-description object="obj" virtual="tabs.copy.virtual" type="objectFull"></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>-->
+                    <objects-from-same type="sequence"></objects-from-same>
                 </div>
 
                 <!-- SAME MOTIF -->
                 <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-with-same-motif'" id="objects-with-same-motif">
                     <header class="page-header">
                         <p class="subhead">Objects with the Same Motif</p>
-                        <!--<h1>{{ tabs.getHeader() }}
-                            <span style="text-transform: capitalize">{{ tabs.getObjectTitle(tabs.copy.selectedObject) }}</span>
-                        </h1>-->
                     </header>
-                    <objects-from-same copy="tabs.copy" objects="tabs.copy.selectedObject.motif" type="motif"></objects-from-same>
-                    <!--<div class="row">
-                        <div ng-repeat="obj in tabs.copy.selectedObject.motif track by $index" class="col-sm-6 col-md-3">
-                            <div class="handprint-block">
-                                <a href="/blake/copy/{{ obj.copy_bad_id}}?objectId={{ obj.object_id }}">
-                                    <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ obj.dbi }}.100.jpg);"></span>
-                                    <span class="description" object-description object="obj" virtual="tabs.copy.virtual" type="objectFull"></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>-->
+                    <objects-from-same type="motif"></objects-from-same>
                 </div>
 
                 <!-- COPY INFO -->
                 <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#copy-info'" id="copy-info">
                     <header class="page-header">
                         <p class="subhead">{{ tabs.getCopyOrWork() }} Information</p>
-                        <!--<h1>{{ tabs.getHeader() }}
-                            <span>{{ tabs.getOicSubheader() }}</span>
-                        </h1>-->
                     </header>
-                    <copy-information copy="tabs.copy"></copy-information>
+                    <copy-information copy="tabs.bds.copy"></copy-information>
                 </div>
 
                 <!-- Electronic Edition Info-->
                 <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#ee-info'" id="ee-info">
-                    {{tabs.copy.header}}
+                    {{tabs.bds.copy.header}}
                 </div>
 
             </div>
