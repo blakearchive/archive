@@ -668,6 +668,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 }
 
             })
+
         };
 
         blakeData.numberVirtualWorkObjects = function(objects){
@@ -750,6 +751,13 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             });
         }
 
+        blakeData.changeCopy = function(copyId,descId){
+            return blakeData.setSelectedCopy(copyId,descId).then(function(){
+                $location.path('/blake/copy/'+copyId,false);
+                $location.search('descId',descId);
+            });
+        }
+
         return blakeData;
     }])
 
@@ -813,7 +821,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
         cof.setMainObject = function(obj){
             cof.main = obj;
-            cof.comparisonObjects.unshift(obj);
+            if(!cof.isComparisonObject(obj)){
+                cof.comparisonObjects.unshift(obj);
+            }
         };
 
         cof.isMain = function(obj){
