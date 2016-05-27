@@ -22,6 +22,7 @@
         })
 
         $rootScope.worksNavState = false;
+        $rootScope.onWorkPage = true;
         /*
             TODO: It's worth exploring the data models of work/copy/object for better efficiencies.
             Currently there are 4 possibilities:
