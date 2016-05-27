@@ -1,9 +1,8 @@
 (function(){
 
     /** @ngInject */
-    var controller = function($sessionStorage,BlakeDataService){
+    var controller = function($rootScope,BlakeDataService){
         var vm = this;
-        vm.$storage = $sessionStorage;
         vm.bds = BlakeDataService;
         
         vm.getOvpTitle = function(){
@@ -26,6 +25,12 @@
             }
         }
 
+
+        vm.changeObject = function(object){
+            vm.bds.changeObject(object);
+            $rootScope.view.mode = 'object';
+            $rootScope.view.scope = 'image';
+        }
     }
 
 
