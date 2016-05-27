@@ -4,61 +4,36 @@
 
 (function() {
 
-    var controller = function ($scope, BlakeDataService, $routeParams) {
+    /** @ngInject */
+    var controller = function (BlakeDataService) {
 
         var vm = this;
-
-        //vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
+        vm.bds = BlakeDataService;
 
         vm.getHeader = function(){
-            if(angular.isDefined(vm.copy)){
-                if(vm.copy.virtual){
-                    return vm.copy.selectedObject.header;
-                } else {
-                    return vm.copy.header;
-                }
+            if(vm.bds.work.virtual){
+                return vm.bds.object.header;
+            } else {
+                return vm.bds.copy.header;
             }
         }
 
         vm.getSource = function(){
-            if(angular.isDefined(vm.copy)) {
-                if (vm.copy.virtual) {
-                    return vm.copy.selectedObject.source;
-                } else {
-                    return vm.copy.source;
-                }
+            if (vm.bds.work.virtual) {
+                return vm.bds.object.source;
+            } else {
+                return vm.bds.copy.source;
             }
         }
 
         vm.getOrigination = function(){
-            if(angular.isDefined(vm.copy)) {
-                var origination = vm.getSource().objdescid.origination;
-                if(angular.isArray(vm.getSource().objdescid.origination)){
-                    return origination;
-                } else {
-                    return [origination];
-                }
+            var origination = angular.isDefined(vm.getSource()) ? vm.getSource().objdescid.origination : '';
+            if(angular.isArray(origination)){
+                return origination;
+            } else {
+                return [origination];
             }
         }
-
-        /*vm.init = function(){
-            if(angular.isDefined(vm.copy)){
-                console.log('copy info set');
-                if(vm.copy.virtual){
-
-                } else {
-                    vm.copySource = vm.copy.source;
-                    vm.copyHeader = vm.copy.header;
-                }
-            } else {
-                console.log('copy info not set');
-            }
-        }*/
-
-        /*$scope.$on('global::copyInfo',function(event,data){
-            vm.copySource = data.source;
-            vm.copyHeader = data.header;
-        });*/
 
         vm.getOriginationRole = function (role) {
             if (role) {
@@ -75,7 +50,6 @@
         }
     }
 
-    controller.$inject = ['$scope', 'BlakeDataService', '$routeParams'];
 
     var copyInformation = function(){
         return {
@@ -84,7 +58,6 @@
             controller: controller,
             controllerAs: 'info',
             scope:{
-                copy: '=copy',
                 highlight: '@highlight'
             },
             bindToController: true

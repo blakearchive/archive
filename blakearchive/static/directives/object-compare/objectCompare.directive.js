@@ -28,8 +28,15 @@
             }
         }
 
-        vm.changeObject = function(copyId,objectId){
-            vm.bds.changeCopy(copyId,objectId);
+        vm.changeObject = function(object){
+            console.log(object);
+            vm.bds.changeCopy(object.copy_bad_id,object.desc_id);
+        }
+
+        vm.goToObject = function(object){
+            $rootScope.view.mode = 'object';
+            $rootScope.view.scope = 'image';
+            vm.changeObject(object);
         }
 
     }
