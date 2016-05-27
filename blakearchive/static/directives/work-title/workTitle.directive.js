@@ -13,7 +13,7 @@
             }
         }
 
-        vm.getOvpTitle = function(){
+        vm.getTitle = function(){
             if(vm.bds.work.virtual == true){
                 if(vm.bds.copy.bad_id == 'letters'){
                     return vm.bds.object.object_group;
@@ -21,6 +21,9 @@
                     return vm.bds.work.title;
                 }
             } else {
+                if($rootScope.onWorkPage == true) {
+                    return vm.bds.work.title;
+                }
                 var copyPhrase = vm.bds.copy.archive_copy_id == null ? '' : ', Copy '+vm.bds.copy.archive_copy_id;
 
                 if(vm.bds.copy.header){
