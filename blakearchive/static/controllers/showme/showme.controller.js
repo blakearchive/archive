@@ -4,62 +4,61 @@
 
 (function () {
 
-    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location,$sessionStorage,$modal,$cookies) {
+    /** @ngInject */
+    var controller = function ($rootScope,$routeParams,$modal,$cookies,BlakeDataService) {
 
         var vm = this;
-        vm.$storage = $sessionStorage;
+        vm.bds = BlakeDataService;
 
         $rootScope.showmePage = true;
 
         vm.what = $routeParams.what;
 
         BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.descId).then(function() {
-            vm.copy = BlakeDataService.selectedCopy;
-            var copyBad = BlakeDataService.selectedCopy.bad_id,
-                workBadMatch = copyBad.indexOf('.'),
-                workBad = workBadMatch > 0 ? copyBad.substring(0,workBadMatch) : copyBad;
-            if (angular.isUndefined(BlakeDataService.selectedWork)) {
-                BlakeDataService.setWorkNoCopies(workBad).then(function(){
-                    vm.init();
-                });
-            } else {
-                vm.init();
-            }
+            vm.init();
         });
 
 
         vm.init = function(){
-            vm.work = BlakeDataService.selectedWork;
-            if(vm.copy.objectsInCopy.length > 1){
+            if(vm.bds.copyObjects.length > 1){
                 vm.getPreviousNextObjects();
             }
         }
 
         vm.getOvpTitle = function(){
-            if(angular.isDefined(vm.copy)){
-                if(vm.copy.virtual == true){
-                    return vm.copy.selectedObject.title;
+            if(angular.isDefined(vm.bds.copy)){
+                if(vm.bds.work.virtual == true){
+                    if(vm.bds.copy.bad_id == 'letters'){
+                        return vm.bds.object.object_group;
+                    } else {
+                        return vm.bds.work.title;
+                    }
                 } else {
-                    var copyPhrase = vm.copy.archive_copy_id == null ? '' : ', Copy '+vm.copy.archive_copy_id;
-                    return vm.copy.header.filedesc.titlestmt.title['@reg']+copyPhrase;
+                    var copyPhrase = vm.bds.copy.archive_copy_id == null ? '' : ', Copy '+vm.bds.copy.archive_copy_id;
+
+                    if(vm.bds.copy.header){
+                        copyPhrase = vm.bds.copy.header.filedesc.titlestmt.title['@reg']+copyPhrase
+                    }
+
+                    return copyPhrase;
                 }
             }
         }
 
         vm.getPreviousNextObjects = function () {
-            if (vm.copy.objectsInCopy && vm.copy.objectsInCopy.length) {
-                for (var i = vm.copy.objectsInCopy.length; i--;) {
-                    if (vm.copy.objectsInCopy[i].object_id == vm.copy.selectedObject.object_id) {
+            if (vm.bds.copyObjects && vm.bds.copyObjects.length) {
+                for (var i = vm.bds.copyObjects.length; i--;) {
+                    if (vm.bds.copyObjects[i].object_id == vm.bds.object.object_id) {
                         // Extra code here to make the list circular
                         if (i - 1 < 0) {
-                            vm.previousObject = vm.copy.objectsInCopy[vm.copy.objectsInCopy.length - 1];
+                            vm.previousObject = vm.bds.copyObjects[vm.bds.copyObjects.length - 1];
                         } else {
-                            vm.previousObject = vm.copy.objectsInCopy[i - 1];
+                            vm.previousObject = vm.bds.copyObjects[i - 1];
                         }
-                        if (i + 1 >= vm.copy.objectsInCopy.length) {
-                            vm.nextObject = vm.copy.objectsInCopy[0];
+                        if (i + 1 >= vm.bds.copyObjects.length) {
+                            vm.nextObject = vm.bds.copyObjects[0];
                         } else {
-                            vm.nextObject = vm.copy.objectsInCopy[i + 1];
+                            vm.nextObject = vm.bds.copyObjects[i + 1];
                         }
                         break;
                     }
@@ -68,14 +67,12 @@
         };
 
         vm.changeObject = function(object){
-            vm.copy.selectedObject = object;
-            $location.search('descId',object.object_id);
-            vm.init();
+            vm.bds.changeObject(object);
         }
 
         vm.trueSize = function(){
-            if(angular.isDefined($cookies.getObject('clientPpi')) && angular.isDefined((vm.copy))){
-                var size = vm.copy.selectedObject.physical_description.objsize['#text'].split(' '),
+            if(angular.isDefined($cookies.getObject('clientPpi')) && angular.isDefined((vm.bds.copy))){
+                var size = vm.bds.object.physical_description.objsize['#text'].split(' '),
                     clientPpi = $cookies.getObject('clientPpi'),
                     x = size[2],
                     y = size[0],
@@ -102,9 +99,6 @@
         }
 
     };
-
-
-    controller.$inject = ['$scope','BlakeDataService','$routeParams','WindowSize','$rootScope','$location','$sessionStorage','$modal','$cookies'];
 
     angular.module('blake').controller('ShowMeController', controller);
 

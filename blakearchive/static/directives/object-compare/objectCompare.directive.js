@@ -1,51 +1,61 @@
 (function(){
 
 
-    var controller = function ($scope, WindowSize, $timeout, $rootScope, $sessionStorage, $location) {
+    /** @ngInject */
+    var controller = function ($rootScope,BlakeDataService,CompareObjectsFactory) {
+
         var vm = this;
+        vm.bds = BlakeDataService;
+        vm.cof = CompareObjectsFactory;
 
         vm.getOvpTitle = function(){
-            if(angular.isDefined(vm.copy)){
-                if(vm.copy.virtual == true){
-                    return vm.copy.selectedObject.title;
+            if(angular.isDefined(vm.bds.copy)){
+                if(vm.bds.work.virtual == true){
+                    if(vm.bds.copy.bad_id == 'letters'){
+                        return vm.bds.object.object_group;
+                    } else {
+                        return vm.bds.work.title;
+                    }
                 } else {
-                    //var copyPhrase = vm.copy.archive_copy_id == null ? '' : ', Copy '+vm.copy.archive_copy_id;
-                    return vm.copy.header.filedesc.titlestmt.title['@reg'];
+                    var copyPhrase = vm.bds.copy.archive_copy_id == null ? '' : ', Copy '+vm.bds.copy.archive_copy_id;
+
+                    if(vm.bds.copy.header){
+                        copyPhrase = vm.bds.copy.header.filedesc.titlestmt.title['@reg']+copyPhrase
+                    }
+
+                    return copyPhrase;
                 }
             }
         }
 
-        vm.$storage = $sessionStorage;
-
-        vm.setActive = function(obj){
-            angular.forEach(vm.$storage.comparisonObjects, function(v,k){
-                v.isActive = false;
-            });
-            obj.isActive = true;
-            //$rootScope.$broadcast('compareCtrl::objectChanged',obj);
+        vm.changeObject = function(object){
+            console.log(object);
+            vm.bds.changeCopy(object.copy_bad_id,object.desc_id);
         }
 
-        /*$scope.$on('copyCtrl::objectChanged',function(){
-            vm.$storage.comparisonObjects[0].isActive = true;
-        });*/
+        vm.goToObject = function(object){
+            $rootScope.view.mode = 'object';
+            $rootScope.view.scope = 'image';
+            vm.changeObject(object);
+        }
 
     }
 
-    controller.$inject = ['$scope','WindowSize','$timeout','$rootScope','$sessionStorage','$location'];
+    var link = function(scope,ele,attr,vm){
+        var object = function(){ return vm.bds.object };
+        scope.$watch(object,function(){
+            vm.cof.setMainObject(vm.bds.object);
+        },true);
+    }
 
     var objectCompare = function(){
         return {
             restrict: 'E',
             templateUrl: '/blake/static/directives/object-compare/objectCompare.html',
             controller: controller,
-            scope: {
-                copy: '=copy',
-                work: '=work',
-                changeCopy: '&',
-                resetView: '&'
-            },
             controllerAs: 'compare',
-            bindToController: true
+            bindToController: true,
+            link: link
         };
     }
 
