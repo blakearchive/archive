@@ -1,29 +1,30 @@
 (function() {
 
-    var controller = function ($scope, $sessionStorage,$rootScope) {
+    /** @ngInject */
+    var controller = function ($rootScope,BlakeDataService) {
 
         var vm = this;
-
-        vm.$storage = $sessionStorage;
+        vm.bds = BlakeDataService;
 
         vm.getOvpTitle = function(){
-            if(angular.isDefined(vm.copy)){
-                if(vm.copy.virtual == true){
-                    if(vm.copy.bad_id == 'letters'){
-                        return vm.copy.selectedObject.object_group;
-                    } else {
-                        return vm.work.title;
-                    }
+            if(vm.bds.work.virtual == true){
+                if(vm.bds.copy.bad_id == 'letters'){
+                    return vm.bds.object.object_group;
                 } else {
-                    var copyPhrase = vm.copy.archive_copy_id == null ? '' : ', Copy '+vm.copy.archive_copy_id;
-                    return vm.copy.header.filedesc.titlestmt.title['@reg']+copyPhrase;
+                    return vm.bds.work.title;
                 }
+            } else {
+                var copyPhrase = vm.bds.copy.archive_copy_id == null ? '' : ', Copy '+vm.bds.copy.archive_copy_id;
+
+                if(vm.bds.copy.header){
+                    copyPhrase = vm.bds.copy.header.filedesc.titlestmt.title['@reg']+copyPhrase
+                }
+
+                return copyPhrase;
             }
         }
 
     }
-
-    controller.$inject = ['$scope', '$sessionStorage','$rootScope'];
 
     var workTitle = function () {
 
@@ -31,10 +32,6 @@
             restrict: 'E',
             templateUrl: '/blake/static/directives/work-title/workTitle.html',
             controller: controller,
-            scope: {
-                copy: '=copyObject',
-                work: '=workObject',
-            },
             controllerAs: 'workTitle',
             bindToController: true
         };
