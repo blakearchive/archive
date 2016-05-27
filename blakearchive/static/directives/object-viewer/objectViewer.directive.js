@@ -1,10 +1,9 @@
 (function(){
 
     /** @ngInject */
-    var controller = function($scope,$sessionStorage,$modal,BlakeDataService){
+    var controller = function($modal,BlakeDataService){
         var vm = this;
 
-        vm.$storage = $sessionStorage;
         vm.bds = BlakeDataService;
 
         vm.userestrictOpen = function(copy,object){
