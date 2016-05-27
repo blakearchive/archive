@@ -1,6 +1,6 @@
 <div id="showme" class="container-fluid main">
 
-    <div class="row showme-nav" ng-if="showme.copy.objectsInCopy.length > 1">
+    <div class="row showme-nav" ng-if="showme.bds.copyObjects.length > 1">
         <ul class="nav nav-pills nav-justified">
             <li>
                 <a ng-click="showme.changeObject(showme.previousObject)">Previous</a>
@@ -16,14 +16,14 @@
             <h1>{{ showme.getOvpTitle() }}
                 <span ng-if="showme.work.virtual">{{ showme.work.title }}</span>
             </h1>
-            <p class="subhead">{{ showme.copy.selectedObject.full_object_id }}</p>
+            <p class="subhead">{{ showme.bds.object.full_object_id }}</p>
         </header>
     </div>
 
     <!-- Object -->
     <div class="row" id="objectImg" ng-if="showme.what == 'enlargement'">
         <div class="col-xs-12 text-center img-enlarge-container">
-            <img class="img-enlarge" ng-src="http://www.blakearchive.org/blake/images/{{ showme.copy.selectedObject.dbi }}.300.jpg">
+            <img class="img-enlarge" ng-src="http://www.blakearchive.org/blake/images/{{ showme.bds.object.dbi }}.300.jpg">
         </div>
     </div>
 
@@ -31,29 +31,29 @@
     <div class="container">
         <div class="row" id="textTranscription" ng-if="showme.what == 'text'">
             <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-                <text-transcription object="showme.copy.selectedObject"></text-transcription>
+                <text-transcription object="showme.bds.object"></text-transcription>
             </div>
         </div>
 
         <!-- Illustration Description -->
         <div class="row" id="illustrationDescription" ng-if="showme.what == 'desc'">
             <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-                <illustration-description object="showme.copy.selectedObject"></illustration-description>
+                <illustration-description object="showme.bds.object"></illustration-description>
             </div>
         </div>
 
         <!-- Editor's notes -->
         <div class="row" id="editorNotes" ng-if="showme.what == 'note'">
             <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-                <editor-notes object="tray.copy.selectedObject"></editor-notes>
+                <editor-notes object="tray.object"></editor-notes>
             </div>
         </div>
 
         <!-- True Size -->
         <div class="row" id="trueSize" ng-if="showme.what == 'truesize'">
             <div class="col-xs-12 text-center img-enlarge-container">
-                <p>{{ showme.copy.selectedObject.physical_description.objsize['#text'] }}</p>
-                <img class="img-enlarge" ng-src="http://www.blakearchive.org/blake/images/{{ showme.copy.selectedObject.dbi }}.100.jpg" ng-style="showme.trueSize()">
+                <p>{{ showme.bds.object.physical_description.objsize['#text'] }}</p>
+                <img class="img-enlarge" ng-src="http://www.blakearchive.org/blake/images/{{ showme.bds.object.dbi }}.100.jpg" ng-style="showme.trueSize()">
             </div>
             <div class="col-xs-12 text-center">
                 <p></p>
@@ -64,7 +64,7 @@
 
     <hr>
 
-    <div class="row showme-nav" ng-if="showme.copy.objectsInCopy.length > 1">
+    <div class="row showme-nav" ng-if="showme.bds.copyObjects.length > 1">
         <ul class="nav nav-pills nav-justified">
             <li>
                 <a ng-click="showme.changeObject(showme.previousObject)">Previous</a>
