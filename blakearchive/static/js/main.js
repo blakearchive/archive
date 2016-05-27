@@ -859,7 +859,12 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             cof.comparisonObjects.unshift(cof.main);
         };
 
-        cof.isComparisonObject = function (obj) {
+        cof.isComparisonObject = function (obj,type) {
+            if(angular.isDefined(type)){
+                if(type != cof.comparisonType){
+                    return false;
+                }
+            }
             var i;
             for (i = cof.comparisonObjects.length; i--;) {
                 if (cof.comparisonObjects[i].object_id == obj.object_id) {

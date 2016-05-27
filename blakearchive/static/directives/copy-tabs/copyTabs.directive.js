@@ -49,23 +49,6 @@
             $rootScope.view.mode = 'object';
             $rootScope.view.scope = 'image';
         }
-
-
-        /*$scope.$on('copyCtrl::objectChanged',function(object){
-            if($routeParams.descId){
-                vm.selectedTab = '#objects-in-copy';
-            } else {
-                vm.selectedTab = angular.isDefined($routeParams.tab) ? '#'+$routeParams.tab : '#objects-in-copy';
-            }
-        });*/
-
-        /*if($routeParams.tab) {
-            $timeout(function () {
-                $('html, body').animate({
-                    scrollTop: $('#archive-tabs').offset().top
-                }, 'slow')
-            }, 0);
-        }*/
     }
 
     var link = function(scope,ele,attr,vm){
