@@ -16,6 +16,8 @@
 
         BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.descId).then(function(){
             vm.cof.clearComparisonObjects();
+            $rootScope.view.mode = 'object';
+            $rootScope.view.scope = 'image';
         })
 
         /*
@@ -116,22 +118,6 @@
         vm.toggleTools = function(){
             vm.showTools = !vm.showTools;
             $scope.$broadcast('copyCtrl::toggleTools',vm.showTools);
-        }
-
-
-        /*vm.newWindow = function(object){
-            $window.open('/blake/new-window/enlargement/'+object.copy_bad_id+'?descId='+object.desc_id, '_blank','width=800, height=600');
-        }*/
-
-        /*
-         * View Manipulation
-         */
-        vm.resetView = function(){
-            if(angular.isDefined(vm.$storage.view)){
-                vm.$storage.view.mode = 'object';
-                vm.$storage.view.scope = 'image';
-            }
-            vm.resetComparisonObjects();
         }
 
         /*

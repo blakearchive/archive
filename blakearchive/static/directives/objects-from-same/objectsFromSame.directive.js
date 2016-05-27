@@ -5,12 +5,11 @@
 (function(){
 
     /** @ngInject */
-    var controller = function($scope,$rootScope,$sessionStorage,BlakeDataService,CompareObjectsFactory){
+    var controller = function($rootScope,BlakeDataService,CompareObjectsFactory){
 
         var vm = this;
         vm.bds = BlakeDataService;
         vm.cof = CompareObjectsFactory;
-        vm.$storage = $sessionStorage;
         vm.compareText = "Select All Objects";
         vm.selectedAll = false;
 
@@ -41,25 +40,20 @@
 
         vm.activateCompare = function(){
             $rootScope.worksNavState = false;
-            $sessionStorage.view = {
-                mode: 'compare',
-                scope: 'image'
-            }
+            $rootScope.view.mode = 'compare';
+            $rootScope.view.scope = 'image';
         }
 
-        /*$scope.$on('copyCtrl::objectChanged',function(){
-            vm.compareText = "Select All Objects";
-            vm.selectedAll = false;
-            //vm.checkSelected();
-        })
+    }
 
-        $scope.$watch(function(){return $sessionStorage.comparisonType},function(newVal){
-            if(newVal != vm.type){
+    var link = function(scope,ele,attr,vm){
+        var type = function(){ return vm.cof.comparisonType };
+        scope.$watch(type,function(){
+            if(type != vm.type){
                 vm.compareText = "Select All Objects";
                 vm.selectedAll = false;
             }
-        })*/
-
+        },true);
     }
 
     var objectsFromSame = function(){
@@ -71,7 +65,8 @@
             scope: {
                 type: '@type'
             },
-            bindToController: true
+            bindToController: true,
+            link: link
         }
     }
 

@@ -813,7 +813,15 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
         cof.setMainObject = function(obj){
             cof.main = obj;
+            cof.comparisonObjects.unshift(obj);
         };
+
+        cof.isMain = function(obj){
+            if(obj.object_id == cof.main.object_id){
+                return true;
+            }
+            return false;
+        }
 
         cof.addComparisonObject = function (obj) {
             if (!cof.isComparisonObject(obj)) {
@@ -823,40 +831,39 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
         cof.selectAll = function (objects) {
             cof.comparisonObjects = angular.copy(objects);
+            cof.comparisonObjects.unshift(cof.main);
         };
 
         cof.removeComparisonObject = function (obj) {
             var i;
-            if (angular.isDefined(cof.comparisonObjects)){
-                for (i = cof.comparisonObjects.length; i--;) {
-                    if (cof.comparisonObjects[i].object_id == obj.object_id) {
-                        cof.comparisonObjects.splice(i, 1);
-                        break;
-                    }
+            for (i = cof.comparisonObjects.length; i--;) {
+                if (cof.comparisonObjects[i].object_id == obj.object_id) {
+                    cof.comparisonObjects.splice(i, 1);
+                    break;
                 }
             }
         };
 
         cof.clearComparisonObjects = function () {
             cof.comparisonObjects = [];
+            cof.comparisonObjects.unshift(cof.main);
         };
 
         cof.isComparisonObject = function (obj) {
-            if (angular.isDefined(cof.comparisonObjects)) {
-                for (var i = cof.comparisonObjects.length; i--;) {
-                    if (cof.comparisonObjects[i].object_id == obj.object_id) {
-                        return true;
-                    }
+            var i;
+            for (i = cof.comparisonObjects.length; i--;) {
+                if (cof.comparisonObjects[i].object_id == obj.object_id) {
+                    return true;
                 }
             }
             return false;
         };
 
         cof.checkCompareType = function(type){
-            if(cof.comparisonType != type){
+            if(cof.comparisonType != type && cof.comparisonType != ''){
                 cof.clearComparisonObjects();
-                cof.comparisonType = type;
             }
+            cof.comparisonType = type;
         };
 
         cof.hasObjects = function(){
