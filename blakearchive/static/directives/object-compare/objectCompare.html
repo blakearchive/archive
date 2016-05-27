@@ -6,7 +6,7 @@
         <div class="compare-inner" ng-sortable="{ group: 'o', animation: 150 }">
             <div class="item"
                  ng-repeat="o in compare.cof.comparisonObjects"
-                 ng-class="{active:compare.cof.isMain()}"
+                 ng-class="{active:compare.cof.isMain(o)}"
                  ng-click="compare.changeObject(o)"
                  ng-dblclick="compare.goToObject(o)"
             >
