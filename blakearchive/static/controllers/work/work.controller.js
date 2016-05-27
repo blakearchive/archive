@@ -4,7 +4,8 @@
 
 (function(){
 
-    var controller = function($scope,$routeParams,$rootScope,$sanitize,BlakeDataService){
+    /** @ngInject */
+    var controller = function($rootScope,$routeParams,BlakeDataService){
 
         var vm = this;
 
@@ -20,12 +21,7 @@
             vm.setRows();
         })
 
-
-
-
         $rootScope.worksNavState = false;
-        vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
-
         /*
             TODO: It's worth exploring the data models of work/copy/object for better efficiencies.
             Currently there are 4 possibilities:
@@ -186,8 +182,6 @@
         };
 
     }
-
-    controller.$inject = ['$scope','$routeParams','$rootScope','$sanitize','BlakeDataService'];
 
     angular.module('blake').controller("WorkController", controller);
 
