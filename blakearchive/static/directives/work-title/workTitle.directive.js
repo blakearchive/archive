@@ -6,6 +6,13 @@
         var vm = this;
         vm.bds = BlakeDataService;
 
+        if(!angular.isDefined($rootScope.view)){
+            $rootScope.view = {
+                mode: 'object',
+                scope: 'image'
+            }
+        }
+
         vm.getOvpTitle = function(){
             if(vm.bds.work.virtual == true){
                 if(vm.bds.copy.bad_id == 'letters'){
