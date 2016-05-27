@@ -10,7 +10,7 @@
 </div>
 <div class="row">
     <div ng-repeat="obj in fromSame.bds.object[fromSame.type] track by $index" class="col-sm-6 col-md-3">
-        <div class="select-for-compare-wrapper" ng-class="{'selected': fromSame.cof.isComparisonObject(obj)}">
+        <div class="select-for-compare-wrapper" ng-class="{'selected': fromSame.cof.isComparisonObject(obj,fromSame.type)}">
             <span class="selected" ng-click="fromSame.selectOne(obj)"></span>
             <handprint-block
                     link="/blake/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
