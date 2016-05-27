@@ -4,7 +4,7 @@
 (function () {
 
     /** @ngInject */
-    var controller = function ($scope,$routeParams,$timeout,$sessionStorage,BlakeDataService) {
+    var controller = function ($rootScope,BlakeDataService) {
 
         var vm = this;
 
@@ -46,8 +46,8 @@
 
         vm.changeObject = function(object){
             vm.bds.changeObject(object);
-            //vm.$storage.view.mode = 'object';
-            //vm.$storage.view.scope = 'image';
+            $rootScope.view.mode = 'object';
+            $rootScope.view.scope = 'image';
         }
 
 
