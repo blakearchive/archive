@@ -28,13 +28,9 @@
             }
         }
 
-        /*vm.setActive = function(obj){
-            angular.forEach(vm.$storage.comparisonObjects, function(v,k){
-                v.isActive = false;
-            });
-            obj.isActive = true;
-        }*/
-
+        vm.changeObject = function(copyId,objectId){
+            vm.bds.changeCopy(copyId,objectId);
+        }
 
     }
 
