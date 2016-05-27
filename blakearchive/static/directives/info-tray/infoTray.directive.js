@@ -1,7 +1,9 @@
 (function(){
 
-    var controller = function($scope,BlakeDataService,WindowSize,$window, $routeParams){
+    /** @ngInject */
+    var controller = function($scope,BlakeDataService,WindowSize,$window){
         var vm = this;
+        vm.bds = BlakeDataService;
 
         vm.firstLine = 1;
         vm.panelAdjust = 55;
@@ -42,11 +44,9 @@
             vm.resize();
         });
         $scope.$on('ovpImage::ovpIncrease',function(event,adjust){
-            console.log(adjust);
             vm.resize(adjust);
         });
         $scope.$on('copyCtrl::toggleTools',function(e,tools){
-            console.log(tools);
             if(tools){
                 vm.resize();
             } else {
@@ -54,14 +54,12 @@
             }
         })
 
-        $scope.$on('copyCtrl::objectChanged',function(e,d){
+        /*$scope.$on('copyCtrl::objectChanged',function(e,d){
             vm.object = d;
-        });
+        });*/
 
 
     }
-
-    controller.$inject = ['$scope','BlakeDataService','WindowSize','$window', '$routeParams'];
 
     var infoTray = function(){
         return {
