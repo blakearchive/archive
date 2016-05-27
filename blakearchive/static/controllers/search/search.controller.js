@@ -8,6 +8,8 @@
 
         var objectMatchingMedium, workMatchingMedium, vm = this;
 
+        vm.bds = BlakeDataService;
+
         $rootScope.showSubMenu = 0;
         $rootScope.worksNavState = false;
 
@@ -17,9 +19,9 @@
         $scope.workResults = [];
 
         $scope.search = function () {
-            var objectSearch = BlakeDataService.queryObjects($scope.searchConfig),
-                copySearch = BlakeDataService.queryCopies($scope.searchConfig),
-                workSearch = BlakeDataService.queryWorks($scope.searchConfig);
+            var objectSearch = vm.bds.queryObjects($scope.searchConfig),
+                copySearch = vm.bds.queryCopies($scope.searchConfig),
+                workSearch = vm.bds.queryWorks($scope.searchConfig);
             return $q.all([objectSearch,copySearch,workSearch]).then(function(results){
                 $scope.objectResults = results[0];
                 angular.forEach($scope.objectResults, function(works,type){

@@ -1,27 +1,25 @@
 (function() {
 
-    var controller = function ($scope, $sessionStorage,$rootScope) {
+    /** @ngInject */
+    var controller = function ($rootScope) {
 
         var vm = this;
 
-        if(!angular.isDefined($sessionStorage.view)){
-            $sessionStorage.view = {
+        if(!angular.isDefined($rootScope.view)){
+            $rootScope.view = {
                 mode: 'object',
                 scope: 'image'
             }
         }
 
-        vm.$storage = $sessionStorage;
-
         vm.changeView = function(mode,scope){
-            vm.$storage.view.mode = mode;
-            vm.$storage.view.scope = scope;
+            $rootScope.view.mode = mode;
+            $rootScope.view.scope = scope;
             $rootScope.worksNavState = false;
         }
 
     }
 
-    controller.$inject = ['$scope', '$sessionStorage','$rootScope'];
 
     var viewSubMenu = function () {
 
