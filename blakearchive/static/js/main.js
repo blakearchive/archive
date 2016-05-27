@@ -744,7 +744,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         }
 
         blakeData.changeObject = function(object){
-            blakeData.setFromSameX(object).then(function(){
+            return blakeData.setFromSameX(object).then(function(){
                 blakeData.object = object;
                 $location.search('descId',blakeData.object.desc_id);
             });
@@ -803,9 +803,71 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         return imageManipulation;
     })
 
-    .factory('CompareObjectsService',['$sessionStorage', function($sessionStorage){
+    .factory('CompareObjectsFactory', function(){
 
-    }])
+        var cof = this;
+
+        cof.comparisonObjects = [];
+        cof.main = {};
+        cof.comparisonType = '';
+
+        cof.setMainObject = function(obj){
+            cof.main = obj;
+        };
+
+        cof.addComparisonObject = function (obj) {
+            if (!cof.isComparisonObject(obj)) {
+                cof.comparisonObjects.push(obj);
+            }
+        };
+
+        cof.selectAll = function (objects) {
+            cof.comparisonObjects = angular.copy(objects);
+        };
+
+        cof.removeComparisonObject = function (obj) {
+            var i;
+            if (angular.isDefined(cof.comparisonObjects)){
+                for (i = cof.comparisonObjects.length; i--;) {
+                    if (cof.comparisonObjects[i].object_id == obj.object_id) {
+                        cof.comparisonObjects.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        };
+
+        cof.clearComparisonObjects = function () {
+            cof.comparisonObjects = [];
+        };
+
+        cof.isComparisonObject = function (obj) {
+            if (angular.isDefined(cof.comparisonObjects)) {
+                for (var i = cof.comparisonObjects.length; i--;) {
+                    if (cof.comparisonObjects[i].object_id == obj.object_id) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+
+        cof.checkCompareType = function(type){
+            if(cof.comparisonType != type){
+                cof.clearComparisonObjects();
+                cof.comparisonType = type;
+            }
+        };
+
+        cof.hasObjects = function(){
+            if (angular.isDefined(cof.comparisonObjects)) {
+                return cof.comparisonObjects.length > 0 ? true : false;
+            }
+            return false;
+        };
+
+        return cof;
+    })
 
 
     .directive('resize', ['$window', '$timeout', 'WindowSize', function ($window, $timeout, WindowSize) {
@@ -960,10 +1022,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             link: link
         }
     })
-    .directive('ovpImage',function(imageManipulation,$rootScope, $sessionStorage){
+    .directive('ovpImage',function(imageManipulation,$rootScope){
         var link = function(scope,element,attr){
-
-            scope.$storage = $sessionStorage;
 
             var image = angular.element(element.children()),
                 container = angular.element(element.parent()),
@@ -994,7 +1054,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                     }
                 }
 
-                if(height > width && scope.$storage.view.mode == 'compare'){
+                if(height > width && $rootScope.view.mode == 'compare'){
                     if((imageManipulation.transform.rotate % 180) != 0){
                         element.width(height).css({'text-align':'center'});
                     } else {

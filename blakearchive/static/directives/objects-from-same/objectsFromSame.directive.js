@@ -4,96 +4,42 @@
 
 (function(){
 
-    var controller = function($scope,$sessionStorage,$rootScope){
+    /** @ngInject */
+    var controller = function($scope,$rootScope,$sessionStorage,BlakeDataService,CompareObjectsFactory){
 
         var vm = this;
-
-        vm.addComparisonObject = function (obj) {
-            var i, objInList = false;
-            // Don't add an object to the list twice
-            for (i = $sessionStorage.comparisonObjects.length; i--;) {
-                if ($sessionStorage.comparisonObjects[i].object_id == obj.object_id) {
-                    objInList = true;
-                    break;
-                }
-            }
-            if (!objInList) {
-                $sessionStorage.comparisonObjects.push(obj);
-            }
-        };
-
-        vm.removeComparisonObject = function (obj) {
-            var i;
-            for (i = $sessionStorage.comparisonObjects.length; i--;) {
-                if ($sessionStorage.comparisonObjects[i].object_id == obj.object_id) {
-                    $sessionStorage.comparisonObjects.splice(i, 1);
-                    break;
-                }
-            }
-        };
-
-        vm.clearComparisonObjects = function () {
-            $sessionStorage.comparisonObjects = [];
-            $sessionStorage.comparisonObjects.unshift(vm.copy.selectedObject);
-        };
-
-        vm.isComparisonObject = function (obj) {
-            for (var i = $sessionStorage.comparisonObjects.length; i--;) {
-                if ($sessionStorage.comparisonObjects[i].object_id == obj.object_id) {
-                    return true;
-                }
-            }
-            return false;
-        };
+        vm.bds = BlakeDataService;
+        vm.cof = CompareObjectsFactory;
+        vm.$storage = $sessionStorage;
+        vm.compareText = "Select All Objects";
+        vm.selectedAll = false;
 
         vm.selectAll = function () {
-            vm.checkCompareType();
-            if(angular.isDefined(vm.objects)){
-                var obj_size = vm.objects.length;
-                vm.clearComparisonObjects(); // Clear out old comparisons
+            vm.cof.checkCompareType(vm.type);
+            if(!vm.selectedAll) {
+                vm.compareText = "Clear All Objects";
+                vm.selectedAll = true;
+                vm.cof.selectAll(vm.bds.object[vm.type]);
 
-                if(!vm.selectedAll) {
-                    vm.compareText = "Clear All Objects";
-                    vm.selectedAll = true;
-
-                    // Add imgs to compare main viewer img too.
-                    for (var i = obj_size; i--;) {
-                        //vm.objects[i].Selected = true;
-                        vm.addComparisonObject(vm.objects[i]);
-                    }
-
-                } else {
-                    vm.compareText = "Select All Objects";
-                    vm.selectedAll = false;
-                }
+            } else {
+                vm.compareText = "Select All Objects";
+                vm.selectedAll = false;
+                vm.cof.clearComparisonObjects();
             }
         };
 
         // Add/remove single object for comparison
         vm.selectOne = function(obj) {
-            vm.checkCompareType();
-            if(vm.isComparisonObject(obj)) {
-
-                //vm.objects[key].Selected = true;
-                vm.removeComparisonObject(obj);
-
+            if(vm.cof.isComparisonObject(obj)) {
+                vm.cof.removeComparisonObject(obj);
             } else {
-
-                vm.addComparisonObject(obj);
-                //vm.objects[key].Selected = false;
-
+                vm.cof.checkCompareType(vm.type);
+                vm.cof.addComparisonObject(obj);
             }
         };
 
-        vm.checkCompareType = function(){
-            if($sessionStorage.comparisonType != vm.type){
-                vm.clearComparisonObjects();
-                $sessionStorage.comparisonType = vm.type;
-            }
-        }
 
         vm.activateCompare = function(){
-            $sessionStorage.comparisonObjects[0].isActive = true;
             $rootScope.worksNavState = false;
             $sessionStorage.view = {
                 mode: 'compare',
@@ -101,11 +47,7 @@
             }
         }
 
-        vm.compareText = "Select All Objects";
-        vm.selectedAll = false;
-        //vm.checkSelected();
-
-        $scope.$on('copyCtrl::objectChanged',function(){
+        /*$scope.$on('copyCtrl::objectChanged',function(){
             vm.compareText = "Select All Objects";
             vm.selectedAll = false;
             //vm.checkSelected();
@@ -116,12 +58,9 @@
                 vm.compareText = "Select All Objects";
                 vm.selectedAll = false;
             }
-        })
+        })*/
 
     }
-
-    controller.$inject = ['$scope','$sessionStorage','$rootScope'];
-
 
     var objectsFromSame = function(){
         return {
@@ -130,8 +69,6 @@
             controller: controller,
             controllerAs: 'fromSame',
             scope: {
-                copy: '=copy',
-                objects: '=objects',
                 type: '@type'
             },
             bindToController: true

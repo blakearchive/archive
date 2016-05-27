@@ -5,16 +5,18 @@
 (function () {
 
     /** @ngInject */
-    var controller = function ($scope,BlakeDataService,$routeParams,WindowSize,$rootScope,$location,$sessionStorage,$window,$modal,imageManipulation,$cookies) {
+    var controller = function ($scope,$routeParams,$rootScope,$location,$window,$modal,$cookies,BlakeDataService,imageManipulation,CompareObjectsFactory,WindowSize) {
 
         var vm = this;
 
         $rootScope.showSubMenu = 1;
         $rootScope.worksNavState = false;
-        vm.$storage = $sessionStorage;
         vm.bds = BlakeDataService;
+        vm.cof = CompareObjectsFactory;
 
-        BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.descId);
+        BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.descId).then(function(){
+            vm.cof.clearComparisonObjects();
+        })
 
         /*
          * Object and Copy selection
