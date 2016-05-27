@@ -8,9 +8,6 @@
         vm.bds = BlakeDataService;
         vm.cof = CompareObjectsFactory;
 
-        vm.cof.setMainObject(vm.bds.object);
-        
-
         vm.getOvpTitle = function(){
             if(angular.isDefined(vm.bds.copy)){
                 if(vm.bds.work.virtual == true){
@@ -41,13 +38,21 @@
 
     }
 
+    var link = function(scope,ele,attr,vm){
+        var object = function(){ return vm.bds.object };
+        scope.$watch(object,function(){
+            vm.cof.setMainObject(vm.bds.object);
+        },true);
+    }
+
     var objectCompare = function(){
         return {
             restrict: 'E',
             templateUrl: '/blake/static/directives/object-compare/objectCompare.html',
             controller: controller,
             controllerAs: 'compare',
-            bindToController: true
+            bindToController: true,
+            link: link
         };
     }
 
