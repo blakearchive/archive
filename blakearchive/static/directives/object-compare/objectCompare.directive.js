@@ -7,6 +7,7 @@
         var vm = this;
         vm.bds = BlakeDataService;
         vm.cof = CompareObjectsFactory;
+        //$rootScope.onComparePage = true;
 
         vm.getOvpTitle = function(){
             if(angular.isDefined(vm.bds.copy)){
