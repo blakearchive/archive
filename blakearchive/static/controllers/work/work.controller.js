@@ -23,6 +23,7 @@
 
         $rootScope.worksNavState = false;
         $rootScope.onWorkPage = true;
+        $rootScope.showSubMenu = 1;
         /*
             TODO: It's worth exploring the data models of work/copy/object for better efficiencies.
             Currently there are 4 possibilities:
