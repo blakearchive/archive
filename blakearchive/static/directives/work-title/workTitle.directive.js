@@ -29,6 +29,9 @@
                 if(vm.bds.copy.header){
                     copyPhrase = vm.bds.copy.header.filedesc.titlestmt.title['@reg']+copyPhrase
                 }
+                if($rootScope.view.mode == 'compare') {
+                    return copyPhrase + ' (Selected)';
+                }
 
                 return copyPhrase;
             }
