@@ -35,6 +35,9 @@
         }
 
         vm.goToObject = function(object){
+            vm.compareText = "Select All Objects";
+            vm.selectedAll = false;
+            vm.cof.clearComparisonObjects();
             $rootScope.view.mode = 'object';
             $rootScope.view.scope = 'image';
             vm.changeObject(object);
