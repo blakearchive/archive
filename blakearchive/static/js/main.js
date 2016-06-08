@@ -1154,27 +1154,32 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
     })
 
     .filter('highlight',function($sce){
-        return function(text,phrase){
-            if(angular.isDefined(text)){
-                if(phrase){
-                    if(phrase.indexOf(' ')){
-                        phraseArray = phrase.split(' ');
-                        angular.forEach(phraseArray,function(ph){
-                            ph = ph.replace('"','');
-                            text = text.replace(new RegExp('('+ph+')','gi'),'<span class="highlighted">$1</span>');
-                        });
-                        return $sce.trustAsHtml(text);
-                    } else {
-                        text = text.replace(new RegExp('('+phrase+')','gi'),'<span class="highlighted">$1</span>');
-                        return $sce.trustAsHtml(text);
-                    }
-                } else {
-                    return $sce.trustAsHtml(text);
-                }
-            } else {
+        return function(text,phrase) {
+            if (!angular.isDefined(text) || !angular.isDefined(phrase)) {
                 return $sce.trustAsHtml('');
             }
+
+            if (phrase.startsWith('"') && phrase.endsWith('"')) {
+                phrase = phrase.replace(/"/g, '');
+                console.log(phrase);
+                text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
+                return $sce.trustAsHtml(text);
+            }
+
+            if (phrase.indexOf(' ')) {
+                phraseArray = phrase.split(' ');
+                angular.forEach(phraseArray, function (ph) {
+                    text = text.replace(new RegExp('(\\b' + ph + '\\b)', 'gi'), '<span class="highlighted">$1</span>');
+                });
+                return $sce.trustAsHtml(text);
+
+            }
+
+            text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
+
+            return $sce.trustAsHtml(text);
         }
+
     })
 
 
