@@ -1,5 +1,5 @@
-<div class="navbar navbar-default" id="searchOptions" style="border-color:black;">
-    <div class="container-fluid" style="background-color:#303030;">
+<div class="navbar navbar-default" id="searchOptions">
+    <div class="container-fluid">
         <div class="collapse navbar-collapse">
             <!--<form class="navbar-form navbar-left" role="search" ng-submit="search()">
                 <div class="form-group">
@@ -15,10 +15,10 @@
                 <!-- date -->
                 <li dropdown class="dropdown">
                     <a dropdown-toggle role="button" aria-expanded="false">Date <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu" style="background-color:rgb(231, 231, 231);">
+                    <ul class="dropdown-menu" role="menu">
                         <li class="list-header">Restrict Date Range:</li>
                         <li>
-                            <div range-slider min="1772" max="1827" show-values="true" model-min="searchConfig.minDate" model-max="searchConfig.maxDate"></div>
+                            <div range-slider min="1772" max="1827" show-values="true" model-min="searchConfig.minDate" model-max="searchConfig.maxDate" on-handle-up="search()"></div>
                         </li>
                         <li class="divider" role="separator"></li>
                         <li>
@@ -33,7 +33,7 @@
                 <!-- search field -->
                 <li dropdown class="dropdown">
                     <a dropdown-toggle role="button" aria-expanded="false">Search Type <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu" style="background-color:rgb(231, 231, 231);">
+                    <ul class="dropdown-menu" role="menu">
                         <li>
                             <input type="checkbox" ng-model="searchConfig.searchTitle"> Title
                         </li>
@@ -62,27 +62,29 @@
                 <!-- type -->
                 <li dropdown class="dropdown">
                     <a dropdown-toggle role="button" aria-expanded="false">Medium <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu" style="background-color:rgb(231, 231, 231);">
+                    <ul class="dropdown-menu" role="menu">
                         <li>
-                            <input type="checkbox" ng-model="searchConfig.searchIlluminatedBooks"> Illuminated Books
+                            <input type="checkbox" ng-model="searchConfig.searchAllTypes" ng-change="searchCtrl.allTypes()"> Any
                         </li>
                         <li>
-                            <input type="checkbox" ng-model="searchConfig.searchCommercialBookIllustrations">
-                            Commercial Book Illustrations
+                            <input type="checkbox" ng-model="searchConfig.searchIlluminatedBooks" ng-change="searchCtrl.changeType()"> Illuminated Books
                         </li>
                         <li>
-                            <input type="checkbox" ng-model="searchConfig.searchSeparatePrints"> Separate Prints
+                            <input type="checkbox" ng-model="searchConfig.searchCommercialBookIllustrations" ng-change="searchCtrl.changeType()"> Commercial Book Illustrations
                         </li>
                         <li>
-                            <input type="checkbox" ng-model="searchConfig.searchDrawingsPaintings"> Drawings and
+                            <input type="checkbox" ng-model="searchConfig.searchSeparatePrints" ng-change="searchCtrl.changeType()"> Separate Prints
+                        </li>
+                        <li>
+                            <input type="checkbox" ng-model="searchConfig.searchDrawingsPaintings" ng-change="searchCtrl.changeType()"> Drawings and
                             Paintings
                         </li>
                         <li>
-                            <input type="checkbox" ng-model="searchConfig.searchManuscripts"> Manuscripts and
+                            <input type="checkbox" ng-model="searchConfig.searchManuscripts" ng-change="searchCtrl.changeType()"> Manuscripts and
                             Typographic Editions
                         </li>
                         <li>
-                            <input type="checkbox" ng-model="searchConfig.searchRelatedMaterials"> Related Materials
+                            <input type="checkbox" ng-model="searchConfig.searchRelatedMaterials" ng-change="searchCtrl.changeType()"> Related Materials
                         </li>
                     </ul>
                 </li>
@@ -100,15 +102,15 @@
             No results found
         </div>
         
-        <search-results ng-if="searchConfig.searchTitle" label="Title" results="objectResults['title']" highlight="{{searchConfig.searchString}}" type="title" tree="object"></search-results>
-        <search-results ng-if="searchConfig.searchText" label="Transcription" results="objectResults['text']" highlight="{{searchConfig.searchString}}" type="text" tree="object"></search-results>
-        <search-results ng-if="searchConfig.searchImageDescriptions" label="Illustration Description" results="objectResults['description']" highlight="{{searchConfig.searchString}}" type="description" tree="object"></search-results>
-        <search-results ng-if="searchConfig.searchImageKeywords" label="Image Tag" results="objectResults['tag']" highlight="{{searchConfig.searchString}}" type="tag" tree="object"></search-results>
-        <search-results ng-if="searchConfig.searchNotes" label="Editors' Note" results="objectResults['notes']" highlight="{{searchConfig.searchString}}" type="notes" tree="object"></search-results>
-        <search-results ng-if="searchConfig.searchTitle" label="Copy Title" results="copyResults['copy-title']" highlight="{{searchConfig.searchString}}" type="copy-title" tree="copy"></search-results>
-        <search-results ng-if="searchConfig.searchCopyInformation" label="Copies Information" results="copyResults['copy-info']" highlight="{{searchConfig.searchString}}" type="copy-info" tree="copy"></search-results>
-        <search-results ng-if="searchConfig.searchTitle" label="Work Title" results="workResults['title']" highlight="{{searchConfig.searchString}}" type="work-title" tree="work"></search-results>
-        <search-results ng-if="searchConfig.searchWorkInformation" label="Work Information" results="workResults['info']" highlight="{{searchConfig.searchString}}" type="work-info" tree="work"></search-results>
+        <search-results ng-if="searchConfig.searchTitle || searchConfig.searchAllFields" label="Title" results="objectResults['title']" highlight="{{searchConfig.searchString}}" type="title" tree="object"></search-results>
+        <search-results ng-if="searchConfig.searchText || searchConfig.searchAllFields" label="Transcription" results="objectResults['text']" highlight="{{searchConfig.searchString}}" type="text" tree="object"></search-results>
+        <search-results ng-if="searchConfig.searchImageDescriptions || searchConfig.searchAllFields" label="Illustration Description" results="objectResults['description']" highlight="{{searchConfig.searchString}}" type="description" tree="object"></search-results>
+        <search-results ng-if="searchConfig.searchImageKeywords || searchConfig.searchAllFields" label="Image Tag" results="objectResults['tag']" highlight="{{searchConfig.searchString}}" type="tag" tree="object"></search-results>
+        <search-results ng-if="searchConfig.searchNotes || searchConfig.searchAllFields" label="Editors' Note" results="objectResults['notes']" highlight="{{searchConfig.searchString}}" type="notes" tree="object"></search-results>
+        <!--<search-results ng-if="searchConfig.searchTitle" label="Copy Title" results="copyResults['copy-title']" highlight="{{searchConfig.searchString}}" type="copy-title" tree="copy"></search-results>-->
+        <search-results ng-if="searchConfig.searchCopyInformation || searchConfig.searchAllFields" label="Copies" results="copyResults['copy-info']" highlight="{{searchConfig.searchString}}" type="copy-info" tree="copy"></search-results>
+        <!--<search-results ng-if="searchConfig.searchTitle" label="Work Title" results="workResults['title']" highlight="{{searchConfig.searchString}}" type="work-title" tree="work"></search-results>-->
+        <search-results ng-if="searchConfig.searchWorkInformation || searchConfig.searchAllFields" label="Works" results="workResults['info']" highlight="{{searchConfig.searchString}}" type="work-info" tree="work"></search-results>
 
     </div>
 </div>

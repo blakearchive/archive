@@ -114,10 +114,10 @@
                         <illustration-description object="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][2][esr.selectedObject][0]" highlight="{{esr.highlight}}" keywords="only"></illustration-description>
                     </div>
                     
-                    <div ng-if="esr.type == 'copy-title'">
+                    <!--<div ng-if="esr.type == 'copy-title'">
                         <h5 class="text-center">Copy Title</h5>
                         <span ng-bind-html="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][0].title | highlight:esr.highlight"></span>
-                    </div>
+                    </div>-->
                    
                     <div ng-if="esr.type == 'copy-info'">
                          <h5 class="text-center">Copy Information</h5>
@@ -125,9 +125,9 @@
                     </div>
                 </div>
 
-                <div class="work-info-highlight" auto-width adjust="100" breakpoint="992" ng-if="esr.tree == 'work'" class="text-center">
+                <div class="object-result-highlight" auto-width adjust="100" breakpoint="992" ng-if="esr.tree == 'work'" class="text-center">
                     <h5 class="text-center">Work Information</h5>
-                    <div ng-bind-html="esr.getWork(esr.selectedWork).info | highlight:esr.highlight"></div>
+                    <div ng-bind-html="esr.resultTree[esr.selectedWork][0].info | highlight:esr.highlight"></div>
                 </div>
 
             </div>

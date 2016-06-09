@@ -42,8 +42,9 @@
 <nav class="navbar navbar-default" role="navigation" ng-class="{'hidden':showmePage}">
   <div class="container-fluid">
     <form ng-controller="SearchController" class="navbar-form" role="search" ng-submit="loadSearchPage()">
+        {{ SearchController.searchConfig }}
       <div class="input-group">
-        <input ng-model="searchText" type="text" class="form-control" placeholder="Search">
+        <input ng-model="searchConfig.searchString" type="text" class="form-control" placeholder="Search">
             <span class="input-group-btn">
               <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </span>
