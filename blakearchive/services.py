@@ -33,19 +33,22 @@ class BlakeDataService(object):
     @classmethod
     def generate_medium_filter(cls, config):
         mediums = []
-        if config["searchIlluminatedBooks"]:
-            mediums.append("illbk")
-        if config["searchCommercialBookIllustrations"]:
-            mediums.extend(["comb", "comdes", "comeng"])
-        if config["searchSeparatePrints"]:
-            mediums.extend(["spb", "spdes", "speng"])
-        if config["searchDrawingsPaintings"]:
-            mediums.extend(["cprint", "penc", "penink", "mono", "wc", "paint"])
-        if config["searchManuscripts"]:
-            mediums.extend(["ms", "ltr", "te"])
-        if config["searchRelatedMaterials"]:
-            mediums.extend(["rmb", "rmoth"])
-        return "(" + " OR ".join("medium: '%s'" % medium for medium in mediums) + ")"
+        if config["searchAllTypes"]:
+            return mediums
+        else:
+            if config["searchIlluminatedBooks"]:
+                mediums.append("illbk")
+            if config["searchCommercialBookIllustrations"]:
+                mediums.extend(["comb", "comdes", "comeng"])
+            if config["searchSeparatePrints"]:
+                mediums.extend(["spb", "spdes", "speng"])
+            if config["searchDrawingsPaintings"]:
+                mediums.extend(["cprint", "penc", "penink", "mono", "wc", "paint"])
+            if config["searchManuscripts"]:
+                mediums.extend(["ms", "ltr", "te"])
+            if config["searchRelatedMaterials"]:
+                mediums.extend(["rmb", "rmoth"])
+            return "(" + " OR ".join("medium: '%s'" % medium for medium in mediums) + ")"
 
     @classmethod
     def generate_date_filter(cls, config):
@@ -64,10 +67,11 @@ class BlakeDataService(object):
     def generate_search_element(cls, prefix, config):
         regex = re.compile(r"\s+(and|or)\s+", re.IGNORECASE)
         search_string_parts = re.split(regex, config["searchString"])
-        mediums = cls.generate_medium_filter(config)
+        medium_list = cls.generate_medium_filter(config)
+        mediums = " AND "+medium_list if medium_list else ""
         dates = cls.generate_date_filter(config)
         element_parts = " ".join(cls.generate_element_part(prefix, p) for p in search_string_parts)
-        return "(" + element_parts + ") AND %s AND %s" % (mediums, dates)
+        return "(" + element_parts + ") AND %s%s" % (dates,mediums)
 
     @classmethod
     def solr_object_query(cls, query):
@@ -100,19 +104,19 @@ class BlakeDataService(object):
     @classmethod
     def query_objects(cls, config):
         results = {"title": [], "tag": [], "text": [], "description": [], "notes": []}
-        if config.get("searchTitle"):
+        if config.get("searchTitle") or config.get("searchAllFields"):
             search_string = cls.generate_search_element("title", config)
             results["title"] = cls.solr_object_query(search_string)
-        if config.get("searchImageKeywords"):
+        if config.get("searchImageKeywords") or config.get("searchAllFields"):
             search_string = cls.generate_search_element("components", config)
             results["tag"] = cls.solr_object_query(search_string)
-        if config.get("searchText"):
+        if config.get("searchText") or config.get("searchAllFields"):
             search_string = cls.generate_search_element("text", config)
             results["text"] = cls.solr_object_query(search_string)
-        if config.get("searchImageDescriptions"):
+        if config.get("searchImageDescriptions") or config.get("searchAllFields"):
             search_string = cls.generate_search_element("illustration_description", config)
             results["description"] = cls.solr_object_query(search_string)
-        if config.get("searchNotes"):
+        if config.get("searchNotes") or config.get("searchAllFields"):
             search_string = cls.generate_search_element("notes", config)
             results["notes"] = cls.solr_object_query(search_string)
 
@@ -125,10 +129,7 @@ class BlakeDataService(object):
     @classmethod
     def query_copies(cls, config):
         results = {"copy-title": [], "copy-info": []}
-        if config.get("searchTitle"):
-            search_string = cls.generate_search_element("title", config)
-            results["copy-title"] = cls.solr_copy_query(search_string)
-        if config.get("searchCopyInformation"):
+        if config.get("searchCopies") or config.get("searchAllFields"):
             search_string = cls.generate_search_element("source", config)
             results["copy-info"] = cls.solr_copy_query(search_string)
 
@@ -145,16 +146,9 @@ class BlakeDataService(object):
             "title": {"count": 0, "results": []},
             "info": {"count": 0, "results": []}
         }
-        if config.get("searchTitle"):
-            offset = config.get("workTitleOffset", 0)
-            search_string = cls.generate_search_element("title", config)
-            solr_results = blake_work_solr.search(search_string, start=offset)
-            results["title"]["results"] = list(solr_results)
-            results["title"]["count"] = solr_results.hits
-        if config.get("searchWorkInformation"):
-            offset = config.get("workInformationOffset", 0)
+        if config.get("searchWorks") or config.get("searchAllFields"):
             search_string = cls.generate_search_element("info", config)
-            solr_results = blake_work_solr.search(search_string, start=offset)
+            solr_results = blake_work_solr.search(search_string)
             results["info"]["results"] = list(solr_results)
             results["info"]["count"] = solr_results.hits
         return results
