@@ -454,6 +454,13 @@ a.compare-selected-objects {
 /***********
 * Search Bar
 *************/
+#searchOptions{
+    border-color: #3b3b3b;
+    border-bottom: none;
+}
+#searchOptions .container-fluid{
+    background-color:#303030;
+}
 #searchOptions.navbar{
     margin-bottom: 0;
     border-radius: 0;
@@ -467,6 +474,19 @@ a.compare-selected-objects {
 }
 #searchOptions .ngrs-range-slider{
     min-width: 300px;
+}
+#searchOptions .dropdown a{
+    color: #fff;
+}
+#searchOptions .dropdown a:hover, #searchOptions .dropdown a:focus{
+    color: #ddd;
+}
+#searchOptions .dropdown.open a{
+    color: #3b3b3b;
+}
+#searchOptions .dropdown .dropdown-menu{
+    background-color:rgb(231, 231, 231);
+    border-top: none;
 }
 
 /***********

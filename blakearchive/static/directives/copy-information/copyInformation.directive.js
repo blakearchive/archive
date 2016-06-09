@@ -5,24 +5,27 @@
 (function() {
 
     /** @ngInject */
-    var controller = function (BlakeDataService) {
+    var controller = function () {
 
         var vm = this;
-        vm.bds = BlakeDataService;
 
         vm.getHeader = function(){
-            if(vm.bds.work.virtual){
-                return vm.bds.object.header;
-            } else {
-                return vm.bds.copy.header;
+            if(vm.copy){
+                if(vm.copy.virtual){
+                    return vm.object.header;
+                } else {
+                    return vm.copy.header;
+                }
             }
         }
 
         vm.getSource = function(){
-            if (vm.bds.work.virtual) {
-                return vm.bds.object.source;
-            } else {
-                return vm.bds.copy.source;
+            if(vm.copy){
+                if (vm.copy.virtual) {
+                    return vm.object.source;
+                } else {
+                    return vm.copy.source;
+                }
             }
         }
 
@@ -58,7 +61,9 @@
             controller: controller,
             controllerAs: 'info',
             scope:{
-                highlight: '@highlight'
+                highlight: '@highlight',
+                copy: '=copy',
+                object: '=object'
             },
             bindToController: true
         }

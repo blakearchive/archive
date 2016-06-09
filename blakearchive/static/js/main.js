@@ -210,13 +210,14 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             switch (copy.archive_copy_id) {
                 case 'biblicalwc':
                 case 'biblicaltemperas':
-                case 'miltons':
+                case 'but543':
                 case 'letters':
                 case 'gravepd':
                 case 'gravewc':
                 case 'gravewd':
                 case 'cpd':
                 case 'allegropenseroso':
+                case 'miltons':
                     copy.virtual = true;
                     break;
                 default:
@@ -891,6 +892,42 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         return cof;
     })
 
+    /*.factory('SearchConfigFactory', function(){
+
+        var scf = this;
+
+        scf.scope = true;
+        scf.type = true;
+
+        scf.config = {
+            useCompDate: true,
+            searchTitle: false,
+            searchText: false,
+            searchWorkInformation: false,
+            searchCopyInformation: false,
+            searchImageKeywords: false,
+            searchNotes: false,
+            searchImageDescriptions: false,
+            searchIlluminatedBooks: false,
+            searchCommercialBookIllustrations: false,
+            searchSeparatePrints: false,
+            searchDrawingsPaintings: false,
+            searchManuscripts: false,
+            searchRelatedMaterials: false,
+            minDate: 1772,
+            maxDate: 1827
+        };
+        scf.getConfig = function(){
+            if(scf.scope){
+                scf.config.searchTitle
+            }
+        }
+
+        return scf;
+
+
+    }*/
+
 
     .directive('resize', ['$window', '$timeout', 'WindowSize', function ($window, $timeout, WindowSize) {
         return function (scope, element) {
@@ -1156,7 +1193,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
     .filter('highlight',function($sce){
         return function(text,phrase) {
             if (!angular.isDefined(text) || !angular.isDefined(phrase)) {
-                return $sce.trustAsHtml('');
+                return $sce.trustAsHtml(text);
             }
 
             if (phrase.startsWith('"') && phrase.endsWith('"')) {
