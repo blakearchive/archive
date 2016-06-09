@@ -179,6 +179,31 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                     }
                     return 0;
                 });*/
+                function eachRecursive(objtext, altspelling){
+                    for (var k in objtext) {
+                        if (typeof objtext[k] == "object" && objtext[k] !== null){
+                            if(k == 'choice'){
+                                if(angular.isArray(objtext[k])){
+                                    angular.forEach(objtext[k], function(spellings){
+                                        var orig = spellings['orig']['#text'];
+                                        var reg = angular.isDefined(spellings['reg']) ? spellings['reg']['#text'] : spellings['corr']['#text'];
+                                        var alt = {reg: reg.toLowerCase(), orig: orig.toLowerCase()};
+                                        altspelling.push(alt);
+                                    });
+                                } else {
+                                    var orig = objtext[k]['orig']['#text'];
+                                    var reg = angular.isDefined(objtext[k]['reg']) ? objtext[k]['reg']['#text'] : objtext[k]['corr']['#text'];
+                                    var alt = {reg: reg.toLowerCase(), orig: orig.toLowerCase()};
+                                    altspelling.push(alt);
+                                }
+                            } else {
+                                eachRecursive(objtext[k],altspelling);
+                            }
+                        }
+                    }
+                }
+                obj.alt_spellings = [];
+                eachRecursive(obj.text,obj.alt_spellings);
                 obj.header = angular.fromJson(config.header);
                 obj.source = angular.fromJson(config.source);
 
@@ -1191,16 +1216,15 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
     })
 
     .filter('highlight',function($sce){
-        return function(text,phrase) {
-            if (!angular.isDefined(text) || !angular.isDefined(phrase)) {
-                return $sce.trustAsHtml(text);
-            }
 
+        var vm = this;
+
+        vm.runReplace = function(phrase,text){
             if (phrase.startsWith('"') && phrase.endsWith('"')) {
                 phrase = phrase.replace(/"/g, '');
                 console.log(phrase);
                 text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
-                return $sce.trustAsHtml(text);
+                return text;
             }
 
             if (phrase.indexOf(' ')) {
@@ -1208,14 +1232,34 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 angular.forEach(phraseArray, function (ph) {
                     text = text.replace(new RegExp('(\\b' + ph + '\\b)', 'gi'), '<span class="highlighted">$1</span>');
                 });
-                return $sce.trustAsHtml(text);
+                return text;
 
             }
 
             text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
 
-            return $sce.trustAsHtml(text);
+            return text;
         }
+
+        return function(text,phrase,alt) {
+            if (!angular.isDefined(text) || !angular.isDefined(phrase)) {
+                return $sce.trustAsHtml(text);
+            }
+
+            if(angular.isDefined(alt) && alt.length > 0){
+                angular.forEach(alt, function(spelling){
+                    var newPhrase = phrase.toLowerCase();
+                    if(newPhrase.indexOf(spelling.reg) > -1){
+                        newPhrase = newPhrase.replace(spelling.reg,spelling.orig);
+                        text = vm.runReplace(newPhrase,text);
+                    }
+                });
+            }
+
+            return $sce.trustAsHtml(vm.runReplace(phrase,text));
+        }
+
+
 
     })
 
