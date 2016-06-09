@@ -42,6 +42,7 @@
                 <button class="close-copies"><span class="glyphicon glyphicon-remove" ng-click="esr.selectedWork = -1" scroll-to-element offset="254"></span></button>
             </header>
             <div class="flex" auto-height adjust="325" breakpoint="992">
+
                 <!-- objects in copy -->
                 <div class="objects-in-copy text-center" auto-width adjust="200" breakpoint="992" divide="3" ng-if="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][1] > 1 && esr.tree == 'object'">
                     <h5 style="">Matching Objects</h5>
@@ -130,6 +131,18 @@
                     <div ng-bind-html="esr.resultTree[esr.selectedWork][0].info | highlight:esr.highlight"></div>
                 </div>
 
+            </div><!-- end flex results -->
+
+            <!-- previous/next controls -->
+            <div class="object-controls" ng-if="esr.resultTree.length > 1">
+                <a class="left carousel-control" role="button" ng-click="esr.previousResult(esr.selectedWork)" ng-if="esr.selectedWork > 0">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" role="button" ng-click="esr.nextResult(esr.selectedWork)" ng-if="esr.selectedWork < (esr.resultTree.length - 1)">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
         </div>
     </div>
