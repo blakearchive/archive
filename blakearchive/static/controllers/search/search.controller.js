@@ -4,11 +4,13 @@
 
 (function(){
 
+    /** @ngInject */
     var controller = function($rootScope,$scope,$location,$routeParams,BlakeDataService,$q){
 
-        var objectMatchingMedium, workMatchingMedium, vm = this;
+        vm = this;
 
         vm.bds = BlakeDataService;
+        vm.queryString = '';
 
         $rootScope.showSubMenu = 0;
         $rootScope.worksNavState = false;
@@ -33,6 +35,7 @@
                     });
                 });
                 $scope.copyResults = results[1];
+                console.log($scope.copyResults);
                 angular.forEach($scope.copyResults, function(works,type){
                     angular.forEach(works, function(work,index){
                         //$scope.populateWorkCopies(type,index);
@@ -59,77 +62,80 @@
         };
 
         $scope.loadSearchPage = function () {
-            $location.url(directoryPrefix + "/search?search=" + encodeURIComponent($scope.searchText));
+            $location.url(directoryPrefix + "/search?search=" + encodeURIComponent($scope.searchConfig.searchString));
         };
 
         $scope.searchConfig = {
             useCompDate: true,
-            searchTitle: true,
-            searchText: true,
-            searchWorkInformation: true,
-            searchCopyInformation: true,
-            searchImageKeywords: true,
-            searchNotes: true,
-            searchImageDescriptions: true,
-            searchIlluminatedBooks: true,
-            searchCommercialBookIllustrations: true,
-            searchSeparatePrints: true,
-            searchDrawingsPaintings: true,
-            searchManuscripts: true,
-            searchRelatedMaterials: true,
+            searchAllFields: true,
+            searchTitle: false,
+            searchText: false,
+            searchNotes: false,
+            searchImageDescriptions: false,
+            searchImageKeywords: false,
+            searchWorks: false,
+            searchCopies: false,
+            searchAllTypes: true,
+            searchIlluminatedBooks: false,
+            searchCommercialBookIllustrations: false,
+            searchSeparatePrints: false,
+            searchDrawingsPaintings: false,
+            searchManuscripts: false,
+            searchRelatedMaterials: false,
             minDate: 1772,
             maxDate: 1827
         };
 
-        
-
-        /*$scope.setPagination = function(resultType,count){
-            $scope.pagination[resultType] = [];
-            var numPages = Math.ceil(count / 10), j;
-            if(numPages > 1){
-                for(j = 1; j <= numPages; j++){
-                   $scope.pagination[resultType].push(j);
+        vm.changeType = function(){
+            var check = 0;
+            var types = ['searchIlluminatedBooks','searchCommercialBookIllustrations','searchSeparatePrints','searchDrawingsPaintings','searchManuscripts','searchRelatedMaterials'];
+            angular.forEach(types, function(type){
+                if($scope.searchConfig[type]){
+                    check++;
                 }
-            }
-        };
+            });
+            $scope.searchConfig.searchAllTypes = check > 0 ? false : true;
+            $scope.search();
+        }
 
-        $scope.paginate = function (resultType,page){
-            switch(resultType){
-                case 'title':
-                    $scope.searchConfig.objectTitleOffset = (page - 1)  * 10;
-                    break;
-                case 'text':
-                    $scope.searchConfig.objectTextOffset = (page - 1)  * 10;
-                    break;
-                case 'tag':
-                    $scope.searchConfig.objectKeywordsOffset = (page - 1)  * 10;
-                    break;
-                case 'notes':
-                    $scope.searchConfig.objectNotesOffset = (page - 1)  * 10;
-                    break;
-                case 'description':
-                    $scope.searchConfig.objectDescriptionOffset = (page - 1)  * 10;
-                    break;
-                case 'worktitle':
-                    $scope.searchConfig.workTitleOffset = (page - 1)  * 10;
-                    break;
-                case 'workinfo':
-                    $scope.searchConfig.workInformationOffset = (page - 1)  * 10;
-                    break;
-                default:
-                    break;
+        vm.allTypes = function(){
+            var types = ['searchIlluminatedBooks','searchCommercialBookIllustrations','searchSeparatePrints','searchDrawingsPaintings','searchManuscripts','searchRelatedMaterials'];
+            if($scope.searchConfig.searchAllTypes){
+                angular.forEach(types, function(type){
+                    $scope.searchConfig[type] = false;
+                });
             }
             $scope.search();
-        };*/
+        }
+
+        vm.changeScope = function(){
+            var check = 0;
+            var fields = ['searchTitle','searchText','searchNotes','searchImageDescriptions','searchImageKeywords','searchWorks','searchCopies'];
+            angular.forEach(fields, function(field){
+                if($scope.searchConfig[field]){
+                    check++;
+                }
+            });
+            $scope.searchConfig.searchAllFields = check > 0 ? false : true;
+        }
+
+        vm.allFields = function(){
+            var fields = ['searchTitle','searchText','searchNotes','searchImageDescriptions','searchImageKeywords','searchWorks','searchCopies'];
+            if($scope.searchConfig.searchAllFields){
+                angular.forEach(types, function(field){
+                    $scope.searchConfig[field] = false;
+                });
+            }
+        }
 
         if ($routeParams.search) {
+            //console.log($scope.searchConfig);
+            //console.log($scope.searchConfig.searchString)
             $scope.searchConfig.searchString = $routeParams.search;
             $scope.search();
         }
 
     }
-
-    controller.$inject = ['$rootScope','$scope','$location','$routeParams','BlakeDataService','$q'];
 
     angular.module('blake').controller('SearchController',controller);
 
