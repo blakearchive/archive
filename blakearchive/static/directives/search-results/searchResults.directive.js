@@ -76,6 +76,23 @@
                 vm.selectedObject = 0;
             }*/
         }
+
+        vm.nextResult = function(workIndex){
+            if(workIndex < (vm.resultTree.length - 1)){
+                vm.selectedCopy = 0;
+                vm.selectedObject = 0;
+                vm.populateTree(workIndex + 1);
+                vm.selectedWork = workIndex + 1;
+            }
+        }
+        vm.previousResult = function(workIndex){
+            if(workIndex > 0){
+                vm.selectedCopy = 0;
+                vm.selectedObject = 0;
+                vm.populateTree(workIndex - 1);
+                vm.selectedWork = workIndex - 1;
+            }
+        }
         
         vm.showHighlight = function(objectIndex){
             vm.selectedObject = objectIndex;

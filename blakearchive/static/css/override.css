@@ -613,6 +613,32 @@ a.compare-selected-objects {
 #search .search-result-row .scroller:hover {
     opacity: 1;
 }
+
+#search .search-result-row .flex {
+    width: 90%;
+    margin: 0 auto;
+}
+
+#search .search-result-row .carousel-control {
+    width: 3%;
+    height: 80px;
+    margin:auto;
+    padding-top: 40px;
+    border: solid 1px black;
+    background: #4c4c4c
+}
+
+#search .search-result-row .carousel-control:hover, #search .search-result-row .carousel-control:focus {
+    background: #5a5a5a;
+}
+
+#search .search-result-row .carousel-control.right {
+    text-align: right;
+}
+#search .search-result-row .carousel-control.left {
+    text-align: left;
+}
+
 #search .search-result-item .handprint-block {
     min-height: 100%;
     position: relative;
@@ -699,7 +725,7 @@ a.compare-selected-objects {
     border: none;
     background: transparent;
     position: absolute;
-    right: 18px;
+    right: 5px;
     top: 20px;
     font-size: 2em;
     opacity: 1;
