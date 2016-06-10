@@ -77,20 +77,22 @@
             }*/
         }
 
-        vm.nextResult = function(workIndex){
-            if(workIndex < (vm.resultTree.length - 1)){
+        vm.nextResult = function(){
+            if(vm.selectedWork + 1 < vm.resultTree.length){
+                vm.selectedWork += 1;
                 vm.selectedCopy = 0;
                 vm.selectedObject = 0;
-                vm.populateTree(workIndex + 1);
-                vm.selectedWork = workIndex + 1;
+                vm.populateTree(vm.selectedWork);
+                $rootScope.$broadcast('searchCtrl::changeResult',{type:vm.type,objectIndex:vm.selectedWork})
             }
         }
-        vm.previousResult = function(workIndex){
-            if(workIndex > 0){
+        vm.previousResult = function(){
+            if(vm.selectedWork > 0){
+                vm.selectedWork -= 1;
                 vm.selectedCopy = 0;
                 vm.selectedObject = 0;
-                vm.populateTree(workIndex - 1);
-                vm.selectedWork = workIndex - 1;
+                vm.populateTree(vm.selectedWork);
+                $rootScope.$broadcast('searchCtrl::changeResult',{type:vm.type,objectIndex:vm.selectedWork})
             }
         }
         
