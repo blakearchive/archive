@@ -40,10 +40,9 @@
         };
 
         var reAdjust = function(){
-            if (widthOfHidden() > 0) {
+            if (widthOfHidden() >= 0) {
                 vm.scrollerRight = false;
-            }
-            else {
+            } else {
                 vm.scrollerRight = true;
             }
 
@@ -66,9 +65,18 @@
             }, 0);
         });
 
+        $scope.$on('searchCtrl::changeResult', function (e, d) {
+            console.log(d);
+            if(d.type == vm.type){
+                console.log('match');
+                console.log(d);
+                vm.scrollToResult(d.objectIndex);
+            }
+        });
+
         vm.scrollRight = function(){
             var newOffset = vm.leftOffset - vm.scrollBy;
-            var maxOffset = vm.viewport.outerWidth() - widthOfList() - (vm.scrollBarWidths * 2);
+            var maxOffset = vm.viewport.outerWidth() - widthOfList() - vm.scrollBarWidths;
             if(newOffset < maxOffset){
                 vm.leftOffset = maxOffset;
             } else {
@@ -88,25 +96,29 @@
         }
 
         vm.scrollToResult = function(objectIndex){
-            vm.leftOffset = objectIndex * -220;
-            /*console.log(vm.leftOffset);
-            console.log(objectIndex * 220);
-            console.log(vm.windowWidth);
-            var newOffset = (objectIndex * 220);
-            if(newOffset > (vm.windowWidth - 220)){
-                vm.leftOffset = newOffset * -1;
+            var objectStart = objectIndex * 235,
+                objectEnd = objectStart + 235,
+                viewWidth = vm.viewport.outerWidth();
+
+            //Part of the handprint is hidden on the right
+            if(objectEnd + vm.leftOffset > viewWidth){
+                console.log('object hidden right')
+                if((widthOfHidden()*-1) > viewWidth){
+                    vm.leftOffset = objectStart * -1;
+                } else {
+                    vm.leftOffset = viewWidth - widthOfList() - vm.scrollBarWidths;
+                }
+
             }
-            if((newOffset * -1) > vm.leftOffset){
-                newOffset = (newOffset - 660) * -1;
-                newOffset = newOffset > 0 ? 0 : newOffset;
-                vm.leftOffset = newOffset;
-            }*/
+
+            //Part of the handprint is hidden on the left
+            if(objectStart < vm.leftOffset * -1){
+                console.log('object hidden left');
+                vm.leftOffset = objectStart * -1;
+            }
+
             reAdjust();
         }
-
-    }
-
-    var link = function (scope, element, attrs) {
 
     }
 
@@ -115,12 +127,13 @@
                 //replace: true,
                 transclude: true,
                 restrict: 'AE',
-                scope: false,
+                scope: {
+                    type: '@type'
+                },
                 controller: controller,
                 controllerAs: 'slideBox',
                 bindToController: true,
-                templateUrl: '/blake/static/directives/slide-box/slideBox.html',
-                link: link
+                templateUrl: '/blake/static/directives/slide-box/slideBox.html'
             }
     }
 
