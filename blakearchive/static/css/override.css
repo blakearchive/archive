@@ -275,7 +275,7 @@ a.compare-selected-objects {
 
 .flex{
     padding: 0;
-    margin: 0;
+    margin: 17px;
     display: flex;
     -webkit-flex-flow: nowrap;
     flex-flow: nowrap;

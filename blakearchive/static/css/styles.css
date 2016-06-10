@@ -6487,6 +6487,7 @@ h3 {
   .object-view-menu {
     background-color: transparent;
     border-bottom: none;
+    /*margin: 15px 310px 0 0;*/
     margin: 15px 310px 0 0;
     padding: 0;
     clear: none;
@@ -6560,7 +6561,7 @@ h3 {
 }
 @media (min-width: 768px) {
   .site-header button.collapse-archive {
-    margin-left: 22px;
+    /*margin-left: 22px;*/
   }
 }
 .site-header button.collapse-archive:hover .icon-bar {
@@ -6870,7 +6871,8 @@ nav.navbar form.navbar-form {
   nav.navbar form.navbar-form {
     position: absolute;
     top: -78px;
-    right: 120px;
+    /*right: 120px;*/
+    right:192px;
     z-index: 1;
   }
 }
