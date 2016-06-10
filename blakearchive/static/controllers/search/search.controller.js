@@ -108,7 +108,7 @@
             $scope.search();
         }
 
-        vm.changeScope = function(){
+        vm.changeField = function(){
             var check = 0;
             var fields = ['searchTitle','searchText','searchNotes','searchImageDescriptions','searchImageKeywords','searchWorks','searchCopies'];
             angular.forEach(fields, function(field){
@@ -122,7 +122,7 @@
         vm.allFields = function(){
             var fields = ['searchTitle','searchText','searchNotes','searchImageDescriptions','searchImageKeywords','searchWorks','searchCopies'];
             if($scope.searchConfig.searchAllFields){
-                angular.forEach(types, function(field){
+                angular.forEach(fields, function(field){
                     $scope.searchConfig[field] = false;
                 });
             }
