@@ -1,10 +1,12 @@
 (function(){
 
     /** @ngInject */
-    var controller = function($modal,BlakeDataService){
+    var controller = function($rootScope,$modal,BlakeDataService){
         var vm = this;
 
         vm.bds = BlakeDataService;
+
+        $rootScope.onWorkPage = false;
 
         vm.userestrictOpen = function(copy,object){
             var header = copy.header ? copy.header.userestrict['#text'] : object.header.userestrict['#text'];
