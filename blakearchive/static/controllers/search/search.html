@@ -22,10 +22,10 @@
                         </li>
                         <li class="divider" role="separator"></li>
                         <li>
-                            <input type="checkbox" ng-model="searchConfig.useCompDate"> Composition Date
+                            <input type="checkbox" ng-model="searchConfig.useCompDate" ng-change="search()"> Composition Date
                         </li>
                         <li>
-                            <input type="checkbox" ng-model="searchConfig.usePrintDate"> Printing Date
+                            <input type="checkbox" ng-model="searchConfig.usePrintDate" ng-change="search()"> Printing Date
                         </li>
                     </ul>
                 </li>
