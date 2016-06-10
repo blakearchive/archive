@@ -7,6 +7,7 @@
         var vm = this;
         vm.bds = BlakeDataService;
         vm.cof = CompareObjectsFactory;
+        //$rootScope.onComparePage = true;
 
         vm.getOvpTitle = function(){
             if(angular.isDefined(vm.bds.copy)){
@@ -34,6 +35,9 @@
         }
 
         vm.goToObject = function(object){
+            vm.compareText = "Select All Objects";
+            vm.selectedAll = false;
+            vm.cof.clearComparisonObjects();
             $rootScope.view.mode = 'object';
             $rootScope.view.scope = 'image';
             vm.changeObject(object);
