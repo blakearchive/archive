@@ -28,12 +28,15 @@
 <div class="site-header-container">
   <div class="container-fluid site-header">
         <a class="navbar-brand" href="/"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
+        <span style="font-size:9px; position:absolute; margin-left:-16px; margin-top:24px; color:gray;"">GALLERY MODE</span>
         <button ng-click="worksNavState = !worksNavState" type="button" class="collapse-archive" ng-class="{'hidden':showmePage, 'menu-open':worksNavState, 'menu-closed': !worksNavState}">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
+        <button title="Reading Mode" style="float:right; margin-top:16px; margin-right:16px; margin-left:8px;">R</button>
+        <button title="Gallery Mode" style="float:right; margin-top:16px; margin-right:7px; margin-left:16px;">G</button>
         <div class="lightbox" ng-class="{'hidden':showmePage}"><a class="lb-amount" href="#">3</a></div>
         <work-title ng-if="showSubMenu == 1"></work-title> 
         <!--<view-sub-menu ng-if="showSubMenu == 1"></view-sub-menu>-->
