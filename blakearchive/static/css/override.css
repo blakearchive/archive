@@ -1,3 +1,17 @@
+@media (min-width: 992px) {
+  #archive #object-view {
+    padding-top: 0;
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+  }
+}
+
+.worktitle {
+    background-color: #1D1D1D; 
+    color: white;
+}
+
 @media (min-width: 768px) {
   nav.navbar ul.navbar-nav {
     width: 100%;
@@ -261,7 +275,7 @@ a.compare-selected-objects {
 
 .flex{
     padding: 0;
-    margin: 0;
+    margin: 17px;
     display: flex;
     -webkit-flex-flow: nowrap;
     flex-flow: nowrap;
