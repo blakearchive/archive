@@ -11,6 +11,8 @@
 
         $rootScope.showSubMenu = 1;
         $rootScope.worksNavState = false;
+        //$rootScope.onComparePage = false;
+        //$rootScope.onWorkPage = false;
         vm.bds = BlakeDataService;
         vm.cof = CompareObjectsFactory;
 

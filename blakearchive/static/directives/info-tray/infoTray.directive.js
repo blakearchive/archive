@@ -22,7 +22,7 @@
         }*/
 
         vm.resize = function(adjust){
-            var adjust = angular.isDefined(adjust) ? 131 - adjust : 131;
+            var adjust = angular.isDefined(adjust) ? 134 - adjust : 134;
             vm.trayPixels = ( WindowSize.height - adjust );
             if(WindowSize.width <= 992){
                 vm.trayHeight = 0
