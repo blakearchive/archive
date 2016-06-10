@@ -177,13 +177,15 @@
         }
 
         vm.getWorkImage = function(workIndex){
-            switch(vm.tree){
-                case 'object':
-                    return vm.resultTree[workIndex][2][0][2][0][0].dbi;
-                case 'copy':
-                    return vm.resultTree[workIndex][2][0][0].image;
-                case 'work':
-                    return '';
+                switch(vm.tree){
+                    case 'object':
+                        if(angular.isDefined(vm.resultTree[workIndex][2][0][2][0][0])){
+                            return vm.resultTree[workIndex][2][0][2][0][0].dbi;
+                        }
+                    case 'copy':
+                        return vm.resultTree[workIndex][2][0][0].image;
+                    case 'work':
+                        return '';
             }
         }
 

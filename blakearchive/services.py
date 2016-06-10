@@ -54,7 +54,15 @@ class BlakeDataService(object):
     def generate_date_filter(cls, config):
         min_date = config.get("minDate", "*")
         max_date = config.get("maxDate", "*")
-        return "composition_date: [%s TO %s]" % (min_date, max_date)
+        date_string = ""
+        if config["useCompDate"] and config["usePrintDate"]:
+            date_string = "(composition_date: [%s TO %s] OR print_date: [%s TO %s])" % (min_date, max_date, min_date, max_date)
+        else:
+            if config["useCompDate"]:
+                date_string = "composition_date: [%s TO %s]" % (min_date, max_date)
+            if config["usePrintDate"]:
+                date_string = "print_date: [%s TO %s]" % (min_date, max_date)
+        return date_string
 
     @classmethod
     def generate_element_part(cls, prefix, part_text):
