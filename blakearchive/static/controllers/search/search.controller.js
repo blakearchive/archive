@@ -67,6 +67,7 @@
 
         $scope.searchConfig = {
             useCompDate: true,
+            usePrintDate: false,
             searchAllFields: true,
             searchTitle: false,
             searchText: false,
