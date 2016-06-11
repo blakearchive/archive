@@ -16,6 +16,10 @@
         vm.bds = BlakeDataService;
         vm.cof = CompareObjectsFactory;
 
+        if(!angular.isDefined($rootScope.persistentmode)){
+            $rootScope.persistentmode = 'gallery';
+        }
+
         BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.descId).then(function(){
             vm.cof.clearComparisonObjects();
             $rootScope.view.mode = 'object';
@@ -74,6 +78,15 @@
 
         vm.rotate = function(){
             imageManipulation.rotate();
+        }
+
+        vm.toggleTranscription = function(){
+            if($rootScope.view.scope == 'image') {
+                $rootScope.view.scope = 'both';
+            }
+            else {
+                $rootScope.view.scope = 'image';
+            }
         }
 
     };
