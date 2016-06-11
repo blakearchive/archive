@@ -1,3 +1,22 @@
+.lightbox {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-image: url("../img/global/icon-lightbox.png");
+  display: inline-block;
+  width: 30px;
+  height: 41px;
+  padding-top: 11px;
+  float: right;
+  margin-right: 8px;
+}
+
+button:active, button.active { 
+    background-color: yellow;
+    padding-bottom: 0px;
+    border: none;
+}
+
 @media (min-width: 992px) {
   #archive #object-view {
     padding-top: 0;
@@ -808,6 +827,13 @@ a.compare-selected-objects {
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
     #archive #object-view .btn-group.edit-object .btn.btn-default.cite .edit-icon {
         background-image: url("../img/global/cite.png");
+        background-size: 26px 24px;
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+    #archive #object-view .btn-group.edit-object .btn.btn-default.show-transcription .edit-icon {
+        background-image: url("../img/global/transcription.png");
         background-size: 26px 24px;
     }
 }

@@ -1,4 +1,9 @@
-<div class="object-view-menu">
+<button title="{{item.title}}" ng-class="{'active': item.id == states.activeItem}" ng-repeat="item in items" ng-click="states.activeItem=item.id; viewSubMenu.changeView(item.mode,item.scope)" style="float:right; margin-top:16px; margin-right:8px; margin-left:0px;">{{item.abbreviation}}</button>
+
+<!--<button title="Reading Mode" ng-click="viewSubMenu.changeView('read','both')" style="float:right; margin-top:16px; margin-right:16px; margin-left:8px;">R</button>
+<button title="Gallery Mode" ng-click="viewSubMenu.changeView('object','image')" style="float:right; margin-top:16px; margin-right:7px; margin-left:16px;">G</button>-->
+
+<!--<div class="object-view-menu">
     <div class="btn-group" role="group" dropdown>
         <button type="button" class="btn btn-xs dropdown-toggle" ng-class="{active: view.mode == 'object'}" dropdown-toggle>
             Object View
@@ -52,4 +57,4 @@
             </li>
         </ul>
     </div>
-</div>
+</div>-->

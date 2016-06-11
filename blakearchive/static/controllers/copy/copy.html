@@ -1,16 +1,16 @@
 <div id="archive" class="container-fluid archive-top">
     <div id="object-container" class="row" ng-class="{'tray-open': copyCtrl.trayOpen, 'tray-closed': !copyCtrl.trayOpen || view.mode == 'read'}">
-        <info-tray toggle="copyCtrl.toggleTray()" ng-if="view.mode != 'read'"></info-tray>
-        <div id="object-view" ng-class="{'show-tools': copyCtrl.showTools, 'hide-tools': !copyCtrl.showTools,'view-objects': view.mode == 'object','reading-view': view.mode == 'read','compare-objects': view.mode == 'compare'}">
+        <info-tray ng-if="persistentmode != 'reading'" toggle="copyCtrl.toggleTray()" ng-if="view.mode != 'read'"></info-tray>
+        <div id="object-view" ng-class="{'show-tools': copyCtrl.showTools, 'hide-tools': !copyCtrl.showTools,'view-objects': persistentmode == 'gallery','reading-view': persistentmode == 'reading','compare-objects': view.mode == 'compare'}">
 
-            <object-viewer ng-if="view.mode == 'object'"></object-viewer>
+            <object-viewer ng-if="persistentmode == 'gallery' && view.mode != 'compare'"></object-viewer>
 
             <object-compare ng-if="view.mode == 'compare'"></object-compare>
 
-            <object-reading ng-if="view.mode == 'read'"></object-reading>
+            <object-reading ng-if="persistentmode == 'reading'"></object-reading>
 
             <!--Edit buttons-->
-            <div id="object-tools" ng-if="view.mode != 'read'">
+            <div id="object-tools" ng-if="persistentmode != 'reading'">
                 <div id="object-tools-inner">
                     <div class="btn-group edit-object" role="group">
                         <button type="button" class="btn btn-default add-lightbox"><span class="edit-icon"></span> Add To Lightbox</button>
@@ -18,7 +18,7 @@
                         <button type="button" class="btn btn-default zoom"><span class="edit-icon"></span> Zoom</button>
                         <button type="button" class="btn btn-default true-size" ng-click="copyCtrl.trueSizeOpen(copyCtrl.bds.object)"><span class="edit-icon"></span> True Size</button>
                         <button type="button" class="btn btn-default new-window" show-me="enlargement" object="copyCtrl.bds.object"><span class="edit-icon"></span> Enlargement</button>
-                        <button type="button" class="btn btn-default show-transcription" ng-click=""><span class="edit-icon"></span> Transcription</button>
+                        <button type="button" class="btn btn-default show-transcription" ng-click="copyCtrl.toggleTranscription()"><span class="edit-icon"></span> Transcription</button>
                         <button type="button" class="btn btn-default cite"><span class="edit-icon"></span> Generate Citation</button>
                     </div>
                     <div class="show-hide-tools" ng-click="copyCtrl.toggleTools()"><span>+</span></div>
@@ -30,6 +30,6 @@
 
     </div>
 </div>
-<div id="archive-tabs" role="tabpanel" ng-if="view.mode != 'read'">
+<div id="archive-tabs" role="tabpanel" ng-if="persistentmode != 'reading'">
     <copy-tabs></copy-tabs>
 </div>
