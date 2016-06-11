@@ -33,6 +33,7 @@
             $rootScope.view.mode = 'object';
             $rootScope.view.scope = 'image';
             $rootScope.persistentmode = 'gallery';
+            $rootScope.states.activeItem = 'gallery';
         }
     }
 
