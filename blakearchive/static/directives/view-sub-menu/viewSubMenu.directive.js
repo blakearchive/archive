@@ -25,9 +25,9 @@
             
         }
 
-        $scope.states = {};
-        $scope.states.activeItem = 'gallery';
-        $scope.items = [{
+        $rootScope.states = {};
+        $rootScope.states.activeItem = 'gallery';
+        $rootScope.items = [{
             id: 'reading',
             mode: 'read',
             scope: 'both',

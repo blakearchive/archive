@@ -5,7 +5,7 @@
         <div class="compare-inner">
             <!-- for letters -->
             <div class="item" ng-repeat="o in read.bds.object.objectsInGroup" ng-if="read.bds.copy.bad_id == 'letters'">
-                <div class="reading-wrapper flex" auto-height adjust="500" breakpoint="992">
+                <div class="reading-wrapper flex" auto-height adjust="150" breakpoint="992">
                     <div class="object-img-container" ng-class="{hidden: view.scope == 'text'}">
                         <img ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" ng-click="read.changeObject(o)">
                     </div>
