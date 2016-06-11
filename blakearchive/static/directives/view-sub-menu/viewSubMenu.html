@@ -1,4 +1,4 @@
-<button title="{{item.title}}" ng-class="{'active': item.id == states.activeItem}" ng-repeat="item in items" ng-click="states.activeItem=item.id; viewSubMenu.changeView(item.mode,item.scope)" style="float:right; margin-top:16px; margin-right:8px; margin-left:0px;">{{item.abbreviation}}</button>
+<button title="{{item.title}}" ng-class="{'active': item.id == states.activeItem}" ng-repeat="item in items" ng-click="states.activeItem=item.id; viewSubMenu.changeView(item.mode,item.scope)" style="float:right; margin-top:11px; margin-right:8px; margin-left:0px; padding:0px; width:30px; height:30px">{{item.abbreviation}}</button>
 
 <!--<button title="Reading Mode" ng-click="viewSubMenu.changeView('read','both')" style="float:right; margin-top:16px; margin-right:16px; margin-left:8px;">R</button>
 <button title="Gallery Mode" ng-click="viewSubMenu.changeView('object','image')" style="float:right; margin-top:16px; margin-right:7px; margin-left:16px;">G</button>-->
