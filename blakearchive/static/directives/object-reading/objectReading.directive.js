@@ -4,6 +4,8 @@
     var controller = function($rootScope,BlakeDataService){
         var vm = this;
         vm.bds = BlakeDataService;
+        $rootScope.onWorkPage = false;
+        $rootScope.view.scope = 'both';
         
         vm.getOvpTitle = function(){
             if(angular.isDefined(vm.bds.copy)){
@@ -30,6 +32,7 @@
             vm.bds.changeObject(object);
             $rootScope.view.mode = 'object';
             $rootScope.view.scope = 'image';
+            $rootScope.persistentmode = 'gallery';
         }
     }
 

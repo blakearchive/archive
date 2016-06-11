@@ -10,6 +10,10 @@
 
         $rootScope.showSubMenu = 0;
         $rootScope.worksNavState = true;
+
+        if(!angular.isDefined($rootScope.persistentmode)){
+            $rootScope.persistentmode = 'gallery';            
+        }
         //$localStorage.$reset()
 
         vm.columns = {

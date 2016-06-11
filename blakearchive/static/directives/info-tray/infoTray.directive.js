@@ -1,7 +1,7 @@
 (function(){
 
     /** @ngInject */
-    var controller = function($scope,BlakeDataService,WindowSize,$window){
+    var controller = function($rootScope,$scope,BlakeDataService,WindowSize,$window){
         var vm = this;
         vm.bds = BlakeDataService;
 
