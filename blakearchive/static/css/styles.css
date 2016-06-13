@@ -7024,12 +7024,12 @@ footer .subscribe form.form-inline input.form-control:focus {
 }
 footer .subscribe form.form-inline button.btn {
   color: #fff;
-  background-color: #5499c9;
+  background-color: rgba(255,0,0,0.37);
   border: none;
   padding: 7px 12px;
 }
 footer .subscribe form.form-inline button.btn:hover {
-  background-color: #7ca142;
+  background-color: rgba(0, 114, 255, 0.31);
 }
 footer .subscribe p {
   color: #45a2e2;
