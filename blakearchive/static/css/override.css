@@ -157,7 +157,8 @@ body {
 
 @media (min-width: 1200px){
     #home.container-fluid.main .row div[class^="col-"] {
-        max-width: 16.666666%;
+        /*max-width: 16.666666%;*/
+        max-width: 10%;
         max-height: 1000px;
     }
 }
