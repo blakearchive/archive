@@ -5,6 +5,8 @@
 
         var vm = this;
         vm.bds = BlakeDataService;
+        var title = "";
+        var copyPhrase = "";
 
         if(!angular.isDefined($rootScope.view)){
             $rootScope.view = {
@@ -16,25 +18,35 @@
         vm.getTitle = function(){
             if(vm.bds.work.virtual == true){
                 if(vm.bds.copy.bad_id == 'letters'){
-                    return vm.bds.object.object_group;
+                    title = vm.bds.object.object_group;
+                    return title;
                 } else {
-                    return vm.bds.work.title;
+                    title = vm.bds.work.title;
+                    return title;
                 }
             } else {
                 if($rootScope.onWorkPage == true) {
-                    return vm.bds.work.title;
+                    title = vm.bds.work.title;
+                    return title;
                 }
-                var copyPhrase = vm.bds.copy.archive_copy_id == null ? '' : ', Copy '+vm.bds.copy.archive_copy_id;
+                copyPhrase = vm.bds.copy.archive_copy_id == null ? '' : ' Copy '+vm.bds.copy.archive_copy_id;
 
                 if(vm.bds.copy.header){
-                    copyPhrase = vm.bds.copy.header.filedesc.titlestmt.title['@reg']+copyPhrase
+                    title = vm.bds.copy.header.filedesc.titlestmt.title['@reg'];
                 }
                 if($rootScope.view.mode == 'compare') {
-                    return copyPhrase + ' (Selected)';
+                    return title;
                 }
-
-                return copyPhrase;
+                return title;
             }
+        }
+
+        vm.getCopyPhrase = function() {
+            return copyPhrase;
+        }
+
+        vm.getWorkId = function() {
+            return vm.bds.work.bad_id;
         }
 
     }
