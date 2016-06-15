@@ -1,1 +1,5 @@
-<div class="object-view-menu"><span class="worktitle" style="padding: 19px;">{{ workTitle.getTitle() }}</span></div>
+<div class="object-view-menu">
+	<span ng-if="$root.onWorkPage == false && $root.view.mode == 'compare'" class="worktitle" style="padding: 19px;"><a href="/blake/work/{{workTitle.getWorkId()}}" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} (Selected)</span>
+	<span ng-if="$root.onWorkPage == true" class="worktitle" style="padding: 19px;"><a href="/blake/work/{{workTitle.getWorkId()}}" style="color:white;">{{ workTitle.getTitle() }}</a></span>
+	<span ng-if="$root.onWorkPage == false && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;"><a href="/blake/work/{{workTitle.getWorkId()}}" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}</span>
+</div>

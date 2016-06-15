@@ -7,6 +7,7 @@
         var vm = this;
         vm.bds = BlakeDataService;
         vm.cof = CompareObjectsFactory;
+        $rootScope.onWorkPage = false;
         //$rootScope.onComparePage = true;
 
         vm.getOvpTitle = function(){
