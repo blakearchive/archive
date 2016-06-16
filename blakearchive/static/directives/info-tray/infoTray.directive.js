@@ -4,10 +4,12 @@
     var controller = function($rootScope,$scope,BlakeDataService,WindowSize,$window){
         var vm = this;
         vm.bds = BlakeDataService;
+        vm.view = $rootScope.view;
 
         vm.firstLine = 1;
         vm.panelAdjust = 55;
-        vm.scrollBarHeight = 7;
+        vm.scrollBarHeight = 15;
+        vm.adjustHeight = 134;
 
         vm.open = {
             'text':false,
@@ -22,7 +24,7 @@
         }*/
 
         vm.resize = function(adjust){
-            var adjust = angular.isDefined(adjust) ? 134 - adjust : 134;
+            var adjust = angular.isDefined(adjust) ? vm.adjustHeight - adjust : vm.adjustHeight;
             vm.trayPixels = ( WindowSize.height - adjust );
             if(WindowSize.width <= 992){
                 vm.trayHeight = 0
@@ -58,7 +60,17 @@
             vm.object = d;
         });*/
 
+        console.log(vm.adjustHeight);
 
+    }
+
+    var link = function(scope,ele,attr,vm){
+        var mode = function(){ return vm.view.mode };
+        scope.$watch(mode,function(){
+            console.log('mode changed: '+vm.view.mode);
+            var adjust = vm.view.mode == 'object' ? 0 : 50;
+            vm.resize(adjust);
+        })
     }
 
     var infoTray = function(){
@@ -70,7 +82,8 @@
             templateUrl: '/blake/static/directives/info-tray/infoTray.html',
             controller: controller,
             controllerAs: 'tray',
-            bindToController: true
+            bindToController: true,
+            link:link
         };
     }
 
