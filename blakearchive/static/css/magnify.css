@@ -8,7 +8,7 @@
         height: 200px;
         position: absolute;
         border-radius: 50%;
-        cursor: crosshair;
+        cursor: none;
 
         /* Multiple box shadows to achieve the glass effect */
         box-shadow:
