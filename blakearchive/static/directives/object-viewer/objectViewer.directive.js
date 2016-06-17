@@ -40,29 +40,22 @@
 
         vm.getPreviousObject = function(){
 
+            var list = {};
+
             if(vm.bds.work.bad_id == 'letters'){
-                if(angular.isDefined(vm.bds.object.objectsInGroup)){
-                    for (var i = vm.bds.object.objectsInGroup.length; i--;) {
-                        if (vm.bds.object.objectsInGroup[i].object_id == vm.bds.object.object_id) {
-                            // Extra code here to make the list circular
-                            if (i - 1 < 0) {
-                                return vm.bds.object.objectsInGroup[vm.bds.object.objectsInGroup.length - 1];
-                            } else {
-                                return vm.bds.object.objectsInGroup[i - 1];
-                            }
-                        }
-                    }
-                }
+                list = vm.bds.copy.objectGroups[vm.bds.object.object_group];
             } else {
-                if(angular.isDefined(vm.bds.copyObjects)){
-                    for (var i = vm.bds.copyObjects.length; i--;) {
-                        if (vm.bds.copyObjects[i].object_id == vm.bds.object.object_id) {
-                            // Extra code here to make the list circular
-                            if (i - 1 < 0) {
-                                return vm.bds.copyObjects[vm.bds.copyObjects.length - 1];
-                            } else {
-                                return vm.bds.copyObjects[i - 1];
-                            }
+                list = vm.bds.copyObjects;
+            }
+
+            if(list){
+                for (var i = list.length; i--;) {
+                    if (list[i].object_id == vm.bds.object.object_id) {
+                        // Extra code here to make the list circular
+                        if (i - 1 < 0) {
+                            return list[list.length - 1];
+                        } else {
+                            return list[i - 1];
                         }
                     }
                 }
@@ -71,33 +64,27 @@
 
         vm.getNextObject = function(){
 
+            var list = {};
+
             if(vm.bds.work.bad_id == 'letters'){
-                if(angular.isDefined(vm.bds.object.objectsInGroup)){
-                    for (var i = vm.bds.object.objectsInGroup.length; i--;) {
-                        if (vm.bds.object.objectsInGroup[i].object_id == vm.bds.object.object_id) {
-                            // Extra code here to make the list circular
-                            if (i + 1 >= vm.bds.object.objectsInGroup.length) {
-                                return vm.bds.object.objectsInGroup[0];
-                            } else {
-                                return vm.bds.object.objectsInGroup[i + 1];
-                            }
-                        }
-                    }
-                }
+                list = vm.bds.copy.objectGroups[vm.bds.object.object_group];
             } else {
-                if (angular.isDefined(vm.bds.copyObjects)) {
-                    for (var i = vm.bds.copyObjects.length; i--;) {
-                        if (vm.bds.copyObjects[i].object_id == vm.bds.object.object_id) {
-                            // Extra code here to make the list circular
-                            if (i + 1 >= vm.bds.copyObjects.length) {
-                                return vm.bds.copyObjects[0];
-                            } else {
-                                return vm.bds.copyObjects[i + 1];
-                            }
+                list = vm.bds.copyObjects;
+            }
+
+            if(list){
+                for (var i = list.length; i--;) {
+                    if (list[i].object_id == vm.bds.object.object_id) {
+                        // Extra code here to make the list circular
+                        if (i + 1 >= list.length) {
+                            return list[0];
+                        } else {
+                            return list[i + 1];
                         }
                     }
                 }
             }
+
         };
 
         vm.changeObject = function(object){

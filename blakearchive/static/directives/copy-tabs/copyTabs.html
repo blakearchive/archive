@@ -32,7 +32,7 @@
                     </header>
                     <div class="row">
                         <!-- for letters (multi object groups) -->
-                        <div ng-repeat="obj in tabs.bds.object.objectsInGroup track by $index" class="col-sm-6 col-md-3" ng-if="tabs.bds.copy.bad_id == 'letters'">
+                        <div ng-repeat="obj in tabs.bds.copy.objectGroups[tabs.bds.object.object_group] track by $index" class="col-sm-6 col-md-3" ng-if="tabs.bds.copy.bad_id == 'letters'">
                             <handprint-block scroll-to-top
                                              action="tabs.changeObject(obj)"
                                              image="{{ obj.dbi }}.100.jpg"
