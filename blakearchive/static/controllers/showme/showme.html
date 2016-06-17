@@ -2,6 +2,15 @@
 
     <div class="row showme-nav" ng-if="showme.bds.copyObjects.length > 1">
         <ul class="nav nav-pills nav-justified">
+             <header class="page-header">
+            <h1>{{ showme.getOvpTitle() }}
+                <span ng-if="showme.work.virtual">{{ showme.work.title }}</span>
+            </h1>
+            <p class="subhead">
+                    {{ showme.bds.object.full_object_id }}
+            </p>
+            <div class="row showme-nav" ng-if="showme.bds.copyObjects.length > 1">
+        <ul class="nav nav-pills nav-justified">
             <li>
                 <a ng-click="showme.changeObject(showme.previousObject)">Previous</a>
             </li>
@@ -9,16 +18,13 @@
         </ul>
     </div>
 
+        </header>
+        </ul>
+    </div>
+
     <hr>
 
-    <div class="row">
-        <header class="page-header">
-            <h1>{{ showme.getOvpTitle() }}
-                <span ng-if="showme.work.virtual">{{ showme.work.title }}</span>
-            </h1>
-            <p class="subhead">{{ showme.bds.object.full_object_id }}</p>
-        </header>
-    </div>
+   
 
     <!-- Object -->
     <div class="row" id="objectImg" ng-if="showme.what == 'enlargement'">
