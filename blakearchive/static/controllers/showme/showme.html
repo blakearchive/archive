@@ -73,9 +73,9 @@
     <div class="row showme-nav" ng-if="showme.bds.copyObjects.length > 1">
         <ul class="nav nav-pills nav-justified">
             <li>
-                <a ng-click="showme.changeObject(showme.previousObject)">Previous</a>
+                <a ng-click="showme.changeObject(showme.getPreviousObject())">Previous</a>
             </li>
-            <li><a ng-click="showme.changeObject(showme.nextObject)">Next</a></li>
+            <li><a ng-click="showme.changeObject(showme.getNextObject())">Next</a></li>
         </ul>
     </div>
 
