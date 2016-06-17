@@ -819,18 +819,25 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         imageManipulation.transform = {
             'rotate':0,
             'scale':1,
-            'style': {}
+            'style': {},
+            'orientation':1
         }
 
         imageManipulation.rotate = function(){
             imageManipulation.transform.rotate = imageManipulation.transform.rotate + 90;
+
+            imageManipulation.transform.orientation += 1;
+            if(imageManipulation.transform.orientation == 5){
+                imageManipulation.transform.orientation = 1;
+            }
         }
 
         imageManipulation.reset = function(){
             imageManipulation.transform = {
                 'rotate':0,
                 'scale':1,
-                'style': {}
+                'style': {},
+                'orientation':1
             }
         }
 
@@ -1121,7 +1128,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 width = image.width();
                 originalHeight = container.height();
                 originalWidth = element.width();
-            })
+            });
 
             scope.transformRotate = function(){
                 if(width > height){
@@ -1181,6 +1188,206 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             scope: {
                 descId: '@descId'
             },
+            link:link
+        }
+    })
+
+
+    /*
+    Code taken from:
+     http://cssdeck.com/labs/magnifying-glass-plugin-with-jquery-and-css3
+
+     Changed slightly to work in angular
+     */
+    .directive('magnifyImage',function(imageManipulation){
+        var link = function(scope,ele,attr,vm){
+            var native_width = 0;
+            var native_height = 0;
+            var mouse = {x: 0, y: 0};
+            var magnify;
+            var cur_img;
+
+            var ui = {
+                magniflier: ele
+            };
+
+            // Add the magnifying glass
+            if (ui.magniflier.length) {
+                var div = document.createElement('div');
+                div.setAttribute('class', 'glass');
+                ui.glass = angular.element(div);
+
+                angular.element(document.body).append(div);
+            }
+
+
+            var mouseMove = function(e) {
+                var $el = angular.element(this);
+
+                // Container offset relative to document
+                var magnify_offset = cur_img.offset();
+
+                // Mouse position relative to container
+                // pageX/pageY - container's offsetLeft/offetTop
+                if((imageManipulation.transform.rotate % 180) != 0){
+                    var checkHeight = cur_img.width();
+                    var checkWidth = cur_img.height();
+                } else {
+                    var checkHeight = cur_img.height();
+                    var checkWidth = cur_img.width();
+                }
+                mouse.x = e.pageX - magnify_offset.left;
+                mouse.y = e.pageY - magnify_offset.top;
+
+
+                // The Magnifying glass should only show up when the mouse is inside
+                // It is important to note that attaching mouseout and then hiding
+                // the glass wont work cuz mouse will never be out due to the glass
+                // being inside the parent and having a higher z-index (positioned above)
+                if (mouse.x < checkWidth && mouse.y < checkHeight && mouse.x > 0 && mouse.y > 0) {
+                    magnify(e);
+                } else {
+                    ui.glass.removeClass('glass-on')
+                }
+
+                return;
+            };
+
+            var magnify = function(e) {
+
+                // The background position of div.glass will be
+                // changed according to the position
+                // of the mouse over the img.magniflier
+                //
+                // So we will get the ratio of the pixel
+                // under the mouse with respect
+                // to the image and use that to position the
+                // large image inside the magnifying glass
+
+                if(imageManipulation.transform.orientation == 4){
+                    newY = cur_img.width() - mouse.y;
+                    var rx = Math.round(newY/cur_img.width()*native_width - ui.glass.width()/2)*-1;
+                    var ry = Math.round(mouse.x/cur_img.height()*native_height - ui.glass.height()/2)*-1;
+                }
+
+                if (imageManipulation.transform.orientation == 3){
+                    newY = cur_img.height() - mouse.y;
+                    newX = cur_img.width() - mouse.x;
+                    var rx = Math.round(newX/cur_img.width()*native_width - ui.glass.width()/2)*-1;
+                    var ry = Math.round(newY/cur_img.height()*native_height - ui.glass.height()/2)*-1;
+                }
+                if (imageManipulation.transform.orientation == 2) {
+                    newX = cur_img.height() - mouse.x;
+                    var rx = Math.round(mouse.y / cur_img.width() * native_width - ui.glass.width() / 2) * -1;
+                    var ry = Math.round(newX / cur_img.height() * native_height - ui.glass.height() / 2) * -1;
+                }
+
+                if (imageManipulation.transform.orientation == 1){
+                    var rx = Math.round(mouse.x/cur_img.width()*native_width - ui.glass.width()/2)*-1;
+                    var ry = Math.round(mouse.y/cur_img.height()*native_height - ui.glass.height()/2)*-1;
+
+                }
+
+                var bg_pos = rx + "px " + ry + "px";
+
+                // Calculate pos for magnifying glass
+                //
+                // Easy Logic: Deduct half of width/height
+                // from mouse pos.
+
+                /*if((imageManipulation.transform.rotate % 180) != 0){
+                    var glass_left = e.pageX - ui.glass.height() / 2;
+                    var glass_top  = e.pageY - ui.glass.width() / 2;
+                } else {
+                    var glass_left = e.pageX - ui.glass.width() / 2;
+                    var glass_top  = e.pageY - ui.glass.height() / 2;
+                }*/
+                var glass_left = e.pageX - ui.glass.width() / 2;
+                var glass_top  = e.pageY - ui.glass.height() / 2;
+
+                //console.log(glass_left, glass_top, bg_pos)
+                // Now, if you hover on the image, you should
+                // see the magnifying glass in action
+                ui.glass.css({
+                    left: glass_left,
+                    top: glass_top,
+                    backgroundPosition: bg_pos
+                });
+
+                return;
+            };
+
+            ele.on('mousemove', function() {
+                console.log('moving');
+                ui.glass.addClass('glass-on');
+
+                cur_img = angular.element(this);
+
+                var src = cur_img.attr('src');
+                src = src.replace('100','300');
+
+                if (src) {
+                    ui.glass.css({
+                        'background-image': 'url(' + src + ')',
+                        'background-repeat': 'no-repeat'
+                    });
+                }
+
+                // When the user hovers on the image, the script will first calculate
+                // the native dimensions if they don't exist. Only after the native dimensions
+                // are available, the script will show the zoomed version.
+                if (!cur_img.data('native_width')) {
+                    // This will create a new image object with the same image as that in .small
+                    // We cannot directly get the dimensions from .small because of the
+                    // width specified to 200px in the html. To get the actual dimensions we have
+                    // created this image object.
+                    var image_object = new Image();
+
+                    image_object.onload = function() {
+                        // This code is wrapped in the .load function which is important.
+                        // width and height of the object would return 0 if accessed before
+                        // the image gets loaded.
+                        native_width = image_object.width;
+                        native_height = image_object.height;
+
+                        cur_img.data('native_width', native_width);
+                        cur_img.data('native_height', native_height);
+
+                        //console.log(native_width, native_height);
+
+                        mouseMove.apply(this, arguments);
+
+                        ui.glass.on('mousemove', mouseMove);
+                    };
+
+
+                    image_object.src = src;
+
+                    return;
+                } else {
+
+                    native_width = cur_img.data('native_width');
+                    native_height = cur_img.data('native_height');
+                }
+
+                mouseMove.apply(this, arguments);
+
+                ui.glass.on('mousemove', mouseMove);
+            });
+
+            ui.glass.on('mouseout', function() {
+                ui.glass.off('mousemove', mouseMove);
+            });
+
+
+            scope.$watch(function(){return imageManipulation.transform},function(){
+                ui.glass.css(imageManipulation.transform.style);
+            },true);
+
+        }
+
+        return{
+            restrict: 'A',
             link:link
         }
     })
