@@ -185,16 +185,20 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                             if(k == 'choice'){
                                 if(angular.isArray(objtext[k])){
                                     angular.forEach(objtext[k], function(spellings){
-                                        var orig = spellings['orig']['#text'];
-                                        var reg = angular.isDefined(spellings['reg']) ? spellings['reg']['#text'] : spellings['corr']['#text'];
-                                        var alt = {reg: reg.toLowerCase(), orig: orig.toLowerCase()};
-                                        altspelling.push(alt);
+                                        if(angular.isDefined(spellings['orig']) && angular.isDefined(spellings['orig']['#text'])) {
+                                            var orig = spellings['orig']['#text'];
+                                            var reg = angular.isDefined(spellings['reg']) ? spellings['reg']['#text'] : spellings['corr']['#text'];
+                                            var alt = {reg: reg.toLowerCase(), orig: orig.toLowerCase()};
+                                            altspelling.push(alt);
+                                        }
                                     });
                                 } else {
-                                    var orig = objtext[k]['orig']['#text'];
-                                    var reg = angular.isDefined(objtext[k]['reg']) ? objtext[k]['reg']['#text'] : objtext[k]['corr']['#text'];
-                                    var alt = {reg: reg.toLowerCase(), orig: orig.toLowerCase()};
-                                    altspelling.push(alt);
+                                    if(angular.isDefined(objtext[k]['orig']) && angular.isDefined(objtext[k]['orig']['#text'])){
+                                        var orig = objtext[k]['orig']['#text'];
+                                        var reg = angular.isDefined(objtext[k]['reg']) ? objtext[k]['reg']['#text'] : objtext[k]['corr']['#text'];
+                                        var alt = {reg: reg.toLowerCase(), orig: orig.toLowerCase()};
+                                        altspelling.push(alt);
+                                    }
                                 }
                             } else {
                                 eachRecursive(objtext[k],altspelling);
@@ -640,7 +644,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 if(blakeData.work.virtual == true){
                     return blakeData.getObjectsForCopy(blakeData.workCopies[0].bad_id).then(function(data){
                         if(blakeData.work.bad_id == 'letters'){
-                            blakeData.workCopies = blakeData.multiObjectGroup(data);
+                            blakeData.workCopies = blakeData.multiObjectGroupCopies(data);
                         } else {
                             blakeData.workCopies = blakeData.numberVirtualWorkObjects(data);
                         }
@@ -674,11 +678,11 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 if (blakeData.work.virtual == true) {
                     blakeData.copyObjects = blakeData.numberVirtualWorkObjects(blakeData.copyObjects);
                 }
-
                 //deal with multi object groups
                 if(blakeData.work.bad_id == 'letters'){
-                    blakeData.multiObjectGroup(blakeData.copyObjects);
+                    blakeData.copy.objectGroups = blakeData.multiObjectGroupObjects(blakeData.copyObjects);
                 }
+
 
                 //Set the selected object
                 if (descId) {
@@ -695,6 +699,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
             })
 
+
         };
 
         blakeData.numberVirtualWorkObjects = function(objects){
@@ -709,36 +714,35 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
         // TODO: Each object group should be programmatically synonymous as a copy...should probably revisit this
         // IF we can get the service working correctly, we could fake the selected copy?
-        blakeData.multiObjectGroup = function(objects){
-            var copyOfObjects = angular.copy(objects);
+        blakeData.multiObjectGroupCopies = function(objects){
             if(angular.isArray(objects)){
                 var objectGroupArray = [];
 
-                //First load all associations into an objectsInGroup array on the copy
-                angular.forEach(copyOfObjects, function(cObject){
-                    cObject.objectsInGroup = [];
-                    angular.forEach(objects, function(obj){
-                        if(obj.object_group == cObject.object_group){
-                            cObject.objectsInGroup.push(obj);
-                        }
-                    })
-                });
-
-                angular.forEach(objects,function(obj){
-                    obj.objectsInGroup = [];
+                angular.forEach(objects, function(obj){
                     if(obj.object_number == 1){
-                        //probably don't need to push the entire object
                         objectGroupArray.push(obj);
                     }
-                    angular.forEach(copyOfObjects, function(cObject){
-                        if(obj.object_group == cObject.object_group){
-                            obj.objectsInGroup.push(cObject);
-                        }
-                    })
                 });
 
             }
             return objectGroupArray;
+        }
+
+        blakeData.multiObjectGroupObjects = function(objects){
+            if(angular.isArray(objects)) {
+                var objectGroup = {};
+
+                angular.forEach(objects, function (obj) {
+                    if(angular.isDefined(objectGroup[obj.object_group])){
+                        objectGroup[obj.object_group].push(obj);
+                    } else {
+                        objectGroup[obj.object_group] = [];
+                        objectGroup[obj.object_group].push(obj);
+                    }
+                });
+
+                return objectGroup;
+            }
         }
 
 
@@ -771,6 +775,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         }
 
         blakeData.changeObject = function(object){
+            console.log(object);
             return blakeData.setFromSameX(object).then(function(){
                 blakeData.object = object;
                 $location.search('descId',blakeData.object.desc_id);
@@ -1305,7 +1310,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 var glass_left = e.pageX - ui.glass.width() / 2;
                 var glass_top  = e.pageY - ui.glass.height() / 2;
 
-                //console.log(glass_left, glass_top, bg_pos)
                 // Now, if you hover on the image, you should
                 // see the magnifying glass in action
                 ui.glass.css({
@@ -1318,7 +1322,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             };
 
             ele.on('mousemove', function() {
-                console.log('moving');
                 ui.glass.addClass('glass-on');
 
                 cur_img = angular.element(this);
@@ -1352,8 +1355,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
                         cur_img.data('native_width', native_width);
                         cur_img.data('native_height', native_height);
-
-                        //console.log(native_width, native_height);
 
                         mouseMove.apply(this, arguments);
 
@@ -1429,7 +1430,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         vm.runReplace = function(phrase,text){
             if (phrase.startsWith('"') && phrase.endsWith('"')) {
                 phrase = phrase.replace(/"/g, '');
-                console.log(phrase);
                 text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
                 return text;
             }
