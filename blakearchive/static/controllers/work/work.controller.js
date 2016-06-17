@@ -17,7 +17,6 @@
             vm.bds.work.probable = workVars.probable;
             vm.sortCopies(vm.bds.workCopies);
             vm.copyCount = vm.bds.workCopies.length;
-            console.log(vm.bds.workCopies);
             vm.setRows();
         })
 
