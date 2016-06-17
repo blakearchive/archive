@@ -14,16 +14,7 @@
 
         vm.what = $routeParams.what;
 
-        BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.descId).then(function() {
-            vm.init();
-        });
-
-
-        vm.init = function(){
-            if(vm.bds.copyObjects.length > 1){
-                vm.getPreviousNextObjects();
-            }
-        }
+        BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.descId);
 
         vm.getOvpTitle = function(){
             if(angular.isDefined(vm.bds.copy)){
@@ -45,25 +36,53 @@
             }
         }
 
-        vm.getPreviousNextObjects = function () {
-            if (vm.bds.copyObjects && vm.bds.copyObjects.length) {
-                for (var i = vm.bds.copyObjects.length; i--;) {
-                    if (vm.bds.copyObjects[i].object_id == vm.bds.object.object_id) {
+        vm.getPreviousObject = function(){
+
+            var list = {};
+
+            if(vm.bds.work.bad_id == 'letters'){
+                list = vm.bds.copy.objectGroups[vm.bds.object.object_group];
+            } else {
+                list = vm.bds.copyObjects;
+            }
+
+            if(list){
+                for (var i = list.length; i--;) {
+                    if (list[i].object_id == vm.bds.object.object_id) {
                         // Extra code here to make the list circular
                         if (i - 1 < 0) {
-                            vm.previousObject = vm.bds.copyObjects[vm.bds.copyObjects.length - 1];
+                            return list[list.length - 1];
                         } else {
-                            vm.previousObject = vm.bds.copyObjects[i - 1];
+                            return list[i - 1];
                         }
-                        if (i + 1 >= vm.bds.copyObjects.length) {
-                            vm.nextObject = vm.bds.copyObjects[0];
-                        } else {
-                            vm.nextObject = vm.bds.copyObjects[i + 1];
-                        }
-                        break;
                     }
                 }
             }
+        }
+
+        vm.getNextObject = function(){
+
+            var list = {};
+
+            if(vm.bds.work.bad_id == 'letters'){
+                list = vm.bds.copy.objectGroups[vm.bds.object.object_group];
+            } else {
+                list = vm.bds.copyObjects;
+            }
+
+            if(list){
+                for (var i = list.length; i--;) {
+                    if (list[i].object_id == vm.bds.object.object_id) {
+                        // Extra code here to make the list circular
+                        if (i + 1 >= list.length) {
+                            return list[0];
+                        } else {
+                            return list[i + 1];
+                        }
+                    }
+                }
+            }
+
         };
 
         vm.changeObject = function(object){
