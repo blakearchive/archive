@@ -15,11 +15,16 @@
             }
         }
 
+        /*this really needs to be redone to be made less convoluted*/
         vm.getTitle = function(){
             if(vm.bds.work.virtual == true){
                 if(vm.bds.copy.bad_id == 'letters'){
+                    if($rootScope.onWorkPage == true) {
+                        return "Letters";
+                    }
                     title = vm.bds.object.object_group;
-                    return title;
+                    title = title.match(/(to.*)/);
+                    return title[1].charAt(0).toUpperCase() + title[1].slice(1);;
                 } else {
                     title = vm.bds.work.title;
                     return title;
@@ -35,7 +40,13 @@
                     title = vm.bds.copy.header.filedesc.titlestmt.title['@reg'];
                 }
                 if($rootScope.view.mode == 'compare') {
+                    if(title.match(/.*, The/)) {
+                        title = "The " + title.match(/(.*), The/)[1];
+                    }
                     return title;
+                }
+                if(title.match(/.*, The/)) {
+                    title = "The " + title.match(/(.*), The/)[1];
                 }
                 return title;
             }
