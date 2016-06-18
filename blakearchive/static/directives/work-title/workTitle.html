@@ -1,5 +1,12 @@
 <div class="object-view-menu">
 	<span ng-if="$root.onWorkPage == false && $root.view.mode == 'compare'" class="worktitle" style="padding: 19px;"><a href="/blake/work/{{workTitle.getWorkId()}}" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} (Selected)</span>
 	<span ng-if="$root.onWorkPage == true" class="worktitle" style="padding: 19px;"><a href="/blake/work/{{workTitle.getWorkId()}}" style="color:white;">{{ workTitle.getTitle() }}</a></span>
-	<span ng-if="$root.onWorkPage == false && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;"><a href="/blake/work/{{workTitle.getWorkId()}}" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}</span>
+	<span ng-if="$root.onWorkPage == false && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
+		<span ng-if="workTitle.bds.copy.bad_id == 'letters'">
+		<a href="/blake/work/{{workTitle.getWorkId()}}" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
+		</span>
+		<span ng-if="workTitle.bds.copy.bad_id != 'letters'">
+		<a href="/blake/work/{{workTitle.getWorkId()}}" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
+		</span>
+	</span>
 </div>
