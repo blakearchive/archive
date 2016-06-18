@@ -929,42 +929,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         return cof;
     })
 
-    /*.factory('SearchConfigFactory', function(){
-
-        var scf = this;
-
-        scf.scope = true;
-        scf.type = true;
-
-        scf.config = {
-            useCompDate: true,
-            searchTitle: false,
-            searchText: false,
-            searchWorkInformation: false,
-            searchCopyInformation: false,
-            searchImageKeywords: false,
-            searchNotes: false,
-            searchImageDescriptions: false,
-            searchIlluminatedBooks: false,
-            searchCommercialBookIllustrations: false,
-            searchSeparatePrints: false,
-            searchDrawingsPaintings: false,
-            searchManuscripts: false,
-            searchRelatedMaterials: false,
-            minDate: 1772,
-            maxDate: 1827
-        };
-        scf.getConfig = function(){
-            if(scf.scope){
-                scf.config.searchTitle
-            }
-        }
-
-        return scf;
-
-
-    }*/
-
 
     .directive('resize', ['$window', '$timeout', 'WindowSize', function ($window, $timeout, WindowSize) {
         return function (scope, element) {
@@ -1117,6 +1081,49 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             restrict: 'A',
             link: link
         }
+    })
+    .directive('affix',function($window){
+        var link = function(scope,element,attr){
+            var w = angular.element($window),
+                elementOffsetTop = element[0].getBoundingClientRect().top,
+                offsetTop = angular.isDefined(attr.offsetTop) ? attr.offsetTop : 0,
+                offsetStart = angular.isDefined(attr.offsetStart) ? parseInt(attr.offsetStart) : 0,
+                width = 0;
+
+            function affixElement() {
+
+                if ($window.pageYOffset > (elementOffsetTop + offsetStart)) {
+                    element.css('position', 'fixed');
+                    element.css('top', offsetTop+'px');
+                    element.css('width',width+'px');
+                } else {
+                    element.css('position', '');
+                    element.css('top', '');
+                    element.css('width','100%');
+                    width = element[0].clientWidth;
+                }
+            }
+
+            function resetWidth() {
+                if ($window.pageYOffset > (elementOffsetTop + offsetStart)) {
+                    element.css('position', '');
+                    element.css('top', '');
+                    element.css('width','100%');
+                    width = element[0].clientWidth;
+                    affixElement();
+                }
+            }
+
+            scope.$on('resize::resize',function(){
+                resetWidth();
+            });
+
+            w.bind('scroll', affixElement);
+        }
+        return {
+            restrict: 'A',
+            link: link
+        };
     })
     .directive('ovpImage',function(imageManipulation,$rootScope){
         var link = function(scope,element,attr){
