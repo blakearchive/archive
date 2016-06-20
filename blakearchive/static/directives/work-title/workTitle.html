@@ -6,7 +6,7 @@
 		<a href="/blake/work/{{workTitle.getWorkId()}}" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
 		</span>
 		<span ng-if="workTitle.bds.copy.bad_id != 'letters'">
-		<a href="/blake/work/{{workTitle.getWorkId()}}" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
+		<a href="" ng-click="setOverlayContent('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
 		</span>
 	</span>
 </div>
