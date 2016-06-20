@@ -7,6 +7,7 @@
         vm.bds = BlakeDataService;
         var title = "";
         var copyPhrase = "";
+        var overlayContent = "";
 
         if(!angular.isDefined($rootScope.view)){
             $rootScope.view = {
@@ -58,6 +59,10 @@
 
         vm.getWorkId = function() {
             return vm.bds.work.bad_id;
+        }
+
+        vm.setOverlayContent = function(contentSource) {
+            overlayContent = contentSource; 
         }
 
     }
