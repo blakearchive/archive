@@ -696,7 +696,7 @@ a.compare-selected-objects {
 #search .search-result-item.selected .handprint-block::after {
     content:'';
     position: absolute;
-    top: 100%;
+    /*top: 100%;*/
     left: 50%;
     margin-left: -50px;
     width: 0;
