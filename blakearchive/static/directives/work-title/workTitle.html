@@ -7,7 +7,7 @@
 
 	<div class="container">
             <div style="color:white" class="section-group" ng-bind-html="workTitle.bds.work.info"></div>
-            <!--
+            
             <p class="text-center"><em>Dates are the probable dates of {{ workTitle.bds.work.probable }}.</em></p>
 
             <div class="row" ng-repeat="increment in workTitle.rows">
@@ -38,7 +38,7 @@
                 </div>
 
             </div>
-             -->
+             
     </div>
  
     
@@ -52,7 +52,7 @@
 		<a href="" ng-click="workTitle.showOverlay('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
 		</span>
 		<span ng-if="workTitle.bds.copy.bad_id != 'letters'">
-		<a href="" ng-click="workTitle.showOverlay('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
+		<a href="" ng-click="workTitle.setWork(); workTitle.showOverlay();" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
 		</span>
 	</span>
 </div>
