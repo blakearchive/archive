@@ -14,8 +14,9 @@
                     <!--to slide, put slideBox.scrollToResult($index); into action for handprint-blocks-->
                     <handprint-block
                             action="esr.showCopies($index);slideBox.scrollToResult($index);"
-                            footer="{{ esr.getHandprintDescription($index) }}"
-                            title="{{ work[0].title }}"
+                            footer="{{ work[0].title }}"
+                            image="{{ work[0].image }}"
+                            work-id="{{ work[0].bad_id }}"
                             ng-if="esr.tree == 'work'"></handprint-block>
                 </div>
             </div>
