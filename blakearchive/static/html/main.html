@@ -42,31 +42,8 @@
           <div title="Lightbox" class="lightbox" ng-class="{'hidden':showmePage}"><a class="lb-amount" href="#">3</a></div>
 
           <!-- Use any element to open/show the overlay navigation menu -->
-          <work-title onclick="openNav()" ng-if="showSubMenu == 1"></work-title> 
+          <work-title ng-if="showSubMenu == 1"></work-title> 
           <!--<view-sub-menu ng-if="showSubMenu == 1"></view-sub-menu>-->
-          <!-- The overlay -->
-     <div id="overlay" class="overlay">
-
-      <!-- Button to close the overlay navigation -->
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
-      <div class="overlay-content">
-        test
-      </div>
-
-      <script>
-        /* Open when someone clicks on the span element */
-        function openNav() {
-          document.getElementById("overlay").style.height = "100%";
-        }
-
-        /* Close when someone clicks on the "x" symbol inside the overlay */
-        function closeNav() {
-          document.getElementById("overlay").style.height = "0%";
-        }
-      </script>
-
-    </div>
         </div>
       </div>
       <!-- /.container -->
