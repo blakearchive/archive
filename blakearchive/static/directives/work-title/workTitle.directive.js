@@ -16,6 +16,57 @@
             }
         }
 
+        vm.setWork = function(){
+            //console.log(id);
+            vm.bds.setSelectedWork(vm.bds.work.bad_id);
+            var workVars = getWorkTypeVars(vm.bds.work.medium);
+            vm.bds.work.medium_pretty = workVars.medium;
+            console.log(vm.bds.work.medium_pretty);
+            vm.bds.work.probable = workVars.probable;
+            vm.sortCopies(vm.bds.workCopies);
+            vm.copyCount = vm.bds.workCopies.length;
+            vm.setRows();
+            //vm.showOverlay();
+        }
+
+        vm.getMedium = function() {
+            return vm.bds.work.medium_pretty;
+        }
+
+        var getWorkTypeVars = function(medium) {
+            switch(medium) {
+                case "illbk":
+                    return {'medium':"Illuminated Books",'probable':'printing'};
+                    break;
+                case "comb":
+                case "comdes":
+                case "comeng":
+                    return {'medium':"Commercial Book Illustrations",'probable':'printing'};
+                    break;
+                case "spb":
+                case "spdes":
+                case "speng":
+                case "cprint":
+                    return {'medium':"Prints",'probable':'printing'};
+                    break;
+                case "mono":
+                case "paint":
+                case "pen":
+                case "penink":
+                case "penc":
+                case "wc":
+                    return {'medium':"Drawings and Paintings",'probable':'composition'};
+                    break;
+                case "ms":
+                case "ltr":
+                case "te":
+                    return {'medium':"Manuscripts and Typographic Works",'probable':'composition'};
+                    break;
+                default:
+                    return false;
+            }
+        };
+
         /*this really needs to be redone to be made less convoluted*/
         vm.getTitle = function(){
             if(vm.bds.work.virtual == true){
@@ -61,7 +112,7 @@
             return vm.bds.work.bad_id;
         }
 
-        vm.showOverlay = function(contentSource) {
+        vm.showOverlay = function() {
             $rootScope.showOverlay = true;
         }
 
@@ -78,6 +129,7 @@
             vm.copyCount = vm.bds.workCopies.length;
             vm.setRows();
         })
+        */
 
         vm.isValidTitle = function (title) {
             return title.match(/\w+/) ? true : false;
@@ -187,48 +239,7 @@
                     return "http://www.blakearchive.org/blake/images/" + copy.bad_id + ".1." + workMedium(wm.bds.work.medium) + ".100.jpg";
                 }
             }
-        };
-
-        /**
-         * Print out full text for medium instead of abbreviation
-         * @param medium
-         * @returns {*}
-         */
-        /*
-        var getWorkTypeVars = function(medium) {
-            switch(medium) {
-                case "illbk":
-                    return {'medium':"Illuminated Books",'probable':'printing'};
-                    break;
-                case "comb":
-                case "comdes":
-                case "comeng":
-                    return {'medium':"Commercial Book Illustrations",'probable':'printing'};
-                    break;
-                case "spb":
-                case "spdes":
-                case "speng":
-                case "cprint":
-                    return {'medium':"Prints",'probable':'printing'};
-                    break;
-                case "mono":
-                case "paint":
-                case "pen":
-                case "penink":
-                case "penc":
-                case "wc":
-                    return {'medium':"Drawings and Paintings",'probable':'composition'};
-                    break;
-                case "ms":
-                case "ltr":
-                case "te":
-                    return {'medium':"Manuscripts and Typographic Works",'probable':'composition'};
-                    break;
-                default:
-                    return false;
-            }
-        };
-        */
+        };       
 
     }
 
