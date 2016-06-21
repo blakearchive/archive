@@ -20,6 +20,15 @@
             vm.setRows();
         })
 
+        vm.setWork = function(){
+            var workVars = getWorkTypeVars(vm.bds.work.medium);
+            vm.bds.work.medium_pretty =  workVars.medium;
+            vm.bds.work.probable = workVars.probable;
+            vm.sortCopies(vm.bds.workCopies);
+            vm.copyCount = vm.bds.workCopies.length;
+            vm.setRows();
+        };
+
         $rootScope.worksNavState = false;
         $rootScope.onWorkPage = true;
         $rootScope.showSubMenu = 1;
