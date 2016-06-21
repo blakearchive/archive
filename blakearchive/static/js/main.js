@@ -853,7 +853,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
         var cof = this;
 
-        cof.comparisonObjects = [];
         cof.main = {};
         cof.comparisonType = '';
 
@@ -879,7 +878,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
         cof.selectAll = function (objects) {
             cof.comparisonObjects = angular.copy(objects);
-            cof.comparisonObjects.unshift(cof.main);
+            if(angular.isDefined(cof.main.object_id)){
+                cof.comparisonObjects.unshift(cof.main);
+            }
         };
 
         cof.removeComparisonObject = function (obj) {
@@ -894,7 +895,10 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
         cof.clearComparisonObjects = function () {
             cof.comparisonObjects = [];
-            cof.comparisonObjects.unshift(cof.main);
+            co.comparisonType = '';
+            if(angular.isDefined(cof.main.object_id)){
+                cof.comparisonObjects.unshift(cof.main);
+            }
         };
 
         cof.isComparisonObject = function (obj,type) {
