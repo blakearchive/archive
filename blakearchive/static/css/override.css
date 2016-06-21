@@ -1,5 +1,5 @@
 .overlay {
-    height: 0%;
+    height: 100%;
     width: 100%;
     position: fixed;
     z-index: 100000;
@@ -34,9 +34,9 @@
 
 .closebtn {
     position: absolute;
-    top: 20px;
-    right: 45px;
-    font-size: 60px !important;
+    top: -11px;
+    right: 5px;
+    font-size: 42px !important;
 }
 
 @media screen and (max-height: 450px) {

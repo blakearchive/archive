@@ -1,12 +1,58 @@
+<div id="Overlay" class="overlay" ng-show="$root.showOverlay == true">
+	<a href="" class="closebtn" ng-click="workTitle.closeOverlay()">&times;</a>
+	<header class="page-header">
+        <p class="subhead">{{ workTitle.bds.work.medium_pretty }}</p>
+        <h1 style="color:maroon">{{ workTitle.bds.work.title }} ({{ workTitle.bds.work.composition_date_string }})</h1>
+    </header>
+
+	<div class="container">
+            <div style="color:white" class="section-group" ng-bind-html="workTitle.bds.work.info"></div>
+            <!--
+            <p class="text-center"><em>Dates are the probable dates of {{ workTitle.bds.work.probable }}.</em></p>
+
+            <div class="row" ng-repeat="increment in workTitle.rows">
+
+                <div ng-repeat="copy in workTitle.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workTitle.bds.work.virtual == false">
+                    <handprint-block
+                            link="/blake/copy/{{copy.bad_id}}"
+                            image="{{ copy.image }}.100.jpg"
+                            footer="Copy {{copy.archive_copy_id}} {{copy.source.objinfo.printdate['#text']}}, ({{copy.institution}})">
+                    </handprint-block>
+                </div>
+
+                <div ng-repeat="obj in workTitle.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workTitle.bds.work.virtual == true && workTitle.bds.work.bad_id != 'letters'">
+
+                    <handprint-block
+                            link="/blake/copy/{{obj.archive_copy_id}}?descId={{obj.desc_id}}"
+                            image="{{ obj.dbi }}.100.jpg"
+                            footer="{{obj.full_object_id}}, {{obj.source.objdescid.compdate['#text']}}, ({{obj.source.provenance.name['#text']}})">
+                    </handprint-block>
+                </div>
+
+                <div ng-repeat="obj in workTitle.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workTitle.bds.work.bad_id == 'letters'">
+                    <handprint-block
+                            link="/blake/copy/{{obj.archive_copy_id}}?descId={{obj.desc_id}}"
+                            image="{{ obj.dbi }}.100.jpg"
+                            footer="{{obj.object_group}}">
+                    </handprint-block>
+                </div>
+
+            </div>
+             -->
+    </div>
+ 
+    
+</div>
+
 <div class="object-view-menu">
-	<span ng-if="$root.onWorkPage == false && $root.view.mode == 'compare'" class="worktitle" style="padding: 19px;"><a href="/blake/work/{{workTitle.getWorkId()}}" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} (Selected)</span>
-	<span ng-if="$root.onWorkPage == true" class="worktitle" style="padding: 19px;"><a href="/blake/work/{{workTitle.getWorkId()}}" style="color:white;">{{ workTitle.getTitle() }}</a></span>
+	<span ng-if="$root.onWorkPage == false && $root.view.mode == 'compare'" class="worktitle" style="padding: 19px;"><a href="" ng-click="workTitle.showOverlay('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} (Selected)</span>
+	<span ng-if="$root.onWorkPage == true" class="worktitle" style="padding: 19px;"><a href="" ng-click="workTitle.showOverlay('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">{{ workTitle.getTitle() }}</a></span>
 	<span ng-if="$root.onWorkPage == false && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
 		<span ng-if="workTitle.bds.copy.bad_id == 'letters'">
-		<a href="/blake/work/{{workTitle.getWorkId()}}" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
+		<a href="" ng-click="workTitle.showOverlay('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
 		</span>
 		<span ng-if="workTitle.bds.copy.bad_id != 'letters'">
-		<a href="" ng-click="setOverlayContent('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
+		<a href="" ng-click="workTitle.showOverlay('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
 		</span>
 	</span>
 </div>
