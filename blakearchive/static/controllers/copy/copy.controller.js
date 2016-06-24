@@ -11,6 +11,7 @@
 
         $rootScope.showSubMenu = 1;
         $rootScope.worksNavState = false;
+        $rootScope.zoom = false;
         //$rootScope.onComparePage = false;
         //$rootScope.onWorkPage = false;
         vm.bds = BlakeDataService;
@@ -78,6 +79,10 @@
 
         vm.rotate = function(){
             imageManipulation.rotate();
+        }
+
+        vm.zoom = function(){
+            $rootScope.zoom = !$rootScope.zoom;
         }
 
         vm.toggleTranscription = function(){
