@@ -895,7 +895,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
         cof.clearComparisonObjects = function () {
             cof.comparisonObjects = [];
-            co.comparisonType = '';
+            cof.comparisonType = '';
             if(angular.isDefined(cof.main.object_id)){
                 cof.comparisonObjects.unshift(cof.main);
             }
@@ -1208,8 +1208,11 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
      Changed slightly to work in angular
      */
-    .directive('magnifyImage',function(imageManipulation){
+    .directive('magnifyImage',function($interval,$window,$rootScope,imageManipulation){
         var link = function(scope,ele,attr,vm){
+            if($rootScope.zoom){
+
+            }
             var native_width = 0;
             var native_height = 0;
             var mouse = {x: 0, y: 0};
@@ -1231,7 +1234,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
 
             var mouseMove = function(e) {
-                var $el = angular.element(this);
 
                 // Container offset relative to document
                 var magnify_offset = cur_img.offset();
@@ -1256,7 +1258,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 if (mouse.x < checkWidth && mouse.y < checkHeight && mouse.x > 0 && mouse.y > 0) {
                     magnify(e);
                 } else {
-                    ui.glass.removeClass('glass-on')
+                    ui.glass.removeClass('glass-on');
                 }
 
                 return;
@@ -1326,67 +1328,75 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             };
 
             ele.on('mousemove', function() {
-                ui.glass.addClass('glass-on');
+                if($rootScope.zoom){
 
-                cur_img = angular.element(this);
+                    ui.glass.addClass('glass-on');
 
-                var src = cur_img.attr('src');
-                src = src.replace('100','300');
+                    cur_img = angular.element(this);
 
-                if (src) {
-                    ui.glass.css({
-                        'background-image': 'url(' + src + ')',
-                        'background-repeat': 'no-repeat'
-                    });
+                    var src = cur_img.attr('src');
+                    src = src.replace('100','300');
+
+                    if (src) {
+                        ui.glass.css({
+                            'background-image': 'url(' + src + ')',
+                            'background-repeat': 'no-repeat'
+                        });
+                    }
+
+                    // When the user hovers on the image, the script will first calculate
+                    // the native dimensions if they don't exist. Only after the native dimensions
+                    // are available, the script will show the zoomed version.
+                    if (!cur_img.data('native_width')) {
+                        // This will create a new image object with the same image as that in .small
+                        // We cannot directly get the dimensions from .small because of the
+                        // width specified to 200px in the html. To get the actual dimensions we have
+                        // created this image object.
+                        var image_object = new Image();
+
+                        image_object.onload = function() {
+                            // This code is wrapped in the .load function which is important.
+                            // width and height of the object would return 0 if accessed before
+                            // the image gets loaded.
+                            native_width = image_object.width;
+                            native_height = image_object.height;
+
+                            cur_img.data('native_width', native_width);
+                            cur_img.data('native_height', native_height);
+
+                            mouseMove.apply(this, arguments);
+
+                            ui.glass.on('mousemove', mouseMove);
+                        };
+
+
+                        image_object.src = src;
+
+                        return;
+                    } else {
+
+                        native_width = cur_img.data('native_width');
+                        native_height = cur_img.data('native_height');
+                    }
+
+                    mouseMove.apply(this, arguments);
+
+                    ui.glass.on('mousemove', mouseMove);
                 }
-
-                // When the user hovers on the image, the script will first calculate
-                // the native dimensions if they don't exist. Only after the native dimensions
-                // are available, the script will show the zoomed version.
-                if (!cur_img.data('native_width')) {
-                    // This will create a new image object with the same image as that in .small
-                    // We cannot directly get the dimensions from .small because of the
-                    // width specified to 200px in the html. To get the actual dimensions we have
-                    // created this image object.
-                    var image_object = new Image();
-
-                    image_object.onload = function() {
-                        // This code is wrapped in the .load function which is important.
-                        // width and height of the object would return 0 if accessed before
-                        // the image gets loaded.
-                        native_width = image_object.width;
-                        native_height = image_object.height;
-
-                        cur_img.data('native_width', native_width);
-                        cur_img.data('native_height', native_height);
-
-                        mouseMove.apply(this, arguments);
-
-                        ui.glass.on('mousemove', mouseMove);
-                    };
-
-
-                    image_object.src = src;
-
-                    return;
-                } else {
-
-                    native_width = cur_img.data('native_width');
-                    native_height = cur_img.data('native_height');
-                }
-
-                mouseMove.apply(this, arguments);
-
-                ui.glass.on('mousemove', mouseMove);
             });
 
             ui.glass.on('mouseout', function() {
                 ui.glass.off('mousemove', mouseMove);
             });
 
-
             scope.$watch(function(){return imageManipulation.transform},function(){
                 ui.glass.css(imageManipulation.transform.style);
+            },true);
+
+            scope.$watch(function(){return $rootScope.zoom},function(){
+                if(!$rootScope.zoom){
+                    ui.glass.removeClass('glass-on');
+                }
             },true);
 
         }
