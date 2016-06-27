@@ -1208,7 +1208,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
      Changed slightly to work in angular
      */
-    .directive('magnifyImage',function($interval,$window,$rootScope,imageManipulation){
+    .directive('magnifyImage',function($interval,$window,$rootScope,imageManipulation,BlakeDataService){
         var link = function(scope,ele,attr,vm){
             if($rootScope.zoom){
 
@@ -1330,8 +1330,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             ele.on('mousemove', function() {
                 if($rootScope.zoom){
 
-                    ui.glass.addClass('glass-on');
-
                     cur_img = angular.element(this);
 
                     var src = cur_img.attr('src');
@@ -1364,6 +1362,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                             cur_img.data('native_width', native_width);
                             cur_img.data('native_height', native_height);
 
+                            ui.glass.addClass('glass-on');
+
                             mouseMove.apply(this, arguments);
 
                             ui.glass.on('mousemove', mouseMove);
@@ -1378,6 +1378,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                         native_width = cur_img.data('native_width');
                         native_height = cur_img.data('native_height');
                     }
+
+                    ui.glass.addClass('glass-on');
 
                     mouseMove.apply(this, arguments);
 
@@ -1396,6 +1398,13 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             scope.$watch(function(){return $rootScope.zoom},function(){
                 if(!$rootScope.zoom){
                     ui.glass.removeClass('glass-on');
+                }
+            },true);
+
+            scope.$watch(function(){return BlakeDataService.object},function(){
+                if(angular.isDefined(cur_img)){
+                    cur_img.data('native_width', false);
+                    cur_img.data('native_height', false);
                 }
             },true);
 
