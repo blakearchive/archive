@@ -1,3 +1,8 @@
+#archive-tabs .container-fluid.tabs {
+  /*border-bottom: 1px solid #ddd;*/
+  z-index: 500;
+}
+
 .lightbox {
   background-color: transparent;
   background-repeat: no-repeat;
