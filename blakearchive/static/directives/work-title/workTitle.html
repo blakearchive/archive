@@ -1,5 +1,6 @@
-<div id="Overlay" class="overlay" ng-show="workTitle.showOverlay == true">
-   	<a href="" class="closebtn" ng-click="workTitle.showOverlay = false">&times;</a>
+<div id="Overlay" class="overlay" ng-show="$root.showOverlay == true">
+
+   	<a href="" class="closebtn" ng-click="$root.showOverlay = false">&times;</a>
    	<header class="page-header">
    		<p class="subhead">{{ workTitle.bds.work.medium_pretty }}</p>
    		<h1 style="color:maroon">{{ workTitle.bds.work.title }} ({{ workTitle.bds.work.composition_date_string }})</h1>
@@ -23,20 +24,20 @@
 
 <div class="object-view-menu">
 	<span ng-if="showWorkTitle == 'work'" class="worktitle" style="padding: 19px;">
-        <a href="" ng-click="workTitle.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a>
+        <a href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a>
     </span>
 
 	<span ng-if="showWorkTitle != 'work' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
 		<span ng-if="workTitle.bds.copy.bad_id == 'letters'">
-			<a href="" ng-click="workTitle.showOverlay = true" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
+			<a href="" ng-click="$root.showOverlay = true" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
 		</span>
 		<span ng-if="workTitle.bds.copy.bad_id != 'letters'">
-			<a href="" ng-click="workTitle.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
+			<a href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
 		</span>
 	</span>
 
 	<span ng-if="showWorkTitle != 'work' && $root.view.mode == 'compare'" class="worktitle" style="padding: 19px;">
-		<a href="" ng-click="workTitle.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} (Selected)
+		<a href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} (Selected)
 	</span>
 
 </div>
