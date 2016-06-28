@@ -60,7 +60,7 @@
             if(vm.bds.work.bad_id == 'letters'){
                 title = vm.bds.object.object_group;
                 title = title.match(/(to.*)/);
-                return title[1].charAt(0).toUpperCase() + title[1].slice(1) + ': ';
+                return title[1].charAt(0).toUpperCase() + title[1].slice(1);
             }
             //For Virtual Groups
             if(vm.bds.work.virtual){

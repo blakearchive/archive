@@ -11,6 +11,8 @@
 
         vm.bds = BlakeDataService;
 
+        $rootScope.view.mode = "work";
+
         vm.bds.setSelectedWork($routeParams.workId).then(function(){
 
             vm.knownCopiesDiv3 = Math.ceil(vm.copyCount / 3);
