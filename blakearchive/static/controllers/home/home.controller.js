@@ -8,8 +8,8 @@
 
         var vm = this;
 
-        $rootScope.showSubMenu = 0;
         $rootScope.worksNavState = true;
+        $rootScope.showWorkTitle = false;
 
         if(!angular.isDefined($rootScope.persistentmode)){
             $rootScope.persistentmode = 'gallery';            

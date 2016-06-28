@@ -1,47 +1,20 @@
-<div ng-controller="WorkController as workCtrl" id="Overlay" class="overlay" ng-show="$root.showOverlay == true">
-	{{workCtrl.setWork()}}
-   	<a href="" class="closebtn" ng-click="$root.showOverlay = false">&times;</a>
+<div id="Overlay" class="overlay" ng-show="workTitle.showOverlay == true">
+   	<a href="" class="closebtn" ng-click="workTitle.showOverlay = false">&times;</a>
    	<header class="page-header">
-   		<p class="subhead">{{ workCtrl.bds.work.medium_pretty }}</p>
-   		<h1 style="color:maroon">{{ workCtrl.bds.work.title }} ({{ workCtrl.bds.work.composition_date_string }})</h1>
+   		<p class="subhead">{{ workTitle.bds.work.medium_pretty }}</p>
+   		<h1 style="color:maroon">{{ workTitle.bds.work.title }} ({{ workTitle.bds.work.composition_date_string }})</h1>
    	</header>
 
    	<article class="categories">
 
    		<div style="color:white" class="container">
-   			<div class="section-group" ng-bind-html="workCtrl.bds.work.info"></div>
+   			<div class="section-group" ng-bind-html="workTitle.bds.work.info"></div>
    			<hr>
-   			<p class="text-center"><em>Dates are the probable dates of {{ workCtrl.bds.work.probable }}.</em></p>
+   			<p class="text-center"><em>Dates are the probable dates of {{ workTitle.bds.work.probable }}.</em></p>
 
-   			<div class="row" ng-repeat="increment in workCtrl.rows">
+            <work-copies></work-copies>
 
-   				<!-- For Non virtual groups -->
-   				<div ng-repeat="copy in workCtrl.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCtrl.bds.work.virtual == false">
-   					<handprint-block ng-click="$root.showOverlay = false"
-   					link="/blake/copy/{{copy.bad_id}}"
-   					image="{{ copy.image }}.100.jpg"
-   					footer="Copy {{copy.archive_copy_id}} {{copy.source.objinfo.printdate['#text']}}, ({{copy.institution}})">
-   				</handprint-block>
-   			</div>
 
-   			<!-- For Virtual Groups, except letters -->
-   			<div ng-repeat="obj in workCtrl.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCtrl.bds.work.virtual == true && workCtrl.bds.work.bad_id != 'letters'">
-
-   				<handprint-block ng-click="$root.showOverlay = false"
-   				link="/blake/copy/{{obj.archive_copy_id}}?descId={{obj.desc_id}}"
-   				image="{{ obj.dbi }}.100.jpg"
-   				footer="{{obj.full_object_id}}, {{obj.source.objdescid.compdate['#text']}}, ({{obj.source.provenance.name['#text']}})">
-   			</handprint-block>
-   			</div>
-
-   			<!-- For Letters -->
-   			<div ng-repeat="obj in workCtrl.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCtrl.bds.work.bad_id == 'letters'">
-   				<handprint-block ng-click="$root.showOverlay = false"
-   				link="/blake/copy/{{obj.archive_copy_id}}?descId={{obj.desc_id}}"
-   				image="{{ obj.dbi }}.100.jpg"
-   				footer="{{obj.object_group}}">
-   			</handprint-block>
-   			</div>
    		</div>
 	</article>
 
@@ -49,8 +22,16 @@
 
 
 <div class="object-view-menu">
-	<span ng-if="$root.onWorkPage == false && $root.view.mode == 'compare'" class="worktitle" style="padding: 19px;"><a href="" ng-click="workTitle.showOverlay('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} (Selected)</span>
-	<span ng-if="$root.onWorkPage == true" class="worktitle" style="padding: 19px;"><a href="" ng-click="workTitle.showOverlay('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">{{ workTitle.getTitle() }}</a></span>
+	<span class="worktitle" style="padding: 19px;">
+        <a href="" ng-click="workTitle.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a>
+        <span ng-if="showWorkTitle == 'copy'">&nbsp;{{workTitle.getCopyPhrase()}}</span>
+        <span ng-if="view.mode == 'compare'">&nbsp;(Selected)</span>
+    </span>
+
+	<!--<span ng-if="$root.onWorkPage == true" class="worktitle" style="padding: 19px;">
+        <a href="" ng-click="workTitle.showOverlay('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">{{ workTitle.getTitle() }}</a>
+    </span>
+
 	<span ng-if="$root.onWorkPage == false && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
 		<span ng-if="workTitle.bds.copy.bad_id == 'letters'">
 			<a href="" ng-click="workTitle.showOverlay('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
@@ -58,5 +39,5 @@
 		<span ng-if="workTitle.bds.copy.bad_id != 'letters'">
 			<a href="" ng-click="workTitle.setWork(); workTitle.showOverlay();" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
 		</span>
-	</span>
+	</span>-->
 </div>
