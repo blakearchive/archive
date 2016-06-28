@@ -11,6 +11,7 @@
 
         $rootScope.worksNavState = false;
         $rootScope.showWorkTitle = 'copy';
+        $rootScope.showOverlay = false;
         //$rootScope.onComparePage = false;
         //$rootScope.onWorkPage = false;
         vm.bds = BlakeDataService;
