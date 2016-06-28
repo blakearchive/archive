@@ -22,29 +22,21 @@
 
 
 <div class="object-view-menu">
-	<span class="worktitle" style="padding: 19px;">
-		<span ng-if="workTitle.bds.copy.bad_id != 'letters'">
+	<span ng-if="showWorkTitle == 'work'" class="worktitle" style="padding: 19px;">
         <a href="" ng-click="workTitle.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a>
-        </span>
-        <span ng-if="workTitle.bds.copy.bad_id == 'letters' && showWorkTitle != 'work'">
-        <a href="" ng-click="workTitle.showOverlay = true" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
-      	</span>
-    </span>
-    <span>
-        <span ng-if="showWorkTitle == 'copy'">{{workTitle.getCopyPhrase()}}</span>
-        <span ng-if="view.mode == 'compare'">(Selected)</span>
     </span>
 
-	<!--<span ng-if="$root.onWorkPage == true" class="worktitle" style="padding: 19px;">
-        <a href="" ng-click="workTitle.showOverlay('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">{{ workTitle.getTitle() }}</a>
-    </span>
-
-	<span ng-if="$root.onWorkPage == false && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
+	<span ng-if="showWorkTitle != 'work' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
 		<span ng-if="workTitle.bds.copy.bad_id == 'letters'">
-			<a href="" ng-click="workTitle.showOverlay('/blake/work/{{workTitle.getWorkId()}}')" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
+			<a href="" ng-click="workTitle.showOverlay = true" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
 		</span>
 		<span ng-if="workTitle.bds.copy.bad_id != 'letters'">
-			<a href="" ng-click="workTitle.setWork(); workTitle.showOverlay();" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
+			<a href="" ng-click="workTitle.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
 		</span>
-	</span>-->
+	</span>
+
+	<span ng-if="showWorkTitle != 'work' && $root.view.mode == 'compare'" class="worktitle" style="padding: 19px;">
+		<a href="" ng-click="workTitle.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} (Selected)
+	</span>
+
 </div>
