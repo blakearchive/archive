@@ -9,8 +9,8 @@
 
         var vm = this;
 
-        $rootScope.showSubMenu = 1;
         $rootScope.worksNavState = false;
+        $rootScope.showWorkTitle = 'copy';
         //$rootScope.onComparePage = false;
         //$rootScope.onWorkPage = false;
         vm.bds = BlakeDataService;

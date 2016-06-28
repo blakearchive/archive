@@ -270,11 +270,45 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         var constructor = function (config) {
 
             var work = angular.copy(config);
-            /*if (config.copies) {
-             for (i = 0; i < config.copies.length; i++) {
-             work.copies.push(BlakeCopy.create(config.copies[i]));
-             }
-             }*/
+
+
+            // Get the medium and probable phrase
+            switch(work.medium) {
+                case "illbk":
+                    work.medium_pretty = 'Illuminated Books';
+                    work.probable = 'printing';
+                    break;
+                case "comb":
+                case "comdes":
+                case "comeng":
+                    work.medium_pretty = 'Commercial Book Illustrations';
+                    work.probable = 'printing';
+                    break;
+                case "spb":
+                case "spdes":
+                case "speng":
+                case "cprint":
+                    work.medium_pretty = 'Prints';
+                    work.probable = 'printing';
+                    break;
+                case "mono":
+                case "paint":
+                case "pen":
+                case "penink":
+                case "penc":
+                case "wc":
+                    work.medium_pretty = 'Drawings and Paintings';
+                    work.probable = 'composition';
+                    break;
+                case "ms":
+                case "ltr":
+                case "te":
+                    work.medium_pretty = 'Manuscripts and Typographic Works';
+                    work.probable = 'composition';
+                    break;
+                default:
+                    return false;
+            }
 
             //Create an alternative work title for virtual works
             work.menuTitle = work.title;
@@ -333,7 +367,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         var blakeData = {
             featured: {},
             work: {},
-            workCopies: {},
+            workCopies: [],
             copy: {},
             copyObjects: {},
             object: {}
@@ -668,11 +702,13 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             return $q.all([
                 blakeData.getCopy(copyId),
                 blakeData.getObjectsForCopy(copyId),
-                blakeData.getWork(workId)
+                blakeData.setSelectedWork(workId)
+                //blakeData.getWork(workId)
             ]).then(function (data) {
+                console.log(blakeData.work);
                 blakeData.copy = data[0];
                 blakeData.copyObjects = data[1];
-                blakeData.work = data[2];
+                //blakeData.work = data[2];
 
                 //Programatically order objects if "copy" is a virtual group, then replace number in full object id
                 if (blakeData.work.virtual == true) {
