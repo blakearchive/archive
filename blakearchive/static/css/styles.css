@@ -5595,6 +5595,7 @@ button.close {
   text-decoration: none;
   background-color: #000000;
   border-radius: 4px;
+  border: 1px solid #d5d5d5;
 }
 .tooltip-arrow {
   position: absolute;
@@ -5608,7 +5609,7 @@ button.close {
   left: 50%;
   margin-left: -5px;
   border-width: 5px 5px 0;
-  border-top-color: #000000;
+  border-top-color: #d5d5d5;
 }
 .tooltip.top-left .tooltip-arrow {
   bottom: 0;
@@ -7837,7 +7838,7 @@ a.new-window:hover {
     border-bottom: none;
   }
 }
-#archive #object-view .btn-group.edit-object .btn.btn-default:hover {
+#archive #object-view .btn-group.edit-object .btn.btn-default:hover,#archive #object-view .btn-group.edit-object .btn.btn-default.hover {
   color: #5b5b5b;
   background-color: #f8f8f8;
   border-color: #dadada;
