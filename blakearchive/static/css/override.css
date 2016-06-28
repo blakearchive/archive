@@ -34,10 +34,16 @@
 }
 
 .closebtn {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+
     position: absolute;
     top: -11px;
     right: 5px;
-    font-size: 42px !important;
 }
 
 @media screen and (max-height: 450px) {
