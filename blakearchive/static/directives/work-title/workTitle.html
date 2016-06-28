@@ -12,7 +12,7 @@
    			<div class="section-group" ng-bind-html="workTitle.bds.work.info"></div>
    			<hr>
    			<p class="text-center"><em>Dates are the probable dates of {{ workTitle.bds.work.probable }}.</em></p>
-          
+
             <work-copies></work-copies>
 
 
@@ -24,20 +24,20 @@
 
 <div class="object-view-menu">
 	<span ng-if="showWorkTitle == 'work'" class="worktitle" style="padding: 19px;">
-        <a href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a>
+        <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a>
     </span>
 
 	<span ng-if="showWorkTitle != 'work' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
 		<span ng-if="workTitle.bds.copy.bad_id == 'letters'">
-			<a href="" ng-click="$root.showOverlay = true" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
+			<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
 		</span>
 		<span ng-if="workTitle.bds.copy.bad_id != 'letters'">
-			<a href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
+			<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
 		</span>
 	</span>
 
 	<span ng-if="showWorkTitle != 'work' && $root.view.mode == 'compare'" class="worktitle" style="padding: 19px;">
-		<a href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} (Selected)
+		<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} (Selected)
 	</span>
 
 </div>
