@@ -23,7 +23,8 @@
 
 <div class="object-view-menu">
 	<span class="worktitle" style="padding: 19px;">
-        <a href="" ng-click="workTitle.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a>
+        <a ng-if="workTitle.bds.copy.bad_id != 'letters'" href="" ng-click="workTitle.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a>
+        <a ng-if="workTitle.bds.copy.bad_id == 'letters'" href="" ng-click="workTitle.showOverlay = true" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
         <span ng-if="showWorkTitle == 'copy'">{{workTitle.getCopyPhrase()}}</span>
         <span ng-if="view.mode == 'compare'">(Selected)</span>
     </span>
