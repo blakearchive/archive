@@ -5,7 +5,7 @@
 </ol>-->
 <div class="tei-wrapper" ng-bind-html="textCtrl.object.markup_text | highlight:textCtrl.highlight:textCtrl.object.alt_spellings"></div>
 
-<p><a href="#">[ n ]</a></p>
+<!--<p><a href="#">[ n ]</a></p>-->
 
-<p><a href="#" ng-click="textCtrl.colorKeyOpen('lg')">Color key for transcriptions</a></p>
+<p ng-if="textCtrl.hasColorKeyMarkup(textCtrl.object.markup_text)"><a href="#" ng-click="textCtrl.colorKeyOpen('lg')">Color key for transcriptions</a></p>
 
