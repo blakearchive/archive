@@ -9,8 +9,9 @@
 
         var vm = this;
 
-        $rootScope.showSubMenu = 1;
         $rootScope.worksNavState = false;
+        $rootScope.showWorkTitle = 'copy';
+        $rootScope.showOverlay = false;
         $rootScope.zoom = false;
         //$rootScope.onComparePage = false;
         //$rootScope.onWorkPage = false;
