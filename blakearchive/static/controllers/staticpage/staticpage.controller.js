@@ -4,8 +4,8 @@
 
         var vm = this;
 
-        $rootScope.showSubMenu = 0;
         $rootScope.worksNavState = false;
+        $rootScope.showWorkTitle = false;
         //$localStorage.$reset()
 
         vm.initialSelection = $routeParams.initialPage;

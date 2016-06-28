@@ -60,14 +60,11 @@
             vm.object = d;
         });*/
 
-        console.log(vm.adjustHeight);
-
     }
 
     var link = function(scope,ele,attr,vm){
         var mode = function(){ return vm.view.mode };
         scope.$watch(mode,function(){
-            console.log('mode changed: '+vm.view.mode);
             var adjust = vm.view.mode == 'object' ? 0 : 50;
             vm.resize(adjust);
         })

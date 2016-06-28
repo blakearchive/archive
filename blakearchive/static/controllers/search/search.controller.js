@@ -12,8 +12,8 @@
         vm.bds = BlakeDataService;
         vm.queryString = '';
 
-        $rootScope.showSubMenu = 0;
         $rootScope.worksNavState = false;
+        $rootScope.showWorkTitle = false;
 
 
         $scope.objectResults = [];
