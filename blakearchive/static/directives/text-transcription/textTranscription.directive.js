@@ -13,6 +13,42 @@
             });
         }
 
+        vm.hasColorKeyMarkup = function(teiMarkup){
+            var teiClasses = [
+                'tei-sic',
+                'tei-rep-overwrite',
+                'tei-rep',
+                'tei-del-overwrite',
+                'tei-del-erasure',
+                'tei-del-obscured',
+                'tei-del-overstrike',
+                'tei-del',
+                'tei-instr-pencil',
+                'tei-unclear-hi',
+                'tei-subst',
+                'tei-addspan-substspan',
+                'tei-add-substspan',
+                'tei-add',
+                'tei-gap-cancellation',
+                'tei-gap',
+                'tei-hspace',
+                'tei-preceding-delspan-substspan',
+                'tei-preceding-delspan',
+                'tei-preceding-addspan-substspan',
+                'tei-preceding-addspan'
+            ];
+
+            var regex = new RegExp('('+teiClasses.join('|')+')','g');
+
+            if(angular.isDefined(teiMarkup)){
+                if(teiMarkup.match(regex)){
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         vm.getNumber = function(num){
             return new Array(parseInt(num));
         }
