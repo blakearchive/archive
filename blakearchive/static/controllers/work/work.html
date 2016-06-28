@@ -10,39 +10,7 @@
             <div class="section-group" ng-bind-html="workCtrl.bds.work.info"></div>
             <hr>
             <p class="text-center"><em>Dates are the probable dates of {{ workCtrl.bds.work.probable }}.</em></p>
-
-            <div class="row" ng-repeat="increment in workCtrl.rows">
-
-                <!-- For Non virtual groups -->
-                <div ng-repeat="copy in workCtrl.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCtrl.bds.work.virtual == false">
-                    <handprint-block
-                            link="/blake/copy/{{copy.bad_id}}"
-                            image="{{ copy.image }}.100.jpg"
-                            footer="Copy {{copy.archive_copy_id}} {{copy.source.objinfo.printdate['#text']}}, ({{copy.institution}})">
-                    </handprint-block>
-                </div>
-
-                <!-- For Virtual Groups, except letters -->
-                <div ng-repeat="obj in workCtrl.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCtrl.bds.work.virtual == true && workCtrl.bds.work.bad_id != 'letters'">
-
-                    <handprint-block
-                            link="/blake/copy/{{obj.archive_copy_id}}?descId={{obj.desc_id}}"
-                            image="{{ obj.dbi }}.100.jpg"
-                            footer="{{obj.full_object_id}}, {{obj.source.objdescid.compdate['#text']}}, ({{obj.source.provenance.name['#text']}})">
-                    </handprint-block>
-                </div>
-
-                <!-- For Letters -->
-                <div ng-repeat="obj in workCtrl.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCtrl.bds.work.bad_id == 'letters'">
-                    <handprint-block
-                            link="/blake/copy/{{obj.archive_copy_id}}?descId={{obj.desc_id}}"
-                            image="{{ obj.dbi }}.100.jpg"
-                            footer="{{obj.object_group}}">
-                    </handprint-block>
-                </div>
-
-            </div>
-            
+            <work-copies></work-copies>
         </div>
     </article>
 </div>
@@ -57,7 +25,7 @@
             <div class="row">
             <!--<div class="row" ng-class="workCtrl.bds.workCtrl.copies.length > 2 ? 'columns' : 'columns-short'">-->
                 <div class="col-sm-4">
-                    <p ng-repeat="copy in workCtrl.copies | limitTo:workCtrl.knownCopiesDiv3">
+                    <p ng-repeat="copy in workCtrl.bds.workCopies | limitTo:workCtrl.knownCopiesDiv3">
                         <a href="/blake/copy/{{ copy.bad_id }}">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date }}</a>
                         <br/>
                         {{ copy.institution }}
@@ -68,7 +36,7 @@
                     </p>
                 </div>
                 <div class="col-sm-4">
-                    <p ng-repeat="copy in workCtrl.copies | limitTo:workCtrl.knownCopiesDiv3:(workCtrl.knownCopiesDiv3 * 2) - workCtrl.knownCopiesDiv3">
+                    <p ng-repeat="copy in workCtrl.bds.workCopies | limitTo:workCtrl.knownCopiesDiv3:(workCtrl.knownCopiesDiv3 * 2) - workCtrl.knownCopiesDiv3">
                         <a href="/blake/copy/{{ copy.bad_id }}">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date }}</a>
                         <br/>
                         {{ copy.institution }}
@@ -79,7 +47,7 @@
                     </p>
                 </div>
                 <div class="col-sm-4">
-                    <p ng-repeat="copy in workCtrl.copies | limitTo:workCtrl.knownCopiesDiv3:(workCtrl.knownCopiesDiv3 * 3) - workCtrl.knownCopiesDiv3">
+                    <p ng-repeat="copy in workCtrl.bds.workCopies | limitTo:workCtrl.knownCopiesDiv3:(workCtrl.knownCopiesDiv3 * 3) - workCtrl.knownCopiesDiv3">
                         <a href="/blake/copy/{{ copy.bad_id }}">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date }}</a>
                         <br/>
                         {{ copy.institution }}
