@@ -29,6 +29,7 @@
 
         // Add/remove single object for comparison
         vm.selectOne = function(obj) {
+            $console.log(obj);
             vm.cof.checkCompareType(vm.type);
             if(vm.cof.isComparisonObject(obj)) {
                 vm.cof.removeComparisonObject(obj);
