@@ -42,10 +42,15 @@
 
                         <!-- for everything else -->
                         <div ng-repeat="obj in tabs.bds.copyObjects track by $index" class="col-sm-6 col-md-3" ng-if="tabs.bds.copy.bad_id != 'letters'">
-                            <handprint-block scroll-to-top
+                            <handprint-block scroll-to-top ng-if="!obj.title"
                                              action="tabs.changeObject(obj)"
                                              image="{{ obj.dbi }}.100.jpg"
                                              footer="{{ obj.full_object_id }}">
+                            </handprint-block>
+                            <handprint-block scroll-to-top ng-if="obj.title"
+                                             action="tabs.changeObject(obj)"
+                                             image="{{ obj.dbi }}.100.jpg"
+                                             footer="{{obj.title}}<br>{{ obj.full_object_id }}">
                             </handprint-block>
                         </div>
                     </div>
