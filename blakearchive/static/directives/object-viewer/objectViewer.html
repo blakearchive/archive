@@ -20,7 +20,7 @@
                     <!--<span class="object-no text-capitalize" ng-if="viewer.work.virtual">{{ viewer.work.title }}, </span>-->
                     <span class="object-no text-capitalize" ng-if="viewer.bds.work.virtual">{{ viewer.bds.object.title }}, </span>
                     <span class="object-no text-capitalize" ng-if="!viewer.bds.work.virtual && !viewer.bds.object.title">{{ viewer.bds.object.full_object_id }}, </span>
-                    <span class="object-no text-capitalize" ng-if="!viewer.bds.work.virtual && viewer.bds.object.title">{{viewer.bds.object.title}}<br>{{ viewer.bds.object.full_object_id }}, </span>
+                    <span class="object-no text-capitalize" ng-if="!viewer.bds.work.virtual && viewer.bds.object.title">{{viewer.bds.object.title}}, {{ viewer.bds.object.full_object_id }}, </span>
                     <span>{{ viewer.bds.object.physical_description.objsize['#text'] }} </span>
                     <a style="color:#168bc1" ng-click="viewer.userestrictOpen(viewer.bds.copy)">&#169;</a>
                 </p>
