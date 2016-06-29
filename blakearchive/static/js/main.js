@@ -659,7 +659,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 .catch(getFeaturedWorksFailed);
 
             function getFeaturedWorksComplete(response){
-                return BlakeWork.create(response.data.results);
+                //return BlakeWork.create(response.data.results);
+                return response.data.results;
             }
 
             function getFeaturedWorksFailed(error){
