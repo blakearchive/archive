@@ -539,6 +539,26 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             }
         };
 
+        blakeData.getTextuallyReferencedMaterial = function (descId) {
+            var url = directoryPrefix + '/api/object/' + descId + '/objects_from_same_production_sequence';
+
+            return $http.get(url)
+                .then(getTextuallyReferencedMaterialComplete)
+                .catch(getTextuallyReferencedMaterialsFailed);
+
+            function getTextuallyReferencedMaterialComplete(response) {
+                return {
+                    objects: BlakeObject.create(response.objects),
+                    copies: BlakeCopy.create(response.copies),
+                    works: BlakeWork.create(response.works)
+                }
+            }
+
+            function getTextuallyReferencedMaterialsFailed(error) {
+                $log.error('XHR failed for getTextaullyReferencedMaterial.\n' + angular.toJson(error.data, true))
+            }
+        };
+
         blakeData.getCopy = function (copyId) {
             var url = directoryPrefix + '/api/copy/' + copyId;
 
