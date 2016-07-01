@@ -198,6 +198,18 @@ class BlakeDataService(object):
         return object_.objects_from_same_matrix
 
     @classmethod
+    def get_textually_referenced_materials(cls, desc_id):
+        object_ = models.BlakeObject.query \
+            .filter(models.BlakeObject.desc_id == desc_id) \
+            .order_by(models.BlakeObject.bentley_id) \
+            .first()
+        return {
+            "objects": object_.textually_referenced_objects,
+            "copies": object_.textually_referenced_copies,
+            "works": object_.textually_referenced_works
+        }
+
+    @classmethod
     def get_copies(cls, bad_ids=None):
         if bad_ids:
             results = models.BlakeCopy.query.filter(models.BlakeCopy.bad_id.in_(bad_ids))
