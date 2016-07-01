@@ -28,6 +28,30 @@ production_sequence__object = db.Table(
     db.Column("related_object_id", db.Integer, db.ForeignKey("object.object_id"))
 )
 
+textual_reference__object = db.Table(
+    "textual_reference__object",
+    db.Model.metadata,
+    db.Column("textual_reference__object_id", db.Integer, primary_key=True),
+    db.Column("object_id", db.Integer, db.ForeignKey("object.object_id")),
+    db.Column("related_object_id", db.Integer, db.ForeignKey("object.object_id"))
+)
+
+textual_reference__copy = db.Table(
+    "textual_reference__copy",
+    db.Model.metadata,
+    db.Column("textual_reference__copy_id", db.Integer, primary_key=True),
+    db.Column("object_id", db.Integer, db.ForeignKey("object.object_id")),
+    db.Column("related_copy_id", db.Integer, db.ForeignKey("copy.copy_id"))
+)
+
+textual_reference__work = db.Table(
+    "textual_reference__work",
+    db.Model.metadata,
+    db.Column("textual_reference__work_id", db.Integer, primary_key=True),
+    db.Column("object_id", db.Integer, db.ForeignKey("object.object_id")),
+    db.Column("related_work_id", db.Integer, db.ForeignKey("work.work_id"))
+)
+
 
 class BlakeObject(db.Model):
     __tablename__ = "object"
@@ -71,6 +95,14 @@ class BlakeObject(db.Model):
         primaryjoin=object_id == motif__object.c.object_id,
         secondaryjoin=object_id == motif__object.c.related_object_id,
         remote_side=motif__object.c.related_object_id)
+    textually_referenced_objects = db.relationship(
+        "BlakeObject",
+        secondary=textual_reference__object,
+        primaryjoin=object_id == textual_reference__object.c.object_id,
+        secondaryjoin=object_id == textual_reference__object.c.related_object_id,
+        remote_side=motif__object.c.related_object_id)
+    textually_referenced_copies = db.relationship("BlakeCopy", secondary=textual_reference__copy)
+    textually_referenced_works = db.relationship("BlakeWork", secondary=textual_reference__work)
 
     def __init__(self, *args, **kwargs):
         super(BlakeObject, self).__init__(*args, **kwargs)

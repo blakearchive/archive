@@ -72,6 +72,13 @@ def get_objects_from_same_matrix(desc_id):
     return jsonify({"results": [r.to_dict for r in results]})
 
 
+@api.route('/object/<desc_id>/textually_related_material')
+def get_textually_related_material(desc_id):
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    results = blake_data_service.get_textually_related_material(desc_id)
+    return jsonify({k: [r.to_dict for r in v] for (k, v) in results})
+
+
 @api.route('/copy/')
 def get_copies():
     if "bad_ids" in request.args:
