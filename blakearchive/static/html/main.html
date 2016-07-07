@@ -30,15 +30,14 @@
       <div class="site-header-container">
         <div class="container-fluid site-header">
           <a class="navbar-brand" href="/"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
-          <span ng-if="persistentmode == 'gallery'" style="font-size:8px; position:absolute; margin-left:-16px; margin-top:25px; color:gray;"">GALLERY MODE</span>
-          <span ng-if="persistentmode == 'reading'" style="font-size:8px; position:absolute; margin-left:-16px; margin-top:25px; color:gray;"">READING MODE</span>
+          <span ng-if="persistentmode == 'gallery'" class="gr-display">GALLERY MODE</span>
+          <span ng-if="persistentmode == 'reading'" class="gr-display">READING MODE</span>
           <button ng-click="worksNavState = !worksNavState" type="button" class="collapse-archive" ng-class="{'hidden':showmePage, 'menu-open':worksNavState, 'menu-closed': !worksNavState}">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <view-sub-menu ng-class="{'hidden':showmePage}"></view-sub-menu>
           <div title="Lightbox" class="lightbox" ng-class="{'hidden':showmePage}"><a class="lb-amount" href="#">3</a></div>
 
           <!-- Use any element to open/show the overlay navigation menu -->
@@ -48,6 +47,7 @@
       <!-- /.container -->
       <nav class="navbar navbar-default" role="navigation" ng-class="{'hidden':showmePage}">
         <div class="container-fluid">
+          <view-sub-menu ng-class="{'hidden':showmePage}"></view-sub-menu>
           <form ng-controller="SearchController" class="navbar-form" role="search" ng-submit="loadSearchPage()">
             {{ SearchController.searchConfig }}
             <div class="input-group">
