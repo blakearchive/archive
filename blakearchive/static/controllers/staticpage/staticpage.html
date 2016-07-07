@@ -1,100 +1,22 @@
 <div class="container-fluid main">
+    <header class="page-header">
+        <h1>{{ staticpage.title }}</h1>
+    </header>
 
-  <header class="page-header">
-    <h1>
-      
-      <div ng-switch on="staticpage.initialSelection">
-      <div ng-switch-when="update">What's New?</div>
-      <div ng-switch-when="biography">About Blake</div>
-      <div ng-switch-when="generalbib">Resources for Further Research</div>
-      <div ng-switch-when="archiveataglance">About the Archive</div>
-      <div ng-switch-when="help">Using the Archive</div>
-      <div ng-switch-when="permissions">Copyright and Permissions</div>
-      <div ng-switch-when="comment">Contact the Archive</div>
-      <div ng-switch-when="relatedsites">Related Sites</div>
-      </div>
-
-    </h1>
-  </header>
-
-  <div class="container">
-    <div class="row">
-
-      <div class="col-sm-2 menu-left-column">
-
-        <div ng-switch on="staticpage.initialSelection">
-
-        <ul class="nav nav-sidebar" ng-switch-when="update">
-          <li ng-click="staticpage.changeContent('update')"><a href="#">Latest Update</a></li>
-          <li ng-click="staticpage.changeContent('all-updates')"><a href="#">All Updates</a></li>
-          <li ng-click="staticpage.changeContent('presentations')"><a href="#">Upcoming Presentations</a></li>
-          <li ng-click="staticpage.changeContent('subscribe')"><a href="#">Subscribe to blake-update</a></li>
-        </ul>
-        
-        <ul class="nav nav-sidebar" ng-switch-when="biography">
-          <li ng-click="staticpage.changeContent('biography')"><a href="#">Biography</a></li>
-          <li ng-click="staticpage.changeContent('glossary')"><a href="#">Glossary</a></li>
-          <li ng-click="staticpage.changeContent('chronology')"><a href="#">Chronology</a></li>
-          <li ng-click="staticpage.changeContent('illuminatedprinting')"><a href="#">Illuminated Printing</a></li>
-        </ul>
-
-        <ul class="nav nav-sidebar" ng-switch-when="generalbib">
-          <li ng-click="staticpage.changeContent('generalbib')"><a href="#">General Bibliography</a></li>
-          <li ng-click="staticpage.changeContent('specificbib')"><a href="#">Specific Bibliography</a></li>
-          <li ng-click="staticpage.changeContent('collectionlists')"><a href="#">Collection Lists</a></li>
-        </ul>
-
-        <ul class="nav nav-sidebar" ng-switch-when="archiveataglance">
-          <li ng-click="staticpage.changeContent('archiveataglance')"><a href="#">Archive at a Glance</a></li>
-          <li ng-click="staticpage.changeContent('editorialprinciples')"><a href="#">Editorial Principles</a></li>
-          <li ng-click="staticpage.changeContent('projectteam')"><a href="#">Project Staff</a></li>
-          <li ng-click="staticpage.changeContent('abouteditors')"><a href="#">About the Editors</a></li>
-          <li ng-click="staticpage.changeContent('credits')"><a href="#">Complete Credits</a></li>
-          <li ng-click="staticpage.changeContent('advisoryboard')"><a href="#">Advisory Board</a></li>
-          <li ng-click="staticpage.changeContent('contributingcollections')"><a href="#">Contributing Collections</a></li>
-          <li ng-click="staticpage.changeContent('standardrefs')"><a href="#">Standard References and Abbreviations</a></li>
-          <li ng-click="staticpage.changeContent('articlesindex')"><a href="#">Articles About the Archive</a></li>
-          <li ng-click="staticpage.changeContent('planNEW')"><a href="#">Plan of the Archive</a></li>
-          <li ng-click="staticpage.changeContent('sponsorsandsupporters')"><a href="#">Sponsors and Supporters</a></li>
-          <li ng-click="staticpage.changeContent('faqs')"><a href="#">Frequently Asked Questions</a></li>
-        </ul>
-
-        <ul class="nav nav-sidebar" ng-switch-when="help">
-          <li ng-click="staticpage.changeContent('help')"><a href="#">How to Use the Archive</a></li>
-          <li ng-click="staticpage.changeContent('techsummary')"><a href="#">Technical Summary</a></li>
-        </ul>
-
-        <ul class="nav nav-sidebar" ng-switch-when="permissionsNEW">
-          
-        </ul>
-
-        <ul class="nav nav-sidebar" ng-switch-when="comment">
-          
-        </ul>
-
-        <ul class="nav nav-sidebar" ng-switch-when="relatedsites">
-          
-        </ul>
-
-        </ul>
-
-        </div>
-
-      </div>
-
-      <div class="col-sm-9 content-right-column">
-
+    <div class="container">
         <div class="row">
-          <div id="content" class="col-sm-12" ng-switch on="subSelection">
+            <div class="col-sm-3 menu-left-column">
+                <ul class="nav nav-sidebar" affix offset-top="75" offset-start="-75">
+                    <li ng-repeat="(nav,text) in staticpage.navigation" ng-class="{active: staticpage.subSelection == nav}">
+                        <a ng-click="staticpage.changeContent(nav)" scroll-to-top>{{text}}</a>
+                    </li>
+                </ul>
+            </div>
 
-               <ng-include src="'/blake/static/html/' + staticpage.subSelection + '.html'"></ng-include>
-
-          </div>
+            <div id="content" ng-switch on="subSelection">
+                <ng-include src="'/blake/static/html/' + staticpage.subSelection + '.html'"></ng-include>
+            </div>
         </div>
-
-      </div>
-    </div>
-
-  </div><!-- /.container -->
+    </div><!-- /.container -->
 
 </div><!-- /.container.main -->

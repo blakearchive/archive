@@ -1,0 +1,72 @@
+{
+  "update":{
+    "title":"What's New?",
+    "initial":"update",
+    "subSections":{
+      "update":"Latest Update",
+      "all-updates":"All Updates",
+      "presentations":"Upcoming Presentations",
+      "subscribe":"Subscribe to blake-update"
+    }
+  },
+  "biography":{
+    "title":"About Blake",
+    "initial":"biography",
+    "subSections":{
+      "biography":"Biography",
+      "glossary":"Glossary",
+      "chronology":"Chronoloyg",
+      "illuminatedprinting":"Illuminated Printing"
+    }
+  },
+  "generalbib":{
+    "title":"Resources for Further Research",
+    "initial":"generalbib",
+    "subSections":{
+      "generalbib":"General Bibliopraphy",
+      "specificbib":"Specific Bibliography",
+      "collectionlists":"Collection Lists"
+    }
+  },
+  "archiveataglance": {
+    "title": "About the Archive",
+    "initial": "archiveataglance",
+    "subSections":{
+      "archiveataglance": "Archive at a Glance",
+      "editorialprinciples": "Editorial Principles",
+      "projectteam": "Project Staff",
+      "abouteditors": "About the Editors",
+      "credits": "Complete Credits",
+      "advisoryboard": "Advisory Board",
+      "contributingcollections": "Contributing Collections",
+      "standardrefs": "Standard References and Abbreviations",
+      "articlesindex": "Articles About the Archive",
+      "planNEW": "Plan of the Archive",
+      "sponsorsandsuppoerters": "Sponsors and Supporters",
+      "faqs": "Frequently Asked Questions"
+    }
+  },
+  "help":{
+    "title":"Using the Archive",
+    "initial":"help",
+    "subSections": {
+      "help":"How to Use the Archive",
+      "techsummary":"Technical Summary"
+    }
+  },
+  "permissionsNEW":{
+    "title":"Copyright and Permissions",
+    "initial":"permissionsNEW",
+    "subSections":{}
+  },
+  "comment":{
+    "title":"Contact the Archive",
+    "initial":"comment",
+    "subSections":{}
+  },
+  "relatedsites":{
+    "title":"Related Sites",
+    "initial":"relatedsites",
+    "subSections":{}
+  }
+}
