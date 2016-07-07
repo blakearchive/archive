@@ -69,11 +69,11 @@
   margin-right: 8px;
 }
 
-button:active, button.active { 
+/*button:active, button.active {
     background-color: yellow;
     padding-bottom: 0px;
     border: none;
-}
+}*/
 
 @media (min-width: 992px) {
   #archive #object-view {
@@ -194,11 +194,76 @@ position:relative;right:50%;float:left;margin:0;list-style:none
 
 body {
   background-color: #222222;
-  padding-top:50px;
 }
+@media(min-width:768px){
+    body{
+        padding-top:50px;
+    }
+}
+@media(max-width: 767px){
+    .navbar-fixed-top{
+        position: relative;
+    }
+}
+
+
 #archive #object-view .btn-group.edit-object .btn.btn-default.generateCitation .edit-icon {
     background-position: center -250px;
 }
+
+/*
+ * Gallery and Reading mode buttons / dispaly info
+ */
+
+.btn-gr-selection {
+    color: #333333;
+    background-color: #ffffff;
+    border-color: #cccccc;
+}
+.btn-gr-selection:hover, .btn-gr-selection:focus, .btn-gr-selection.focus, .btn-gr-selection:active, .btn-gr-selection.active{
+    color: #666666;
+    background-color: #eeeeee;
+    border-color: #cccccc;
+}
+
+.gr-display,.gr-abbreviation {
+    display:none;
+}
+
+#gr-selection{
+    text-align: center;
+}
+
+#gr-selection .btn.active{
+    background-color:yellow;
+}
+
+
+@media(min-width: 768px){
+    .gr-display {
+        font-size:8px;
+        position:absolute;
+        margin-left:-16px;
+        margin-top:25px;
+        color:gray;
+        display: inline-block;
+    }
+    #gr-selection{
+        position: absolute;
+        right: 105px;
+        top: -43px;
+        padding: 0;
+        /*width:30px;
+        height:30px;*/
+    }
+    .gr-title{
+        display:none;
+    }
+    .gr-abbreviation{
+        display: inline-block;
+    }
+}
+
 
 /*
  * Image Waterfall
