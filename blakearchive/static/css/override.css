@@ -1,3 +1,11 @@
+.tooltip.top-right .tooltip-arrow {
+  bottom: 7px;
+  left: -15px;
+  margin-bottom: -5px;
+  border-width: 5px 5px 0;
+  border-top-color: #000000;
+}
+
 .overlay {
     height: 100%;
     width: 100%;
