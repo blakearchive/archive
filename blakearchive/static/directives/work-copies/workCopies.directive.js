@@ -11,7 +11,6 @@
         vm.sortCopies = function(copies){
             if(angular.isDefined(copies)){
                 //sort letters by compdate
-                console.log(copies);
                 if(copies[0].archive_copy_id == "letters") {
                     copies.sort(function(a,b){
                         if(a.source.objdescid.compdate['@value'] > b.source.objdescid.compdate['@value']){return 1;}
