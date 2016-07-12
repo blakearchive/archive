@@ -47,10 +47,15 @@
                                              image="{{ obj.dbi }}.100.jpg"
                                              footer="{{ obj.full_object_id }}">
                             </handprint-block>
-                            <handprint-block scroll-to-top ng-if="obj.title"
+                            <handprint-block scroll-to-top ng-if="obj.title && !tabs.bds.work.virtual"
                                              action="tabs.changeObject(obj)"
                                              image="{{ obj.dbi }}.100.jpg"
                                              footer="{{obj.title}}<br>{{ obj.full_object_id }}">
+                            </handprint-block>
+                            <handprint-block scroll-to-top ng-if="obj.title && tabs.bds.work.virtual"
+                                             action="tabs.changeObject(obj)"
+                                             image="{{ obj.dbi }}.100.jpg"
+                                             footer="{{ obj.full_object_id }}">
                             </handprint-block>
                         </div>
                     </div>
