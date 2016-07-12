@@ -9,13 +9,31 @@
         vm.copyCount = 0;
 
         vm.sortCopies = function(copies){
-            //sort by copy
             if(angular.isDefined(copies)){
-                copies.sort(function(a,b){
-                    if(a.archive_copy_id > b.archive_copy_id){return 1;}
-                    if(a.archive_copy_id < b.archive_copy_id){return -1;}
-                    return 0;
-                })
+                //sort letters by compdate
+                console.log(copies);
+                if(copies[0].archive_copy_id == "letters") {
+                    copies.sort(function(a,b){
+                        if(a.source.objdescid.compdate['@value'] > b.source.objdescid.compdate['@value']){return 1;}
+                        if(a.source.objdescid.compdate['@value'] < b.source.objdescid.compdate['@value']){return -1;}
+                        return 0;
+                    })
+                }
+                else if(vm.bds.work.virtual == true) {
+                    copies.sort(function(a,b){
+                        if(a.dbi > b.dbi){return 1;}
+                        if(a.dbi < b.dbi){return -1;}
+                        return 0;
+                    })
+                }
+                //sort works with copies by copy letter
+                else {
+                    copies.sort(function(a,b){
+                        if(a.archive_copy_id > b.archive_copy_id){return 1;}
+                        if(a.archive_copy_id < b.archive_copy_id){return -1;}
+                        return 0;
+                    })
+                }
             }
         }
 
