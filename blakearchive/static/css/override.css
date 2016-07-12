@@ -288,7 +288,17 @@ a.compare-selected-objects {
 /********
  * Compare object selection
  **********/
-.selected.select-for-compare-wrapper span.selected,.select-for-compare-wrapper:hover span.selected {
+.select-for-compare-wrapper:hover span.selected {
+    /*background: transparent url("../img/global/selected-object-icon.png") no-repeat 0 0;*/
+    display: block;
+    width: 68px;
+    height: 68px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    border: 2px solid red;
+}
+.selected.select-for-compare-wrapper span.selected span.icon {
     background: transparent url("../img/global/selected-object-icon.png") no-repeat 0 0;
     display: block;
     width: 68px;
@@ -296,8 +306,21 @@ a.compare-selected-objects {
     position: absolute;
     right: 2px;
     top: 2px;
+    /*border: 2px solid red;*/
 
 }
+.select-for-compare-wrapper:hover span.selected span.icon {
+    background: transparent url("../img/global/selected-object-icon.png") no-repeat 0 0;
+    display: block;
+    width: 68px;
+    height: 68px;
+    position: absolute;
+    right: -2px;
+    top: -2px;
+    /*border: 2px solid red;*/
+
+}
+
 #objects-from-same-matrix .handprint-block:hover span.object-img {
     border: 2px solid black;
 }
