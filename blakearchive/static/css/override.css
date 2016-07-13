@@ -351,7 +351,8 @@ a.compare-selected-objects {
     width: 68px;
     height: 68px;
     position: absolute;
-    right: 0;
+    right: 2px;
+    top: 2px;
 
 }
 #objects-from-same-matrix .handprint-block:hover span.object-img {
