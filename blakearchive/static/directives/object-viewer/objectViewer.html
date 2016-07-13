@@ -1,11 +1,8 @@
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
     <div class="featured-object">
-        <!--<p class="object-title" ng-if="viewer.bds.work.bad_id == 'letters'">{{ viewer.bds.object.object_group }}</p>
-        <p class="object-title" ng-if="viewer.bds.work.virtual && viewer.bds.work.bad_id != 'letters'">{{ viewer.bds.copy.title }}</p>
-        <p class="object-title" ng-if="!viewer.bds.work.virtual">{{ viewer.getOvpTitle() }}</p>-->
 
         <div class="carousel-inner" role="listbox">
-            <div class="item col-xs-12 col-md-8 col-md-offset-2 active">
+            <div class="item col-xs-12 col-md-8 col-md-offset-2 active" ng-swipe-left="viewer.changeObject(viewer.getNextObject())" ng-swipe-right="viewer.changeObject(viewer.getPreviousObject())">
                 <div class="flex" auto-height adjust="270" breakpoint="992">
                     <div class="object-img-container" ng-class="{hidden: view.scope == 'text'}" ovp-image>
                         <img ng-src="http://www.blakearchive.org/blake/images/{{ viewer.bds.object.dbi }}.100.jpg" magnify-image>
@@ -17,7 +14,6 @@
                     </div>
                 </div>
                 <p class="object-subtitle">
-                    <!--<span class="object-no text-capitalize" ng-if="viewer.work.virtual">{{ viewer.work.title }}, </span>-->
                     <span class="object-no text-capitalize" ng-if="viewer.bds.work.virtual">{{ viewer.bds.object.title }}, </span>
                     <span class="object-no text-capitalize" ng-if="!viewer.bds.work.virtual && !viewer.bds.object.title">{{ viewer.bds.object.full_object_id }}, </span>
                     <span class="object-no text-capitalize" ng-if="!viewer.bds.work.virtual && viewer.bds.object.title">{{viewer.bds.object.title}}, {{ viewer.bds.object.full_object_id }}, </span>
@@ -28,7 +24,7 @@
         </div>
     </div>
 
-    <div class="featured-object-controls" ng-if="viewer.bds.object.objectsInGroup.length > 1 || viewer.bds.copyObjects.length > 1">
+    <div class="featured-object-controls hidden-sm" ng-if="viewer.bds.object.objectsInGroup.length > 1 || viewer.bds.copyObjects.length > 1">
         <a class="left carousel-control" role="button" ng-click="viewer.changeObject(viewer.getPreviousObject())" role="button">
             <span class="object-thumb" style="background-image:url(http://www.blakearchive.org/blake/images/{{ viewer.getPreviousObject().dbi }}.100.jpg)"></span>
 

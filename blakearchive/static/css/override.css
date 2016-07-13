@@ -179,12 +179,23 @@ footer ul.nav.nav-pills {
   }
 }
 
-.nav.nav-tabs.objects {
-position:relative;left:50%;float:left;margin-right:0;margin-left:0;
+/*
+ * OVP tabs
+ */
+#archive-tabs ul.nav-tabs.objects {
+    text-align: center;
 }
 
-.nav.nav-tabs.objects li {
-position:relative;right:50%;float:left;margin:0;list-style:none
+@media(min-width: 992px){
+
+    #archive-tabs ul.nav-tabs.objects > li {
+        float:none;
+        display:inline-block;
+        margin-left:-3px;
+        margin-bottom:0;
+        width:auto;
+    }
+
 }
 
 [ng-click],
@@ -406,9 +417,11 @@ a.compare-selected-objects {
 #objects-from-same-matrix .handprint-block:hover span.object-img {
     border: 2px solid black;
 }
+
 .select-for-compare-wrapper{
     width: 220px;
     position: relative;
+    margin:auto;
 }
 
 /*************
@@ -521,7 +534,20 @@ a.compare-selected-objects {
 /*****************
 * Object View
 *******************/
-@media (min-width: 768px) {
+
+@media(min-width: 768px){
+    /*#archive #object-view.view-objects .item .object-img-container{
+        height: 100%;
+        max-width: 75%;
+        overflow-x: auto;
+    }
+    #archive #object-view.view-objects .item .object-img-container img{
+        height: auto;
+        max-width: 100%;
+    }*/
+}
+
+@media (min-width: 992px) {
     #archive #object-view.view-objects .featured-object{
         margin-bottom: 14px;
     }
@@ -1039,9 +1065,6 @@ a.compare-selected-objects {
 /***************
 * Responsive Fixes
 *****************/
-#object-detail-tray{
-    margin-top: 108px;
-}
 @media (min-width: 601px) {
     #object-detail-tray{
         margin-top: 35px;
