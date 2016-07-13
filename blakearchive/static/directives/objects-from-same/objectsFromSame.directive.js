@@ -19,7 +19,6 @@
                 vm.compareText = "Clear All Objects";
                 vm.selectedAll = true;
                 vm.cof.selectAll(vm.bds.object[vm.type]);
-
             } else {
                 vm.compareText = "Select All Objects";
                 vm.selectedAll = false;
@@ -29,7 +28,6 @@
 
         // Add/remove single object for comparison
         vm.selectOne = function(obj) {
-            $console.log(obj);
             vm.cof.checkCompareType(vm.type);
             if(vm.cof.isComparisonObject(obj)) {
                 vm.cof.removeComparisonObject(obj);
@@ -49,9 +47,11 @@
 
     var link = function(scope,ele,attr,vm){
         var type = function(){ return vm.cof.comparisonType };
-        scope.$watch(type,function(){
-            vm.compareText = "Select All Objects";
-            vm.selectedAll = false;
+        scope.$watch(type,function(newVal,oldVal){
+            if(oldVal && newVal != vm.type){
+                vm.compareText = "Select All Objects";
+                vm.selectedAll = false;
+            }
         },true);
     }
 
