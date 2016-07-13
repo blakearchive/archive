@@ -15,7 +15,7 @@
     "subSections":{
       "biography":"Biography",
       "glossary":"Glossary",
-      "chronology":"Chronoloyg",
+      "chronology":"Chronology",
       "illuminatedprinting":"Illuminated Printing"
     }
   },
@@ -42,16 +42,8 @@
       "standardrefs": "Standard References and Abbreviations",
       "articlesindex": "Articles About the Archive",
       "planNEW": "Plan of the Archive",
-      "sponsorsandsuppoerters": "Sponsors and Supporters",
+      "techsummary": "Technical Summary",
       "faqs": "Frequently Asked Questions"
-    }
-  },
-  "help":{
-    "title":"Using the Archive",
-    "initial":"help",
-    "subSections": {
-      "help":"How to Use the Archive",
-      "techsummary":"Technical Summary"
     }
   },
   "permissionsNEW":{
