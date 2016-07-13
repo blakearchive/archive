@@ -40,7 +40,7 @@
 
             var regex = new RegExp('('+teiClasses.join('|')+')','g');
 
-            if(angular.isDefined(teiMarkup)){
+            if(teiMarkup){
                 if(teiMarkup.match(regex)){
                     return true;
                 }
