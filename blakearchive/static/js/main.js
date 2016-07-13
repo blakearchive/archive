@@ -1062,7 +1062,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         var link = function (scope, element, attrs) {
 
             scope.setStyles = function (windowSize) {
-                if(WindowSize.width <= scope.breakpoint){
+                if(windowSize.width < scope.breakpoint){
                     element.height('auto');
                 } else {
                     var newHeight = (windowSize.height - scope.adjust);
