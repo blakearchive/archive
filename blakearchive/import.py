@@ -107,24 +107,46 @@ class BlakeDocumentImporter(object):
                     if copy in self.copies:
                         work.copies.append(self.copies[copy])
 
-    def process_motif_relationships(self):
-        for obj in self.objects.values():
-            same_motif_objs = [self.objects[desc_id] for desc_id in self.motif_relationships_expanded[obj.desc_id]]
-            obj.objects_with_same_motif = same_motif_objs
+    def get_matching_objects(self, desc_ids):
+        return [self.objects[desc_id] for desc_id in desc_ids if desc_id in self.objects]
+
+    def get_matching_copies(self, bad_ids):
+        return [self.copies[bad_id] for bad_id in bad_ids if bad_id in self.copies]
+
+    def get_matching_works(self, bad_ids):
+        return [self.works[bad_id] for bad_id in bad_ids if bad_id in self.works]
+
+    def split_ids(self, id_string):
+        return id_string.lower().split(",")
 
     def process_relationships(self):
-        for relationship in self.relationships:
-            obj = self.objects.get(relationship[0].lower())
-            same_matrix = []
-            same_production_sequence = []
-            for desc_id in relationship[4].lower().split(","):
-                if self.objects.get(desc_id):
-                    same_matrix.append(self.objects.get(desc_id))
-            for desc_id in relationship[5].lower().split(","):
-                if self.objects.get(desc_id):
-                    same_production_sequence.append(self.objects.get(desc_id))
-            obj.objects_from_same_matrix.extend(same_matrix)
-            obj.objects_from_same_production_sequence.extend(same_production_sequence)
+        for (desc_id, dbi, bad_id, vg, same_matrix, same_production_sequence, similar_design, referenced_objects,
+             referenced_copies, referenced_works, supplemental) in self.relationships:
+            obj = self.objects.get(desc_id.lower())
+
+            same_matrix_ids = self.split_ids(same_matrix)
+            same_matrix_objects = self.get_matching_objects(same_matrix_ids)
+            obj.objects_from_same_matrix.extend(same_matrix_objects)
+
+            same_production_sequence_ids = self.split_ids(same_production_sequence)
+            same_production_sequence_objects = self.get_matching_objects(same_production_sequence_ids)
+            obj.objects_from_same_production_sequence.extend(same_production_sequence_objects)
+
+            same_motif_ids = self.split_ids(similar_design)
+            same_motif_objects = self.get_matching_objects(same_motif_ids)
+            obj.objects_with_same_motif.extend(same_motif_objects)
+
+            referenced_object_ids = self.split_ids(referenced_objects)
+            referenced_objects = self.get_matching_objects(referenced_object_ids)
+            obj.textually_referenced_objects.extend(referenced_objects)
+
+            referenced_copy_ids = self.split_ids(referenced_copies)
+            referenced_copies = self.get_matching_copies(referenced_copy_ids)
+            obj.textually_referenced_copies.extend(referenced_copies)
+
+            referenced_work_ids = self.split_ids(referenced_works)
+            referenced_works = self.get_matching_copies(referenced_work_ids)
+            obj.textually_referenced_works.extend(referenced_works)
 
     def get_object_title(self, obj):
         for title in obj.xpath("objtitle/title"):
@@ -292,7 +314,6 @@ def main():
         except ValueError as err:
             print err
     importer.process_relationships()
-    importer.process_motif_relationships()
     importer.populate_works()
     importer.denormalize_objects()
     engine = models.db.create_engine(config.db_connection_string)
