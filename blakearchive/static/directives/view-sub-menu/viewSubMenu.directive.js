@@ -5,6 +5,10 @@
 
         var vm = this;
 
+        if(!angular.isDefined($rootScope.persistentmode)){
+            $rootScope.persistentmode = 'gallery';
+        }
+
         if(!angular.isDefined($rootScope.view)){
             $rootScope.view = {
                 mode: 'object',
@@ -13,6 +17,7 @@
         }
 
         vm.changeView = function(mode,scope){
+            console.log('change');
             $rootScope.view.mode = mode;
             $rootScope.view.scope = scope;
             //$rootScope.worksNavState = false;

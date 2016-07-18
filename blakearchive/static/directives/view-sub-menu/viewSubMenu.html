@@ -1,4 +1,15 @@
-<button title="{{item.title}}" ng-class="{'active': item.id == states.activeItem}" ng-repeat="item in items" ng-click="states.activeItem=item.id; viewSubMenu.changeView(item.mode,item.scope)" style="float:right; margin-top:11px; margin-right:8px; margin-left:0px; padding:0px; width:30px; height:30px">{{item.abbreviation}}</button>
+<form id="gr-selection" class="navbar-form">
+    <div class="btn-group">
+        <button title="Gallery Mode" class="btn btn-gr-selection" ng-class="{'active':persistentmode == 'gallery'}" ng-click="viewSubMenu.changeView('object','image')">
+            <span class="gr-abbreviation">G</span>
+            <span class="gr-title">Gallery Mode</span>
+        </button>
+        <button title="Reading Mode" class="btn btn-gr-selection" ng-class="{'active':persistentmode == 'reading'}" ng-click="viewSubMenu.changeView('read','both')">
+            <span class="gr-abbreviation">R</span>
+            <span class="gr-title">Reading Mode</span>
+        </button>
+    </div>
+</form>
 
 <!--<button title="Reading Mode" ng-click="viewSubMenu.changeView('read','both')" style="float:right; margin-top:16px; margin-right:16px; margin-left:8px;">R</button>
 <button title="Gallery Mode" ng-click="viewSubMenu.changeView('object','image')" style="float:right; margin-top:16px; margin-right:7px; margin-left:16px;">G</button>-->

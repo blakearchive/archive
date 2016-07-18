@@ -30,16 +30,15 @@
       <div class="site-header-container">
         <div class="container-fluid site-header">
           <a class="navbar-brand" href="/"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
-          <span ng-if="persistentmode == 'gallery'" style="font-size:8px; position:absolute; margin-left:-16px; margin-top:25px; color:gray;"">GALLERY MODE</span>
-          <span ng-if="persistentmode == 'reading'" style="font-size:8px; position:absolute; margin-left:-16px; margin-top:25px; color:gray;"">READING MODE</span>
+          <span ng-if="persistentmode == 'gallery'" class="gr-display">GALLERY MODE</span>
+          <span ng-if="persistentmode == 'reading'" class="gr-display">READING MODE</span>
           <button ng-click="worksNavState = !worksNavState" type="button" class="collapse-archive" ng-class="{'hidden':showmePage, 'menu-open':worksNavState, 'menu-closed': !worksNavState}">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <view-sub-menu ng-class="{'hidden':showmePage}"></view-sub-menu>
-          <div title="Lightbox" class="lightbox" ng-class="{'hidden':showmePage}"><a class="lb-amount" href="#">3</a></div>
+          <div title="Lightbox" class="lightbox hidden-xs" ng-class="{'hidden':showmePage}"><a class="lb-amount" href="#">3</a></div>
 
           <!-- Use any element to open/show the overlay navigation menu -->
           <work-title ng-if="showWorkTitle"></work-title>
@@ -48,8 +47,8 @@
       <!-- /.container -->
       <nav class="navbar navbar-default" role="navigation" ng-class="{'hidden':showmePage}">
         <div class="container-fluid">
+          <view-sub-menu ng-class="{'hidden':showmePage}"></view-sub-menu>
           <form ng-controller="SearchController" class="navbar-form" role="search" ng-submit="loadSearchPage()">
-            {{ SearchController.searchConfig }}
             <div class="input-group">
               <input ng-model="searchConfig.searchString" type="text" class="form-control" placeholder="Search">
               <span class="input-group-btn">
@@ -77,20 +76,26 @@
  <span class="back-top" scroll-to-top to-top-button>Back to top</span>
 
  <div class="container" ng-class="{hidden:showmePage}">
-  <div class="row">
-    <div class="span12 text-center">
-
-      <br>
-      <span style="color:#999999;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span><a style="color:rgba(255,0,0,0.37)" href="https://blakearchive.wordpress.com/" target="_blank">BLOG</a><span style="color:#999999;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
-      <a style="color:rgba(255,0,0,0.37)" href="http://blake.lib.rochester.edu/blakeojs/index.php/blake" target="_blank">BLAKE / AN ILLUSTRATED QUARTERLY</a><span style="color:#999999;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
-      <a style="color:rgba(255,0,0,0.37)" href="http://www.blakearchive.org/blake/erdman.html" target="_blank">THE COMPLETE POETRY AND PROSE OF WILLIAM BLAKE, ED. ERDMAN</a><span style="color:#999999;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
-      
-    </div>
-  </div>
 
   <footer>
 
-    <br><br>
+    <br>
+
+    <div class="row">
+      <div class="span12 text-center">
+        <ul class="list-unstyled list-inline" id="external-links">
+          <li class="hidden-xs">|</li>
+          <li><a href="https://blakearchive.wordpress.com/" target="_blank">BLOG</a></li>
+          <li class="hidden-xs">|</li>
+          <li><a href="http://blake.lib.rochester.edu/blakeojs/index.php/blake" target="_blank">BLAKE <span class="hidden-xs hidden-sm">/ AN ILLUSTRATED </span>QUARTERLY</a></li>
+          <li class="hidden-xs">|</li>
+          <li><a href="http://www.blakearchive.org/blake/erdman.html" target="_blank"><span class="hidden-xs hidden-sm">THE COMPLETE POETRY AND PROSE OF WILLIAM BLAKE, ED. </span>ERDMAN</a></li>
+          <li class="hidden-xs">|</li>
+        </ul>
+      </div>
+    </div>
+
+    <br>
 
     <div class="row">
       <div class="span12 text-center">
@@ -142,6 +147,7 @@
 <script src="/blake/static/js/angularjs/1.4.8/angular-sanitize.min.js"></script>
 <script src="/blake/static/js/angularjs/1.4.8/angular-animate.js"></script>
 <script src="/blake/static/js/angularjs/1.4.8/angular-cookies.js"></script>
+<script src="/blake/static/js/angularjs/1.4.8/angular-touch.js"></script>
 <script src="/blake/static/js/angular-ui-bootstrap/0.12.1/ui-bootstrap.min.js"></script>
 <script src="/blake/static/js/Sortable/1.4.2/Sortable.min.js"></script>
 <script src="/blake/static/js/Sortable/ng-sortable.min.js"></script>
