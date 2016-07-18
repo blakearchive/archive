@@ -6871,9 +6871,10 @@ nav.navbar form.navbar-form {
 @media (min-width: 768px) {
   nav.navbar form.navbar-form {
     position: absolute;
-    top: -78px;
+    top: -43px;
+    /*top: -78px;*/
     /*right: 120px;*/
-    right:165px;
+    right:170px;
     z-index: 1;
   }
 }
@@ -7963,12 +7964,13 @@ a.new-window:hover {
   }
 }
 #archive-tabs ul.nav-tabs.objects > li {
-  /*width: inherit;*/
+  width: inherit;
   float: none;
 }
 @media (min-width: 768px) {
   #archive-tabs ul.nav-tabs.objects > li {
-    /*width: 50%;*/
+    width: 50%;
+    text-align: center;
     float: left;
   }
 }
