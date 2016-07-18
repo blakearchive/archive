@@ -225,8 +225,7 @@ class BlakeDataService(object):
     def get_objects_for_copy(cls, bad_id):
         return models.BlakeObject.query\
             .join(models.BlakeCopy)\
-            .order_by(models.BlakeCopy.print_date, models.BlakeCopy.composition_date,
-                      models.BlakeObject.object_group, models.BlakeObject.object_number)\
+            .order_by(models.BlakeObject.object_number)\
             .filter(models.BlakeCopy.bad_id == bad_id).all()
 
     @classmethod
