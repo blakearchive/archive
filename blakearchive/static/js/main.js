@@ -1139,8 +1139,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         var link = function (scope, element, attrs) {
 
             scope.setStyles = function (windowSize) {
-                if(WindowSize.width <= scope.breakpoint){
-                    element.width('auto');
+                if(windowSize.width <= scope.breakpoint){
+                    element.width('');
                 } else {
                     var newWidth = (windowSize.width - scope.adjust);
                     if(scope.percent){
