@@ -77,7 +77,6 @@ class BlakeObject(db.Model):
     source = db.Column(JSON)
     notes = db.Column(JSON)
     object_group = db.Column(db.UnicodeText)
-    supplemental = db.Column(db.Boolean)
     objects_from_same_matrix = db.relationship(
         "BlakeObject",
         secondary=matrix__object,
