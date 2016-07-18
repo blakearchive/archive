@@ -49,7 +49,6 @@
         <div class="container-fluid">
           <view-sub-menu ng-class="{'hidden':showmePage}"></view-sub-menu>
           <form ng-controller="SearchController" class="navbar-form" role="search" ng-submit="loadSearchPage()">
-            {{ SearchController.searchConfig }}
             <div class="input-group">
               <input ng-model="searchConfig.searchString" type="text" class="form-control" placeholder="Search">
               <span class="input-group-btn">

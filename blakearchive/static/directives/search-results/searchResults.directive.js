@@ -131,7 +131,7 @@
         vm.getHandprintDescription = function(workIndex){
             switch(vm.tree){
                 case 'work':
-                    return;
+                    return '<strong>' + vm.resultTree[workIndex][0].title + '</strong>';
                 default:
                     var string = '<strong>'+vm.resultTree[workIndex][0].title+'</strong><br>',
                         endstring = '';
@@ -180,12 +180,12 @@
                 switch(vm.tree){
                     case 'object':
                         if(angular.isDefined(vm.resultTree[workIndex][2][0][2][0][0])){
-                            return vm.resultTree[workIndex][2][0][2][0][0].dbi;
+                            return vm.resultTree[workIndex][2][0][2][0][0].dbi + '.100.jpg';
                         }
                     case 'copy':
-                        return vm.resultTree[workIndex][2][0][0].image;
+                        return vm.resultTree[workIndex][2][0][0].image + '.100.jpg';
                     case 'work':
-                        return '';
+                        return vm.resultTree[workIndex][0].image;
             }
         }
 

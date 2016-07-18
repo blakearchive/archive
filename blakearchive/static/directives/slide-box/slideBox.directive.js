@@ -66,10 +66,7 @@
         });
 
         $scope.$on('searchCtrl::changeResult', function (e, d) {
-            console.log(d);
             if(d.type == vm.type){
-                console.log('match');
-                console.log(d);
                 vm.scrollToResult(d.objectIndex);
             }
         });
@@ -102,7 +99,6 @@
 
             //Part of the handprint is hidden on the right
             if(objectEnd + vm.leftOffset > viewWidth){
-                console.log('object hidden right')
                 if((widthOfHidden()*-1) > viewWidth){
                     vm.leftOffset = objectStart * -1;
                 } else {
@@ -113,7 +109,6 @@
 
             //Part of the handprint is hidden on the left
             if(objectStart < vm.leftOffset * -1){
-                console.log('object hidden left');
                 vm.leftOffset = objectStart * -1;
             }
 
