@@ -8,7 +8,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
 }]);
 
 
-angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies'])
+angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch'])
 
     .factory("GenericService", function () {
         return function (constructor) {
@@ -1062,7 +1062,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         var link = function (scope, element, attrs) {
 
             scope.setStyles = function (windowSize) {
-                if(WindowSize.width <= scope.breakpoint){
+                if(windowSize.width < scope.breakpoint){
                     element.height('auto');
                 } else {
                     var newHeight = (windowSize.height - scope.adjust);
@@ -1139,8 +1139,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         var link = function (scope, element, attrs) {
 
             scope.setStyles = function (windowSize) {
-                if(WindowSize.width <= scope.breakpoint){
-                    element.width('auto');
+                if(windowSize.width < scope.breakpoint){
+                    element.width('');
                 } else {
                     var newWidth = (windowSize.width - scope.adjust);
                     if(scope.percent){
