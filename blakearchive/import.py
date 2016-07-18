@@ -202,6 +202,9 @@ class BlakeDocumentImporter(object):
         for physdesc in obj.xpath("physdesc"):
             return self.element_to_dict(physdesc)["physdesc"]
 
+    def is_supplemental(self, obj):
+        return obj.getparent().tag == "supplemental"
+
     def process_object(self, obj):
         bo = models.BlakeObject()
         bo.desc_id = obj.attrib.get("id").lower()
@@ -218,6 +221,7 @@ class BlakeDocumentImporter(object):
         bo.object_number = self.get_object_number(obj)
         bo.bentley_id = self.get_bentley_id(obj)
         bo.physical_description = self.get_physical_description(obj)
+        bo.supplemental = self.is_supplemental(obj)
         return bo
 
     def extract_date(self, date_string):
@@ -272,7 +276,7 @@ class BlakeDocumentImporter(object):
         archive_copy_id = root.get("copy")
         header = self.get_header(root)
         source = self.get_source(root)
-        objects = [self.process_object(o) for o in root.xpath("objdesc/desc")]
+        objects = [self.process_object(o) for o in root.xpath(".//desc")]
         copy = models.BlakeCopy(bad_id=copy_id, header=header, source=source, objects=objects,
                                 composition_date=comp_date, composition_date_string=comp_date_string,
                                 print_date=print_date, print_date_string=print_date_string,
