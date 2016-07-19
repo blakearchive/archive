@@ -8,7 +8,7 @@
         vm.rows = [];
         vm.copyCount = 0;
 
-        vm.sortCopies = function(copies){
+        /*vm.sortCopies = function(copies){
             if(angular.isDefined(copies)){
                 //sort letters by compdate
                 if(copies[0].archive_copy_id == "letters") {
@@ -34,7 +34,7 @@
                     })
                 }
             }
-        }
+        }*/
 
 
         vm.setRows = function(){
