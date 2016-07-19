@@ -698,11 +698,13 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 blakeData.workCopies = data[1];
                 if(blakeData.work.virtual == true){
                     return blakeData.getObjectsForCopy(blakeData.workCopies[0].bad_id).then(function(data){
+
+                        blakeData.workCopies = blakeData.combineSupplemental(data);
+
                         if(blakeData.work.bad_id == 'letters'){
-                            blakeData.workCopies = blakeData.multiObjectGroupCopies(data);
+                            blakeData.workCopies = blakeData.multiObjectGroupCopies(blakeData.workCopies);
                         } else {
-                            //blakeData.workCopies = blakeData.numberVirtualWorkObjects(data);
-                            blakeData.workCopies = data;
+                            blakeData.workCopies = blakeData.numberVirtualWorkObjects(blakeData.workCopies);
                         }
                     });
                 }
@@ -730,12 +732,14 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 console.log(blakeData.work);
                 blakeData.copy = data[0];
                 blakeData.copyObjects = data[1];
-                //blakeData.work = data[2];
+
+                //Deal with supplemental objects
+                blakeData.copyObjects = blakeData.combineSupplemental(blakeData.copyObjects);
 
                 //Programatically order objects if "copy" is a virtual group, then replace number in full object id
-                /*if (blakeData.work.virtual == true) {
+                if (blakeData.work.virtual == true) {
                     blakeData.copyObjects = blakeData.numberVirtualWorkObjects(blakeData.copyObjects);
-                }*/
+                }
                 //deal with multi object groups
                 if(blakeData.work.bad_id == 'letters'){
                     blakeData.copy.objectGroups = blakeData.multiObjectGroupObjects(blakeData.copyObjects);
@@ -760,12 +764,42 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
         };
 
+        blakeData.combineSupplemental = function(objects){
+            var supps = [],
+                newObjects = [];
+            objects.forEach(function (obj,index){
+                if(obj.supplemental){
+                    console.log('supp');
+                    if(!angular.isDefined(supps[obj.object_group])){
+                        supps[obj.object_group] = [];
+                    }
+                    supps[obj.object_group].push(obj);
+                } else {
+                    newObjects.push(obj);
+                }
+            });
+
+
+            newObjects.forEach(function(obj){
+                if(!obj.supplemental){
+                    if(angular.isDefined(supps[obj.object_group])){
+                        obj.supp_objects = supps[obj.object_group];
+                    }
+                }
+            })
+
+            return newObjects;
+
+        }
+
         blakeData.numberVirtualWorkObjects = function(objects){
             var inc = 1;
             objects.forEach(function (obj) {
-                //obj.object_number = inc;
-                obj.full_object_id  = obj.title + ', Object '+inc+ obj.full_object_id.replace(/object [\d]+/g,'');
-                inc++;
+                if(!obj.supplemental){
+                    //obj.object_number = inc;
+                    obj.full_object_id  = 'Object '+inc+ obj.full_object_id.replace(/object [\d]+/g,'');
+                    inc++;
+                }
             });
             return objects;
         }
