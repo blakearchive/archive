@@ -52,7 +52,7 @@
         var copies = function(){return vm.bds.workCopies};
         scope.$watch(copies,function(){
             vm.copyCount = vm.bds.workCopies.length;
-            vm.sortCopies(vm.bds.workCopies);
+            //vm.sortCopies(vm.bds.workCopies);
             vm.setRows();
         })
     }
