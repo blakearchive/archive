@@ -795,11 +795,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         blakeData.numberVirtualWorkObjects = function(objects){
             var inc = 1;
             objects.forEach(function (obj) {
-                if(!obj.supplemental){
                     //obj.object_number = inc;
                     obj.full_object_id  = 'Object '+inc+ obj.full_object_id.replace(/object [\d]+/g,'');
                     inc++;
-                }
             });
             return objects;
         }
