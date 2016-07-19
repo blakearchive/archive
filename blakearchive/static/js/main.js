@@ -701,7 +701,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                         if(blakeData.work.bad_id == 'letters'){
                             blakeData.workCopies = blakeData.multiObjectGroupCopies(data);
                         } else {
-                            blakeData.workCopies = blakeData.numberVirtualWorkObjects(data);
+                            //blakeData.workCopies = blakeData.numberVirtualWorkObjects(data);
+                            blakeData.workCopies = data;
                         }
                     });
                 }
@@ -732,9 +733,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 //blakeData.work = data[2];
 
                 //Programatically order objects if "copy" is a virtual group, then replace number in full object id
-                if (blakeData.work.virtual == true) {
+                /*if (blakeData.work.virtual == true) {
                     blakeData.copyObjects = blakeData.numberVirtualWorkObjects(blakeData.copyObjects);
-                }
+                }*/
                 //deal with multi object groups
                 if(blakeData.work.bad_id == 'letters'){
                     blakeData.copy.objectGroups = blakeData.multiObjectGroupObjects(blakeData.copyObjects);
