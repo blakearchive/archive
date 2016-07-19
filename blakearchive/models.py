@@ -131,6 +131,7 @@ class BlakeObject(db.Model):
             "title": self.title,
             "header": self.header,
             "source": self.source,
+            "supplemental": self.supplemental,
             "notes": self.notes,
             "object_group": self.object_group
         }
