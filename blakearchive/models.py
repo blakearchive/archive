@@ -144,6 +144,7 @@ class BlakeCopy(db.Model):
     archive_copy_id = db.Column(db.Text)
     header = db.Column(JSON)
     source = db.Column(JSON)
+    source_html = db.Column(db.Text)
     title = db.Column(db.UnicodeText)
     objects = db.relationship(BlakeObject, backref="copy")
     institution = db.Column(db.UnicodeText)
@@ -153,6 +154,7 @@ class BlakeCopy(db.Model):
     print_date_string = db.Column(db.UnicodeText)
     print_date = db.Column(db.Integer)
     effective_copy_id = db.Column(db.UnicodeText, index=True)
+    bad_xml = db.Column(db.Text)
 
     def __init__(self, *args, **kwargs):
         super(BlakeCopy, self).__init__(*args, **kwargs)
@@ -165,6 +167,7 @@ class BlakeCopy(db.Model):
             "work_id": self.work_id,
             "bad_id": self.bad_id,
             "source": self.source,
+            "source_html": self.source_html,
             "title": self.title,
             "institution": self.institution,
             "image": self.image,
@@ -173,7 +176,8 @@ class BlakeCopy(db.Model):
             "composition_date_string": self.composition_date_string,
             "print_date_string": self.print_date_string,
             "print_date": self.print_date,
-            "effective_copy_id": self.effective_copy_id
+            "effective_copy_id": self.effective_copy_id,
+            "bad_xml": self.bad_xml
         }
 
 
