@@ -46,7 +46,9 @@ class BlakeDocumentImporter(object):
                 all_but_current_id = matching_ids_set ^ set([matching_id])
                 self.motif_relationships_expanded[matching_id].update(all_but_current_id)
         xslt_xml = etree.parse(open("static/xslt/transcription.xsl"))
+        source_xslt_xml = etree.parse(open("static/xslt/source.xsl"))
         self.transform = etree.XSLT(xslt_xml)
+        self.source_transform = etree.XSLT(source_xslt_xml)
 
     def process_info_file(self, document):
         def transform_relationship(rel):
@@ -248,6 +250,11 @@ class BlakeDocumentImporter(object):
             source_xml = etree.tostring(source, encoding='utf8', method='xml')
             return json.dumps(xmltodict.parse(source_xml, force_cdata=True)["source"])
 
+    def get_source_html(self, document):
+        for source in document.xpath("objdesc/source"):
+            transformed_source = self.source_transform(source)
+            return etree.tostring(transformed_source)
+
     def get_copy_title(self, document):
         for title in document.xpath("header/filedesc/titlestmt/title"):
             title_text = title.xpath("string()")
@@ -268,6 +275,7 @@ class BlakeDocumentImporter(object):
 
     def process(self, document):
         root = self.get_document_tree(document)
+        bad_xml = etree.tostring(root)  #
         copy_id = root.get("id").lower()
         comp_date_string = self.get_compdate_string(root)
         comp_date = self.extract_date(comp_date_string)
@@ -276,11 +284,13 @@ class BlakeDocumentImporter(object):
         archive_copy_id = root.get("copy")
         header = self.get_header(root)
         source = self.get_source(root)
+        source_html = self.get_source_html(root)
         objects = [self.process_object(o) for o in root.xpath(".//desc")]
         copy = models.BlakeCopy(bad_id=copy_id, header=header, source=source, objects=objects,
                                 composition_date=comp_date, composition_date_string=comp_date_string,
                                 print_date=print_date, print_date_string=print_date_string,
-                                archive_copy_id=archive_copy_id, image=self.copy_handprint_map.get(copy_id))
+                                archive_copy_id=archive_copy_id, image=self.copy_handprint_map.get(copy_id),
+                                source_html=source_html, bad_xml=bad_xml)
         copy.effective_copy_id = copy_id
         copy.title = self.get_copy_title(root)
         copy.institution = self.get_copy_institution(root)
