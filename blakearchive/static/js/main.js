@@ -763,7 +763,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             var inc = 1;
             objects.forEach(function (obj) {
                 //obj.object_number = inc;
-                obj.full_object_id  = obj.title + ', Object '+inc+ obj.full_object_id.replace(/object [\d]+/g,'');
+                obj.full_object_id  = 'Object '+inc+ obj.full_object_id.replace(/object [\d]+/g,'');
                 inc++;
             });
             return objects;
