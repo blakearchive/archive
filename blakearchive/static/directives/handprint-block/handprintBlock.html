@@ -4,6 +4,6 @@
         <span class="object-img" style="background-image: url({{ handprint.imagePath }}{{ handprint.image }});">
             <span class="handprint-title" ng-if="!handprint.image">{{handprint.title}}</span>
         </span>
-        <span ng-style="{color: $root.showOverlay == true ? 'white' : 'inherit' }" class="description text-capitalize" ng-bind-html="handprint.footer"></span>
+        <span class="description text-capitalize" ng-bind-html="handprint.footer"></span>
     </a>
 </div>
