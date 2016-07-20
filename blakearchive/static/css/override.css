@@ -1142,8 +1142,28 @@ a.compare-selected-objects {
 .carousel-inner .handprint-block .description {
     color: #eee;
 }
+handprint-block.supp-original .handprint-block{
+    min-height: 140px;
+}
+
+.supp-original .handprint-block a span.object-img{
+    height: 110px;
+    width: 110px;
+}
 @media(min-width: 768px){
     #suppImages .flex {
         flex-flow: wrap;
+        overflow: auto;
+    }
+}
+@media(min-width: 992px){
+    handprint-block.supp-original{
+        position: absolute;
+        left: -20%;
+    }
+}
+@media(min-width: 1200px){
+    handprint-block.supp-original{
+        left: -10%;
     }
 }
