@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <p class="object-subtitle">
-                    <span class="object-no text-capitalize" ng-if="viewer.bds.work.virtual"><span ng-if="viewer.bds.object.supplemental">{{ viewer.bds.object.title }}, </span>{{ viewer.bds.object.full_object_id }}, </span>
+                    <span class="object-no text-capitalize" ng-if="viewer.bds.work.virtual"><span>{{ viewer.bds.object.title }}, </span>{{ viewer.bds.object.full_object_id }}, </span>
                     <span class="object-no text-capitalize" ng-if="!viewer.bds.work.virtual && !viewer.bds.object.title">{{ viewer.bds.object.full_object_id }}, </span>
                     <span class="object-no text-capitalize" ng-if="!viewer.bds.work.virtual && viewer.bds.object.title">{{viewer.bds.object.title}}, {{ viewer.bds.object.full_object_id }}, </span>
                     <span>{{ viewer.bds.object.physical_description.objsize['#text'] }} </span>
@@ -32,7 +32,7 @@
                                          image="{{ obj.dbi }}.100.jpg"
                                          footer="{{ obj.full_object_id }}">
                         </handprint-block>
-                        <div class="flex" auto-height adjust="241" breakpoint="992">
+                        <div class="flex" auto-height adjust="277" breakpoint="992">
                             <!-- the supplemental views -->
                             <handprint-block ng-repeat="obj in viewer.bds.copyObjects | filter:{object_group: viewer.bds.object.object_group} | filter:{supplemental:true}"
                                              action="viewer.changeObject(obj); viewer.toggleSupplemental();"
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-                <!--<p class="object-subtitle">Supplemental Views</p>-->
+                <p ng-if="supplemental" class="object-subtitle">{{viewer.bds.object.title}}</p>
 
         </div>
     </div>
