@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <p class="object-subtitle">
-                    <span class="object-no text-capitalize" ng-if="viewer.bds.work.virtual"><span ng-if="viewer.bds.object.supplemental">{{ viewer.bds.object.full_object_id }}, </span>{{ viewer.bds.object.title }}, </span>
+                    <span class="object-no text-capitalize" ng-if="viewer.bds.work.virtual"><span>{{ viewer.bds.object.title }}, </span>{{ viewer.bds.object.full_object_id }}, </span>
                     <span class="object-no text-capitalize" ng-if="!viewer.bds.work.virtual && !viewer.bds.object.title">{{ viewer.bds.object.full_object_id }}, </span>
                     <span class="object-no text-capitalize" ng-if="!viewer.bds.work.virtual && viewer.bds.object.title">{{viewer.bds.object.title}}, {{ viewer.bds.object.full_object_id }}, </span>
                     <span>{{ viewer.bds.object.physical_description.objsize['#text'] }} </span>
