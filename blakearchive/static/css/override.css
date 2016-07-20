@@ -37,6 +37,9 @@
 }
 */
 
+.overlay .handprint-block .description {
+    color: white;
+}
 .overlay a:hover, .overlay a:focus {
     color: #f1f1f1;
 }
@@ -572,7 +575,8 @@ a.compare-selected-objects {
         overflow-x: auto;
     }
     #archive #object-view.view-objects .item .object-img-container img{
-        height: 100%;
+        max-height: 100%;
+        width: auto;
     }
     #archive #object-view.view-objects .item .reading-copy .reading-copy-inner{
         min-width: 400px;
@@ -622,7 +626,7 @@ a.compare-selected-objects {
         min-width: 400px;
     }
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item img{
-        height: 100%;
+        max-height: 100%;
         width: auto;
     }
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy{
@@ -661,7 +665,7 @@ a.compare-selected-objects {
         text-align: center;
     }
     #archive #object-view.compare-objects #compare.scrollbar .compare-inner .item img{
-        height: 100%;
+        max-height: 100%;
         width: auto;
     }
     #archive #object-view.compare-objects #compare.scrollbar .compare-inner .item .reading-copy{
@@ -1128,5 +1132,18 @@ a.compare-selected-objects {
 @media (min-width: 768px) {
     #object-detail-tray{
         margin-top: 0;
+    }
+}
+
+
+/***************
+ * Supp Images
+ ****************/
+.carousel-inner .handprint-block .description {
+    color: #eee;
+}
+@media(min-width: 768px){
+    #suppImages .flex {
+        flex-flow: wrap;
     }
 }
