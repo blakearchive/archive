@@ -13,6 +13,7 @@
         $rootScope.showWorkTitle = 'copy';
         $rootScope.showOverlay = false;
         $rootScope.zoom = false;
+        $rootScope.supplemental = false;
         //$rootScope.onComparePage = false;
         //$rootScope.onWorkPage = false;
         vm.bds = BlakeDataService;
@@ -69,12 +70,12 @@
                     size: 'lg'
                 });
             } else {
-                $window.open('/blake/new-window/truesize/'+object.copy_bad_id+'?descId='+object.desc_id, '_blank', 'width=800, height=600');
+                $window.open('/blake/new-window/truesize/'+vm.bds.copy.bad_id+'?descId='+object.desc_id, '_blank', 'width=800, height=600');
             }
         }
 
         $scope.$on('clientPpi::savedPpi',function(){
-            $window.open('/blake/new-window/truesize/'+vm.bds.object.copy_bad_id+'?descId='+vm.bds.object.desc_id, '_blank', 'width=800, height=600');
+            $window.open('/blake/new-window/truesize/'+vm.bds.copy.bad_id+'?descId='+vm.bds.object.desc_id, '_blank', 'width=800, height=600');
         });
 
 
@@ -93,6 +94,10 @@
             else {
                 $rootScope.view.scope = 'image';
             }
+        }
+
+        vm.toggleSupplemental = function(){
+            $rootScope.supplemental = !$rootScope.supplemental;
         }
 
     };
