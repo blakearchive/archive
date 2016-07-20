@@ -7213,6 +7213,7 @@ a.new-window:hover {
   width: 220px;
   min-height: 320px;
   margin: 0 auto;
+  margin-bottom: -4%;
 }
 .handprint-block a {
   color: #333;

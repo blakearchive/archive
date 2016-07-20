@@ -1158,9 +1158,13 @@ handprint-block.supp-original .handprint-block{
     width: 110px;
 }
 @media(min-width: 768px){
-    #suppImages .flex {
+    #suppImages .flexsupp {
         flex-flow: wrap;
         overflow: auto;
+        padding: 0;
+        margin: 17px;  
+        justify-content: space-around;   
+        transition: 300ms ease all;
     }
 }
 @media(min-width: 992px){
