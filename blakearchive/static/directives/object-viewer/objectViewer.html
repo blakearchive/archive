@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <p class="object-subtitle">
-                    <span class="object-no text-capitalize" ng-if="viewer.bds.work.virtual">{{ viewer.bds.object.title }}, </span>
+                    <span class="object-no text-capitalize" ng-if="viewer.bds.work.virtual"><span ng-if="viewer.bds.object.supplemental">{{ viewer.bds.object.full_object_id }}, </span>{{ viewer.bds.object.title }}, </span>
                     <span class="object-no text-capitalize" ng-if="!viewer.bds.work.virtual && !viewer.bds.object.title">{{ viewer.bds.object.full_object_id }}, </span>
                     <span class="object-no text-capitalize" ng-if="!viewer.bds.work.virtual && viewer.bds.object.title">{{viewer.bds.object.title}}, {{ viewer.bds.object.full_object_id }}, </span>
                     <span>{{ viewer.bds.object.physical_description.objsize['#text'] }} </span>
@@ -26,14 +26,21 @@
 
             <!-- supplemental image viewer -->
             <div class="item col-xs-12 col-md-8 col-md-offset-2 active" id="suppImages" ng-class="{hidden: !supplemental || !viewer.bds.hasSupplemental()}">
-                <div class="flex" auto-height adjust="270" breakpoint="992">
-
-                    <!-- the supplemental views -->
-                    <handprint-block ng-repeat="obj in viewer.bds.copyObjects | filter:{object_group: viewer.bds.object.object_group}"
-                                     action="viewer.changeObject(obj); viewer.toggleSupplemental();"
-                                     image="{{ obj.dbi }}.100.jpg"
-                                     footer="{{ obj.full_object_id }}">
-                    </handprint-block>
+                        <handprint-block ng-repeat="obj in viewer.bds.copyObjects | filter:{object_group: viewer.bds.object.object_group} | filter:{supplemental:false}"
+                                         class="supp-original"
+                                         action="viewer.changeObject(obj); viewer.toggleSupplemental();"
+                                         image="{{ obj.dbi }}.100.jpg"
+                                         footer="{{ obj.full_object_id }}">
+                        </handprint-block>
+                        <div class="flex" auto-height adjust="270" breakpoint="992">
+                            <!-- the supplemental views -->
+                            <handprint-block ng-repeat="obj in viewer.bds.copyObjects | filter:{object_group: viewer.bds.object.object_group} | filter:{supplemental:true}"
+                                             action="viewer.changeObject(obj); viewer.toggleSupplemental();"
+                                             image="{{ obj.dbi }}.100.jpg"
+                                             footer="{{ obj.full_object_id }}">
+                            </handprint-block>
+                        </div>
+                    </div>
                 </div>
                 <p class="object-subtitle">Supplemental Views</p>
 
