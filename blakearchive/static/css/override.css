@@ -1140,7 +1140,7 @@ a.compare-selected-objects {
  * Supp Images
  ****************/
 .carousel-inner .handprint-block .description {
-    color: #eee;
+    color: red;
 }
 handprint-block.supp-original .handprint-block{
     min-height: 140px;
