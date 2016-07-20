@@ -1110,6 +1110,13 @@ a.compare-selected-objects {
     }
 }
 
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+    #archive #object-view .btn-group.edit-object .btn.btn-default.show-supplemental .edit-icon {
+        background-image: url("../img/global/suppicon.png");
+        background-size: 26px 24px;
+    }
+}
+
 /**************
 * True Size
 ****************/
