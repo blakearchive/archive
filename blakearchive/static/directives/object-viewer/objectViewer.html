@@ -26,24 +26,22 @@
 
             <!-- supplemental image viewer -->
             <div class="item col-xs-12 col-md-8 col-md-offset-2 active" id="suppImages" ng-class="{hidden: !supplemental || !viewer.bds.hasSupplemental()}">
-                        <handprint-block ng-repeat="obj in viewer.bds.copyObjects | filter:{object_group: viewer.bds.object.object_group} | filter:{supplemental:false}"
-                                         class="supp-original"
-                                         action="viewer.changeObject(obj); viewer.toggleSupplemental();"
-                                         image="{{ obj.dbi }}.100.jpg"
-                                         footer="{{ obj.full_object_id }}">
-                        </handprint-block>
-                        <div class="flex" auto-height adjust="270" breakpoint="992">
-                            <!-- the supplemental views -->
-                            <handprint-block ng-repeat="obj in viewer.bds.copyObjects | filter:{object_group: viewer.bds.object.object_group} | filter:{supplemental:true}"
-                                             action="viewer.changeObject(obj); viewer.toggleSupplemental();"
-                                             image="{{ obj.dbi }}.100.jpg"
-                                             footer="{{ obj.full_object_id }}">
-                            </handprint-block>
-                        </div>
-                    </div>
+                <handprint-block ng-repeat="obj in viewer.bds.copyObjects | filter:{object_group: viewer.bds.object.object_group} | filter:{supplemental:false}"
+                                 class="supp-original"
+                                 action="viewer.changeObject(obj); viewer.toggleSupplemental();"
+                                 image="{{ obj.dbi }}.100.jpg"
+                                 footer="{{ obj.full_object_id }}">
+                </handprint-block>
+                <div class="flex" auto-height adjust="270" breakpoint="992">
+                    <!-- the supplemental views -->
+                    <handprint-block ng-repeat="obj in viewer.bds.copyObjects | filter:{object_group: viewer.bds.object.object_group} | filter:{supplemental:true}"
+                                     action="viewer.changeObject(obj); viewer.toggleSupplemental();"
+                                     image="{{ obj.dbi }}.100.jpg"
+                                     footer="{{ obj.full_object_id }}">
+                    </handprint-block>
                 </div>
                 <p class="object-subtitle">Supplemental Views</p>
-
+            </div>
         </div>
     </div>
 
