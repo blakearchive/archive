@@ -369,7 +369,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             work: {},
             workCopies: [],
             copy: {},
-            copyObjects: {},
+            copyObjects: [],
             object: {}
         };
 
@@ -698,11 +698,20 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 blakeData.workCopies = data[1];
                 if(blakeData.work.virtual == true){
                     return blakeData.getObjectsForCopy(blakeData.workCopies[0].bad_id).then(function(data){
+
+
+                        blakeData.workCopies = [];
+                        //remove supps
+                        data.forEach(function(object){
+                            if(!object.supplemental){
+                                blakeData.workCopies.push(object);
+                            }
+                        });
+
                         if(blakeData.work.bad_id == 'letters'){
-                            blakeData.workCopies = blakeData.multiObjectGroupCopies(data);
+                            blakeData.workCopies = blakeData.multiObjectGroupCopies(blakeData.workCopies);
                         } else {
-                            //blakeData.workCopies = blakeData.numberVirtualWorkObjects(data);
-                            blakeData.workCopies = data;
+                            blakeData.workCopies = blakeData.numberVirtualWorkObjects(blakeData.workCopies);
                         }
                     });
                 }
@@ -730,12 +739,15 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 console.log(blakeData.work);
                 blakeData.copy = data[0];
                 blakeData.copyObjects = data[1];
-                //blakeData.work = data[2];
+
+                //Deal with supplemental objects
+                /*blakeData.copyObjects = blakeData.combineSupplemental(blakeData.copyObjects);
+                console.log(blakeData.copyObjects);*/
 
                 //Programatically order objects if "copy" is a virtual group, then replace number in full object id
-                /*if (blakeData.work.virtual == true) {
+                if (blakeData.work.virtual == true) {
                     blakeData.copyObjects = blakeData.numberVirtualWorkObjects(blakeData.copyObjects);
-                }*/
+                }
                 //deal with multi object groups
                 if(blakeData.work.bad_id == 'letters'){
                     blakeData.copy.objectGroups = blakeData.multiObjectGroupObjects(blakeData.copyObjects);
@@ -763,9 +775,11 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         blakeData.numberVirtualWorkObjects = function(objects){
             var inc = 1;
             objects.forEach(function (obj) {
-                //obj.object_number = inc;
-                obj.full_object_id  = 'Object '+inc+ obj.full_object_id.replace(/object [\d]+/g,'');
-                inc++;
+                if(!obj.supplemental){
+                    //obj.object_number = inc;
+                    obj.full_object_id  = 'Object '+inc+ obj.full_object_id.replace(/object [\d]+/g,'');
+                    inc++;
+                }
             });
             return objects;
         }
@@ -845,6 +859,21 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 $location.path('/blake/copy/'+copyId,false);
                 $location.search('descId',descId);
             });
+        }
+
+        blakeData.hasSupplemental = function(){
+
+            var hasSupp = false;
+
+            if(blakeData.object.object_group){
+                blakeData.copyObjects.forEach(function(copyObject){
+                    if(copyObject.supplemental && copyObject.object_group == blakeData.object.object_group) {
+                        hasSupp = true;
+                    }
+                });
+            }
+
+            return hasSupp;
         }
 
         return blakeData;
@@ -1243,29 +1272,29 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             });
 
             scope.transformRotate = function(){
-                if(width > height){
-                    var padding = (width - height) / 2;
-                    if((imageManipulation.transform.rotate % 180) != 0){
-                        container.height(width);
-                        element.width(width);
-                        image.css({'height':'auto','width':'100%','margin-top':padding+'px'});
-                        $rootScope.$broadcast('ovpImage::ovpIncrease',width-originalHeight);
-                    } else {
-                        container.height(originalHeight);
-                        image.css({'height':'100%','width':'auto','margin-top':'0'});
-                        $rootScope.$broadcast('ovpImage::ovpIncrease',0);
-                    }
-                }
-
-                if(height > width && $rootScope.view.mode == 'compare'){
-                    if((imageManipulation.transform.rotate % 180) != 0){
-                        element.width(height).css({'text-align':'center'});
-                    } else {
-                        element.width(originalWidth);
-                    }
-                }
-
                 if(imageManipulation.transform.rotate == 0){
+                    if(width > height){
+                        var padding = (width - height) / 2;
+                        if((imageManipulation.transform.rotate % 180) != 0){
+                            container.height(width);
+                            element.width(width);
+                            image.css({'height':'auto','width':'100%','margin-top':padding+'px'});
+                            $rootScope.$broadcast('ovpImage::ovpIncrease',width-originalHeight);
+                        } else {
+                            container.height(originalHeight);
+                            image.css({'height':'100%','width':'auto','margin-top':'0'});
+                            $rootScope.$broadcast('ovpImage::ovpIncrease',0);
+                        }
+                    }
+
+                    if(height > width && $rootScope.view.mode == 'compare'){
+                        if((imageManipulation.transform.rotate % 180) != 0){
+                            element.width(height).css({'text-align':'center'});
+                        } else {
+                            element.width(originalWidth);
+                        }
+                    }
+
                     element.removeClass('rotated');
                 } else {
                     element.addClass('rotated');
@@ -1540,11 +1569,12 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             restrict: 'A',
             link: function(scope,ele,attr){
                 ele.on('click',function(){
-                    $window.open('/blake/new-window/'+attr.showMe+'/'+scope.object.copy_bad_id+'?descId='+scope.object.desc_id, '_blank','width=800, height=600');
+                    $window.open('/blake/new-window/'+attr.showMe+'/'+scope.copyBad+'?descId='+scope.object.desc_id, '_blank','width=800, height=600');
                 })
             },
             scope:{
-                object: '='
+                object: '=',
+                copyBad: '@'
             }
         }
     })

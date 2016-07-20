@@ -43,12 +43,26 @@
             if(vm.bds.work.bad_id == 'letters'){
                 list = vm.bds.copy.objectGroups[vm.bds.object.object_group];
             } else {
-                list = vm.bds.copyObjects;
+                list = [];
+                angular.forEach(vm.bds.copyObjects,function(obj){
+                    if(!obj.supplemental){
+                        list.push(obj);
+                    }
+                })
+            }
+
+            var currObject = vm.bds.object;
+            if(currObject.supplemental){
+                list.forEach(function(object){
+                    if(currObject.object_group == object.object_group){
+                        currObject = object;
+                    }
+                });
             }
 
             if(list){
                 for (var i = list.length; i--;) {
-                    if (list[i].object_id == vm.bds.object.object_id) {
+                    if (list[i].object_id == currObject.object_id) {
                         // Extra code here to make the list circular
                         if (i - 1 < 0) {
                             return list[list.length - 1];
@@ -67,12 +81,26 @@
             if(vm.bds.work.bad_id == 'letters'){
                 list = vm.bds.copy.objectGroups[vm.bds.object.object_group];
             } else {
-                list = vm.bds.copyObjects;
+                list = [];
+                angular.forEach(vm.bds.copyObjects,function(obj){
+                    if(!obj.supplemental){
+                        list.push(obj);
+                    }
+                })
+            }
+
+            var currObject = vm.bds.object;
+            if(currObject.supplemental){
+                list.forEach(function(object){
+                    if(currObject.object_group == object.object_group){
+                        currObject = object;
+                    }
+                });
             }
 
             if(list){
                 for (var i = list.length; i--;) {
-                    if (list[i].object_id == vm.bds.object.object_id) {
+                    if (list[i].object_id == currObject.object_id) {
                         // Extra code here to make the list circular
                         if (i + 1 >= list.length) {
                             return list[0];
