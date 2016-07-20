@@ -23,7 +23,8 @@
                     <img ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" ng-click="read.changeObject(o)">
                     <div class="reading-copy">
                         <div class="reading-copy-inner">
-                            <h4 ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
+                            <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
+                            <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
                             <text-transcription object="o"></text-transcription>
                         </div>
                     </div>
