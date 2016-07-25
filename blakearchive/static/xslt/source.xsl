@@ -4,8 +4,7 @@
     <xsl:include href="includes.xsl"/>
     <xsl:template match="/">
         <div>
-            <xsl:apply-templates select="//body"/>
-            <xsl:call-template name="datestamp"/>
+            <xsl:apply-templates/>
         </div>
     </xsl:template>
     <xsl:template match="revisiondesc">
@@ -194,19 +193,9 @@
         <xsl:apply-templates select="@*|node()" mode="htmlincludes"/>
     </xsl:template>
     <xsl:template match="@*|node()" mode="htmlincludes">
-        <xsl:choose>
-            <xsl:when test="name()='link'">
-                <xsl:call-template name="linkmaker"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:copy>
-                    <xsl:apply-templates select="@*|node()" mode="htmlincludes"/>
-                </xsl:copy>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-    <xsl:template match="link">
-        <xsl:call-template name="linkmaker"/>
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()" mode="htmlincludes"/>
+        </xsl:copy>
     </xsl:template>
     <xsl:template match="titlestmt/title">
         <b>Title:</b>

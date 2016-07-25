@@ -11,10 +11,12 @@ from lxml import etree
 import xmltodict
 import models
 import config
+from sqlalchemy.orm import sessionmaker
 
 
 class BlakeDocumentImporter(object):
-    def __init__(self):
+    def __init__(self, data_folder):
+        self.data_folder = data_folder
         self.works = []
         self.copies = {}
         self.objects = {}
@@ -88,17 +90,21 @@ class BlakeDocumentImporter(object):
             self.works.append(work)
             if int(virtual) == 1:
                 # Virtual works need to have a special copy created just for them
-                objects = list(itertools.chain.from_iterable(
-                    self.copies[copy_id].objects for copy_id in virtual_objects.split(",") if copy_id in self.copies))
+                objects = self.objects_sorted_for_virtual_copy(virtual_objects.split(","))
                 virtual_work_copy = models.BlakeCopy(work_id=bad_id, title=title.encode('utf-8'), image=cover_image,
                                                      bad_id=bad_id, archive_copy_id=bad_id,
                                                      composition_date=composition_date,
                                                      composition_date_string=composition_date_string)
+                copy_source_tree = self.virtual_copy_source(bad_id)
+                if copy_source_tree:
+                    virtual_work_copy.copy_source = self.element_to_dict(copy_source_tree.getroot())
+                    virtual_work_copy.copy_source_html = self.source_to_html(copy_source_tree)
                 # We need to clean-up since we're not using the previously generated copy, but the new virtual copy
-                for obj in objects:
+                for (i, obj) in enumerate(objects, 1):
                     old_copy = obj.copy
                     obj.header = old_copy.header
                     obj.source = old_copy.source
+                    obj.full_object_id = i
                     obj.copy = virtual_work_copy
                     obj.object_group = old_copy.title
                     old_copy.effective_copy_id = virtual_work_copy.bad_id
@@ -108,6 +114,20 @@ class BlakeDocumentImporter(object):
                 for copy in copies.split(","):
                     if copy in self.copies:
                         work.copies.append(self.copies[copy])
+
+    def source_to_html(self, source_tree):
+        transformed_tree = self.source_transform(source_tree)
+        return etree.tostring(transformed_tree)
+
+    def objects_sorted_for_virtual_copy(self, virtual_objects):
+        copies = [self.copies[copy_id].objects for copy_id in virtual_objects if copy_id in self.copies]
+        chained_copies = itertools.chain.from_iterable(copies)
+        return list(chained_copies)
+
+    def virtual_copy_source(self, bad_id):
+        virtual_copy_source_file = os.path.join(self.data_folder, "groups", bad_id + ".xml")
+        if os.path.exists(virtual_copy_source_file):
+            return etree.parse(virtual_copy_source_file)
 
     def get_matching_objects(self, desc_ids):
         return [self.objects[desc_id] for desc_id in desc_ids if desc_id in self.objects]
@@ -286,6 +306,8 @@ class BlakeDocumentImporter(object):
         source = self.get_source(root)
         source_html = self.get_source_html(root)
         objects = [self.process_object(o) for o in root.xpath(".//desc")]
+        for (i, obj) in enumerate(objects, 1):
+            obj.full_object_id = i
         copy = models.BlakeCopy(bad_id=copy_id, header=header, source=source, objects=objects,
                                 composition_date=comp_date, composition_date_string=comp_date_string,
                                 print_date=print_date, print_date_string=print_date_string,
@@ -306,37 +328,40 @@ class BlakeDocumentImporter(object):
             obj.copy_composition_date = obj.copy.composition_date
             obj.copy_bad_id = obj.copy.bad_id
 
+    def import_data(self):
+        document_pattern = os.path.join(self.data_folder, "works/*.xml")
+        info_pattern = os.path.join(self.data_folder, "info/*.xml")
+        matching_bad_files = glob.glob(document_pattern)
+        matching_info_files = glob.glob(info_pattern)
+        for matching_info_file in matching_info_files:
+            try:
+                self.process_info_file(matching_info_file)
+            except ValueError as err:
+                print err
+        for matching_file in matching_bad_files:
+            try:
+                self.process(matching_file)
+            except ValueError as err:
+                print err
+        self.process_relationships()
+        self.populate_works()
+        self.denormalize_objects()
+        engine = models.db.create_engine(config.db_connection_string)
+        session = sessionmaker(bind=engine)()
+        models.BlakeObject.metadata.drop_all(bind=engine)
+        models.BlakeObject.metadata.create_all(bind=engine)
+        session.add_all(self.works)
+        session.add_all(self.objects.values())
+        session.commit()
+
 
 def main():
-    from sqlalchemy.orm import sessionmaker
-
     parser = argparse.ArgumentParser()
-    parser.add_argument("document_filename")
-    parser.add_argument("info_filename")
+    parser.add_argument("data_folder")
     args = parser.parse_args()
-    matching_bad_files = glob.glob(args.document_filename)
-    matching_info_files = glob.glob(args.info_filename)
-    importer = BlakeDocumentImporter()
-    for matching_info_file in matching_info_files:
-        try:
-            importer.process_info_file(matching_info_file)
-        except ValueError as err:
-            print err
-    for matching_file in matching_bad_files:
-        try:
-            importer.process(matching_file)
-        except ValueError as err:
-            print err
-    importer.process_relationships()
-    importer.populate_works()
-    importer.denormalize_objects()
-    engine = models.db.create_engine(config.db_connection_string)
-    session = sessionmaker(bind=engine)()
-    models.BlakeObject.metadata.drop_all(bind=engine)
-    models.BlakeObject.metadata.create_all(bind=engine)
-    session.add_all(importer.works)
-    session.add_all(importer.objects.values())
-    session.commit()
+    importer = BlakeDocumentImporter(args.data_folder)
+    importer.import_data()
+
 
 
 if __name__ == "__main__":
