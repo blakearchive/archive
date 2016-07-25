@@ -1,5 +1,5 @@
 <!-- William Blake Archive includes.xsl Last Modified 2005-03-20 Aziza Technology Associates,LLC -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exist="http://exist.sourceforge.net/NS/exist" xmlns:xalan="http://xml.apache.org/xalan" exclude-result-prefixes="xalan" version="1.0" xmlns:str="http://exslt.org/strings" extension-element-prefixes="str">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exist="http://exist.sourceforge.net/NS/exist" xmlns:str="http://exslt.org/strings" extension-element-prefixes="str">
     <xsl:include href="globals.xsl"/>
     <xsl:variable name="lcletters">abcdefghijklmnopqrstuvwxyz</xsl:variable>
     <xsl:variable name="ucletters">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
@@ -205,9 +205,6 @@ and the URL of current document -->
                 </span>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:template>
-    <xsl:template match="link">
-        <xsl:call-template name="linkmaker"/>
     </xsl:template>
     <!--<xsl:template name="linkmaker">-->
         <!--<xsl:choose>-->
