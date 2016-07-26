@@ -50,7 +50,7 @@ class BlakeDocumentImporter(object):
         xslt_xml = etree.parse(open("static/xslt/transcription.xsl"))
         source_xslt_xml = etree.parse(open("static/xslt/source.xsl"))
         self.transform = etree.XSLT(xslt_xml)
-        self.source_transform = etree.XSLT(source_xslt_xml)
+        self.header_transform = etree.XSLT(source_xslt_xml)
 
     def process_info_file(self, document):
         def transform_relationship(rel):
@@ -97,8 +97,7 @@ class BlakeDocumentImporter(object):
                                                      composition_date_string=composition_date_string)
                 copy_source_tree = self.virtual_copy_source(bad_id)
                 if copy_source_tree:
-                    virtual_work_copy.copy_source = self.element_to_dict(copy_source_tree.getroot())
-                    virtual_work_copy.copy_source_html = self.source_to_html(copy_source_tree)
+                    virtual_work_copy.source = self.element_to_dict(copy_source_tree.getroot())
                 # We need to clean-up since we're not using the previously generated copy, but the new virtual copy
                 for (i, obj) in enumerate(objects, 1):
                     old_copy = obj.copy
@@ -116,7 +115,7 @@ class BlakeDocumentImporter(object):
                         work.copies.append(self.copies[copy])
 
     def source_to_html(self, source_tree):
-        transformed_tree = self.source_transform(source_tree)
+        transformed_tree = self.header_transform(source_tree)
         return etree.tostring(transformed_tree)
 
     def objects_sorted_for_virtual_copy(self, virtual_objects):
@@ -270,10 +269,10 @@ class BlakeDocumentImporter(object):
             source_xml = etree.tostring(source, encoding='utf8', method='xml')
             return json.dumps(xmltodict.parse(source_xml, force_cdata=True)["source"])
 
-    def get_source_html(self, document):
-        for source in document.xpath("objdesc/source"):
-            transformed_source = self.source_transform(source)
-            return etree.tostring(transformed_source)
+    def get_header_html(self, document):
+        for header in document.xpath("header"):
+            transformed_header = self.header_transform(header)
+            return etree.tostring(transformed_header)
 
     def get_copy_title(self, document):
         for title in document.xpath("header/filedesc/titlestmt/title"):
@@ -304,7 +303,7 @@ class BlakeDocumentImporter(object):
         archive_copy_id = root.get("copy")
         header = self.get_header(root)
         source = self.get_source(root)
-        source_html = self.get_source_html(root)
+        header_html = self.get_header_html(root)
         objects = [self.process_object(o) for o in root.xpath(".//desc")]
         for (i, obj) in enumerate(objects, 1):
             obj.full_object_id = i
@@ -312,7 +311,7 @@ class BlakeDocumentImporter(object):
                                 composition_date=comp_date, composition_date_string=comp_date_string,
                                 print_date=print_date, print_date_string=print_date_string,
                                 archive_copy_id=archive_copy_id, image=self.copy_handprint_map.get(copy_id),
-                                source_html=source_html, bad_xml=bad_xml)
+                                header_html=header_html, bad_xml=bad_xml)
         copy.effective_copy_id = copy_id
         copy.title = self.get_copy_title(root)
         copy.institution = self.get_copy_institution(root)

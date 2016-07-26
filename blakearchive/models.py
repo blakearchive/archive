@@ -145,7 +145,7 @@ class BlakeCopy(db.Model):
     archive_copy_id = db.Column(db.Text)
     header = db.Column(JSON)
     source = db.Column(JSON)
-    source_html = db.Column(db.Text)
+    header_html = db.Column(db.Text)
     title = db.Column(db.UnicodeText)
     objects = db.relationship(BlakeObject, backref="copy")
     institution = db.Column(db.UnicodeText)
@@ -168,11 +168,11 @@ class BlakeCopy(db.Model):
             "work_id": self.work_id,
             "bad_id": self.bad_id,
             "source": self.source,
-            "source_html": self.source_html,
             "title": self.title,
             "institution": self.institution,
             "image": self.image,
             "header": self.header,
+            "header_html": self.header_html,
             "composition_date": self.composition_date,
             "composition_date_string": self.composition_date_string,
             "print_date_string": self.print_date_string,
