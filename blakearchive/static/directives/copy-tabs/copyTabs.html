@@ -95,7 +95,19 @@
 
                 <!-- Electronic Edition Info-->
                 <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#ee-info'" id="ee-info">
-                    {{tabs.bds.copy.header}}
+                    <header class="page-header">
+                        <p class="subhead">Electronic Edition Information</p>
+                    </header>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div ng-bind-html="tabs.bds.copy.header_html"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 text-center">
+                            <h4><a href="#">View XML</a> <small>(may not work in all browsers)</small></h4>
+                        </div>
+                    </div>
                 </div>
 
             </div>
