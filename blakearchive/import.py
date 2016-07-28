@@ -306,7 +306,7 @@ class BlakeDocumentImporter(object):
         header_html = self.get_header_html(root)
         objects = [self.process_object(o) for o in root.xpath(".//desc")]
         for (i, obj) in enumerate(objects, 1):
-            obj.full_object_id = i
+            obj.object_number = i
         copy = models.BlakeCopy(bad_id=copy_id, header=header, source=source, objects=objects,
                                 composition_date=comp_date, composition_date_string=comp_date_string,
                                 print_date=print_date, print_date_string=print_date_string,
