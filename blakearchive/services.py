@@ -163,10 +163,14 @@ class BlakeDataService(object):
 
     @classmethod
     def get_objects(cls, desc_ids=None):
+        query = models.BlakeObject.query \
+                .join(models.BlakeCopy) \
+                .order_by(models.BlakeCopy.print_date, models.BlakeCopy.composition_date,
+                          models.BlakeObject.object_group, models.BlakeObject.object_number)
         if desc_ids:
-            results = models.BlakeObject.query.filter(models.BlakeObject.desc_id.in_(desc_ids)).all()
+            results = query.filter(models.BlakeObject.desc_id.in_(desc_ids)).all()
         else:
-            results = models.BlakeObject.query.all()
+            results = query.all()
         return results
 
     @classmethod
