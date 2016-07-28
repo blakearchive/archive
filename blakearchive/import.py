@@ -103,7 +103,7 @@ class BlakeDocumentImporter(object):
                     old_copy = obj.copy
                     obj.header = old_copy.header
                     obj.source = old_copy.source
-                    obj.full_object_id = i
+                    obj.object_number = i
                     obj.copy = virtual_work_copy
                     obj.object_group = old_copy.title
                     old_copy.effective_copy_id = virtual_work_copy.bad_id
