@@ -7,6 +7,7 @@
         vm.bds = BlakeDataService;
         vm.rows = [];
         vm.copyCount = 0;
+        console.log(vm.bds);
 
         /*vm.sortCopies = function(copies){
             if(angular.isDefined(copies)){
