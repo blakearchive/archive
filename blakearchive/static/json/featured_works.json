@@ -2,31 +2,31 @@
     {
         "dbi": "america.a.p9",
         "desc_id": "america.a.illbk.09",
-        "byline": "copy A, object 9",
+        "byline": "Copy A, Object 9",
         "title": "America a Prophecy"
     },
     {
         "dbi": "america.m.p2",
         "desc_id": "america.m.illbk.02",
-        "byline": "copy M, object 2",
+        "byline": "Copy M, Object 2",
         "title": "America a Prophecy"
     },
     {
         "dbi": "b-los.a.p1",
         "desc_id": "b-los.a.illbk.01",
-        "byline": "copy A, object 1",
+        "byline": "Copy A, Object 1",
         "title": "The Book of Los"
     },
     {
         "dbi": "bb85.a.1.ps",
         "desc_id": "bb85.a.spb.01",
-        "byline": "copy A, object 1 -- \"Albion Rose\"",
+        "byline": "Copy A, Object 1 -- \"Albion Rose\"",
         "title": "A Large Book of Designs"
     },
     {
         "dbi": "bb85.a.3.ps",
         "desc_id": "bb85.a.spb.03",
-        "byline": "copy A, object 3 -- \"The Accusers\"",
+        "byline": "Copy A, Object 3 -- \"The Accusers\"",
         "title": "A Large Book of Designs"
     },
     {
@@ -134,43 +134,43 @@
     {
         "dbi": "europe.k.p1",
         "desc_id": "europe.k.illbk.01",
-        "byline": "copy K, object 1",
+        "byline": "Copy K, Object 1",
         "title": "Europe a Prophecy"
     },
     {
         "dbi": "jerusalem.e.p1",
         "desc_id": "jerusalem.e.illbk.01",
-        "byline": "copy E, object 1",
+        "byline": "Copy E, Object 1",
         "title": "Jerusalem The Emanation of The Giant Albion"
     },
     {
         "dbi": "jerusalem.e.p32",
         "desc_id": "jerusalem.e.illbk.32",
-        "byline": "copy E, object 32",
+        "byline": "Copy E, Object 32",
         "title": "Jerusalem The Emanation of The Giant Albion"
     },
     {
         "dbi": "jerusalem.e.p41",
         "desc_id": "jerusalem.e.illbk.41",
-        "byline": "copy E, object 41",
+        "byline": "Copy E, Object 41",
         "title": "Jerusalem The Emanation of The Giant Albion"
     },
     {
         "dbi": "jerusalem.e.p53",
         "desc_id": "jerusalem.e.illbk.53",
-        "byline": "copy E, object 53",
+        "byline": "Copy E, Object 53",
         "title": "Jerusalem The Emanation of The Giant Albion"
     },
     {
         "dbi": "jerusalem.e.p76",
         "desc_id": "jerusalem.e.illbk.76",
-        "byline": "copy E, object 76",
+        "byline": "Copy E, Object 76",
         "title": "Jerusalem The Emanation of The Giant Albion"
     },
     {
         "dbi": "laocoon.b.p1",
         "desc_id": "laocoon.b.illbk.01",
-        "byline": "copy B, object 1",
+        "byline": "Copy B, Object 1",
         "title": "Laoco\u00c3\u00b6n"
     },
     {
@@ -182,61 +182,61 @@
     {
         "dbi": "mhh.g.p1",
         "desc_id": "mhh.g.illbk.01",
-        "byline": "copy G, object 1",
+        "byline": "Copy G, Object 1",
         "title": "The Marriage of Heaven and Hell"
     },
     {
         "dbi": "milton.a.p1",
         "desc_id": "milton.a.illbk.01",
-        "byline": "copy A, object 1",
+        "byline": "Copy A, Object 1",
         "title": "Milton a Poem"
     },
     {
         "dbi": "s-los.b.p1",
         "desc_id": "s-los.b.illbk.01",
-        "byline": "copy B, object 1",
+        "byline": "Copy B, Object 1",
         "title": "The Song of Los"
     },
     {
         "dbi": "s-los.e.p7-5",
         "desc_id": "s-los.e.illbk.07",
-        "byline": "copy E, object 7",
+        "byline": "Copy E, Object 7",
         "title": "The Song of Los"
     },
     {
         "dbi": "songsie.aa.p11",
         "desc_id": "songsie.aa.illbk.11",
-        "byline": "copy AA, object 11",
+        "byline": "Copy AA, Object 11",
         "title": "Songs of Innocence and of Experience"
     },
     {
         "dbi": "songsie.n.p8-42",
         "desc_id": "songsie.n.illbk.08",
-        "byline": "copy N, object 8",
+        "byline": "Copy N, Object 8",
         "title": "Songs of Innocence and of Experience"
     },
     {
         "dbi": "songsie.t.p10",
         "desc_id": "songsie.t.illbk.10",
-        "byline": "copy T, object10",
+        "byline": "Copy T, object10",
         "title": "Songs of Innocence and of Experience"
     },
     {
         "dbi": "thel.f.p2",
         "desc_id": "thel.f.illbk.02",
-        "byline": "copy F, object 2",
+        "byline": "Copy F, Object 2",
         "title": "The Book of Thel"
     },
     {
         "dbi": "urizen.a.p3-22",
         "desc_id": "urizen.a.illbk.03",
-        "byline": "copy A, object 3",
+        "byline": "Copy A, Object 3",
         "title": "The First Book of Urizen"
     },
     {
         "dbi": "urizen.b.p23-21",
         "desc_id": "urizen.b.illbk.23",
-        "byline": "copy B, object 23",
+        "byline": "Copy B, Object 23",
         "title": "The First Book of Urizen"
     }
 ]
