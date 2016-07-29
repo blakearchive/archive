@@ -12,6 +12,7 @@ import xmltodict
 import models
 import config
 from sqlalchemy.orm import sessionmaker
+import titlecase
 
 
 class BlakeDocumentImporter(object):
@@ -171,11 +172,11 @@ class BlakeDocumentImporter(object):
 
     def get_object_title(self, obj):
         for title in obj.xpath("objtitle/title"):
-            return title.xpath("string()").encode("utf-8")
+            return titlecase.titlecase(title.xpath("string()").encode("utf-8"))
         else:
             for objnumber in obj.xpath(".//objnumber"):
                 if objnumber.attrib.get("code") == "A1":
-                    return objnumber.xpath("string()").encode("utf-8")
+                    return titlecase.titlecase(objnumber.xpath("string()").encode("utf-8"))
 
     def element_to_dict(self, obj):
             element_xml = etree.tostring(obj, encoding='utf8', method='xml')
@@ -199,7 +200,7 @@ class BlakeDocumentImporter(object):
 
     def get_full_object_id(self, obj):
         for objid in obj.xpath("objtitle/objid"):
-            return objid.xpath("string()").encode("utf-8")
+            return titlecase.titlecase(objid.xpath("string()").encode("utf-8"))
 
     def get_object_number(self, obj):
         for objnumber in obj.xpath("objtitle/objid/objnumber"):
