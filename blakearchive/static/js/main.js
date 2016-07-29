@@ -791,7 +791,10 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 var objectGroupArray = [];
 
                 angular.forEach(objects, function(obj){
-                    if(obj.object_number == 1){
+                    //if(obj.object_number == 1){
+                    //    objectGroupArray.push(obj);
+                    //}
+                    if(obj.full_object_id.indexOf("Object 1")){
                         objectGroupArray.push(obj);
                     }
                 });
