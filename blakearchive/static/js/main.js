@@ -699,7 +699,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 if(blakeData.work.virtual == true){
                     return blakeData.getObjectsForCopy(blakeData.workCopies[0].bad_id).then(function(data){
 
-
                         blakeData.workCopies = [];
                         //remove supps
                         data.forEach(function(object){
@@ -709,7 +708,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                         });
 
                         if(blakeData.work.bad_id == 'letters'){
-                            blakeData.workCopies = blakeData.multiObjectGroupCopies(blakeData.workCopies);
+                            //blakeData.workCopies = blakeData.multiObjectGroupCopies(blakeData.workCopies);
                         } else {
                             blakeData.workCopies = blakeData.numberVirtualWorkObjects(blakeData.workCopies);
                         }
@@ -777,7 +776,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             objects.forEach(function (obj) {
                 if(!obj.supplemental){
                     //obj.object_number = inc;
-                    obj.full_object_id  = 'Object '+inc+ obj.full_object_id.replace(/object [\d]+/g,'');
+                    obj.full_object_id  = 'Object '+inc+ obj.full_object_id.replace(/object [\d]+/gi,'');
                     inc++;
                 }
             });
