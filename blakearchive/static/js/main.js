@@ -680,6 +680,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
             function getFeaturedWorksComplete(response){
                 //return BlakeWork.create(response.data.results);
+                $log.info(response.data.results);
                 return response.data.results;
             }
 
