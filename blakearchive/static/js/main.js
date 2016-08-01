@@ -700,19 +700,25 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 if(blakeData.work.virtual == true){
                     return blakeData.getObjectsForCopy(blakeData.workCopies[0].bad_id).then(function(data){
 
-                        blakeData.workCopies = [];
-                        //remove supps
-                        data.forEach(function(object){
-                            if(!object.supplemental){
-                                blakeData.workCopies.push(object);
-                            }
-                        });
+                        blakeData.workCopies = data;
 
                         if(blakeData.work.bad_id == 'letters'){
-                            //blakeData.workCopies = blakeData.multiObjectGroupCopies(blakeData.workCopies);
+
+                            var objectGroup = {};
+
+                            angular.forEach(blakeData.workCopies, function(obj){
+                                if(!angular.isDefined(objectGroup[obj.object_group])) {
+                                    objectGroup[obj.object_group] = obj;
+                                }
+                            });
+
+                            blakeData.workCopies = objectGroup;
+
                         } else {
                             blakeData.workCopies = blakeData.numberVirtualWorkObjects(blakeData.workCopies);
                         }
+
+                        console.log(blakeData.workCopies);
                     });
                 }
             });
@@ -739,19 +745,16 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 console.log(blakeData.work);
                 blakeData.copy = data[0];
                 blakeData.copyObjects = data[1];
-
-                //Deal with supplemental objects
-                /*blakeData.copyObjects = blakeData.combineSupplemental(blakeData.copyObjects);
-                console.log(blakeData.copyObjects);*/
+                console.log(blakeData.copyObjects);
 
                 //Programatically order objects if "copy" is a virtual group, then replace number in full object id
                 if (blakeData.work.virtual == true) {
                     blakeData.copyObjects = blakeData.numberVirtualWorkObjects(blakeData.copyObjects);
                 }
                 //deal with multi object groups
-                if(blakeData.work.bad_id == 'letters'){
+                /*if(blakeData.work.bad_id == 'letters'){
                     blakeData.copy.objectGroups = blakeData.multiObjectGroupObjects(blakeData.copyObjects);
-                }
+                }*/
 
 
                 //Set the selected object
@@ -784,23 +787,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             return objects;
         }
 
-        // TODO: Each object group should be programmatically synonymous as a copy...should probably revisit this
-        // IF we can get the service working correctly, we could fake the selected copy?
-        blakeData.multiObjectGroupCopies = function(objects){
-            if(angular.isArray(objects)){
-                var objectGroupArray = [];
-
-                angular.forEach(objects, function(obj){
-                    if(obj.object_number == 1){
-                        objectGroupArray.push(obj);
-                    }
-                });
-
-            }
-            return objectGroupArray;
-        }
-
-        blakeData.multiObjectGroupObjects = function(objects){
+        /*blakeData.multiObjectGroupObjects = function(objects){
             if(angular.isArray(objects)) {
                 var objectGroup = {};
 
@@ -815,7 +802,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
                 return objectGroup;
             }
-        }
+        }*/
 
 
         blakeData.setSelectedObject = function (descId) {

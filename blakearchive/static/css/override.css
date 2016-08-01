@@ -592,7 +592,7 @@ a.compare-selected-objects {
         overflow-x: auto;
     }
     #archive #object-view.view-objects .item .object-img-container img{
-        max-height: 100%;
+        height: 100%;
         width: auto;
     }
     #archive #object-view.view-objects .item .reading-copy .reading-copy-inner{
@@ -643,7 +643,7 @@ a.compare-selected-objects {
         min-width: 400px;
     }
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item img{
-        max-height: 100%;
+        height: 100%;
         width: auto;
     }
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy{
@@ -682,7 +682,7 @@ a.compare-selected-objects {
         text-align: center;
     }
     #archive #object-view.compare-objects #compare.scrollbar .compare-inner .item img{
-        max-height: 100%;
+        height: 100%;
         width: auto;
     }
     #archive #object-view.compare-objects #compare.scrollbar .compare-inner .item .reading-copy{
