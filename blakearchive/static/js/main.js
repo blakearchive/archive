@@ -704,7 +704,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
                         if(blakeData.work.bad_id == 'letters'){
 
-                            var objectGroup = {};
+                            var objectGroup = {},
+                                objectArray = [];
 
                             angular.forEach(blakeData.workCopies, function(obj){
                                 if(!angular.isDefined(objectGroup[obj.object_group])) {
@@ -712,7 +713,11 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                                 }
                             });
 
-                            blakeData.workCopies = objectGroup;
+                            angular.forEach(objectGroup, function(v){
+                               objectArray.push(v);
+                            });
+
+                            blakeData.workCopies = objectArray;
 
                         } else {
                             blakeData.workCopies = blakeData.numberVirtualWorkObjects(blakeData.workCopies);
