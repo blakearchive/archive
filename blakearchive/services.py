@@ -250,7 +250,7 @@ class BlakeDataService(object):
         return models.BlakeCopy.query\
             .join(models.BlakeWork)\
             .filter(models.BlakeWork.bad_id == bad_id)\
-            .order_by(models.BlakeCopy.print_date).all()
+            .order_by(models.BlakeCopy.print_date_string).all()
 
     @classmethod
     def get_featured_works(cls, count=25):
