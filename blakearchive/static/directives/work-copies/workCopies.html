@@ -1,28 +1,28 @@
-<div class="row" ng-repeat="increment in workCopies.rows">
+<div class="row">
 
 	<!-- For Non virtual groups -->
-	<div ng-repeat="copy in workCopies.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && copy.source.objinfo.printdate['#text'] && copy.archive_copy_id">
+	<div ng-repeat="copy in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && copy.source.objinfo.printdate['#text'] && copy.archive_copy_id">
 		<handprint-block
 				link="/blake/copy/{{copy.bad_id}}"
 				image="{{ copy.image }}.100.jpg"
 				footer="Copy {{copy.archive_copy_id}}, {{copy.source.objinfo.printdate['#text']}}, {{copy.institution}}">
 		</handprint-block>
 	</div>
-	<div ng-repeat="copy in workCopies.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && copy.source.objinfo.printdate['#text'] && !copy.archive_copy_id">
+	<div ng-repeat="copy in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && copy.source.objinfo.printdate['#text'] && !copy.archive_copy_id">
 		<handprint-block
 				link="/blake/copy/{{copy.bad_id}}"
 				image="{{ copy.image }}.100.jpg"
 				footer="{{copy.source.objinfo.printdate['#text']}}, {{copy.institution}}">
 		</handprint-block>
 	</div>
-	<div ng-repeat="copy in workCopies.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && !copy.source.objinfo.printdate['#text'] && copy.archive_copy_id">
+	<div ng-repeat="copy in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && !copy.source.objinfo.printdate['#text'] && copy.archive_copy_id">
 		<handprint-block
 				link="/blake/copy/{{copy.bad_id}}"
 				image="{{ copy.image }}.100.jpg"
 				footer="Copy {{copy.archive_copy_id}}, {{copy.source.objdescid.compdate['#text']}}, {{copy.institution}}">
 		</handprint-block>
 	</div>
-	<div ng-repeat="copy in workCopies.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && !copy.source.objinfo.printdate['#text'] && !copy.archive_copy_id">
+	<div ng-repeat="copy in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && !copy.source.objinfo.printdate['#text'] && !copy.archive_copy_id">
 		<handprint-block
 				link="/blake/copy/{{copy.bad_id}}"
 				image="{{ copy.image }}.100.jpg"
@@ -31,8 +31,7 @@
 	</div>
 
 	<!-- For Virtual Groups, except letters -->
-	<div ng-repeat="obj in workCopies.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == true && workCopies.bds.work.bad_id != 'letters'">
-
+	<div ng-repeat="obj in workCopies.bds.workCopies | filter:{supplemental:false}" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == true && workCopies.bds.work.bad_id != 'letters'">
 		<handprint-block
 				link="/blake/copy/{{obj.archive_copy_id}}?descId={{obj.desc_id}}"
 				image="{{ obj.dbi }}.100.jpg"
@@ -41,9 +40,10 @@
 	</div>
 
 	<!-- For Letters -->
-	<div ng-repeat="obj in workCopies.bds.workCopies | limitTo:4:(increment * 4) - 4" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.bad_id == 'letters'">
+	<div ng-repeat="obj in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.bad_id == 'letters'">
 		<handprint-block
 				link="/blake/copy/{{obj.archive_copy_id}}?descId={{obj.desc_id}}"
+				action="workCopies.bds.changeObject(obj)"
 				image="{{ obj.dbi }}.100.jpg"
 				footer="{{obj.object_group}}">
 		</handprint-block>
