@@ -87,6 +87,10 @@
             }
         }
 
+        vm.getStaticPageTitle = function() {
+            return $rootScope.staticPageTitle;
+        }
+
     }
 
     var link = function(scope,ele,attr,vm){
