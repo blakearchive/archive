@@ -1,15 +1,15 @@
+td.c2 {
+  padding: 0px;
+  text-align: left;
+  width: 8%;
+}
+
 .navbar-form .input-group > .form-control {
     width: 40%;
     margin-left: 60%;
 }
 
 .navbar-form .input-group > .form-control:focus {
-    width: 100%;
-    margin-left: 0%;
-    z-index:999;
-}
-
-.navbar-form .input-group > .form-control:hover {
     width: 100%;
     margin-left: 0%;
     z-index:999;
