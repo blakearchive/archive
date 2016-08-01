@@ -103,9 +103,35 @@
                             <div ng-bind-html="tabs.bds.copy.header_html"></div>
                         </div>
                     </div>
-                    <div class="row">
+
+                    <!-- regular copies -->
+                    <div class="row" ng-if="!tabs.bds.work.virtual">
                         <div class="col-xs-12 text-center">
                             <h4><a href="#">View XML</a> <small>(may not work in all browsers)</small></h4>
+                        </div>
+                    </div>
+
+                    <!-- virtual works -->
+                    <div class="row" ng-if="tabs.bds.work.virtual && tabs.bds.work.bad_id != 'letters'">
+                        <div class="col-xs-12">
+                            <h4>Included Objects</h4>
+                            <div class="well" ng-repeat="obj in tabs.bds.copyObjects | filter:{supplemental:false} track by $index">
+                                <h4>{{ obj.full_object_id }}</h4>
+                                <p><strong>Title:</strong> {{ obj.title }}</p>
+                                <p><a href="#">View XML</a> <small>(may not work in all browsers)</small></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- letters -->
+                    <div class="row" ng-if="tabs.bds.work.virtual && tabs.bds.work.bad_id == 'letters'">
+                        <div class="col-xs-12">
+                            <h4>Included Objects</h4>
+                            <div class="well" ng-repeat="obj in tabs.bds.copy.objectGroups track by $index">
+                                <h4>{{ obj[0].full_object_id }}</h4>
+                                <p><strong>Title:</strong> {{ obj[0].object_group}}</p>
+                                <p><a href="#">View XML</a> <small>(may not work in all browsers)</small></p>
+                            </div>
                         </div>
                     </div>
                 </div>
