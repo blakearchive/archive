@@ -96,9 +96,10 @@ class BlakeDocumentImporter(object):
                                                      bad_id=bad_id, archive_copy_id=bad_id,
                                                      composition_date=composition_date,
                                                      composition_date_string=composition_date_string)
-                copy_source_tree = self.virtual_copy_source(bad_id)
-                if copy_source_tree:
-                    virtual_work_copy.source = self.element_to_dict(copy_source_tree.getroot())
+                virtual_group_header = self.virtual_group_header(bad_id)
+                if virtual_group_header:
+                    virtual_work_copy.header = self.element_to_dict(virtual_group_header.getroot())
+                    virtual_work_copy.header_html = etree.tostring(self.header_transform(virtual_group_header))
                 # We need to clean-up since we're not using the previously generated copy, but the new virtual copy
                 for (i, obj) in enumerate(objects, 1):
                     old_copy = obj.copy
@@ -125,7 +126,7 @@ class BlakeDocumentImporter(object):
         chained_copies = itertools.chain.from_iterable(copies)
         return list(chained_copies)
 
-    def virtual_copy_source(self, bad_id):
+    def virtual_group_header(self, bad_id):
         virtual_copy_source_file = os.path.join(self.data_folder, "groups", bad_id + ".xml")
         if os.path.exists(virtual_copy_source_file):
             return etree.parse(virtual_copy_source_file)
