@@ -38,17 +38,21 @@
 
         vm.getPreviousObject = function(){
 
-            var list = {};
+            var list = [];
 
             if(vm.bds.work.bad_id == 'letters'){
-                list = vm.bds.copy.objectGroups[vm.bds.object.object_group];
+                vm.bds.copyObjects.forEach(function(obj){
+                    if(obj.object_group == vm.bds.object.object_group){
+                        list.push(obj);
+                    }
+                })
             } else {
-                list = [];
                 angular.forEach(vm.bds.copyObjects,function(obj){
                     if(!obj.supplemental){
                         list.push(obj);
                     }
                 })
+
             }
 
             var currObject = vm.bds.object;
@@ -76,17 +80,21 @@
 
         vm.getNextObject = function(){
 
-            var list = {};
+            var list = [];
 
             if(vm.bds.work.bad_id == 'letters'){
-                list = vm.bds.copy.objectGroups[vm.bds.object.object_group];
+                vm.bds.copyObjects.forEach(function(obj){
+                    if(obj.object_group == vm.bds.object.object_group){
+                        list.push(obj);
+                    }
+                })
             } else {
-                list = [];
                 angular.forEach(vm.bds.copyObjects,function(obj){
                     if(!obj.supplemental){
                         list.push(obj);
                     }
                 })
+
             }
 
             var currObject = vm.bds.object;
