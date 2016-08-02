@@ -66,6 +66,9 @@ class BlakeObject(db.Model):
     archive_copy_id = db.Column(db.Text)
     copy_institution = db.Column(db.Text)
     copy_composition_date = db.Column(db.Integer)
+    copy_composition_date_value = db.Column(db.UnicodeText)
+    copy_print_date = db.Column(db.Integer)
+    copy_print_date_value = db.Column(db.UnicodeText)
     copy_bad_id = db.Column(db.Text)
     illustration_description = db.Column(JSON)
     components = db.Column(JSON)
@@ -80,24 +83,29 @@ class BlakeObject(db.Model):
     supplemental = db.Column(db.Boolean)
     objects_from_same_matrix = db.relationship(
         "BlakeObject",
+        order_by="(asc(BlakeObject.copy_print_date_value), asc(BlakeObject.copy_composition_date_value), asc(BlakeObject.object_number))",
         secondary=matrix__object,
         primaryjoin=object_id == matrix__object.c.object_id,
         secondaryjoin=object_id == matrix__object.c.related_object_id,
         remote_side=matrix__object.c.related_object_id)
     objects_from_same_production_sequence = db.relationship(
         "BlakeObject",
+        order_by="(asc(BlakeObject.copy_print_date_value), asc(BlakeObject.copy_composition_date_value), asc(BlakeObject.object_number))",
         secondary=production_sequence__object,
         primaryjoin=object_id == production_sequence__object.c.object_id,
         secondaryjoin=object_id == production_sequence__object.c.related_object_id,
-        remote_side=production_sequence__object.c.related_object_id)
+        remote_side=production_sequence__object.c.related_object_id,
+        )
     objects_with_same_motif = db.relationship(
         "BlakeObject",
+        order_by="(asc(BlakeObject.copy_print_date_value), asc(BlakeObject.copy_composition_date_value), asc(BlakeObject.object_number))",
         secondary=motif__object,
         primaryjoin=object_id == motif__object.c.object_id,
         secondaryjoin=object_id == motif__object.c.related_object_id,
         remote_side=motif__object.c.related_object_id)
     textually_referenced_objects = db.relationship(
         "BlakeObject",
+        order_by="(asc(BlakeObject.copy_print_date_value), asc(BlakeObject.copy_composition_date_value), asc(BlakeObject.object_number))",
         secondary=textual_reference__object,
         primaryjoin=object_id == textual_reference__object.c.object_id,
         secondaryjoin=object_id == textual_reference__object.c.related_object_id,
@@ -121,6 +129,9 @@ class BlakeObject(db.Model):
             "archive_copy_id": self.archive_copy_id,
             "copy_institution": self.copy_institution,
             "copy_composition_date": self.copy_composition_date,
+            "copy_composition_date_value": self.copy_composition_date_value,
+            "copy_print_date": self.copy_print_date,
+            "copy_print_date_value": self.copy_print_date_value,
             "copy_bad_id": self.copy_bad_id,
             "full_object_id": self.full_object_id,
             "illustration_description": self.illustration_description,
@@ -152,8 +163,10 @@ class BlakeCopy(db.Model):
     image = db.Column(db.UnicodeText)
     composition_date = db.Column(db.Integer)
     composition_date_string = db.Column(db.UnicodeText)
-    print_date_string = db.Column(db.UnicodeText)
+    composition_date_value = db.Column(db.UnicodeText)
     print_date = db.Column(db.Integer)
+    print_date_string = db.Column(db.UnicodeText)
+    print_date_value = db.Column(db.UnicodeText)
     effective_copy_id = db.Column(db.UnicodeText, index=True)
     bad_xml = db.Column(db.Text)
 
