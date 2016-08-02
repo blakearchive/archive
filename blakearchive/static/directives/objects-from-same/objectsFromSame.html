@@ -16,14 +16,14 @@
             <handprint-block ng-if="obj.title"
                     link="/blake/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
                     image="{{ obj.dbi }}.100.jpg"
-                    footer="<b>{{obj.copy_title}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}"
+                    footer="<b>{{obj.copy_title}}</b><br>{{obj.title}}<br>{{obj.copy_print_date_string}}, {{obj.copy_institution}}<br>{{obj.full_object_id}}"
                     
                 >
             </handprint-block>
             <handprint-block ng-if="!obj.title"
                     link="/blake/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
                     image="{{ obj.dbi }}.100.jpg"
-                    footer="<b>{{obj.copy_title}}</b><br>{{obj.full_object_id}}"
+                    footer="<b>{{obj.copy_title}}</b><br>{{obj.copy_print_date_string}}, {{obj.copy_institution}}<br>{{obj.full_object_id}}"
                     
                 >
             </handprint-block>
