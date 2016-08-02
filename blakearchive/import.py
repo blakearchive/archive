@@ -259,6 +259,14 @@ class BlakeDocumentImporter(object):
             return cd.xpath("string()").encode("utf-8")
 
     def get_printdate_string(self, document):
+            for cd in document.xpath("//compdate"):
+                return cd.xpath("string()").encode("utf-8")
+
+    def get_compdate_value(self, document):
+            for pd in document.xpath("//printdate"):
+                return pd.attrib["value"]
+
+    def get_printdate_value(self, document):
         for pd in document.xpath("//printdate"):
             return pd.attrib["value"]
 
@@ -300,8 +308,10 @@ class BlakeDocumentImporter(object):
         bad_xml = etree.tostring(root)  #
         copy_id = root.get("id").lower()
         comp_date_string = self.get_compdate_string(root)
+        comp_date_value = self.get_compdate_value(root)
         comp_date = self.extract_date(comp_date_string)
         print_date_string = self.get_printdate_string(root)
+        print_date_value = self.get_printdate_value(root)
         print_date = self.extract_date(print_date_string)
         archive_copy_id = root.get("copy")
         header = self.get_header(root)
@@ -310,11 +320,22 @@ class BlakeDocumentImporter(object):
         objects = [self.process_object(o) for o in root.xpath(".//desc")]
         for (i, obj) in enumerate(objects, 1):
             obj.object_number = i
-        copy = models.BlakeCopy(bad_id=copy_id, header=header, source=source, objects=objects,
-                                composition_date=comp_date, composition_date_string=comp_date_string,
-                                print_date=print_date, print_date_string=print_date_string,
-                                archive_copy_id=archive_copy_id, image=self.copy_handprint_map.get(copy_id),
-                                header_html=header_html, bad_xml=bad_xml)
+        copy = models.BlakeCopy(
+            bad_id=copy_id,
+            header=header,
+            source=source,
+            objects=objects,
+            composition_date=comp_date,
+            composition_date_string=comp_date_string,
+            composition_date_value=comp_date_value,
+            print_date=print_date,
+            print_date_string=print_date_string,
+            print_date_value=print_date_value,
+            archive_copy_id=archive_copy_id,
+            image=self.copy_handprint_map.get(copy_id),
+            header_html=header_html,
+            bad_xml=bad_xml
+        )
         copy.effective_copy_id = copy_id
         copy.title = self.get_copy_title(root)
         copy.institution = self.get_copy_institution(root)
@@ -327,7 +348,10 @@ class BlakeDocumentImporter(object):
             obj.copy_title = obj.copy.title
             obj.archive_copy_id = obj.copy.archive_copy_id
             obj.copy_institution = obj.copy.institution
+            obj.copy_composition_date_value = obj.copy.composition_date_value
             obj.copy_composition_date = obj.copy.composition_date
+            obj.copy_print_date_value = obj.copy.print_date_value
+            obj.copy_print_date = obj.copy.print_date
             obj.copy_bad_id = obj.copy.bad_id
 
     def import_data(self):

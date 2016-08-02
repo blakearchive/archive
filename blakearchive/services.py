@@ -165,8 +165,7 @@ class BlakeDataService(object):
     def get_objects(cls, desc_ids=None):
         query = models.BlakeObject.query \
                 .join(models.BlakeCopy) \
-                .order_by(models.BlakeCopy.print_date, models.BlakeCopy.composition_date,
-                          models.BlakeObject.object_group, models.BlakeObject.object_number)
+                .order_by(models.BlakeObject.copy_print_date_value, models.BlakeObject.copy_composition_date_value, models.BlakeObject.object_number)
         if desc_ids:
             results = query.filter(models.BlakeObject.desc_id.in_(desc_ids)).all()
         else:
@@ -181,7 +180,6 @@ class BlakeDataService(object):
     def get_objects_with_same_motif(cls, desc_id):
         object_ = models.BlakeObject.query\
             .filter(models.BlakeObject.desc_id == desc_id)\
-            .order_by(models.BlakeObject.bentley_id)\
             .first()
         return object_.objects_with_same_motif
 
@@ -189,7 +187,6 @@ class BlakeDataService(object):
     def get_objects_from_same_production_sequence(cls, desc_id):
         object_ = models.BlakeObject.query\
             .filter(models.BlakeObject.desc_id == desc_id)\
-            .order_by(models.BlakeObject.bentley_id)\
             .first()
         return object_.objects_from_same_production_sequence
 
@@ -197,7 +194,6 @@ class BlakeDataService(object):
     def get_objects_from_same_matrix(cls, desc_id):
         object_ = models.BlakeObject.query\
             .filter(models.BlakeObject.desc_id == desc_id)\
-            .order_by(models.BlakeObject.bentley_id)\
             .first()
         return object_.objects_from_same_matrix
 
@@ -205,7 +201,6 @@ class BlakeDataService(object):
     def get_textually_referenced_materials(cls, desc_id):
         object_ = models.BlakeObject.query \
             .filter(models.BlakeObject.desc_id == desc_id) \
-            .order_by(models.BlakeObject.bentley_id) \
             .first()
         return {
             "objects": object_.textually_referenced_objects,
@@ -227,10 +222,9 @@ class BlakeDataService(object):
 
     @classmethod
     def get_objects_for_copy(cls, bad_id):
-        # .order_by(models.BlakeCopy.print_date, models.BlakeCopy.composition_date,
-        #          models.BlakeObject.object_group, models.BlakeObject.object_number)\
         return models.BlakeObject.query\
             .join(models.BlakeCopy).order_by(models.BlakeObject.object_number)\
+            .order_by(models.BlakeObject.copy_print_date_value, models.BlakeObject.copy_composition_date_value, models.BlakeObject.object_number)\
             .filter(models.BlakeCopy.bad_id == bad_id).all()
 
     @classmethod
@@ -250,7 +244,7 @@ class BlakeDataService(object):
         return models.BlakeCopy.query\
             .join(models.BlakeWork)\
             .filter(models.BlakeWork.bad_id == bad_id)\
-            .order_by(models.BlakeCopy.print_date_string).all()
+            .order_by(models.BlakeCopy.print_date_value, models.BlakeCopy.composition_date_value).all()
 
     @classmethod
     def get_featured_works(cls, count=25):
