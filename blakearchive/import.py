@@ -259,12 +259,12 @@ class BlakeDocumentImporter(object):
             return cd.xpath("string()").encode("utf-8")
 
     def get_printdate_string(self, document):
-            for cd in document.xpath("//compdate"):
-                return cd.xpath("string()").encode("utf-8")
+            for pd in document.xpath("//printdate"):
+                return pd.xpath("string()").encode("utf-8")
 
     def get_compdate_value(self, document):
-            for pd in document.xpath("//printdate"):
-                return pd.attrib["value"]
+            for cd in document.xpath("//compdate"):
+                return cd.attrib["value"]
 
     def get_printdate_value(self, document):
         for pd in document.xpath("//printdate"):
@@ -348,8 +348,10 @@ class BlakeDocumentImporter(object):
             obj.copy_title = obj.copy.title
             obj.archive_copy_id = obj.copy.archive_copy_id
             obj.copy_institution = obj.copy.institution
+            obj.copy_composition_date_string = obj.copy.composition_date_string
             obj.copy_composition_date_value = obj.copy.composition_date_value
             obj.copy_composition_date = obj.copy.composition_date
+            obj.copy_print_date_string = obj.copy.print_date_string
             obj.copy_print_date_value = obj.copy.print_date_value
             obj.copy_print_date = obj.copy.print_date
             obj.copy_bad_id = obj.copy.bad_id
