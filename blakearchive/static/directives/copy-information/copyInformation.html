@@ -82,6 +82,7 @@
                 <span ng-bind-html="info.getSource().repository.addressline[1]['#text'] | highlight:info.highlight"></span><br>
                 <span ng-bind-html="info.getSource().repository.addressline[2]['#text'] | highlight:info.highlight"></span>
             </dd>
+
             <dt> {{ info.getSource().repository.addressline[3]['#text'].split(': ')[0] }}</dt>
             <dd ng-bind-html="info.getSource().repository.addressline[3]['#text'].split(': ')[1] | highlight:info.highlight"></dd>
 
@@ -94,12 +95,19 @@
             <dt> {{ info.getSource().repository.addressline[6]['#text'].split(': ')[0] }}</dt>
             <dd ng-bind-html="info.getSource().repository.addressline[6]['#text'].split(': ')[1] | highlight:info.highlight"></dd>
 
-            <dt>Department</dt>
-            <dd ng-bind-html="info.getSource().repository.department['#text'] | highlight:info.highlight"></dd>
-            <dt>Collection</dt>
-            <dd ng-bind-html="info.getSource().repository.collection['#text'] | highlight:info.highlight"></dd>
-            <dt>{{ info.getSource().repository.repositoryid['@label'] }}</dt>
-            <dd ng-bind-html="info.getSource().repository.repositoryid['#text'] | highlight:info.highlight"></dd>
+            <div ng-if="info.getSource().repository.department['#text']">
+                <dt>Department</dt>
+                <dd ng-bind-html="info.getSource().repository.department['#text'] | highlight:info.highlight"></dd>
+            </div>
+            <div ng-if="info.getSource().repository.collection['#text']">
+                <dt>Collection</dt>
+                <dd ng-bind-html="info.getSource().repository.collection['#text'] | highlight:info.highlight"></dd>
+            </div>
+            <div ng-if="info.getSource().repository.repositoryid['@label']">
+                <dt>{{ info.getSource().repository.repositoryid['@label'] }}</dt>
+                <dd ng-bind-html="info.getSource().repository.repositoryid['#text'] | highlight:info.highlight"></dd>
+            </div>
+
         </dl>
     </div>
 </div>
