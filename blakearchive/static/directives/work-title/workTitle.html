@@ -34,13 +34,16 @@
 		<span ng-if="workTitle.bds.copy.bad_id == 'letters'">
 			<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
 		</span>
-		<span ng-if="workTitle.bds.copy.bad_id != 'letters'">
-			<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
+		<span ng-if="workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.copy.source.objinfo.printdate['#text']">
+			<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} ({{workTitle.bds.copy.source.objinfo.printdate['#text']}})
 		</span>
+    <span ng-if="workTitle.bds.copy.bad_id != 'letters' && !workTitle.bds.copy.source.objinfo.printdate['#text']">
+      <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
+    </span>
 	</span>
 
 	<span ng-if="showWorkTitle != 'work' && showWorkTitle == 'static' && $root.view.mode == 'compare'" class="worktitle" style="padding: 19px;">
-		<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} (Selected)
+		<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} ({{workTitle.bds.copy.source.objinfo.printdate['#text']}}) (Selected)
 	</span>
 
 </div>
