@@ -90,10 +90,8 @@
             <dd ng-bind-html="info.getSource().repository.addressline[5]['#text'].split(': ')[1] | highlight:info.highlight"></dd>
             <dt>URL</dt>
             <dd ng-bind-html="info.getSource().repository.addressline[6]['#text'].split(': ')[1] | highlight:info.highlight"></dd>
-            <dt>Department</dt>
-            <dd ng-bind-html="info.getSource().repository.department['#text'] | highlight:info.highlight"></dd>
-            <dt>Collection</dt>
-            <dd ng-bind-html="info.getSource().repository.collection['#text'] | highlight:info.highlight"></dd>
+            <copy-info-dl dt="Department" highlight="info.highlight" info-object="info.getSource().repository.department"></copy-info-dl>
+            <copy-info-dl dt="Collection" highlight="info.highlight" info-object="info.getSource().repository.collection"></copy-info-dl>
             <dt>{{ info.getSource().repository.repositoryid['@label'] }}</dt>
             <dd ng-bind-html="info.getSource().repository.repositoryid['#text'] | highlight:info.highlight"></dd>
         </dl>
