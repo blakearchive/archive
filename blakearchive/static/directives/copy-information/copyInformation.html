@@ -13,7 +13,7 @@
                 <dt>Origination:</dt>
                 <dd><span ng-bind-html="origination['#text'] | highlight:info.highlight"></span>: <span ng-bind-html="info.getOriginationRole(origination.role) | highlight:info.highlight"></span></dd>
                 <div ng-if="origination.note" class="indent-dl">
-                    <dt>Note:</dt>
+                    <dt><li></li></dt>
                     <dd ng-bind-html="origination.note['#text'] | highlight:info.highlight"></dd>
                 </div>
             </div>
@@ -21,28 +21,28 @@
             <dt>Publisher:</dt>
             <dd ng-bind-html="info.getSource().objdescid.imprint.publisher['#text'] | highlight:info.highlight"></dd>
             <div ng-if="info.getSource().objdescid.imprint.publisher.note" class="indent-dl">
-                <dt>Note:</dt>
+                <dt><li></li></dt>
                 <dd ng-bind-html="info.getSource().objdescid.imprint.publisher.note['#text'] | highlight:info.highlight"></dd>
             </div>
 
             <dt>Place of Publication:</dt>
             <dd ng-bind-html="info.getSource().objdescid.imprint.pubplace['#text'] | highlight:info.highlight"></dd>
             <div ng-if="info.getSource().objdescid.imprint.pubplace.note" class="indent-dl">
-                <dt>Note:</dt>
+                <dt><li></li></dt>
                 <dd ng-bind-html="info.getSource().objdescid.imprint.pubplace.note['#text'] | highlight:info.highlight"></dd>
             </div>
 
             <dt>Date:</dt>
             <dd ng-bind-html="info.getSource().objdescid.imprint.date['#text'] | highlight:info.highlight"></dd>
             <div ng-if="info.getSource().objdescid.imprint.date.note" class="indent-dl">
-                <dt>Note:</dt>
+                <dt><li></li></dt>
                 <dd ng-bind-html="info.getSource().objdescid.imprint.date.note['#text'] | highlight:info.highlight"></dd>
             </div>
 
             <dt>Composition Date:</dt>
             <dd ng-bind-html="info.getSource().objdescid.compdate['#text'] | highlight:info.highlight"></dd>
             <div ng-if="info.getSource().objdescid.compdate.note" class="indent-dl">
-                <dt>Note:</dt>
+                <dt><li></li></dt>
                 <dd ng-bind-html="info.getSource().objdescid.compdate.note['#text'] | highlight:info.highlight"></dd>
             </div>
 
@@ -57,7 +57,7 @@
             <dt>Object Order:</dt>
             <dd ng-bind-html="info.getSource().objinfo.objorder['#text'] | highlight:info.highlight"></dd>
             <div ng-if="info.getSource().objinfo.objorder.note" class="indent-dl">
-                <dt>Note:</dt>
+                <dt><li></li></dt>
                 <dd ng-bind-html="info.getSource().objinfo.objorder.note['#text'] | highlight:info.highlight"></dd>
             </div>
 
@@ -67,7 +67,7 @@
             <dt>Number of Leaves:</dt>
             <dd ng-bind-html="info.getSource().objinfo.numberleaves['#text'] | highlight:info.highlight"></dd>
             <div ng-if="info.getSource().objinfo.numberleaves.note" class="indent-dl">
-                <dt>Note:</dt>
+                <dt><li></li></dt>
                 <dd ng-bind-html="info.getSource().objinfo.numberleaves.note['#text'] | highlight:info.highlight"></dd>
             </div>
 
@@ -77,21 +77,21 @@
             <dt>Medium:</dt>
             <dd ng-bind-html="info.getSource().objinfo.medium['#text'] | highlight:info.highlight"></dd>
             <div ng-if="info.getSource().objinfo.medium.note" class="indent-dl">
-                <dt>Note:</dt>
+                <dt><li></li></dt>
                 <dd ng-bind-html="info.getSource().objinfo.medium.note['#text'] | highlight:info.highlight"></dd>
             </div>
 
             <dt>Printing Style:</dt>
             <dd ng-bind-html="info.getSource().objinfo.printingstyle['#text'] | highlight:info.highlight"></dd>
             <div ng-if="info.getSource().objinfo.printingstyle.note" class="indent-dl">
-                <dt>Note:</dt>
+                <dt><li></li></dt>
                 <dd ng-bind-html="info.getSource().objinfo.printingstyle.note['#text'] | highlight:info.highlight"></dd>
             </div>
 
             <dt>Ink Color:</dt>
             <dd ng-bind-html="info.getSource().objinfo.inkcolor['#text'] | highlight:info.highlight"></dd>
             <div ng-if="info.getSource().objinfo.inkcolor.note" class="indent-dl">
-                <dt>Note:</dt>
+                <dt><li></li></dt>
                 <dd ng-bind-html="info.getSource().objinfo.inkcolor.note['#text'] | highlight:info.highlight"></dd>
             </div>
 
@@ -107,7 +107,7 @@
             <dt>Penned Numbers:</dt>
             <dd ng-bind-html="info.getSource().objinfo.pennednumbers['#text'] | highlight:info.highlight"></dd>
             <div ng-if="info.getSource().objinfo.pennednumbers.note" class="indent-dl">
-                <dt>Note:</dt>
+                <dt><li></li></dt>
                 <dd ng-bind-html="info.getSource().objinfo.pennednumbers.note['#text'] | highlight:info.highlight"></dd>
             </div>
 
@@ -117,14 +117,14 @@
             <dt>Binding:</dt>
             <dd ng-bind-html="info.getSource().objinfo.binding['#text'] | highlight:info.highlight"></dd>
             <div ng-if="info.getSource().objinfo.binding.note" class="indent-dl">
-                <dt>Note:</dt>
+                <dt><li></li></dt>
                 <dd ng-bind-html="info.getSource().objinfo.binding.note['#text'] | highlight:info.highlight"></dd>
             </div>
 
             <dt>Stab Holes:</dt>
             <dd ng-bind-html="info.getSource().objinfo.stabholes['#text'] | highlight:info.highlight"></dd>
             <div ng-if="info.getSource().objinfo.binding.note" class="indent-dl">
-                <dt>Note:</dt>
+                <dt><li></li></dt>
                 <dd ng-bind-html="info.getSource().objinfo.stabholes.note['#text'] | highlight:info.highlight"></dd>
             </div>
         </dl>
@@ -142,7 +142,7 @@
       <dt>Price:</dt>
       <dd ng-bind-html="info.getSource().provenance.price['#text'] | highlight:info.highlight"></dd>
       <div ng-if="info.getSource().provenance.note" class="indent-dl">
-        <dt>Note:</dt>
+        <dt><li></li></dt>
         <dd ng-bind-html="info.getSource().provenance.note['#text'] | highlight:info.highlight"></dd>
       </div>
     </dl>
