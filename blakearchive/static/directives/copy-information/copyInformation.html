@@ -82,14 +82,18 @@
                 <span ng-bind-html="info.getSource().repository.addressline[1]['#text'] | highlight:info.highlight"></span><br>
                 <span ng-bind-html="info.getSource().repository.addressline[2]['#text'] | highlight:info.highlight"></span>
             </dd>
-            <dt>Telephone:</dt>
+            <dt> {{ info.getSource().repository.addressline[3]['#text'].split(': ')[0] }}: </dt>
             <dd ng-bind-html="info.getSource().repository.addressline[3]['#text'].split(': ')[1] | highlight:info.highlight"></dd>
-            <dt>Fax:</dt>
+
+            <dt> {{ info.getSource().repository.addressline[4]['#text'].split(': ')[0] }}: </dt>
             <dd ng-bind-html="info.getSource().repository.addressline[4]['#text'].split(': ')[1] | highlight:info.highlight"></dd>
-            <dt>Email:</dt>
+
+            <dt> {{ info.getSource().repository.addressline[5]['#text'].split(': ')[0] }}: </dt>
             <dd ng-bind-html="info.getSource().repository.addressline[5]['#text'].split(': ')[1] | highlight:info.highlight"></dd>
-            <dt>URL:</dt>
+
+            <dt> {{ info.getSource().repository.addressline[6]['#text'].split(': ')[0] }}: </dt>
             <dd ng-bind-html="info.getSource().repository.addressline[6]['#text'].split(': ')[1] | highlight:info.highlight"></dd>
+
             <dt>Department:</dt>
             <dd ng-bind-html="info.getSource().repository.department['#text'] | highlight:info.highlight"></dd>
             <dt>Collection:</dt>
