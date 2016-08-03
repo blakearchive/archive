@@ -723,7 +723,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                             blakeData.workCopies = blakeData.numberVirtualWorkObjects(blakeData.workCopies);
                         }
 
-                        console.log(blakeData.workCopies);
                     });
                 }
             });
@@ -747,9 +746,14 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 blakeData.setSelectedWork(workId)
                 //blakeData.getWork(workId)
             ]).then(function (data) {
-                console.log(blakeData.work);
                 blakeData.copy = data[0];
                 blakeData.copyObjects = data[1];
+
+                console.log('selected Work');
+                console.log(blakeData.work);
+                console.log('selected Copy');
+                console.log(blakeData.copy);
+                console.log('selected Copy Objects');
                 console.log(blakeData.copyObjects);
 
                 //Programatically order objects if "copy" is a virtual group, then replace number in full object id
