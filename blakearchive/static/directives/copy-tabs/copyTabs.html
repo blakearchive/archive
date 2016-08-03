@@ -55,7 +55,7 @@
                             <handprint-block scroll-to-top ng-if="obj.title && tabs.bds.work.virtual"
                                              action="tabs.changeObject(obj)"
                                              image="{{ obj.dbi }}.100.jpg"
-                                             footer="{{obj.title}}<br>{{ obj.full_object_id }}">
+                                             footer="{{obj.title}}<br>{{ obj.full_object_id }}, {{obj.source.objdescid.compdate['#text']}}, {{obj.source.repository.institution['#text']}}">
                             </handprint-block>
                         </div>
                     </div>

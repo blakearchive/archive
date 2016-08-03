@@ -22,7 +22,7 @@
                     if(vm.bds.work.bad_id == 'letters'){
                         return 'Letter';
                     } else {
-                        return 'Work';
+                        return 'Object';
                     }
                 } else {
                     return 'Copy';
