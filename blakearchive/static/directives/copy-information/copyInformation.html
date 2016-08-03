@@ -34,9 +34,17 @@
 
             <dt>Date:</dt>
             <dd ng-bind-html="info.getSource().objdescid.imprint.date['#text'] | highlight:info.highlight"></dd>
+            <div ng-if="info.getSource().objdescid.imprint.date.note" class="indent-dl">
+                <dt>Note:</dt>
+                <dd ng-bind-html="info.getSource().objdescid.imprint.date.note['#text'] | highlight:info.highlight"></dd>
+            </div>
 
             <dt>Composition Date:</dt>
             <dd ng-bind-html="info.getSource().objdescid.compdate['#text'] | highlight:info.highlight"></dd>
+            <div ng-if="info.getSource().objdescid.compdate.note" class="indent-dl">
+                <dt>Note:</dt>
+                <dd ng-bind-html="info.getSource().objdescid.compdate.note['#text'] | highlight:info.highlight"></dd>
+            </div>
 
             <div ng-if="copy.print_date">
                 <dt>Print Date:</dt>
@@ -48,6 +56,10 @@
 
             <dt>Object Order:</dt>
             <dd ng-bind-html="info.getSource().objinfo.objorder['#text'] | highlight:info.highlight"></dd>
+            <div ng-if="info.getSource().objinfo.objorder.note" class="indent-dl">
+                <dt>Note:</dt>
+                <dd ng-bind-html="info.getSource().objinfo.objorder.note['#text'] | highlight:info.highlight"></dd>
+            </div>
 
             <dt>Object Size:</dt>
             <dd ng-bind-html="info.getSource().objinfo.objsize['#text'] | highlight:info.highlight"></dd>
@@ -94,6 +106,10 @@
 
             <dt>Penned Numbers:</dt>
             <dd ng-bind-html="info.getSource().objinfo.pennednumbers['#text'] | highlight:info.highlight"></dd>
+            <div ng-if="info.getSource().objinfo.pennednumbers.note" class="indent-dl">
+                <dt>Note:</dt>
+                <dd ng-bind-html="info.getSource().objinfo.pennednumbers.note['#text'] | highlight:info.highlight"></dd>
+            </div>
 
             <dt>Frame Lines:</dt>
             <dd ng-bind-html="info.getSource().objinfo.framelines['#text'] | highlight:info.highlight"></dd>
