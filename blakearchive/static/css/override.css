@@ -43,16 +43,6 @@ td.c2 {
     text-align: center;
     margin-top: 30px;
 }
-/*
-.overlay a {
-    padding: 8px;
-    text-decoration: none;
-    font-size: 36px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-*/
 
 .overlay .handprint-block .description {
     color: white;
@@ -96,12 +86,6 @@ td.c2 {
   float: right;
   margin-right: 8px;
 }
-
-/*button:active, button.active {
-    background-color: yellow;
-    padding-bottom: 0px;
-    border: none;
-}*/
 
 @media (min-width: 992px) {
   #archive #object-view {
@@ -199,6 +183,12 @@ footer ul.nav.nav-pills {
   }
 }
 
+/*
+ * Copy Information
+ */
+.indent-dl{
+    margin-left: 20px;
+}
 /*
  * OVP tabs
  */
