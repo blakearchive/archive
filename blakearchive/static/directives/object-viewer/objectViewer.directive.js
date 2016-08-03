@@ -58,6 +58,7 @@
             }
 
             var currObject = vm.bds.object;
+
             if(currObject.supplemental){
                 list.forEach(function(object){
                     if(currObject.object_group == object.object_group){
@@ -69,11 +70,10 @@
             if(list){
                 for (var i = list.length; i--;) {
                     if (list[i].object_id == currObject.object_id) {
-                        // Extra code here to make the list circular
-                        if (i - 1 < 0) {
-                            return list[list.length - 1];
-                        } else {
+                        if (list[i - 1]) {
                             return list[i - 1];
+                        } else {
+                            return false;
                         }
                     }
                 }
@@ -111,11 +111,10 @@
             if(list && currObject){
                 for (var i = list.length; i--;) {
                     if (list[i].object_id == currObject.object_id) {
-                        // Extra code here to make the list circular
-                        if (i + 1 >= list.length) {
-                            return list[0];
-                        } else {
+                        if(list[i + 1]){
                             return list[i + 1];
+                        } else {
+                            return false;
                         }
                     }
                 }
