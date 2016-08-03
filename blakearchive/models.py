@@ -67,8 +67,10 @@ class BlakeObject(db.Model):
     copy_institution = db.Column(db.Text)
     copy_composition_date = db.Column(db.Integer)
     copy_composition_date_value = db.Column(db.UnicodeText)
+    copy_composition_date_string = db.Column(db.UnicodeText)
     copy_print_date = db.Column(db.Integer)
     copy_print_date_value = db.Column(db.UnicodeText)
+    copy_print_date_string = db.Column(db.UnicodeText)
     copy_bad_id = db.Column(db.Text)
     illustration_description = db.Column(JSON)
     components = db.Column(JSON)
@@ -129,8 +131,10 @@ class BlakeObject(db.Model):
             "archive_copy_id": self.archive_copy_id,
             "copy_institution": self.copy_institution,
             "copy_composition_date": self.copy_composition_date,
+            "copy_composition_date_string": self.copy_composition_date_string,
             "copy_composition_date_value": self.copy_composition_date_value,
             "copy_print_date": self.copy_print_date,
+            "copy_print_date_string": self.copy_print_date_string,
             "copy_print_date_value": self.copy_print_date_value,
             "copy_bad_id": self.copy_bad_id,
             "full_object_id": self.full_object_id,
