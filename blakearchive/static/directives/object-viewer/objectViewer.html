@@ -18,7 +18,7 @@
                 <p class="object-subtitle">
                     <span ng-if="viewer.bds.work.virtual"><span>{{ viewer.bds.object.title }}, </span><span class="object-no">{{ viewer.bds.object.full_object_id }}, {{viewer.bds.object.source.objdescid.compdate['#text']}}, {{viewer.bds.object.source.repository.institution['#text']}}, </span></span>
                     <span class="object-no" ng-if="!viewer.bds.work.virtual && !viewer.bds.object.title">{{ viewer.bds.object.full_object_id }}, {{viewer.bds.copy.source.objinfo.printdate['#text']}}, {{viewer.bds.object.copy_institution}}, </span>
-                    <span class="object-no" ng-if="!viewer.bds.work.virtual && viewer.bds.object.title">{{viewer.bds.object.title}}, {{ viewer.bds.object.full_object_id }}, {{viewer.bds.copy.source.objinfo.printdate['#text']}}, {{viewer.bds.object.copy_institution}}, </span>
+                    <span class="object-no" ng-if="!viewer.bds.work.virtual && viewer.bds.object.title">{{viewer.bds.object.title}}, {{ viewer.bds.object.full_object_id }}, </span>
                     <span>{{ viewer.bds.object.physical_description.objsize['#text'] }} </span>
                     <a style="color:#168bc1" ng-click="viewer.userestrictOpen(viewer.bds.copy)">&#169;</a>
                 </p>
