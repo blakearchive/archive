@@ -174,11 +174,11 @@ class BlakeDocumentImporter(object):
 
     def get_object_title(self, obj):
         for title in obj.xpath("objtitle/title"):
-            return titlecase.titlecase(title.xpath("string()").encode("utf-8"))
+            return titlecase.titlecase(title.xpath("string()").rstrip().encode("utf-8"))
         else:
             for objnumber in obj.xpath(".//objnumber"):
                 if objnumber.attrib.get("code") == "A1":
-                    return titlecase.titlecase(objnumber.xpath("string()").encode("utf-8"))
+                    return titlecase.titlecase(objnumber.xpath("string()").rstrip().encode("utf-8"))
 
     def element_to_dict(self, obj):
             element_xml = etree.tostring(obj, encoding='utf8', method='xml')
@@ -256,11 +256,11 @@ class BlakeDocumentImporter(object):
 
     def get_compdate_string(self, document):
         for cd in document.xpath("//compdate"):
-            return cd.xpath("string()").encode("utf-8")
+            return str(cd.xpath("text()")).strip("'[]'").rstrip().encode("utf-8")
 
     def get_printdate_string(self, document):
             for pd in document.xpath("//printdate"):
-                return pd.xpath("string()").encode("utf-8")
+                return str(pd.xpath("text()")).strip("'[]'").rstrip().encode("utf-8")
 
     def get_compdate_value(self, document):
             for cd in document.xpath("//compdate"):
@@ -288,7 +288,7 @@ class BlakeDocumentImporter(object):
     def get_copy_title(self, document):
         for title in document.xpath("header/filedesc/titlestmt/title"):
             title_text = title.xpath("string()")
-            return re.match(r"(?:(.*):|(.*))", title_text, flags=re.DOTALL).group(1).encode("utf-8")
+            return re.match(r"(?:(.*):|(.*))", title_text, flags=re.DOTALL).group(1).rstrip().encode("utf-8")
 
     def get_copy_institution(self, document):
         for institution in document.xpath("//institution"):
