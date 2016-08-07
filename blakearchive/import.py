@@ -300,7 +300,7 @@ class BlakeDocumentImporter(object):
         else:
             root = etree.fromstring(document).getroot()
         if not root.tag == "bad":
-            raise ValueError("Document is not a blake archive xml document")
+            raise ValueError(document + " is not a blake archive xml document")
         return root
 
     def process(self, document):
