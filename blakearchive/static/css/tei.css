@@ -153,3 +153,6 @@
 #colorKeyTable tbody tr th{
     margin-top: 10px;
 }
+.tei-hi-italic{
+    font-style:italic;
+}

@@ -3,7 +3,7 @@
    	<a style="text-decoration: none" href="" class="closebtn" ng-click="$root.showOverlay = false">&times;</a>
    	<header class="page-header">
    		<p class="subhead">{{ workTitle.bds.work.medium_pretty }}</p>
-   		<h1 style="color:maroon">{{ workTitle.bds.work.title }} ({{ workTitle.bds.work.composition_date_string }})</h1>
+   		<h1 style="color:maroon">{{ workTitle.bds.work.title }} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>
    	</header>
 
    	<article class="categories">
@@ -27,20 +27,20 @@
         <a scroll-to-top href="" style="color:white;">{{ workTitle.getStaticPageTitle() }}</a>
     </span>
 	<span ng-if="showWorkTitle == 'work'" class="worktitle" style="padding: 19px;">
-        <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a>
+        <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }} (Composed {{workTitle.bds.work.composition_date_string}})</a>
     </span>
 
 	<span ng-if="showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
 		<span ng-if="workTitle.bds.copy.bad_id == 'letters'">
-			<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Letters</a>: {{ workTitle.getTitle() }}
+			<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Letters (Composed {{workTitle.bds.work.composition_date_string}})</a>: {{ workTitle.getTitle() }}
 		</span>
 		<span ng-if="workTitle.bds.copy.bad_id != 'letters'">
-			<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}}
+			<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} ({{workTitle.getCompOrPrintDateString()}})
 		</span>
 	</span>
 
 	<span ng-if="showWorkTitle != 'work' && showWorkTitle == 'static' && $root.view.mode == 'compare'" class="worktitle" style="padding: 19px;">
-		<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} (Selected)
+		<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} ({{workTitle.getCompOrPrintDateString()}}) (Selected)
 	</span>
 
 </div>
