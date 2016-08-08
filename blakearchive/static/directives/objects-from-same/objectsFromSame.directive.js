@@ -12,6 +12,7 @@
         vm.cof = CompareObjectsFactory;
         vm.compareText = "Select All Objects";
         vm.selectedAll = false;
+        console.log(vm.bds)
 
         vm.selectAll = function () {
             vm.cof.checkCompareType(vm.type);
