@@ -254,9 +254,11 @@ class BlakeCopyImporter(BlakeImporter):
             obj.archive_copy_id = copy.archive_copy_id
             obj.copy_institution = copy.institution
             obj.copy_composition_date = copy.composition_date
+            obj.copy_composition_date_string = copy.composition_date_string
             obj.copy_composition_date_value = copy.composition_date_value
             obj.copy_print_date = copy.print_date
             obj.copy_print_date_value = copy.print_date_value
+            obj.copy_print_date_string = copy.print_date_string
             obj.copy_bad_id = copy.bad_id
 
     @staticmethod
