@@ -359,11 +359,11 @@ class BlakeObjectImporter(BlakeImporter):
     @staticmethod
     def get_object_title(obj):
         for title in obj.xpath("objtitle/title"):
-            return titlecase.titlecase(title.xpath("string()").encode("utf-8"))
+            return titlecase.titlecase(title.xpath("string()").rstrip().encode("utf-8"))
         else:
             for objnumber in obj.xpath(".//objnumber"):
                 if objnumber.attrib.get("code") == "A1":
-                    return titlecase.titlecase(objnumber.xpath("string()").encode("utf-8"))
+                    return titlecase.titlecase(objnumber.xpath("string()").rstrip().encode("utf-8"))
 
     @classmethod
     def get_text(cls, obj):
@@ -419,7 +419,6 @@ class BlakeObjectImporter(BlakeImporter):
     @staticmethod
     def is_supplemental(obj):
         return obj.getparent().tag == "supplemental"
-
 
 def main():
     parser = argparse.ArgumentParser()
