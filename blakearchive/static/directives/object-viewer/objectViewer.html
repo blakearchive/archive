@@ -16,7 +16,8 @@
                     </div>
                 </div>
                 <p class="object-subtitle">
-                    <span ng-if="viewer.bds.work.virtual"><span>{{ viewer.bds.object.title }}, </span><span class="object-no">{{ viewer.bds.object.full_object_id }}, {{viewer.bds.object.source.objdescid.compdate['#text']}}, {{viewer.bds.object.source.repository.institution['#text']}}, </span></span>
+                    <span ng-if="viewer.bds.work.virtual && viewer.bds.copy.bad_id != 'letters'"><span>{{ viewer.bds.object.title }}, </span><span class="object-no">{{ viewer.bds.object.full_object_id }}, {{viewer.bds.object.source.objdescid.compdate['#text']}}, {{viewer.bds.object.source.repository.institution['#text']}}, </span></span>
+                    <span ng-if="viewer.bds.work.virtual && viewer.bds.copy.bad_id == 'letters'"><span>{{ viewer.bds.object.title }}, </span><span class="object-no">{{ viewer.bds.object.full_object_id }}, </span></span>
                     <span class="object-no" ng-if="!viewer.bds.work.virtual && !viewer.bds.object.title">{{ viewer.bds.object.full_object_id }}, </span>
                     <span class="object-no" ng-if="!viewer.bds.work.virtual && viewer.bds.object.title">{{viewer.bds.object.title}}, {{ viewer.bds.object.full_object_id }}, </span>
                     <span>{{ viewer.bds.object.physical_description.objsize['#text'] }} </span>
