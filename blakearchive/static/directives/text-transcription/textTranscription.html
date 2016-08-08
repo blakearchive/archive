@@ -3,8 +3,8 @@
         <span ng-repeat="i in textCtrl.getNumber(line.indent) track by $index">&nbsp;</span>{{ line.text }}
     </li>
 </ol>-->
-<div class="tei-wrapper" ng-bind-html="textCtrl.object.markup_text | highlight:textCtrl.highlight:textCtrl.object.alt_spellings"></div>
-
+<div ng-if="textCtrl.object.markup_text != null" class="tei-wrapper" ng-bind-html="textCtrl.object.markup_text | highlight:textCtrl.highlight:textCtrl.object.alt_spellings"></div>
+<div ng-if="textCtrl.object.markup_text == null" class="tei-wrapper">[There is no transcription for this object.]</div>
 <!--<p><a href="#">[ n ]</a></p>-->
 
 <p ng-if="textCtrl.hasColorKeyMarkup(textCtrl.object.markup_text)"><a href="#" ng-click="textCtrl.colorKeyOpen('lg')">Color key for transcriptions</a></p>
