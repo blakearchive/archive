@@ -938,12 +938,18 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
         cof.main = {};
         cof.comparisonType = '';
+        cof.comparisonObjects = [];
 
         cof.setMainObject = function(obj){
             cof.main = obj;
             if(!cof.isComparisonObject(obj)){
                 cof.comparisonObjects.unshift(obj);
             }
+        };
+
+        cof.resetComparisonObjects = function(){
+            cof.main = {};
+            cof.clearComparisonObjects();
         };
 
         cof.isMain = function(obj){

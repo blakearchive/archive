@@ -45,7 +45,6 @@
             if(vm.bds.work.probable == "printing")
                 return "Printed " + vm.bds.copy.print_date_string;
             else 
-                console.log(vm.bds)
                 return "Composed " + vm.bds.work.composition_date_string;
         }
 
