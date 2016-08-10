@@ -539,6 +539,24 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             }
         };
 
+        blakeData.getSupplementalObjects = function (descId) {
+            var url = directoryPrefix + '/api/object/' + descId + '/supplemental_objects';
+
+            $log.info('getting supplemental objects');
+
+            return $http.get(url)
+                .then(getSupplementalObjectsComplete)
+                .catch(getSupplementalObjectsFailed);
+
+            function getSupplementalObjectsComplete(response){
+                return BlakeObject.create(response.data.results);
+            }
+
+            function getSupplementalObjectsFailed(error){
+                $log.error('XHR Failed for getSupplementalObjects.\n' + angular.toJson(error.data, true));
+            }
+        };
+
         blakeData.getTextuallyReferencedMaterial = function (descId) {
             var url = directoryPrefix + '/api/object/' + descId + '/objects_from_same_production_sequence';
 
