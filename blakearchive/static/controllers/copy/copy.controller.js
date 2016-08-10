@@ -24,7 +24,7 @@
         }
 
         BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.descId).then(function(){
-            vm.cof.clearComparisonObjects();
+            vm.cof.resetComparisonObjects();
             $rootScope.view.mode = 'object';
             $rootScope.view.scope = 'image';
         })
