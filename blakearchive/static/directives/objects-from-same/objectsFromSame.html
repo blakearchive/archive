@@ -1,6 +1,6 @@
 <div class="row">
-    <p class="text-center"><em>Dates are the probable dates of {{ fromSame.bds.work.probable }}.</em></p>
-    <br>
+    <!--<p class="text-center"><em>Dates are the probable dates of {{ fromSame.bds.work.probable }}.</em></p>
+    <br>-->
     <div class="col-sm-12 action-items">
         <div class="action-items-wrapper matrix">
             <ul class="list-unstyled list-inline">
@@ -17,35 +17,35 @@
             <handprint-block ng-if="obj.title && obj.copy_print_date_string"
                     link="/blake/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
                     image="{{ obj.dbi }}.100.jpg"
-                    footer="<b>{{obj.copy_title}}, {{obj.copy_print_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}"
+                    footer="<b>{{obj.copy_title}}, Printed {{obj.copy_print_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}"
                     
                 >
             </handprint-block>
             <handprint-block ng-if="obj.title && !obj.copy_print_date_string && !obj.source.repository.institution['#text']"
                     link="/blake/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
                     image="{{ obj.dbi }}.100.jpg"
-                    footer="<b>{{obj.copy_title}}, {{obj.copy_composition_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}"
+                    footer="<b>{{obj.copy_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}"
                     
                 >
             </handprint-block>
             <handprint-block ng-if="obj.title && !obj.copy_print_date_string && obj.source.repository.institution['#text']"
                     link="/blake/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
                     image="{{ obj.dbi }}.100.jpg"
-                    footer="<b>{{obj.copy_title}}, {{obj.copy_composition_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}"
+                    footer="<b>{{obj.copy_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}"
                     
                 >
             </handprint-block>
             <handprint-block ng-if="!obj.title && obj.copy_print_date_string"
                     link="/blake/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
                     image="{{ obj.dbi }}.100.jpg"
-                    footer="<b>{{obj.copy_title}}, {{obj.copy_print_date_string}}</b><br>{{obj.full_object_id}}"
+                    footer="<b>{{obj.copy_title}}, Printed {{obj.copy_print_date_string}}</b><br>{{obj.full_object_id}}"
                     
                 >
             </handprint-block>
              <handprint-block ng-if="!obj.title && !obj.copy_print_date_string"
                     link="/blake/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
                     image="{{ obj.dbi }}.100.jpg"
-                    footer="<b>{{obj.copy_title}}, {{obj.copy_composition_date_string}}</b><br>{{obj.full_object_id}}"
+                    footer="<b>{{obj.copy_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.full_object_id}}"
                     
                 >
             </handprint-block>

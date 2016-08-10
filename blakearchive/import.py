@@ -176,7 +176,7 @@ class BlakeDocumentImporter(BlakeImporter):
             obj.header = old_copy.header
             obj.source = old_copy.source
             obj.object_number = i
-            obj.full_object_id = re.sub(r"\s*Object 1\s*", "", obj.full_object_id, flags=re.IGNORECASE)
+            obj.full_object_id = re.sub(r"\s*Object 1\s*", "", obj.full_object_id, flags=re.IGNORECASE).rstrip()
             obj.copy = copy
             obj.object_group = old_copy.title
             old_copy.effective_copy_id = copy.bad_id
@@ -303,7 +303,7 @@ class BlakeCopyImporter(BlakeImporter):
     def get_copy_title(document):
         for title in document.xpath("header/filedesc/titlestmt/title"):
             title_text = title.xpath("string()")
-            return re.match(r"(?:(.*):|(.*))", title_text, flags=re.DOTALL).group(1).encode("utf-8")
+            return re.match(r"(?:(.*):|(.*))", title_text, flags=re.DOTALL).group(1).rstrip().encode("utf-8")
 
     @staticmethod
     def get_copy_institution(document):
