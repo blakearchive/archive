@@ -1,4 +1,6 @@
 from flask.ext.sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.sql import case
 from sqlalchemy.dialects.postgresql import JSON
 
 
@@ -82,17 +84,17 @@ class BlakeObject(db.Model):
     source = db.Column(JSON)
     notes = db.Column(JSON)
     object_group = db.Column(db.UnicodeText)
-    supplemental = db.Column(db.Boolean)
+    supplemental = db.Column(db.UnicodeText)
     objects_from_same_matrix = db.relationship(
         "BlakeObject",
-        order_by="(asc(BlakeObject.copy_print_date_value), asc(BlakeObject.copy_composition_date_value), asc(BlakeObject.object_number))",
+        order_by="BlakeObject.ordering_date",
         secondary=matrix__object,
         primaryjoin=object_id == matrix__object.c.object_id,
         secondaryjoin=object_id == matrix__object.c.related_object_id,
         remote_side=matrix__object.c.related_object_id)
     objects_from_same_production_sequence = db.relationship(
         "BlakeObject",
-        order_by="(asc(BlakeObject.copy_print_date_value), asc(BlakeObject.copy_composition_date_value), asc(BlakeObject.object_number))",
+        order_by="BlakeObject.ordering_date",
         secondary=production_sequence__object,
         primaryjoin=object_id == production_sequence__object.c.object_id,
         secondaryjoin=object_id == production_sequence__object.c.related_object_id,
@@ -115,6 +117,16 @@ class BlakeObject(db.Model):
     textually_referenced_copies = db.relationship("BlakeCopy", secondary=textual_reference__copy)
     textually_referenced_works = db.relationship("BlakeWork", secondary=textual_reference__work)
 
+    @hybrid_property
+    def ordering_date(self):
+        return self.copy_print_date or self.copy_composition_date
+
+    @ordering_date.expression
+    def ordering_date(cls):
+        return case([
+            (cls.copy_print_date != None, cls.copy_print_date)
+        ], else_=cls.copy_composition_date)
+
     def __init__(self, *args, **kwargs):
         super(BlakeObject, self).__init__(*args, **kwargs)
 
@@ -136,6 +148,7 @@ class BlakeObject(db.Model):
             "copy_print_date": self.copy_print_date,
             "copy_print_date_string": self.copy_print_date_string,
             "copy_print_date_value": self.copy_print_date_value,
+            "ordering_date": self.ordering_date,
             "copy_bad_id": self.copy_bad_id,
             "full_object_id": self.full_object_id,
             "illustration_description": self.illustration_description,

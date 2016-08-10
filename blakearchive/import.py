@@ -94,6 +94,7 @@ class BlakeDocumentImporter(BlakeImporter):
             title = {"text": "".join(i.xpath("string()").encode("utf-8").strip() for i in rel.xpath("i"))}
         result = {"title": title, "info": "<br />".join(rt.encode("utf-8").strip() for rt in rel_text)}
         return result
+
     # endregion
 
     def import_bad_files(self, bad_files):
@@ -127,6 +128,7 @@ class BlakeDocumentImporter(BlakeImporter):
     def objects_for_id_string(self, id_string):
         ids = self.split_ids(id_string)
         return self.object_importer.get(ids)
+
     # endregion
 
     # region Work processing
@@ -196,6 +198,7 @@ class BlakeDocumentImporter(BlakeImporter):
     def header_to_html(self, source_tree):
         transformed_tree = self.transform(source_tree)
         return etree.tostring(transformed_tree)
+
     # endregion
 
     def populate_database(self):
@@ -354,7 +357,7 @@ class BlakeObjectImporter(BlakeImporter):
         obj.object_number = self.get_object_number(element)
         obj.bentley_id = self.get_bentley_id(element)
         obj.physical_description = self.get_physical_description(element)
-        obj.supplemental = self.is_supplemental(element)
+        obj.supplemental = self.supplemental_to(element)
         self.members[obj.desc_id] = obj
         return obj
 
@@ -419,8 +422,11 @@ class BlakeObjectImporter(BlakeImporter):
             return cls.element_to_dict(physdesc)["physdesc"]
 
     @staticmethod
-    def is_supplemental(obj):
-        return obj.getparent().tag == "supplemental"
+    def supplemental_to(obj):
+        parent = obj.getparent()
+        if parent.tag == "supplemental":
+            return parent.getparent().get("id")
+
 
 def main():
     parser = argparse.ArgumentParser()
