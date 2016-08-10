@@ -102,14 +102,14 @@ class BlakeObject(db.Model):
         )
     objects_with_same_motif = db.relationship(
         "BlakeObject",
-        order_by="(asc(BlakeObject.copy_print_date_value), asc(BlakeObject.copy_composition_date_value), asc(BlakeObject.object_number))",
+        order_by="BlakeObject.ordering_date",
         secondary=motif__object,
         primaryjoin=object_id == motif__object.c.object_id,
         secondaryjoin=object_id == motif__object.c.related_object_id,
         remote_side=motif__object.c.related_object_id)
     textually_referenced_objects = db.relationship(
         "BlakeObject",
-        order_by="(asc(BlakeObject.copy_print_date_value), asc(BlakeObject.copy_composition_date_value), asc(BlakeObject.object_number))",
+        order_by="BlakeObject.ordering_date",
         secondary=textual_reference__object,
         primaryjoin=object_id == textual_reference__object.c.object_id,
         secondaryjoin=object_id == textual_reference__object.c.related_object_id,
@@ -119,13 +119,13 @@ class BlakeObject(db.Model):
 
     @hybrid_property
     def ordering_date(self):
-        return self.copy_print_date or self.copy_composition_date
+        return self.copy_print_date_value or self.copy_composition_date_value
 
     @ordering_date.expression
     def ordering_date(cls):
         return case([
-            (cls.copy_print_date != None, cls.copy_print_date)
-        ], else_=cls.copy_composition_date)
+            (cls.copy_print_date_value != None, cls.copy_print_date_value)
+        ], else_=cls.copy_composition_date_value)
 
     def __init__(self, *args, **kwargs):
         super(BlakeObject, self).__init__(*args, **kwargs)
