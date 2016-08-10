@@ -43,7 +43,7 @@
                         </div>
 
                         <!-- for everything else -->
-                        <div ng-repeat="obj in tabs.bds.copyObjects | filter:{supplemental:false} track by $index" class="col-sm-6 col-md-3" ng-if="tabs.bds.copy.bad_id != 'letters'">
+                        <div ng-repeat="obj in tabs.bds.copyObjects | filter:{supplemental:null} track by $index" class="col-sm-6 col-md-3" ng-if="tabs.bds.copy.bad_id != 'letters'">
                             <span ng-if="tabs.bds.work.probable == 'printing'">
                                 <handprint-block scroll-to-top ng-if="!obj.title"
                                                  action="tabs.changeObject(obj)"
