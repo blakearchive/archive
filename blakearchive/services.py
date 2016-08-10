@@ -164,7 +164,8 @@ class BlakeDataService(object):
         query = models.BlakeObject.query \
             .order_by(models.BlakeObject.copy_print_date_value,
                       models.BlakeObject.copy_composition_date_value,
-                      models.BlakeObject.object_number)
+                      models.BlakeObject.object_number)\
+            .filter(models.BlakeObject.supplemental == None)
         return query
 
     @classmethod
@@ -244,3 +245,7 @@ class BlakeDataService(object):
     @classmethod
     def get_featured_works(cls, count=25):
         return models.BlakeFeaturedWork.query.order_by(func.random()).limit(count)
+
+    @classmethod
+    def get_supplemental_objects(cls, desc_id):
+        return models.BlakeObject.query.filter(models.BlakeObject.supplemental == desc_id).all()
