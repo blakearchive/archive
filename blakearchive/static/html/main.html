@@ -118,11 +118,15 @@
 
       <div class="col-sm-12 col-md-7 subscribe">
 
-        <form class="form-inline" role="form">
+        <form class="form-inline" role="form" action="http://lists.unc.edu/subscribe/subscribe.tml" method="POST">
           <div class="form-group">
             <div class="input-group">
               <label class="sr-only" for="inputEmail">Subscribe</label>
-              <input type="email" class="form-control" id="inputEmail" placeholder="Enter email address.">
+              <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Enter email address.">
+              <input type="hidden" name="list" value="blake-update">
+              <input type="hidden" name="confirm" value="one">
+              <input type="hidden" name="showconfirm" value="T">
+              <input type="hidden" name="url" value="http://www.blakearchive.org/">
             </div>
           </div>
           <button type="submit" class="btn btn-default">Subscribe</button><p style="color:rgba(255,0,0,0.37)"> to The William Blake Archive Newsletter.</p>
