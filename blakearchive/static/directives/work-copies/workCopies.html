@@ -31,7 +31,7 @@
 	</div>
 
 	<!-- For Virtual Groups, except letters -->
-	<div ng-repeat="obj in workCopies.bds.workCopies | filter:{supplemental:false}" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == true && workCopies.bds.work.bad_id != 'letters'">
+	<div ng-repeat="obj in workCopies.bds.workCopies | filter:{supplemental:null}" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == true && workCopies.bds.work.bad_id != 'letters'">
 		<handprint-block
 				link="/blake/copy/{{ workCopies.bds.work.bad_id }}?descId={{obj.desc_id}}"
 				image="{{ obj.dbi }}.100.jpg"
