@@ -18,7 +18,7 @@
 
 
             <!-- for everything else -->
-            <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:false}" ng-if="read.bds.copy.bad_id != 'letters'">
+            <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null}" ng-if="read.bds.copy.bad_id != 'letters'">
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768">
                     <img ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" ng-click="read.changeObject(o)">
                     <div class="reading-copy">
