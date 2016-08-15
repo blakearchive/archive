@@ -59,6 +59,7 @@ Virtualenv needs to be active for any python or cap scripts to work. To instanti
     * path to the local repo (e.g. ```path/to/blake/archive```)
 
 #### Final steps
+Needs to be cleaned up, provide specific instructions on symlinking solr
 In the repo directory ```archive/```:
 
 1. Seed the database and solr by running ```cap local setup:start```
