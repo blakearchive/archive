@@ -20,7 +20,7 @@
             <header class="page-header">
                 <button class="close-copies"><span class="glyphicon glyphicon-remove" ng-click="esr.selectedWork = -1" scroll-to-element offset="254"></span></button>
                 <h1>
-                    {{esr.resultTree[esr.selectedWork][0].title}}&nbsp;
+                    <a href="/blake/work/{{esr.resultTree[esr.selectedWork][0].bad_id}}">{{esr.resultTree[esr.selectedWork][0].title}}</a>&nbsp;
                     <span dropdown class="dropdown" ng-if="esr.resultTree[esr.selectedWork][2].length > 1 && esr.tree == 'object'">
                         <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">
                             <span>Copy {{esr.resultTree[esr.selectedWork][2][esr.selectedCopy][0].archive_copy_id}}</span>&nbsp;
