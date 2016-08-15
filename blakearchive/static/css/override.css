@@ -521,7 +521,7 @@ a.compare-selected-objects {
 .flex-wrap{
     padding: 0;
     margin: 0;
-    display: flex;
+    display: block;
     -webkit-flex-flow: wrap;
     flex-flow: wrap;
     justify-content: space-around;
@@ -937,7 +937,7 @@ a.compare-selected-objects {
 
 #search .handprint-block-small {
     text-align: center;
-    width: 75px;
+    width: 220px;
     margin: 0 auto;
 }
 
@@ -958,8 +958,8 @@ a.compare-selected-objects {
     background-size: cover;
     border: 2px solid #fff;
     display: block;
-    width: 64px;
-    height: 64px;
+    width: 220px;
+    height: 220px;
     margin: 0 auto 10px;
 }
 
@@ -1074,6 +1074,7 @@ a.compare-selected-objects {
 
     .copies-in-work,.objects-in-copy,.object-result-highlight{
         max-height: 89%;
+        overflow: auto;
         scrollbar-face-color: #666666;
         scrollbar-arrow-color: #666666;
         scrollbar-track-color: #0a0a0a;
