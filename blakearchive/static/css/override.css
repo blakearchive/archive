@@ -1073,7 +1073,7 @@ a.compare-selected-objects {
     }
 
     .copies-in-work,.objects-in-copy,.object-result-highlight{
-        max-height: 100%;
+        max-height: 89%;
         scrollbar-face-color: #666666;
         scrollbar-arrow-color: #666666;
         scrollbar-track-color: #0a0a0a;
