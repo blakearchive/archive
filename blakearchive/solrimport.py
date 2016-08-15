@@ -23,7 +23,7 @@ def main():
     objects = session.query(models.BlakeObject).all()
     blake_object_solr.delete(q='*:*')
     for blake_object in objects:
-        if blake_object.supplemental is False:
+        if blake_object.supplemental is None:
             obj = {
                 "id": blake_object.object_id,
                 "title": blake_object.title,
