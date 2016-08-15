@@ -821,6 +821,9 @@ a.compare-selected-objects {
     .search-result-item .description{
         min-height: 24px;
     }
+    .copy-container .object-img-container img {
+        max-height: 95%;
+    }
 }
 
 #search .search-result-row .scroller .glyphicon{
