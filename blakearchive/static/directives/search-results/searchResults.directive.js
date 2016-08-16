@@ -131,7 +131,6 @@
         vm.getHandprintDescription = function(workIndex){
             switch(vm.tree){
                 case 'work':
-                    console.log(vm.resultTree[workIndex][0]);
                     return '<strong>' + vm.resultTree[workIndex][0].title + '</strong>';
                 default:
                     var string = '<strong>'+vm.resultTree[workIndex][0].title+'</strong><br>',
@@ -153,7 +152,8 @@
             }
             switch(vm.tree){
                 case 'object':
-                    var copyBad = vm.resultTree[vm.selectedWork][2][vm.selectedCopy][0].bad_id,
+                    var work = vm.resultTree[vm.selectedWork][0],
+                        copyBad = work.virtual ? work.bad_id : vm.resultTree[vm.selectedWork][2][vm.selectedCopy][0].bad_id,
                         descId = vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].desc_id;
                     return copyBad+'?descId='+descId;
                 case 'copy':
