@@ -178,7 +178,8 @@ class BlakeDocumentImporter(BlakeImporter):
             obj.header = old_copy.header
             obj.source = old_copy.source
             obj.object_number = i
-            obj.full_object_id = re.sub(r"\s*Object 1\s*", "", obj.full_object_id, flags=re.IGNORECASE).rstrip()
+            # obj.full_object_id = re.sub(r"\s*Object 1\s*", "", obj.full_object_id, flags=re.IGNORECASE).rstrip()
+            obj.full_object_id = obj.full_object_id.rstrip()
             obj.copy = copy
             obj.object_group = old_copy.title
             old_copy.effective_copy_id = copy.bad_id
