@@ -1,4 +1,16 @@
-<h3 style="padding-left:15px">{{ esr.label }} ({{ esr.resultTree.length}} works)</h3>
+
+   
+    <span dropdown class="dropdown" ng-if="esr.resultTree.length > 1">
+        <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">
+            <span><h3 style="padding-left:15px">{{ esr.label }} ({{ esr.resultTree.length}} works)<span class="caret"></span></h3></span>&nbsp;
+        </button>
+            <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat="work in esr.resultTree track by $index">
+                        <a scroll-to-element="#{{esr.type}}" offset="125" ng-click="esr.showCopies($index);slideBox.scrollToResult($index);">{{work[0].title}}</a>
+                    </li>
+            </ul>
+    </span>
+
 
 <div class="row search-result-row" ng-show="esr.resultTree.length > 0">
     <div class="col-xs-12 full-width">
