@@ -131,6 +131,7 @@
         vm.getHandprintDescription = function(workIndex){
             switch(vm.tree){
                 case 'work':
+                    console.log(vm.resultTree[workIndex][0]);
                     return '<strong>' + vm.resultTree[workIndex][0].title + '</strong>';
                 default:
                     var string = '<strong>'+vm.resultTree[workIndex][0].title+'</strong><br>',
