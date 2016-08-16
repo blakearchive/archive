@@ -96,10 +96,14 @@
             }
         }
         
-        vm.showHighlight = function(objectIndex){
+        vm.showHighlight = function(objectIndex,virtualCopyIndex){
+
             vm.selectedObject = objectIndex;
             if(vm.tree == 'copy'){
                 vm.selectedCopy = objectIndex;
+            }
+            if(virtualCopyIndex){
+                vm.selectedCopy = virtualCopyIndex;
             }
         }
 
@@ -139,7 +143,7 @@
                         string += '('+vm.resultTree[workIndex][1] + ' results';
                         endstring = ')';
                     }
-                    if(vm.resultTree[workIndex][2].length > 1){
+                    if(vm.resultTree[workIndex][2].length > 1 && !vm.resultTree[workIndex][0].virtual){
                         string += ' in '+vm.resultTree[workIndex][2].length+ ' copies';
                     }
                     string += endstring;
