@@ -200,10 +200,6 @@
             }
             switch(vm.tree){
                 case 'object':
-                    if(vm.resultTree[vm.selectedWork][0].virtual == true) {
-                        return 'Object '+vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].object_number+' '+
-                            vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].full_object_id
-                    }
                     return vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].full_object_id
                 case 'copy':
                     return 'Copy '+vm.resultTree[vm.selectedWork][2][vm.selectedCopy][0].archive_copy_id;
