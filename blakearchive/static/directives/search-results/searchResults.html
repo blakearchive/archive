@@ -50,7 +50,7 @@
             <div class="flex-992" auto-height adjust="325" breakpoint="992">
 
                 <!-- objects in virtual work -->
-                <div class="objects-in-copy col-sm-12 text-center" auto-width adjust="200" breakpoint="992" divide="3" ng-if="esr.tree == 'object' && esr.resultTree[esr.selectedWork][0].virtual">
+                <div class="objects-in-copy col-sm-12 text-center" auto-width adjust="200" breakpoint="992" divide="3" ng-if="esr.resultTree[esr.selectedWork][1] > 1 && esr.tree == 'object' && esr.resultTree[esr.selectedWork][0].virtual">
                     <h5 style="">Matching Objects</h5>
                     <br>
                     <div class="flex-wrap">
@@ -61,7 +61,7 @@
                             >
                                 <a ng-click="esr.showHighlight($index,$parent.$index)">
                                     <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ object[0].dbi }}.100.jpg);"></span>
-                                    <span class="description text-capitalize">Object {{object[0].object_number}} {{object[0].full_object_id}}</span>
+                                    <span class="description text-capitalize">{{object[0].full_object_id}}</span>
                                 </a>
                             </div>
                         </div>
