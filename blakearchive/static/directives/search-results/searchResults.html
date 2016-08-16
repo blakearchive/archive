@@ -33,7 +33,7 @@
                 <button class="close-copies"><span class="glyphicon glyphicon-remove" ng-click="esr.selectedWork = -1" scroll-to-element offset="254"></span></button>
                 <h1>
                     <a href="/blake/work/{{esr.resultTree[esr.selectedWork][0].bad_id}}">{{esr.resultTree[esr.selectedWork][0].title}}</a>&nbsp;
-                    <span dropdown class="dropdown" ng-if="esr.resultTree[esr.selectedWork][2].length > 1 && esr.tree == 'object'">
+                    <span dropdown class="dropdown" ng-if="esr.resultTree[esr.selectedWork][2].length > 1 && esr.tree == 'object' && !esr.resultTree[esr.selectedWork][0].virtual">
                         <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">
                             <span>Copy {{esr.resultTree[esr.selectedWork][2][esr.selectedCopy][0].archive_copy_id}}</span>&nbsp;
                             <span>({{esr.resultTree[esr.selectedWork][2][esr.selectedCopy][1]}} Objects)</span>&nbsp;
@@ -49,8 +49,27 @@
             </header>
             <div class="flex-992" auto-height adjust="325" breakpoint="992">
 
+                <!-- objects in virtual work -->
+                <div class="objects-in-copy col-sm-12 text-center" auto-width adjust="200" breakpoint="992" divide="3" ng-if="esr.tree == 'object' && esr.resultTree[esr.selectedWork][0].virtual">
+                    <h5 style="">Matching Objects</h5>
+                    <br>
+                    <div class="flex-wrap">
+                        <div ng-repeat="copy in esr.resultTree[esr.selectedWork][2] track by $index">
+                            <div class="handprint-block-small"
+                                 ng-repeat="object in copy[2] track by $index"
+                                 ng-class="{selected: esr.selectedObject == $index && esr.selectedCopy == $parent.$index}"
+                            >
+                                <a ng-click="esr.showHighlight($index,$parent.$index)">
+                                    <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ object[0].dbi }}.100.jpg);"></span>
+                                    <span class="description text-capitalize">Object {{object[0].object_number}}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- objects in copy -->
-                <div class="objects-in-copy col-sm-12 text-center" auto-width adjust="200" breakpoint="992" divide="3" ng-if="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][1] > 1 && esr.tree == 'object'">
+                <div class="objects-in-copy col-sm-12 text-center" auto-width adjust="200" breakpoint="992" divide="3" ng-if="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][1] > 1 && esr.tree == 'object' && !esr.resultTree[esr.selectedWork][0].virtual">
                     <h5 style="">Matching Objects</h5>
                     <br>
                     <div class="flex-wrap">
