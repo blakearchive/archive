@@ -775,7 +775,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 console.log(blakeData.copyObjects);
 
                 //Programatically order objects if "copy" is a virtual group, then replace number in full object id
-                if (blakeData.work.virtual == true) {
+                if (blakeData.work.virtual == true && blakeData.work.bad_id != 'letters') {
                     blakeData.copyObjects = blakeData.numberVirtualWorkObjects(blakeData.copyObjects);
                 }
                 //deal with multi object groups
