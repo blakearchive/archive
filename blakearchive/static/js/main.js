@@ -793,6 +793,14 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                             })
                         }
                     })
+
+                    if(!blakeData.object.length){
+                        console.log('object not found in copy objects');
+                        blakeData.getObject(descId).then(function(data){
+                            blakeData.object = data;
+                        })
+                    }
+
                 } else {
                     blakeData.changeObject(blakeData.copyObjects[0]);
                 }
@@ -847,24 +855,32 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             object.matrix = {};
             object.sequence = {};
             object.motif = {};
+            object.supplemental_objects = {};
+
+            var desc_id_for_supp_query = object.supplemental ? object.supplemental : object.desc_id;
+
 
             return $q.all([
                 blakeData.getObjectsFromSameMatrix(object.desc_id),
                 blakeData.getObjectsFromSameProductionSequence(object.desc_id),
-                blakeData.getObjectsWithSameMotif(object.desc_id)
+                blakeData.getObjectsWithSameMotif(object.desc_id),
+                blakeData.getSupplementalObjects(desc_id_for_supp_query)
             ]).then(function (data) {
                 object.matrix = BlakeObject.create(data[0]);
                 object.sequence = BlakeObject.create(data[1]);
                 object.motif = BlakeObject.create(data[2]);
-
+                object.supplemental_objects = BlakeObject.create(data[3]);
             });
         }
 
         blakeData.changeObject = function(object){
-            console.log(object);
             return blakeData.setFromSameX(object).then(function(){
                 blakeData.object = object;
-                $location.search('descId',blakeData.object.desc_id);
+                console.log('object');
+                console.log(blakeData.object);
+                if(!object.supplemental){
+                    $location.search('descId',blakeData.object.desc_id);
+                }
             });
         }
 
@@ -873,21 +889,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 $location.path('/blake/copy/'+copyId,false);
                 $location.search('descId',descId);
             });
-        }
-
-        blakeData.hasSupplemental = function(){
-
-            var hasSupp = false;
-
-            if(blakeData.object.object_group){
-                blakeData.copyObjects.forEach(function(copyObject){
-                    if(copyObject.supplemental && copyObject.object_group == blakeData.object.object_group) {
-                        hasSupp = true;
-                    }
-                });
-            }
-
-            return hasSupp;
         }
 
         return blakeData;
