@@ -1,6 +1,6 @@
 
    
-    <span dropdown class="dropdown" ng-if="esr.resultTree.length > 1">
+    <span dropdown class="dropdown" ng-if="esr.resultTree.length > 0">
         <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">
             <span><h3 style="padding-left:15px">{{ esr.label }} ({{ esr.resultTree.length}} works)<span class="caret"></span></h3></span>&nbsp;
         </button>
@@ -61,7 +61,7 @@
                             >
                                 <a ng-click="esr.showHighlight($index,$parent.$index)">
                                     <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ object[0].dbi }}.100.jpg);"></span>
-                                    <span class="description text-capitalize">Object {{object[0].object_number}}</span>
+                                    <span class="description text-capitalize">Object {{object[0].object_number}} {{object[0].full_object_id}}</span>
                                 </a>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                             >
                             <a ng-click="esr.showHighlight($index)">
                                 <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ object[0].dbi }}.100.jpg);"></span>
-                                <span class="description text-capitalize">Object {{object[0].object_number}}</span>
+                                <span class="description text-capitalize">{{object[0].full_object_id}}</span>
                             </a>
                         </div>
                     </div>
