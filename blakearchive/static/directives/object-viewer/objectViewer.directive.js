@@ -49,27 +49,14 @@
                     }
                 })
             } else {
-                angular.forEach(vm.bds.copyObjects,function(obj){
-                    if(!obj.supplemental){
-                        list.push(obj);
-                    }
-                })
-
+                list = vm.bds.copyObjects;
             }
 
-            var currObject = vm.bds.object;
-
-            if(currObject.supplemental){
-                list.forEach(function(object){
-                    if(currObject.object_group == object.object_group){
-                        currObject = object;
-                    }
-                });
-            }
+            var obj_desc_id = vm.bds.object.supplemental ? vm.bds.object.supplemental : vm.bds.object.desc_id;
 
             if(list){
                 for (var i = list.length; i--;) {
-                    if (list[i].object_id == currObject.object_id) {
+                    if (list[i].desc_id == obj_desc_id) {
                         if (list[i - 1]) {
                             return list[i - 1];
                         } else {
@@ -91,26 +78,14 @@
                     }
                 })
             } else {
-                angular.forEach(vm.bds.copyObjects,function(obj){
-                    if(!obj.supplemental){
-                        list.push(obj);
-                    }
-                })
+                list = vm.bds.copyObjects;
             }
 
-            var currObject = vm.bds.object;
-            if(currObject.supplemental){
-                list.forEach(function(object){
-                    if(currObject.object_group == object.object_group){
-                        currObject = object;
-                    }
-                });
-            }
+            var obj_desc_id = vm.bds.object.supplemental ? vm.bds.object.supplemental : vm.bds.object.desc_id;
 
-
-            if(list && currObject){
+            if(list){
                 for (var i = list.length; i--;) {
-                    if (list[i].object_id == currObject.object_id) {
+                    if (list[i].desc_id == obj_desc_id) {
                         if(list[i + 1]){
                             return list[i + 1];
                         } else {
