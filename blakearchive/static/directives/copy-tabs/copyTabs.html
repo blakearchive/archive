@@ -136,7 +136,7 @@
                     <div class="row" ng-if="tabs.bds.work.virtual && tabs.bds.work.bad_id != 'letters'">
                         <div class="col-xs-12">
                             <h4>Included Objects</h4>
-                            <div class="well" ng-repeat="obj in tabs.bds.copyObjects | filter:{supplemental:false} track by $index">
+                            <div class="well" ng-repeat="obj in tabs.bds.copyObjects | filter:{supplemental:null} track by $index">
                                 <h4>{{ obj.full_object_id }}</h4>
                                 <p><strong>Title:</strong> {{ obj.title }}</p>
                                 <p><a href="#">View XML</a> <small>(may not work in all browsers)</small></p>

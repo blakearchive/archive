@@ -786,20 +786,10 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
                 //Set the selected object
                 if (descId) {
-                    blakeData.copyObjects.forEach(function (obj) {
-                        if (obj.desc_id == descId) {
-                            return (blakeData.setFromSameX(obj)).then(function(){
-                                blakeData.object = obj;
-                            })
-                        }
-                    })
 
-                    if(!blakeData.object.length){
-                        console.log('object not found in copy objects');
-                        blakeData.getObject(descId).then(function(data){
-                            blakeData.object = data;
-                        })
-                    }
+                    blakeData.getObject(descId).then(function(data){
+                        blakeData.changeObject(data);
+                    });
 
                 } else {
                     blakeData.changeObject(blakeData.copyObjects[0]);
