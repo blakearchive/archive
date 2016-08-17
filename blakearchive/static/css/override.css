@@ -822,7 +822,7 @@ a.compare-selected-objects {
         min-height: 24px;
     }
     .copy-container .object-img-container img {
-        max-height: 85%;
+        max-height: 80%;
     }
 }
 
@@ -1003,7 +1003,7 @@ a.compare-selected-objects {
 
 
 #search header.page-header{
-    margin: 20px 0 15px 0;
+    margin: 20px 0 0px 0;
 }
 #search header.page-header h1{
     color: #eee;
