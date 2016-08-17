@@ -47,7 +47,7 @@
                     </span>
                 </h1>
             </header>
-            <div class="flex-992" auto-height adjust="325" breakpoint="992">
+            <div class="flex-992" auto-height adjust="275" breakpoint="992">
 
                 <!-- objects in virtual work -->
                 <div class="objects-in-copy col-sm-12 text-center" auto-width adjust="200" breakpoint="992" divide="3" ng-if="esr.resultTree[esr.selectedWork][1] > 1 && esr.tree == 'object' && esr.resultTree[esr.selectedWork][0].virtual">
@@ -114,7 +114,7 @@
                             <img ng-src="http://www.blakearchive.org/blake/images/{{ esr.getPreviewImage() }}.100.jpg">
                             <p></p>
                             <p class="object-subtitle">
-                                <span ng-if="esr.tree == 'object'" class="object-no">{{esr.getPreviewTitle()}}<br></span>
+                                <span ng-if="esr.tree == 'object' && esr.getPreviewTitle() != null" class="object-no">{{esr.getPreviewTitle()}}<br></span>
                                 <span ng-if="esr.resultTree[esr.selectedWork][0].virtual && esr.resultTree[esr.selectedWork][0].bad_id != 'letters'" class="object-no">{{esr.getPreviewLabel().replace("Object 1","")}}</span>
                                 <span ng-if="esr.resultTree[esr.selectedWork][0].virtual && esr.resultTree[esr.selectedWork][0].bad_id == 'letters'" class="object-no">{{esr.getPreviewLabel()}}</span>
                                 <span ng-if="!esr.resultTree[esr.selectedWork][0].virtual" class="object-no">{{esr.getPreviewLabel()}}</span></p>
