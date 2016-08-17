@@ -2,7 +2,7 @@
    
     <span dropdown class="dropdown" ng-if="esr.resultTree.length > 0">
         <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">
-            <span><h3 style="padding-left:15px">{{ esr.label }} ({{ esr.resultTree.length}} works)<span class="caret"></span></h3></span>&nbsp;
+            <span><h3 style="padding-left:15px">{{ esr.label }} ({{ esr.resultTree.length}} )<span class="caret"></span></h3></span>&nbsp;
         </button>
             <ul class="dropdown-menu" role="menu">
                     <li ng-repeat="work in esr.resultTree track by $index">
@@ -32,11 +32,11 @@
             <header class="page-header">
                 <button class="close-copies"><span class="glyphicon glyphicon-remove" ng-click="esr.selectedWork = -1" scroll-to-element offset="254"></span></button>
                 <h1>
-                    <a href="/blake/work/{{esr.resultTree[esr.selectedWork][0].bad_id}}">{{esr.resultTree[esr.selectedWork][0].title}}</a>&nbsp;
+                    <a href="/blake/work/{{esr.resultTree[esr.selectedWork][0].bad_id}}">{{esr.resultTree[esr.selectedWork][0].title}} (Composed {{esr.resultTree[esr.selectedWork][0].composition_date_string}})</a>&nbsp;
                     <span dropdown class="dropdown" ng-if="esr.resultTree[esr.selectedWork][2].length > 1 && esr.tree == 'object' && !esr.resultTree[esr.selectedWork][0].virtual">
                         <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">
                             <span>Copy {{esr.resultTree[esr.selectedWork][2][esr.selectedCopy][0].archive_copy_id}}</span>&nbsp;
-                            <span>({{esr.resultTree[esr.selectedWork][2][esr.selectedCopy][1]}} Objects)</span>&nbsp;
+                            <span>(Printed {{esr.resultTree[esr.selectedWork][2][esr.selectedCopy][0].print_date_string}})</span>&nbsp;
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
@@ -61,7 +61,10 @@
                             >
                                 <a ng-click="esr.showHighlight($index,$parent.$index)">
                                     <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ object[0].dbi }}.100.jpg);"></span>
-                                    <span class="description text-capitalize">{{object[0].full_object_id}}</span>
+                                    <span ng-if="esr.resultTree[esr.selectedWork][0].bad_id == 'letters'" class="description">{{object[0].object_group}}</span>
+                                    <span ng-if="object[0].title && esr.resultTree[esr.selectedWork][0].bad_id != 'letters'" class="description">{{object[0].title}}</span>
+                                    <span ng-if="esr.resultTree[esr.selectedWork][0].bad_id != 'letters'" class="description text-capitalize">{{object[0].full_object_id.replace("Object 1","")}}</span>
+                                    <span ng-if="esr.resultTree[esr.selectedWork][0].bad_id == 'letters'" class="description text-capitalize">{{object[0].full_object_id}}</span>
                                 </a>
                             </div>
                         </div>
@@ -79,6 +82,7 @@
                             >
                             <a ng-click="esr.showHighlight($index)">
                                 <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ object[0].dbi }}.100.jpg);"></span>
+                                <span class="description">{{object[0].title}}</span>
                                 <span class="description text-capitalize">{{object[0].full_object_id}}</span>
                             </a>
                         </div>
@@ -102,12 +106,18 @@
                 </div>
 
                 <!-- preview -->
-                <div class="object-preview col-sm-12" auto-width adjust="100" breakpoint="992" divide="3" ng-if="esr.tree != 'work'">
+                <div class="object-preview col-sm-12 text-center" auto-width adjust="100" breakpoint="992" divide="3" ng-if="esr.tree != 'work'">
+                    <h5 style="">Selected Object</h5>
+                    <br>
                     <div class="object-img-container text-center" auto-height adjust="350" breakpoint="992">
                         <a ng-href="/blake/copy/{{esr.getPreviewHref()}}">
                             <img ng-src="http://www.blakearchive.org/blake/images/{{ esr.getPreviewImage() }}.100.jpg">
                             <p></p>
-                            <p class="object-subtitle"><span class="object-no text-capitalize">{{esr.getPreviewLabel()}}</span></p>
+                            <p class="object-subtitle">
+                                <span ng-if="esr.tree == 'object'" class="object-no">{{esr.getPreviewTitle()}}<br></span>
+                                <span ng-if="esr.resultTree[esr.selectedWork][0].virtual && esr.resultTree[esr.selectedWork][0].bad_id != 'letters'" class="object-no">{{esr.getPreviewLabel().replace("Object 1","")}}</span>
+                                <span ng-if="esr.resultTree[esr.selectedWork][0].virtual && esr.resultTree[esr.selectedWork][0].bad_id == 'letters'" class="object-no">{{esr.getPreviewLabel()}}</span>
+                                <span ng-if="!esr.resultTree[esr.selectedWork][0].virtual" class="object-no">{{esr.getPreviewLabel()}}</span></p>
                         </a>
                     </div>
                 </div>

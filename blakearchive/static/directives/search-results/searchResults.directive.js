@@ -200,11 +200,22 @@
             }
             switch(vm.tree){
                 case 'object':
+                console.log(vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0])
                     return vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].full_object_id
                 case 'copy':
                     return 'Copy '+vm.resultTree[vm.selectedWork][2][vm.selectedCopy][0].archive_copy_id;
                 case 'work':
                     return
+            }
+        }
+
+        vm.getPreviewTitle = function(){
+             if(vm.selectedWork == -1){
+                return;
+            }
+            switch(vm.tree){
+                case 'object':
+                    return vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].title
             }
         }
 

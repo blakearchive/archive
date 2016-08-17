@@ -822,7 +822,7 @@ a.compare-selected-objects {
         min-height: 24px;
     }
     .copy-container .object-img-container img {
-        max-height: 95%;
+        max-height: 85%;
     }
 }
 
