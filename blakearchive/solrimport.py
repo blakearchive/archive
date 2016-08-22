@@ -79,7 +79,8 @@ def main():
             "medium": blake_work.medium,
             "info": blake_work.info,
             "image": blake_work.image,
-            "composition_date": blake_work.composition_date
+            "composition_date": blake_work.composition_date,
+            "composition_date_string": blake_work.composition_date_string
         }])
     blake_work_solr.optimize()
 
