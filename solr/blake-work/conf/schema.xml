@@ -35,6 +35,7 @@
     <field name="title" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="medium" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="composition_date" type="long" indexed="true" stored="true" multiValued="false"/>
+    <field name="composition_date_string" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="info" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="image" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="print_date" type="text" indexed="true" stored="true" multiValued="false"/>
