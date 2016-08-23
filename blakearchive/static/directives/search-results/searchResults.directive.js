@@ -135,9 +135,9 @@
         vm.getHandprintDescription = function(workIndex){
             switch(vm.tree){
                 case 'work':
-                    return '<strong>' + vm.resultTree[workIndex][0].title + '</strong>';
+                    return '<strong>' + vm.resultTree[workIndex][0].title + ' (' + 'Composed ' + vm.resultTree[workIndex][0].composition_date_string + ')' + '</strong>';
                 default:
-                    var string = '<strong>'+vm.resultTree[workIndex][0].title+'</strong><br>',
+                    var string = '<strong>'+vm.resultTree[workIndex][0].title+' (' + 'Composed ' + vm.resultTree[workIndex][0].composition_date_string + ')'+'</strong><br>',
                         endstring = '';
                     if(vm.resultTree[workIndex][1] > 1){
                         string += '('+vm.resultTree[workIndex][1] + ' results';
