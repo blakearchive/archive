@@ -15,7 +15,7 @@
                 <!-- date -->
                 <li dropdown class="dropdown">
                     <a dropdown-toggle role="button" aria-expanded="false">Date <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
+                    <ul class="dropdown-menu" role="menu" ng-click="$event.stopPropagation()">
                         <li class="list-header">Restrict Date Range:</li>
                         <li>
                             <div range-slider min="1772" max="1827" show-values="true" model-min="searchConfig.minDate" model-max="searchConfig.maxDate" on-handle-up="search()"></div>
@@ -31,7 +31,7 @@
                 </li>
 
                 <!-- search field -->
-                <li dropdown class="dropdown">
+                <li dropdown class="dropdown" ng-click="$event.stopPropagation()">
                     <a dropdown-toggle role="button" aria-expanded="false">Type <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
@@ -63,7 +63,7 @@
                 </li>
 
                 <!-- type -->
-                <li dropdown class="dropdown">
+                <li dropdown class="dropdown" ng-click="$event.stopPropagation()">
                     <a dropdown-toggle role="button" aria-expanded="false">Medium <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
