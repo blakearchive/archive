@@ -53,7 +53,7 @@ class BlakeDataService(object):
         min_date = cfg.get("minDate", "*")
         max_date = cfg.get("maxDate", "*")
         date_string = ""
-        if cfg["useCompDate"] and cfg["usePrintDate"]:
+        if cfg.get("searchAllDateTypes"):
             date_ranges = (min_date, max_date, min_date, max_date)
             date_string = "(composition_date: [%s TO %s] OR print_date: [%s TO %s])" % date_ranges
         else:
