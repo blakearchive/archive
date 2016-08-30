@@ -46,7 +46,7 @@
                     used.push(value.bad_id);
                     value.column = sci;
                     ++i;
-                    if(i == 4){
+                    if(i == 3){
                         ++sci;
                         i = 0;
                     }
