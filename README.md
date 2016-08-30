@@ -1,8 +1,8 @@
-## Blake Archive Application Redesign
+# Blake Archive
 
-### Setup (for MAC)
+## Requirements
 
-#### Postgres
+### Postgres
 1. Install [Postgresql](http://postgresapp.com/)
 2. Start the postgres service
     * Find and click the "Postgres" Elephant icon in you applications, then click "open psql"
@@ -11,23 +11,25 @@
 3. Setup your blake database
     * In the postgres terminal, run ```CREATE DATABASE databasename;```
 
-#### Solr
-1. [Download and install solr](https://cwiki.apache.org/confluence/display/solr/Installing+Solr)
-    * (We're currently uses 5.3.0)
-2. Make your solr cores
-```bash
-cd ~/path/to/solr/instance # if you followed the apache install instructions, it's likely at ~/solr-5.3.0
-bin/solr start
-cd server/solr
-mkdir blake_object
-mkdir blake_work
-mkdir blake_copy
-```
+### Solr >= 5.3.x
+[Download and install solr](https://cwiki.apache.org/confluence/display/solr/Installing+Solr)
 
-#### Capistrano
-```gem install capistrano #install capistrano```
+### Ruby & Capistrano
+1. Have Ruby?
+```ruby -v```
+2. Then
+```gem install capistrano```
 
-#### Code Base
+### Python
+1. Have Python?
+```python --version```
+
+### Node.js
+
+
+## Local Development Setup (works with Mac)
+
+### Clone Repo & Install modules/packages/etc
 ```bash
 easy_install pip #install pip
 pip install virtualenv #install virtualenv
@@ -35,46 +37,61 @@ cd /place/where/you/want/blake/to/live # you do not need to make a dir, that is 
 virtualenv blake #create the virtual environment
 cd blake #cd into the env
 source bin/activate #activate the env
-git clone https://github.com/blakearchive/archive.git #clone the repo
+git clone https://github.com/blakearchive/data.git #clone the blakearchive/data repo
+git clone https://github.com/blakearchive/archive.git #clone the blakearchvie/archive repo
 cd archive #cd into the repo
 pip install -r requirements.txt #install the python requirements
-npm install #install gulp and gulp modules, need to have node.js installed locally, see below
+npm install
 ```
-##### Note:
-Virtualenv needs to be active for any python or cap scripts to work. To instantiate virtualenv, run ```source bin/activate``` in the blake/ directory
 
-#### Config Files
-1. Copy ```config/config.py.example``` to ```blakearchive/```
-2. Rename the file ```config.py```
-3. Edit db_connection_string with your postgres info
+### Setup your config
+In /blake/archive/
+```
+cp config.py.example blakearchive/config.py
+ ```
+1. Edit db_connection_string with your postgres info
     * the postgres app uses ```postgres``` as the default username with no password, unless you've set your postgres up differently.
     * keep the ```:``` if you have no password
     * ```[host]``` should be ```localhost```
     * ```[dbname]``` should be the database name you created in step 3 of the postgres instructions
-4. Make a of ```config/cap_config.yml.example`` in the same directory, named ```cap_config.yml```
-5. Edit the file, setting:
-    * your username
-    * your group
-    * path to your solr instance (e.g. ```path/to/solr-5.3.0/server/solr```)
-    * path to the local repo (e.g. ```path/to/blake/archive```)
 
-#### Final steps
-Needs to be cleaned up, provide specific instructions on symlinking solr
-In the repo directory ```archive/```:
+### Make your solr cores
+```bash
+cd ~/path/to/solr/instance # if you followed the apache install instructions, it's likely at ~/solr-5.3.0
+bin/solr start
+cd server/solr
+mkdir blake_object
+ln -s <path-to-repo>/blakearchive/solr/blake-object/conf <path-to-solr-install>/server/solr/blake_object/conf
+mkdir blake_work
+ln -s <path-to-repo>/blakearchive/solr/blake-work/conf <path-to-solr-install>/server/solr/blake_work/conf
+mkdir blake_copy
+ln -s <path-to-repo>/blakearchive/solr/blake-copy/conf <path-to-solr-install>/server/solr/blake_copy/conf
+```
 
-1. Seed the database and solr by running ```cap local setup:start```
-2. Run the python server ```python run.py```
-3. You can now view the site at http://localhost:8002/blake
+Go to http://localhost:8983/solr/admin
+Click "Core Admin"
+Click "Add Core"
+Change **name** and **instanceDir** to **blake_object** and click "Add Core" (repeat for blake_copy & blake_work)
 
-### Running Gulp
-You'll need to have [Node.js](https://nodejs.org/en/) installed on your local machine.
+### Seed the data
 
-CD into the archive/ directory and run ```npm install``` to download and install the required modules below
+You'll need a working copy of the data repo. In /blake/ 
+```
+git clone https://github.com/blakearchive/data.git
+```
 
-##### Required NPM modules
-* gulp
-* gulp-concat
-* gulp-cssmin
-* gulp-uglify
+##### Note:
+Virtualenv needs to be active for any python scripts to work. To instantiate virtualenv, run ```source bin/activate``` in the blake/ directory
 
-Running "gulp" from the commandline with no arguments will run the default task which minifies and concatenates the JS
+In /blake/archive/blakearchive
+```
+python import.py '../../data'
+python solrimport.py
+python homepageimport.py
+```
+
+### Run the project
+In blake/archive
+```
+python run.py
+```
