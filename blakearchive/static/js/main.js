@@ -1659,6 +1659,12 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             controllerAs: 'copyCtrl',
             reloadOnSearch: false
         });
+        $routeProvider.when(directoryPrefix + '/exhibit/:copyId', {
+            templateUrl: directoryPrefix + '/static/controllers/exhibit/exhibit.html',
+            controller: "ExhibitController",
+            controllerAs: 'exhibitCtrl',
+            reloadOnSearch: false
+        });
         $routeProvider.when(directoryPrefix + '/new-window/:what/:copyId', {
             templateUrl: directoryPrefix + '/static/controllers/showme/showme.html',
             controller: "ShowMeController",
