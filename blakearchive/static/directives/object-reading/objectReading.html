@@ -35,20 +35,17 @@
 </div>
 
 <!--for exhibits-->
-<div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:50%; background:white" id="compare" ng-if="read.bds.copy.bad_id == 'illum'"">
-    <div class="featured-object">
-        <div class="compare-inner">
-            <div class="item" ng-if="read.bds.copy.bad_id != 'letters'">
-                <div auto-height adjust="150" breakpoint="768">
-                    <ng-include src="'/blake/static/html/illuminatedprinting.html'"></ng-include>
+<div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="compare" ng-if="read.bds.copy.bad_id == 'illum'"">
+    
+           
+                
+                    <ng-include src="'/blake/static/html/illuminatedprinting.exhibit.html'"></ng-include>
                    
-                </div>
-            </div>
-        </div>
-    </div>
+
+   
 </div>
 
-<div style="float:right; width:50%" id="compare" class="scrollbar" ng-if="read.bds.copy.bad_id == 'illum'"">
+<div style="float:right; width:67%" id="compare" class="scrollbar" ng-if="read.bds.copy.bad_id == 'illum'"">
     <div class="featured-object">
         <div class="compare-inner">
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null}" ng-if="read.bds.copy.bad_id != 'letters'">
