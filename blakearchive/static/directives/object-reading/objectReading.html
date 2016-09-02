@@ -1,6 +1,6 @@
 <!--<p class="object-title">{{ read.getOvpTitle() }}</p>-->
 <!-- compare -->
-<div id="compare" class="scrollbar">
+<div id="compare" class="scrollbar" ng-if="read.bds.copy.bad_id != 'illum'"">
     <div class="featured-object">
         <div class="compare-inner">
             <!-- for letters -->
@@ -18,6 +18,39 @@
 
 
             <!-- for everything else -->
+            <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null}" ng-if="read.bds.copy.bad_id != 'letters'">
+                <div class="reading-wrapper" auto-height adjust="150" breakpoint="768">
+                    <img ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" ng-click="read.changeObject(o)">
+                    <div class="reading-copy">
+                        <div class="reading-copy-inner">
+                            <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
+                            <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
+                            <text-transcription object="o"></text-transcription>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--for exhibits-->
+<div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:50%; background:white" id="compare" ng-if="read.bds.copy.bad_id == 'illum'"">
+    <div class="featured-object">
+        <div class="compare-inner">
+            <div class="item" ng-if="read.bds.copy.bad_id != 'letters'">
+                <div auto-height adjust="150" breakpoint="768">
+                    <ng-include src="'/blake/static/html/illuminatedprinting.html'"></ng-include>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="float:right; width:50%" id="compare" class="scrollbar" ng-if="read.bds.copy.bad_id == 'illum'"">
+    <div class="featured-object">
+        <div class="compare-inner">
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null}" ng-if="read.bds.copy.bad_id != 'letters'">
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768">
                     <img ng-src="http://www.blakearchive.org/blake/images/{{ o.dbi }}.100.jpg" ng-click="read.changeObject(o)">
