@@ -20,7 +20,7 @@
                     <span class="object-no" ng-if="!viewer.bds.work.virtual && !viewer.bds.object.title">{{ viewer.bds.object.full_object_id }}, </span>
                     <span class="object-no" ng-if="!viewer.bds.work.virtual && viewer.bds.object.title && viewer.bds.work.medium != 'exhibit'">{{viewer.bds.object.title}}, {{ viewer.bds.object.full_object_id }}, </span>
                     <span class="object-no" ng-if="!viewer.bds.work.virtual && viewer.bds.object.title && viewer.bds.work.medium == 'exhibit'">{{viewer.bds.object.title}}</span>
-                    <span ng-if="viewer.bds.work.medium == 'exhibit'">{{ viewer.bds.object.physical_description.objsize['#text'] }} </span>
+                    <span ng-if="viewer.bds.work.medium != 'exhibit'">{{ viewer.bds.object.physical_description.objsize['#text'] }} </span>
                     <a ng-if="viewer.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="viewer.userestrictOpen(viewer.bds.copy)">&#169;</a>
                 </p>
             </div>
