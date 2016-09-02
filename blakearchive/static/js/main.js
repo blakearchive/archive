@@ -306,6 +306,10 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                     work.medium_pretty = 'Manuscripts and Typographic Works';
                     work.probable = 'composition';
                     break;
+                case "exhibit":
+                    work.medium_pretty = "Archive Exhibits";
+                    work.probable = 'composition';
+                    break;
                 default:
                     return false;
             }
