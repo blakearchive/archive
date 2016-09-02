@@ -196,19 +196,6 @@ transforms transcriptions
     </xsl:template>
     <xsl:template match="l">
         <tr>
-            <td class="tei-line-number"> <!-- "width: 5%; font-family:Times New Roman;font-size:8pt;color:gray;" -->
-                <xsl:choose>
-                    <xsl:when test="not(contains(@n, 'XX'))">
-                        <xsl:value-of select="number(substring(@n, string-length(@n) - 1))"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        &#160;
-                    </xsl:otherwise>
-                </xsl:choose>
-            </td>
-            <td class="tei-line-note"> <!-- width: 5% -->
-                <xsl:apply-templates select="note"/>
-            </td>
             <td class="tei-line-text"> <!-- width: 90%; font-family:Times New Roman; font-size:12pt -->
                 <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/></xsl:attribute>
                 <span>
@@ -235,36 +222,6 @@ transforms transcriptions
             </td>
         </tr>
     </xsl:template>
-
-    <xsl:template match="lexh">
-        <tr>
-            <td class="tei-line-text"> <!-- width: 90%; font-family:Times New Roman; font-size:12pt -->
-                <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/></xsl:attribute>
-                <span>
-                    <xsl:choose>
-                        <xsl:when test="@justify ='left'">
-                            <xsl:if test="@indent">
-                                <xsl:call-template name="spacemaker">
-                                    <xsl:with-param name="spaces">
-                                        <xsl:value-of select="round(@indent * 1.75)"/>
-                                    </xsl:with-param>
-                                </xsl:call-template>
-                            </xsl:if>
-                        </xsl:when>
-                        <xsl:when test="@justify ='right'"/>
-                        <xsl:when test="@justify='center'">
-                            <xsl:attribute name="style">text-align:center</xsl:attribute>
-                        </xsl:when>
-                        <xsl:otherwise/>
-                    </xsl:choose>
-                    <!-- excludes note from display -->
-                    <xsl:apply-templates
-                            select="vspace|space|physnumber|text()|foreign|hi|catchword|exist:match|add|del|subst|choose|sic|corr|hspace|orig|rep|instr|unclear|hr|choice|gap"/>
-                </span>
-            </td>
-        </tr>
-    </xsl:template>
-
     <xsl:template match="space">
         <span>
             <xsl:call-template name="spacemaker">

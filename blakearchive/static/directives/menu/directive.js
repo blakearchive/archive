@@ -16,10 +16,14 @@
             });
         } else {
             vm.lists = $sessionStorage.menus;
+            console.log(vm.lists);
         }
 
         var category = function(item) {
             switch(item) {
+                case "exhibit":
+                    return "exhibits";
+                    break;
                 case "illbk":
                     return "illuminated_books";
                     break;
@@ -103,7 +107,8 @@
                     manuscripts: [],
                     letters: [],
                     typographic: []
-                }]
+                }],
+                exhibits: []
             };
 
             // Add to menu categories
@@ -125,6 +130,7 @@
             });
 
             vm.lists = menus;
+            console.log(vm.lists);
             $sessionStorage.menus = menus;
         }
 

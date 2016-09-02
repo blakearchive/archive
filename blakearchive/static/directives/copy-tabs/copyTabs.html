@@ -13,10 +13,10 @@
                 <li role="presentation" ng-if="tabs.bds.object.motif.length > 0" ng-class="{active:tabs.selectedTab == '#objects-with-same-motif'}">
                     <a href="" ng-click="tabs.showTab('#objects-with-same-motif');" role="tab">Objects with a Similar Design</a>
                 </li>
-                <li role="presentation" ng-class="{active:tabs.selectedTab == '#copy-info'}">
+                <li ng-if="tabs.bds.work.medium != 'exhibit'" role="presentation" ng-class="{active:tabs.selectedTab == '#copy-info'}">
                     <a href="" ng-click="tabs.showTab('#copy-info')" role="tab">{{ tabs.getCopyOrWork() }} Information</a>
                 </li>
-                <li role="presentation" ng-class="{active:tabs.selectedTab == '#ee-info'}">
+                <li ng-if="tabs.bds.work.medium != 'exhibit'" role="presentation" ng-class="{active:tabs.selectedTab == '#ee-info'}">
                     <a href="" ng-click="tabs.showTab('#ee-info')" role="tab">Electronic Edition Information</a>
                 </li>
             </ul>
