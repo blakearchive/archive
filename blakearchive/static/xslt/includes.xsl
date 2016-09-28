@@ -176,7 +176,7 @@ and the URL of current document -->
         <xsl:choose>
             <xsl:when test="@rend='italic' or @rend='i'">
                 <span class="tei-hi-italic"> <!--  style="font-style:italic" -->
-                    <xsl:value-of select="."/>
+                    <xsl:apply-templates/>
                 </span>
             </xsl:when>
             <xsl:when test="@rend='underscore' or @rend='u'">
