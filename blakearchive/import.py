@@ -69,7 +69,7 @@ class BlakeDocumentImporter(BlakeImporter):
 
     # region Info file handling
     def import_info_files(self, info_files):
-        for matching_info_file in tqdm(info_files, desc="Info files"):
+        for matching_info_file in info_files:
             try:
                 self.process_info_file(matching_info_file)
             except ValueError as err:
@@ -98,7 +98,7 @@ class BlakeDocumentImporter(BlakeImporter):
     # endregion
 
     def import_bad_files(self, bad_files):
-        for matching_file in tqdm(bad_files, desc="BAD files"):
+        for matching_file in bad_files:
             try:
                 self.copy_importer.process(matching_file)
             except ValueError as err:
@@ -107,7 +107,20 @@ class BlakeDocumentImporter(BlakeImporter):
     # region Relationship processing
     def process_relationships(self):
         for entry in self.relationships_df.itertuples():
-            self.process_relationship(entry)
+            new_entry = {
+                desc_id: entry[1],
+                dbi:entry[2],
+                bad_id:entry[3],
+                virtual_group:entry[4],
+                same_matrix_ids:entry[5]
+                same_production_sequence_ids:entry[6],
+                similar_design_ids:entry[7],
+                reference_object_ids:entry[8],
+                reference_copy_ids:entry[9],
+                reference_work_ids:entry[10],
+                supplemental_ids:entry[11]
+            }
+            self.process_relationship(new_entry)
 
     def process_relationship(self, entry):
         obj = self.object_importer.get(entry.desc_id.lower())
@@ -221,7 +234,7 @@ class BlakeCopyImporter(BlakeImporter):
         copy_handprint_df = pandas.read_csv("static/csv/copy-handprints.csv", encoding="utf-8")
         copy_handprint_df.fillna("", inplace=True)
         for entry in copy_handprint_df.itertuples():
-            self.copy_handprints[entry.bad_id] = entry.dbi.lower()
+            self.copy_handprints[entry[1]] = entry[2].lower()
 
     def process(self, document):
         root = self.get_document_tree(document)
