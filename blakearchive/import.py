@@ -107,20 +107,9 @@ class BlakeDocumentImporter(BlakeImporter):
     # region Relationship processing
     def process_relationships(self):
         for entry in self.relationships_df.itertuples():
-            new_entry = {
-                desc_id:entry[1],
-                dbi:entry[2],
-                bad_id:entry[3],
-                virtual_group:entry[4],
-                same_matrix_ids:entry[5],
-                same_production_sequence_ids:entry[6],
-                similar_design_ids:entry[7],
-                reference_object_ids:entry[8],
-                reference_copy_ids:entry[9],
-                reference_work_ids:entry[10],
-                supplemental_ids:entry[11]
-            }
-            self.process_relationship(new_entry)
+            Record = namedtuple('Object',['index','desc_id','dbi','bad_id','virtual_group','same_matrix_ids','same_production_sequence_ids','similar_design_ids','reference_object_ids','reference_copy_ids','reference_work_ids','supplemental_ids'])
+            entry = Record(*entry)
+            self.process_relationship(entry)
 
     def process_relationship(self, entry):
         obj = self.object_importer.get(entry.desc_id.lower())
@@ -147,19 +136,9 @@ class BlakeDocumentImporter(BlakeImporter):
     # region Work processing
     def process_works(self):
         for entry in self.works_df.itertuples():
-            work_entry = {
-                title:entry[1],
-                medium:entry[2],
-                composition_date:entry[3],
-                image:entry[4],
-                copies:entry[5],
-                bad_id:entry[6],
-                info:entry[7],
-                info_filename:entry[8],
-                virtual:entry[9],
-                virtual_objects:entry[10]
-            }
-            self.process_work(work_entry)
+            Record = namedtuple('Work',['index','title','medium','composition_date','image','copies','bad_id','info','info_filename','virtual','virtual_objects'])
+            entry = Record(*entry)
+            self.process_work(entry)
 
     def process_work(self, entry):
         bad_id = entry.bad_id or entry.info_filename.split(".", 1)[0]
@@ -246,7 +225,9 @@ class BlakeCopyImporter(BlakeImporter):
         copy_handprint_df = pandas.read_csv("static/csv/copy-handprints.csv", encoding="utf-8")
         copy_handprint_df.fillna("", inplace=True)
         for entry in copy_handprint_df.itertuples():
-            self.copy_handprints[entry[1]] = entry[2].lower()
+            Record = namedtuple('Copy',['index','bad_id','dbi'])
+            entry = Record(*entry)
+            self.copy_handprints[entry.bad_id] = entry.dbi.lower()
 
     def process(self, document):
         root = self.get_document_tree(document)
