@@ -108,17 +108,17 @@ class BlakeDocumentImporter(BlakeImporter):
     def process_relationships(self):
         for entry in self.relationships_df.itertuples():
             new_entry = {
-                "desc_id": entry[1],
-                "dbi":entry[2],
-                "bad_id":entry[3],
-                "virtual_group":entry[4],
-                "same_matrix_ids":entry[5],
-                "same_production_sequence_ids":entry[6],
-                "similar_design_ids":entry[7],
-                "reference_object_ids":entry[8],
-                "reference_copy_ids":entry[9],
-                "reference_work_ids":entry[10],
-                "supplemental_ids":entry[11]
+                desc_id:entry[1],
+                dbi:entry[2],
+                bad_id:entry[3],
+                virtual_group:entry[4],
+                same_matrix_ids:entry[5],
+                same_production_sequence_ids:entry[6],
+                similar_design_ids:entry[7],
+                reference_object_ids:entry[8],
+                reference_copy_ids:entry[9],
+                reference_work_ids:entry[10],
+                supplemental_ids:entry[11]
             }
             self.process_relationship(new_entry)
 
@@ -147,19 +147,19 @@ class BlakeDocumentImporter(BlakeImporter):
     # region Work processing
     def process_works(self):
         for entry in self.works_df.itertuples():
-            new_entry = {
-                "title": entry[1],
-                "medium": entry[2],
-                "composition_date": entry[3],
-                "image": entry[4],
-                "copies": entry[5],
-                "bad_id": entry[6],
-                "info": entry[7],
-                "info_filename": entry[8],
-                "virtual": entry[9],
-                "virtual_objects": entry[10]
+            work_entry = {
+                title:entry[1],
+                medium:entry[2],
+                composition_date:entry[3],
+                image:entry[4],
+                copies:entry[5],
+                bad_id:entry[6],
+                info:entry[7],
+                info_filename:entry[8],
+                virtual:entry[9],
+                virtual_objects:entry[10]
             }
-            self.process_work(new_entry)
+            self.process_work(work_entry)
 
     def process_work(self, entry):
         bad_id = entry.bad_id or entry.info_filename.split(".", 1)[0]
