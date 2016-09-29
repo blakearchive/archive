@@ -15,6 +15,7 @@ from sqlalchemy.orm import sessionmaker
 import titlecase
 from tqdm import tqdm
 import logging
+from collection import namedtuple
 
 logging.basicConfig()
 logger = logging.getLogger('import')
