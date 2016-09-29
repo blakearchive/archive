@@ -18,8 +18,8 @@ import logging
 
 logging.basicConfig()
 logger = logging.getLogger('import')
-# dtype = defaultdict(lambda: unicode)
-# dtype["virtual"] = int
+dtype = defaultdict(lambda: unicode)
+dtype["virtual"] = int
 
 
 class BlakeImporter(object):
@@ -51,8 +51,8 @@ class BlakeDocumentImporter(BlakeImporter):
         self.works = {}
         self.work_info = {}
         self.virtual_works = defaultdict(lambda: set())
-        self.relationships_df = pandas.read_csv("static/csv/blake-relations.csv", encoding="utf-8")
-        self.works_df = pandas.read_csv("static/csv/works.csv", encoding="utf-8")
+        self.relationships_df = pandas.read_csv("static/csv/blake-relations.csv", dtype=dtype, encoding="utf-8")
+        self.works_df = pandas.read_csv("static/csv/works.csv", dtype=dtype, encoding="utf-8")
         self.relationships_df.fillna("", inplace=True)
         self.works_df.fillna("", inplace=True)
 
@@ -218,7 +218,7 @@ class BlakeCopyImporter(BlakeImporter):
         self.object_importer = object_importer or BlakeObjectImporter()
         self.members = {}
         self.copy_handprints = {}
-        copy_handprint_df = pandas.read_csv("static/csv/copy-handprints.csv", encoding="utf-8")
+        copy_handprint_df = pandas.read_csv("static/csv/copy-handprints.csv", dtype=dtype, encoding="utf-8")
         copy_handprint_df.fillna("", inplace=True)
         for entry in copy_handprint_df.itertuples():
             self.copy_handprints[entry.bad_id] = entry.dbi.lower()
