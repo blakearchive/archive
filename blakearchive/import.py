@@ -148,7 +148,7 @@ class BlakeDocumentImporter(BlakeImporter):
     def process_works(self):
         for entry in self.works_df.itertuples():
             new_entry = {
-                title: entry[1],
+                "title": entry[1],
                 medium: entry[2],
                 composition_date: entry[3],
                 image: entry[4],
