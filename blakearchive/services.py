@@ -128,10 +128,10 @@ class BlakeDataService(object):
             results["notes"] = cls.solr_object_query(search_string)
 
         def add_object_query_works(results_):
-            works = {w.bad_id: w for w in cls.get_works([r[0] for r in results_])}
+            works = dict((w.bad_id, w) for w in cls.get_works([r[0] for r in results_]))
             return [[works[w].to_dict, c, r] for (w, c, r) in results_]
 
-        return {k: add_object_query_works(v) for (k, v) in results.items()}
+        return dict((k, add_object_query_works(v)) for (k, v) in results.items())
 
     @classmethod
     def query_copies(cls, cfg):
@@ -141,10 +141,10 @@ class BlakeDataService(object):
             results["copy-info"] = cls.solr_copy_query(search_string)
 
         def add_copy_query_works(results_):
-            works = {w.bad_id: w for w in cls.get_works([r[0] for r in results_])}
+            works = dict((w.bad_id, w) for w in cls.get_works([r[0] for r in results_]))
             return [[works[w].to_dict, c, r] for (w, c, r) in results_]
 
-        return {k: add_copy_query_works(v) for (k, v) in results.items()}
+        return dict((k, add_copy_query_works(v)) for (k, v) in results.items())
 
     @classmethod
     def query_works(cls, cfg):

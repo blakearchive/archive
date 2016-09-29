@@ -76,7 +76,7 @@ def get_objects_from_same_matrix(desc_id):
 def get_textually_related_material(desc_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     results = blake_data_service.get_textually_related_material(desc_id)
-    return jsonify({k: [r.to_dict for r in v] for (k, v) in results})
+    return jsonify(dict(k,[r.to_dict for r in v]) for (k, v) in results)
 
 
 @api.route('/object/<desc_id>/supplemental_objects')
