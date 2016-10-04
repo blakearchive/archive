@@ -383,13 +383,22 @@ class BlakeObjectImporter(BlakeImporter):
 
     @classmethod
     def get_components(cls, obj):
+        def generate_component(comp):
+            element_dict = cls.element_to_dict(comp)
+            try:
+                obj_desc = comp.xpath(".//illusobjdesc")[0]
+                component_markup = etree.tostring(cls.transform(obj_desc))
+                element_dict["component"]["illusobjdesc"]["#text"] = component_markup
+            except (IndexError, TypeError):
+                pass
+            return element_dict
         components = obj.xpath(".//illusdesc/illustration/component")
-        return [cls.element_to_dict(c) for c in components]
+        return [generate_component(c) for c in components]
 
     @classmethod
     def get_illustration_description(cls, obj):
         for description in obj.xpath("illusdesc/illustration/illusobjdesc"):
-            return cls.element_to_dict(description)
+            return {'#text': etree.tostring(cls.transform(description))}
 
     @staticmethod
     def get_full_object_id(obj):
