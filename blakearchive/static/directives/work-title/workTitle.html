@@ -23,7 +23,7 @@
 
 
 <div class="object-view-menu hidden-xs hidden-sm">
-  <span ng-if="showWorkTitle == 'static' && $root.view.mode == 'static'" class="worktitle" style="padding: 19px;">
+  <span ng-if="showWorkTitle == 'static'" class="worktitle" style="padding: 19px;">
         <a scroll-to-top href="" style="color:white;">{{ workTitle.getStaticPageTitle() }}</a>
     </span>
 	<span ng-if="showWorkTitle == 'work'" class="worktitle" style="padding: 19px;">
@@ -43,7 +43,7 @@
 
 	</span>
 
-	<span ng-if="$root.view.mode == 'compare'" class="worktitle" style="padding: 19px;">
+	<span ng-if="$root.view.mode == 'compare' && showWorkTitle != 'static'" class="worktitle" style="padding: 19px;">
 		<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} ({{workTitle.getCompOrPrintDateString()}}) (Selected)
 	</span>
 
