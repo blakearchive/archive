@@ -262,7 +262,7 @@ body {
     color:#999999;
 }
 #external-links a{
-    color:rgba(255,0,0,0.37)
+    color:rgba(233,188,71,1)
 }
 @media(max-width: 468px){
     #external-links li{
