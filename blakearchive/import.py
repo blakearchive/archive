@@ -446,7 +446,7 @@ def main():
     importer = BlakeDocumentImporter(args.data_folder)
     if args.profile:
         import cProfile
-        cProfile.run("importer.import_data()", "import_stats.out")
+        cProfile.runctx("importer.import_data()", globals(), locals(), filename="import_stats.out")
     else:
         importer.import_data()
 
