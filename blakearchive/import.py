@@ -441,9 +441,14 @@ class BlakeObjectImporter(BlakeImporter):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("data_folder")
+    parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
     importer = BlakeDocumentImporter(args.data_folder)
-    importer.import_data()
+    if args.profile:
+        import cProfile
+        cProfile.run("importer.import_data()", "import_stats.out")
+    else:
+        importer.import_data()
 
 
 if __name__ == "__main__":
