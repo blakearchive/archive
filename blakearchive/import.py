@@ -386,7 +386,7 @@ class BlakeObjectImporter(BlakeImporter):
         def generate_component(comp):
             element_dict = cls.element_to_dict(comp)
             try:
-                obj_desc = comp.xpath(".//illusobjdesc")[0]
+                obj_desc = comp.xpath("./illusobjdesc")[0]
                 component_markup = etree.tostring(cls.transform(obj_desc))
                 element_dict["component"]["illusobjdesc"]["#text"] = component_markup
             except (IndexError, TypeError):
