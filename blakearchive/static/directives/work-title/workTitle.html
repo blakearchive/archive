@@ -27,7 +27,7 @@
         <a scroll-to-top href="" style="color:white;">{{ workTitle.getStaticPageTitle() }}</a>
     </span>
 	<span ng-if="showWorkTitle == 'work'" class="worktitle" style="padding: 19px;">
-        <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }} (Composed {{workTitle.bds.work.composition_date_string}})</a>
+        <span scroll-to-top style="color:white;">{{ workTitle.getTitle() }} (Composed {{workTitle.bds.work.composition_date_string}})</span>
     </span>
 
 	<span ng-if="showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
