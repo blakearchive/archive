@@ -9,7 +9,7 @@
         vm.firstLine = 1;
         vm.panelAdjust = 55;
         vm.scrollBarHeight = 15;
-        vm.adjustHeight = 134;
+        vm.adjustHeight = 136;
 
         vm.open = {
             'text':false,
@@ -52,7 +52,7 @@
             if(tools){
                 vm.resize();
             } else {
-                vm.resize(-50);
+                vm.resize(-47);
             }
         })
 
