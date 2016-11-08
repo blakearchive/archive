@@ -390,13 +390,28 @@ class BlakeObjectImporter(BlakeImporter):
 
     @classmethod
     def get_components(cls, obj):
+        def generate_component_markup(obj_desc):
+            return etree.tostring(cls.transform(obj_desc))
+
+        def generate_element_dict(comp):
+            return cls.element_to_dict(comp)
+
+        def generate_component(comp):
+            element_dict = generate_element_dict(comp)
+            for obj_desc in comp.xpath("./illusobjdesc"):
+                try:
+                    component_markup = generate_component_markup(obj_desc)
+                    element_dict["component"]["illusobjdesc"]["#text"] = component_markup
+                except TypeError:
+                    pass
+                return element_dict
         components = obj.xpath(".//illusdesc/illustration/component")
-        return [cls.element_to_dict(c) for c in components]
+        return [generate_component(c) for c in components]
 
     @classmethod
     def get_illustration_description(cls, obj):
         for description in obj.xpath("illusdesc/illustration/illusobjdesc"):
-            return cls.element_to_dict(description)
+            return {'#text': etree.tostring(cls.transform(description))}
 
     @staticmethod
     def get_full_object_id(obj):
@@ -439,9 +454,14 @@ class BlakeObjectImporter(BlakeImporter):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("data_folder")
+    parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
     importer = BlakeDocumentImporter(args.data_folder)
-    importer.import_data()
+    if args.profile:
+        import cProfile
+        cProfile.runctx("importer.import_data()", globals(), locals(), filename="import_stats.out")
+    else:
+        importer.import_data()
 
 
 if __name__ == "__main__":

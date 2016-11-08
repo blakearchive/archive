@@ -1,3 +1,34 @@
+h3 a {
+    color:black;
+    text-transform:uppercase;
+}
+
+div h3 {
+    color:black;
+}
+
+.btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  height:33px;
+}
+
 @media (min-width: 768px) {
   nav.navbar ul.navbar-nav > li {
     width: 16.666%;
@@ -184,6 +215,7 @@ footer ul.nav.nav-pills {
     right: -33px;
     bottom: 7px;
     left: auto;
+    background-color:#fdfd96;
   }
 }
 
@@ -262,7 +294,7 @@ body {
     color:#999999;
 }
 #external-links a{
-    color:rgba(255,0,0,0.37)
+    color:rgba(233,188,71,1)
 }
 @media(max-width: 468px){
     #external-links li{
@@ -295,7 +327,7 @@ body {
 }
 
 #gr-selection .btn.active{
-    background-color:yellow;
+    background-color:#fdfd96;
 }
 
 
