@@ -2341,7 +2341,7 @@ output {
 .form-control {
   display: block;
   width: 100%;
-  height: 34px;
+  height: 33px;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857143;
@@ -7026,7 +7026,7 @@ footer .subscribe form.form-inline input.form-control:focus {
 }
 footer .subscribe form.form-inline button.btn {
   color: #fff;
-  background-color: rgba(255,0,0,0.37);
+  background-color: rgba(233,188,71,1);
   border: none;
   padding: 7px 12px;
 }

@@ -62,7 +62,9 @@
         };
 
         $scope.loadSearchPage = function () {
-            $location.url(directoryPrefix + "/search?search=" + encodeURIComponent($scope.searchConfig.searchString));
+            if($scope.searchConfig.searchString != null) {
+                $location.url(directoryPrefix + "/search?search=" + encodeURIComponent($scope.searchConfig.searchString));
+            }
         };
 
         $scope.searchConfig = {

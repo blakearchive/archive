@@ -7,6 +7,7 @@
 
         $rootScope.worksNavState = false;
         $rootScope.showWorkTitle = 'static';
+        $rootScope.view.mode = 'static';
         //$localStorage.$reset()
 
         vm.page = $routeParams.initialPage;

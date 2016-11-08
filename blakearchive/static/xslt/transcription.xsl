@@ -305,4 +305,38 @@ transforms transcriptions
             <xsl:otherwise/>
         </xsl:choose>
     </xsl:template>
+    <xsl:template match="hi">
+        <xsl:choose>
+            <xsl:when test="@rend='italic' or @rend='i'">
+                <span class="tei-hi-italic"> <!--  style="font-style:italic" -->
+                    <xsl:apply-templates/>
+                </span>
+            </xsl:when>
+            <xsl:when test="@rend='underscore' or @rend='u'">
+                <span class="tei-hi-underscore"> <!-- style="text-decoration:underline" -->
+                    <xsl:apply-templates/>
+                </span>
+            </xsl:when>
+            <xsl:when test="@rend='superscript' or @rend='sup'">
+                <sup>
+                    <xsl:apply-templates/>
+                </sup>
+            </xsl:when>
+            <xsl:when test="@rend='subscript' or @rend='sub'">
+                <sub>
+                    <xsl:apply-templates/>
+                </sub>
+            </xsl:when>
+            <xsl:when test="@rend= 'roman' or @rend = 'normal'">
+                <span class="tei-hi-normal"> <!-- style="font-style:normal" -->
+                    <xsl:apply-templates/>
+                </span>
+            </xsl:when>
+            <xsl:otherwise>
+                <span class="tei-hi-normal">
+                    <xsl:apply-templates/>
+                </span>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
 </xsl:stylesheet>
