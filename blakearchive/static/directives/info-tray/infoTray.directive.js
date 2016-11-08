@@ -52,7 +52,7 @@
             if(tools){
                 vm.resize();
             } else {
-                vm.resize(-50);
+                vm.resize(-47);
             }
         })
 
