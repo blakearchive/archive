@@ -2,13 +2,17 @@ __author__ = 'nathan'
 
 import tablib
 from sqlalchemy.orm import sessionmaker
+import argparse
 
 import models, config
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("data_folder")
+    args = parser.parse_args()
     featured_works = tablib.Dataset()
-    with open("static/csv/home-page-images.csv") as f:
+    with open(args.data_folder + "/csv/home-page-images.csv") as f:
         featured_works.csv = f.read()
     engine = models.db.create_engine(config.db_connection_string)
     session = sessionmaker(bind=engine)()
