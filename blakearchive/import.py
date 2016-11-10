@@ -47,7 +47,7 @@ class BlakeDocumentImporter(BlakeImporter):
     def __init__(self, data_folder):
         self.data_folder = data_folder
         self.object_importer = BlakeObjectImporter()
-        self.copy_importer = BlakeCopyImporter(object_importer=self.object_importer)
+        self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
         self.works = {}
         self.work_info = {}
         self.virtual_works = defaultdict(lambda: set())
@@ -214,7 +214,8 @@ class BlakeDocumentImporter(BlakeImporter):
 
 
 class BlakeCopyImporter(BlakeImporter):
-    def __init__(self, object_importer=None):
+    def __init__(self, data_folder, object_importer=None):
+        self.data_folder = data_folder
         self.object_importer = object_importer or BlakeObjectImporter()
         self.members = {}
         self.copy_handprints = {}
