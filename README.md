@@ -87,7 +87,7 @@ In /blake/archive/blakearchive
 ```
 python import.py '../../data'
 python solrimport.py
-python homepageimport.py
+python homepageimport.py '../../data'
 ```
 
 ### Run the project
