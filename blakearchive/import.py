@@ -47,12 +47,12 @@ class BlakeDocumentImporter(BlakeImporter):
     def __init__(self, data_folder):
         self.data_folder = data_folder
         self.object_importer = BlakeObjectImporter()
-        self.copy_importer = BlakeCopyImporter(object_importer=self.object_importer)
+        self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
         self.works = {}
         self.work_info = {}
         self.virtual_works = defaultdict(lambda: set())
-        self.relationships_df = pandas.read_csv("static/csv/blake-relations.csv", dtype=dtype, encoding="utf-8")
-        self.works_df = pandas.read_csv("static/csv/works.csv", dtype=dtype, encoding="utf-8")
+        self.relationships_df = pandas.read_csv(self.data_folder + "/csv/blake-relations.csv", dtype=dtype, encoding="utf-8")
+        self.works_df = pandas.read_csv(self.data_folder + "/csv/works.csv", dtype=dtype, encoding="utf-8")
         self.relationships_df.fillna("", inplace=True)
         self.works_df.fillna("", inplace=True)
 
@@ -214,11 +214,12 @@ class BlakeDocumentImporter(BlakeImporter):
 
 
 class BlakeCopyImporter(BlakeImporter):
-    def __init__(self, object_importer=None):
+    def __init__(self, data_folder, object_importer=None):
+        self.data_folder = data_folder
         self.object_importer = object_importer or BlakeObjectImporter()
         self.members = {}
         self.copy_handprints = {}
-        copy_handprint_df = pandas.read_csv("static/csv/copy-handprints.csv", dtype=dtype, encoding="utf-8")
+        copy_handprint_df = pandas.read_csv(self.data_folder + "/csv/copy-handprints.csv", dtype=dtype, encoding="utf-8")
         copy_handprint_df.fillna("", inplace=True)
         for entry in copy_handprint_df.itertuples():
             self.copy_handprints[entry.bad_id] = entry.dbi.lower()
