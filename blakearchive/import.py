@@ -15,11 +15,12 @@ from sqlalchemy.orm import sessionmaker
 import titlecase
 from tqdm import tqdm
 import logging
+from collections import namedtuple
 
 logging.basicConfig()
 logger = logging.getLogger('import')
-dtype = defaultdict(lambda: unicode)
-dtype["virtual"] = int
+# dtype = defaultdict(lambda: unicode)
+# dtype["virtual"] = int
 
 
 class BlakeImporter(object):
@@ -51,8 +52,8 @@ class BlakeDocumentImporter(BlakeImporter):
         self.works = {}
         self.work_info = {}
         self.virtual_works = defaultdict(lambda: set())
-        self.relationships_df = pandas.read_csv(self.data_folder + "/csv/blake-relations.csv", dtype=dtype, encoding="utf-8")
-        self.works_df = pandas.read_csv(self.data_folder + "/csv/works.csv", dtype=dtype, encoding="utf-8")
+        self.relationships_df = pandas.read_csv(self.data_folder + "/csv/blake-relations.csv", encoding="utf-8")
+        self.works_df = pandas.read_csv(self.data_folder + "/csv/works.csv", encoding="utf-8")
         self.relationships_df.fillna("", inplace=True)
         self.works_df.fillna("", inplace=True)
 
@@ -69,7 +70,7 @@ class BlakeDocumentImporter(BlakeImporter):
 
     # region Info file handling
     def import_info_files(self, info_files):
-        for matching_info_file in tqdm(info_files, desc="Info files"):
+        for matching_info_file in info_files:
             try:
                 self.process_info_file(matching_info_file)
             except ValueError as err:
@@ -98,7 +99,7 @@ class BlakeDocumentImporter(BlakeImporter):
     # endregion
 
     def import_bad_files(self, bad_files):
-        for matching_file in tqdm(bad_files, desc="BAD files"):
+        for matching_file in bad_files:
             try:
                 self.copy_importer.process(matching_file)
             except ValueError as err:
@@ -107,6 +108,8 @@ class BlakeDocumentImporter(BlakeImporter):
     # region Relationship processing
     def process_relationships(self):
         for entry in self.relationships_df.itertuples():
+            Record = namedtuple('Object',['index','desc_id','dbi','bad_id','virtual_group','same_matrix_ids','same_production_sequence_ids','similar_design_ids','reference_object_ids','reference_copy_ids','reference_work_ids','supplemental_ids'])
+            entry = Record(*entry)
             self.process_relationship(entry)
 
     def process_relationship(self, entry):
@@ -134,6 +137,8 @@ class BlakeDocumentImporter(BlakeImporter):
     # region Work processing
     def process_works(self):
         for entry in self.works_df.itertuples():
+            Record = namedtuple('Work',['index','title','medium','composition_date','image','copies','bad_id','info','info_filename','virtual','virtual_objects'])
+            entry = Record(*entry)
             self.process_work(entry)
 
     def process_work(self, entry):
@@ -219,9 +224,11 @@ class BlakeCopyImporter(BlakeImporter):
         self.object_importer = object_importer or BlakeObjectImporter()
         self.members = {}
         self.copy_handprints = {}
-        copy_handprint_df = pandas.read_csv(self.data_folder + "/csv/copy-handprints.csv", dtype=dtype, encoding="utf-8")
+        copy_handprint_df = pandas.read_csv(self.data_folder + "/csv/copy-handprints.csv", encoding="utf-8")
         copy_handprint_df.fillna("", inplace=True)
         for entry in copy_handprint_df.itertuples():
+            Record = namedtuple('Copy',['index','bad_id','dbi'])
+            entry = Record(*entry)
             self.copy_handprints[entry.bad_id] = entry.dbi.lower()
 
     def process(self, document):
