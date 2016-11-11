@@ -5,21 +5,21 @@ import config
 import models
 
 if hasattr(config, "solr") and config.solr == "lib_prod":
-    blake_object_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake_object')
-    blake_copy_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake_copy')
-    blake_work_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake_work')
+    blake_object_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake-object')
+    blake_copy_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake-copy')
+    blake_work_solr = pysolr.Solr('http://webapp.lib.unc.edu:8200/solr/blake/blake-work')
 elif hasattr(config, "solr") and config.solr == "lib_dev":
-    blake_object_solr = pysolr.Solr('http://london.libint.unc.edu:8983/solr/blake_object')
-    blake_copy_solr = pysolr.Solr('http://london.libint.unc.edu:8983/solr/blake_copy')
-    blake_work_solr = pysolr.Solr('http://london.libint.unc.edu:8983/solr/blake_work')
+    blake_object_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-object')
+    blake_copy_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-copy')
+    blake_work_solr = pysolr.Solr('http://webapp-dev.libint.unc.edu:8200/solr/blake/blake-work')
 elif hasattr(config, "solr") and config.solr == "local":
     blake_object_solr = pysolr.Solr('http://localhost:8983/solr/blake_object')
     blake_copy_solr = pysolr.Solr('http://localhost:8983/solr/blake_copy')
     blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake_work')
 else:
-    blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu/solr/blake-object')
-    blake_copy_solr = pysolr.Solr('http://ctools-dev.its.unc.edu/solr/blake-copy')
-    blake_work_solr = pysolr.Solr('http://ctools-dev.its.unc.edu/solr/blake-work')
+    blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-object')
+    blake_copy_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-copy')
+    blake_work_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-work')
 
 
 class BlakeDataService(object):
@@ -128,10 +128,10 @@ class BlakeDataService(object):
             results["notes"] = cls.solr_object_query(search_string)
 
         def add_object_query_works(results_):
-            works = {w.bad_id: w for w in cls.get_works([r[0] for r in results_])}
+            works = dict((w.bad_id, w) for w in cls.get_works([r[0] for r in results_]))
             return [[works[w].to_dict, c, r] for (w, c, r) in results_]
 
-        return {k: add_object_query_works(v) for (k, v) in results.items()}
+        return dict((k, add_object_query_works(v)) for (k, v) in results.items())
 
     @classmethod
     def query_copies(cls, cfg):
@@ -141,10 +141,10 @@ class BlakeDataService(object):
             results["copy-info"] = cls.solr_copy_query(search_string)
 
         def add_copy_query_works(results_):
-            works = {w.bad_id: w for w in cls.get_works([r[0] for r in results_])}
+            works = dict((w.bad_id, w) for w in cls.get_works([r[0] for r in results_]))
             return [[works[w].to_dict, c, r] for (w, c, r) in results_]
 
-        return {k: add_copy_query_works(v) for (k, v) in results.items()}
+        return dict((k, add_copy_query_works(v)) for (k, v) in results.items())
 
     @classmethod
     def query_works(cls, cfg):
