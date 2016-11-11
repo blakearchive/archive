@@ -1,3 +1,18 @@
+@media (min-width: 992px) {
+  #archive-tabs ul.nav-tabs.objects > li.active > a,
+  #archive-tabs ul.nav-tabs.objects > li.active > a:hover,
+  #archive-tabs ul.nav-tabs.objects > li.active > a:focus {
+    border-right: 0px solid #ddd;
+  }
+}
+
+#archive-tabs ul.nav-tabs.objects > li > a {
+  color: #898989;
+  border: 0px solid #ddd;
+  border-radius: 1px;
+  margin: 0;
+}
+
 h3 a {
     color:black;
     text-transform:uppercase;
