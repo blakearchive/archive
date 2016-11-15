@@ -1,3 +1,32 @@
+.dropdown-header {
+  display: block;
+  padding: 3px 20px;
+  font-size: 12px;
+  line-height: 1.42857143;
+  color: #e9bc47;
+  white-space: nowrap;
+}
+
+nav.navbar ul.navbar-nav ul.dropdown-menu .dropdown-header {
+  font-size: 20px;
+  padding: 14px 20px 1px;
+}
+
+@media (min-width: 992px) {
+  #archive-tabs ul.nav-tabs.objects > li.active > a,
+  #archive-tabs ul.nav-tabs.objects > li.active > a:hover,
+  #archive-tabs ul.nav-tabs.objects > li.active > a:focus {
+    border-right: 0px solid #ddd;
+  }
+}
+
+#archive-tabs ul.nav-tabs.objects > li > a {
+  color: #898989;
+  border: 0px solid #ddd;
+  border-radius: 1px;
+  margin: 0;
+}
+
 h3 a {
     color:black;
     text-transform:uppercase;
