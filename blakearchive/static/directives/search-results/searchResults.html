@@ -30,7 +30,7 @@
     <div class="col-xs-12 full-width copy-container-wrapper">
         <div class="copy-container" ng-class="{hidden: esr.selectedWork == -1}" auto-height adjust="175" breakpoint="992" id="{{esr.type}}">
             <header class="page-header">
-                <button class="close-copies"><span class="glyphicon glyphicon-remove" ng-click="esr.selectedWork = -1" scroll-to-element offset="254"></span></button>
+                <button class="close-copies" ng-click="esr.selectedWork = -1" scroll-to-element offset="254"><span class="glyphicon glyphicon-remove"></span></button>
                 <h1>
                     <a href="/blake/work/{{esr.resultTree[esr.selectedWork][0].bad_id}}">{{esr.resultTree[esr.selectedWork][0].title}} (Composed {{esr.resultTree[esr.selectedWork][0].composition_date_string}})</a>&nbsp;
                     <span dropdown class="dropdown" ng-if="esr.resultTree[esr.selectedWork][2].length > 1 && esr.tree == 'object' && !esr.resultTree[esr.selectedWork][0].virtual">

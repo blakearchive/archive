@@ -45,9 +45,7 @@
         $scope.$on('resize::resize',function(event,window){
             vm.resize();
         });
-        $scope.$on('ovpImage::ovpIncrease',function(event,adjust){
-            vm.resize(adjust);
-        });
+
         $scope.$on('copyCtrl::toggleTools',function(e,tools){
             if(tools){
                 vm.resize();
