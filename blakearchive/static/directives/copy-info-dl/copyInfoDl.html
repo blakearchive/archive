@@ -1,8 +1,9 @@
 <div ng-if="dl.infoObject['#text']">
+    {{ dl.highlight }}
     <dt>{{ dl.dt }} </dt>
-    <dd markdown-it="dl.infoObject['#text']"></dd>
+    <dd ng-bind-html="dl.infoObject['#text'] | markdown | highlight:dl.highlight"></dd>
     <div ng-if="dl.infoObject.note" class="indent-dl">
         <dt><li></li></dt>
-        <dd markdown-it="dl.infoObject.note['#text']"></dd>
+        <dd ng-bind-html="dl.infoObject.note['#text'] | markdown | highlight:dl.highlight"></dd>
     </div>
 </div>

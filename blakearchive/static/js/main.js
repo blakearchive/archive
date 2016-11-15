@@ -8,7 +8,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
 }]);
 
 
-angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch','mdMarkdownIt'])
+angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch','markdown'])
 
     .factory("GenericService", function () {
         return function (constructor) {
@@ -1620,8 +1620,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
             return $sce.trustAsHtml(vm.runReplace(phrase,text));
         }
-
-
 
     })
 
