@@ -8,7 +8,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
 }]);
 
 
-angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch'])
+angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch','mdMarkdownIt'])
 
     .factory("GenericService", function () {
         return function (constructor) {
@@ -227,6 +227,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
          * @param config
          */
         var constructor = function (config) {
+            console.log(config);
             var copy = angular.copy(config);
             copy.header = angular.fromJson(config.header);
             copy.source = angular.fromJson(config.source);
