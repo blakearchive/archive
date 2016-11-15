@@ -1276,40 +1276,23 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 container = angular.element(element.parent()),
                 height = 0,
                 width = 0,
-                originalHeight = 0,
-                originalWidth = 0;
+                parentHeight = 0;
 
             image.on('load',function(){
-                height = image.height();
-                width = image.width();
-                originalHeight = container.height();
-                originalWidth = element.width();
+                height = image[0].naturalHeight;
+                width = image[0].naturalWidth;
+                parentHeight = container.height();
+                if(width > height){
+                    var newHeight = Math.round((height * parentHeight / width));
+                    var margin = Math.round(((parentHeight - newHeight) / 2));
+                    image.css({'height':'auto','width':parentHeight+'px','margin-top':margin+'px'});
+                } else {
+                    image.css({'height':'100%','width':'auto','margin-top':'0'});
+                }
             });
 
             scope.transformRotate = function(){
                 if(imageManipulation.transform.rotate == 0){
-                    if(width > height){
-                        var padding = (width - height) / 2;
-                        if((imageManipulation.transform.rotate % 180) != 0){
-                            container.height(width);
-                            element.width(width);
-                            image.css({'height':'auto','width':'100%','margin-top':padding+'px'});
-                            $rootScope.$broadcast('ovpImage::ovpIncrease',width-originalHeight);
-                        } else {
-                            container.height(originalHeight);
-                            image.css({'height':'100%','width':'auto','margin-top':'0'});
-                            $rootScope.$broadcast('ovpImage::ovpIncrease',0);
-                        }
-                    }
-
-                    if(height > width && $rootScope.view.mode == 'compare'){
-                        if((imageManipulation.transform.rotate % 180) != 0){
-                            element.width(height).css({'text-align':'center'});
-                        } else {
-                            element.width(originalWidth);
-                        }
-                    }
-
                     element.removeClass('rotated');
                 } else {
                     element.addClass('rotated');
