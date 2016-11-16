@@ -2,4 +2,4 @@ app_secret_key = "[secret_key_for_your_app]"
 db_connection_string = 'postgresql://[username]:[password]@[host]/[dbname]'
 production = False
 solr = 'local'
-local_image_page = ""
+local_image_path = ""

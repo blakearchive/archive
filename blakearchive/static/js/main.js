@@ -8,7 +8,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
 }]);
 
 
-angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch'])
+angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch','markdown'])
 
     .factory("GenericService", function () {
         return function (constructor) {
@@ -853,7 +853,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
             var desc_id_for_supp_query = object.supplemental ? object.supplemental : object.desc_id;
 
-
             return $q.all([
                 blakeData.getObjectsFromSameMatrix(object.desc_id),
                 blakeData.getObjectsFromSameProductionSequence(object.desc_id),
@@ -1582,22 +1581,24 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         var vm = this;
 
         vm.runReplace = function(phrase,text){
-            if (phrase.startsWith('"') && phrase.endsWith('"')) {
-                phrase = phrase.replace(/"/g, '');
+            if (phrase !== ''){
+                if (phrase.startsWith('"') && phrase.endsWith('"')) {
+                    phrase = phrase.replace(/"/g, '');
+                    text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
+                    return text;
+                }
+
+                if (phrase.indexOf(' ')) {
+                    phraseArray = phrase.split(' ');
+                    angular.forEach(phraseArray, function (ph) {
+                        text = text.replace(new RegExp('(\\b' + ph + '\\b)', 'gi'), '<span class="highlighted">$1</span>');
+                    });
+                    return text;
+
+                }
+
                 text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
-                return text;
             }
-
-            if (phrase.indexOf(' ')) {
-                phraseArray = phrase.split(' ');
-                angular.forEach(phraseArray, function (ph) {
-                    text = text.replace(new RegExp('(\\b' + ph + '\\b)', 'gi'), '<span class="highlighted">$1</span>');
-                });
-                return text;
-
-            }
-
-            text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
 
             return text;
         }
@@ -1619,8 +1620,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
             return $sce.trustAsHtml(vm.runReplace(phrase,text));
         }
-
-
 
     })
 
