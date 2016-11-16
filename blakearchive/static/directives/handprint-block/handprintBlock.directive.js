@@ -20,7 +20,7 @@
                     vm.imagePath = '/blake/static/img/virtualworks/';
                     break;
                 default:
-                    vm.imagePath = 'http://www.blakearchive.org/blake/images/';;
+                    vm.imagePath = '/images/';
                     break;
             }
 

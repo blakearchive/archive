@@ -3,10 +3,8 @@ import json
 from flask import Blueprint, request, current_app, jsonify, abort
 import config
 
-if hasattr(config, "production") and config.production:
-    api = Blueprint('api', __name__, url_prefix='/api')
-else:
-    api = Blueprint('api', __name__, url_prefix='/blake/api')
+
+api = Blueprint('api', __name__, url_prefix='/blake/api')
 
 
 @api.route('/query_objects', methods=["POST"])
