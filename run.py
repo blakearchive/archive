@@ -12,16 +12,7 @@ models.db.init_app(app)
 
 @app.route('/images/<image>')
 def get_image(image=None):
-    if image:
-        if config.production:
-            return send_file("/htdocs/blake_assets/images/"+image)
-        else:
-            return send_file(config.local_image_path+image)
-
-@app.route('/blake/static/<file>')
-def get_file(file=None):
-    if file:
-        return send_file("static/"+file)
+    return send_file(config.local_image_path+image)
 
 @app.route('/', defaults={'path': ''})
 
