@@ -43,6 +43,18 @@
                         // Doing an in-place substitution of the bad_id with the relevant object
                         copyBadMap[result.bad_id][0] = result;
                     });
+                    if(angular.isArray(vm.resultTree[index][2])){
+                        vm.resultTree[index][2].sort(function(a,b){
+                            console.log('is '+ a[0].print_date+' > '+ b[0].print_date);
+                            if(a[0].print_date > b[0].print_date){
+                                return 1
+                            }
+                            if(a[0].print_date < b[0].print_date){
+                                return -1
+                            }
+                            return 0
+                        })
+                    }
                 });
             }
             if (objectIds.length > 0) {
@@ -53,6 +65,9 @@
                     });
                 });
             }
+
+            // Sort the copies
+
 
         };
 
@@ -207,7 +222,6 @@
             }
             switch(vm.tree){
                 case 'object':
-                console.log(vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0])
                     return vm.resultTree[vm.selectedWork][2][vm.selectedCopy][2][vm.selectedObject][0].full_object_id
                 case 'copy':
                     return 'Copy '+vm.resultTree[vm.selectedWork][2][vm.selectedCopy][0].archive_copy_id;
