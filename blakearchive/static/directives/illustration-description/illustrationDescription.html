@@ -7,8 +7,8 @@
     
     <p ng-if="descCtrl.keywords != 'hidden'" class="keywords">Keywords:</p>
     <ul class="list-inline" ng-if="descCtrl.keywords != 'hidden'">
-        <li ng-repeat="characteristic in component.component.characteristic track by $index"><span markdown-it="characteristic['#text']"></span></li>
+        <li ng-repeat="characteristic in component.component.characteristic track by $index"><span ng-bind-html="characteristic['#text'] | highlight:descCtrl.highlight"></span></li>
     </ul>
 
-    <p ng-if="descCtrl.keywords != 'only'" markdown-it="component.component.illusobjdesc['#text']"></p>
+    <p ng-if="descCtrl.keywords != 'only'" ng-bind-html="component.component.illusobjdesc['#text'] | highlight:descCtrl.highlight | markdown"></p>
 </div>

@@ -8,13 +8,13 @@
         <dl>
 
             <dt>Title</dt>
-            <dd ng-bind-html=" info.getHeader().filedesc.titlestmt.title.main['#text'] | highlight:info.highlight"></dd>
+            <dd ng-bind-html=" info.getHeader().filedesc.titlestmt.title.main['#text'] | markdown"></dd>
             <div ng-repeat="origination in info.getOrigination() track by $index">
                 <dt>Origination</dt>
-                <dd><span ng-bind-html="origination['#text'] | highlight:info.highlight"></span>: <span ng-bind-html="info.getOriginationRole(origination.role) | highlight:info.highlight"></span></dd>
+                <dd><span ng-bind-html="origination['#text'] | markdown"></span>: <span ng-bind-html="info.getOriginationRole(origination.role) | markdown"></span></dd>
                 <div ng-if="origination.note" class="indent-dl">
                     <dt><li></li></dt>
-                    <dd ng-bind-html="origination.note['#text'] | highlight:info.highlight"></dd>
+                    <dd ng-bind-html="origination.note['#text'] | markdown"></dd>
                 </div>
             </div>
 
@@ -28,7 +28,7 @@
 
             <div ng-if="copy.print_date">
                 <dt>Print Date</dt>
-                <dd ng-bind-html="copy.print_date | highlight:info.highlight"></dd>
+                <dd ng-bind-html="copy.print_date | markdown"></dd>
             </div>
 
             <copy-info-dl dt="Number of Objects" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.numberobj"></copy-info-dl>
@@ -77,35 +77,35 @@
         <dl class="dl-horizontal">
             <dt>Mailing Address</dt>
             <dd>
-                <span ng-bind-html="info.getSource().repository.institution['#text'] | highlight:info.highlight"></span><br>
+                <span ng-bind-html="info.getSource().repository.institution['#text'] | markdown"></span><br>
                 <span ng-bind-html="info.getSource().repository.addressline[0]['#text']| highlight:info.highlight"></span><br>
-                <span ng-bind-html="info.getSource().repository.addressline[1]['#text'] | highlight:info.highlight"></span><br>
-                <span ng-bind-html="info.getSource().repository.addressline[2]['#text'] | highlight:info.highlight"></span>
+                <span ng-bind-html="info.getSource().repository.addressline[1]['#text'] | markdown"></span><br>
+                <span ng-bind-html="info.getSource().repository.addressline[2]['#text'] | markdown"></span>
             </dd>
 
             <dt> {{ info.getSource().repository.addressline[3]['#text'].split(': ')[0] }}</dt>
-            <dd ng-bind-html="info.getSource().repository.addressline[3]['#text'].split(': ')[1] | highlight:info.highlight"></dd>
+            <dd ng-bind-html="info.getSource().repository.addressline[3]['#text'].split(': ')[1] | markdown"></dd>
 
             <dt> {{ info.getSource().repository.addressline[4]['#text'].split(': ')[0] }}</dt>
-            <dd ng-bind-html="info.getSource().repository.addressline[4]['#text'].split(': ')[1] | highlight:info.highlight"></dd>
+            <dd ng-bind-html="info.getSource().repository.addressline[4]['#text'].split(': ')[1] | markdown"></dd>
 
             <dt> {{ info.getSource().repository.addressline[5]['#text'].split(': ')[0] }}</dt>
-            <dd ng-bind-html="info.getSource().repository.addressline[5]['#text'].split(': ')[1] | highlight:info.highlight"></dd>
+            <dd ng-bind-html="info.getSource().repository.addressline[5]['#text'].split(': ')[1] | markdown"></dd>
 
             <dt> {{ info.getSource().repository.addressline[6]['#text'].split(': ')[0] }}</dt>
-            <dd ng-bind-html="info.getSource().repository.addressline[6]['#text'].split(': ')[1] | highlight:info.highlight"></dd>
+            <dd ng-bind-html="info.getSource().repository.addressline[6]['#text'].split(': ')[1] | markdown"></dd>
 
             <div ng-if="info.getSource().repository.department['#text']">
                 <dt>Department</dt>
-                <dd ng-bind-html="info.getSource().repository.department['#text'] | highlight:info.highlight"></dd>
+                <dd ng-bind-html="info.getSource().repository.department['#text'] | markdown"></dd>
             </div>
             <div ng-if="info.getSource().repository.collection['#text']">
                 <dt>Collection</dt>
-                <dd ng-bind-html="info.getSource().repository.collection['#text'] | highlight:info.highlight"></dd>
+                <dd ng-bind-html="info.getSource().repository.collection['#text'] | markdown"></dd>
             </div>
             <div ng-if="info.getSource().repository.repositoryid['@label']">
                 <dt>{{ info.getSource().repository.repositoryid['@label'] }}</dt>
-                <dd ng-bind-html="info.getSource().repository.repositoryid['#text'] | highlight:info.highlight"></dd>
+                <dd ng-bind-html="info.getSource().repository.repositoryid['#text'] | markdown"></dd>
             </div>
 
         </dl>

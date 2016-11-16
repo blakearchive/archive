@@ -1583,22 +1583,24 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         var vm = this;
 
         vm.runReplace = function(phrase,text){
-            if (phrase.startsWith('"') && phrase.endsWith('"')) {
-                phrase = phrase.replace(/"/g, '');
+            if (phrase !== ''){
+                if (phrase.startsWith('"') && phrase.endsWith('"')) {
+                    phrase = phrase.replace(/"/g, '');
+                    text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
+                    return text;
+                }
+
+                if (phrase.indexOf(' ')) {
+                    phraseArray = phrase.split(' ');
+                    angular.forEach(phraseArray, function (ph) {
+                        text = text.replace(new RegExp('(\\b' + ph + '\\b)', 'gi'), '<span class="highlighted">$1</span>');
+                    });
+                    return text;
+
+                }
+
                 text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
-                return text;
             }
-
-            if (phrase.indexOf(' ')) {
-                phraseArray = phrase.split(' ');
-                angular.forEach(phraseArray, function (ph) {
-                    text = text.replace(new RegExp('(\\b' + ph + '\\b)', 'gi'), '<span class="highlighted">$1</span>');
-                });
-                return text;
-
-            }
-
-            text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
 
             return text;
         }
@@ -1607,6 +1609,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             if (!angular.isDefined(text) || !angular.isDefined(phrase)) {
                 return $sce.trustAsHtml(text);
             }
+
+            console.log('no text or phrase')
+            console.log(text);
 
             if(angular.isDefined(alt) && alt.length > 0){
                 angular.forEach(alt, function(spelling){

@@ -18,6 +18,10 @@ angular.module('markdown', [])
   }])
   .filter('markdown', ['markdown', function (markdown) {
     return function (text) {
-      return markdown.render(text || '');
+      if (typeof text == 'string') {
+        return markdown.render(text || '');
+      } else {
+        return text;
+      }
     };
   }]);
