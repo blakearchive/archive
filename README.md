@@ -41,7 +41,6 @@ git clone https://github.com/blakearchive/data.git #clone the blakearchive/data 
 git clone https://github.com/blakearchive/archive.git #clone the blakearchvie/archive repo
 cd archive #cd into the repo
 pip install -r requirements.txt #install the python requirements
-npm install
 ```
 
 ### Setup your config
@@ -54,6 +53,12 @@ cp config.py.example blakearchive/config.py
     * keep the ```:``` if you have no password
     * ```[host]``` should be ```localhost```
     * ```[dbname]``` should be the database name you created in step 3 of the postgres instructions
+2. Add the dir where you keep the blake images
+
+### Rsync the blake images
+```
+rsync -rv <user>@<server>:<img dir> <local_image_path>
+```
 
 ### Make your solr cores
 ```bash
