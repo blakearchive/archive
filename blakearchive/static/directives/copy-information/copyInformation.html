@@ -18,48 +18,48 @@
                 </div>
             </div>
 
-            <copy-info-dl dt="Publisher" highlight="info.highlight" info-object="info.getSource().objdescid.imprint.publisher"></copy-info-dl>
+            <copy-info-dl dt="Publisher" highlight="{{ info.highlight }}" info-object="info.getSource().objdescid.imprint.publisher"></copy-info-dl>
 
-            <copy-info-dl dt="Place of Publication" highlight="info.highlight" info-object="info.getSource().objdescid.imprint.pubplace"></copy-info-dl>
+            <copy-info-dl dt="Place of Publication" highlight="{{ info.highlight }}" info-object="info.getSource().objdescid.imprint.pubplace"></copy-info-dl>
 
-            <copy-info-dl dt="Date" highlight="info.highlight" info-object="info.getSource().objdescid.imprint.date"></copy-info-dl>
+            <copy-info-dl dt="Date" highlight="{{ info.highlight }}" info-object="info.getSource().objdescid.imprint.date"></copy-info-dl>
 
-            <copy-info-dl dt="Composition Date" highlight="info.highlight" info-object="info.getSource().objdescid.compdate"></copy-info-dl>
+            <copy-info-dl dt="Composition Date" highlight="{{ info.highlight }}" info-object="info.getSource().objdescid.compdate"></copy-info-dl>
 
             <div ng-if="copy.print_date">
                 <dt>Print Date</dt>
                 <dd ng-bind-html="copy.print_date | highlight:info.highlight"></dd>
             </div>
 
-            <copy-info-dl dt="Number of Objects" highlight="info.highlight" info-object="info.getSource().objinfo.numberobj"></copy-info-dl>
+            <copy-info-dl dt="Number of Objects" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.numberobj"></copy-info-dl>
 
-            <copy-info-dl dt="Object Order" highlight="info.highlight" info-object="info.getSource().objinfo.objorder"></copy-info-dl>
+            <copy-info-dl dt="Object Order" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.objorder"></copy-info-dl>
 
-            <copy-info-dl dt="Object Size" highlight="info.highlight" info-object="info.getSource().objinfo.objsize"></copy-info-dl>
+            <copy-info-dl dt="Object Size" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.objsize"></copy-info-dl>
 
-            <copy-info-dl dt="Number of Leaves" highlight="info.highlight" info-object="info.getSource().objinfo.numberleaves"></copy-info-dl>
+            <copy-info-dl dt="Number of Leaves" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.numberleaves"></copy-info-dl>
 
-            <copy-info-dl dt="Leaf Size" highlight="info.highlight" info-object="info.getSource().objinfo.leafsize"></copy-info-dl>
+            <copy-info-dl dt="Leaf Size" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.leafsize"></copy-info-dl>
 
-            <copy-info-dl dt="Medium" highlight="info.highlight" info-object="info.getSource().objinfo.medium"></copy-info-dl>
+            <copy-info-dl dt="Medium" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.medium"></copy-info-dl>
 
-            <copy-info-dl dt="Printing Style" highlight="info.highlight" info-object="info.getSource().objinfo.printingstyle"></copy-info-dl>
+            <copy-info-dl dt="Printing Style" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.printingstyle"></copy-info-dl>
 
-            <copy-info-dl dt="Ink Color" highlight="info.highlight" info-object="info.getSource().objinfo.inkcolor"></copy-info-dl>
+            <copy-info-dl dt="Ink Color" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.inkcolor"></copy-info-dl>
 
-            <copy-info-dl dt="Support" highlight="info.highlight" info-object="info.getSource().objinfo.support"></copy-info-dl>
+            <copy-info-dl dt="Support" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.support"></copy-info-dl>
 
-            <copy-info-dl dt="Watermark" highlight="info.highlight" info-object="info.getSource().objinfo.watermark"></copy-info-dl>
+            <copy-info-dl dt="Watermark" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.watermark"></copy-info-dl>
 
-            <copy-info-dl dt="Etched Numbers" highlight="info.highlight" info-object="info.getSource().objinfo.etchednumbers"></copy-info-dl>
+            <copy-info-dl dt="Etched Numbers" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.etchednumbers"></copy-info-dl>
 
-            <copy-info-dl dt="Penned Numbers" highlight="info.highlight" info-object="info.getSource().objinfo.pennednumbers"></copy-info-dl>
+            <copy-info-dl dt="Penned Numbers" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.pennednumbers"></copy-info-dl>
 
-            <copy-info-dl dt="Frame Lines" highlight="info.highlight" info-object="info.getSource().objinfo.framelines"></copy-info-dl>
+            <copy-info-dl dt="Frame Lines" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.framelines"></copy-info-dl>
 
-            <copy-info-dl dt="Binding" highlight="info.highlight" info-object="info.getSource().objinfo.binding"></copy-info-dl>
+            <copy-info-dl dt="Binding" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.binding"></copy-info-dl>
 
-            <copy-info-dl dt="Stab Holes" highlight="info.highlight" info-object="info.getSource().objinfo.stabholes"></copy-info-dl>
+            <copy-info-dl dt="Stab Holes" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.stabholes"></copy-info-dl>
 
         </dl>
     </div>
@@ -67,10 +67,10 @@
     <div class="col-sm-6">
         <h3>Provenance</h3>
         <dl class="dl-horizontal">
-            <copy-info-dl dt="Name" highlight="info.highlight" info-object="info.getSource().provenance.name"></copy-info-dl>
-            <copy-info-dl dt="Date" highlight="info.highlight" info-object="info.getSource().provenance.date"></copy-info-dl>
-            <copy-info-dl dt="Dealer" highlight="info.highlight" info-object="info.getSource().provenance.dealer"></copy-info-dl>
-            <copy-info-dl dt="Price" highlight="info.highlight" info-object="info.getSource().provenance.price"></copy-info-dl>
+            <copy-info-dl dt="Name" highlight="{{ info.highlight }}" info-object="info.getSource().provenance.name"></copy-info-dl>
+            <copy-info-dl dt="Date" highlight="{{ info.highlight }}" info-object="info.getSource().provenance.date"></copy-info-dl>
+            <copy-info-dl dt="Dealer" highlight="{{ info.highlight }}" info-object="info.getSource().provenance.dealer"></copy-info-dl>
+            <copy-info-dl dt="Price" highlight="{{ info.highlight }}" info-object="info.getSource().provenance.price"></copy-info-dl>
         </dl>
 
         <h3>Present Location</h3>
