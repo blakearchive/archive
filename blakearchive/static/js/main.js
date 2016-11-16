@@ -187,17 +187,55 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                                     angular.forEach(objtext[k], function(spellings){
                                         if(angular.isDefined(spellings['orig']) && angular.isDefined(spellings['orig']['#text'])) {
                                             var orig = spellings['orig']['#text'];
-                                            var reg = angular.isDefined(spellings['reg']) ? spellings['reg']['#text'] : spellings['corr']['#text'];
-                                            var alt = {reg: reg.toLowerCase(), orig: orig.toLowerCase()};
-                                            altspelling.push(alt);
+                                            var reg = '';
+
+                                            // Check the reg attribute
+                                            if (angular.isDefined(spellings['reg'])){
+                                                reg = spellings['reg'];
+                                            }
+
+                                            // Check the corr attribute
+                                            if (angular.isDefined(spellings['corr'])){
+                                                reg = spellings['corr'];
+                                            }
+                                            console.log(spellings);
+                                            console.log(reg);
+                                            if(angular.isArray(reg)){
+                                                angular.forEach(reg, function(v){
+                                                    var alt = {reg: v['#text'].toLowerCase(), orig: orig.toLowerCase()};
+                                                    altspelling.push(alt);
+                                                });
+                                            } else {
+                                                var alt = {reg: reg['#text'].toLowerCase(), orig: orig.toLowerCase()};
+                                                altspelling.push(alt);
+                                            }
+
                                         }
                                     });
                                 } else {
                                     if(angular.isDefined(objtext[k]['orig']) && angular.isDefined(objtext[k]['orig']['#text'])){
                                         var orig = objtext[k]['orig']['#text'];
-                                        var reg = angular.isDefined(objtext[k]['reg']) ? objtext[k]['reg']['#text'] : objtext[k]['corr']['#text'];
-                                        var alt = {reg: reg.toLowerCase(), orig: orig.toLowerCase()};
-                                        altspelling.push(alt);
+                                        var reg = '';
+
+                                        // Check the reg attribute
+                                        if (angular.isDefined(objtext[k]['reg'])){
+                                            reg = objtext[k]['reg'];
+                                        }
+
+                                        // Check the corr attribute
+                                        if (angular.isDefined(objtext[k]['corr'])){
+                                            reg = objtext[k]['corr'];
+                                        }
+
+                                        if(angular.isArray(reg)){
+                                            angular.forEach(reg, function(v){
+                                                var alt = {reg: v['#text'].toLowerCase(), orig: orig.toLowerCase()};
+                                                altspelling.push(alt);
+                                            });
+                                        } else {
+                                            var alt = {reg: reg['#text'].toLowerCase(), orig: orig.toLowerCase()};
+                                            altspelling.push(alt);
+                                        }
                                     }
                                 }
                             } else {
@@ -633,6 +671,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
             function getObjectsForCopyFailed(error){
                 $log.error('XHR Failed for getObjectsForCopy.\n' + angular.toJson(error.data, true));
+                $log.error('Reuesting: ' + url);
             }
 
         };
