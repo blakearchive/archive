@@ -10,13 +10,18 @@ app.config["BLAKE_DATA_SERVICE"] = services.BlakeDataService
 # The database object must initialize the app in order to be able to perform queries
 models.db.init_app(app)
 
-# @app.route('/images/<image>')
-# def get_image(image=None):
-#    if image:
-#        if config.production:
-#            return send_file("/htdocs/blake_assets/images/"+image)
-#        else:
-#            return send_file(config.local_image_path+image)
+@app.route('/images/<image>')
+def get_image(image=None):
+    if image:
+        if config.production:
+            return send_file("/htdocs/blake_assets/images/"+image)
+        else:
+            return send_file(config.local_image_path+image)
+
+@app.route('/blake/static/<file>')
+def get_file(file=None):
+    if file:
+        return send_file("static/"+file)
 
 @app.route('/', defaults={'path': ''})
 
