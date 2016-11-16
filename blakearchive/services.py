@@ -176,17 +176,26 @@ class BlakeDataService(object):
     @classmethod
     def get_objects_with_same_motif(cls, desc_id):
         obj = cls.get_sorted_object_query().filter(models.BlakeObject.desc_id == desc_id).first()
-        return obj.objects_with_same_motif
+        if obj.objects_with_same_motif:
+            return obj.objects_with_same_motif
+        else:
+            return []
 
     @classmethod
     def get_objects_from_same_production_sequence(cls, desc_id):
         obj = cls.get_sorted_object_query().filter(models.BlakeObject.desc_id == desc_id).first()
-        return obj.objects_from_same_production_sequence
+        if obj.objects_from_same_production_sequence:
+            return obj.objects_from_same_production_sequence
+        else:
+            return []
 
     @classmethod
     def get_objects_from_same_matrix(cls, desc_id):
         obj = cls.get_sorted_object_query().filter(models.BlakeObject.desc_id == desc_id).first()
-        return obj.objects_from_same_matrix
+        if obj.objects_from_same_matrix:
+            return obj.objects_from_same_matrix
+        else:
+            return []
 
     @classmethod
     def get_textually_referenced_materials(cls, desc_id):

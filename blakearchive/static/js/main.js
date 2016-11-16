@@ -853,7 +853,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
             var desc_id_for_supp_query = object.supplemental ? object.supplemental : object.desc_id;
 
-
             return $q.all([
                 blakeData.getObjectsFromSameMatrix(object.desc_id),
                 blakeData.getObjectsFromSameProductionSequence(object.desc_id),
