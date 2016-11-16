@@ -227,7 +227,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
          * @param config
          */
         var constructor = function (config) {
-            console.log(config);
             var copy = angular.copy(config);
             copy.header = angular.fromJson(config.header);
             copy.source = angular.fromJson(config.source);
@@ -1609,9 +1608,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             if (!angular.isDefined(text) || !angular.isDefined(phrase)) {
                 return $sce.trustAsHtml(text);
             }
-
-            console.log('no text or phrase')
-            console.log(text);
 
             if(angular.isDefined(alt) && alt.length > 0){
                 angular.forEach(alt, function(spelling){
