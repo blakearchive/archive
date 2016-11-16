@@ -60,7 +60,7 @@
                                  ng-class="{selected: esr.selectedObject == $index && esr.selectedCopy == $parent.$index}"
                             >
                                 <a ng-click="esr.showHighlight($index,$parent.$index)">
-                                    <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ object[0].dbi }}.100.jpg);"></span>
+                                    <span class="object-img" style="background-image: url(/images/{{ object[0].dbi }}.100.jpg);"></span>
                                     <span ng-if="esr.resultTree[esr.selectedWork][0].bad_id == 'letters'" class="description">{{object[0].object_group}}</span>
                                     <span ng-if="object[0].title && esr.resultTree[esr.selectedWork][0].bad_id != 'letters'" class="description">{{object[0].title}}</span>
                                     <span ng-if="esr.resultTree[esr.selectedWork][0].bad_id != 'letters'" class="description text-capitalize">{{object[0].full_object_id.replace("Object 1","")}}</span>
@@ -81,7 +81,7 @@
                              ng-class="{selected: esr.selectedObject == $index}"
                             >
                             <a ng-click="esr.showHighlight($index)">
-                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ object[0].dbi }}.100.jpg);"></span>
+                                <span class="object-img" style="background-image: url(/images/{{ object[0].dbi }}.100.jpg);"></span>
                                 <span class="description">{{object[0].title}}</span>
                                 <span class="description text-capitalize">{{object[0].full_object_id}}</span>
                             </a>
@@ -98,7 +98,7 @@
                              ng-class="{selected: esr.selectedCopy == $index}"
                         >
                             <a ng-click="esr.showHighlight($index)">
-                                <span class="object-img" style="background-image: url(http://www.blakearchive.org/blake/images/{{ copy[0].image }}.100.jpg);"></span>
+                                <span class="object-img" style="background-image: url(/images/{{ copy[0].image }}.100.jpg);"></span>
                                 <span class="description text-capitalize">Copy {{copy[0].archive_copy_id}}</span>
                             </a>
                         </div>
@@ -111,7 +111,7 @@
                     <br>
                     <div class="object-img-container text-center" auto-height adjust="350" breakpoint="992">
                         <a ng-href="/blake/copy/{{esr.getPreviewHref()}}">
-                            <img ng-src="http://www.blakearchive.org/blake/images/{{ esr.getPreviewImage() }}.100.jpg">
+                            <img ng-src="/images/{{ esr.getPreviewImage() }}.100.jpg">
                             <p></p>
                             <p class="object-subtitle">
                                 <span ng-if="esr.tree == 'object' && esr.getPreviewTitle() != null" class="object-no">{{esr.getPreviewTitle()}}<br></span>
