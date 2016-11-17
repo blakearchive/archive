@@ -135,7 +135,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             var obj = angular.copy(config);
             if (obj) {
                 obj.illustration_description = angular.fromJson(config.illustration_description);
-                obj.characteristics = angular.fromJson(config.characteristics);
+                // obj.characteristics = angular.fromJson(config.characteristics);
                 obj.text = angular.fromJson(config.text);
                 obj.notes = angular.fromJson(config.notes);
                 obj.lines = [];
@@ -198,8 +198,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                                             if (angular.isDefined(spellings['corr'])){
                                                 reg = spellings['corr'];
                                             }
-                                            console.log(spellings);
-                                            console.log(reg);
                                             if(angular.isArray(reg)){
                                                 angular.forEach(reg, function(v){
                                                     var alt = {reg: v['#text'].toLowerCase(), orig: orig.toLowerCase()};
