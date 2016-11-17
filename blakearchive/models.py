@@ -74,6 +74,7 @@ class BlakeObject(db.Model):
     copy_print_date_value = db.Column(db.UnicodeText)
     copy_print_date_string = db.Column(db.UnicodeText)
     copy_bad_id = db.Column(db.Text)
+    characteristics = db.Column(db.UnicodeText)
     illustration_description = db.Column(JSON)
     components = db.Column(JSON)
     text = db.Column(JSON)
@@ -148,6 +149,7 @@ class BlakeObject(db.Model):
             "copy_print_date": self.copy_print_date,
             "copy_print_date_string": self.copy_print_date_string,
             "copy_print_date_value": self.copy_print_date_value,
+            "characteristics": self.characteristics,
             "ordering_date": self.ordering_date,
             "copy_bad_id": self.copy_bad_id,
             "full_object_id": self.full_object_id,
