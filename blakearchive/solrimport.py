@@ -39,6 +39,7 @@ def main():
                 "dbi": blake_object.dbi,
                 "desc_id": blake_object.desc_id,
                 "copy_id": blake_object.copy_bad_id,
+                "characteristics": blake_object.characteristics,
                 "components": json.dumps(blake_object.components),
                 "illustration_description": json.dumps(blake_object.illustration_description),
                 "text": json.dumps(blake_object.text),
