@@ -70,11 +70,15 @@ def get_objects_from_same_matrix(desc_id):
     return jsonify({"results": [r.to_dict for r in results]})
 
 
-@api.route('/object/<desc_id>/textually_related_material')
-def get_textually_related_material(desc_id):
+@api.route('/object/<desc_id>/textually_referenced_materials')
+def get_textually_referenced_material(desc_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
-    results = blake_data_service.get_textually_related_material(desc_id)
-    return jsonify({k: [r.to_dict for r in v] for (k, v) in results})
+    results = blake_data_service.get_textually_referenced_materials(desc_id)
+    return jsonify({
+        "objects": [r.to_dict for r in results["objects"]],
+        "copies": [r.to_dict for r in results["copies"]],
+        "works": [r.to_dict for r in results["works"]]
+    })
 
 
 @api.route('/object/<desc_id>/supplemental_objects')
