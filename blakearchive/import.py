@@ -405,8 +405,7 @@ class BlakeObjectImporter(BlakeImporter):
 
     @classmethod
     def get_characteristics(cls, obj):
-        # return " ".join(s.encode("utf-8") for s in set(obj.xpath(".//characteristic/text()")))
-        return " "
+        return " ".join(s.encode("utf-8") for s in set(obj.xpath(".//characteristic/text()")))
 
     @classmethod
     def get_illustration_description(cls, obj):
