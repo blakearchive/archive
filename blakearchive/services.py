@@ -107,7 +107,7 @@ class BlakeDataService(object):
             search_string = cls.generate_search_element("title", cfg)
             results["title"] = cls.solr_object_query(search_string)
         if cfg.get("searchImageKeywords") or cfg.get("searchAllFields"):
-            search_string = cls.generate_search_element("components", cfg)
+            search_string = cls.generate_search_element("characteristics", cfg)
             results["tag"] = cls.solr_object_query(search_string)
         if cfg.get("searchText") or cfg.get("searchAllFields"):
             search_string = cls.generate_search_element("text", cfg)
