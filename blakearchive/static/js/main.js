@@ -600,7 +600,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         };
 
         blakeData.getTextuallyReferencedMaterial = function (descId) {
-            var url = directoryPrefix + '/api/object/' + descId + '/objects_from_same_production_sequence';
+            var url = directoryPrefix + '/api/object/' + descId + '/textually_referenced_materials';
+
+            $log.info('getting objects with textual references');
 
             return $http.get(url)
                 .then(getTextuallyReferencedMaterialComplete)
@@ -608,9 +610,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
             function getTextuallyReferencedMaterialComplete(response) {
                 return {
-                    objects: BlakeObject.create(response.objects),
-                    copies: BlakeCopy.create(response.copies),
-                    works: BlakeWork.create(response.works)
+                    objects: response.data.objects.length ? BlakeObject.create(response.data.objects) : [],
+                    copies: response.data.copies.length ? BlakeObject.create(response.data.copies) : [],
+                    works: response.data.works.length ? BlakeObject.create(response.data.works) : []
                 }
             }
 
@@ -896,11 +898,13 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 blakeData.getObjectsFromSameMatrix(object.desc_id),
                 blakeData.getObjectsFromSameProductionSequence(object.desc_id),
                 blakeData.getObjectsWithSameMotif(object.desc_id),
-                blakeData.getSupplementalObjects(desc_id_for_supp_query)
+                blakeData.getSupplementalObjects(desc_id_for_supp_query),
+                blakeData.getTextuallyReferencedMaterial(object.desc_id)
             ]).then(function (data) {
                 object.matrix = BlakeObject.create(data[0]);
                 object.sequence = BlakeObject.create(data[1]);
                 object.motif = BlakeObject.create(data[2]);
+                object.text_ref = data[4];
                 object.supplemental_objects = BlakeObject.create(data[3]);
             });
         }
