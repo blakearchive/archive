@@ -350,6 +350,7 @@ class BlakeObjectImporter(BlakeImporter):
         obj.desc_id = element.attrib.get("id").lower()
         obj.dbi = element.attrib.get("dbi").lower()
         obj.components = self.get_components(element)
+        obj.characteristics = self.get_characteristics(element)
         obj.illustration_description = self.get_illustration_description(element)
         obj.notes = self.get_object_notes(element)
         obj.title = self.get_object_title(element)
@@ -401,6 +402,10 @@ class BlakeObjectImporter(BlakeImporter):
                 return element_dict
         components = obj.xpath(".//illusdesc/illustration/component")
         return [generate_component(c) for c in components]
+
+    @classmethod
+    def get_characteristics(cls, obj):
+        return " ".join(s.encode("utf-8") for s in set(obj.xpath(".//characteristic/text()")))
 
     @classmethod
     def get_illustration_description(cls, obj):
