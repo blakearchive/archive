@@ -29,8 +29,7 @@
     <nav class="navbar navbar-default navbar-fixed-top" blake-menu ng-class="{'menu-open':worksNavState, 'menu-closed': !worksNavState}">
       <div class="site-header-container">
         <div class="container-fluid site-header">
-          <a ng-if="!showmePage" class="navbar-brand" ng-href="{{showmePage ? '':'/'}}"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
-          <span ng-if="showmePage" class="name">The William Blake Archive</span><span class="sig"></span>
+          <a class="navbar-brand" ng-href="{{showmePage ? '':'/'}}"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
           <span ng-if="persistentmode == 'gallery' && !showmePage" class="gr-display">GALLERY MODE</span>
           <span ng-if="persistentmode == 'reading' && !showmePage" class="gr-display">READING MODE</span>
           <span ng-if="showmePage && showmeType == 'text'" class="gr-display">TEXTUAL TRANSCRIPTION</span>
