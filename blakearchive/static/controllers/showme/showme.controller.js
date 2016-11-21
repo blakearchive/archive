@@ -13,6 +13,7 @@
         $rootScope.showmePage = true;
 
         vm.what = $routeParams.what;
+        $rootScope.showmeType = $routeParams.what;
 
         BlakeDataService.setSelectedCopy($routeParams.copyId,$routeParams.descId);
 
