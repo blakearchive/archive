@@ -1674,7 +1674,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         $routeProvider.when(directoryPrefix + '/staticpage/:initialPage', {
             templateUrl: directoryPrefix + '/static/controllers/staticpage/staticpage.html',
             controller: "StaticpageController",
-            controllerAs: 'staticpage'
+            controllerAs: 'staticpage',
+            reloadOnSearch: false
         });
         $routeProvider.when(directoryPrefix + '/object/:descId', {
             templateUrl: directoryPrefix + '/static/html/object.html',
