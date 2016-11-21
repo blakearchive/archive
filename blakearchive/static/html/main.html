@@ -29,9 +29,14 @@
     <nav class="navbar navbar-default navbar-fixed-top" blake-menu ng-class="{'menu-open':worksNavState, 'menu-closed': !worksNavState}">
       <div class="site-header-container">
         <div class="container-fluid site-header">
-          <a class="navbar-brand" href="/"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
-          <span ng-if="persistentmode == 'gallery'" class="gr-display">GALLERY MODE</span>
-          <span ng-if="persistentmode == 'reading'" class="gr-display">READING MODE</span>
+          <a class="navbar-brand" ng-href="{{showmePage ? '':'/'}}"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
+          <span ng-if="persistentmode == 'gallery' && !showmePage" class="gr-display">GALLERY MODE</span>
+          <span ng-if="persistentmode == 'reading' && !showmePage" class="gr-display">READING MODE</span>
+          <span ng-if="showmePage && showmeType == 'text'" class="gr-display">TEXTUAL TRANSCRIPTION</span>
+          <span ng-if="showmePage && showmeType == 'desc'" class="gr-display">ILLUSTRATION DESCRIPTION</span>
+          <span ng-if="showmePage && showmeType == 'note'" class="gr-display">EDITORS' NOTES</span>
+          <span ng-if="showmePage && showmeType == 'enlargement'" class="gr-display">ENLARGEMENT</span>
+          <span ng-if="showmePage && showmeType == 'truesize'" class="gr-display">TRUE SIZE</span>
           <button ng-click="worksNavState = !worksNavState" type="button" class="collapse-archive" ng-class="{'hidden':showmePage, 'menu-open':worksNavState, 'menu-closed': !worksNavState}">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
