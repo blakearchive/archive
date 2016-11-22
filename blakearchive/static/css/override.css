@@ -1,3 +1,18 @@
+.site-header button.collapse-archive {
+  background-image: none;
+  border-top-right-radius: 2px;
+  border-top-left-radius: 2px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-top: 8px;
+  float: right;
+  position: relative;
+  z-index: 10;
+  -webkit-transition: padding-top 0.1s ease-out;
+  -o-transition: padding-top 0.1s ease-out;
+  transition: padding-top 0.1s ease-out;
+}
+
 .dropdown-header {
   display: block;
   padding: 3px 20px;
