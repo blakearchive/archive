@@ -1195,7 +1195,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                   if (offsetBottom !== 0 && $window.pageYOffset + elementHeight >= doNotPass && pageHeight - offsetBottom > elementHeight){
                       element.css('position', 'absolute');
                       element.css('top','');
-                      element.css('bottom','0');
+                      element.css('bottom','50px');
                   } else if ($window.pageYOffset > elementOffsetTop + offsetStart && pageHeight - offsetBottom > elementHeight) {
                       element.css('position', 'fixed');
                       element.css('top', offsetTop+'px');
