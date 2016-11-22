@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <!-- copies in work -->
-                <div class="copies-in-work col-sm-12 text-center" auto-width adjust="200" breakpoint="992" divide="3" ng-if="esr.resultTree[esr.selectedWork][1] > 1 && esr.tree == 'copy'">
+                <div class="copies-in-work col-sm-12 text-center" auto-width adjust="200" breakpoint="992" divide="3" ng-if="esr.resultTree[esr.selectedWork][1] > 1 && esr.tree == 'copy'" to-top-on-broadcast="searchCtrl::changeResult">
                     <h5>Matching Copies</h5>
                     <br>
                     <div class="flex-wrap">
@@ -123,7 +123,7 @@
                 </div>
 
 
-                <div class="object-result-highlight col-sm-12" auto-width adjust="100" breakpoint="992" divide="3" ng-if="esr.tree != 'work'">
+                <div class="object-result-highlight col-sm-12" auto-width adjust="100" breakpoint="992" divide="3" ng-if="esr.tree != 'work'" to-top-on-broadcast="searchCtrl::changeResult">
     
                     <div ng-if="esr.type == 'title'" class="text-center">
                         <h5 class="text-center">Title</h5>
@@ -161,7 +161,7 @@
                     </div>
                 </div>
 
-                <div class="object-result-highlight" auto-width adjust="100" breakpoint="992" ng-if="esr.tree == 'work'" class="text-center">
+                <div class="object-result-highlight" auto-width adjust="100" breakpoint="992" ng-if="esr.tree == 'work'" class="text-center" to-top-on-broadcast="searchCtrl::changeResult">
                     <h5 class="text-center">Work Information</h5>
                     <div ng-bind-html="esr.resultTree[esr.selectedWork][0].info | highlight:esr.highlight"></div>
                 </div>
