@@ -26,7 +26,6 @@
         });
 
         vm.changeContent = function(page){
-            console.log('changing page to '+page);
             vm.subSelection = page;
             $location.search('p',page);
         }

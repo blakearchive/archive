@@ -1220,21 +1220,6 @@ a.compare-selected-objects {
 }
 
 /***************
-* Responsive Fixes
-*****************/
-@media (min-width: 601px) {
-    #object-detail-tray{
-        margin-top: 35px;
-    }
-}
-@media (min-width: 768px) {
-    #object-detail-tray{
-        margin-top: 0;
-    }
-}
-
-
-/***************
  * Supp Images
  ****************/
 .carousel-inner .handprint-block .description {
@@ -1253,8 +1238,8 @@ handprint-block.supp-original .handprint-block{
         flex-flow: wrap;
         overflow: auto;
         padding: 0;
-        margin: 17px;  
-        justify-content: space-around;   
+        margin: 17px;
+        justify-content: space-around;
         transition: 300ms ease all;
     }
 }
@@ -1269,3 +1254,59 @@ handprint-block.supp-original .handprint-block{
         left: -10%;
     }
 }
+
+/***************
+ * Static Pages
+ ****************/
+.static-page-wrapper {
+    margin-bottom: 50px;
+}
+.sidebar-wrapper {
+    background: #fff;
+}
+.sidebar-wrapper ul.nav-sidebar.nav {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+
+@media(min-width:768px){
+    .static-page-wrapper {
+        position: relative;
+    }
+    .sidebar-wrapper {
+        position: absolute;
+        min-height: 100%;
+        min-width: 100%;
+        overflow:hidden;
+        margin-top: 50px;
+    }
+    .static-page-sidebar {
+        width: 25%;
+        margin-left: 30px;
+        padding: 0 45px;
+    }
+    .content-right-column {
+        min-height: 500px;
+    }
+}
+@media(min-width:992px){
+    .static-page-sidebar {
+        margin-left: 60px;
+    }
+}
+/***************
+* Responsive Fixes
+*****************/
+@media (min-width: 601px) {
+    #object-detail-tray{
+        margin-top: 35px;
+    }
+}
+@media (min-width: 768px) {
+    #object-detail-tray{
+        margin-top: 0;
+    }
+}
+
+
