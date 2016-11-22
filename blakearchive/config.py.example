@@ -3,3 +3,4 @@ db_connection_string = 'postgresql://[username]:[password]@[host]/[dbname]'
 production = False
 solr = 'local'
 local_image_path = ""
+local_data_path = ""
