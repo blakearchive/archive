@@ -816,6 +816,11 @@ a.compare-selected-objects {
 /***********
 * Search Bar
 *************/
+@media (min-width: 768px) {
+    #search.container-fluid {
+        padding-bottom: 30px;
+    }
+}
 #searchOptions{
     border-color: #3b3b3b;
     border-bottom: none;
