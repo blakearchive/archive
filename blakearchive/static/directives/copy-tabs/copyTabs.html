@@ -1,54 +1,54 @@
-    <div class="container-fluid tabs">
-        <div class="container">
-            <ul class="nav nav-tabs objects" role="tablist">
-                <li role="presentation" ng-class="{active:tabs.selectedTab == '#objects-in-copy'}">
-                    <a href="" ng-click="tabs.showTab('#objects-in-copy');" role="tab">Objects in {{ tabs.getCopyOrGroup() }}</a>
-                </li>
-                <li role="presentation" ng-if="tabs.bds.object.matrix.length > 0" ng-class="{active:tabs.selectedTab == '#objects-from-same-matrix'}">
-                    <a href="" ng-click="tabs.showTab('#objects-from-same-matrix');" role="tab">Objects from the Same Matrix</a>
-                </li>
-                <li role="presentation" ng-if="tabs.bds.object.sequence.length > 0" ng-class="{active:tabs.selectedTab == '#objects-from-same-production-sequence'}">
-                    <a href="" ng-click="tabs.showTab('#objects-from-same-production-sequence');" role="tab">Objects from the Same Production Sequence</a>
-                </li>
-                <li role="presentation" ng-if="tabs.bds.object.motif.length > 0" ng-class="{active:tabs.selectedTab == '#objects-with-same-motif'}">
-                    <a href="" ng-click="tabs.showTab('#objects-with-same-motif');" role="tab">Objects with a Similar Design</a>
-                </li>
-                <li role="presentation"
-                    ng-if="tabs.bds.object.text_ref.objects.length > 0 || tabs.bds.object.text_ref.copies.length > 0 || tabs.bds.object.text_ref.works.length > 0"
-                    ng-class="{active:tabs.selectedTab == '#text-reference'}">
-                    <a href="" ng-click="tabs.showTab('#text-reference');" role="tab">Textual References</a>
-                </li>
-                <li ng-if="tabs.bds.work.medium != 'exhibit'" role="presentation" ng-class="{active:tabs.selectedTab == '#copy-info'}">
-                    <a href="" ng-click="tabs.showTab('#copy-info')" role="tab">{{ tabs.getCopyOrWork() }} Information</a>
-                </li>
-                <li ng-if="tabs.bds.work.medium != 'exhibit'" role="presentation" ng-class="{active:tabs.selectedTab == '#ee-info'}">
-                    <a href="" ng-click="tabs.showTab('#ee-info')" role="tab">Electronic Edition Information</a>
-                </li>
-            </ul>
-        </div>
+<div class="container-fluid tabs">
+    <div class="container">
+        <ul class="nav nav-tabs objects" role="tablist">
+            <li role="presentation" ng-class="{active:tabs.selectedTab == '#objects-in-copy'}">
+                <a href="" ng-click="tabs.showTab('#objects-in-copy');" role="tab">Objects in {{ tabs.getCopyOrGroup() }}</a>
+            </li>
+            <li role="presentation" ng-if="tabs.bds.object.matrix.length > 0" ng-class="{active:tabs.selectedTab == '#objects-from-same-matrix'}">
+                <a href="" ng-click="tabs.showTab('#objects-from-same-matrix');" role="tab">Objects from the Same Matrix</a>
+            </li>
+            <li role="presentation" ng-if="tabs.bds.object.sequence.length > 0" ng-class="{active:tabs.selectedTab == '#objects-from-same-production-sequence'}">
+                <a href="" ng-click="tabs.showTab('#objects-from-same-production-sequence');" role="tab">Objects from the Same Production Sequence</a>
+            </li>
+            <li role="presentation" ng-if="tabs.bds.object.motif.length > 0" ng-class="{active:tabs.selectedTab == '#objects-with-same-motif'}">
+                <a href="" ng-click="tabs.showTab('#objects-with-same-motif');" role="tab">Objects with a Similar Design</a>
+            </li>
+            <li role="presentation"
+                ng-if="tabs.bds.object.text_ref.objects.length > 0 || tabs.bds.object.text_ref.copies.length > 0 || tabs.bds.object.text_ref.works.length > 0"
+                ng-class="{active:tabs.selectedTab == '#text-reference'}">
+                <a href="" ng-click="tabs.showTab('#text-reference');" role="tab">Textual References</a>
+            </li>
+            <li ng-if="tabs.bds.work.medium != 'exhibit'" role="presentation" ng-class="{active:tabs.selectedTab == '#copy-info'}">
+                <a href="" ng-click="tabs.showTab('#copy-info')" role="tab">{{ tabs.getCopyOrWork() }} Information</a>
+            </li>
+            <li ng-if="tabs.bds.work.medium != 'exhibit'" role="presentation" ng-class="{active:tabs.selectedTab == '#ee-info'}">
+                <a href="" ng-click="tabs.showTab('#ee-info')" role="tab">Electronic Edition Information</a>
+            </li>
+        </ul>
     </div>
-    <div class="container-fluid main">
-        <div class="container">
-            <div class="tab-content">
-                <!-- OBJECTS IN COPY -->
-                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-in-copy'" id="objects-in-copy">
-                    <header class="page-header">
-                        <!--<p class="subhead">Objects In {{ tabs.getCopyOrGroup() }}</p>-->
-                    </header>
-                     <p ng-if="tabs.bds.work.virtual && tabs.bds.copy.bad_id != 'letters'" class="text-center"><em>Dates are the probable dates of {{ tabs.bds.work.probable }}.</em></p>
-                    <br>
-                    <div class="row">
-                        <!-- for letters (multi object groups) -->
-                        <div ng-repeat="obj in tabs.bds.copyObjects | filter:{object_group: tabs.bds.object.object_group}:true track by $index" class="col-sm-6 col-md-3" ng-if="tabs.bds.copy.bad_id == 'letters'">
-                            <handprint-block scroll-to-top
-                                             action="tabs.changeObject(obj)"
-                                             image="{{ obj.dbi }}.100.jpg"
-                                             footer="{{ obj.title }}<br>{{ obj.full_object_id }}">
-                            </handprint-block>
-                        </div>
+</div>
+<div class="container-fluid main">
+    <div class="container">
+        <div class="tab-content">
+            <!-- OBJECTS IN COPY -->
+            <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-in-copy'" id="objects-in-copy">
+                <header class="page-header">
+                    <!--<p class="subhead">Objects In {{ tabs.getCopyOrGroup() }}</p>-->
+                </header>
+                <p ng-if="tabs.bds.work.virtual && tabs.bds.copy.bad_id != 'letters'" class="text-center"><em>Dates are the probable dates of {{ tabs.bds.work.probable }}.</em></p>
+                <br>
+                <div class="row">
+                    <!-- for letters (multi object groups) -->
+                    <div ng-repeat="obj in tabs.bds.copyObjects | filter:{object_group: tabs.bds.object.object_group}:true track by $index" class="col-sm-6 col-md-3" ng-if="tabs.bds.copy.bad_id == 'letters'">
+                        <handprint-block scroll-to-top
+                                         action="tabs.changeObject(obj)"
+                                         image="{{ obj.dbi }}.100.jpg"
+                                         footer="{{ obj.title }}<br>{{ obj.full_object_id }}">
+                        </handprint-block>
+                    </div>
 
-                        <!-- for everything else -->
-                        <div ng-repeat="obj in tabs.bds.copyObjects | filter:{supplemental:null} track by $index" class="col-sm-6 col-md-3" ng-if="tabs.bds.copy.bad_id != 'letters'">
+                    <!-- for everything else -->
+                    <div ng-repeat="obj in tabs.bds.copyObjects | filter:{supplemental:null} track by $index" class="col-sm-6 col-md-3" ng-if="tabs.bds.copy.bad_id != 'letters'">
                             <span ng-if="tabs.bds.work.probable == 'printing'">
                                 <handprint-block scroll-to-top ng-if="!obj.title"
                                                  action="tabs.changeObject(obj)"
@@ -83,127 +83,126 @@
                                                  footer="{{obj.title}}<br>{{ obj.full_object_id }}, {{obj.source.objdescid.compdate['#text']}}, {{obj.source.repository.institution['#text']}}">
                                 </handprint-block>
                             </span>
-                        </div>
                     </div>
                 </div>
-
-                <!-- SAME MATRIX -->
-                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-from-same-matrix'"  id="objects-from-same-matrix">
-                    <header class="page-header">
-                        <!--<p class="subhead">Objects from the Same Matrix</p>-->
-                    </header>
-                    <objects-from-same type="matrix"></objects-from-same>
-                </div>
-
-                <!-- SAME SEQUENCE -->
-                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-from-same-production-sequence'"  id="objects-from-same-production-sequence">
-                    <header class="page-header">
-                        <!--<p class="subhead">Objects from the Same Production Sequence</p>-->
-                    </header>
-                    <objects-from-same type="sequence"></objects-from-same>
-                </div>
-
-                <!-- SAME MOTIF -->
-                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-with-same-motif'" id="objects-with-same-motif">
-                    <header class="page-header">
-                        <!--<p class="subhead">Objects with the Same Motif</p>-->
-                    </header>
-                    <objects-from-same type="motif"></objects-from-same>
-                </div>
-
-                <!-- TEXTUAL REFERENCES -->
-                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#text-reference'" id="text-reference">
-                    <!-- OBJECTS -->
-                    <div class="row" ng-if="tabs.bds.object.text_ref.objects.length > 0">
-                        <h3>Objects</h3>
-                        <div ng-repeat="obj in tabs.bds.object.text_ref.objects track by $index" class="col-sm-6 col-md-3">
-                            <handprint-block ng-if="obj.object_group !== null"
-                                             link="/blake/copy/letters?descId={{ obj.desc_id }}"
-                                             image="{{ obj.dbi }}.100.jpg"
-                                             footer="{{ obj.object_group }}">
-                            </handprint-block>
-                            <handprint-block ng-if="obj.object_group === null"
-                                             link="/blake/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
-                                             image="{{ obj.dbi }}.100.jpg"
-                                             footer="{{ obj.full_object_id }}">
-                            </handprint-block>
-                        </div>
-                    </div>
-
-                    <!-- COPIES -->
-                    <div class="row" ng-if="tabs.bds.object.text_ref.copies.length > 0">
-                        <h3>Copies</h3>
-                        <div ng-repeat="cp in tabs.bds.object.text_ref.copies track by $index" class="col-sm-6 col-md-3">
-                            <handprint-block link="/blake/copy/{{cp.bad_id}}"
-                                             image="{{ cp.image }}.100.jpg"
-                                             footer="Copy {{cp.archive_copy_id}}, {{cp.source.objinfo.printdate['#text']}}, {{cp.institution}}">
-                            </handprint-block>
-                        </div>
-                    </div>
-
-                    <!-- WORKS -->
-                    <div class="row" ng-if="tabs.bds.object.text_ref.works.length > 0">
-                        <h3>Works</h3>
-                        <div ng-repeat="wk in tabs.bds.object.text_ref.works track by $index" class="col-sm-6 col-md-3">
-                            <handprint-block link="/blake/work/{{wk.bad_id}}"
-                                             image="{{ wk.image }}"
-                                             footer="{{ wk.title }}">
-                            </handprint-block>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- COPY INFO -->
-                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#copy-info'" id="copy-info">
-                    <header class="page-header">
-                        <!--<p class="subhead">{{ tabs.getCopyOrWork() }} Information</p>-->
-                    </header>
-                    <copy-information copy="tabs.bds.copy" object="tabs.bds.object"></copy-information>
-                </div>
-
-                <!-- Electronic Edition Info-->
-                <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#ee-info'" id="ee-info">
-                    <header class="page-header">
-                        <!--<p class="subhead">Electronic Edition Information</p>-->
-                    </header>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div ng-bind-html="tabs.bds.copy.header_html"></div>
-                        </div>
-                    </div>
-
-                    <!-- regular copies -->
-                    <div class="row" ng-if="!tabs.bds.work.virtual">
-                        <div class="col-xs-12 text-center">
-                            <h4><a href="#">View XML</a> <small>(may not work in all browsers)</small></h4>
-                        </div>
-                    </div>
-
-                    <!-- virtual works -->
-                    <div class="row" ng-if="tabs.bds.work.virtual && tabs.bds.work.bad_id != 'letters'">
-                        <div class="col-xs-12">
-                            <h4>Included Objects</h4>
-                            <div class="well" ng-repeat="obj in tabs.bds.copyObjects | filter:{supplemental:null} track by $index">
-                                <h4>{{ obj.full_object_id }}</h4>
-                                <p><strong>Title:</strong> {{ obj.title }}</p>
-                                <p><a href="#">View XML</a> <small>(may not work in all browsers)</small></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- letters -->
-                    <div class="row" ng-if="tabs.bds.work.virtual && tabs.bds.work.bad_id == 'letters'">
-                        <div class="col-xs-12">
-                            <h4>Included Objects</h4>
-                            <div class="well" ng-repeat="obj in tabs.bds.copy.objectGroups track by $index">
-                                <h4>{{ obj[0].full_object_id }}</h4>
-                                <p><strong>Title:</strong> {{ obj[0].object_group}}</p>
-                                <p><a href="#">View XML</a> <small>(may not work in all browsers)</small></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+
+            <!-- SAME MATRIX -->
+            <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-from-same-matrix'"  id="objects-from-same-matrix">
+                <header class="page-header">
+                    <!--<p class="subhead">Objects from the Same Matrix</p>-->
+                </header>
+                <objects-from-same type="matrix"></objects-from-same>
+            </div>
+
+            <!-- SAME SEQUENCE -->
+            <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-from-same-production-sequence'"  id="objects-from-same-production-sequence">
+                <header class="page-header">
+                    <!--<p class="subhead">Objects from the Same Production Sequence</p>-->
+                </header>
+                <objects-from-same type="sequence"></objects-from-same>
+            </div>
+
+            <!-- SAME MOTIF -->
+            <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-with-same-motif'" id="objects-with-same-motif">
+                <header class="page-header">
+                    <!--<p class="subhead">Objects with the Same Motif</p>-->
+                </header>
+                <objects-from-same type="motif"></objects-from-same>
+            </div>
+
+            <!-- TEXTUAL REFERENCES -->
+            <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#text-reference'" id="text-reference">
+                <!-- OBJECTS -->
+                <div class="row" ng-if="tabs.bds.object.text_ref.objects.length > 0">
+                    <h3>Objects</h3>
+                    <div ng-repeat="obj in tabs.bds.object.text_ref.objects track by $index" class="col-sm-6 col-md-3">
+                        <handprint-block ng-if="obj.object_group !== null"
+                                         link="/blake/copy/letters?descId={{ obj.desc_id }}"
+                                         image="{{ obj.dbi }}.100.jpg"
+                                         footer="{{ obj.object_group }}">
+                        </handprint-block>
+                        <handprint-block ng-if="obj.object_group === null"
+                                         link="/blake/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
+                                         image="{{ obj.dbi }}.100.jpg"
+                                         footer="{{ obj.full_object_id }}">
+                        </handprint-block>
+                    </div>
+                </div>
+
+                <!-- COPIES -->
+                <div class="row" ng-if="tabs.bds.object.text_ref.copies.length > 0">
+                    <h3>Copies</h3>
+                    <div ng-repeat="cp in tabs.bds.object.text_ref.copies track by $index" class="col-sm-6 col-md-3">
+                        <handprint-block link="/blake/copy/{{cp.bad_id}}"
+                                         image="{{ cp.image }}.100.jpg"
+                                         footer="Copy {{cp.archive_copy_id}}, {{cp.source.objinfo.printdate['#text']}}, {{cp.institution}}">
+                        </handprint-block>
+                    </div>
+                </div>
+
+                <!-- WORKS -->
+                <div class="row" ng-if="tabs.bds.object.text_ref.works.length > 0">
+                    <h3>Works</h3>
+                    <div ng-repeat="wk in tabs.bds.object.text_ref.works track by $index" class="col-sm-6 col-md-3">
+                        <handprint-block link="/blake/work/{{wk.bad_id}}"
+                                         image="{{ wk.image }}"
+                                         footer="{{ wk.title }}">
+                        </handprint-block>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COPY INFO -->
+            <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#copy-info'" id="copy-info">
+                <header class="page-header">
+                    <!--<p class="subhead">{{ tabs.getCopyOrWork() }} Information</p>-->
+                </header>
+                <copy-information copy="tabs.bds.copy" object="tabs.bds.object"></copy-information>
+            </div>
+
+            <!-- Electronic Edition Info-->
+            <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#ee-info'" id="ee-info">
+                <header class="page-header">
+                    <!--<p class="subhead">Electronic Edition Information</p>-->
+                </header>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div ng-bind-html="tabs.bds.copy.header_html"></div>
+                    </div>
+                </div>
+
+                <!-- regular copies -->
+                <div class="row" ng-if="!tabs.bds.work.virtual">
+                    <div class="col-xs-12 text-center">
+                        <p><a href="/bad/{{ tabs.bds.copy.bad_id }}.xml" target="_blank">View XML</a> <small>(may not work in all browsers)</small></h4>
+                    </div>
+                </div>
+
+                <!-- virtual works -->
+                <div class="row" ng-if="tabs.bds.work.virtual && tabs.bds.work.bad_id != 'letters'">
+                    <div class="col-xs-12">
+                        <h4>Included Objects</h4>
+                        <div class="well" ng-repeat="obj in tabs.bds.copyObjects | filter:{supplemental:null} track by $index">
+                            <h4>{{ obj.full_object_id }}</h4>
+                            <p><strong>Title:</strong> {{ obj.title }}</p>
+                            <p><a href="/bad/{{ obj.copy_bad_id }}.xml" target="_blank">View XML</a> <small>(may not work in all browsers)</small></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- letters -->
+                <div class="row" ng-if="tabs.bds.work.virtual && tabs.bds.work.bad_id == 'letters'">
+                    <div class="col-xs-12">
+                        <h4>Included Objects</h4>
+                        <div class="well" ng-repeat="obj in tabs.bds.workCopies track by $index">
+                            <h4>{{ obj.object_group}}</h4>
+                            <p><a href="/bad/{{ obj.copy_bad_id }}.xml" target="_blank">View XML</a> <small>(may not work in all browsers)</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+</div>
