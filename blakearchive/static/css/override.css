@@ -891,7 +891,7 @@ a.compare-selected-objects {
     .slide-box-viewport{
         position: relative;
         overflow: hidden;
-        height: 270px;
+        height: 290px;
     }
 
     .slide-box-wrapper{

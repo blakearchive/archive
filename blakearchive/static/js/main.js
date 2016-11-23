@@ -1286,6 +1286,21 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             link: link
         }
     })
+
+    .directive('toTopOnBroadcast',function(){
+      var link = function(scope,element,attr) {
+          if(attr.toTopOnBroadcast){
+              scope.$on(attr.toTopOnBroadcast,function(){
+                  $(element).animate({scrollTop: 0}, 'fast');
+              })
+          }
+      }
+      return{
+          restrict: 'A',
+          link: link
+      }
+    })
+
     //TODO make this a true scroll to element, rather than simple offset of current element
     .directive('scrollToElement',['$timeout',function($timeout){
         var link = function(scope,element,attr) {
