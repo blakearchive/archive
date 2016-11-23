@@ -6,6 +6,6 @@
 
 <p><strong>Textual Note(s):</strong></p>
 <ul ng-if="noteCtrl.object.notes.length > 0">
-    <li ng-repeat="note in noteCtrl.object.notes track by $index"><span ng-bind-html=" note |  highlight:noteCtrl.highlight"></span></li>
+    <li ng-repeat="note in noteCtrl.object.notes track by $index" ng-if="note !== noteCtrl.object.physical_description.objnote.p['#text']"><span ng-bind-html=" note |  highlight:noteCtrl.highlight"></span></li>
 </ul>
 <p ng-if="noteCtrl.object.notes.length == 0"><em>No textual notes for this object</em></p>
