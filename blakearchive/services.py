@@ -70,8 +70,9 @@ class BlakeDataService(object):
         medium_list = cls.generate_medium_filter(cfg)
         mediums = " AND " + medium_list if medium_list else ""
         dates = cls.generate_date_filter(cfg)
-        element_parts = " ".join(cls.generate_element_part(prefix, p) for p in search_string_parts)
-        return "(" + element_parts + ") AND %s%s" % (dates, mediums)
+        # element_parts = " ".join(cls.generate_element_part(prefix, p) for p in search_string_parts)
+        # return prefix + "(" + element_parts.join(" ") + ") AND %s%s" % (dates, mediums)
+        return prefix + ":(" + " ".join(search_string_parts) + ") AND %s%s" % (dates, mediums)
 
     @classmethod
     def solr_object_query(cls, query):
