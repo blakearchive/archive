@@ -85,6 +85,7 @@ sup a img {
 }
 
 sup a:hover {
+z-index:1;
 position: relative;
 }
 
