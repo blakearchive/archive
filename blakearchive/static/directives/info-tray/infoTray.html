@@ -1,6 +1,6 @@
 <div id="object-detail-tray" ng-style="{'min-height': tray.trayHeight}">
     <div class="tray-toggle" ng-click="tray.toggle()">Open/Close Tray</div>
-    <div id="object-detail-tray-inner">
+    <div id="object-detail-tray-inner" to-top-on-broadcast="change::selectedObject" target=".panel-body">
 
         <accordion close-others="true" id="object-detail-tray-accordion">
             <accordion-group id="textual-transcription" is-open="tray.open.text">

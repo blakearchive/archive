@@ -398,7 +398,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         return GenericService(constructor);
     }])
 
-    .factory("BlakeDataService", ['$log', '$http', '$q', '$location', 'BlakeWork', 'BlakeCopy', 'BlakeObject', 'BlakeFeaturedWork', function ($log, $http, $q, $location, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
+    .factory("BlakeDataService", ['$rootScope','$log', '$http', '$q', '$location', 'BlakeWork', 'BlakeCopy', 'BlakeObject', 'BlakeFeaturedWork', function ($rootScope, $log, $http, $q, $location, BlakeWork, BlakeCopy, BlakeObject, BlakeFeaturedWork) {
         /**
          * For the time being, all data accessor functions should be placed here.  This service should mirror the API
          * of the back-end BlakeDataService.
@@ -915,6 +915,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 if(!object.supplemental){
                     $location.search('descId',blakeData.object.desc_id);
                 }
+                $rootScope.$broadcast('change::selectedObject')
             });
         }
 
@@ -1291,7 +1292,13 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
       var link = function(scope,element,attr) {
           if(attr.toTopOnBroadcast){
               scope.$on(attr.toTopOnBroadcast,function(){
-                  $(element).animate({scrollTop: 0}, 'fast');
+                  if(attr.target){
+                      $(element).find(attr.target).each(function(k,v){
+                          $(v).animate({scrollTop: 0}, 'fast');
+                      });
+                  } else {
+                    $(element).animate({scrollTop: 0}, 'fast');
+                  }
               })
           }
       }
