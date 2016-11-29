@@ -42,7 +42,8 @@
       <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].pencil"><a href="/blake/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
         (Composed {{ menu_list.composition_date_string }})</a></li>
       <li role="presentation" class="dropdown-header">Pen and Ink Drawings</li>
-      <li class="empty-subcat">—</li>
+      <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].pen"><a href="/blake/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
+        (Composed {{ menu_list.composition_date_string }})</a></li>
       <li role="presentation" class="dropdown-header">Monochrome Wash Drawings</li>
       <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].monochrome"><a
           href="/blake/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a></li>
