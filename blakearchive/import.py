@@ -113,6 +113,7 @@ class BlakeDocumentImporter(BlakeImporter):
             self.process_relationship(entry)
 
     def process_relationship(self, entry):
+        print entry.desc_id.lower()+"\n"
         obj = self.object_importer.get(entry.desc_id.lower())
 
         obj.objects_from_same_matrix.extend(self.objects_for_id_string(entry.same_matrix_ids))
