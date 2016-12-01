@@ -11,6 +11,7 @@
                 case 'biblicaltemperas':
                 case 'but543':
                 case 'letters':
+                case 'pid':
                 case 'gravepd':
                 case 'gravewc':
                 case 'gravewd':

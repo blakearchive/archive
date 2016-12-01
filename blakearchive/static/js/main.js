@@ -278,6 +278,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 case 'but543':
                 case 'letters':
                 case 'gravepd':
+                case 'pid':
                 case 'gravewc':
                 case 'gravewd':
                 case 'cpd':
@@ -364,6 +365,10 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 case 'but543':
                     work.title = 'Illustrations to Milton\'s "On the Morning of Christ\'s Nativity"';
                     work.virtual = false;
+                    break;
+                case 'pid':
+                    work.title = 'Pen and Ink Drawings';
+                    work.virtual = true;
                     break;
                 case 'letters':
                 case 'gravepd':
