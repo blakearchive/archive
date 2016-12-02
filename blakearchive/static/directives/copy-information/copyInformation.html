@@ -66,7 +66,7 @@
 
     <div class="col-sm-6">
         <h3>Provenance</h3>
-        <dl class="dl-horizontal">
+        <dl>
             <copy-info-dl dt="Name" highlight="{{ info.highlight }}" info-object="info.getSource().provenance.name"></copy-info-dl>
             <copy-info-dl dt="Date" highlight="{{ info.highlight }}" info-object="info.getSource().provenance.date"></copy-info-dl>
             <copy-info-dl dt="Dealer" highlight="{{ info.highlight }}" info-object="info.getSource().provenance.dealer"></copy-info-dl>
@@ -76,7 +76,7 @@
         </dl>
 
         <h3>Present Location</h3>
-        <dl class="dl-horizontal">
+        <dl>
             <dt>Mailing Address</dt>
             <dd>
                 <span ng-bind-html="info.getSource().repository.institution['#text'] | highlight:info.highlight | markdown"></span><br>

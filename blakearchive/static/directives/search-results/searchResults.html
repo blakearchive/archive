@@ -155,7 +155,7 @@
                         <span ng-bind-html="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][0].title | highlight:esr.highlight"></span>
                     </div>-->
                    
-                    <div ng-if="esr.type == 'copy-info'">
+                    <div ng-if="esr.type == 'copy-info'" id="searchResultCopyInfo">
                          <h5 class="text-center">Copy Information</h5>
                         <copy-information copy="esr.resultTree[esr.selectedWork][2][esr.selectedCopy][0]" highlight="{{esr.highlight}}"></copy-information>
                     </div>
