@@ -574,8 +574,23 @@ a.compare-selected-objects {
 #showme {
     min-height:100%;
     min-width: 100%;
+    background-color: #1d1d1d;
+    border-top: 1px solid #2a2a2a;
+    color: #999;
 }
-#showme #textTranscription ol{
+#showme h1 {
+    color: #fff;
+}
+#showme .subhead, #showme .nav > li > a {
+    color:rgba(233,188,71,1);
+}
+
+#showme .nav > li > a:hover, #showme .nav > li > a:focus  {
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+/*#showme #textTranscription ol{
     list-style-type: decimal-leading-zero;
     padding: 0 0 0 23px;
 }
@@ -585,7 +600,7 @@ a.compare-selected-objects {
     line-height: 16px;
     padding-bottom: 5px;
     padding-left: 10px;
-}
+}*/
 
 @media(min-width: 768px){
     .flex{
@@ -653,6 +668,9 @@ a.compare-selected-objects {
     -ms-transition: left 0.3s ease-out, min-height 300ms ease;
     -o-transition: left 0.3s ease-out, min-height 300ms ease;
     transition: left 0.3s ease-out, min-height 300ms ease;
+}
+#archive #object-detail-tray .panel-group .panel.panel-default .panel-body{
+    background-color: #1d1d1d;
 }
 
 /*****************
