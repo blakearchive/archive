@@ -1181,6 +1181,16 @@ a.compare-selected-objects {
     font-size: 11px;
 }
 
+#searchResultCopyInfo .col-sm-6 {
+    width: 100%;
+}
+#searchResultCopyInfo h3 {
+    color: #fff
+}
+#searchResultCopyInfo dt {
+    text-decoration: underline;
+}
+
 .object-result-highlight{
     margin-bottom: 30px;
     padding: 0 30px;
