@@ -17,7 +17,7 @@
 
         vm.bds.setSelectedWork($routeParams.workId).then(function(){
 
-            vm.knownCopiesDiv3 = Math.ceil(vm.copyCount / 3);
+            vm.knownCopiesDiv3 = Math.ceil(vm.bds.workCopies.length / 3);
             if(!angular.isUndefined(vm.bds.work.related_works) && vm.bds.work.related_works !== null){
                 vm.allKnownRelatedItemsDiv3 = Math.ceil(vm.bds.work.related_works.length / 3);
             }
