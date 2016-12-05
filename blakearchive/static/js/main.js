@@ -308,7 +308,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
             var work = angular.copy(config);
 
-
             // Get the medium and probable phrase
             switch(work.medium) {
                 case "illbk":
@@ -383,6 +382,38 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                     work.virtual = false;
                     break;
             }
+
+            angular.forEach(work.related_works, function(v){
+                v.displayTitle = v.title.text != '' ? v.title.text : false;
+                if (v.title.link){
+                    switch(v.title.type){
+                        case 'work':
+                            v.type = 'work';
+                            v.link = "/blake/work/" + v.title.link;
+                            break;
+                        case 'copy':
+                            v.type = 'copy';
+                            v.link = "/blake/copy/" + v.title.link;
+                            break;
+                        case 'object':
+                            var descIdElements = descId.split(".");
+                            var copyId = descIdElements[0] + "." + descIdElements[1];
+                            v.type = 'copy';
+                            v.link = "/blake/copy/" + copyId + "?descId=" + v.title.link;
+                            break;
+                        default:
+                            v.type = "none";
+                            v.link = false;
+                    }
+                } else {
+                    if(v.title.text.substring(0,4).toLowerCase() == 'copy' || v.info.substring(0,4).toLowerCase() == 'copy'){
+                        v.type = "copy";
+                    } else {
+                        v.type = "none";
+                    }
+                    v.link = false;
+                }
+            });
 
             return work;
         };
@@ -788,7 +819,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                         } else {
                             blakeData.workCopies = blakeData.numberVirtualWorkObjects(blakeData.workCopies);
                         }
-
                     });
                 }
             });
