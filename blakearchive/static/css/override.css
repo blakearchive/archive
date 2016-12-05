@@ -584,7 +584,7 @@ a.compare-selected-objects {
     min-width: 100%;
     background-color: #1d1d1d;
     border-top: 1px solid #2a2a2a;
-    color: #999;
+    color: #ccc;
 }
 #showme h1 {
     color: #fff;
