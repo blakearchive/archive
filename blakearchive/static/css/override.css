@@ -589,6 +589,13 @@ a.compare-selected-objects {
 #showme h1 {
     color: #fff;
 }
+#showme #illustrationDescription strong, #showme #editorNotes strong {
+    color: #aaa39c;
+}
+#showme #illustrationDescription .keywords{
+    font-size: 12px;
+    font-style: italic;
+}
 #showme .subhead, #showme .nav > li > a {
     color:rgba(233,188,71,1);
 }
