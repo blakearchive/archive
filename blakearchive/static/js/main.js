@@ -396,7 +396,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                             v.link = "/blake/copy/" + v.title.link;
                             break;
                         case 'object':
-                            var descIdElements = descId.split(".");
+                            var descIdElements = v.title.link.split(".");
                             var copyId = descIdElements[0] + "." + descIdElements[1];
                             v.type = 'copy';
                             v.link = "/blake/copy/" + copyId + "?descId=" + v.title.link;
