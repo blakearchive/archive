@@ -26,7 +26,7 @@
             <!--<div class="row" ng-class="workCtrl.bds.workCtrl.copies.length > 2 ? 'columns' : 'columns-short'">-->
                 <div class="col-sm-4">
                     <p ng-repeat="copy in workCtrl.bds.workCopies | limitTo:workCtrl.knownCopiesDiv3">
-                        <a href="/blake/copy/{{ copy.bad_id }}">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date }}</a>
+                        <a href="/blake/copy/{{ copy.bad_id }}">Copy {{ copy.archive_copy_id }}, {{ copy.print_date }}</a>
                         <br/>
                         {{ copy.institution }}
                         <br/>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-sm-4">
                     <p ng-repeat="copy in workCtrl.bds.workCopies | limitTo:workCtrl.knownCopiesDiv3:(workCtrl.knownCopiesDiv3 * 2) - workCtrl.knownCopiesDiv3">
-                        <a href="/blake/copy/{{ copy.bad_id }}">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date }}</a>
+                        <a href="/blake/copy/{{ copy.bad_id }}">Copy {{ copy.archive_copy_id }}, {{ copy.print_date }}</a>
                         <br/>
                         {{ copy.institution }}
                         <br/>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-sm-4">
                     <p ng-repeat="copy in workCtrl.bds.workCopies | limitTo:workCtrl.knownCopiesDiv3:(workCtrl.knownCopiesDiv3 * 3) - workCtrl.knownCopiesDiv3">
-                        <a href="/blake/copy/{{ copy.bad_id }}">Copy {{ copy.archive_copy_id }}, {{ copy.composition_date }}</a>
+                        <a href="/blake/copy/{{ copy.bad_id }}">Copy {{ copy.archive_copy_id }}, {{ copy.print_date }}</a>
                         <br/>
                         {{ copy.institution }}
                         <br/>
@@ -67,7 +67,7 @@
                 <div class="col-sm-4">
                     <p ng-repeat="relatedWork in workCtrl.bds.work.related_works | limitTo:workCtrl.allKnownRelatedItemsDiv3">
                         <span ng-if="relatedWork.title.type == 'work'"><a href="/blake/work/{{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>
-                        <span ng-if="relatedWork.title.type == 'copy'"><a href="/blake/copy/{{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>
+                        <!--<span ng-if="relatedWork.title.type == 'copy'"><a href="/blake/copy/{{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>-->
                         <span ng-if="relatedWork.title.type == 'object'"><a href="/blake/copy/{{ workCtrl.objectCopyId(relatedWork.title.link) }}?descId={{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>
                         <span ng-if="!relatedWork.title.type">{{ relatedWork.title.text }}</span>
                         <br ng-if="workCtrl.isValidTitle(relatedWork.title.text)"/>
@@ -77,7 +77,7 @@
                 <div class="col-sm-4">
                     <p ng-repeat="relatedWork in workCtrl.bds.work.related_works | limitTo:workCtrl.allKnownRelatedItemsDiv3:(workCtrl.allKnownRelatedItemsDiv3 * 2) - workCtrl.allKnownRelatedItemsDiv3">
                         <span ng-if="relatedWork.title.type == 'work'"><a href="/blake/work/{{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>
-                        <span ng-if="relatedWork.title.type == 'copy'"><a href="/blake/copy/{{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>
+                        <!--<span ng-if="relatedWork.title.type == 'copy'"><a href="/blake/copy/{{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>-->
                         <span ng-if="relatedWork.title.type == 'object'"><a href="/blake/copy/{{ workCtrl.objectCopyId(relatedWork.title.link) }}?descId={{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>
                         <span ng-if="!relatedWork.title.type">{{ relatedWork.title.text }}</span>
                         <br ng-if="workCtrl.isValidTitle(relatedWork.title.text)"/>
@@ -87,7 +87,7 @@
                 <div class="col-sm-4">
                     <p ng-repeat="relatedWork in workCtrl.bds.work.related_works | limitTo:workCtrl.allKnownRelatedItemsDiv3:(workCtrl.allKnownRelatedItemsDiv3 * 3) - workCtrl.allKnownRelatedItemsDiv3">
                         <span ng-if="relatedWork.title.type == 'work'"><a href="/blake/work/{{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>
-                        <span ng-if="relatedWork.title.type == 'copy'"><a href="/blake/copy/{{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>
+                        <!--<span ng-if="relatedWork.title.type == 'copy'"><a href="/blake/copy/{{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>-->
                         <span ng-if="relatedWork.title.type == 'object'"><a href="/blake/copy/{{ workCtrl.objectCopyId(relatedWork.title.link) }}?descId={{ relatedWork.title.link }}">{{ relatedWork.title.text }}</a></span>
                         <span ng-if="!relatedWork.title.type">{{ relatedWork.title.text }}</span>
                         <br ng-if="workCtrl.isValidTitle(relatedWork.title.text)"/>
