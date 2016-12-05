@@ -198,6 +198,14 @@ td.c2 {
     background-color: #1D1D1D; 
     color: white;
 }
+.related-copy {
+    margin-bottom: 15px;
+    min-height: 80px;
+}
+.related-work {
+    margin-bottom: 15px;
+    min-height: 140px;
+}
 
 @media (min-width: 768px) {
   nav.navbar ul.navbar-nav {
