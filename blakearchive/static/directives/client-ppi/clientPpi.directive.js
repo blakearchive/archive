@@ -30,7 +30,7 @@
                 y = vm.config.y,
                 d = vm.config.d;
             // Calculate PPI/DPI
-            var dpi = Math.sqrt(x*x + y*y) / d;
+            var dpi = Math.sqrt(x*x + y*y) / d / 2;
             return dpi>0 ? Math.round(dpi) : 0;
 
         }
