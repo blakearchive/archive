@@ -107,8 +107,8 @@
                     manuscripts: [],
                     letters: [],
                     typographic: []
-                }],
-                exhibits: []
+                }]
+                //exhibits: []
             };
 
             // Add to menu categories
