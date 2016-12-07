@@ -23,24 +23,32 @@
         <div class="section-group" ng-if="workCtrl.bds.work.medium=='illbk'">
             <h3>All Known Copies</h3>
             <div class="row">
-                <div class="col-sm-4 related-copy" ng-repeat="copy in workCtrl.bds.work.related_works | filter:{type:'copy'}">
-                    <span ng-if="copy.link">
-                        <a href="{{ copy.link }}">{{ copy.displayTitle }}</a><br>
-                    </span>
-                    <span ng-if="!copy.link && copy.displayTitle">{{ copy.displayTitle }}<br></span>
-                    <span ng-bind-html="copy.info"></span>
+                <div class="col-xs-12">
+                    <div class="related-flex">
+                        <div class="related-item" ng-repeat="copy in workCtrl.bds.work.related_works | filter:{type:'copy'}">
+                            <span ng-if="copy.link">
+                                <a href="{{ copy.link }}">{{ copy.displayTitle }}</a><br>
+                            </span>
+                            <span ng-if="!copy.link && copy.displayTitle">{{ copy.displayTitle }}<br></span>
+                            <span ng-bind-html="copy.info"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="section-group" ng-class="workCtrl.bds.work.related_works.length > 0 ? '' : 'hidden'">
             <h3>All Known Related Items</h3>
             <div class="row">
-                <div class="col-sm-4 related-work" ng-repeat="copy in workCtrl.bds.work.related_works | filter:{type:'!copy'}">
-                    <span ng-if="copy.link">
-                        <a href="{{ copy.link }}">{{ copy.displayTitle }}</a><br>
-                    </span>
-                    <span ng-if="!copy.link && copy.displayTitle">{{ copy.displayTitle }}<br></span>
-                    <span ng-bind-html="copy.info"></span>
+                <div class="col-xs-12">
+                    <div class="related-flex">
+                        <div class="related-item" ng-repeat="copy in workCtrl.bds.work.related_works | filter:{type:'!copy'}">
+                            <span ng-if="copy.link">
+                                <a href="{{ copy.link }}">{{ copy.displayTitle }}</a><br>
+                            </span>
+                            <span ng-if="!copy.link && copy.displayTitle">{{ copy.displayTitle }}<br></span>
+                            <span ng-bind-html="copy.info"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
