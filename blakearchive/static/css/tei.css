@@ -1,15 +1,15 @@
 .tei-sic {
-    color: black;
+    color: #eee;
     text-decoration: line-through;
 }
 
 .tei-rep-overwrite {
-    color: black;
-    background-color: #00CCFF;
+    color: #eee;
+    background-color: #168bc1;
 }
 
 .tei-rep {
-    background-color: #00CCFF;
+    background-color: #168bc1;
 }
 
 .tei-del-overwrite {
@@ -29,61 +29,61 @@
 }
 
 .tei-del-overstrike {
-    color: black;
+    color: #eee;
     text-decoration:line-through;
 }
 
 .tei-del {
-    color: black;
+    color: #eee;
     text-decoration: line-through;
 }
 
 .tei-instr-pencil {
-    color: gray;
+    color: lightgray;
 }
 
 .tei-hr {
-    border:1px solid #000000;
-    color:#000000;
-    background-color:#000000;
+    border:1px solid #eee;
+    color:#eee;
+    background-color:#eee;
     height:1px;
     position:relative;
 }
 
 .tei-unclear-hi {
-    color: gray;
+    color: lightgray;
 }
 
 .tei-subst {
-    background-color: #ffff99;
+    background-color: #e9bb01;
 }
 
 .tei-addspan-substspan {
-    color: #00ccff;
-    background-color:#ffff99;
+    color: #168bc1;
+    background-color:#e9bb01;
 }
 
 .tei-add-substspan {
-    color: #00ccff;
-    background-color:#ffff99;
+    color: #168bc1;
+    background-color:#e9bb01;
 }
 
 .tei-add {
-    color: #00ccff;
+    color: #168bc1;
 }
 
 .tei-gap-cancellation {
     color:red;
-    background-color:black;
+    background-color:#eee;
     text-decoration:line-through;
 }
 
 .tei-gap {
-    background-color:black;
+    background-color:#eee;
 }
 
 .tei-hspace {
-    background-color:yellow
+    background-color:#e9bb01;
 }
 
 .tei-columns-table-data {
@@ -91,8 +91,8 @@
 }
 
 .tei-vspace {
-    font-size: 15pt;
-    height: 2em;
+    font-size: 12pt;
+    height: 1em;
 }
 
 .tei-table-extra-small {
@@ -111,7 +111,7 @@
 }
 
 .tei-preceding-delspan-substspan {
-    background-color:#ffff99;
+    background-color:#e9bb01;
     text-decoration:line-through;
 }
 
@@ -120,12 +120,12 @@
 }
 
 .tei-preceding-addspan-substspan {
-    color: #00ccff;
-    background-color:#ffff99;
+    color: #168bc1;
+    background-color:#e9bb01;
 }
 
 .tei-preceding-addspan {
-     color: #00ccff;
+     color: #168bc1;
 }
 
 .tei-line-number {
@@ -139,6 +139,9 @@
 
 .tei-line-text {
     width: 90%;
+    color: #eee;
+}
+#showme .tei-line-text{
     color: #eee;
 }
 .tei-line-text span{
