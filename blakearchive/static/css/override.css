@@ -198,13 +198,25 @@ td.c2 {
     background-color: #1D1D1D; 
     color: white;
 }
-.related-copy {
-    margin-bottom: 15px;
-    min-height: 80px;
+.related-flex {
+    display: flex;
+    flex-wrap: wrap;
 }
-.related-work {
+.related-item {
+    width: 100%;
     margin-bottom: 15px;
-    min-height: 140px;
+    padding-right: 20px;
+}
+
+@media (min-width: 768px) {
+    .related-item {
+        width: 50%;
+    }
+}
+@media (min-width: 992px) {
+    .related-item {
+        width: 33%;
+    }
 }
 
 @media (min-width: 768px) {
