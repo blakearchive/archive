@@ -37,6 +37,8 @@ def main():
                 print note
                 if hasattr(note, 'note'):
                     notes.append(unicodedata.normalize('NFKD', note.note).encode('ascii', 'ignore'))
+            print 'NOTES'
+            print notes
 
             obj = {
                 "id": blake_object.object_id,
