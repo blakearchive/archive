@@ -80,12 +80,10 @@ class BlakeDocumentImporter(BlakeImporter):
         root = etree.parse(document).getroot()
         document_name = os.path.split(document)[1]
         # logger.error(document_name)
-        logger.error(document_name)
         self.work_info[document_name] = [self.transform_relationship(r) for r in root.xpath("./related/relationship")]
 
     @staticmethod
     def transform_relationship(rel):
-        logger.error(rel)
         rel_text = rel.xpath("text()")
         link = rel.xpath("link")
         if link:
@@ -158,7 +156,7 @@ class BlakeDocumentImporter(BlakeImporter):
         if entry.info_filename in self.work_info:
             work.related_works = self.work_info[entry.info_filename]
         else:
-            logger.debug("info file does not exist: %s" % entry.info_filename)
+            logger.error("info file does not exist: %s" % entry.info_filename)
         self.works[bad_id] = work
         work.copies = self.copy_importer.get(self.split_ids(entry.copies))
         if work.virtual:
