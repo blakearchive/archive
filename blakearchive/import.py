@@ -151,7 +151,7 @@ class BlakeDocumentImporter(BlakeImporter):
         if entry.info_filename in self.work_info:
             work.related_works = self.work_info[entry.info_filename]
         else:
-            logger.debug("info file does not exist: %s" % entry.info_filename)
+            logger.error("info file does not exist: %s" % entry.info_filename)
         self.works[bad_id] = work
         work.copies = self.copy_importer.get(self.split_ids(entry.copies))
         if work.virtual:
