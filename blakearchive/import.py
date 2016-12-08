@@ -407,8 +407,8 @@ class BlakeObjectImporter(BlakeImporter):
 
         def generate_illustration(ill):
             return {
-                'type': ill.attrib["type"],
-                'location': ill.attrib["location"],
+                'type': ill.attrib["type"] if len(ill.attrib["type"]) else "",
+                'location': ill.attrib["location"] if len(ill.attrib["location"]) else "",
                 '#text': etree.tostring(cls.transform(ill.xpath("./illusobjdesc")[0])),
                 'components': [generate_component(c) for c in ill.xpath("./component")]
             }
