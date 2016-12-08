@@ -35,8 +35,10 @@ def main():
             notes = []
             for note in blake_object.notes:
                 print note
+                print unicodedata.normalize('NFKD', note).encode('ascii', 'ignore')
                 if hasattr(note, 'note'):
-                    notes.append(unicodedata.normalize('NFKD', note.note).encode('ascii', 'ignore'))
+
+                    notes.append(unicodedata.normalize('NFKD', note).encode('ascii', 'ignore'))
             print 'NOTES'
             print notes
 
