@@ -404,8 +404,16 @@ class BlakeObjectImporter(BlakeImporter):
                 except TypeError:
                     pass
                 return element_dict
-        components = obj.xpath(".//illusdesc/illustration/component")
-        return [generate_component(c) for c in components]
+
+        def generate_illustration(ill):
+            return {
+                'type': ill.attrib["type"],
+                'location': ill.attrib["location"],
+                '#text': etree.tostring(cls.transform(ill.xpath("./illusobjdesc")[0])),
+                'components': [generate_component(c) for c in ill.xpath("./component")]
+            }
+
+        return [generate_illustration(i) for i in obj.xpath(".//illusdesc/illustration")]
 
     @classmethod
     def get_characteristics(cls, obj):
