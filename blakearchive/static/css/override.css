@@ -415,7 +415,9 @@ body {
     }
     #gr-selection{
         position: absolute;
-        right: 105px;
+        /*put back after lightbox*/
+        /*right: 105px;*/
+        right: 64px;
         top: -43px;
         padding: 0;
         /*width:30px;
