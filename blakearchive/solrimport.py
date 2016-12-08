@@ -32,16 +32,6 @@ def main():
     blake_object_solr.delete(q='*:*')
     for blake_object in objects:
         if blake_object.supplemental is None:
-            notes = []
-            for note in blake_object.notes:
-                print note
-                print unicodedata.normalize('NFKD', note).encode('ascii', 'ignore')
-                if hasattr(note, 'note'):
-
-                    notes.append(unicodedata.normalize('NFKD', note).encode('ascii', 'ignore'))
-            print 'NOTES'
-            print notes
-
             obj = {
                 "id": blake_object.object_id,
                 "title": blake_object.title,
@@ -56,7 +46,7 @@ def main():
                 "copy_title": blake_object.copy.title,
                 "copy_institution": blake_object.copy.institution,
                 # FIXME: properly convert unicode rather than stripping characters
-                "notes": json.dumps(notes)
+                "notes": json.dumps([unicodedata.normalize('NFKD', note["note"]).encode('ascii', 'ignore') for note in blake_object.notes])
             }
             print obj["id"]
             if blake_object.copy.work:
