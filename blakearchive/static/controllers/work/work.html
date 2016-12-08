@@ -30,7 +30,7 @@
                                 <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle | markdown"></a>
                             </span>
                             <span ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle | markdown"></span>
-                            <span ng-repeat="info in workCtrl.getInfo(copy.info)" ng-bind-html="info | markdown"></span>
+                            <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info | markdown"></span>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                             <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle | markdown"></a>
                         </span>
                             <span ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle | markdown"></span>
-                            <span ng-repeat="info in workCtrl.getInfo(copy.info)" ng-bind-html="info | markdown"></span>
+                            <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info | markdown"></span>
                         </div>
                     </div>
                 </div>
