@@ -79,12 +79,10 @@ class BlakeDocumentImporter(BlakeImporter):
         root = etree.parse(document).getroot()
         document_name = os.path.split(document)[1]
         # logger.error(document_name)
-        logger.error(document_name)
         self.work_info[document_name] = [self.transform_relationship(r) for r in root.xpath("./related/relationship")]
 
     @staticmethod
     def transform_relationship(rel):
-        logger.error(rel)
         rel_text = rel.xpath("text()")
         link = rel.xpath("link")
         if link:
