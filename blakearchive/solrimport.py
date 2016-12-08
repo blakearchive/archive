@@ -34,7 +34,7 @@ def main():
         if blake_object.supplemental is None:
             notes = []
             for note in blake_object.notes:
-                if hasattr(note, 'note')::
+                if hasattr(note, 'note'):
                     notes.append(unicodedata.normalize('NFKD', note.note).encode('ascii', 'ignore'))
 
             obj = {
