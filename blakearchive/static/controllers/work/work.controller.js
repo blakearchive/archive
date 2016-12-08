@@ -18,6 +18,10 @@
         $rootScope.worksNavState = false;
         $rootScope.showWorkTitle = 'work';
 
+        vm.getInfo = function(info){
+            return info.split('<br />')
+        }
+
 
     }
 
