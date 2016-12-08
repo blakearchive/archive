@@ -3,7 +3,16 @@
     var controller = function($routeParams){
         var vm = this;
 
-        //vm.searchTerm = angular.isDefined($routeParams.searchTerm) ? $routeParams.searchTerm : '';
+        vm.objectNotes = function(){
+            if(angular.isDefined(vm.object)){
+                return vm.object.notes.filter(function(o){ return o.type == "object"}).length > 0
+            }
+        }
+        vm.textNotes = function(){
+            if(angular.isDefined(vm.object)){
+                return vm.object.notes.filter(function(o){ return o.type == "text"}).length > 0
+            }
+        }
     }
 
     controller.$inject = ['$routeParams'];
