@@ -26,7 +26,7 @@
                         return vm.bds.work.title;
                     }
                 } else {
-                    var copyPhrase = vm.bds.copy.archive_copy_id == null ? '' : ', Copy '+vm.bds.copy.archive_copy_id;
+                    var copyPhrase = vm.bds.copy.archive_copy_id == null ? '' : ' Copy '+vm.bds.copy.archive_copy_id;
 
                     if(vm.bds.copy.header){
                         copyPhrase = vm.bds.copy.header.filedesc.titlestmt.title['@reg']+copyPhrase
