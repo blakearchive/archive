@@ -39,7 +39,7 @@
 }
 
 .tei-instr-pencil {
-    color: lightgray;
+    color: #626262;
 }
 
 .tei-hr {
@@ -51,7 +51,7 @@
 }
 
 .tei-unclear-hi {
-    color: lightgray;
+    color: #e085c2;
 }
 
 .tei-subst {
@@ -74,12 +74,12 @@
 
 .tei-gap-cancellation {
     color:red;
-    background-color:#eee;
+    background-color:lightgray;
     text-decoration:line-through;
 }
 
 .tei-gap {
-    background-color:#eee;
+    background-color:lightgray;
 }
 
 .tei-hspace {
@@ -111,11 +111,14 @@
 }
 
 .tei-preceding-delspan-substspan {
+    color:#303030;
     background-color:#e9bb01;
     text-decoration:line-through;
 }
 
 .tei-preceding-delspan {
+    color:#303030;
+    background-color: #e9bb01;
     text-decoration:line-through;
 }
 
