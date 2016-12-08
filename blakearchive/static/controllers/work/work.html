@@ -27,10 +27,10 @@
                     <div class="related-flex">
                         <div class="related-item" ng-repeat="copy in workCtrl.bds.work.related_works | filter:{type:'copy'}">
                             <span ng-if="copy.link">
-                                <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle | markdown"></a>
+                                <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
                             </span>
-                            <span ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle | markdown"></span>
-                            <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info | markdown"></span>
+                            <span ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
+                            <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info.trim() | markdown"></span>
                         </div>
                     </div>
                 </div>
@@ -43,10 +43,10 @@
                     <div class="related-flex">
                         <div class="related-item" ng-repeat="copy in workCtrl.bds.work.related_works | filter:{type:'!copy'}">
                         <span ng-if="copy.link">
-                            <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle | markdown"></a>
+                            <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
                         </span>
-                            <span ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle | markdown"></span>
-                            <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info | markdown"></span>
+                            <span ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
+                            <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info.trim() | markdown"></span>
                         </div>
                     </div>
                 </div>
