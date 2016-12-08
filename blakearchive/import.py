@@ -103,7 +103,7 @@ class BlakeDocumentImporter(BlakeImporter):
             try:
                 self.copy_importer.process(matching_file)
             except Exception as err:
-                logger.debug("Error processing BAD [%s]: %s" % (matching_file, err.message))
+                logger.error("Error processing BAD [%s]: %s" % (matching_file, err.message))
 
     # region Relationship processing
     def process_relationships(self):
