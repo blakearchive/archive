@@ -5,8 +5,7 @@
 
         vm.objectNotes = function(){
             if(angular.isDefined(vm.object) && angular.isDefined(vm.object.notes)){
-                console.log(vm.object.notes.filter(function(o){ return o.type == "object"}));
-                return vm.object.notes.filter(function(o){ return o.type == "object"}).length > 0
+                return vm.object.notes.filter(function(o){ return o.type == "desc"}).length > 0
             }
         }
         vm.textNotes = function(){
