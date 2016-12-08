@@ -104,7 +104,7 @@ class BlakeDocumentImporter(BlakeImporter):
             try:
                 self.copy_importer.process(matching_file)
             except Exception as err:
-                logger.debug("Error processing BAD [%s]: %s" % (matching_file, err.message))
+                logger.error("Error processing BAD [%s]: %s" % (matching_file, err.message))
 
     # region Relationship processing
     def process_relationships(self):
@@ -443,9 +443,22 @@ class BlakeObjectImporter(BlakeImporter):
                 if bentley_id:
                     return int(bentley_id.group(0))
 
+    @classmethod
+    def get_object_notes(cls, obj):
+        #return [{"note":note.xpath("string()"), "line": note.xpath('parent::node()')[0]} for note in obj.xpath(".//note") + obj.xpath(".//objnote")]
+        for note in obj.xpath(".//note") + obj.xpath(".//objnote"):
+            return cls.create_object_note(note)
+
     @staticmethod
-    def get_object_notes(obj):
-        return [note.xpath("string()") for note in obj.xpath(".//note") + obj.xpath(".//objnote")]
+    def create_object_note(note):
+        text = note.xpath("string()")
+        parent = note.xpath('parent::node()')
+        if parent:
+            line = parent[0].attrib["n"].rsplit("." , 1)
+            result = {"note": text, "line": line[1]}
+        else:
+            result = {"note": text}
+        return result
 
     @classmethod
     def get_physical_description(cls, obj):
