@@ -364,6 +364,8 @@ class BlakeObjectImporter(BlakeImporter):
         obj.physical_description = self.get_physical_description(element)
         obj.supplemental = self.supplemental_to(element)
         self.members[obj.desc_id] = obj
+        #print 'notes for' + obj.title
+        #print obj.notes
         return obj
 
     @staticmethod
@@ -436,22 +438,20 @@ class BlakeObjectImporter(BlakeImporter):
                 if bentley_id:
                     return int(bentley_id.group(0))
 
-    @classmethod
-    def get_object_notes(cls, obj):
-        return [note.xpath("string()") for note in obj.xpath(".//note") + obj.xpath(".//objnote")]
-        #for note in obj.xpath(".//note") + obj.xpath(".//objnote"):
-        #    return cls.create_object_note(note)
-
     @staticmethod
-    def create_object_note(note):
-        text = note.xpath("string()")
-        parent = note.xpath('parent::node()')
-        if parent:
-            line = parent[0].attrib["n"].rsplit("." , 1)
-            result = {"note": text, "line": line[1]}
-        else:
-            result = {"note": text}
-        return result
+    def get_object_notes(obj):
+        notes = []
+        #return [note.xpath("string()") for note in obj.xpath(".//note") + obj.xpath(".//objnote")]
+        for note in obj.xpath(".//note") + obj.xpath(".//objnote"):
+            text = note.xpath("string()")
+            parent = note.xpath('parent::l')
+            if len(parent):
+                line = parent[0].attrib["n"].rsplit("." , 1)[1]
+                result = {"note": text, "type": "text", "line": line}
+            else:
+                result = {"note": text, "type": "desc"}
+            notes.append(result)
+        return notes
 
     @classmethod
     def get_physical_description(cls, obj):
