@@ -46,7 +46,7 @@ def main():
                 "copy_title": blake_object.copy.title,
                 "copy_institution": blake_object.copy.institution,
                 # FIXME: properly convert unicode rather than stripping characters
-                "notes": json.dumps([unicodedata.normalize('NFKD', note.text).encode('ascii', 'ignore') for note in blake_object.notes])
+                "notes": json.dumps([unicodedata.normalize('NFKD', note.note).encode('ascii', 'ignore') for note in blake_object.notes])
             }
             print obj["id"]
             if blake_object.copy.work:

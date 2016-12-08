@@ -4,12 +4,13 @@
         var vm = this;
 
         vm.objectNotes = function(){
-            if(angular.isDefined(vm.object)){
+            if(angular.isDefined(vm.object) && angular.isDefined(vm.object.notes)){
+                console.log(vm.object.notes.filter(function(o){ return o.type == "object"}));
                 return vm.object.notes.filter(function(o){ return o.type == "object"}).length > 0
             }
         }
         vm.textNotes = function(){
-            if(angular.isDefined(vm.object)){
+            if(angular.isDefined(vm.object) && angular.isDefined(vm.object.notes)){
                 return vm.object.notes.filter(function(o){ return o.type == "text"}).length > 0
             }
         }
