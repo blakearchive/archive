@@ -396,10 +396,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                             v.link = "/blake/copy/" + v.title.link;
                             break;
                         case 'object':
-                            var descIdElements = v.title.link.split(".");
-                            var copyId = descIdElements[0] + "." + descIdElements[1];
-                            v.type = 'copy';
-                            v.link = "/blake/copy/" + copyId + "?descId=" + v.title.link;
+                            v.type = 'object';
+                            v.link = v.title.link;
                             break;
                         default:
                             v.type = "none";
@@ -793,7 +791,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 blakeData.getCopiesForWork(workId)
             ]).then(function(data){
                 blakeData.work = data[0];
+                console.log(data[0]);
                 blakeData.workCopies = data[1];
+                blakeData.setRelatedWorkObjectLinks();
                 if(blakeData.work.virtual == true){
                     return blakeData.getObjectsForCopy(blakeData.workCopies[0].bad_id).then(function(data){
 
@@ -823,6 +823,26 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 }
             });
         };
+
+        blakeData.setRelatedWorkObjectLinks = function(){
+            if(blakeData.related_works){
+                var related_work_objects = blakeData.work.related_works.filter(function(obj) {
+                    return obj.type == 'object' && obj.link;
+                });
+
+                if(related_work_objects.length > 0){
+                    var object_ids = related_work_objects.map(function(obj) { return obj.link; });
+                    return blakeData.getObjects(object_ids).then(function(data){
+                        angular.forEach(blakeData.work.related_works, function(obj,key){
+                            if(obj.type == 'object' && obj.link){
+                                var matchingObject = data.filter(function(o){return o.desc_id == obj.link});
+                                blakeData.work.related_works[key].link = '/blake/copy/'+matchingObject[0].copy_bad_id+'?descId='+obj.link;
+                            }
+                        });
+                    });
+                }
+            }
+        }
 
         blakeData.setWorkNoCopies = function (workId) {
             return blakeData.getWork(workId).then(function (data) {
