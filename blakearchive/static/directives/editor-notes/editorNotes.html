@@ -1,11 +1,11 @@
 <p><strong>Object Note(s):</strong></p>
 
 <ul ng-if="noteCtrl.object.physical_description.objnote">
-    <li ng-bind-html="noteCtrl.object.physical_description.objnote.p['#text'] | markdown | highlight:noteCtrl.highlight"></li>
+    <li ng-bind-html="noteCtrl.object.physical_description.objnote.p['#text'].trim() | markdown | highlight:noteCtrl.highlight"></li>
 </ul>
 
 <p><strong>Textual Note(s):</strong></p>
 <ul ng-if="noteCtrl.object.notes.length > 0">
-    <li ng-repeat="note in noteCtrl.object.notes track by $index" ng-if="note !== noteCtrl.object.physical_description.objnote.p['#text']"><span ng-bind-html="note | markdown | highlight:noteCtrl.highlight"></span></li>
+    <li ng-repeat="note in noteCtrl.object.notes track by $index" ng-if="note !== noteCtrl.object.physical_description.objnote.p['#text']"><span ng-bind-html="note.trim() | markdown | highlight:noteCtrl.highlight"></span></li>
 </ul>
 <p ng-if="noteCtrl.object.notes.length == 0"><em>No textual notes for this object</em></p>
