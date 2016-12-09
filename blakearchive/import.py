@@ -450,7 +450,7 @@ class BlakeObjectImporter(BlakeImporter):
     def get_object_notes(obj):
         notes = []
         #return [note.xpath("string()") for note in obj.xpath(".//note") + obj.xpath(".//objnote")]
-        for note in obj.xpath("./note") + obj.xpath("./objnote"):
+        for note in obj.xpath(".//note") + obj.xpath(".//objnote"):
             text = note.xpath("string()")
             parent = note.xpath('parent::l')
             if len(parent):
