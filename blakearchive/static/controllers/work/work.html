@@ -16,12 +16,12 @@
 </div>
 <div class="container-bottom">
     <div class="container">
-        <div class="section-group">
+        <!--<div class="section-group">
             <h2>Related Works</h2>
             <p>Related works currently available in the William Blake Archive appear as links below. Works not currently available appear as plain text.</p>
-        </div>
+        </div>-->
         <div class="section-group" ng-if="workCtrl.bds.work.medium=='illbk'">
-            <h3>All Known Copies</h3>
+            <h3 style="font-weight:bold;">All Known Copies</h3>
             <div class="row">
                 <div class="col-xs-12">
                     <div class="related-flex">
@@ -29,7 +29,7 @@
                             <span ng-if="copy.link">
                                 <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
                             </span>
-                            <span ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
+                            <span style="font-weight:bold;" ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
                             <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info.trim() | markdown"></span>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="section-group" ng-class="workCtrl.bds.work.related_works.length > 0 ? '' : 'hidden'">
-            <h3>All Known Related Items</h3>
+            <h3 style="font-weight:bold;">All Known Related Items</h3>
             <div class="row">
                 <div class="col-xs-12">
                     <div class="related-flex">
@@ -45,7 +45,7 @@
                         <span ng-if="copy.link">
                             <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
                         </span>
-                            <span ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
+                            <span style="font-weight:bold;" ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
                             <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info.trim() | markdown"></span>
                         </div>
                     </div>
