@@ -1,14 +1,16 @@
 <p><strong>Object</strong></p>
 
 <ul ng-if="noteCtrl.objectNotes()">
-    <li ng-repeat="note in noteCtrl.object.notes | filter:{type:'desc'} track by $index" ng-bind-html="note.note.trim() | markdown | highlight:noteCtrl.highlight"></li>
+    <li ng-repeat="note in noteCtrl.object.notes | filter:{type:'desc'} track by $index">
+        <span ng-repeat="n in noteCtrl.getNote(note.note)" ng-bind-html="note.trim() | markdown | highlight:noteCtrl.highlight"></span>
+    </li>
 </ul>
 <p ng-if="!noteCtrl.objectNotes()"><em>[There are no object notes for this object.]</em></p>
 
 <p><strong>Text</strong></p>
 <ul ng-if="noteCtrl.textNotes()">
     <li ng-repeat="note in noteCtrl.object.notes | filter:{type:'text'} track by $index">
-        Line {{ note.line }}: <span ng-bind-html="note.note.trim() | markdown | highlight:noteCtrl.highlight"></span>
+        Line {{ note.line }}: <span ng-repeat="n in noteCtrl.getNote(note.note) track by $index" ng-bind-html="note.trim() | markdown | highlight:noteCtrl.highlight"></span>
     </li>
 </ul>
 <p ng-if="!noteCtrl.textNotes()"><em>[There are no textual notes for this object.]</em></p>
