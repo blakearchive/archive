@@ -58,6 +58,18 @@
     background-color: #e9bb01;
 }
 
+.tei-del-overstrike-subst {
+    color:#303030;
+    text-decoration:line-through;
+    background-color: #e9bb01;
+}
+
+.tei-del-overstrike-substspan {
+    color:#303030;
+    text-decoration:line-through;
+    background-color: #e9bb01;
+}
+
 .tei-addspan-substspan {
     color: #168bc1;
     background-color:#e9bb01;
