@@ -211,6 +211,10 @@ td.c2 {
     margin-bottom: 0;
 }
 
+.related-item span:first-child{
+    font-weight: 600;
+}
+
 @media (min-width: 768px) {
     .related-item {
         width: 50%;
