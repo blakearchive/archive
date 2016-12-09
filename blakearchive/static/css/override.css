@@ -1,3 +1,9 @@
+td,
+th {
+  padding: 0;
+  padding-left: 2px;
+}
+
 .site-header button.collapse-archive {
   background-image: none;
   border-top-right-radius: 2px;
