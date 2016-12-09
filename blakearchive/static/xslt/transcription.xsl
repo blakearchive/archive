@@ -174,33 +174,6 @@ transforms transcriptions
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
-
-    <xsl:template match="text()[preceding::del[1]/@spanto=following::anchor[1]/@xml:id]">
-        <xsl:variable name="parentType">
-            <xsl:value-of select="local-name(..)"/>
-        </xsl:variable>
-        <xsl:choose>
-            <!-- This is pretty bad practice.  We need a better way to deal with this problem in notes... no guarantee that we'll always use
-               the HTML rendering tag b for note formatting. -->
-            <xsl:when test="$parentType = 'b' or $parentType = 'note'">
-                <xsl:value-of select="."/>
-            </xsl:when>
-            <xsl:when test="preceding::substSpan/@spanto=following::anchor/@xml:id">
-                <span class="tei-preceding-del-substspan"> <!-- background-color:#ffff99; text-decoration:line-through; -->
-                    <xsl:value-of select="."/>
-                </span>
-            </xsl:when>
-            <xsl:otherwise>
-                <span class="tei-preceding-del">
-                    <xsl:value-of select="."/>
-                </span>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-
-
-
     <xsl:template match="text()[preceding::addSpan[1]/@spanto=following::anchor[1]/@xml:id]">
         <xsl:variable name="parentType">
             <xsl:value-of select="local-name(..)"/>
