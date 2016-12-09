@@ -30,10 +30,7 @@
                                 <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
                             </span>
                             <span style="font-weight:bold;" ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
-                            <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index">
-                                <span style="font-weight:bold;" ng-if="$index==0" ng-bind-html="info.trim() | markdown"></span>
-                                <span ng-if="$index>0" ng-bind-html="info.trim() | markdown"></span>
-                            </span>
+                            <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info.trim() | markdown"></span>
                         </div>
                     </div>
                 </div>
@@ -49,10 +46,7 @@
                             <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
                         </span>
                             <span style="font-weight:bold;" ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
-                            <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info.trim() | markdown">
-                                <span style="font-weight:bold;" ng-if="$index==0" ng-bind-html="info.trim() | markdown"></span>
-                                <span ng-if="$index>0" ng-bind-html="info.trim() | markdown"></span>
-                            </span>
+                            <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info.trim() | markdown"></span>
                         </div>
                     </div>
                 </div>
