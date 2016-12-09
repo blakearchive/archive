@@ -13,6 +13,10 @@
                 return vm.object.notes.filter(function(o){ return o.type == "text"}).length > 0
             }
         }
+
+        vm.getNote = function(note){
+            return note.split('<br />')
+        }
     }
 
     controller.$inject = ['$routeParams'];
