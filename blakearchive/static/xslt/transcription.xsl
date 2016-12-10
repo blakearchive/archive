@@ -2,7 +2,7 @@
 transforms transcriptions
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0">
-    <!--<xsl:include href="includes.xsl"/>-->
+    <xsl:include href="includes.xsl"/>
     <xsl:include href="wba_ms_test.xsl"/>
     <xsl:template match="/">
         <div>
@@ -103,7 +103,7 @@ transforms transcriptions
         </xsl:choose>
     </xsl:template>
     <xsl:template match="lg">
-        <xsl:param name="colnum">
+        <xsl:param name="column">
             <xsl:for-each select="ancestor::columns/column">
                 <xsl:value-of select="last()"/>
             </xsl:for-each>
@@ -111,7 +111,7 @@ transforms transcriptions
         <xsl:choose>
             <xsl:when test="ancestor::columns">
                 <xsl:choose>
-                    <xsl:when test="$colnum='333'">
+                    <xsl:when test="$column='333'">
                         <table class="tei-table-extra-small">
                             <xsl:attribute name="style">text-align:
                                 <xsl:value-of select="@justify"/>
@@ -338,5 +338,16 @@ transforms transcriptions
                 </span>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    <!-- Additional templates to handle del tags nested in subst and substSpan -->
+    <xsl:template match="//subst/del[@type='overstrike']">
+        <del type="overstrike" class="tei-del-overstrike-subst">
+            <xsl:apply-templates/>
+        </del>
+    </xsl:template>
+    <xsl:template match="//substSpan/del[@type='overstrike']">
+        <del type="overstrike" class="tei-del-overstrike-substspan">
+            <xsl:apply-templates/>
+        </del>
     </xsl:template>
 </xsl:stylesheet>
