@@ -120,7 +120,7 @@
     text-align: left;
     min-width: 400px;
     padding: 10px;
-    font-family: "Times New Roman", Times, serif;
+    /*font-family: "Times New Roman", Times, serif;*/
 }
 
 .tei-preceding-delspan-substspan {
