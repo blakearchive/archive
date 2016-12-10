@@ -9,7 +9,7 @@
 }
 
 .tei-rep {
-    background-color: #168bc1;
+    color: #168bc1;
 }
 
 .tei-del-overwrite {
@@ -165,9 +165,11 @@
 }
 #colorKeyTable, #colorKeyTable tbody tr, #colorKeyTable tbody tr td{
     border: none;
+    color: #eee;
 }
 #colorKeyTable tbody tr th{
     margin-top: 10px;
+    color: #eee;
 }
 .tei-hi-italic{
     font-style:italic;
