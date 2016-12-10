@@ -2,7 +2,7 @@
 transforms transcriptions
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0">
-    <xsl:include href="includes.xsl"/>
+    <!--<xsl:include href="includes.xsl"/>-->
     <xsl:include href="wba_ms_test.xsl"/>
     <xsl:template match="/">
         <div>
