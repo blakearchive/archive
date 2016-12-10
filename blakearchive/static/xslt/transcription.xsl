@@ -339,7 +339,7 @@ transforms transcriptions
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    <!-- Additional templates to handle del tags nested in subst and substSpan -->
+    <!-- Additional templates to handle del tags nested in subst and substSpan 
     <xsl:template match="//subst/del[@type='overstrike']">
         <del type="overstrike" class="tei-del-overstrike-subst">
             <xsl:apply-templates/>
@@ -350,4 +350,4 @@ transforms transcriptions
             <xsl:apply-templates/>
         </del>
     </xsl:template>
-</xsl:stylesheet>
+</xsl:stylesheet>-->
