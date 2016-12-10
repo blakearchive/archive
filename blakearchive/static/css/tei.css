@@ -147,6 +147,7 @@
 .tei-line-number {
     width: 5%;
     color:gray;
+    text-align:end;
 }
 
 .tei-line-note {
