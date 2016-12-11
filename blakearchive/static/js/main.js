@@ -1340,7 +1340,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                         $timeout(function(){
                             var offset = $(element).find($data.target)[0].offsetLeft;
                             $(element).animate({scrollLeft: offset}, 'fast');
-                            console.log('going');
                         },300);
 
                     }
