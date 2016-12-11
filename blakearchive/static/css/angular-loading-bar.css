@@ -5,12 +5,6 @@
  * License: MIT
  */
 
-.loading-bar-container{
-    /*min-height: 66vh;
-    min-width: 100vw;*/
-    margin-top: 2px;
-}
-
 /* Make clicks pass-through */
 #loading-bar,
 #loading-bar-spinner {
@@ -43,9 +37,9 @@
     transition: width 350ms;
 
     background: rgba(233,188,71,1);
-    position: relative;
+    position: fixed;
     z-index: 10002;
-    top: 0;
+    top: 50px;
     left: 0;
     width: 100%;
     height: 4px;
