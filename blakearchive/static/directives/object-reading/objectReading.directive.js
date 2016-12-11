@@ -35,6 +35,10 @@
             $rootScope.persistentmode = 'gallery';
             $rootScope.states.activeItem = 'gallery';
         }
+
+        vm.cssSafeId = function(string){
+            return string.replace(/\./g,'-');
+        }
     }
 
 

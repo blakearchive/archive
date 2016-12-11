@@ -1330,6 +1330,25 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             });
         };
     })
+    .directive('leftOnBroadcast',function($timeout){
+        var link = function(scope,element,attr) {
+            if(attr.leftOnBroadcast){
+                scope.$on(attr.leftOnBroadcast,function($event,$data){
+                    if($data.target){
+                        $timeout(function(){
+                            var offset = $(element).find($data.target)[0].offsetLeft;
+                            $(element).animate({scrollLeft: offset}, 'fast');
+                        },300);
+
+                    }
+                });
+            }
+        }
+        return{
+            restrict: 'A',
+            link: link
+        }
+    })
     .directive('scrollToTop',function(){
         var link = function(scope,element,attr) {
             element.on('click',function(){
