@@ -138,7 +138,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 // obj.characteristics = angular.fromJson(config.characteristics);
                 obj.text = angular.fromJson(config.text);
                 obj.notes = angular.fromJson(config.notes);
-                obj.lines = [];
+                //obj.lines = [];
                 /*if (angular.isObject(obj.text)) {
                     if (angular.isDefined(obj.text.texthead)) {
                         parseObjectLines(obj.text.texthead, obj.lines, 'header', 0);
@@ -272,6 +272,10 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
              copy.objects.push(BlakeObject.create(config.objects[i]));
              }
              }*/
+            //FIXME:: Figure out why the Laocoon work's title isn't getting encoded in utf8
+            if(copy.title == "LaocoÃ¶n"){
+                copy.title = "Laocoön";
+            }
             switch (copy.archive_copy_id) {
                 case 'biblicalwc':
                 case 'biblicaltemperas':
@@ -352,6 +356,11 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
             //Create an alternative work title for virtual works
             work.menuTitle = work.title;
+            //FIXME:: Figure out why the Laocoon work's title isn't getting encoded in utf8
+            if(work.title == "LaocoÃ¶n"){
+                work.title = "Laocoön";
+                work.menuTitle = "Laocoön";
+            }
             switch (work.bad_id) {
                 case 'biblicalwc':
                     work.title = 'Water Color Drawings Illustrating the Bible';
