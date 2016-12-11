@@ -6,6 +6,12 @@
         vm.selectedWork = -1;
         vm.selectedCopy = 0;
         vm.selectedObject = 0;
+
+        vm.scrollToFromDropdown = function(id,index){
+            var scrollboxId = '#'+id;
+            console.log(angular.element(scrollboxId));
+            angular.element(scrollboxId).scrollToResult(index);
+        };
         
         vm.populateTree = function (index) {
             var copyBads = [],
