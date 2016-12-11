@@ -6,12 +6,6 @@
         vm.selectedWork = -1;
         vm.selectedCopy = 0;
         vm.selectedObject = 0;
-
-        vm.scrollToFromDropdown = function(id,index){
-            var scrollboxId = '#'+id;
-            console.log(angular.element(scrollboxId));
-            angular.element(scrollboxId).scrollToResult(index);
-        };
         
         vm.populateTree = function (index) {
             var copyBads = [],
@@ -83,6 +77,7 @@
             vm.populateTree(workIndex);
             vm.selectedWork = workIndex;
             $rootScope.$broadcast('searchResultDirective::showCopies',{type:vm.type});
+            $rootScope.$broadcast('searchCtrl::changeResult',{type:vm.type,objectIndex:vm.selectedWork});
             /*if(vm.resultTree[workIndex][2].length == 1){
                 vm.selectedCopy = 0;
                 if(vm.resultTree[workIndex][2][0][2].length == 1){
