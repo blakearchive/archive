@@ -1,7 +1,7 @@
 (function() {
 
     /** @ngInject */
-    var controller = function ($rootScope,$scope) {
+    var controller = function ($rootScope,$routeParams) {
 
         var vm = this;
 
@@ -17,7 +17,6 @@
         }
 
         vm.changeView = function(mode,scope){
-            console.log('change');
             $rootScope.view.mode = mode;
             $rootScope.view.scope = scope;
             //$rootScope.worksNavState = false;
@@ -25,6 +24,8 @@
                 $rootScope.persistentmode = 'gallery';
             }
             if(mode == 'read') {
+                var target = '#'+$routeParams.descId.replace(/\./g,'-');
+                $rootScope.$broadcast('viewSubMenu::readingMode',{'target': target});
                 $rootScope.persistentmode = 'reading';
             }
             
