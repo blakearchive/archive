@@ -24,7 +24,7 @@
                 $rootScope.persistentmode = 'gallery';
             }
             if(mode == 'read') {
-                var target = '#'+$routeParams.descId.replace(/\./g,'-');
+                var target = $routeParams.descId ? '#'+$routeParams.descId.replace(/\./g,'-') : '';
                 $rootScope.$broadcast('viewSubMenu::readingMode',{'target': target});
                 $rootScope.persistentmode = 'reading';
             }
