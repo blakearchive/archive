@@ -42,6 +42,11 @@
                 sci = 1,
                 used = [];
             angular.forEach(results, function(value) {
+
+                //FIXME
+                if(value.title == "LaocoÃ¶n"){
+                    value.title = "Laocoön";
+                }
                 if(used.indexOf(value.bad_id) == -1){
                     used.push(value.bad_id);
                     value.column = sci;
