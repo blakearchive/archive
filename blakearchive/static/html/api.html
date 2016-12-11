@@ -5,7 +5,6 @@
 <p><strong>http://www.blakearchive.org/blake/api:</strong>
 
 </br></br><strong>POST:</strong></br>
-<p>/query_objects
 
 
 <p>/query_objects
@@ -15,6 +14,29 @@
 
 
 <p>/query_works
+
+<p>The entire JSON object must be posted for queries. For example:
+
+<p>searchString: '',
+</br>useCompDate: true,
+</br>usePrintDate: false,
+</br>searchAllFields: true,
+</br>searchTitle: false,
+</br>searchText: false,
+</br>searchNotes: false,
+</br>searchImageDescriptions: false,
+</br>searchImageKeywords: false,
+</br>searchWorks: false,
+</br>searchCopies: false,
+</br>searchAllTypes: true,
+</br>searchIlluminatedBooks: false,
+</br>searchCommercialBookIllustrations: false,
+</br>searchSeparatePrints: false,
+</br>searchDrawingsPaintings: false,
+</br>searchManuscripts: false,
+</br>searchRelatedMaterials: false,
+</br>minDate: 1772,
+</br>maxDate: 1827
 
 </br></br><strong>GET:</strong></br>
 <p>/object/[desc_id]
