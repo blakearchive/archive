@@ -8,7 +8,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
 }]);
 
 
-angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch','markdown'])
+angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch','markdown','angular-loading-bar'])
 
     .factory("GenericService", function () {
         return function (constructor) {
@@ -1835,6 +1835,10 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
         $routeProvider.otherwise({redirectTo: directoryPrefix + '/'});
         $locationProvider.html5Mode(true);
+    }])
+    .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+        cfpLoadingBarProvider.includeSpinner = false;
+        cfpLoadingBarProvider.parentSelector = '.loading-bar-container';
     }])
 
     .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
