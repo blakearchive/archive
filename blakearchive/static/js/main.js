@@ -969,6 +969,10 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 console.log(blakeData.object);
                 if(!object.supplemental){
                     $location.search('descId',blakeData.object.desc_id);
+                    if($rootScope.view.persistentmode == 'reading'){
+                        var target = '#' + blakeData.object.desc_id.replace(/\./g,'-');
+                        $rootScope.$broadcast('viewSubMenu::readingMode',{'target': target});
+                    }
                 }
                 $rootScope.$broadcast('change::selectedObject')
             });
