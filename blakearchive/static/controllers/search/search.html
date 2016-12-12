@@ -105,7 +105,7 @@
             No results found
         </div>
         
-        <span ng-if="objectResults.length == 0 || copyResults.count == 0 || workResults.count == 0">
+        <span ng-if="objectResults.length != 0 || copyResults.count != 0 || workResults.count != 0">
         <search-results ng-if="searchConfig.searchTitle || searchConfig.searchAllFields" label="Title" results="objectResults['title']" highlight="{{searchConfig.searchString}}" type="title" tree="object"></search-results>
         <search-results ng-if="searchConfig.searchText || searchConfig.searchAllFields" label="Transcription" results="objectResults['text']" highlight="{{searchConfig.searchString}}" type="text" tree="object"></search-results>
         <search-results ng-if="searchConfig.searchImageDescriptions || searchConfig.searchAllFields" label="Illustration Description" results="objectResults['description']" highlight="{{searchConfig.searchString}}" type="description" tree="object"></search-results>
