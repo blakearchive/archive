@@ -329,8 +329,9 @@ footer ul.nav.nav-pills {
     margin-left: 20px;
 }
 dd span p {
-    display: inline-block;
+    display: inline;
 }
+
 /*
  * OVP tabs
  */
