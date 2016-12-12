@@ -29,7 +29,11 @@
                     var copyPhrase = vm.bds.copy.archive_copy_id == null ? '' : ' Copy '+vm.bds.copy.archive_copy_id;
 
                     if(vm.bds.copy.header){
-                        copyPhrase = vm.bds.copy.header.filedesc.titlestmt.title['@reg']+copyPhrase
+                        title = vm.bds.copy.header.filedesc.titlestmt.title['@reg'];
+                        if(title.match(/.*, The/)) {
+                            title = "The " + title.match(/(.*), The/)[1];
+                        }
+                        copyPhrase = title+copyPhrase
                     }
 
                     return copyPhrase;
