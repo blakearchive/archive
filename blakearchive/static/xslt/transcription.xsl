@@ -345,7 +345,7 @@ transforms transcriptions
             <xsl:apply-templates/>
         </del>
     </xsl:template>
-    <xsl:template match="//del[preceding-sibling::substSpan]">
+    <xsl:template match="//del[@type='overstrike' and preceding-sibling::substSpan] | //del[@type='overstrike' and following-sibling::anchor]">
         <del type="overstrike" class="tei-del-overstrike-substspan">
             <xsl:apply-templates/>
         </del>
