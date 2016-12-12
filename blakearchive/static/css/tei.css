@@ -119,9 +119,8 @@
     border-collapse: separate;
     text-align: left;
     min-width: 400px;
-    /*padding: 10px;*/
+     /*padding: 10px;*/
     padding:0px;
-    /*font-family: "Times New Roman", Times, serif;*/
 }
 
 .tei-preceding-delspan-substspan {
