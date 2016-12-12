@@ -151,9 +151,6 @@
         vm.getHandprintDescription = function(workIndex){
             switch(vm.tree){
                 case 'work':
-                    if(vm.resultTree[workIndex][0].title == "LaocoÃ¶n"){
-                        vm.resultTree[workIndex][0].title = "Laocoön";
-                    }
                     return '<strong>' + vm.resultTree[workIndex][0].title + ' (' + 'Composed ' + vm.resultTree[workIndex][0].composition_date_string + ')' + '</strong>';
                 default:
                     var string = '<strong>'+vm.resultTree[workIndex][0].title+' (' + 'Composed ' + vm.resultTree[workIndex][0].composition_date_string + ')'+'</strong><br>',
