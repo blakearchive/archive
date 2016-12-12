@@ -1,4 +1,7 @@
-<div ng-repeat="comp in descCtrl.object.components track by $index">
+<div ng-if="descCtrl.object.components == ''" class="tei-wrapper">[There is no illustration description for this object.]</div>
+
+
+<div ng-if="descCtrl.object.components != ''" ng-repeat="comp in descCtrl.object.components track by $index">
     <p style="font-size: 1.8rem; padding-top: 5px;">
         <strong>
             Sector {{ comp.location }}<br>
