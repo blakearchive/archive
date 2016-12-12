@@ -8338,7 +8338,7 @@ a.new-window:hover {
 }
 @media (min-width: 768px) {
   #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy {
-    /*float: left;*/
+    float: left;
   }
 }
 #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy .reading-copy-inner {
