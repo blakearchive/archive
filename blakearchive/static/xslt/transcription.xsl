@@ -350,7 +350,7 @@ transforms transcriptions
             <xsl:apply-templates/>
         </del>
     </xsl:template>
-    <xsl:template match="//substSpan/del[@type='wash']">
+    <xsl:template match="//del[@type='wash' and preceding-sibling::substSpan] | //del[@type='wash' and following-sibling::anchor]">
         <del type="wash" class="tei-del-overstrike-substspan">
             <xsl:apply-templates/>
         </del>
