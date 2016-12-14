@@ -809,6 +809,7 @@ a.compare-selected-objects {
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy{
         max-height: 100%;
         display: flex;
+        overflow:auto;
     }
 }
 #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy ol li span{
