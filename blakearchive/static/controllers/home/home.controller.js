@@ -58,7 +58,7 @@
                 }
             });
             vm.featured_works = results;
-            console.log(vm.featured_works);
+
         });
 
     }
