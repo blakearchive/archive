@@ -66,7 +66,7 @@
           <nav-menu></nav-menu>
         </div>
       </nav>
-      <div style="position:absolute;right:0"><a twitter-share href="https://twitter.com/share" class="twitter-share-button" data-url="{{$scope.myLocation}}" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></div>
+      <div id="custom-tweet-button" style="position:absolute;right:0"><a twitter-share href="" onclick="window.open('https://twitter.com/share','name','width=600,height=400')" data-url="{{$scope.myLocation}}" data-show-count="false"></a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></div>
     </nav>
 <!--
 <ul class="list-inline">
