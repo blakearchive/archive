@@ -1703,6 +1703,15 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             link:link
         }
     })
+
+    .directive('twitterShare', function($rootScope){
+        return {
+            restrict: 'A',
+            constoller: function($scope,$rootScope,$location){
+                $scope.myLocation = $location.path;
+            },
+        }
+    })
     
     .directive('blakeMenu', function($rootScope){
         return {
