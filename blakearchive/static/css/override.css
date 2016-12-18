@@ -1,3 +1,10 @@
+#custom-tweet-button a {
+    display: block;
+    padding: 2px 13px 19px 20px;
+    background: url("../img/global/twitter-128.png") center no-repeat;
+    background-size:20px 20px;
+  }
+
 #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy h4 {
   color: #e5e5e5;
   font-size: 14px;
