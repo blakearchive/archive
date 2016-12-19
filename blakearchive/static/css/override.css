@@ -1,3 +1,12 @@
+.custom-tweet-button {
+  display: inline-block;
+  width: 30px;
+  height: 41px;
+  padding-top: 15px;
+  float: right;
+  margin-right: 10px;
+}
+
 #custom-tweet-button a {
     display: block;
     padding: 2px 13px 19px 20px;
@@ -448,7 +457,8 @@ body {
         position: absolute;
         /*put back after lightbox*/
         /*right: 105px;*/
-        right: 64px;
+        /*right: 64px;*/
+        right:105px;
         top: -43px;
         padding: 0;
         /*width:30px;
