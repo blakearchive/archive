@@ -45,7 +45,7 @@
     var objectReading = function(){
         return {
             restrict: 'E',
-            templateUrl: '/blake/static/directives/object-reading/objectReading.html',
+            templateUrl: '/static/directives/object-reading/objectReading.html',
             controller: controller,
             controllerAs: 'read',
             bindToController: true

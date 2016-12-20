@@ -32,7 +32,7 @@
             <header class="page-header">
                 <button class="close-copies" ng-click="esr.selectedWork = -1" scroll-to-element offset="254"><span class="glyphicon glyphicon-remove"></span></button>
                 <h1>
-                    <a href="/blake/work/{{esr.resultTree[esr.selectedWork][0].bad_id}}">{{esr.resultTree[esr.selectedWork][0].title}} (Composed {{esr.resultTree[esr.selectedWork][0].composition_date_string}})</a>&nbsp;
+                    <a href="/work/{{esr.resultTree[esr.selectedWork][0].bad_id}}">{{esr.resultTree[esr.selectedWork][0].title}} (Composed {{esr.resultTree[esr.selectedWork][0].composition_date_string}})</a>&nbsp;
                     <span dropdown class="dropdown" ng-if="esr.resultTree[esr.selectedWork][2].length > 1 && esr.tree == 'object' && !esr.resultTree[esr.selectedWork][0].virtual">
                         <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">
                             <span>Copy {{esr.resultTree[esr.selectedWork][2][esr.selectedCopy][0].archive_copy_id}}</span>&nbsp;
@@ -110,7 +110,7 @@
                     <h5 style="">Selected Object</h5>
                     <br>
                     <div class="object-img-container text-center" auto-height adjust="350" breakpoint="992">
-                        <a ng-href="/blake/copy/{{esr.getPreviewHref()}}">
+                        <a ng-href="/copy/{{esr.getPreviewHref()}}">
                             <img ng-src="/images/{{ esr.getPreviewImage() }}.100.jpg">
                             <p></p>
                             <p class="object-subtitle">

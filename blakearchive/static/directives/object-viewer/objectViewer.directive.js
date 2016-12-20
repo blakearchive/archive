@@ -110,7 +110,7 @@
     var objectViewer = function(){
         return {
             restrict: 'E',
-            templateUrl: '/blake/static/directives/object-viewer/objectViewer.html',
+            templateUrl: '/static/directives/object-viewer/objectViewer.html',
             controller: controller,
             controllerAs: 'viewer',
             bindToController: true

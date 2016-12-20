@@ -9,7 +9,7 @@
         vm.imageTagsOpen = function(){
 
             var imageTagsModalInstance = $modal.open({
-                templateUrl: '/blake/static/html/newsearch.html',
+                templateUrl: '/static/html/newsearch.html',
                 controller: 'ModalController',
                 size: 'lg'
             });
@@ -20,7 +20,7 @@
     var imageTags = function(){
         return {
             restrict: 'E',
-            templateUrl: '/blake/static/directives/image-tags/imageTags.html',
+            templateUrl: '/static/directives/image-tags/imageTags.html',
             controller: controller,
             controllerAs: 'imagetags',
             bindToController: true

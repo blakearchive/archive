@@ -128,7 +128,7 @@
                 controller: controller,
                 controllerAs: 'slideBox',
                 bindToController: true,
-                templateUrl: '/blake/static/directives/slide-box/slideBox.html'
+                templateUrl: '/static/directives/slide-box/slideBox.html'
             }
     }
 

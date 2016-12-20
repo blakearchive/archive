@@ -56,7 +56,7 @@
     var objectCompare = function(){
         return {
             restrict: 'E',
-            templateUrl: '/blake/static/directives/object-compare/objectCompare.html',
+            templateUrl: '/static/directives/object-compare/objectCompare.html',
             controller: controller,
             controllerAs: 'compare',
             bindToController: true,

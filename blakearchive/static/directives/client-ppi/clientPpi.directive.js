@@ -66,7 +66,7 @@
             $rootScope.$broadcast('clientPpi::savedPpi');
         }
 
-        $http.get('/blake/static/directives/client-ppi/screens.json').success(function(data){
+        $http.get('/static/directives/client-ppi/screens.json').success(function(data){
            vm.screens = data;
         });
 
@@ -81,7 +81,7 @@
     var clientPpi = function() {
         return {
             restrict: 'EA',
-            templateUrl: "/blake/static/directives/client-ppi/clientPpi.html",
+            templateUrl: "/static/directives/client-ppi/clientPpi.html",
             controller: controller,
             controllerAs: 'ppi',
             bindToController: true

@@ -7,7 +7,7 @@
     var copyInfoDl = function(){
         return {
             restrict: 'EA',
-            templateUrl: '/blake/static/directives/copy-info-dl/copyInfoDl.html',
+            templateUrl: '/static/directives/copy-info-dl/copyInfoDl.html',
             controller: controller,
             scope: {
                 infoObject: '=',

@@ -32,17 +32,17 @@
                 <!--<xsl:value-of select="//head/title"/>-->
             <!--</title>-->
             <!--<script>-->
-                <!--<xsl:attribute name="src">/blake/applets/lightbox/lb.js</xsl:attribute>-->
+                <!--<xsl:attribute name="src">/applets/lightbox/lb.js</xsl:attribute>-->
             <!--</script>-->
             <!--<link>-->
                 <!--<xsl:attribute name="rel">stylesheet</xsl:attribute>-->
                 <!--<xsl:attribute name="type">text/css</xsl:attribute>-->
-                <!--<xsl:attribute name="href">/blake/style.css</xsl:attribute>-->
+                <!--<xsl:attribute name="href">/style.css</xsl:attribute>-->
             <!--</link>-->
             <!--<link>-->
                 <!--<xsl:attribute name="rel">stylesheet</xsl:attribute>-->
                 <!--<xsl:attribute name="type">text/css</xsl:attribute>-->
-                <!--<xsl:attribute name="href">/blake/slider.css</xsl:attribute>-->
+                <!--<xsl:attribute name="href">/slider.css</xsl:attribute>-->
             <!--</link>-->
             <!--<link>-->
                 <!--<xsl:attribute name="rel">stylesheet</xsl:attribute>-->
@@ -58,15 +58,15 @@
                 <!--<xsl:attribute name="type">text/javascript</xsl:attribute>-->
             <!--</script>-->
             <!--<script>-->
-                <!--<xsl:attribute name="src">/blake/jQueryRotate.2.1.js</xsl:attribute>-->
+                <!--<xsl:attribute name="src">/jQueryRotate.2.1.js</xsl:attribute>-->
                 <!--<xsl:attribute name="type">text/javascript</xsl:attribute>-->
             <!--</script>-->
             <!--<script>-->
-                <!--<xsl:attribute name="src">/blake/binaryajax.js</xsl:attribute>-->
+                <!--<xsl:attribute name="src">/binaryajax.js</xsl:attribute>-->
                 <!--<xsl:attribute name="type">text/javascript</xsl:attribute>-->
             <!--</script>-->
             <!--<script>-->
-                <!--<xsl:attribute name="src">/blake/imageinfo.js</xsl:attribute>-->
+                <!--<xsl:attribute name="src">/imageinfo.js</xsl:attribute>-->
                 <!--<xsl:attribute name="type">text/javascript</xsl:attribute>-->
             <!--</script>-->
             <!--<script>-->
@@ -83,15 +83,15 @@
   <!--})();-->
                 <!--]]></script>-->
             <!--<script>-->
-                <!--<xsl:attribute name="src">/blake/exif.js</xsl:attribute>-->
+                <!--<xsl:attribute name="src">/exif.js</xsl:attribute>-->
                 <!--<xsl:attribute name="type">text/javascript</xsl:attribute>-->
             <!--</script>-->
             <!--<script>-->
-                <!--<xsl:attribute name="src">/blake/accessibleUISlider.jQuery.js</xsl:attribute>-->
+                <!--<xsl:attribute name="src">/accessibleUISlider.jQuery.js</xsl:attribute>-->
                 <!--<xsl:attribute name="type">text/javascript</xsl:attribute>-->
             <!--</script>-->
             <!--<script>-->
-                <!--<xsl:attribute name="src">/blake/functions.js</xsl:attribute>-->
+                <!--<xsl:attribute name="src">/functions.js</xsl:attribute>-->
             <!--</script>-->
             <!--<style>-->
                 <!--<xsl:attribute name="type">text/css</xsl:attribute>-->
@@ -105,7 +105,7 @@
             <!--<link>-->
                 <!--<xsl:attribute name="rel">meta</xsl:attribute>-->
                 <!--<xsl:attribute name="type">application/rdf+xml</xsl:attribute>-->
-                <!--<xsl:attribute name="href">/exist/blake/archive/rdf.xq?req=<xsl:value-of select="$objectid"/>&amp;mode=obj</xsl:attribute>-->
+                <!--<xsl:attribute name="href">/exist/archive/rdf.xq?req=<xsl:value-of select="$objectid"/>&amp;mode=obj</xsl:attribute>-->
             <!--</link>-->
         <!--</head>-->
     <!--</xsl:template>-->
@@ -123,12 +123,12 @@
                 <!--<xsl:value-of select="//head/title"/>-->
             <!--</title>-->
             <!--<script>-->
-                <!--<xsl:attribute name="src">/blake/functions.js</xsl:attribute>-->
+                <!--<xsl:attribute name="src">/functions.js</xsl:attribute>-->
             <!--</script>-->
             <!--<script>-->
                 <!--<xsl:attribute name="language">javascript</xsl:attribute>-->
                 <!--<xsl:attribute name="type">text/javascript</xsl:attribute>-->
-                <!--<xsl:attribute name="src">/blake/template/includes/style_call.txt</xsl:attribute>-->
+                <!--<xsl:attribute name="src">/template/includes/style_call.txt</xsl:attribute>-->
             <!--</script>-->
             <!--<meta lang="en"/>-->
         <!--</head>-->
@@ -211,7 +211,7 @@ and the URL of current document -->
             <!--<xsl:when test="@type='work' or @type='copy' or @type='object'">-->
                 <!--<a>-->
                     <!--<xsl:attribute name="href">-->
-                        <!--/exist/blake/archive/<xsl:value-of select="@type"/>.xq?<xsl:value-of select="@type"/>id=<xsl:value-of select="translate(@ptr,$ucletters,$lcletters)"/>&amp;java=no</xsl:attribute>-->
+                        <!--/exist/archive/<xsl:value-of select="@type"/>.xq?<xsl:value-of select="@type"/>id=<xsl:value-of select="translate(@ptr,$ucletters,$lcletters)"/>&amp;java=no</xsl:attribute>-->
                     <!--<xsl:apply-templates/>-->
                 <!--</a>-->
             <!--</xsl:when>-->
@@ -233,7 +233,7 @@ and the URL of current document -->
             <!--<xsl:when test="@type='compare'">-->
                 <!--<a>-->
                     <!--<xsl:attribute name="href">-->
-                        <!--/exist/blake/archive/comparison.xq?selection=compare&amp;copies=all&amp;copyid=<xsl:value-of select="@ptr"/>&amp;bentleynum=<xsl:value-of select="@objnum"/>-->
+                        <!--/exist/archive/comparison.xq?selection=compare&amp;copies=all&amp;copyid=<xsl:value-of select="@ptr"/>&amp;bentleynum=<xsl:value-of select="@objnum"/>-->
                     <!--</xsl:attribute>-->
                     <!--<xsl:apply-templates/>-->
                 <!--</a>-->
@@ -247,7 +247,7 @@ and the URL of current document -->
             <!--</xsl:when>-->
             <!--<xsl:when test="@type='simple'">-->
                 <!--<a>-->
-                    <!--<xsl:attribute name="href">/blake/<xsl:value-of select="@path"/>?java=no-->
+                    <!--<xsl:attribute name="href">/<xsl:value-of select="@path"/>?java=no-->
                     <!--</xsl:attribute>-->
                     <!--<xsl:if test="@target">-->
                         <!--<xsl:attribute name="target">-->
@@ -275,19 +275,19 @@ and the URL of current document -->
                     <!--<xsl:choose>-->
                         <!--<xsl:when test="$java='no'">-->
                             <!--<img>-->
-                                <!--<xsl:attribute name="src">/blake/dwicons/java_bb515.jpg</xsl:attribute>-->
+                                <!--<xsl:attribute name="src">/dwicons/java_bb515.jpg</xsl:attribute>-->
                                 <!--<xsl:attribute name="alt">[Java]</xsl:attribute>-->
                             <!--</img>-->
                         <!--</xsl:when>-->
                         <!--<xsl:when test="$java='yes'">-->
                             <!--<img>-->
-                                <!--<xsl:attribute name="src">/blake/dwicons/nonjava_bb515.jpg</xsl:attribute>-->
+                                <!--<xsl:attribute name="src">/dwicons/nonjava_bb515.jpg</xsl:attribute>-->
                                 <!--<xsl:attribute name="alt">[Non-Java]</xsl:attribute>-->
                             <!--</img>-->
                         <!--</xsl:when>-->
                         <!--<xsl:otherwise>-->
                             <!--<img>-->
-                                <!--<xsl:attribute name="src">/blake/dwicons/nonjava_bb515.jpg</xsl:attribute>-->
+                                <!--<xsl:attribute name="src">/dwicons/nonjava_bb515.jpg</xsl:attribute>-->
                                 <!--<xsl:attribute name="alt">[Non-Java]</xsl:attribute>-->
                             <!--</img>-->
                         <!--</xsl:otherwise>-->
@@ -565,7 +565,7 @@ Previous</a>
                         <xsl:choose>
                             <xsl:when test="position() = last()">
                                 <img>
-                                    <xsl:attribute name="src">/blake/dwicons/d_next.gif</xsl:attribute>
+                                    <xsl:attribute name="src">/dwicons/d_next.gif</xsl:attribute>
                                     <xsl:attribute name="alt"> No Next</xsl:attribute>
                                     <xsl:attribute name="border">Next</xsl:attribute>
                                 </img>
@@ -589,7 +589,7 @@ Previous</a>
                                         </xsl:if>
                                     </xsl:attribute>
                                     <img>
-                                        <xsl:attribute name="src">/blake/dwicons/b_next.gif</xsl:attribute>
+                                        <xsl:attribute name="src">/dwicons/b_next.gif</xsl:attribute>
                                         <xsl:attribute name="alt">Next</xsl:attribute>
                                         <xsl:attribute name="border">Next</xsl:attribute>
                                     </img>
@@ -605,7 +605,7 @@ Previous</a>
                         <xsl:choose>
                             <xsl:when test="position() = 1">
                                 <img>
-                                    <xsl:attribute name="src">/blake/dwicons/d_prev.gif</xsl:attribute>
+                                    <xsl:attribute name="src">/dwicons/d_prev.gif</xsl:attribute>
                                     <xsl:attribute name="alt"> No Previous</xsl:attribute>
                                     <xsl:attribute name="border">Previous</xsl:attribute>
                                 </img>
@@ -629,7 +629,7 @@ Previous</a>
                                         </xsl:if>
                                     </xsl:attribute>
                                     <img>
-                                        <xsl:attribute name="src">/blake/dwicons/b_prev.gif</xsl:attribute>
+                                        <xsl:attribute name="src">/dwicons/b_prev.gif</xsl:attribute>
                                         <xsl:attribute name="alt">Previous</xsl:attribute>
                                         <xsl:attribute name="border">Previous</xsl:attribute>
                                     </img>
