@@ -118,12 +118,12 @@
                     <h3>Objects</h3>
                     <div ng-repeat="obj in tabs.bds.object.text_ref.objects track by $index" class="col-sm-6 col-md-3">
                         <handprint-block ng-if="obj.object_group !== null"
-                                         link="/blake/copy/letters?descId={{ obj.desc_id }}"
+                                         link="/copy/letters?descId={{ obj.desc_id }}"
                                          image="{{ obj.dbi }}.100.jpg"
                                          footer="{{ obj.object_group }}">
                         </handprint-block>
                         <handprint-block ng-if="obj.object_group === null"
-                                         link="/blake/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
+                                         link="/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
                                          image="{{ obj.dbi }}.100.jpg"
                                          footer="{{ obj.full_object_id }}">
                         </handprint-block>
@@ -134,7 +134,7 @@
                 <div class="row" ng-if="tabs.bds.object.text_ref.copies.length > 0">
                     <h3>Copies</h3>
                     <div ng-repeat="cp in tabs.bds.object.text_ref.copies track by $index" class="col-sm-6 col-md-3">
-                        <handprint-block link="/blake/copy/{{cp.bad_id}}"
+                        <handprint-block link="/copy/{{cp.bad_id}}"
                                          image="{{ cp.image }}.100.jpg"
                                          footer="Copy {{cp.archive_copy_id}}, {{cp.source.objinfo.printdate['#text']}}, {{cp.institution}}">
                         </handprint-block>
@@ -145,7 +145,7 @@
                 <div class="row" ng-if="tabs.bds.object.text_ref.works.length > 0">
                     <h3>Works</h3>
                     <div ng-repeat="wk in tabs.bds.object.text_ref.works track by $index" class="col-sm-6 col-md-3">
-                        <handprint-block link="/blake/work/{{wk.bad_id}}"
+                        <handprint-block link="/work/{{wk.bad_id}}"
                                          image="{{ wk.image }}"
                                          footer="{{ wk.title }}">
                         </handprint-block>

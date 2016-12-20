@@ -12,7 +12,7 @@
     var illustrationDescription = function(){
         return {
             restrict: 'EA',
-            templateUrl: '/blake/static/directives/illustration-description/illustrationDescription.html',
+            templateUrl: '/static/directives/illustration-description/illustrationDescription.html',
             controller: controller,
             scope: {
                 object: '=object',

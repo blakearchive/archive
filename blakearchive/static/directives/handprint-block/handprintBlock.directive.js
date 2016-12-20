@@ -18,7 +18,7 @@
                 case 'cpd':
                 case 'allegropenseroso':
                 case 'miltons':
-                    vm.imagePath = '/blake/static/img/virtualworks/';
+                    vm.imagePath = '/static/img/virtualworks/';
                     break;
                 default:
                     vm.imagePath = '/images/';
@@ -29,7 +29,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/blake/static/directives/handprint-block/handprintBlock.html',
+            templateUrl: '/static/directives/handprint-block/handprintBlock.html',
             controller: controller,
             scope: {
                 header: '@header',

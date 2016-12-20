@@ -5,7 +5,7 @@ from blakearchive import config
 if hasattr(config, "production") and config.production:
     app = Flask(__name__)
 else:
-    app = Flask(__name__, static_url_path='/blake/static', static_folder='static')
+    app = Flask(__name__, static_url_path='/static', static_folder='static')
 
 
 # Blueprints should be registered here

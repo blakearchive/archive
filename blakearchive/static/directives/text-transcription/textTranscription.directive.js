@@ -7,7 +7,7 @@
 
         vm.colorKeyOpen = function(size){
             var colorKeyModalInstance = $modal.open({
-                templateUrl: '/blake/static/controllers/modal/colorKeyModal.html',
+                templateUrl: '/static/controllers/modal/colorKeyModal.html',
                 controller: 'ModalController',
                 size: size
             });
@@ -59,7 +59,7 @@
     var textTranscription = function(){
         return {
             restrict: 'EA',
-            templateUrl: '/blake/static/directives/text-transcription/textTranscription.html',
+            templateUrl: '/static/directives/text-transcription/textTranscription.html',
             controller: controller,
             scope: {
                 object: '=object',

@@ -12,7 +12,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/blake/static/directives/work-copies/workCopies.html',
+            templateUrl: '/static/directives/work-copies/workCopies.html',
             controller: controller,
             controllerAs: 'workCopies',
             bindToController: true

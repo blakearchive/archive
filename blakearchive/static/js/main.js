@@ -1,4 +1,4 @@
-directoryPrefix = '/blake';
+directoryPrefix = '';
 
 angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     .controller('CarouselController', ['$scope', '$timeout', '$transition', '$q',
@@ -398,11 +398,11 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                     switch(v.title.type){
                         case 'work':
                             v.type = 'work';
-                            v.link = "/blake/work/" + v.title.link;
+                            v.link = "/work/" + v.title.link;
                             break;
                         case 'copy':
                             v.type = 'copy';
-                            v.link = "/blake/copy/" + v.title.link;
+                            v.link = "/copy/" + v.title.link;
                             break;
                         case 'object':
                             v.type = 'object';
@@ -845,7 +845,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                         angular.forEach(blakeData.work.related_works, function(obj,key){
                             if(obj.type == 'object' && obj.link){
                                 var matchingObject = data.filter(function(o){return o.desc_id == obj.link});
-                                blakeData.work.related_works[key].link = '/blake/copy/'+matchingObject[0].copy_bad_id+'?descId='+obj.link;
+                                blakeData.work.related_works[key].link = '/copy/'+matchingObject[0].copy_bad_id+'?descId='+obj.link;
                             }
                         });
                     });
@@ -987,7 +987,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
         blakeData.changeCopy = function(copyId,descId){
             return blakeData.setSelectedCopy(copyId,descId).then(function(){
-                $location.path('/blake/copy/'+copyId,false);
+                $location.path('/copy/'+copyId,false);
                 $location.search('descId',descId);
             });
         }
@@ -1734,7 +1734,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             restrict: 'A',
             link: function(scope,ele,attr){
                 ele.on('click',function(){
-                    $window.open('/blake/new-window/'+attr.showMe+'/'+scope.copyBad+'?descId='+scope.object.desc_id, '_blank','width=800, height=600');
+                    $window.open('/new-window/'+attr.showMe+'/'+scope.copyBad+'?descId='+scope.object.desc_id, '_blank','width=800, height=600');
                 })
             },
             scope:{
