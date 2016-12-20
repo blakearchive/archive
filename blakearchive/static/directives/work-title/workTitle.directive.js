@@ -73,7 +73,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/blake/static/directives/work-title/workTitle.html',
+            templateUrl: '/static/directives/work-title/workTitle.html',
             controller: controller,
             link: link,
             controllerAs: 'workTitle',

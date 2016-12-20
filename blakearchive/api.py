@@ -4,7 +4,7 @@ from flask import Blueprint, request, current_app, jsonify, abort
 import config
 
 
-api = Blueprint('api', __name__, url_prefix='/blake/api')
+api = Blueprint('api', __name__, url_prefix='/api')
 
 
 @api.route('/query_objects', methods=["POST"])
