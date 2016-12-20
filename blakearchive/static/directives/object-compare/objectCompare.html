@@ -9,8 +9,8 @@
                  ng-class="{active:compare.cof.isMain(o)}"
                  ng-click="compare.changeObject(o)"
                  ng-dblclick="compare.goToObject(o)">
-                <!--<p class="object-title text-capitalize"><a href="/blake/copy/{{o.copy_bad_id}}?objectId={{o.object_id}}">{{ o.copy_title }}</a></p>-->
-                <p class="object-title text-capitalize"><a href="/blake/copy/{{o.copy_bad_id}}">{{ o.copy_title }}</a></p>
+                <!--<p class="object-title text-capitalize"><a href="/copy/{{o.copy_bad_id}}?objectId={{o.object_id}}">{{ o.copy_title }}</a></p>-->
+                <p class="object-title text-capitalize"><a href="/copy/{{o.copy_bad_id}}">{{ o.copy_title }}</a></p>
                 <div class="compare-wrapper flex" auto-height adjust="270" breakpoint="768">
                     <div class="object-img-container" ng-class="{hidden: view.scope == 'text'}" ovp-image>
                         <img ng-src="/images/{{ o.dbi }}.100.jpg" magnify-image>
@@ -21,7 +21,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="object-subtitle text-capitalize"><a href="/blake/copy/{{o.copy_bad_id}}?descId={{o.desc_id}}">{{ o.full_object_id }}, {{ o.copy_composition_date }}, {{ o.copy_institution }}</a></p>
+                <p class="object-subtitle text-capitalize"><a href="/copy/{{o.copy_bad_id}}?descId={{o.desc_id}}">{{ o.full_object_id }}, {{ o.copy_composition_date }}, {{ o.copy_institution }}</a></p>
             </div>
         </div>
     </div>

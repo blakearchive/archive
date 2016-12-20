@@ -39,7 +39,7 @@
         vm.resize();
 
         vm.newWindow = function(object,type){
-            $window.open('/blake/new-window/'+type+'/'+object.copy_bad_id+'?descId='+object.desc_id, '_blank','width=800, height=600');
+            $window.open('/new-window/'+type+'/'+object.copy_bad_id+'?descId='+object.desc_id, '_blank','width=800, height=600');
         }
 
         $scope.$on('resize::resize',function(event,window){
@@ -74,7 +74,7 @@
             scope: {
                 toggle: '&',
             },
-            templateUrl: '/blake/static/directives/info-tray/infoTray.html',
+            templateUrl: '/static/directives/info-tray/infoTray.html',
             controller: controller,
             controllerAs: 'tray',
             bindToController: true,

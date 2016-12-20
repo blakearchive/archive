@@ -63,7 +63,7 @@
     var copyTabs = function() {
         return {
             restrict: 'E',
-            templateUrl: "/blake/static/directives/copy-tabs/copyTabs.html",
+            templateUrl: "/static/directives/copy-tabs/copyTabs.html",
             controller: controller,
             controllerAs: 'tabs',
             bindToController: true,

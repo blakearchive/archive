@@ -55,7 +55,7 @@
         return {
             restrict: 'E',
             scope: true,
-            templateUrl: '/blake/static/directives/view-sub-menu/viewSubMenu.html',
+            templateUrl: '/static/directives/view-sub-menu/viewSubMenu.html',
             controller: controller,
             controllerAs: 'viewSubMenu',
             bindToController: true
