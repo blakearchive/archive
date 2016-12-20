@@ -57,7 +57,7 @@
     var copyInformation = function(){
         return {
             restrict: 'E',
-            templateUrl: "/blake/static/directives/copy-information/copyInformation.html",
+            templateUrl: "/static/directives/copy-information/copyInformation.html",
             controller: controller,
             controllerAs: 'info',
             scope:{

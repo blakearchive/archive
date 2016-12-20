@@ -142,7 +142,7 @@
     var navMenu = function() {
         return {
             restrict: 'EA',
-            templateUrl: "/blake/static/directives/menu/template.html",
+            templateUrl: "/static/directives/menu/template.html",
             controller: controller,
             controllerAs: 'menu',
             bindToController: true,

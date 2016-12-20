@@ -58,7 +58,7 @@
     var objectsFromSame = function(){
         return {
             restrict: 'E',
-            templateUrl: "/blake/static/directives/objects-from-same/objectsFromSame.html",
+            templateUrl: "/static/directives/objects-from-same/objectsFromSame.html",
             controller: controller,
             controllerAs: 'fromSame',
             scope: {

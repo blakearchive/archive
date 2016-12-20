@@ -249,7 +249,7 @@
     var searchResults = function(){
         return {
             restrict: 'E',
-            templateUrl: '/blake/static/directives/search-results/searchResults.html',
+            templateUrl: '/static/directives/search-results/searchResults.html',
             controller: controller,
             scope: {
                 resultTree: '=results',
