@@ -2796,7 +2796,7 @@ h3 {
   background-color: transparent;
   background-repeat: no-repeat;
   background-position: 0 0;
-  background-image: url("/blake/static/img/global/william_blake_archive.png");
+  background-image: url("/static/img/global/william_blake_archive.png");
   display: block;
   width: 100%;
   max-width: 334px;
@@ -2819,7 +2819,7 @@ h3 {
   background-color: transparent;
   background-repeat: no-repeat;
   background-position: center bottom;
-  background-image: url("/blake/static/img/global/icon-lightbox.png");
+  background-image: url("/static/img/global/icon-lightbox.png");
   display: inline-block;
   width: 30px;
   height: 41px;
@@ -2961,7 +2961,7 @@ nav.navbar ul.navbar-nav > li > a {
   background-color: #303030;
   background-repeat: no-repeat;
   background-position: right center;
-  background-image: url("/blake/static/img/global/arrow-open.png");
+  background-image: url("/static/img/global/arrow-open.png");
   border-bottom: 1px solid #454545;
   -webkit-transition: color 0.2s ease-out;
   -o-transition: color 0.2s ease-out;
@@ -2984,7 +2984,7 @@ nav.navbar ul.navbar-nav .open > a:focus {
   background-color: #404040;
   background-repeat: no-repeat;
   background-position: right center;
-  background-image: url("/blake/static/img/global/arrow-close.png");
+  background-image: url("/static/img/global/arrow-close.png");
 }
 nav.navbar ul.navbar-nav .active > a,
 nav.navbar ul.navbar-nav .active > a:hover,
@@ -2992,7 +2992,7 @@ nav.navbar ul.navbar-nav .active > a:focus {
   color: #666666;
   font-weight: bold;
   background-color: #fff;
-  background-image: url("/blake/static/img/global/arrow-open-active.png");
+  background-image: url("/static/img/global/arrow-open-active.png");
 }
 nav.navbar ul.navbar-nav .active > a:hover,
 nav.navbar ul.navbar-nav .active > a:focus {
@@ -3000,7 +3000,7 @@ nav.navbar ul.navbar-nav .active > a:focus {
 }
 nav.navbar ul.navbar-nav .open.active > a:hover,
 nav.navbar ul.navbar-nav .open.active > a:focus {
-  background-image: url("/blake/static/img/global/arrow-close-active.png");
+  background-image: url("/static/img/global/arrow-close-active.png");
 }
 nav.navbar ul.navbar-nav ul.dropdown-menu {
   background-color: rgba(56, 56, 56, 0.97);
@@ -3184,11 +3184,11 @@ a.compare-selected-objects:hover {
   background-color: #91c054;
 }
 a.select-all-objects {
-  background-image: url("/blake/static/img/global/select-icon.png");
+  background-image: url("/static/img/global/select-icon.png");
   padding-left: 38px;
 }
 a.compare-selected-objects {
-  background-image: url("/blake/static/img/global/compare-icon.png");
+  background-image: url("/static/img/global/compare-icon.png");
   padding-left: 65px;
 }
 .action-items {
@@ -3201,7 +3201,7 @@ a.compare-selected-objects {
   overflow: hidden;
 }
 .selected.handprint-block a span.object-img span.selected {
-  background: transparent url(/blake/static/img/global/selected-object-icon.png) no-repeat 0 0;
+  background: transparent url(/static/img/global/selected-object-icon.png) no-repeat 0 0;
   display: block;
   width: 68px;
   height: 68px;
@@ -3212,7 +3212,7 @@ a.new-window {
   background-color: transparent;
   background-repeat: no-repeat;
   background-position: center center;
-  background-image: url("/blake/static/img/global/new-window-icon.png");
+  background-image: url("/static/img/global/new-window-icon.png");
   border-radius: 2px;
   display: block;
   width: 36px;
@@ -3232,7 +3232,7 @@ a.new-window:hover {
   background-color: rgba(0, 0, 0, 0.1);
   background-repeat: no-repeat;
   background-position: center center;
-  background-image: url("/blake/static/img/global/back-top-arrow.png");
+  background-image: url("/static/img/global/back-top-arrow.png");
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 3px;
   display: block;
@@ -3329,7 +3329,7 @@ a.new-window:hover {
   background-color: #2d2d2d;
   background-repeat: no-repeat;
   background-position: center 6px;
-  background-image: url("/blake/static/img/global/open-close-tray-icon-mobile.png");
+  background-image: url("/static/img/global/open-close-tray-icon-mobile.png");
   border: 1px solid #424242;
   border-top: none;
   border-radius: 0 0 2px 2px;
@@ -3393,7 +3393,7 @@ a.new-window:hover {
   color: #ccc;
   background-color: #333;
   background-repeat: no-repeat;
-  background-image: url("/blake/static/img/global/detail-tray-icons.png");
+  background-image: url("/static/img/global/detail-tray-icons.png");
   display: block;
   padding: 14px 4px 14px 40px;
 }
@@ -3412,7 +3412,7 @@ a.new-window:hover {
 }
 #archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .panel-title a.new-window {
   background-color: transparent;
-  background-image: url("/blake/static/img/global/new-window-icon.png");
+  background-image: url("/static/img/global/new-window-icon.png");
   background-position: center center !important;
   margin: 0;
   padding: 0;
@@ -3599,10 +3599,10 @@ a.new-window:hover {
   filter: alpha(opacity=70);
 }
 #archive #object-view.view-objects .featured-object-controls a.carousel-control.right .chevron {
-  background-image: url("/blake/static/img/global/chevron-thin-right.png");
+  background-image: url("/static/img/global/chevron-thin-right.png");
 }
 #archive #object-view.view-objects .featured-object-controls a.carousel-control.left .chevron {
-  background-image: url("/blake/static/img/global/chevron-thin-left.png");
+  background-image: url("/static/img/global/chevron-thin-left.png");
 }
 #archive #object-view.view-objects .featured-object-controls a.carousel-control .object-text:hover {
   opacity: 0.9;
@@ -3636,7 +3636,7 @@ a.new-window:hover {
 #archive #object-view .btn-group.edit-object .btn.btn-default .edit-icon {
   background-color: transparent;
   background-repeat: no-repeat;
-  background-image: url("/blake/static/img/global/edit-icons.png");
+  background-image: url("/static/img/global/edit-icons.png");
   display: inline-block;
   margin-right: 4px;
   margin-bottom: -8px;
@@ -4644,13 +4644,13 @@ h3 {
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   .site-header-container a.navbar-brand span.sig {
- background-image: url("/blake/static/img/global/william_blake_archive@2x.png");
+ background-image: url("/static/img/global/william_blake_archive@2x.png");
  background-size: 334px 56px;
 }
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   .lightbox {
- background-image: url("/blake/static/img/global/icon-lightbox@2x.png");
+ background-image: url("/static/img/global/icon-lightbox@2x.png");
  background-size: 30px 14px;
 }
 }
@@ -4735,7 +4735,7 @@ h3 {
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   nav.navbar ul.navbar-nav > li > a {
- background-image: url("/blake/static/img/global/arrow-open@2x.png");
+ background-image: url("/static/img/global/arrow-open@2x.png");
  background-size: 25px 7px;
 }
 }
@@ -4756,7 +4756,7 @@ h3 {
   nav.navbar ul.navbar-nav .open > a,
   nav.navbar ul.navbar-nav .open > a:hover,
   nav.navbar ul.navbar-nav .open > a:focus {
- background-image: url("/blake/static/img/global/arrow-close@2x.png");
+ background-image: url("/static/img/global/arrow-close@2x.png");
  background-size: 25px 7px;
 }
 }
@@ -4772,7 +4772,7 @@ h3 {
   nav.navbar ul.navbar-nav .active > a,
   nav.navbar ul.navbar-nav .active > a:hover,
   nav.navbar ul.navbar-nav .active > a:focus {
- background-image: url("/blake/static/img/global/arrow-open-active@2x.png");
+ background-image: url("/static/img/global/arrow-open-active@2x.png");
  background-size: 25px 7px;
 }
 }
@@ -4787,7 +4787,7 @@ h3 {
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   nav.navbar ul.navbar-nav .open.active > a:hover,
   nav.navbar ul.navbar-nav .open.active > a:focus {
- background-image: url("/blake/static/img/global/arrow-close-active@2x.png");
+ background-image: url("/static/img/global/arrow-close-active@2x.png");
  background-size: 25px 7px;
 }
 }
@@ -4877,25 +4877,25 @@ h3 {
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   a.select-all-objects {
- background-image: url("/blake/static/img/global/select-icon@2x.png");
+ background-image: url("/static/img/global/select-icon@2x.png");
  background-size: 16px 16px;
 }
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   a.compare-selected-objects {
- background-image: url("/blake/static/img/global/compare-icon@2x.png");
+ background-image: url("/static/img/global/compare-icon@2x.png");
  background-size: 42px 20px;
 }
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   a.new-window {
- background-image: url("/blake/static/img/global/new-window-icon@2x.png");
+ background-image: url("/static/img/global/new-window-icon@2x.png");
  background-size: 24px 22px;
 }
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   .back-top {
- background-image: url("/blake/static/img/global/back-top-arrow.png");
+ background-image: url("/static/img/global/back-top-arrow.png");
  background-size: 14px 14px;
 }
 }
@@ -4960,13 +4960,13 @@ h3 {
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   #archive .tray-toggle {
- background-image: url("/blake/static/img/global/open-close-tray-icon-mobile@2x.png");
+ background-image: url("/static/img/global/open-close-tray-icon-mobile@2x.png");
  background-size: 16px 168px;
 }
 }
 @media (min-width: 992px) {
   #archive .tray-toggle {
- background-image: url("/blake/static/img/global/open-close-tray-icon.png");
+ background-image: url("/static/img/global/open-close-tray-icon.png");
  border-top: 1px solid #424242;
  border-left: none;
  border-radius: 0 2px 2px 0;
@@ -4976,7 +4976,7 @@ h3 {
 }
 @media (min-width: 992px) and only screen and (-webkit-min-device-pixel-ratio: 2), (min-width: 992px) and only screen and (min--moz-device-pixel-ratio: 2), (min-width: 992px) and only screen and (-o-min-device-pixel-ratio: 2/1), (min-width: 992px) and only screen and (min-device-pixel-ratio: 2), (min-width: 992px) and only screen and (min-resolution: 192dpi), (min-width: 992px) and only screen and (min-resolution: 2dppx) {
   #archive .tray-toggle {
- background-image: url("/blake/static/img/global/open-close-tray-icon@2x.png");
+ background-image: url("/static/img/global/open-close-tray-icon@2x.png");
  background-size: 16px 168px;
 }
 }
@@ -5020,13 +5020,13 @@ h3 {
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   #archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .panel-title a {
- background-image: url("/blake/static/img/global/detail-tray-icons@2x.png");
+ background-image: url("/static/img/global/detail-tray-icons@2x.png");
  background-size: 20px 454px;
 }
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   #archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .panel-title a.new-window {
- background-image: url("/blake/static/img/global/new-window-icon@2x.png");
+ background-image: url("/static/img/global/new-window-icon@2x.png");
  background-size: 24px 22px;
 }
 }
@@ -5073,7 +5073,7 @@ h3 {
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   #archive #object-view.view-objects .featured-object-controls a.carousel-control.right .chevron {
- background-image: url("/blake/static/img/global/chevron-thin-right@2x.png");
+ background-image: url("/static/img/global/chevron-thin-right@2x.png");
  background-size: 14px 27px;
 }
 }
@@ -5094,7 +5094,7 @@ h3 {
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   #archive #object-view.view-objects .featured-object-controls a.carousel-control.left .chevron {
- background-image: url("/blake/static/img/global/chevron-thin-left@2x.png");
+ background-image: url("/static/img/global/chevron-thin-left@2x.png");
  background-size: 14px 27px;
 }
 }
@@ -5139,7 +5139,7 @@ h3 {
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   #archive #object-view .btn-group.edit-object .btn.btn-default .edit-icon {
- background-image: url("/blake/static/img/global/edit-icons@2x.png");
+ background-image: url("/static/img/global/edit-icons@2x.png");
  background-size: 26px 224px;
 }
 }
