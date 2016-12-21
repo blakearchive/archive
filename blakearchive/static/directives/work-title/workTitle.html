@@ -43,7 +43,7 @@
 
 	</span>
 
-	<span ng-if="$root.view.mode == 'compare' && showWorkTitle != 'static'" class="worktitle" style="padding: 19px;">
+	<span ng-if="$root.view.mode == 'compare' && showWorkTitle != 'static' && showWorkTitle != 'work'" class="worktitle" style="padding: 19px;">
 		<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} ({{workTitle.getCompOrPrintDateString()}}) (Selected)
 	</span>
 
