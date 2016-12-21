@@ -6831,7 +6831,10 @@ nav.navbar ul.navbar-nav ul.dropdown-menu > li > a {
   white-space: normal;
   border-radius: 2px;
   margin-bottom: 1px;
-  padding: 7px 20px;
+  /*taking padding out because Drawings and Paintings 
+  is a big menu and goes outside the window if the window 
+  is too small*/
+  /*padding: 7px 20px;*/
 }
 nav.navbar ul.navbar-nav ul.dropdown-menu > li > a:hover,
 nav.navbar ul.navbar-nav ul.dropdown-menu > li > a:focus {
