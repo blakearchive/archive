@@ -1,7 +1,7 @@
 (function() {
 
     /** @ngInject */
-    var controller = function ($rootScope,$routeParams) {
+    var controller = function ($rootScope,$routeParams,$modal) {
 
         var vm = this;
 
@@ -14,6 +14,41 @@
                 mode: 'object',
                 scope: 'image'
             }
+        }
+
+        vm.helpOpen = function(){
+
+            var myTemplateURL;
+
+            switch ($rootScope.view.mode) {
+                case 'home':
+                    myTemplateURL = '/static/html/help-home.html';
+                    break;
+                case 'work':
+                    myTemplateURL = '/static/html/help-work.html';
+                    break;
+                case 'read':
+                    myTemplateURL = '/static/html/help-reading.html';
+                    break;
+                case 'static':
+                    myTemplateURL = '/static/html/help-static.html';
+                    break;
+                case 'object':
+                    myTemplateURL = '/static/html/help-object.html';
+                    break;
+                case 'compare':
+                    myTemplateURL = '/static/html/help-compare.html';
+                    break;
+                case 'search':
+                    myTemplateURL = '/static/html/help-search.html';
+                    break;
+            }
+
+            var helpModalInstance = $modal.open({
+                templateUrl: myTemplateURL,
+                controller: 'ModalController',
+                size: 'lg'
+            });
         }
 
         vm.changeView = function(mode,scope){

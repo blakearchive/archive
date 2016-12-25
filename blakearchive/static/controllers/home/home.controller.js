@@ -10,6 +10,7 @@
 
         $rootScope.worksNavState = true;
         $rootScope.showWorkTitle = false;
+        $rootScope.view.mode = 'home';
 
         if(!angular.isDefined($rootScope.persistentmode)){
             $rootScope.persistentmode = 'gallery';            
