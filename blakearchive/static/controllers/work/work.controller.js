@@ -12,7 +12,7 @@
         vm.bds = BlakeDataService;
 
         $rootScope.showOverlay = false;
-        $rootScope.view.mode = 'work';
+        $rootScope.help = 'work';
 
         vm.bds.setSelectedWork($routeParams.workId);
 
