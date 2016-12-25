@@ -1,3 +1,29 @@
+.modal-header .close {
+  margin-top: -2px;
+  color:white;
+}
+
+.modal-header {
+  padding: 15px;
+  border-bottom: 1px solid #e5e5e5;
+  min-height: 16.42857143px;
+  background-color: #3d3d3c;
+}
+
+.modal-title {
+  margin: 0;
+  line-height: 1.42857143;
+  color: #e9bc47;
+  text-align: center;
+}
+
+.modal-footer {
+  padding: 15px;
+  border-top: 1px solid #e5e5e5;
+  color: #e9bc47;
+  background-color:#222222;
+}
+
 .custom-tweet-button {
   display: inline-block;
   width: 30px;
