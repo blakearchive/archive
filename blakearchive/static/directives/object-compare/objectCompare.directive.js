@@ -9,6 +9,7 @@
         vm.cof = CompareObjectsFactory;
         $rootScope.onWorkPage = false;
         //$rootScope.onComparePage = true;
+        $rootScope.view.mode = 'compare';
 
         vm.getOvpTitle = function(){
             if(angular.isDefined(vm.bds.copy)){

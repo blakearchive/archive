@@ -6,6 +6,8 @@
         vm.selectedWork = -1;
         vm.selectedCopy = 0;
         vm.selectedObject = 0;
+
+        $rootScope.view.mode = 'search';
         
         vm.populateTree = function (index) {
             var copyBads = [],
