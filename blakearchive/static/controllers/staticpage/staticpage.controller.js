@@ -7,7 +7,7 @@
 
         $rootScope.worksNavState = false;
         $rootScope.showWorkTitle = 'static';
-        $rootScope.view.mode = 'static';
+        $rootScope.help = 'static';
 
         vm.page = $routeParams.initialPage;
         vm.subSelection = 'empty';

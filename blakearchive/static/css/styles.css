@@ -5416,7 +5416,7 @@ a.list-group-item-danger.active:focus {
   line-height: 1;
   color: #000000;
   text-shadow: 0 1px 0 #ffffff;
-  opacity: 0.2;
+  /*opacity: 0.2;*/
   filter: alpha(opacity=20);
 }
 .close:hover,
@@ -5518,7 +5518,7 @@ button.close {
 }
 .modal-footer {
   padding: 15px;
-  text-align: right;
+  /*text-align: right;*/
   border-top: 1px solid #e5e5e5;
 }
 .modal-footer .btn + .btn {
@@ -6877,7 +6877,8 @@ nav.navbar form.navbar-form {
     position: absolute;
     top: -43px;
     /*top: -78px;*/
-    right:170px;
+    /*right:170px;*/
+    right:205px;
     /*right: 126px;*/
     z-index: 1;
   }
