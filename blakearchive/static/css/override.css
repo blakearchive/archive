@@ -1,3 +1,14 @@
+.hangingindent {
+  padding-left: 22px ;
+  text-indent: -22px ;
+}
+
+.modal-body p {
+  margin: 10px 0 10px;
+  padding-left: 22px ;
+  text-indent: -22px ;
+}
+
 .modal-header .close {
   margin-top: -2px;
   color:white;
@@ -22,6 +33,12 @@
   border-top: 1px solid #e5e5e5;
   color: #e9bc47;
   background-color:#222222;
+}
+
+.modal-footer p {
+  margin: 10px 0 10px;
+  padding-left: 22px ;
+  text-indent: -22px ;
 }
 
 .custom-tweet-button {
