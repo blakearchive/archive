@@ -50,7 +50,7 @@
             var helpModalInstance = $modal.open({
                 templateUrl: myTemplateURL,
                 controller: 'ModalController',
-                size: 'lg'
+                //size: 'sm'
             });
         }
 
