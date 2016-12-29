@@ -150,7 +150,7 @@
         //TODO: Directive has become too large with too many ng-ifs because of the variations between work,copy,object
         //Need to bust these out into more directives or figure out a better way to handle them
 
-        vm.getHandprintDescription = function(workIndex){
+        vm.getHandprintDescription = function(workIndex,label){
             switch(vm.tree){
                 case 'work':
                     return '<strong>' + vm.resultTree[workIndex][0].title + ' (' + 'Composed ' + vm.resultTree[workIndex][0].composition_date_string + ')' + '</strong>';
@@ -171,7 +171,14 @@
                     if(vm.resultTree[workIndex][2].length == 1 && !vm.resultTree[workIndex][0].virtual){
                         string += ' across '+vm.resultTree[workIndex][2].length+ ' Copy';
                     }
+                    
                     string += endstring;
+
+                    if(label == 'Copy Information') {
+                        stringArray = string.split(' across ');
+                        string = '(' + stringArray[1];
+                    } 
+
                     return string;
             }
         }
