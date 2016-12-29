@@ -9,7 +9,8 @@
         $rootScope.onWorkPage = false;
 
         vm.userestrictOpen = function(copy,object){
-            var header = copy.header ? copy.header.userestrict['#text'] : object.header.userestrict['#text'];
+            console.log(copy);
+            var header = copy.header.userestrict ? copy.header.userestrict['#text'] : object.header.userestrict['#text'];
             var template = '<div class="modal-header">'
                 +'<button type="button" class="close" ng-click="close()" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
                 +'<h4 class="modal-title">Use Restriction</h4>'
