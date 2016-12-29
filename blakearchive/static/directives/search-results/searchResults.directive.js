@@ -157,6 +157,17 @@
                 default:
                     var string = '<strong>'+vm.resultTree[workIndex][0].title+' (' + 'Composed ' + vm.resultTree[workIndex][0].composition_date_string + ')'+'</strong><br>',
                         endstring = '';
+
+                    if(label == 'Copy Information') {
+                        if(vm.resultTree[workIndex][2].length > 1 && !vm.resultTree[workIndex][0].virtual){
+                            string += '(' + vm.resultTree[workIndex][2].length+ ' Copies' + ')';
+                        }
+                        if(vm.resultTree[workIndex][2].length == 1 && !vm.resultTree[workIndex][0].virtual){
+                            string += '(' + vm.resultTree[workIndex][2].length+ ' Copy' + ')';
+                        }
+                        return string;
+                    }
+
                     if(vm.resultTree[workIndex][1] > 1){
                         string += '('+vm.resultTree[workIndex][1] + ' Objects';
                         endstring = ')';
@@ -173,11 +184,6 @@
                     }
                     
                     string += endstring;
-
-                    if(label == 'Copy Information') {
-                        stringArray = string.split(' across ');
-                        string = '(' + stringArray[1];
-                    } 
 
                     return string;
             }
