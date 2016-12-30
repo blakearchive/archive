@@ -18,13 +18,16 @@
 
 <schema name="example core zero" version="1.1">
 
-    <fieldtype name="string"  class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+    <fieldtype name="string"  class="solr.StrField" sortMissingLast="true" omitNorms="true">
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true"/>
+    </fieldtype>
     <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
     <fieldType name="text" class="solr.TextField" omitNorms="false">
         <analyzer>
             <tokenizer class="solr.StandardTokenizerFactory"/>
             <filter class="solr.StandardFilterFactory"/>
             <filter class="solr.LowerCaseFilterFactory"/>
+            <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true"/>
         </analyzer>
     </fieldType>
 
