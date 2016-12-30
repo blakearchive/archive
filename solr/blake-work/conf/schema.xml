@@ -20,7 +20,6 @@
 
     <fieldtype name="string"  class="solr.StrField" sortMissingLast="true" omitNorms="true">
         <analyzer>
-            <tokenizer class="solr.StandardTokenizerFactory"/>
             <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true"/>
         </analyzer>
     </fieldtype>
