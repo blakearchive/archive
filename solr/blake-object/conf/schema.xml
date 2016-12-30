@@ -26,12 +26,6 @@
             <filter class="solr.StandardFilterFactory"/>
             <filter class="solr.LowerCaseFilterFactory"/>
         </analyzer>
-        <analyzer type="index">
-            <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true"/>
-        </analyzer>
-        <analyzer type="query">
-            <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true"/>
-        </analyzer>
     </fieldType>
 
     <!-- general -->
