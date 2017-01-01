@@ -329,7 +329,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 case "speng":
                 case "cprint":
                     work.medium_pretty = 'Prints';
-                    work.probable = 'printing';
+                    work.probable = 'composition';
                     break;
                 case "mono":
                 case "paint":
