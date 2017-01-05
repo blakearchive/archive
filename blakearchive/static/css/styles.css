@@ -8042,7 +8042,10 @@ a.new-window:hover {
 }
 @media (min-width: 768px) {
   #archive-tabs .tab-pane dl dt {
-    line-height: 2;
+    /*line-height: 2;*/
+    line-height: 0.8;
+    /*added padding-top to fix multi-line labels*/
+    padding-top: 6px;
     text-align: right;
     padding-bottom: 7px;
     width: 100px;
