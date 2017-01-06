@@ -861,7 +861,6 @@ a.compare-selected-objects {
     }
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy .reading-copy-inner{
         min-width: 400px;
-        display:flex;
     }
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item img{
         height: 100%;
