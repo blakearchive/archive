@@ -57,7 +57,7 @@
     background-size:20px 20px;
   }
 
-#archive #object-view.reading-view #compare.scrollbar .compare-inner .item  h4 {
+#archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-copy h4 {
   color: #e5e5e5;
   font-size: 14px;
   line-height: 20px;
