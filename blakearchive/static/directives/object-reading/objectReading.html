@@ -45,7 +45,7 @@
    
 </div>
 
-<div style="float:right; width:67%" id="compare" class="scrollbar" ng-if="read.bds.copy.bad_id == 'illum'" left-on-broadcast="viewSubMenu::readingMode">
+<div onResize="location.reload();" style="float:right; width:67%" id="compare" class="scrollbar" ng-if="read.bds.copy.bad_id == 'illum'" left-on-broadcast="viewSubMenu::readingMode">
     <div class="featured-object">
         <div class="compare-inner">
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null}" ng-if="read.bds.copy.bad_id != 'letters'">
