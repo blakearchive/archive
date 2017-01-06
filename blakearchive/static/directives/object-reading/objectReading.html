@@ -6,10 +6,11 @@
             <!-- for letters -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index" ng-if="read.bds.copy.bad_id == 'letters'">
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
+                    <h4 class="text-capitalize" ng-click="read.changeObject(o)">{{ o.full_object_id }}</h4>
                     <img ng-src="/images/{{ o.dbi }}.100.jpg" ng-click="read.changeObject(o)">
                     <div class="reading-copy">
                         <div class="reading-copy-inner">
-                            <!--<h4 class="text-capitalize" ng-click="read.changeObject(o)">{{ o.full_object_id }}</h4>-->
+                            
                             <text-transcription object="o"></text-transcription>
                         </div>
                     </div>
@@ -20,11 +21,12 @@
             <!-- for everything else -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null}" ng-if="read.bds.copy.bad_id != 'letters'">
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
+                    <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
+                            <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
                     <img ng-src="/images/{{ o.dbi }}.100.jpg" ng-click="read.changeObject(o)">
                     <div class="reading-copy">
                         <div class="reading-copy-inner">
-                            <!--<h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
-                            <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span></h4>-->
+                            
                             <text-transcription object="o"></text-transcription>
                         </div>
                     </div>
@@ -50,11 +52,12 @@
         <div class="compare-inner">
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null}" ng-if="read.bds.copy.bad_id != 'letters'">
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
+                    <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
+                            <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
                     <img ng-src="/images/{{ o.dbi }}.100.jpg" ng-click="read.changeObject(o)">
                     <div class="reading-copy">
                         <div class="reading-copy-inner">
-                            <!--<h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
-                            <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span></h4>-->
+                            
                             <text-transcription object="o"></text-transcription>
                         </div>
                     </div>
