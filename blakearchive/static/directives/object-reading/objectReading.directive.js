@@ -5,7 +5,7 @@
         var vm = this;
         vm.bds = BlakeDataService;
         $rootScope.onWorkPage = false;
-        $rootScope.view.scope = 'both';
+        //$rootScope.view.scope = 'both';
         
         vm.getOvpTitle = function(){
             if(angular.isDefined(vm.bds.copy)){

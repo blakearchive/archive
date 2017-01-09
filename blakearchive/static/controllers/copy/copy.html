@@ -7,7 +7,7 @@
 
             <object-compare ng-if="view.mode == 'compare'"></object-compare>
 
-            <object-reading ng-if="persistentmode == 'reading'"></object-reading>
+            <object-reading ng-show="persistentmode == 'reading'"></object-reading>
 
             <!--Edit buttons-->
             <div id="object-tools" ng-if="persistentmode != 'reading'" class="hidden-xs">
