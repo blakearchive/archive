@@ -1,7 +1,7 @@
 (function(){
 
     /** @ngInject */
-    var controller = function($rootScope,$modal,BlakeDataService){
+    var controller = function($rootScope,$modal,BlakeDataService,imageManipulation){
         var vm = this;
 
         vm.bds = BlakeDataService;
@@ -103,6 +103,7 @@
         }
 
         vm.changeObject = function(object){
+            imageManipulation.reset();
             vm.bds.changeObject(object);
         }
 
