@@ -79,6 +79,9 @@
             $window.open('/new-window/truesize/'+vm.bds.copy.bad_id+'?descId='+vm.bds.object.desc_id, '_blank', 'width=800, height=600');
         });
 
+        $scope.$on('change::selectedObject',function(){
+            imageManipulation.reset();
+        });
 
         vm.rotate = function(){
             imageManipulation.rotate();
