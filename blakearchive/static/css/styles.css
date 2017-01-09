@@ -7818,9 +7818,12 @@ a.new-window:hover {
     filter: alpha(opacity=0);
   }
 }
-#archive #object-view.view-objects .carousel-control.right,
+#archive #object-view.view-objects .carousel-control.right {
+  background: none;
+}
 #archive #object-view.view-objects .carousel-control.left {
   background: none;
+  margin-left:-5px;
 }
 #archive #object-view .btn-group.edit-object {
   margin-bottom: 14px;
