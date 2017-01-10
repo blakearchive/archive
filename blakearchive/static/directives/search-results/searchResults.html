@@ -107,7 +107,8 @@
 
                 <!-- preview -->
                 <div class="object-preview col-sm-12 text-center" auto-width adjust="100" breakpoint="992" divide="3" ng-if="esr.tree != 'work'">
-                    <h5 style="">Selected Object</h5>
+                    <h5 ng-if="esr.type != 'copy-info'" style="">Selected Object</h5>
+                    <h5 ng-if="esr.type == 'copy-info'" style="">Selected Copy</h5>
                     <br>
                     <div class="object-img-container text-center" auto-height adjust="350" breakpoint="992">
                         <a ng-href="/copy/{{esr.getPreviewHref()}}">
