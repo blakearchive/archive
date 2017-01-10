@@ -62,6 +62,16 @@
                 $rootScope.persistentmode = 'gallery';
             }
             if(mode == 'read') {
+                //console.log($rootScope.descIDFromCompare);
+                //console.log($routeParams.descId);
+                if($rootScope.descIDFromCompare != null) {
+                    var target = $rootScope.descIDFromCompare ? '#'+$rootScope.descIDFromCompare.replace(/\./g,'-') : '';
+                    $rootScope.$broadcast('viewSubMenu::readingMode',{'target': target});
+                    $rootScope.persistentmode = 'reading';
+                    $routeParams.descId = $rootScope.descIDFromCompare;
+                    $rootScope.descIDFromCompare = null; 
+                    return;
+                }
                 var target = $routeParams.descId ? '#'+$routeParams.descId.replace(/\./g,'-') : '';
                 $rootScope.$broadcast('viewSubMenu::readingMode',{'target': target});
                 $rootScope.persistentmode = 'reading';
