@@ -31,7 +31,9 @@
         }
 
         vm.changeObject = function(object){
-            console.log(object);
+            //console.log(object);
+            $rootScope.descIDFromCompare = object.desc_id;
+            //console.log($rootScope.descIDFromCompare);
             vm.bds.changeCopy(object.copy_bad_id,object.desc_id);
         }
 
