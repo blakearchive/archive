@@ -8,7 +8,7 @@
             <span class="text-capitalize">{{ comp.type }} Illustration:</span>
         </strong>
     </p>
-    <p ng-bind-html="comp['#text'] | markdown | highlight:descCtrl.highlight"></p>
+    <p ng-bind-html="comp['#text'] | highlight:descCtrl.highlight"></p>
     <div ng-repeat="c in comp.components track by $index">
         <p><strong>Component (Sector {{ c.component['@location'] }})</strong></p>
 
