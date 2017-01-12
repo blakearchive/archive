@@ -20,6 +20,181 @@
         $scope.copyResults = [];
         $scope.workResults = [];
 
+        $scope.stop_words = ["a",
+            "about",
+            "above",
+            "after",
+            "again",
+            "against",
+            "all",
+            "am",
+            "an",
+            "and",
+            "any",
+            "are",
+            "aren't",
+            "as",
+            "at",
+            "be",
+            "because",
+            "been",
+            "before",
+            "being",
+            "below",
+            "between",
+            "both",
+            "but",
+            "by",
+            "can't",
+            "cannot",
+            "could",
+            "couldn't",
+            "did",
+            "didn't",
+            "do",
+            "does",
+            "doesn't",
+            "doing",
+            "don't",
+            "down",
+            "during",
+            "each",
+            "few",
+            "for",
+            "from",
+            "further",
+            "had",
+            "hadn't",
+            "has",
+            "hasn't",
+            "have",
+            "haven't",
+            "having",
+            "he",
+            "he'd",
+            "he'll",
+            "he's",
+            "her",
+            "here",
+            "here's",
+            "hers",
+            "herself",
+            "him",
+            "himself",
+            "his",
+            "how",
+            "how's",
+            "i",
+            "i'd",
+            "i'll",
+            "i'm",
+            "i've",
+            "if",
+            "in",
+            "into",
+            "is",
+            "isn't",
+            "it",
+            "it's",
+            "its",
+            "itself",
+            "let's",
+            "me",
+            "more",
+            "most",
+            "mustn't",
+            "my",
+            "myself",
+            "no",
+            "nor",
+            "not",
+            "of",
+            "off",
+            "on",
+            "once",
+            "only",
+            "or",
+            "other",
+            "ought",
+            "our",
+            "ours   ",
+            "ourselves",
+            "out",
+            "over",
+            "own",
+            "same",
+            "shan't",
+            "she",
+            "she'd",
+            "she'll",
+            "she's",
+            "should",
+            "shouldn't",
+            "so",
+            "some",
+            "such",
+            "than",
+            "that",
+            "that's",
+            "the",
+            "their",
+            "theirs",
+            "them",
+            "themselves",
+            "then",
+            "there",
+            "there's",
+            "these",
+            "they",
+            "they'd",
+            "they'll",
+            "they're",
+            "they've",
+            "this",
+            "those",
+            "through",
+            "to",
+            "too",
+            "under",
+            "until",
+            "up",
+            "very",
+            "was",
+            "wasn't",
+            "we",
+            "we'd",
+            "we'll",
+            "we're",
+            "we've",
+            "were",
+            "weren't",
+            "what",
+            "what's",
+            "when",
+            "when's",
+            "where",
+            "where's",
+            "which",
+            "while",
+            "who",
+            "who's",
+            "whom",
+            "why",
+            "why's",
+            "with",
+            "won't",
+            "would",
+            "wouldn't",
+            "you",
+            "you'd",
+            "you'll",
+            "you're",
+            "you've",
+            "your",
+            "yours",
+            "yourself",
+            "yourselves"];
+
         $scope.search = function () {
             var objectSearch = vm.bds.queryObjects($scope.searchConfig),
                 copySearch = vm.bds.queryCopies($scope.searchConfig),
@@ -132,16 +307,38 @@
         }
 
         if ($routeParams.search) {
+            //console.log($scope.stop_words);
             //console.log($scope.searchConfig);
             //console.log($scope.searchConfig.searchString)
-            if(!$routeParams.search.match(/\".*\"/g)) {
-                $routeParams.search = $routeParams.search.replace("of","");
-                $routeParams.search = $routeParams.search.replace(/\s\s*/g," ");
-            }
             //console.log($routeParams.search);
             $scope.searchConfig.searchString = $routeParams.search;
+
+            if(!$scope.searchConfig.searchString.match(/\".*\"/g)) {
+                 
+                for(x=0; x < $scope.stop_words.length; x++) {
+                    var re1 = new RegExp('\\s' + $scope.stop_words[x] + '\\s',"g");
+                    var re2 = new RegExp('^' + $scope.stop_words[x] + '\\s',"g");
+                    var re3 = new RegExp('\\s' + $scope.stop_words[x] + '$',"g");
+                    $scope.searchConfig.searchString = $scope.searchConfig.searchString.replace(re1," ");
+                    $scope.searchConfig.searchString = $scope.searchConfig.searchString.replace(re2,"");
+                    $scope.searchConfig.searchString = $scope.searchConfig.searchString.replace(re3,"");
+                }
+            
+            
+                $scope.searchConfig.searchString = $scope.searchConfig.searchString.replace(/\s\s*/g," ");
+            }
+
+            $routeParams.search = $scope.searchConfig.searchString;
+
+            console.log($scope.searchConfig.searchString);
+            console.log($routeParams.search);
+
             $scope.search();
         }
+
+
+
+
 
     }
 
