@@ -11,6 +11,7 @@
 
         vm.bds = BlakeDataService;
         vm.queryString = '';
+        $scope.noresults = false;
 
         $rootScope.worksNavState = false;
         $rootScope.showWorkTitle = false;
@@ -319,9 +320,11 @@
                     var re1 = new RegExp('\\s' + $scope.stop_words[x] + '\\s',"g");
                     var re2 = new RegExp('^' + $scope.stop_words[x] + '\\s',"g");
                     var re3 = new RegExp('\\s' + $scope.stop_words[x] + '$',"g");
+                    var re4 = new RegExp('^' + $scope.stop_words[x] + '$',"g");
                     $scope.searchConfig.searchString = $scope.searchConfig.searchString.replace(re1," ");
                     $scope.searchConfig.searchString = $scope.searchConfig.searchString.replace(re2,"");
                     $scope.searchConfig.searchString = $scope.searchConfig.searchString.replace(re3,"");
+                    $scope.searchConfig.searchString = $scope.searchConfig.searchString.replace(re4,"");
                 }
             
             
@@ -330,10 +333,14 @@
 
             $routeParams.search = $scope.searchConfig.searchString;
 
-            console.log($scope.searchConfig.searchString);
-            console.log($routeParams.search);
-
-            $scope.search();
+            //console.log($scope.searchConfig.searchString);
+            //console.log($routeParams.search);
+            if($scope.searchConfig.searchString == "") {
+                $scope.noresults = true;
+            }
+            else {
+                $scope.search();
+            }
         }
 
 
