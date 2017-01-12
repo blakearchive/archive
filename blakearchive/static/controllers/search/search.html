@@ -104,6 +104,10 @@
         <div ng-if="objectResults.length == 0 && copyResults.count == 0 && workResults.count == 0">
             No results found
         </div>
+
+        <div ng-if="noresults == true">
+            No results found
+        </div>
         
         <search-results ng-if="searchConfig.searchTitle || searchConfig.searchAllFields" label="Title" results="objectResults['title']" highlight="{{searchConfig.searchString}}" type="title" tree="object"></search-results>
         <search-results ng-if="searchConfig.searchText || searchConfig.searchAllFields" label="Transcription" results="objectResults['text']" highlight="{{searchConfig.searchString}}" type="text" tree="object"></search-results>
