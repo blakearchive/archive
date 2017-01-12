@@ -134,6 +134,9 @@
         if ($routeParams.search) {
             //console.log($scope.searchConfig);
             //console.log($scope.searchConfig.searchString)
+            $routeParams.search = $routeParams.search.replace("of","");
+            $routeParams.search = $routeParams.search.replace(/\s\s*/g," ");
+            //console.log($routeParams.search);
             $scope.searchConfig.searchString = $routeParams.search;
             $scope.search();
         }
