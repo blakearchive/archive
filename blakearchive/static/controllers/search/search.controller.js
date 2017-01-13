@@ -229,8 +229,9 @@
                     });
                     $scope.workResults[type] = arrayedResults;
                 });
-                console.log($scope.objectResults);
-                console.log($scope.workResults);
+                //console.log($scope.copyResults);
+                //console.log($scope.objectResults);
+                //console.log($scope.workResults);
                 $rootScope.$broadcast('searchCtrl::newSearch');
                 //$location.search('search',encodeURIComponent($scope.searchConfig.searchString));
             });
@@ -339,8 +340,10 @@
                 $scope.noresults = true;
             }
             else {
+                $scope.noresults = false;
                 $scope.search();
             }
+            console.log($scope.noresults);
         }
 
 
