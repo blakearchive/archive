@@ -21,9 +21,9 @@
 
         var category = function(item) {
             switch(item) {
-                case "exhibit":
+                /*case "exhibit":
                     return "exhibits";
-                    break;
+                    break;*/
                 case "illbk":
                     return "illuminated_books";
                     break;
