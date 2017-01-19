@@ -350,7 +350,7 @@ class BlakeObjectImporter(BlakeImporter):
     def process(self, element):
         obj = models.BlakeObject()
         obj.desc_id = element.attrib.get("id").lower()
-        obj.butnumber = re.split('\.|t',desc_id)[1]
+        obj.butnumber = re.split('\.|t',obj.desc_id)[1]
         obj.dbi = element.attrib.get("dbi").lower()
         obj.components = self.get_components(element)
         obj.characteristics = self.get_characteristics(element)
