@@ -154,6 +154,13 @@ class BlakeDataService(object):
         return results
 
     @staticmethod
+    def get_virtual_sorted_query():
+        query = models.BlakeObject.query \
+            .order_by(models.BlakeObject.butnumber) \
+            .filter(models.BlakeObject.supplemental == None)
+        return query
+
+    @staticmethod
     def get_sorted_object_query():
         query = models.BlakeObject.query \
             .order_by(models.BlakeObject.copy_print_date_value,
@@ -222,7 +229,12 @@ class BlakeDataService(object):
 
     @classmethod
     def get_objects_for_copy(cls, bad_id):
-        query = cls.get_sorted_object_query()
+        vgroups = ['biblicalwc', 'gravepd', 'biblicaltemperas', 'gravewc', 'cpd', 'gravewd', 'pid']
+        if any(bad_id in s for s in vgroups):
+            query = cls.get_virtual_sorted_query()
+        else:
+            query = cls.get_sorted_object_query()
+
         results = query.join(models.BlakeCopy).filter(models.BlakeCopy.bad_id == bad_id).all()
         return results
 

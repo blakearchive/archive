@@ -60,6 +60,7 @@ class BlakeObject(db.Model):
     object_id = db.Column(db.Integer, primary_key=True)
     copy_id = db.Column(db.Integer, db.ForeignKey("copy.copy_id"))
     desc_id = db.Column(db.UnicodeText, index=True)
+    butnumber = db.Column(db.UnicodeText, index=True)
     dbi = db.Column(db.UnicodeText, index=True)
     bentley_id = db.Column(db.Integer, index=True)
     object_number = db.Column(db.Integer, index=True)
@@ -138,6 +139,7 @@ class BlakeObject(db.Model):
             "object_number": self.object_number,
             "object_id": self.object_id,
             "desc_id": self.desc_id,
+            "butnumber": self.butnumber,
             "dbi": self.dbi,
             "copy_id": self.copy_id,
             "copy_title": self.copy_title,
