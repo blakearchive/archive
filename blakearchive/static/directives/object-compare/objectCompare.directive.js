@@ -2,7 +2,7 @@
 
 
     /** @ngInject */
-    var controller = function ($rootScope,BlakeDataService,CompareObjectsFactory) {
+    var controller = function ($rootScope,BlakeDataService,CompareObjectsFactory,$scope) {
 
         var vm = this;
         vm.bds = BlakeDataService;
