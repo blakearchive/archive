@@ -5,6 +5,7 @@
         var vm = this;
         vm.bds = BlakeDataService;
         $rootScope.onWorkPage = false;
+        $scope.dpi = $rootScope.dpivalue;
         //$rootScope.view.scope = 'both';
         
         vm.getOvpTitle = function(){
@@ -39,6 +40,20 @@
         vm.cssSafeId = function(string){
             return string.replace(/\./g,'-');
         }
+
+         $scope.$watch(function() {
+            return $rootScope.dpivalue;
+            }, function() {
+                 
+                if ($rootScope.dpivalue == '300') {
+                        $scope.dpi = "300";
+                }
+                else {
+                        $scope.dpi = "100";
+                }
+
+            }, true);
+        
     }
 
 
