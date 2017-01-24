@@ -1,12 +1,13 @@
 (function(){
 
     /** @ngInject */
-    var controller = function($rootScope,$modal,BlakeDataService){
+    var controller = function($rootScope,$modal,BlakeDataService,$scope){
         var vm = this;
 
         vm.bds = BlakeDataService;
 
         $rootScope.onWorkPage = false;
+        $scope.dpi = $rootScope.dpivalue;
 
         vm.userestrictOpen = function(copy,object){
             console.log(copy);
@@ -105,6 +106,19 @@
         vm.changeObject = function(object){
             vm.bds.changeObject(object);
         }
+
+        $scope.$watch(function() {
+            return $rootScope.dpivalue;
+            }, function() {
+                 
+                if ($rootScope.dpivalue == '300') {
+                        $scope.dpi = "300";
+                }
+                else {
+                        $scope.dpi = "100";
+                }
+
+            }, true);
 
     }
 
