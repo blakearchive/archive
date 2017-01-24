@@ -209,6 +209,14 @@ td.c2 {
   border-top-color: #000000;
 }
 
+.tooltip.bottom .tooltip-arrow {
+  top: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 0 5px 5px;
+  border-bottom-color: #d5d5d5;
+}
+
 .tooltip.right .tooltip-arrow {
   top: 50%;
   left: 0;
