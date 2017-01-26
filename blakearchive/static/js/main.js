@@ -1013,10 +1013,10 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
     // TODO: resize directive should not need to broadcast if the factory is properly formatted
     .factory('WindowSize', ['$window', function ($window) {
         var windowSize = {},
-            w = angular.element($window);
+            w = angular.element($window)[0];
 
-        windowSize.height = w.height();
-        windowSize.width = w.width();
+        windowSize.height = w.innerHeight;
+        windowSize.width = w.innerWidth;
 
         return windowSize;
     }])
@@ -1184,8 +1184,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             var w = angular.element($window);
             scope.getWindowDimensions = function () {
                 return {
-                    'h': w.height(),
-                    'w': w.width()
+                    'h': w.innerHeight,
+                    'w': w.innerWidth
                 };
             };
 
