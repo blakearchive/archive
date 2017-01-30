@@ -82,6 +82,6 @@
         };
     }
 
-    angular.module('blake').directive("infoTray", infoTray);
+    angular.module('blake').directive("infoTray", ['$rootScope','$scope','BlakeDataService','WindowSize','$window',infoTray]);
 
 }());

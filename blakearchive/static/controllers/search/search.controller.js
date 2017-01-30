@@ -352,6 +352,7 @@
 
     }
 
-    angular.module('blake').controller('SearchController',controller);
+    angular.module('blake').controller('SearchController',
+        ['$rootScope', '$scope', '$location', '$routeParams', 'BlakeDataService', '$q', controller]);
 
 }());

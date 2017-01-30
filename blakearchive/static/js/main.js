@@ -1142,43 +1142,6 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         return cof;
     })
 
-    /*.factory('SearchConfigFactory', function(){
-
-        var scf = this;
-
-        scf.scope = true;
-        scf.type = true;
-
-        scf.config = {
-            useCompDate: true,
-            searchTitle: false,
-            searchText: false,
-            searchWorkInformation: false,
-            searchCopyInformation: false,
-            searchImageKeywords: false,
-            searchNotes: false,
-            searchImageDescriptions: false,
-            searchIlluminatedBooks: false,
-            searchCommercialBookIllustrations: false,
-            searchSeparatePrints: false,
-            searchDrawingsPaintings: false,
-            searchManuscripts: false,
-            searchRelatedMaterials: false,
-            minDate: 1772,
-            maxDate: 1827
-        };
-        scf.getConfig = function(){
-            if(scf.scope){
-                scf.config.searchTitle
-            }
-        }
-
-        return scf;
-
-
-    }*/
-
-
     .directive('resize', ['$window', '$timeout', 'WindowSize', function ($window, $timeout, WindowSize) {
         return function (scope, element) {
             var w = angular.element($window);
@@ -1210,7 +1173,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         }
 
     }])
-    .directive('autoHeight', ['WindowSize', '$rootScope', function (WindowSize) {
+    .directive('autoHeight', ['WindowSize', function (WindowSize) {
         var link = function (scope, element, attrs) {
 
             scope.setStyles = function (windowSize) {
@@ -1243,7 +1206,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         };
     }])
 
-      .directive('affix',function($window){
+      .directive('affix', ['$window', function($window){
           var link = function(scope,element,attr){
               var w = angular.element($window),
                 elementOffsetTop = element[0].getBoundingClientRect().top,
@@ -1296,9 +1259,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
               restrict: 'A',
               link: link
           };
-      })
+      }])
 
-    .directive('autoWidth', ['WindowSize', '$rootScope', function (WindowSize) {
+    .directive('autoWidth', ['WindowSize', function (WindowSize) {
         var link = function (scope, element, attrs) {
 
             scope.setStyles = function (windowSize) {
@@ -1334,14 +1297,14 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
         };
     }])
 
-    .directive('parallax', function ($window) {
+    .directive('parallax', ['$window', function ($window) {
         return function (scope, element, attr) {
             angular.element($window).bind("scroll", function () {
                 scope.$broadcast('scroll::scroll', {'offset': this.pageYOffset});
             });
         };
-    })
-    .directive('leftOnBroadcast',function($timeout){
+    }])
+    .directive('leftOnBroadcast', ['$timeout', function($timeout){
         var link = function(scope,element,attr) {
             if(attr.leftOnBroadcast){
                 scope.$on(attr.leftOnBroadcast,function($event,$data){
@@ -1359,7 +1322,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             restrict: 'A',
             link: link
         }
-    })
+    }])
     .directive('scrollToTop',function(){
         var link = function(scope,element,attr) {
             element.on('click',function(){
@@ -1394,7 +1357,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
     })
 
     //TODO make this a true scroll to element, rather than simple offset of current element
-    .directive('scrollToElement',['$timeout',function($timeout){
+    .directive('scrollToElement',['$timeout', function($timeout){
         var link = function(scope,element,attr) {
             element.on('click',function(){
                 $timeout(function () {
@@ -1412,7 +1375,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             link: link,
         }
     }])
-    .directive('toTopButton',function($window){
+
+    .directive('toTopButton', ['$window', function($window){
         var link = function(scope,element,attr){
             angular.element($window).bind("scroll",function(){
                 if(this.pageYOffset > 50){
@@ -1426,8 +1390,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             restrict: 'A',
             link: link
         }
-    })
-    .directive('ovpImage',function(imageManipulation,$rootScope){
+    }])
+
+    .directive('ovpImage', ['imageManipulation', function(imageManipulation){
         var link = function(scope,element,attr){
 
             var image = angular.element(element.children()),
@@ -1487,7 +1452,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             },
             link:link
         }
-    })
+    }])
 
 
     /*
@@ -1496,7 +1461,8 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
 
      Changed slightly to work in angular
      */
-    .directive('magnifyImage',function($interval,$window,$rootScope,imageManipulation,BlakeDataService){
+    .directive('magnifyImage', ['$interval', '$window', '$rootScope', 'imageManipulation', 'BlakeDataService',
+        function($interval, $window, $rootScope, imageManipulation, BlakeDataService){
         var link = function(scope,ele,attr,vm){
             if($rootScope.zoom){
 
@@ -1702,23 +1668,23 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             restrict: 'A',
             link:link
         }
-    })
+    }])
 
-    .directive('twitterShare', function($rootScope){
+    .directive('twitterShare', ['$rootScope', function($rootScope){
         return {
             restrict: 'A',
-            constoller: function($scope,$rootScope,$location){
+            controller: ['$scope', '$rootScope', '$location', function($scope,$rootScope,$location){
                 $scope.myLocation = $location.path;
-            },
+            }],
         }
-    })
+    }])
     
-    .directive('blakeMenu', function($rootScope){
+    .directive('blakeMenu', ['$rootScope', function($rootScope){
         return {
             restrict: 'A',
-            constoller: function($scope,$rootScope){
+            controller: ["$scope", "$rootScope", function($scope,$rootScope){
                 $scope.worksNavState = $rootScope.worksNavState;
-            },
+            }],
             /*link: function(scope,el,attr){
                 el.on('click',function(){
                     console.log('menu clicked');
@@ -1727,9 +1693,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 })
             }*/
         }
-    })
+    }])
 
-    .directive('showMe',function($window){
+    .directive('showMe', ['$window', function($window){
         return{
             restrict: 'A',
             link: function(scope,ele,attr){
@@ -1742,9 +1708,9 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
                 copyBad: '@'
             }
         }
-    })
+    }])
 
-    .filter('highlight',function($sce){
+    .filter('highlight', ['$sce', function($sce){
 
         var vm = this;
 
@@ -1789,7 +1755,7 @@ angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstra
             return $sce.trustAsHtml(vm.runReplace(phrase,text));
         }
 
-    })
+    }])
 
 
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
