@@ -130,7 +130,9 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         console.log(vm.lists);
         $sessionStorage.menus = menus;
     }
-}).directive('navMenu', function () {
+});
+
+angular.module("blake").directive('navMenu', function () {
     return {
         restrict: 'EA',
         template: require('html-loader!./template.html'),

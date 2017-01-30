@@ -1,10 +1,4 @@
-/**
- * Created by lukeluke on 1/21/16.
- */
-(function () {
-
-    /** @ngInject */
-    var controller = function ($rootScope,BlakeDataService) {
+angular.module('blake').controller("CopyTabsController", function ($rootScope,BlakeDataService) {
 
         var vm = this;
 
@@ -51,26 +45,26 @@
             $rootScope.view.mode = 'object';
             $rootScope.view.scope = 'image';
         }
-    }
+    });
 
-    var link = function(scope,ele,attr,vm){
-        var object = function(){ return vm.bds.object };
-        scope.$watch(object,function(){
+angular.module('blake').directive('copyTabs', function() {
+    let link = function (scope, ele, attr, vm) {
+        let object = function () {
+            return vm.bds.object
+        };
+        scope.$watch(object, function () {
             vm.selectedTab = '#objects-in-copy';
-        },true);
+        }, true);
+    };
+
+    return {
+        restrict: 'E',
+        template: require("html-loader!./copyTabs.html"),
+        controller: "CopyTabsController",
+        controllerAs: 'tabs',
+        bindToController: true,
+        link: link
     }
+});
 
-    var copyTabs = function() {
-        return {
-            restrict: 'E',
-            templateUrl: "/static/directives/copy-tabs/copyTabs.html",
-            controller: controller,
-            controllerAs: 'tabs',
-            bindToController: true,
-            link: link
-        }
-    }
 
-    angular.module('blake').directive('copyTabs', copyTabs);
-
-}());
