@@ -1,7 +1,7 @@
 (function(){
 
     /** @ngInject */
-    var controller = function($rootScope,$modal,BlakeDataService,$scope){
+    var controller = function($rootScope, $modal, BlakeDataService, $scope){
         var vm = this;
 
         vm.bds = BlakeDataService;
@@ -132,6 +132,6 @@
         };
     }
 
-    angular.module('blake').directive("objectViewer", objectViewer);
+    angular.module('blake').directive("objectViewer", ['$rootScope', '$modal', 'BlakeDataService', '$scope', objectViewer]);
 
 }());

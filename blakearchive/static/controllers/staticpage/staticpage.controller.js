@@ -12,7 +12,8 @@
         vm.page = $routeParams.initialPage;
         vm.subSelection = 'empty';
 
-        $http.get('/static/controllers/staticpage/meta.json').success(function(data){
+        $http.get('/static/controllers/staticpage/meta.json').then(function(response){
+            let data = response.data;
             vm.meta = data;
             vm.title = data[vm.page].title;
             $rootScope.staticPageTitle = vm.title;
