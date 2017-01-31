@@ -14,58 +14,86 @@ import './js/angular-ui-bootstrap/0.12.1/ui-bootstrap.min';
 import './js/angular-fullscreen/angular-fullscreen.min';
 import 'script-loader!./js/angular-markdown-it/markdown-it.min';
 import './js/angular-markdown-it/angular-markdown-it';
-import './js/main';
-import './services/generic-service';
-import './services/blake-object';
-import './services/blake-copy';
-import './services/blake-work';
-import './services/blake-data';
-import './services/compare-objects';
-import './services/format';
-import './services/image-manipulation';
-import './services/window-size';
-import './controllers/copy/copy.controller';
-import './controllers/exhibit/exhibit.controller';
-import './controllers/home/home.controller';
-import './controllers/modal/modal.controller';
-import './controllers/search/search.controller';
-import './controllers/showme/showme.controller';
-import './controllers/staticpage/staticpage.controller';
-import './controllers/work/work.controller';
-import './directives/client-ppi/clientPpi.directive';
-import './directives/copy-info-dl/copyInfoDl.directive';
-import './directives/copy-information/copyInformation.directive';
-import './directives/copy-tabs/copyTabs.directive';
-import './directives/dpi/dpi.directive';
-import './directives/editor-notes/editorNotes.directive';
-import './directives/handprint-block/handprintBlock.directive';
-import './directives/illustration-description/illustrationDescription.directive';
-import './directives/image-tags/imageTags.directive';
-import './directives/info-tray/infoTray.directive';
-import './directives/menu/directive';
-import './directives/object-compare/objectCompare.directive';
-import './directives/object-reading/objectReading.directive';
-import './directives/object-viewer/objectViewer.directive';
-import './directives/objects-from-same/objectsFromSame.directive';
-import './directives/search-results/searchResults.directive';
-import './directives/slide-box/slideBox.directive';
-import './directives/text-transcription/textTranscription.directive';
-import './directives/view-sub-menu/viewSubMenu.directive';
-import './directives/work-copies/workCopies.directive';
-import './directives/work-title/workTitle.directive';
-import './directives/magnify-image/directive';
-import './directives/blake-menu/directive';
-import './directives/show-me/directive';
-import './directives/ovp-image/directive';
-import './directives/resize/directive';
-import './directives/auto-height/directive';
-import './directives/affix/directive';
-import './directives/auto-width/directive';
-import './directives/parallax/directive';
-import './directives/left-on-broadcast/directive';
-import './directives/scroll-to-top/directive';
-import './directives/to-top-on-broadcast/directive';
-import './directives/scroll-to-element/directive';
-import './directives/to-top-button/directive';
-import './directives/twitter-share/directive';
-import './filters/highlight';
+
+directoryPrefix = '';
+
+let carousel = angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition']);
+
+carousel.controller('CarouselController', function ($scope, $timeout, $transition, $q) {});
+carousel.directive('carousel', function () { return {} });
+
+let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch','markdown','angular-loading-bar'])
+
+blake.config(function ($routeProvider, $locationProvider) {
+    $routeProvider.when(directoryPrefix + '/', {
+        templateUrl: directoryPrefix + '/static/controllers/home/home.html',
+        controller: "HomeController",
+        controllerAs: 'home'
+    });
+    $routeProvider.when(directoryPrefix + '/staticpage/:initialPage', {
+        templateUrl: directoryPrefix + '/static/controllers/staticpage/staticpage.html',
+        controller: "StaticpageController",
+        controllerAs: 'staticpage',
+        reloadOnSearch: false
+    });
+    $routeProvider.when(directoryPrefix + '/object/:descId', {
+        templateUrl: directoryPrefix + '/static/html/object.html',
+        controller: "ObjectController"
+    });
+    $routeProvider.when(directoryPrefix + '/copy/:copyId', {
+        templateUrl: directoryPrefix + '/static/controllers/copy/copy.html',
+        controller: "CopyController",
+        controllerAs: 'copyCtrl',
+        reloadOnSearch: false
+    });
+    $routeProvider.when(directoryPrefix + '/exhibit/:copyId', {
+        templateUrl: directoryPrefix + '/static/controllers/exhibit/exhibit.html',
+        controller: "ExhibitController",
+        controllerAs: 'exhibitCtrl',
+        reloadOnSearch: false
+    });
+    $routeProvider.when(directoryPrefix + '/new-window/:what/:copyId', {
+        templateUrl: directoryPrefix + '/static/controllers/showme/showme.html',
+        controller: "ShowMeController",
+        controllerAs: 'showme',
+        reloadOnSearch: false
+    });
+    $routeProvider.when(directoryPrefix + '/work/:workId', {
+        templateUrl: directoryPrefix + '/static/controllers/work/work.html',
+        controller: "WorkController",
+        controllerAs: 'workCtrl'
+    });
+    $routeProvider.when(directoryPrefix + '/search/', {
+        templateUrl: directoryPrefix + '/static/controllers/search/search.html',
+        controller: "SearchController",
+        controllerAs: 'searchCtrl'
+    });
+
+    $routeProvider.otherwise({redirectTo: directoryPrefix + '/'});
+    $locationProvider.html5Mode(true);
+});
+
+blake.config(function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = false;
+    cfpLoadingBarProvider.parentSelector = '.loading-bar-container';
+});
+
+blake.run(function ($route, $rootScope, $location) {
+    var original = $location.path;
+    $location.path = function (path, reload) {
+        if (reload === false) {
+            var lastRoute = $route.current;
+            var un = $rootScope.$on('$locationChangeSuccess', function () {
+                $route.current = lastRoute;
+                un();
+            });
+        }
+        return original.apply($location, [path]);
+    };
+});
+
+function requireAll(r) { r.keys().forEach(r); }
+
+requireAll(require.context('./services/', true, /\.js$/));
+requireAll(require.context('./controllers/', true, /\.js$/));
+requireAll(require.context('./directives/', true, /\.js$/));
