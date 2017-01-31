@@ -1,6 +1,4 @@
-import GenericService from 'generic-service';
-
-export const BlakeObject = angular.module("blake").factory("BlakeObject", function () {
+angular.module("blake").factory("BlakeObject", function (GenericService) {
     /**
      * Constructor takes a config object and creates a BlakeObject.
      *

@@ -1,8 +1,4 @@
-import BlakeObject from 'blake-object';
-import BlakeCopy from 'blake-copy';
-import BlakeWork from 'blake-work';
-
-export const BlakeDataService = angular.module("blake").factory("BlakeDataService", ['$rootScope','$log', '$http', '$q', '$location', function ($rootScope, $log, $http, $q, $location) {
+angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork) {
     /**
      * For the time being, all data accessor functions should be placed here.  This service should mirror the API
      * of the back-end BlakeDataService.
@@ -531,4 +527,4 @@ export const BlakeDataService = angular.module("blake").factory("BlakeDataServic
     };
 
     return blakeData;
-}]);
+});
