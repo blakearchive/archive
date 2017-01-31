@@ -1,7 +1,4 @@
-import GenericService from 'generic-service';
-import BlakeCopy from 'blake-copy';
-
-export const BlakeWork = angular.module("blake").factory("BlakeWork", function () {
+angular.module("blake").factory("BlakeWork", function (GenericService, BlakeCopy) {
         /**
          * Constructor takes a config object and creates a BlakeWork, with child objects transformed into the
          * BlakeCopies.

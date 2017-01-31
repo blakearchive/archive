@@ -1,31 +1,19 @@
-/**
- * Created by lukeluke on 1/26/16.
- */
+angular.module('blake').controller("WorkController", function($rootScope,$routeParams,BlakeDataService){
+    var vm = this;
 
-(function(){
+    vm.bds = BlakeDataService;
 
-    /** @ngInject */
-    var controller = function($rootScope,$routeParams,BlakeDataService){
+    $rootScope.showOverlay = false;
+    $rootScope.help = 'work';
 
-        var vm = this;
+    vm.bds.setSelectedWork($routeParams.workId);
 
-        vm.bds = BlakeDataService;
+    $rootScope.worksNavState = false;
+    $rootScope.showWorkTitle = 'work';
 
-        $rootScope.showOverlay = false;
-        $rootScope.help = 'work';
-
-        vm.bds.setSelectedWork($routeParams.workId);
-
-        $rootScope.worksNavState = false;
-        $rootScope.showWorkTitle = 'work';
-
-        vm.getInfo = function(info){
-            return info.split('<br />')
-        }
-
-
+    vm.getInfo = function(info){
+        return info.split('<br />')
     }
 
-    angular.module('blake').controller("WorkController", controller);
 
-}());
+});
