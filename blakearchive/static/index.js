@@ -1,5 +1,5 @@
-import 'angular';
 import 'script-loader!jquery';
+import 'angular';
 import 'angular-route';
 import 'angular-sanitize';
 import 'angular-animate';
@@ -15,14 +15,15 @@ import './js/angular-fullscreen/angular-fullscreen.min';
 import 'script-loader!./js/angular-markdown-it/markdown-it.min';
 import './js/angular-markdown-it/angular-markdown-it';
 
-directoryPrefix = '';
-
+let directoryPrefix = '';
 let carousel = angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition']);
 
 carousel.controller('CarouselController', function ($scope, $timeout, $transition, $q) {});
 carousel.directive('carousel', function () { return {} });
 
 let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch','markdown','angular-loading-bar'])
+
+blake.value("directoryPrefix", directoryPrefix);
 
 blake.config(function ($routeProvider, $locationProvider) {
     $routeProvider.when(directoryPrefix + '/', {
@@ -97,3 +98,4 @@ function requireAll(r) { r.keys().forEach(r); }
 requireAll(require.context('./services/', true, /\.js$/));
 requireAll(require.context('./controllers/', true, /\.js$/));
 requireAll(require.context('./directives/', true, /\.js$/));
+requireAll(require.context('./filters/', true, /\.js$/));

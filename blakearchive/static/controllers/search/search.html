@@ -1,97 +1,12 @@
 <div class="navbar navbar-default" id="searchOptions">
     <div class="container-fluid">
         <div>
-            <!--<form class="navbar-form navbar-left" role="search" ng-submit="search()">
-                <div class="form-group">
-                    <div class="input-group">
-                        <input ng-model="searchConfig.searchString" id="searchString" type="text" class="form-control" placeholder="Search">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </span>
-                    </div>
-                </div>
-            </form>-->
             <ul class="nav navbar-nav">
-                <!-- date -->
-                <li dropdown class="dropdown">
-                    <a dropdown-toggle role="button" aria-expanded="false">Date <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu" ng-click="$event.stopPropagation()">
-                        <li class="list-header">Restrict Date Range:</li>
-                        <li>
-                            <div range-slider min="1772" max="1827" show-values="true" model-min="searchConfig.minDate" model-max="searchConfig.maxDate" on-handle-up="search()"></div>
-                        </li>
-                        <li class="divider" role="separator"></li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.useCompDate" ng-change="search()"> Composition Date
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.usePrintDate" ng-change="search()"> Printing Date
-                        </li>
-                    </ul>
-                </li>
+                <date-search-field/>
 
-                <!-- search field -->
-                <li dropdown class="dropdown" ng-click="$event.stopPropagation()">
-                    <a dropdown-toggle role="button" aria-expanded="false">Type <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchAllFields" ng-change="searchCtrl.allFields()"> Any
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchTitle" ng-change="searchCtrl.changeField()"> Title
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchText" ng-change="searchCtrl.changeField()"> Transcription
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchImageKeywords" ng-change="searchCtrl.changeField()"> Image Tag
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchNotes" ng-change="searchCtrl.changeField()"> Editors' Note
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchImageDescriptions" ng-change="searchCtrl.changeField()"> Illustration
-                            Description
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchCopyInformation" ng-change="searchCtrl.changeField()"> Copy Information
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchWorkInformation" ng-change="searchCtrl.changeField()"> Work Information
-                        </li>
-                    </ul>
-                </li>
+                <field-search-field/>
 
-                <!-- type -->
-                <li dropdown class="dropdown" ng-click="$event.stopPropagation()">
-                    <a dropdown-toggle role="button" aria-expanded="false">Medium <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchAllTypes" ng-change="searchCtrl.allTypes()"> Any
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchIlluminatedBooks" ng-change="searchCtrl.changeType()"> Illuminated Books
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchCommercialBookIllustrations" ng-change="searchCtrl.changeType()"> Commercial Book Illustrations
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchSeparatePrints" ng-change="searchCtrl.changeType()"> Separate Prints
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchDrawingsPaintings" ng-change="searchCtrl.changeType()"> Drawings and
-                            Paintings
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchManuscripts" ng-change="searchCtrl.changeType()"> Manuscripts and
-                            Typographic Editions
-                        </li>
-                        <li>
-                            <input type="checkbox" ng-model="searchConfig.searchRelatedMaterials" ng-change="searchCtrl.changeType()"> Related Materials
-                        </li>
-                    </ul>
-                </li>
-
+                <medium-search-field/>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

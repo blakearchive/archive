@@ -55,7 +55,7 @@ angular.module('blake').directive('textTranscription', function(){
     return {
         restrict: 'EA',
         templateUrl: '/static/directives/text-transcription/textTranscription.html',
-        controller: controller,
+        controller: "TextTranscriptionController",
         scope: {
             object: '=object',
             highlight: '@highlight'
