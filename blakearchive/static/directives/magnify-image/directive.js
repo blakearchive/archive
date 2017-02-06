@@ -68,7 +68,7 @@ angular.module("blake").directive('magnifyImage', function($interval, $window, $
         };
 
         // Add the magnifying glass
-        if (ui.magniflier.length) {
+        if (ui.magnifier.length) {
             var div = document.createElement('div');
             div.setAttribute('class', 'glass');
             ui.glass = angular.element(div);
