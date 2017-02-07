@@ -1,23 +1,6 @@
 <div class="col-xs-12 full-width copy-container-wrapper">
     <div class="copy-container" ng-class="{hidden: pb.s.selectedWork == -1}" auto-height adjust="175" breakpoint="992" id="{{pb.type}}">
-        <header class="page-header">
-            <button class="close-copies" ng-click="pb.s.selectedWork = -1" scroll-to-element offset="254"><span class="glyphicon glyphicon-remove"></span></button>
-            <h1>
-                <a href="/work/{{pb.results[pb.s.selectedWork][0].bad_id}}">{{pb.results[pb.s.selectedWork][0].title}} (Composed {{pb.results[pb.s.selectedWork][0].composition_date_string}})</a>&nbsp;
-                <span dropdown class="dropdown" ng-if="pb.results[pb.s.selectedWork][2].length > 1 && pb.s.tree == 'object' && !pb.results[pb.s.selectedWork][0].virtual">
-                    <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">
-                        <span>Copy {{pb.results[pb.s.selectedWork][2][pb.s.selectedCopy][0].archive_copy_id}}</span>&nbsp;
-                        <span>(Printed {{pb.results[pb.s.selectedWork][2][pb.s.selectedCopy][0].print_date_string}})</span>&nbsp;
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li ng-repeat="copy in pb.results[pb.s.selectedWork][2] track by $index">
-                            <a ng-click="pb.s.showObjects($index)">Copy {{copy[0].archive_copy_id}} (Printed {{copy[0].print_date_string}}) ({{copy[1]}} Objects)</a>
-                        </li>
-                    </ul>
-                </span>
-            </h1>
-        </header>
+        <preview-header tree="pb.tree" results="pb.results"/>
         <div class="flex-992" auto-height adjust="275" breakpoint="992">
             
             <objects-in-virtual-work-preview tree="pb.tree" results="pb.results" ng-if="pb.results[pb.s.selectedWork][1] > 1 && pb.tree == 'object' && pb.results[pb.s.selectedWork][0].virtual"/>
@@ -26,24 +9,7 @@
             
             <copies-in-work-preview tree="pb.tree" results="pb.results" ng-if="pb.results[pb.s.selectedWork][1] > 1 && pb.tree == 'copy'" to-top-on-broadcast="searchCtrl::changeResult"/>
             
-            <!-- preview -->
-            <div class="object-preview col-sm-12 text-center" auto-width adjust="100" breakpoint="992" divide="3" ng-if="pb.s.tree != 'work'">
-                <h5 ng-if="pb.type != 'copy-info'" style="">Selected Object</h5>
-                <h5 ng-if="pb.type == 'copy-info'" style="">Selected Copy</h5>
-                <br>
-                <div class="object-img-container text-center" auto-height adjust="350" breakpoint="992">
-                    <a ng-href="/copy/{{pb.getPreviewHref()}}">
-                        <img ng-src="/images/{{ pb.getPreviewImage() }}.100.jpg">
-                        <p></p>
-                        <p class="object-subtitle">
-                            <span ng-if="pb.tree == 'object' && pb.getPreviewTitle() != null" class="object-no">{{pb.getPreviewTitle()}}<br></span>
-                            <span ng-if="pb.results[pb.s.selectedWork][0].virtual && pb.results[pb.s.selectedWork][0].bad_id != 'letters'" class="object-no">{{pb.getPreviewLabel(pb.tree, pb.results).replace("Object 1","")}}</span>
-                            <span ng-if="pb.results[pb.s.selectedWork][0].virtual && pb.results[pb.s.selectedWork][0].bad_id == 'letters'" class="object-no">{{pb.getPreviewLabel(pb.tree, pb.results)}}</span>
-                            <span ng-if="!pb.results[pb.s.selectedWork][0].virtual" class="object-no">{{pb.getPreviewLabel()}}</span></p>
-                    </a>
-                </div>
-            </div>
-
+            <preview-selection tree="pb.results" results="pb.results" ng-if="pb.tree != 'work'"/>
 
             <div class="object-result-highlight col-sm-12" auto-width adjust="100" breakpoint="992" divide="3" ng-if="pb.tree != 'work'" to-top-on-broadcast="searchCtrl::changeResult">
 
