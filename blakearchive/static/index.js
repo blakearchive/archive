@@ -67,7 +67,7 @@ blake.config(function ($routeProvider, $locationProvider) {
     $routeProvider.when(directoryPrefix + '/search/', {
         templateUrl: directoryPrefix + '/static/controllers/search/search.html',
         controller: "SearchController",
-        controllerAs: 'searchCtrl'
+        controllerAs: 'search'
     });
 
     $routeProvider.otherwise({redirectTo: directoryPrefix + '/'});

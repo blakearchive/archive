@@ -370,7 +370,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
                         var objectGroup = {},
                             objectArray = [];
 
-                        angular.forEach(blakeData.workCopies, function(obj){
+                        blakeData.workCopies.forEach(obj =>{
                             if(!angular.isDefined(objectGroup[obj.object_group])) {
                                 objectGroup[obj.object_group] = obj;
                             }
@@ -399,7 +399,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
             if(related_work_objects.length > 0){
                 var object_ids = related_work_objects.map(function(obj) { return obj.link; });
                 return blakeData.getObjects(object_ids).then(function(data){
-                    angular.forEach(blakeData.work.related_works, function(obj,key){
+                    blakeData.work.related_works.forEach((obj,key) => {
                         if(obj.type == 'object' && obj.link){
                             var matchingObject = data.filter(function(o){return o.desc_id == obj.link});
                             blakeData.work.related_works[key].link = '/copy/'+matchingObject[0].copy_bad_id+'?descId='+obj.link;

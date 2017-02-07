@@ -1,28 +1,28 @@
-<span dropdown class="dropdown" ng-if="esr.s.resultTree.length > 0">
+<span dropdown class="dropdown" ng-if="esr.results.length > 0">
     <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">
-        <span><h3 style="padding-left:15px">{{ esr.s.label }} ({{ esr.s.resultTree.length}} )<span class="caret"></span></h3></span>&nbsp;
+        <span><h3 style="padding-left:15px">{{ esr.label }} ({{ esr.results.length}} )<span class="caret"></span></h3></span>&nbsp;
     </button>
         <ul class="dropdown-menu" role="menu" style="z-index: 10000;">
-                <li ng-repeat="work in esr.s.resultTree track by $index">
-                    <a scroll-to-element="#{{esr.s.type}}" offset="125" ng-click="esr.s.showCopies($index);">{{work[0].title}} (Composed {{work[0].composition_date_string}})</a>
-                </li>
+            <li ng-repeat="work in esr.results track by $index">
+                <a scroll-to-element="#{{esr.type}}" offset="125" ng-click="esr.s.showCopies(esr.type, $index);">{{work[0].title}} (Composed {{work[0].composition_date_string}})</a>
+            </li>
         </ul>
 </span>
 
-<div class="row search-result-row" ng-show="esr.s.resultTree.length > 0">
+<div class="row search-result-row" ng-show="esr.results.length > 0">
     <div class="col-xs-12 full-width">
-        <slide-box id="{{esr.s.type}}-slide-box" type="{{ esr.s.type }}">
-            <div ng-repeat="(k,work) in esr.s.resultTree" class="search-result-item" ng-class="{selected:k == esr.s.selectedWork}">
-                <div scroll-to-element="#{{esr.s.type}}" offset="125">
+        <slide-box id="{{esr.type}}-slide-box" type="{{ esr.type }}">
+            <div ng-repeat="(k,work) in esr.results" class="search-result-item" ng-class="{selected:k == esr.s.selectedWork}">
+                <div scroll-to-element="#{{esr.type}}" offset="125">
                     <!--to slide, put slideBox.scrollToResult($index); into action for handprint-blocks-->
                     <handprint-block
-                        action="esr.showCopies($index);slideBox.scrollToResult($index);"
-                        image="{{ esr.s.getWorkImage($index) }}"
-                        footer="{{ esr.s.getHandprintDescription($index, esr.s.label) }}"
+                        action="esr.showCopies(esr.type, $index); slideBox.scrollToResult($index);"
+                        image="{{ esr.s.getWorkImage(esr.tree, esr.results, $index) }}"
+                        footer="{{ esr.s.getHandprintDescription(esr.tree, esr.results, $index, esr.label) }}"
                         ></handprint-block>
                 </div>
             </div>
         </slide-box>
     </div>
-
+    <preview-box results="esr.results" tree="esr.tree"/>
 </div>

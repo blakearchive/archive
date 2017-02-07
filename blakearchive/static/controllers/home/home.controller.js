@@ -1,4 +1,4 @@
-angular.module('blake').controller('HomeController', function($scope,$rootScope,BlakeDataService,$window,$localStorage){
+angular.module('blake').controller('HomeController', function($scope,$rootScope,BlakeDataService){
     var vm = this;
 
     $rootScope.worksNavState = true;
@@ -27,13 +27,13 @@ angular.module('blake').controller('HomeController', function($scope,$rootScope,
             vm.columns[5].topOffset = (-90-(scroll.offset*0.5))+'px';
             vm.columns[6].topOffset = (-20-(scroll.offset*0.3))+'px';
         })
-    })
+    });
 
     BlakeDataService.getFeaturedWorks().then(function (results) {
-        var i = 0,
+        let i = 0,
             sci = 1,
             used = [];
-        angular.forEach(results, function(value) {
+        results.forEach(value => {
 
             //FIXME
             if(value.title == "LaocoÃ¶n"){
@@ -42,15 +42,13 @@ angular.module('blake').controller('HomeController', function($scope,$rootScope,
             if(used.indexOf(value.bad_id) == -1){
                 used.push(value.bad_id);
                 value.column = sci;
-                ++i;
-                if(i == 3){
+                if(++i == 3){
                     ++sci;
                     i = 0;
                 }
             }
         });
         vm.featured_works = results;
-
     });
 
 });

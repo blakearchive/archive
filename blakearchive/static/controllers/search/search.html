@@ -16,23 +16,17 @@
     
     <div class="container-fluid main" id="search">
 
-        <div ng-if="objectResults['title'].length == 0 && objectResults['tag'].length == 0 && objectResults['notes'].length == 0 && objectResults['text'].length == 0 && objectResults['description'].length == 0 && copyResults['copy-info'].length == 0 && workResults['info'].length == 0">
-            NO RESULTS
-        </div>
-
-        <div ng-if="noresults == true">
+        <div ng-if="!search.s.hasResults()">
             NO RESULTS
         </div>
         
-        <search-results ng-if="searchConfig.searchTitle || searchConfig.searchAllFields" label="Title" results="objectResults['title']" highlight="{{searchConfig.searchString}}" type="title" tree="object"></search-results>
-        <search-results ng-if="searchConfig.searchText || searchConfig.searchAllFields" label="Transcription" results="objectResults['text']" highlight="{{searchConfig.searchString}}" type="text" tree="object"></search-results>
-        <search-results ng-if="searchConfig.searchImageDescriptions || searchConfig.searchAllFields" label="Illustration Description" results="objectResults['description']" highlight="{{searchConfig.searchString}}" type="description" tree="object"></search-results>
-        <search-results ng-if="searchConfig.searchImageKeywords || searchConfig.searchAllFields" label="Image Tag" results="objectResults['tag']" highlight="{{searchConfig.searchString}}" type="tag" tree="object"></search-results>
-        <search-results ng-if="searchConfig.searchNotes || searchConfig.searchAllFields" label="Editors' Note" results="objectResults['notes']" highlight="{{searchConfig.searchString}}" type="notes" tree="object"></search-results>
-        <!--<search-results ng-if="searchConfig.searchTitle" label="Copy Title" results="copyResults['copy-title']" highlight="{{searchConfig.searchString}}" type="copy-title" tree="copy"></search-results>-->
-        <search-results ng-if="searchConfig.searchCopyInformation || searchConfig.searchAllFields" label="Copy Information" results="copyResults['copy-info']" highlight="{{searchConfig.searchString}}" type="copy-info" tree="copy"></search-results>
-        <!--<search-results ng-if="searchConfig.searchTitle" label="Work Title" results="workResults['title']" highlight="{{searchConfig.searchString}}" type="work-title" tree="work"></search-results>-->
-        <search-results ng-if="searchConfig.searchWorkInformation || searchConfig.searchAllFields" label="Work Information" results="workResults['info']" highlight="{{searchConfig.searchString}}" type="work-info" tree="work"></search-results>
+        <search-results ng-if="search.s.searchConfig.searchTitle || search.s.searchConfig.searchAllFields" label="Title" results="objectResults['title']" type="title" tree="object"/>
+        <search-results ng-if="search.s.searchConfig.searchText || search.s.searchConfig.searchAllFields" label="Transcription" results="objectResults['text']" type="text" tree="object"/>
+        <search-results ng-if="search.s.searchConfig.searchImageDescriptions || search.s.searchConfig.searchAllFields" label="Illustration Description" results="objectResults['description']" type="description" tree="object"/>
+        <search-results ng-if="search.s.searchConfig.searchImageKeywords || search.s.searchConfig.searchAllFields" label="Image Tag" results="objectResults['tag']" type="tag" tree="object"/>
+        <search-results ng-if="search.s.searchConfig.searchNotes || search.s.searchConfig.searchAllFields" label="Editors' Note" results="objectResults['notes']" type="notes" tree="object"/>
+        <search-results ng-if="search.s.searchConfig.searchCopyInformation || search.s.searchConfig.searchAllFields" label="Copy Information" results="copyResults['copy-info']" type="copy-info" tree="copy"/>
+        <search-results ng-if="search.s.searchConfig.searchWorkInformation || search.s.searchConfig.searchAllFields" label="Work Information" results="workResults['info']" type="work-info" tree="work"/>
 
     </div>
 </div>
