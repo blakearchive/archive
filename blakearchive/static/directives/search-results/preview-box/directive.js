@@ -6,5 +6,9 @@ angular.module("blake").controller("PreviewBoxController", function (SearchServi
 angular.module("blake").component("previewBox", {
     template: require("html-loader!./template.html"),
     controller: "PreviewBoxController",
+    scope: {
+        results: '=results',
+        tree: '@tree'
+    },
     controllerAs: "pb"
 });

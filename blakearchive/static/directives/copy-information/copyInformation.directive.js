@@ -1,5 +1,5 @@
 angular.module('blake').controller("CopyInformationController", function () {
-    var vm = this;
+    let vm = this;
 
     vm.getHeader = function(){
         if(vm.copy){
@@ -22,8 +22,8 @@ angular.module('blake').controller("CopyInformationController", function () {
     };
 
     vm.getOrigination = function(){
-        var origination = angular.isDefined(vm.getSource()) ? vm.getSource().objdescid.origination : '';
-        if(angular.isArray(origination)){
+        let origination = typeof vm.getSource() !== "undefined" ? vm.getSource().objdescid.origination : '';
+        if(Array.isArray(origination)){
             return origination;
         } else {
             return [origination];
@@ -33,7 +33,7 @@ angular.module('blake').controller("CopyInformationController", function () {
     vm.getOriginationRole = function (role) {
         if (role) {
             if (role.join) {
-                var roleText = [];
+                let roleText = [];
                 role.forEach(function (role) {
                     roleText.push(role['#text']);
                 });

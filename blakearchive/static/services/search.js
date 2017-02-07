@@ -5,13 +5,13 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
     s.selectedCopy = 0;
     s.selectedObject = 0;
     
-        s.queryString = '';
+    s.queryString = '';
     s.noresults = false;
     s.objectResults = [];
     s.copyResults = [];
     s.workResults = [];
 
-    s.stop_words = ["a",
+    s.stopWords = ["a",
         "about",
         "above",
         "after",
@@ -192,27 +192,27 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
             workSearch = BlakeDataService.queryWorks(s.searchConfig);
         return $q.all([objectSearch,copySearch,workSearch]).then(function(results){
             s.objectResults = results[0];
-            angular.forEach(s.objectResults, function(works,type){
-                angular.forEach(works, function(work,index){
-                    BlakeDataService.getObject(s.objectResults[type][index][2][0][2][0][0]).then(function (results) {
+            s.objectResults.forEach((works,type) => {
+                works.forEach((work,index) =>{
+                    BlakeDataService.getObject(s.objectResults[type][index][2][0][2][0][0]).then(results => {
                         s.objectResults[type][index][2][0][2][0][0] = results;
                     });
                 });
             });
             s.copyResults = results[1];
             console.log(s.copyResults);
-            angular.forEach(s.copyResults, function(works,type){
-                angular.forEach(works, function(work,index){
+            s.copyResults.forEach((works,type) => {
+                works.forEach((work,index) => {
                     //s.populateWorkCopies(type,index);
-                    BlakeDataService.getCopy(s.copyResults[type][index][2][0][0]).then(function (results) {
+                    BlakeDataService.getCopy(s.copyResults[type][index][2][0][0]).then(results => {
                         s.copyResults[type][index][2][0][0] = results;
                     });
                 });
             });
             s.workResults = results[2];
-            angular.forEach(s.workResults, function(results,type){
+            s.workResults.forEach((results, type) => {
                 let arrayedResults = [];
-                angular.forEach(results.results,function(work){
+                results.results.forEach(work => {
                     let array = [work,1];
                     arrayedResults.push(array);
                 });
@@ -223,8 +223,18 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
 
     };
 
+    s.hasResults = function () {
+        return (s.objectResults['title'].length != 0 ||
+                s.objectResults['tag'].length != 0 ||
+                s.objectResults['notes'].length != 0 ||
+                s.objectResults['text'].length != 0 ||
+                s.objectResults['description'].length != 0 ||
+                s.copyResults['copy-info'].length != 0 ||
+                s.workResults['info'].length != 0) || !s.noresults;
+    };
+
     s.loadSearchPage = function () {
-        if(s.searchConfig.searchString != null) {
+        if (s.searchConfig.searchString != null) {
             $location.url(directoryPrefix + "/search?search=" + encodeURIComponent(s.searchConfig.searchString));
         }
     };
@@ -243,6 +253,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         searchAllTypes: true,
         searchIlluminatedBooks: false,
         searchCommercialBookIllustrations: false,
+        searchCopyInformation: false,
         searchSeparatePrints: false,
         searchDrawingsPaintings: false,
         searchManuscripts: false,
@@ -250,25 +261,79 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         minDate: 1772,
         maxDate: 1827
     };
+
+    s.searchFields = ['searchTitle','searchText','searchNotes','searchImageDescriptions','searchImageKeywords','searchWorks','searchCopies'];
+
+    s.searchTypes = ['searchIlluminatedBooks','searchCommercialBookIllustrations','searchSeparatePrints','searchDrawingsPaintings','searchManuscripts','searchRelatedMaterials'];
+
+    s.removeStopWords = function () {
+        if (!s.searchConfig.searchString.match(/\".*\"/g)) {
+            for (let x = 0; x < s.stopWords.length; x++) {
+                let re1 = new RegExp('\\s' + s.stopWords[x] + '\\s', "g");
+                let re2 = new RegExp('^' + s.stopWords[x] + '\\s', "g");
+                let re3 = new RegExp('\\s' + s.stopWords[x] + '$', "g");
+                let re4 = new RegExp('^' + s.stopWords[x] + '$', "g");
+                s.searchConfig.searchString = s.searchConfig.searchString.replace(re1, " ");
+                s.searchConfig.searchString = s.searchConfig.searchString.replace(re2, "");
+                s.searchConfig.searchString = s.searchConfig.searchString.replace(re3, "");
+                s.searchConfig.searchString = s.searchConfig.searchString.replace(re4, "");
+            }
+            s.searchConfig.searchString = s.searchConfig.searchString.replace(/\s\s*/g, " ");
+        }
+    };
     
-    s.populateTree = function (index) {
+    s.changeType = function(){
+        let check = 0;
+        s.searchTypes.forEach(type => {
+            if (s.searchConfig[type]) {
+                check++;
+            }
+        });
+        s.searchConfig.searchAllTypes = check <= 0;
+        s.search();
+    };
+
+    s.allTypes = function(){
+        if (s.searchConfig.searchAllTypes) {
+            s.types.forEach(type => s.searchConfig[type] = false);
+        }
+        s.search();
+    };
+
+    s.changeField = function(){
+        let check = 0;
+        s.searchFields.forEach(field => {
+            if (s.searchConfig[field]) {
+                check++;
+            }
+        });
+        s.searchConfig.searchAllFields = check <= 0;
+    };
+
+    s.allFields = function(){
+        if (s.searchConfig.searchAllFields) {
+            s.searchFields.forEach(field => s.searchConfig[field] = false);
+        }
+    };
+    
+    s.populateTree = function (resultTree, index) {
         let copyBads = [],
             copyBadMap = {},
             objectIds = [],
             objectIdMap = {};
 
-        if (angular.isArray(s.resultTree[index][2])){
+        if (Array.isArray(resultTree[index][2])){
 
-            s.resultTree[index][2].forEach(function (copyResults,copyKey) {
+            resultTree[index][2].forEach((copyResults,copyKey) => {
                 if (typeof copyResults[0] === "string") {
                     copyBads.push(copyResults[0]);
                     // We're storing a map from bad_id to its results container to simplify updating the results
                     // with retrieved copies.
                     copyBadMap[copyResults[0]] = copyResults;
 
-                    if(angular.isArray(s.resultTree[index][2][copyKey][2])){
+                    if(Array.isArray(resultTree[index][2][copyKey][2])){
 
-                        s.resultTree[index][2][copyKey][2].forEach(function (objResults) {
+                        resultTree[index][2][copyKey][2].forEach(objResults => {
                             objectIds.push(objResults[0]);
                             // We're storing a map from bad_id to its results container to simplify updating the results
                             // with retrieved copies.
@@ -286,8 +351,8 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
                     // Doing an in-place substitution of the bad_id with the relevant object
                     copyBadMap[result.bad_id][0] = result;
                 });
-                if(angular.isArray(s.resultTree[index][2])){
-                    s.resultTree[index][2].sort(function(a,b){
+                if(Array.isArray(resultTree[index][2])){
+                    resultTree[index][2].sort(function(a,b){
                         console.log('is '+ a[0].print_date+' > '+ b[0].print_date);
                         if(a[0].print_date > b[0].print_date){
                             return 1
@@ -311,9 +376,9 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         // Sort the copies
     };
 
-    s.showHighlight = function(objectIndex,virtualCopyIndex){
+    s.showHighlight = function(tree, objectIndex,virtualCopyIndex){
         s.selectedObject = objectIndex;
-        if(s.tree == 'copy'){
+        if(tree == 'copy'){
             s.selectedCopy = objectIndex;
         }
         if(virtualCopyIndex){
@@ -321,37 +386,37 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         }
     };
     
-    s.getHandprintDescription = function(workIndex,label){
-        switch(s.tree){
+    s.getHandprintDescription = function(tree, results, workIndex,label){
+        switch (tree) {
             case 'work':
-                return '<strong>' + s.resultTree[workIndex][0].title + ' (' + 'Composed ' + s.resultTree[workIndex][0].composition_date_string + ')' + '</strong>';
+                return `<strong>${results[workIndex][0].title} (Composed ${results[workIndex][0].composition_date_string})</strong>`;
             default:
-                let string = '<strong>'+s.resultTree[workIndex][0].title+' (' + 'Composed ' + s.resultTree[workIndex][0].composition_date_string + ')'+'</strong><br>',
+                let string = `<strong>${results[workIndex][0].title} (Composed ${results[workIndex][0].composition_date_string})</strong><br>`,
                     endstring = '';
 
                 if(label == 'Copy Information') {
-                    if(s.resultTree[workIndex][2].length > 1 && !s.resultTree[workIndex][0].virtual){
-                        string += '(' + s.resultTree[workIndex][2].length+ ' Copies' + ')';
+                    if(results[workIndex][2].length > 1 && !results[workIndex][0].virtual){
+                        string += '(' + results[workIndex][2].length+ ' Copies' + ')';
                     }
-                    if(s.resultTree[workIndex][2].length == 1 && !s.resultTree[workIndex][0].virtual){
-                        string += '(' + s.resultTree[workIndex][2].length+ ' Copy' + ')';
+                    if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
+                        string += '(' + results[workIndex][2].length+ ' Copy' + ')';
                     }
                     return string;
                 }
 
-                if(s.resultTree[workIndex][1] > 1){
-                    string += '('+s.resultTree[workIndex][1] + ' Objects';
+                if(results[workIndex][1] > 1){
+                    string += '('+results[workIndex][1] + ' Objects';
                     endstring = ')';
                 }
-                if(s.resultTree[workIndex][1] == 1){
-                    string += '('+s.resultTree[workIndex][1] + ' Object';
+                if(results[workIndex][1] == 1){
+                    string += '('+results[workIndex][1] + ' Object';
                     endstring = ')';
                 }
-                if(s.resultTree[workIndex][2].length > 1 && !s.resultTree[workIndex][0].virtual){
-                    string += ' across '+s.resultTree[workIndex][2].length+ ' Copies';
+                if(results[workIndex][2].length > 1 && !results[workIndex][0].virtual){
+                    string += ' across '+results[workIndex][2].length+ ' Copies';
                 }
-                if(s.resultTree[workIndex][2].length == 1 && !s.resultTree[workIndex][0].virtual){
-                    string += ' across '+s.resultTree[workIndex][2].length+ ' Copy';
+                if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
+                    string += ' across '+results[workIndex][2].length+ ' Copy';
                 }
 
                 string += endstring;
@@ -360,104 +425,104 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         }
     };
     
-    s.getPreviewHref = function(){
-        if(s.selectedWork == -1){
+    s.getPreviewHref = function (tree, resultTree) {
+        if (s.selectedWork == -1){
             return;
         }
-        switch(s.tree){
+        switch(tree){
             case 'object':
-                let work = s.resultTree[s.selectedWork][0],
-                    copyBad = work.virtual ? work.bad_id : s.resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id,
-                    descId = s.resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].desc_id;
+                let work = resultTree[s.selectedWork][0],
+                    copyBad = work.virtual ? work.bad_id : resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id,
+                    descId = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].desc_id;
                 return copyBad+'?descId='+descId;
             case 'copy':
-                return s.resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id;
+                return resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id;
             case 'work':
                 return
         }
     };
 
-    s.getPreviewImage = function(){
-        if(s.selectedWork == -1){
+    s.getPreviewImage = function(tree, resultTree){
+        if (s.selectedWork == -1){
             return;
         }
-        switch(s.tree){
+        switch(tree){
             case 'object':
-                return s.resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].dbi;
+                return resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].dbi;
             case 'copy':
-                return s.resultTree[s.selectedWork][2][s.selectedCopy][0].image;
+                return resultTree[s.selectedWork][2][s.selectedCopy][0].image;
             case 'work':
                 return
         }
     };
 
-    s.getWorkImage = function(workIndex){
-            switch(s.tree){
+    s.getWorkImage = function(tree, resultTree, workIndex){
+            switch(tree){
                 case 'object':
-                    if(angular.isDefined(s.resultTree[workIndex][2][0][2][0][0])){
-                        return s.resultTree[workIndex][2][0][2][0][0].dbi + '.100.jpg';
+                    if(angular.isDefined(resultTree[workIndex][2][0][2][0][0])){
+                        return resultTree[workIndex][2][0][2][0][0].dbi + '.100.jpg';
                     }
                 case 'copy':
-                    return s.resultTree[workIndex][2][0][0].image + '.100.jpg';
+                    return resultTree[workIndex][2][0][0].image + '.100.jpg';
                 case 'work':
-                    return s.resultTree[workIndex][0].image;
+                    return resultTree[workIndex][0].image;
         }
     };
 
-    s.getPreviewLabel = function(){
-        if(s.selectedWork == -1){
+    s.getPreviewLabel = function (tree, resultTree) {
+        if (s.selectedWork == -1){
             return;
         }
-        switch(s.tree){
+        switch(tree){
             case 'object':
-                return s.resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].full_object_id;
+                return resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].full_object_id;
             case 'copy':
-                return 'Copy '+s.resultTree[s.selectedWork][2][s.selectedCopy][0].archive_copy_id;
+                return 'Copy '+resultTree[s.selectedWork][2][s.selectedCopy][0].archive_copy_id;
             case 'work':
                 return
         }
     };
     
-    s.showCopies = function(workIndex){
+    s.showCopies = function(type, workIndex){
         s.selectedCopy = 0;
         s.selectedObject = 0;
         s.populateTree(workIndex);
         s.selectedWork = workIndex;
-        $rootScope.$broadcast('searchResultDirective::showCopies',{type:s.type});
-        $rootScope.$broadcast('searchCtrl::changeResult',{type:s.type,objectIndex:s.selectedWork});
+        $rootScope.$broadcast('searchResultDirective::showCopies', {type: type});
+        $rootScope.$broadcast('searchCtrl::changeResult', {type: type, objectIndex: s.selectedWork});
     };
 
     s.showObjects = function(copyIndex){
         s.selectedCopy = copyIndex;
     };
 
-    s.getPreviewTitle = function(){
-         if(s.selectedWork == -1){
+    s.getPreviewTitle = function (tree, resultTree){
+         if (s.selectedWork == -1){
             return;
         }
-        switch(s.tree){
+        switch(tree){
             case 'object':
-                return s.resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].title
+                return resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].title
         }
     };
 
-    s.nextResult = function(){
-        if(s.s.selectedWork + 1 < s.s.resultTree.length){
-            s.s.selectedWork += 1;
-            s.s.selectedCopy = 0;
-            s.s.selectedObject = 0;
-            s.s.populateTree(s.s.selectedWork);
-            $rootScope.$broadcast('searchCtrl::changeResult',{type:s.type,objectIndex:s.selectedWork})
+    s.nextResult = function(type, resultTree){
+        if (s.selectedWork + 1 < resultTree.length){
+            s.selectedWork += 1;
+            s.selectedCopy = 0;
+            s.selectedObject = 0;
+            s.populateTree(s.selectedWork);
+            $rootScope.$broadcast('searchCtrl::changeResult',{type: type, objectIndex:s.selectedWork})
         }
     };
 
-    s.previousResult = function(){
-        if(s.selectedWork > 0){
+    s.previousResult = function(type){
+        if (s.selectedWork > 0){
             s.selectedWork -= 1;
             s.selectedCopy = 0;
             s.selectedObject = 0;
             s.populateTree(s.selectedWork);
-            $rootScope.$broadcast('searchCtrl::changeResult',{type:s.type,objectIndex:s.selectedWork})
+            $rootScope.$broadcast('searchCtrl::changeResult',{type: type, objectIndex: s.selectedWork})
         }
     };
     
@@ -468,8 +533,8 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         s.types.object[resultType].selectedObject = -1;
     };
     
-    s.showCopiesHandler = function(e,d){
-        if(d.type !== s.type){
+    s.showCopiesHandler = function(e,d, type){
+        if(d.type !== type){
             s.selectedWork = -1;
         }
     };

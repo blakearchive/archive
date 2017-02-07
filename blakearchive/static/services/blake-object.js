@@ -6,9 +6,9 @@ angular.module("blake").factory("BlakeObject", function (GenericService) {
      */
 
     const parseObjectLines = (object, array, type, colnum) => {
-        if (angular.isArray(object)) {
+        if (Array.isArray(object)) {
             angular.forEach(object, function (objectSet, lineKey) {
-                if (angular.isArray(objectSet.l)) {
+                if (Array.isArray(objectSet.l)) {
                     angular.forEach(objectSet.l, function (v, k) {
                         var indent = angular.isDefined(v['@indent']) ? v['@indent'] : 0;
                         array.push({
@@ -53,7 +53,7 @@ angular.module("blake").factory("BlakeObject", function (GenericService) {
                     }
                 }
             });
-        } else if (angular.isArray(object.l)) {
+        } else if (Array.isArray(object.l)) {
             angular.forEach(object.l, function (v, k) {
                 var indent = angular.isDefined(v['@indent']) ? v['@indent'] : 0;
                 array.push({
@@ -111,7 +111,7 @@ angular.module("blake").factory("BlakeObject", function (GenericService) {
                 for (var k in objtext) {
                     if (typeof objtext[k] == "object" && objtext[k] !== null) {
                         if (k == 'choice') {
-                            if (angular.isArray(objtext[k])) {
+                            if (Array.isArray(objtext[k])) {
                                 angular.forEach(objtext[k], function (spellings) {
                                     if (angular.isDefined(spellings['orig']) && angular.isDefined(spellings['orig']['#text'])) {
                                         var orig = spellings['orig']['#text'];
@@ -126,7 +126,7 @@ angular.module("blake").factory("BlakeObject", function (GenericService) {
                                         if (angular.isDefined(spellings['corr'])) {
                                             reg = spellings['corr'];
                                         }
-                                        if (angular.isArray(reg)) {
+                                        if (Array.isArray(reg)) {
                                             angular.forEach(reg, function (v) {
                                                 var alt = {reg: v['#text'].toLowerCase(), orig: orig.toLowerCase()};
                                                 altspelling.push(alt);
@@ -153,7 +153,7 @@ angular.module("blake").factory("BlakeObject", function (GenericService) {
                                         reg = objtext[k]['corr'];
                                     }
 
-                                    if (angular.isArray(reg)) {
+                                    if (Array.isArray(reg)) {
                                         angular.forEach(reg, function (v) {
                                             var alt = {reg: v['#text'].toLowerCase(), orig: orig.toLowerCase()};
                                             altspelling.push(alt);
