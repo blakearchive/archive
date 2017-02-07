@@ -1,0 +1,17 @@
+<!-- preview -->
+<div class="object-preview col-sm-12 text-center" auto-width adjust="100" breakpoint="992" divide="3">
+    <h5 ng-if="ps.type != 'copy-info'" style="">Selected Object</h5>
+    <h5 ng-if="ps.type == 'copy-info'" style="">Selected Copy</h5>
+    <br>
+    <div class="object-img-container text-center" auto-height adjust="350" breakpoint="992">
+        <a ng-href="/copy/{{ps.s.getPreviewHref()}}">
+            <img ng-src="/images/{{ ps.s.getPreviewImage() }}.100.jpg">
+            <p></p>
+            <p class="object-subtitle">
+                <span ng-if="ps.tree == 'object' && ps.getPreviewTitle() != null" class="object-no">{{ps.getPreviewTitle()}}<br></span>
+                <span ng-if="ps.results[ps.s.selectedWork][0].virtual && ps.results[ps.s.selectedWork][0].bad_id != 'letters'" class="object-no">{{ps.s.getPreviewLabel(ps.tree, ps.results).replace("Object 1","")}}</span>
+                <span ng-if="ps.results[ps.s.selectedWork][0].virtual && ps.results[ps.s.selectedWork][0].bad_id == 'letters'" class="object-no">{{ps.s.getPreviewLabel(ps.tree, ps.results)}}</span>
+                <span ng-if="!ps.results[ps.s.selectedWork][0].virtual" class="object-no">{{ps.getPreviewLabel()}}</span></p>
+        </a>
+    </div>
+</div>
