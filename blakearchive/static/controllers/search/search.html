@@ -20,13 +20,13 @@
             NO RESULTS
         </div>
         
-        <search-results ng-if="search.s.searchConfig.searchTitle || search.s.searchConfig.searchAllFields" label="Title" results="objectResults['title']" type="title" tree="object"/>
-        <search-results ng-if="search.s.searchConfig.searchText || search.s.searchConfig.searchAllFields" label="Transcription" results="objectResults['text']" type="text" tree="object"/>
-        <search-results ng-if="search.s.searchConfig.searchImageDescriptions || search.s.searchConfig.searchAllFields" label="Illustration Description" results="objectResults['description']" type="description" tree="object"/>
-        <search-results ng-if="search.s.searchConfig.searchImageKeywords || search.s.searchConfig.searchAllFields" label="Image Tag" results="objectResults['tag']" type="tag" tree="object"/>
-        <search-results ng-if="search.s.searchConfig.searchNotes || search.s.searchConfig.searchAllFields" label="Editors' Note" results="objectResults['notes']" type="notes" tree="object"/>
-        <search-results ng-if="search.s.searchConfig.searchCopyInformation || search.s.searchConfig.searchAllFields" label="Copy Information" results="copyResults['copy-info']" type="copy-info" tree="copy"/>
-        <search-results ng-if="search.s.searchConfig.searchWorkInformation || search.s.searchConfig.searchAllFields" label="Work Information" results="workResults['info']" type="work-info" tree="work"/>
+        <search-results ng-if="search.s.searchConfig.searchTitle || search.s.searchConfig.searchAllFields" label="Title" results="search.s.objectResults['title']" type="title" tree="object"/>
+        <search-results ng-if="search.s.searchConfig.searchText || search.s.searchConfig.searchAllFields" label="Transcription" results="search.s.objectResults['text']" type="text" tree="object"/>
+        <search-results ng-if="search.s.searchConfig.searchImageDescriptions || search.s.searchConfig.searchAllFields" label="Illustration Description" results="search.s.objectResults['description']" type="description" tree="object"/>
+        <search-results ng-if="search.s.searchConfig.searchImageKeywords || search.s.searchConfig.searchAllFields" label="Image Tag" results="search.s.objectResults['tag']" type="tag" tree="object"/>
+        <search-results ng-if="search.s.searchConfig.searchNotes || search.s.searchConfig.searchAllFields" label="Editors' Note" results="search.s.objectResults['notes']" type="notes" tree="object"/>
+        <search-results ng-if="search.s.searchConfig.searchCopyInformation || search.s.searchConfig.searchAllFields" label="Copy Information" results="search.s.copyResults['copy-info']" type="copy-info" tree="copy"/>
+        <search-results ng-if="search.s.searchConfig.searchWorkInformation || search.s.searchConfig.searchAllFields" label="Work Information" results="search.s.workResults['info']" type="work-info" tree="work"/>
 
     </div>
 </div>
