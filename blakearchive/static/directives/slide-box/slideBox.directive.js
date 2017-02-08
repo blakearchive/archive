@@ -1,5 +1,5 @@
 angular.module("blake").controller("SlideBoxController", function($scope,$element,$attrs,$timeout){
-    var vm = this;
+    let vm = this;
 
     vm.scrollBarWidths = 40;
     vm.viewport = $element.children('.slide-box-viewport');
@@ -12,34 +12,21 @@ angular.module("blake").controller("SlideBoxController", function($scope,$elemen
     vm.windowWidth = 0;
 
 
-    var widthOfList = function(){
-        var itemsWidth = 0;
-        angular.forEach(vm.items,function(child){
-            var itemWidth = angular.element(child).outerWidth();
-            itemsWidth+=itemWidth;
-        })
+    let widthOfList = function(){
+        let itemsWidth = 0;
+        vm.items.forEach(child => itemsWidth += angular.element(child).outerWidth());
         return itemsWidth;
     };
 
-    var widthOfHidden = function(){
+    let widthOfHidden = function(){
         vm.viewport = $element.children('.slide-box-viewport');
         return ((vm.viewport.outerWidth())-widthOfList()-vm.leftOffset)-vm.scrollBarWidths;
     };
 
-    var reAdjust = function(){
-        if (widthOfHidden() >= 0) {
-            vm.scrollerRight = false;
-        } else {
-            vm.scrollerRight = true;
-        }
-
-        if (vm.leftOffset<0) {
-            vm.scrollerLeft = true;
-        } else {
-            //$('.item').animate({left:"-="+getLeftPosi()+"px"},'slow');
-            vm.scrollerLeft = false;
-        }
-    }
+    let reAdjust = function(){
+        vm.scrollerRight = widthOfHidden() < 0;
+        vm.scrollerLeft = vm.leftOffset < 0;
+    };
 
     $scope.$on('resize::resize', function (e, w) {
         vm.windowWidth = w.width;
@@ -59,28 +46,28 @@ angular.module("blake").controller("SlideBoxController", function($scope,$elemen
     });
 
     vm.scrollRight = function(){
-        var newOffset = vm.leftOffset - vm.scrollBy;
-        var maxOffset = vm.viewport.outerWidth() - widthOfList() - vm.scrollBarWidths;
+        let newOffset = vm.leftOffset - vm.scrollBy;
+        let maxOffset = vm.viewport.outerWidth() - widthOfList() - vm.scrollBarWidths;
         if(newOffset < maxOffset){
             vm.leftOffset = maxOffset;
         } else {
             vm.leftOffset = newOffset;
         }
         reAdjust();
-    }
+    };
 
     vm.scrollLeft = function(){
-        var newOffset = vm.leftOffset + vm.scrollBy;
+        let newOffset = vm.leftOffset + vm.scrollBy;
         if(newOffset > 0){
             vm.leftOffset = 0;
         } else {
             vm.leftOffset = newOffset;
         }
         reAdjust();
-    }
+    };
 
     vm.scrollToResult = function(objectIndex){
-        var objectStart = objectIndex * 235,
+        let objectStart = objectIndex * 235,
             objectEnd = objectStart + 235,
             viewWidth = vm.viewport.outerWidth();
 

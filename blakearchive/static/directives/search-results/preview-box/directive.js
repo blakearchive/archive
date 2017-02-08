@@ -8,7 +8,8 @@ angular.module("blake").component("previewBox", {
     controller: "PreviewBoxController",
     scope: {
         results: '=results',
-        tree: '@tree'
+        tree: '@tree',
+        type: '@type'
     },
     controllerAs: "pb"
 });

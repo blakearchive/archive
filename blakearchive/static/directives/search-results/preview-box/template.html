@@ -2,65 +2,12 @@
     <div class="copy-container" ng-class="{hidden: pb.s.selectedWork == -1}" auto-height adjust="175" breakpoint="992" id="{{pb.type}}">
         <preview-header tree="pb.tree" results="pb.results"/>
         <div class="flex-992" auto-height adjust="275" breakpoint="992">
-            
             <objects-in-virtual-work-preview tree="pb.tree" results="pb.results" ng-if="pb.results[pb.s.selectedWork][1] > 1 && pb.tree == 'object' && pb.results[pb.s.selectedWork][0].virtual"/>
-
             <objects-in-copy-preview tree="pb.tree" results="pb.results" ng-if="pb.results[pb.s.selectedWork][2][pb.s.selectedCopy][1] > 1 && pb.tree == 'object' && !pb.results[pb.s.selectedWork][0].virtual"/>
-            
             <copies-in-work-preview tree="pb.tree" results="pb.results" ng-if="pb.results[pb.s.selectedWork][1] > 1 && pb.tree == 'copy'" to-top-on-broadcast="searchCtrl::changeResult"/>
-            
             <preview-selection tree="pb.results" results="pb.results" ng-if="pb.tree != 'work'"/>
-
-            <div class="object-result-highlight col-sm-12" auto-width adjust="100" breakpoint="992" divide="3" ng-if="pb.tree != 'work'" to-top-on-broadcast="searchCtrl::changeResult">
-
-                <div ng-if="pb.type == 'title'" class="text-center">
-                    <h5 class="text-center">Title</h5>
-                    <span ng-bind-html="pb.results[pb.s.selectedWork][2][pb.s.selectedCopy][2][pb.s.selectedObject][0].title | highlight:pb.s.highlight"></span>
-                </div>
-
-                <div ng-if="pb.type == 'text'">
-                    <h5 class="text-center">Transcription</h5>
-                    <text-transcription object="pb.results[pb.s.selectedWork][2][pb.s.selectedCopy][2][pb.s.selectedObject][0]" highlight="{{pb.s.highlight}}"></text-transcription>
-                </div>
-
-                <div ng-if="pb.type == 'description'">
-                    <h5 class="text-center">Illustration Description</h5>
-                    <illustration-description object="pb.results[pb.s.selectedWork][2][pb.s.selectedCopy][2][pb.s.selectedObject][0]" highlight="{{pb.s.highlight}}" keywords="hidden"></illustration-description>
-                </div>
-
-                <div ng-if="pb.type == 'notes'">
-                    <h5 class="text-center">Editors' Notes</h5>
-                    <editor-notes object="pb.results[pb.s.selectedWork][2][pb.s.selectedCopy][2][pb.s.selectedObject][0]" highlight="{{pb.s.highlight}}"></editor-notes>
-                </div>
-
-                <div ng-if="pb.type == 'tag'">
-                    <h5 class="text-center">Image Tags</h5>
-                    <illustration-description object="pb.results[pb.s.selectedWork][2][pb.s.selectedCopy][2][pb.s.selectedObject][0]" highlight="{{pb.s.highlight}}" keywords="only"></illustration-description>
-                </div>
-
-                <div ng-if="pb.type == 'copy-info'" id="searchResultCopyInfo">
-                     <h5 class="text-center">Copy Information</h5>
-                    <copy-information copy="pb.results[pb.s.selectedWork][2][pb.s.selectedCopy][0]" highlight="{{pb.s.highlight}}"></copy-information>
-                </div>
-            </div>
-
-            <div class="object-result-highlight" auto-width adjust="100" breakpoint="992" ng-if="pb.tree == 'work'" class="text-center" to-top-on-broadcast="searchCtrl::changeResult">
-                <h5 class="text-center">Work Information</h5>
-                <div ng-bind-html="pb.results[pb.s.selectedWork][0].info | highlight:pb.s.highlight"></div>
-            </div>
-
+            <object-result-highlight ng-if="pb.tree != 'work'"/>
         </div><!-- end flex results -->
-
-        <!-- previous/next controls -->
-        <div class="object-controls" ng-if="pb.results.length > 1">
-            <a class="left carousel-control" role="button" ng-click="pb.s.previousResult(pb.type, pb.results)" ng-if="pb.s.selectedWork > 0">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" role="button" ng-click="pb.s.nextResult(pb.type)" ng-if="pb.s.selectedWork < (pb.results.length - 1)">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
+        <previous-next results="pb.results" type="pb.type"/>
     </div>
 </div>
