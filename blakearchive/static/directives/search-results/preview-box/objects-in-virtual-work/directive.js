@@ -3,12 +3,15 @@ angular.module("blake").controller("ObjectsInVirtualWorkPreviewController", func
     vm.s = SearchService;
 });
 
-angular.module("blake").component("objectsInVirtualWorkPreview", {
-    template: require("html-loader!./template.html"),
-    controller: "ObjectsInVirtualWorkController",
-    scope: {
-        results: '=results',
-        tree: '@tree'
-    },
-    controllerAs: "ovw"
+angular.module("blake").directive("objectsInVirtualWorkPreview", function () {
+    return {
+        template: require("html-loader!./template.html"),
+        controller: "ObjectsInVirtualWorkController",
+        scope: {
+            results: '=results',
+            tree: '@tree'
+        },
+        controllerAs: "ovw",
+        replace: true
+    }
 });

@@ -14,7 +14,9 @@ angular.module("blake").controller("SlideBoxController", function($scope,$elemen
 
     let widthOfList = function(){
         let itemsWidth = 0;
-        vm.items.forEach(child => itemsWidth += angular.element(child).outerWidth());
+        for (let child in vm.items) {
+            itemsWidth += angular.element(child).outerWidth();
+        }
         return itemsWidth;
     };
 

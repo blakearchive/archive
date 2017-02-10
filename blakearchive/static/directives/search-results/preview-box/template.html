@@ -1,10 +1,10 @@
 <div class="col-xs-12 full-width copy-container-wrapper">
-    <div class="copy-container" ng-class="{hidden: pb.s.selectedWork == -1}" auto-height adjust="175" breakpoint="992" id="{{pb.type}}">
+    <div class="copy-container" ng-class="{hidden: pb.hidden()}" auto-height adjust="175" breakpoint="992" id="{{pb.type}}">
         <preview-header tree="pb.tree" results="pb.results"/>
         <div class="flex-992" auto-height adjust="275" breakpoint="992">
-            <objects-in-virtual-work-preview tree="pb.tree" results="pb.results" ng-if="pb.results[pb.s.selectedWork][1] > 1 && pb.tree == 'object' && pb.results[pb.s.selectedWork][0].virtual"/>
-            <objects-in-copy-preview tree="pb.tree" results="pb.results" ng-if="pb.results[pb.s.selectedWork][2][pb.s.selectedCopy][1] > 1 && pb.tree == 'object' && !pb.results[pb.s.selectedWork][0].virtual"/>
-            <copies-in-work-preview tree="pb.tree" results="pb.results" ng-if="pb.results[pb.s.selectedWork][1] > 1 && pb.tree == 'copy'" to-top-on-broadcast="searchCtrl::changeResult"/>
+            <objects-in-virtual-work-preview tree="pb.tree" results="pb.results" ng-if="pb.showObjectsInVirtualWorkPreview()"/>
+            <objects-in-copy-preview tree="pb.tree" results="pb.results" ng-if="pb.showObjectsInCopyPreview()"/>
+            <copies-in-work-preview tree="pb.tree" results="pb.results" ng-if="pb.showCopiesInWorkPreview()" to-top-on-broadcast="searchCtrl::changeResult"/>
             <preview-selection tree="pb.results" results="pb.results" ng-if="pb.tree != 'work'"/>
             <object-result-highlight ng-if="pb.tree != 'work'"/>
         </div><!-- end flex results -->

@@ -3,12 +3,15 @@ angular.module("blake").controller("ObjectsInCopyPreviewController", function (S
     vm.s = SearchService;
 });
 
-angular.module("blake").component("objectsInCopyPreview", {
-    template: require("html-loader!./template.html"),
-    controller: "ObjectsInCopyController",
-    scope: {
-        results: '=results',
-        tree: '@tree'
-    },
-    controllerAs: "oc"
+angular.module("blake").directive("objectsInCopyPreview", function () {
+    return {
+        template: require("html-loader!./template.html"),
+        controller: "ObjectsInCopyController",
+        scope: {
+            results: '=results',
+            tree: '@tree'
+        },
+        controllerAs: "oc",
+        replace: true
+    }
 });
