@@ -16,16 +16,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The William Blake Archive</title>
-  <!--<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>-->
   <link rel="stylesheet" href="/static/fonts/Lato/lato.css">
   <link rel="stylesheet" href="/static/css/styles.css">
-  <!--<link rel="stylesheet" href="/static/css/main.css">-->
   <link rel="stylesheet" href="/static/css/angular.rangeSlider.css">
   <link rel="stylesheet" href="/static/css/angular-loading-bar.css">
   <link rel="stylesheet" href="/static/css/magnify.css">
   <link rel="stylesheet" href="/static/css/override.css">
   <link rel="stylesheet" href="/static/css/tei.css">
-  <!--<link rel="stylesheet" href="/static/css/output.min.css">-->
   <base href="/">
   <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon">
 
@@ -38,61 +35,8 @@
     </head>
     <body ng-app="blake" resize scroll>
 
-    <nav class="navbar navbar-default navbar-fixed-top" blake-menu ng-class="{'menu-open':worksNavState, 'menu-closed': !worksNavState}">
-      <div class="site-header-container">
-        <div class="container-fluid site-header">
-          <a class="navbar-brand" ng-href="{{showmePage ? '':'/'}}"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
-          <span ng-if="persistentmode == 'gallery' && !showmePage" class="gr-display">GALLERY MODE</span>
-          <span ng-if="persistentmode == 'reading' && !showmePage" class="gr-display">READING MODE</span>
-          <span ng-if="showmePage && showmeType == 'text'" class="gr-display">DIPLOMATIC TRANSCRIPTION</span>
-          <span ng-if="showmePage && showmeType == 'desc'" class="gr-display">ILLUSTRATION DESCRIPTION</span>
-          <span ng-if="showmePage && showmeType == 'note'" class="gr-display">EDITORS' NOTES</span>
-          <span ng-if="showmePage && showmeType == 'enlargement'" class="gr-display">ENLARGEMENT</span>
-          <span ng-if="showmePage && showmeType == 'truesize'" class="gr-display">TRUE SIZE</span>
-          <button ng-click="worksNavState = !worksNavState" type="button" class="collapse-archive" ng-class="{'hidden':showmePage, 'menu-open':worksNavState, 'menu-closed': !worksNavState}">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <!--<div title="Lightbox" class="lightbox hidden-xs" ng-class="{'hidden':showmePage}"><a class="lb-amount" href="#">3</a></div>-->
-          <div id="custom-tweet-button" class="custom-tweet-button"><a twitter-share href="" onclick="window.open('https://twitter.com/share?text=@BlakeArchive','name','width=600,height=400')"></a></div>
+    <blake-menu></blake-menu>
 
-          <!-- Use any element to open/show the overlay navigation menu -->
-          <work-title ng-if="showWorkTitle"></work-title>
-        </div>
-      </div>
-      <!-- /.container -->
-      <nav class="navbar navbar-default" role="navigation" ng-class="{'hidden':showmePage}">
-        <div class="container-fluid">
-          <view-sub-menu ng-class="{'hidden':showmePage}"></view-sub-menu>
-          <form ng-controller="SearchController" class="navbar-form" role="search" ng-submit="loadSearchPage()">
-            <div class="input-group">
-              <input ng-model="searchConfig.searchString" type="text" class="form-control" placeholder="Search">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                <!--<image-tags></image-tags>-->
-              </span>
-            </div>
-          </form>
-          <nav-menu></nav-menu>
-        </div>
-      </nav>
-
-
-      <dpi ng-if="help != 'home' && help != 'work' && help != 'static' && help != 'search'"></dpi>
-      
-    </nav>
-<!--
-<ul class="list-inline">
-  <li><a href="/">Home</a></li>
-  <li><a href="/work/mhh">Work</a></li>
-  <li><a href="/copy/mhh.b">Copy</a></li> -->
-  <!-- <li><a href="/matrix/3">Same Matrix</a></li> -->
-<!--  <li><a href="/sequence/3">Same Prod Sequence</a></li>
-  <li><a href="/search/">Search</a></li>
-</ul>
--->
 <!-- This div is the viewport where all views will be loaded, so css for individual pages should
  be based on elements below this point in the DOM -->
     <div class="loading-bar-container"></div>
@@ -128,7 +72,6 @@
           <li><a href="/staticpage/biography">About Blake</a></li>
           <li><a href="/staticpage/generalbib">Resources for Further Research</a></li>
           <li><a href="/staticpage/archiveataglance">About the Archive</a></li>
-          <!--<li><a href="/staticpage/help">Using the Archive</a></li>-->
           <li><a href="/staticpage/permissionsNEW">Copyright and Permissions</a></li>
           <li><a href="/staticpage/comment">Contact the Archive</a></li>
           <li><a href="/staticpage/relatedsites">Related Sites</a></li>

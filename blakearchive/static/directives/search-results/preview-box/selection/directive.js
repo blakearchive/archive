@@ -3,12 +3,14 @@ angular.module("blake").controller("PreviewSelectionController", function (Searc
     vm.s = SearchService;
 });
 
-angular.module("blake").component("previewSelection", {
-    template: require("html-loader!./template.html"),
-    controller: "PreviewSelectionController",
-    scope: {
-        results: '=results',
-        tree: '@tree'
-    },
-    controllerAs: "ps"
+angular.module("blake").directive("previewSelection", function () {
+    return {
+        template: require("html-loader!./template.html"),
+        controller: "PreviewSelectionController",
+        scope: {
+            results: '=results',
+            tree: '@tree'
+        },
+        controllerAs: "ps"
+    }
 });

@@ -3,12 +3,15 @@ angular.module("blake").controller("PreviousNextController", function (SearchSer
     vm.s = SearchService;
 });
 
-angular.module("blake").component("previousNext", {
-    template: require("html-loader!./template.html"),
-    controller: "PreviousNextController",
-    scope: {
-        results: '=results',
-        type: '@type'
-    },
-    controllerAs: "pn"
+angular.module("blake").directive("previousNext", function () {
+    return {
+        template: require("html-loader!./template.html"),
+        controller: "PreviousNextController",
+        scope: {
+            results: '=results',
+            type: '=type'
+        },
+        controllerAs: "pn",
+        replace: "true"
+    }
 });

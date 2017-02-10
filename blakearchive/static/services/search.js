@@ -1,4 +1,4 @@
-angular.module("blake").factory("SearchService", function ($rootScope, $location, $q, BlakeDataService) {
+angular.module("blake").factory("SearchService", function ($rootScope, $location, $q, BlakeDataService, directoryPrefix) {
     let s = {};
 
     s.selectedWork = -1;
@@ -192,45 +192,62 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
             workSearch = BlakeDataService.queryWorks(s.searchConfig);
         return $q.all([objectSearch,copySearch,workSearch]).then(function(results){
             s.objectResults = results[0];
-            s.objectResults.forEach((works,type) => {
+            for (let type in s.objectResults) {
+                let works = s.objectResults[type];
                 works.forEach((work,index) =>{
                     BlakeDataService.getObject(s.objectResults[type][index][2][0][2][0][0]).then(results => {
                         s.objectResults[type][index][2][0][2][0][0] = results;
                     });
                 });
-            });
+            }
             s.copyResults = results[1];
             console.log(s.copyResults);
-            s.copyResults.forEach((works,type) => {
+            for (let type in s.copyResults) {
+                let works = s.copyResults[type];
                 works.forEach((work,index) => {
                     //s.populateWorkCopies(type,index);
                     BlakeDataService.getCopy(s.copyResults[type][index][2][0][0]).then(results => {
                         s.copyResults[type][index][2][0][0] = results;
                     });
                 });
-            });
+            }
             s.workResults = results[2];
-            s.workResults.forEach((results, type) => {
-                let arrayedResults = [];
+            for (let type in s.workResults) {
+                let results = s.workResults[type], arrayedResults = [];
                 results.results.forEach(work => {
                     let array = [work,1];
                     arrayedResults.push(array);
                 });
                 s.workResults[type] = arrayedResults;
-            });
+            }
             $rootScope.$broadcast('searchCtrl::newSearch');
         });
+    };
 
+    s.hasObjectResults = function () {
+        return s.objectResults && (
+            s.objectResults['title'] && s.objectResults['title'].length != 0 ||
+            s.objectResults['tag'] && s.objectResults['tag'].length != 0 ||
+            s.objectResults['notes'] && s.objectResults['notes'].length != 0 ||
+            s.objectResults['text'] && s.objectResults['text'].length != 0 ||
+            s.objectResults['text'] && s.objectResults['description'].length != 0)
+    };
+
+    s.hasCopyResults = function () {
+        return s.copyResults && s.copyResults['copy-info'] && s.copyResults['copy-info'].length != 0;
+    };
+
+    s.hasWorkResults = function () {
+        return s.workResults && s.workResults['info'] && s.workResults['info'].length != 0;
     };
 
     s.hasResults = function () {
-        return (s.objectResults['title'].length != 0 ||
-                s.objectResults['tag'].length != 0 ||
-                s.objectResults['notes'].length != 0 ||
-                s.objectResults['text'].length != 0 ||
-                s.objectResults['description'].length != 0 ||
-                s.copyResults['copy-info'].length != 0 ||
-                s.workResults['info'].length != 0) || !s.noresults;
+        return (
+            s.hasObjectResults() ||
+            s.hasCopyResults() ||
+            s.hasWorkResults() ||
+            !s.noresults
+        );
     };
 
     s.loadSearchPage = function () {
@@ -483,12 +500,13 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         }
     };
     
-    s.showCopies = function(type, workIndex){
+    s.showCopies = function(type, results, workIndex){
         s.selectedCopy = 0;
         s.selectedObject = 0;
-        s.populateTree(workIndex);
+        s.populateTree(results, workIndex);
         s.selectedWork = workIndex;
-        $rootScope.$broadcast('searchResultDirective::showCopies', {type: type});
+        s.type = type;
+        // $rootScope.$broadcast('searchResultDirective::showCopies', {type: type});
         $rootScope.$broadcast('searchCtrl::changeResult', {type: type, objectIndex: s.selectedWork});
     };
 
@@ -511,32 +529,23 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
             s.selectedWork += 1;
             s.selectedCopy = 0;
             s.selectedObject = 0;
-            s.populateTree(s.selectedWork);
+            s.populateTree(resultTree, s.selectedWork);
             $rootScope.$broadcast('searchCtrl::changeResult',{type: type, objectIndex:s.selectedWork})
         }
     };
 
-    s.previousResult = function(type){
+    s.previousResult = function(type, resultTree){
         if (s.selectedWork > 0){
             s.selectedWork -= 1;
             s.selectedCopy = 0;
             s.selectedObject = 0;
-            s.populateTree(s.selectedWork);
+            s.populateTree(resultTree, s.selectedWork);
             $rootScope.$broadcast('searchCtrl::changeResult',{type: type, objectIndex: s.selectedWork})
         }
     };
     
-    s.closeCopies = function(resultType){
-        s.types.object[resultType].showCopies = false;
-        s.types.object[resultType].selectedWork = -1;
-        s.types.object[resultType].selectedCopy = -1;
-        s.types.object[resultType].selectedObject = -1;
-    };
-    
-    s.showCopiesHandler = function(e,d, type){
-        if(d.type !== type){
-            s.selectedWork = -1;
-        }
+    s.closeCopies = function(){
+        s.selectedWork = -1;
     };
     
     return s;

@@ -1,10 +1,13 @@
-angular.module("blake").controller("FieldSearchFieldController", function (SearchController) {
+angular.module("blake").controller("FieldSearchFieldController", function (SearchService) {
     let vm = this;
-    vm.s = SearchController;
+    vm.s = SearchService;
 });
 
-angular.module("blake").component("fieldSearchField", {
-    template: require("html-loader!./template.html"),
-    controller: "FieldSearchFieldController",
-    controllerAs: "fsf"
+angular.module("blake").directive("fieldSearchField", function () {
+    return {
+        template: require("html-loader!./template.html"),
+        controller: "FieldSearchFieldController",
+        controllerAs: "fsf",
+        replace: true
+    }
 });

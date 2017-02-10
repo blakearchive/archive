@@ -10,7 +10,11 @@ angular.module("blake").controller("SearchResultsController", function($scope,$r
         }
     });
 
-    $scope.$on('searchResultDirective::showCopies', vm.s.showCopiesHandler);
+    // $scope.$on('searchResultDirective::showCopies', function(e,d){
+    //     if(d.type !== vm.type){
+    //         vm.s.selectedWork = -1;
+    //     }
+    // });
     
 });
 

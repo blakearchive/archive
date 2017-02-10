@@ -80,11 +80,11 @@ blake.config(function(cfpLoadingBarProvider) {
 });
 
 blake.run(function ($route, $rootScope, $location) {
-    var original = $location.path;
+    let original = $location.path;
     $location.path = function (path, reload) {
         if (reload === false) {
-            var lastRoute = $route.current;
-            var un = $rootScope.$on('$locationChangeSuccess', function () {
+            let lastRoute = $route.current;
+            let un = $rootScope.$on('$locationChangeSuccess', function () {
                 $route.current = lastRoute;
                 un();
             });

@@ -3,7 +3,7 @@ angular.module("blake").directive('scrollToElement', function($timeout){
     var link = function(scope,element,attr) {
         element.on('click',function(){
             $timeout(function () {
-                var elementOffset = attr.scrollToElement ? $(attr.scrollToElement).offset() : element.offset(),
+                var elementOffset = attr.scrollToElement && $(attr.scrollToElement).offset() || element.offset(),
                     offset = scope.offset ? parseInt(scope.offset) : 0;
                 $('html, body').animate({scrollTop: (elementOffset.top - offset)}, 'slow');
             }, 300);

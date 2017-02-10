@@ -16,7 +16,7 @@
                 <div scroll-to-element="#{{esr.type}}" offset="125">
                     <!--to slide, put slideBox.scrollToResult($index); into action for handprint-blocks-->
                     <handprint-block
-                        action="esr.s.showCopies(esr.type, $index); slideBox.scrollToResult($index);"
+                        action="esr.s.showCopies(esr.type, esr.results, $index); slideBox.scrollToResult($index);"
                         image="{{ esr.s.getWorkImage(esr.tree, esr.results, $index) }}"
                         footer="{{ esr.s.getHandprintDescription(esr.tree, esr.results, $index, esr.label) }}"
                         ></handprint-block>
