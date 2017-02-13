@@ -24,7 +24,7 @@ angular.module('blake').directive('searchResults', function(){
         template: require('html-loader!./searchResults.html'),
         controller: "SearchResultsController",
         scope: {
-            results: '=results',
+            results: '<results',
             label: '@label',
             type: '@type',
             tree: '@tree'

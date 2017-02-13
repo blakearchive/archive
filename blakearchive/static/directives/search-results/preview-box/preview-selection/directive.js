@@ -7,10 +7,11 @@ angular.module("blake").directive("previewSelection", function () {
     return {
         template: require("html-loader!./template.html"),
         controller: "PreviewSelectionController",
+        bindToController: true,
         scope: {
-            results: '=results',
-            tree: '@tree'
+            results: '<results',
+            tree: '<tree'
         },
-        controllerAs: "ps"
+        controllerAs: "ps",
     }
 });

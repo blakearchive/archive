@@ -1,11 +1,11 @@
 angular.module("blake").directive('autoWidth', function (WindowSize) {
-    var link = function (scope, element, attrs) {
+    let link = function (scope, element, attrs) {
 
         scope.setStyles = function (windowSize) {
             if(windowSize.width < scope.breakpoint){
                 element.width('');
             } else {
-                var newWidth = (windowSize.width - scope.adjust);
+                let newWidth = (windowSize.width - scope.adjust);
                 if(scope.percent){
                     newWidth = newWidth * scope.percent;
                 }
@@ -14,7 +14,7 @@ angular.module("blake").directive('autoWidth', function (WindowSize) {
                 }
                 element.width(newWidth);
             }
-        }
+        };
 
         scope.setStyles(WindowSize);
 

@@ -14,9 +14,7 @@ angular.module("blake").controller("SlideBoxController", function($scope,$elemen
 
     let widthOfList = function(){
         let itemsWidth = 0;
-        for (let child in vm.items) {
-            itemsWidth += angular.element(child).outerWidth();
-        }
+        angular.forEach(vm.items, child => itemsWidth += angular.element(child).outerWidth());
         return itemsWidth;
     };
 
@@ -99,7 +97,7 @@ angular.module('blake').directive("slideBox", function(){
         transclude: true,
         restrict: 'AE',
         scope: {
-            type: '@type'
+            type: '=type'
         },
         controller: "SlideBoxController",
         controllerAs: 'slideBox',
