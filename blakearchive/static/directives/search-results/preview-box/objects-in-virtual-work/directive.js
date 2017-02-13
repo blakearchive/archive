@@ -6,10 +6,11 @@ angular.module("blake").controller("ObjectsInVirtualWorkPreviewController", func
 angular.module("blake").directive("objectsInVirtualWorkPreview", function () {
     return {
         template: require("html-loader!./template.html"),
-        controller: "ObjectsInVirtualWorkController",
+        controller: "ObjectsInVirtualWorkPreviewController",
+        bindToController: true,
         scope: {
-            results: '=results',
-            tree: '@tree'
+            results: '<results',
+            tree: '<tree'
         },
         controllerAs: "ovw",
         replace: true

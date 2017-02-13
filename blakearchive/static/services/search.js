@@ -370,7 +370,6 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
                 });
                 if(Array.isArray(resultTree[index][2])){
                     resultTree[index][2].sort(function(a,b){
-                        console.log('is '+ a[0].print_date+' > '+ b[0].print_date);
                         if(a[0].print_date > b[0].print_date){
                             return 1
                         }
@@ -443,61 +442,54 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
     };
     
     s.getPreviewHref = function (tree, resultTree) {
-        if (s.selectedWork == -1){
-            return;
-        }
-        switch(tree){
-            case 'object':
-                let work = resultTree[s.selectedWork][0],
-                    copyBad = work.virtual ? work.bad_id : resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id,
-                    descId = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].desc_id;
-                return copyBad+'?descId='+descId;
-            case 'copy':
-                return resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id;
-            case 'work':
-                return
-        }
+        try {
+            switch (tree) {
+                case 'object':
+                    let work = resultTree[s.selectedWork][0],
+                        copyBad = work.virtual ? work.bad_id : resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id,
+                        descId = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].desc_id;
+                    return copyBad + '?descId=' + descId;
+                case 'copy':
+                    return resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id;
+            }
+        } catch (e) {}
     };
 
     s.getPreviewImage = function(tree, resultTree){
-        if (s.selectedWork == -1){
-            return;
-        }
-        switch(tree){
-            case 'object':
-                return resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].dbi;
-            case 'copy':
-                return resultTree[s.selectedWork][2][s.selectedCopy][0].image;
-            case 'work':
-                return
-        }
+        try {
+            switch (tree) {
+                case 'object':
+                    return resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].dbi;
+                case 'copy':
+                    return resultTree[s.selectedWork][2][s.selectedCopy][0].image;
+            }
+        } catch (e) {}
     };
 
     s.getWorkImage = function(tree, resultTree, workIndex){
-            switch(tree){
+        try {
+            switch(tree) {
                 case 'object':
-                    if(angular.isDefined(resultTree[workIndex][2][0][2][0][0])){
+                    if (angular.isDefined(resultTree[workIndex][2][0][2][0][0])) {
                         return resultTree[workIndex][2][0][2][0][0].dbi + '.100.jpg';
                     }
                 case 'copy':
                     return resultTree[workIndex][2][0][0].image + '.100.jpg';
                 case 'work':
                     return resultTree[workIndex][0].image;
-        }
+            }
+        } catch (e) {}
     };
 
     s.getPreviewLabel = function (tree, resultTree) {
-        if (s.selectedWork == -1){
-            return;
-        }
-        switch(tree){
-            case 'object':
-                return resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].full_object_id;
-            case 'copy':
-                return 'Copy '+resultTree[s.selectedWork][2][s.selectedCopy][0].archive_copy_id;
-            case 'work':
-                return
-        }
+        try {
+            switch (tree) {
+                case 'object':
+                    return resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].full_object_id;
+                case 'copy':
+                    return 'Copy ' + resultTree[s.selectedWork][2][s.selectedCopy][0].archive_copy_id;
+            }
+        } catch (e) {}
     };
     
     s.showCopies = function(type, results, workIndex){
@@ -515,13 +507,11 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
     };
 
     s.getPreviewTitle = function (tree, resultTree){
-         if (s.selectedWork == -1){
-            return;
-        }
-        switch(tree){
-            case 'object':
+        try {
+            if (tree == 'object') {
                 return resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].title
-        }
+            }
+        } catch (e) {}
     };
 
     s.nextResult = function(type, resultTree){

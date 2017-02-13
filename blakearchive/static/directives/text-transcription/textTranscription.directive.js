@@ -1,52 +1,55 @@
 angular.module("blake").controller("TextTranscriptionController", function($routeParams, $modal){
-    var vm = this;
+    let vm = this;
 
     vm.colorKeyOpen = function(size){
-        var colorKeyModalInstance = $modal.open({
+        $modal.open({
             templateUrl: '/static/controllers/modal/colorKeyModal.html',
             controller: 'ModalController',
             size: size
         });
-    }
+    };
+
+    let teiClasses = [
+        'tei-sic',
+        'tei-rep-overwrite',
+        'tei-rep',
+        'tei-del-overwrite',
+        'tei-del-erasure',
+        'tei-del-obscured',
+        'tei-del-overstrike',
+        'tei-del',
+        'tei-instr-pencil',
+        'tei-unclear-hi',
+        'tei-subst',
+        'tei-addspan-substspan',
+        'tei-add-substspan',
+        'tei-add',
+        'tei-gap-cancellation',
+        'tei-gap',
+        'tei-hspace',
+        'tei-preceding-delspan-substspan',
+        'tei-preceding-delspan',
+        'tei-preceding-addspan-substspan',
+        'tei-preceding-addspan'
+    ];
 
     vm.hasColorKeyMarkup = function(teiMarkup){
-        var teiClasses = [
-            'tei-sic',
-            'tei-rep-overwrite',
-            'tei-rep',
-            'tei-del-overwrite',
-            'tei-del-erasure',
-            'tei-del-obscured',
-            'tei-del-overstrike',
-            'tei-del',
-            'tei-instr-pencil',
-            'tei-unclear-hi',
-            'tei-subst',
-            'tei-addspan-substspan',
-            'tei-add-substspan',
-            'tei-add',
-            'tei-gap-cancellation',
-            'tei-gap',
-            'tei-hspace',
-            'tei-preceding-delspan-substspan',
-            'tei-preceding-delspan',
-            'tei-preceding-addspan-substspan',
-            'tei-preceding-addspan'
-        ];
-
-        var regex = new RegExp('('+teiClasses.join('|')+')','g');
+        let regex = new RegExp('('+teiClasses.join('|')+')','g');
 
         if(teiMarkup){
             if(teiMarkup.match(regex)){
                 return true;
             }
         }
-
         return false;
-    }
+    };
 
     vm.getNumber = function(num){
         return new Array(parseInt(num));
+    };
+
+    vm.hasMarkupText = function () {
+        return vm.object && vm.object.markup_text;
     }
 });
 
@@ -60,7 +63,7 @@ angular.module('blake').directive('textTranscription', function(){
             object: '=object',
             highlight: '@highlight'
         },
-        controllerAs: 'textCtrl',
+        controllerAs: 'tt',
         bindToController: true
     };
 });

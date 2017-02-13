@@ -6,10 +6,11 @@ angular.module("blake").controller("CopiesInWorkPreviewController", function (Se
 angular.module("blake").directive("copiesInWorkPreview", function () {
     return {
         template: require("html-loader!./template.html"),
-        controller: "CopiesInWorkController",
+        controller: "CopiesInWorkPreviewController",
+        bindToController: true,
         scope: {
-            results: '=results',
-            tree: '@tree'
+            results: '<results',
+            tree: '<tree'
         },
         controllerAs: "cw",
         replace: true

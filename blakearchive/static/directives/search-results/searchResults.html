@@ -11,8 +11,8 @@
 
 <div class="row search-result-row" ng-show="esr.results.length > 0">
     <div class="col-xs-12 full-width">
-        <slide-box id="{{esr.type}}-slide-box" type="{{ esr.type }}">
-            <div ng-repeat="(k,work) in esr.results" class="search-result-item" ng-class="{selected:k == esr.s.selectedWork}">
+        <slide-box id="{{esr.type}}-slide-box" type="esr.type">
+            <div ng-repeat="(k,work) in esr.results" class="search-result-item" ng-class="{selected:k == esr.s.selectedWork && esr.type == esr.s.type}">
                 <div scroll-to-element="#{{esr.type}}" offset="125">
                     <!--to slide, put slideBox.scrollToResult($index); into action for handprint-blocks-->
                     <handprint-block

@@ -5,8 +5,8 @@
             <objects-in-virtual-work-preview tree="pb.tree" results="pb.results" ng-if="pb.showObjectsInVirtualWorkPreview()"/>
             <objects-in-copy-preview tree="pb.tree" results="pb.results" ng-if="pb.showObjectsInCopyPreview()"/>
             <copies-in-work-preview tree="pb.tree" results="pb.results" ng-if="pb.showCopiesInWorkPreview()" to-top-on-broadcast="searchCtrl::changeResult"/>
-            <preview-selection tree="pb.results" results="pb.results" ng-if="pb.tree != 'work'"/>
-            <object-result-highlight ng-if="pb.tree != 'work'"/>
+            <preview-selection tree="pb.tree" results="pb.results" ng-if="pb.tree != 'work'"/>
+            <object-result-highlight type="pb.type" tree="pb.tree" results="pb.results" ng-if="pb.tree != 'work'"/>
         </div><!-- end flex results -->
         <previous-next results="pb.results" type="pb.type"/>
     </div>
