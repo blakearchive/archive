@@ -1,25 +1,14 @@
-(function() {
+angular.module("blake").controller("WorkCopiesController", function (BlakeDataService) {
+    var vm = this;
+    vm.bds = BlakeDataService;
+});
 
-    /** @ngInject */
-    var controller = function (BlakeDataService) {
-
-        var vm = this;
-        vm.bds = BlakeDataService;
-
-    }
-
-    var workCopies = function () {
-
-        return {
-            restrict: 'E',
-            templateUrl: '/static/directives/work-copies/workCopies.html',
-            controller: controller,
-            controllerAs: 'workCopies',
-            bindToController: true
-        };
-    }
-
-    angular.module('blake').directive("workCopies", workCopies);
-
-
-}());
+angular.module('blake').directive("workCopies", function () {
+    return {
+        restrict: 'E',
+        template: require('html-loader!./workCopies.html'),
+        controller: "WorkCopiesController",
+        controllerAs: 'workCopies',
+        bindToController: true
+    };
+});

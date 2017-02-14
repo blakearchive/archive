@@ -115,7 +115,8 @@ class BlakeDocumentImporter(BlakeImporter):
 
     def process_relationship(self, entry):
         obj = self.object_importer.get(entry.desc_id.lower())
-
+        if not obj:
+            return
         obj.objects_from_same_matrix.extend(self.objects_for_id_string(entry.same_matrix_ids))
         obj.objects_from_same_production_sequence.extend(self.objects_for_id_string(entry.same_production_sequence_ids))
         obj.objects_with_same_motif.extend(self.objects_for_id_string(entry.similar_design_ids))

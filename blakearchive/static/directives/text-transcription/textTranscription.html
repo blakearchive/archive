@@ -1,11 +1,4 @@
-<!--<ol>
-    <li class="line-type-{{line.type}}" ng-class="{'text-center': line.justify == 'center'}" ng-repeat="line in textCtrl.object.lines track by $index">
-        <span ng-repeat="i in textCtrl.getNumber(line.indent) track by $index">&nbsp;</span>{{ line.text }}
-    </li>
-</ol>-->
-<div ng-if="textCtrl.object.markup_text != null" class="tei-wrapper" ng-bind-html="textCtrl.object.markup_text | highlight:textCtrl.highlight:textCtrl.object.alt_spellings"></div>
-<div ng-if="textCtrl.object.markup_text == null" class="tei-wrapper">[There is no transcription for this object.]</div>
-<!--<p><a href="#">[ n ]</a></p>-->
-
-<p ng-if="textCtrl.hasColorKeyMarkup(textCtrl.object.markup_text)"><a href="#" ng-click="textCtrl.colorKeyOpen('lg')">Color key for transcriptions</a></p>
+<div ng-if="tt.hasMarkupText()" class="tei-wrapper" ng-bind-html="tt.object.markup_text | highlight:tt.highlight:tt.object.alt_spellings"></div>
+<div ng-if="!tt.hasMarkupText()" class="tei-wrapper">[There is no transcription for this object.]</div>
+<p ng-if="tt.hasColorKeyMarkup(tt.object.markup_text)"><a href="#" ng-click="tt.colorKeyOpen('lg')">Color key for transcriptions</a></p>
 

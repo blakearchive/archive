@@ -1,0 +1,34 @@
+<nav class="navbar navbar-default navbar-fixed-top" ng-class="{'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}">
+  <div class="site-header-container">
+    <div class="container-fluid site-header">
+      <a class="navbar-brand" ng-href="{{showmePage ? '':'/'}}"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
+      <span ng-if="bm.rs.persistentmode == 'gallery' && !bm.rs.showmePage" class="gr-display">GALLERY MODE</span>
+      <span ng-if="bm.rs.persistentmode == 'reading' && !bm.rs.showmePage" class="gr-display">READING MODE</span>
+      <span ng-if="bm.rs.showmePage && bm.rs.showmeType == 'text'" class="gr-display">DIPLOMATIC TRANSCRIPTION</span>
+      <span ng-if="bm.rs.showmePage && bm.rs.showmeType == 'desc'" class="gr-display">ILLUSTRATION DESCRIPTION</span>
+      <span ng-if="bm.rs.showmePage && bm.rs.showmeType == 'note'" class="gr-display">EDITORS' NOTES</span>
+      <span ng-if="bm.rs.showmePage && bm.rs.showmeType == 'enlargement'" class="gr-display">ENLARGEMENT</span>
+      <span ng-if="bm.rs.showmePage && bm.rs.showmeType == 'truesize'" class="gr-display">TRUE SIZE</span>
+      <button ng-click="bm.rs.worksNavState = !bm.rs.worksNavState" type="button" class="collapse-archive" ng-class="{'hidden':bm.rs.showmePage, 'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!--<div title="Lightbox" class="lightbox hidden-xs" ng-class="{'hidden':showmePage}"><a class="lb-amount" href="#">3</a></div>-->
+      <div id="custom-tweet-button" class="custom-tweet-button"><a twitter-share href="" onclick="window.open('https://twitter.com/share?text=@BlakeArchive','name','width=600,height=400')"></a></div>
+
+      <!-- Use any element to open/show the overlay navigation menu -->
+      <work-title ng-if="bm.rs.showWorkTitle"></work-title>
+    </div>
+  </div>
+  <!-- /.container -->
+  <nav class="navbar navbar-default" role="navigation" ng-class="{'hidden':bm.rs.showmePage}">
+    <div class="container-fluid">
+      <view-sub-menu ng-class="{'hidden':bm.rs.showmePage}"></view-sub-menu>
+      <search-box/>
+      <nav-menu></nav-menu>
+    </div>
+  </nav>
+  <dpi ng-if="bm.rs.help != 'home' && bm.rs.help != 'work' && bm.rs.help != 'static' && bm.rs.help != 'search'"></dpi>
+</nav>
