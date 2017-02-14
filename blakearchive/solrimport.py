@@ -17,45 +17,44 @@ def main():
         blake_object_solr = pysolr.Solr('http://london.libint.unc.edu:8983/solr/blake_object')
         blake_copy_solr = pysolr.Solr('http://london.libint.unc.edu:8983/solr/blake_copy')
         blake_work_solr = pysolr.Solr('http://london.libint.unc.edu:8983/solr/blake_work')
-    elif hasattr(config, "solr") and config.solr == "local":
-        blake_object_solr = pysolr.Solr('http://localhost:8983/solr/blake_object')
-        blake_copy_solr = pysolr.Solr('http://localhost:8983/solr/blake_copy')
-        blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake_work')
     else:
-        blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu/solr/blake-object')
-        blake_copy_solr = pysolr.Solr('http://ctools-dev.its.unc.edu/solr/blake-copy')
-        blake_work_solr = pysolr.Solr('http://ctools-dev.its.unc.edu/solr/blake-work')
+        blake_object_solr = pysolr.Solr('http://localhost:8983/solr/blake-object')
+        blake_copy_solr = pysolr.Solr('http://localhost:8983/solr/blake-copy')
+        blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake-work')
 
     engine = models.db.create_engine(config.db_connection_string)
     session = sessionmaker(bind=engine)()
     objects = session.query(models.BlakeObject).all()
     blake_object_solr.delete(q='*:*')
     for blake_object in objects:
-        if blake_object.supplemental is None:
-            obj = {
-                "id": blake_object.object_id,
-                "title": blake_object.title,
-                "bentley_id": blake_object.bentley_id,
-                "dbi": blake_object.dbi,
-                "desc_id": blake_object.desc_id,
-                "copy_id": blake_object.copy_bad_id,
-                "characteristics": blake_object.characteristics,
-                "components": json.dumps(blake_object.components),
-                "illustration_description": json.dumps(blake_object.illustration_description),
-                "text": json.dumps(blake_object.text),
-                "copy_title": blake_object.copy.title,
-                "copy_institution": blake_object.copy.institution,
-                # FIXME: properly convert unicode rather than stripping characters
-                "notes": json.dumps([unicodedata.normalize('NFKD', note["note"]).encode('ascii', 'ignore') for note in blake_object.notes])
-            }
-            print obj["id"]
-            if blake_object.copy.work:
-                obj["work_title"] = blake_object.copy.work.title
-                obj["work_id"] = blake_object.copy.work.bad_id
-                obj["composition_date"] = blake_object.copy.composition_date
-                obj["print_date"] = blake_object.copy.print_date
-                obj["medium"] = blake_object.copy.work.medium
-            blake_object_solr.add([obj])
+        try:
+            if blake_object.supplemental is None:
+                obj = {
+                    "id": blake_object.object_id,
+                    "title": blake_object.title,
+                    "bentley_id": blake_object.bentley_id,
+                    "dbi": blake_object.dbi,
+                    "desc_id": blake_object.desc_id,
+                    "copy_id": blake_object.copy_bad_id,
+                    "characteristics": blake_object.characteristics,
+                    "components": json.dumps(blake_object.components),
+                    "illustration_description": json.dumps(blake_object.illustration_description),
+                    "text": json.dumps(blake_object.text),
+                    "copy_title": blake_object.copy.title,
+                    "copy_institution": blake_object.copy.institution,
+                    # FIXME: properly convert unicode rather than stripping characters
+                    "notes": json.dumps([unicodedata.normalize('NFKD', note["note"]).encode('ascii', 'ignore') for note in blake_object.notes])
+                }
+                print obj["id"]
+                if blake_object.copy.work:
+                    obj["work_title"] = blake_object.copy.work.title
+                    obj["work_id"] = blake_object.copy.work.bad_id
+                    obj["composition_date"] = blake_object.copy.composition_date
+                    obj["print_date"] = blake_object.copy.print_date
+                    obj["medium"] = blake_object.copy.work.medium
+                blake_object_solr.add([obj])
+        except pysolr.SolrError as err:
+            print err
     blake_object_solr.optimize()
 
     copies = session.query(models.BlakeCopy).all()

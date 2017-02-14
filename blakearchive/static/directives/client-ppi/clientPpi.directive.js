@@ -1,11 +1,4 @@
-/**
- * Created by lukeluke on 1/21/16.
- *
- * Based on http://dpi.lv
- */
-(function () {
-
-    var controller = function ($http,$rootScope,$cookies) {
+angular.module("blake").controller('clientPpiController', function ($http,$rootScope,$cookies) {
 
         var vm = this;
 
@@ -74,20 +67,16 @@
 
 
 
-    }
-
-    controller.$inject = ['$http','$rootScope','$cookies'];
-
-    var clientPpi = function() {
+    })
+.directive('clientPpi', function() {
         return {
             restrict: 'EA',
-            templateUrl: "/static/directives/client-ppi/clientPpi.html",
-            controller: controller,
+            template: require('html-loader!./clientPpi.html'),
+            controller: "ClientPpiController",
             controllerAs: 'ppi',
             bindToController: true
         }
-    }
+    });
 
-    angular.module('blake').directive('clientPpi', clientPpi);
 
-}());
+

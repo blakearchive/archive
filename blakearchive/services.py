@@ -1,9 +1,7 @@
 import re
 import pysolr
 from sqlalchemy.sql import func
-import config
 import models
-
 
 if hasattr(config, "solr") and config.solr == "local":
     blake_object_solr = pysolr.Solr('http://localhost:8983/solr/blake_object')
@@ -13,7 +11,6 @@ else:
     blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-object')
     blake_copy_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-copy')
     blake_work_solr = pysolr.Solr('http://ctools-dev.its.unc.edu:8983/solr/blake-work')
-
 
 class BlakeDataService(object):
     """
