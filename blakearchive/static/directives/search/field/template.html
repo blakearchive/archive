@@ -1,0 +1,31 @@
+<!-- search field -->
+<li dropdown class="dropdown" ng-click="$event.stopPropagation()">
+    <a dropdown-toggle role="button" aria-expanded="false">Type <span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+        <li>
+            <input type="checkbox" ng-model="searchConfig.searchAllFields" ng-change="searchCtrl.allFields()"> Any
+        </li>
+        <li>
+            <input type="checkbox" ng-model="searchConfig.searchTitle" ng-change="searchCtrl.changeField()"> Title
+        </li>
+        <li>
+            <input type="checkbox" ng-model="searchConfig.searchText" ng-change="searchCtrl.changeField()"> Transcription
+        </li>
+        <li>
+            <input type="checkbox" ng-model="searchConfig.searchImageKeywords" ng-change="searchCtrl.changeField()"> Image Tag
+        </li>
+        <li>
+            <input type="checkbox" ng-model="searchConfig.searchNotes" ng-change="searchCtrl.changeField()"> Editors' Note
+        </li>
+        <li>
+            <input type="checkbox" ng-model="searchConfig.searchImageDescriptions" ng-change="searchCtrl.changeField()"> Illustration
+            Description
+        </li>
+        <li>
+            <input type="checkbox" ng-model="searchConfig.searchCopyInformation" ng-change="searchCtrl.changeField()"> Copy Information
+        </li>
+        <li>
+            <input type="checkbox" ng-model="searchConfig.searchWorkInformation" ng-change="searchCtrl.changeField()"> Work Information
+        </li>
+    </ul>
+</li>
