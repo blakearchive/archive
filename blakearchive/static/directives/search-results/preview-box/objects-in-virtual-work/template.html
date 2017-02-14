@@ -8,7 +8,7 @@
                 <div class="handprint-block-small"
                      ng-repeat="object in copy[2] track by $index"
                      ng-class="{selected: ovw.s.selectedObject == $index && ovw.s.selectedCopy == $parent.$index}">
-                    <a ng-click="ovw.showHighlight($index,$parent.$index)">
+                    <a ng-click="ovw.s.showHighlight(ovw.tree, $index,$parent.$index)">
                         <span class="object-img" style="background-image: url(/images/{{ object[0].dbi }}.100.jpg);"></span>
                         <span ng-if="ovw.results[ovw.s.selectedWork][0].bad_id == 'letters'" class="description">{{object[0].object_group}}</span>
                         <span ng-if="object[0].title && ovw.results[ovw.s.selectedWork][0].bad_id != 'letters'" class="description">{{object[0].title}}</span>

@@ -392,7 +392,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         // Sort the copies
     };
 
-    s.showHighlight = function(tree, objectIndex,virtualCopyIndex){
+    s.showHighlight = function(tree, objectIndex, virtualCopyIndex){
         s.selectedObject = objectIndex;
         if(tree == 'copy'){
             s.selectedCopy = objectIndex;

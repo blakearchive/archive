@@ -1,10 +1,10 @@
 angular.module("blake").directive('autoHeight', function (WindowSize) {
-    var link = function (scope, element, attrs) {
+    let link = function (scope, element, attrs) {
         scope.setStyles = function (windowSize) {
             if(windowSize.width < scope.breakpoint){
                 element.height('auto');
             } else {
-                var newHeight = (windowSize.height - scope.adjust);
+                let newHeight = (windowSize.height - scope.adjust);
                 if(scope.divide){
                     newHeight = newHeight / scope.divide;
                 }
