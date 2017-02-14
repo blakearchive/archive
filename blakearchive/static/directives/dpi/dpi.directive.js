@@ -1,36 +1,22 @@
-(function() {
+angular.module('blake').controller("DpiController", function ($rootScope) {
+    var vm = this;
 
-    /** @ngInject */
-    var controller = function ($rootScope,$routeParams,$modal,$route) {
-
-        var vm = this;
-
-        if(!angular.isDefined($rootScope.dpivalue)){
-            $rootScope.dpivalue = '100';
-        }
-
-        vm.reloadWith100or300 = function(dpiValue) {
-            //console.log($rootScope.threehundredmode);
-            $rootScope.dpivalue = dpiValue;
-            
-        }
-
+    if(!angular.isDefined($rootScope.dpivalue)){
+        $rootScope.dpivalue = '100';
     }
 
-
-    var dpi = function () {
-
-        return {
-            restrict: 'E',
-            scope: true,
-            templateUrl: '/static/directives/dpi/dpi.html',
-            controller: controller,
-            controllerAs: 'dpi',
-            bindToController: true
-        };
+    vm.reloadWith100or300 = function(dpiValue) {
+        $rootScope.dpivalue = dpiValue;
     }
+});
 
-    angular.module('blake').directive("dpi", dpi);
-
-
-}());
+angular.module("blake").directive("dpi", function () {
+    return {
+        restrict: 'E',
+        scope: true,
+        template: require('html-loader!./dpi.html'),
+        controller: "DpiController",
+        controllerAs: 'dpi',
+        bindToController: true
+    };
+});

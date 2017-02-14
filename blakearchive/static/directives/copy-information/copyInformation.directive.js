@@ -1,74 +1,62 @@
-/**
- * Created by nathan on 2/13/15.
- */
+angular.module('blake').controller("CopyInformationController", function () {
+    let vm = this;
 
-(function() {
-
-    /** @ngInject */
-    var controller = function () {
-
-        var vm = this;
-
-        vm.getHeader = function(){
-            if(vm.copy){
-                if(vm.copy.virtual){
-                    return vm.object.header;
-                } else {
-                    return vm.copy.header;
-                }
-            }
-        }
-
-        vm.getSource = function(){
-            if(vm.copy){
-                if (vm.copy.virtual) {
-                    return vm.object.source;
-                } else {
-                    return vm.copy.source;
-                }
-            }
-        }
-
-        vm.getOrigination = function(){
-            var origination = angular.isDefined(vm.getSource()) ? vm.getSource().objdescid.origination : '';
-            if(angular.isArray(origination)){
-                return origination;
+    vm.getHeader = function(){
+        if(vm.copy){
+            if(vm.copy.virtual){
+                return vm.object.header;
             } else {
-                return [origination];
+                return vm.copy.header;
             }
         }
+    };
 
-        vm.getOriginationRole = function (role) {
-            if (role) {
-                if (role.join) {
-                    var roleText = [];
-                    role.forEach(function (role) {
-                        roleText.push(role['#text']);
-                    });
-                    return roleText.join(' ');
-                } else {
-                    return role['#text'];
-                }
+    vm.getSource = function(){
+        if(vm.copy){
+            if (vm.copy.virtual) {
+                return vm.object.source;
+            } else {
+                return vm.copy.source;
+            }
+        }
+    };
+
+    vm.getOrigination = function(){
+        let origination = typeof vm.getSource() !== "undefined" ? vm.getSource().objdescid.origination : '';
+        if(Array.isArray(origination)){
+            return origination;
+        } else {
+            return [origination];
+        }
+    };
+
+    vm.getOriginationRole = function (role) {
+        if (role) {
+            if (role.join) {
+                let roleText = [];
+                role.forEach(function (role) {
+                    roleText.push(role['#text']);
+                });
+                return roleText.join(' ');
+            } else {
+                return role['#text'];
             }
         }
     }
+});
 
-
-    var copyInformation = function(){
-        return {
-            restrict: 'E',
-            templateUrl: "/static/directives/copy-information/copyInformation.html",
-            controller: controller,
-            controllerAs: 'info',
-            scope:{
-                highlight: '@highlight',
-                copy: '=copy',
-                object: '=object'
-            },
-            bindToController: true
-        }
+angular.module('blake').directive("copyInformation", function(){
+    return {
+        restrict: 'E',
+        template: require("html-loader!./copyInformation.html"),
+        controller: "CopyInformationController",
+        controllerAs: 'info',
+        scope:{
+            highlight: '@highlight',
+            copy: '=copy',
+            object: '=object'
+        },
+        bindToController: true
     }
+});
 
-    angular.module('blake').directive("copyInformation", copyInformation);
-
-}());
