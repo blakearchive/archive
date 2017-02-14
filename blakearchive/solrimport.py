@@ -18,9 +18,9 @@ def main():
         blake_copy_solr = pysolr.Solr('http://london.libint.unc.edu:8983/solr/blake_copy')
         blake_work_solr = pysolr.Solr('http://london.libint.unc.edu:8983/solr/blake_work')
     else:
-        blake_object_solr = pysolr.Solr('http://localhost:8983/solr/blake-object')
-        blake_copy_solr = pysolr.Solr('http://localhost:8983/solr/blake-copy')
-        blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake-work')
+        blake_object_solr = pysolr.Solr('http://localhost:8983/solr/blake_object')
+        blake_copy_solr = pysolr.Solr('http://localhost:8983/solr/blake_copy')
+        blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake_work')
 
     engine = models.db.create_engine(config.db_connection_string)
     session = sessionmaker(bind=engine)()
