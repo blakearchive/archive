@@ -22,12 +22,12 @@ module.exports = {
         new ngAnnotatePlugin({
             add: true,
             // other ng-annotate options here
-        })/*,
+        }),
         new ClosureCompilerPlugin({
           compiler: {
             compilation_level: 'SIMPLE'
           },
           concurrency: 3,
-        })*/
+        })
     ]
 };
