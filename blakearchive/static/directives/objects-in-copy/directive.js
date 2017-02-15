@@ -2,6 +2,10 @@ angular.module("blake").controller("ObjectsInCopyTabController", function (Blake
     let vm = this;
     vm.bds = BlakeDataService;
 
+    vm.changeObject = function(object){
+        vm.bds.changeObject(object);
+    };
+
     vm.getCopyOrGroup = function(){
         if(angular.isDefined(vm.bds.copy)){
             if(vm.bds.work.medium == 'exhibit')
