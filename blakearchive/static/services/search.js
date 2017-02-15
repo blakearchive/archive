@@ -187,6 +187,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         "yourselves"];
 
     s.search = function () {
+        delete s.type;
         let objectSearch = BlakeDataService.queryObjects(s.searchConfig),
             copySearch = BlakeDataService.queryCopies(s.searchConfig),
             workSearch = BlakeDataService.queryWorks(s.searchConfig);
