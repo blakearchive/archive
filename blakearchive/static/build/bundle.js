@@ -3236,6 +3236,7 @@ angular.module("blake").directive('autoHeight', ["WindowSize", function (WindowS
                 if (divide) {
                     newHeight = newHeight / divide;
                 }
+                console.log("setting height: " + newHeight);
                 element.height(newHeight);
             }
         };
@@ -4627,8 +4628,8 @@ angular.module("blake").directive('resize', ["$window", "$timeout", "WindowSize"
         var w = angular.element($window);
         scope.getWindowDimensions = function () {
             return {
-                'h': w.innerHeight,
-                'w': w.innerWidth
+                'h': w.innerHeight(),
+                'w': w.innerWidth()
             };
         };
 

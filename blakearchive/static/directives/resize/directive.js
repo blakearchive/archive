@@ -3,8 +3,8 @@ angular.module("blake").directive('resize', function ($window, $timeout, WindowS
         var w = angular.element($window);
         scope.getWindowDimensions = function () {
             return {
-                'h': w.innerHeight,
-                'w': w.innerWidth
+                'h': w.innerHeight(),
+                'w': w.innerWidth()
             };
         };
 
