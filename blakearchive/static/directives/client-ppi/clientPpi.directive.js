@@ -1,4 +1,4 @@
-angular.module("blake").controller('clientPpiController', function ($http,$rootScope,$cookies) {
+angular.module("blake").controller('ClientPPIController', function ($http,$rootScope,$cookies) {
 
         var vm = this;
 
@@ -14,7 +14,7 @@ angular.module("blake").controller('clientPpiController', function ($http,$rootS
                 {'x':800,'y':600}
             ],
             'diagonals':[7,11.6,13.3,14,15.6,17.3,21,27]
-        }
+        };
 
         vm.screens = {};
 
@@ -26,7 +26,7 @@ angular.module("blake").controller('clientPpiController', function ($http,$rootS
             var dpi = Math.sqrt(x*x + y*y) / d;
             return dpi>0 ? Math.round(dpi) : 0;
 
-        }
+        };
 
         if(angular.isDefined($cookies.getObject('clientPpi'))){
             vm.config = $cookies.getObject('clientPpi');
@@ -44,23 +44,23 @@ angular.module("blake").controller('clientPpiController', function ($http,$rootS
             'background-color':'red',
             'height': '5px',
             'width': vm.calculatePpi()+'px'
-        }
+        };
 
         vm.updateConfig = function(x,y,d) {
             vm.config.x = x > 0 ? x : vm.config.x;
             vm.config.y = y > 0 ? y : vm.config.y;
             vm.config.d = d > 0 ? d : vm.config.d;
             vm.testLine.width = vm.calculatePpi() + 'px';
-        }
+        };
 
         vm.savePpi = function(){
             vm.config.ppi = vm.calculatePpi();
             $cookies.putObject('clientPpi',vm.config);
             $rootScope.$broadcast('clientPpi::savedPpi');
-        }
+        };
 
-        $http.get('/static/directives/client-ppi/screens.json').success(function(data){
-           vm.screens = data;
+        $http.get('/static/directives/client-ppi/screens.json').then(function(response){
+           vm.screens = response.data;
         });
 
         vm.screenQuery = '';
@@ -72,7 +72,7 @@ angular.module("blake").controller('clientPpiController', function ($http,$rootS
         return {
             restrict: 'EA',
             template: require('html-loader!./clientPpi.html'),
-            controller: "ClientPpiController",
+            controller: "ClientPPIController",
             controllerAs: 'ppi',
             bindToController: true
         }
