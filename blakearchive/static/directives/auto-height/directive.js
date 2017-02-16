@@ -1,16 +1,20 @@
 angular.module("blake").directive('autoHeight', function (WindowSize) {
     let link = function (scope, element, attrs) {
+        let adjust = scope.$eval(attrs.adjust),
+            breakpoint = scope.$eval(attrs.breakpoint),
+            divide = scope.$eval(attrs.divide);
+
         scope.setStyles = function (windowSize) {
-            if(windowSize.width < scope.breakpoint){
+            if(windowSize.width < breakpoint){
                 element.height('auto');
             } else {
-                let newHeight = (windowSize.height - scope.adjust);
-                if(scope.divide){
-                    newHeight = newHeight / scope.divide;
+                let newHeight = (windowSize.height - adjust);
+                if(divide){
+                    newHeight = newHeight / divide;
                 }
                 element.height(newHeight);
             }
-        }
+        };
 
         scope.setStyles(WindowSize);
 
@@ -21,11 +25,6 @@ angular.module("blake").directive('autoHeight', function (WindowSize) {
     };
     return {
         restrict: 'A',
-        link: link,
-        scope: {
-            'adjust': '@adjust',
-            'breakpoint': '@breakpoint',
-            'divide': '@divide'
-        }
+        link: link
     };
 });
