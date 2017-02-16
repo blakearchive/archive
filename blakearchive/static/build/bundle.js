@@ -3224,13 +3224,17 @@ angular.module("blake").directive('affix', ["$window", function ($window) {
 
 angular.module("blake").directive('autoHeight', ["WindowSize", function (WindowSize) {
     let link = function (scope, element, attrs) {
+        let adjust = scope.$eval(attrs.adjust),
+            breakpoint = scope.$eval(attrs.breakpoint),
+            divide = scope.$eval(attrs.divide);
+
         scope.setStyles = function (windowSize) {
-            if (windowSize.width < scope.breakpoint) {
+            if (windowSize.width < breakpoint) {
                 element.height('auto');
             } else {
-                let newHeight = windowSize.height - scope.adjust;
-                if (scope.divide) {
-                    newHeight = newHeight / scope.divide;
+                let newHeight = windowSize.height - adjust;
+                if (divide) {
+                    newHeight = newHeight / divide;
                 }
                 element.height(newHeight);
             }
@@ -3244,12 +3248,7 @@ angular.module("blake").directive('autoHeight', ["WindowSize", function (WindowS
     };
     return {
         restrict: 'A',
-        link: link,
-        scope: {
-            'adjust': '@adjust',
-            'breakpoint': '@breakpoint',
-            'divide': '@divide'
-        }
+        link: link
     };
 }]);
 
@@ -32964,7 +32963,7 @@ module.exports = "<!-- previous/next controls -->\n<div class=\"object-controls\
 /* 126 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"col-xs-12 full-width copy-container-wrapper\">\n    <div class=\"copy-container\" ng-class=\"{hidden: pb.hidden()}\" auto-height adjust=\"175\" breakpoint=\"992\" id=\"pb.type\">\n        <preview-header tree=\"pb.tree\" results=\"pb.results\"/>\n        <div class=\"flex-992\" auto-height adjust=\"275\" breakpoint=\"992\">\n            <objects-in-virtual-work-preview tree=\"pb.tree\" results=\"pb.results\" ng-if=\"pb.showObjectsInVirtualWorkPreview()\"/>\n            <objects-in-copy-preview tree=\"pb.tree\" results=\"pb.results\" ng-if=\"pb.showObjectsInCopyPreview()\"/>\n            <copies-in-work-preview tree=\"pb.tree\" results=\"pb.results\" ng-if=\"pb.showCopiesInWorkPreview()\" to-top-on-broadcast=\"searchCtrl::changeResult\"/>\n            <preview-selection tree=\"pb.tree\" results=\"pb.results\" ng-if=\"pb.tree != 'work'\"/>\n            <object-result-highlight type=\"pb.type\" tree=\"pb.tree\" results=\"pb.results\" ng-if=\"pb.tree != 'work'\"/>\n        </div><!-- end flex results -->\n        <previous-next results=\"pb.results\" type=\"pb.type\"/>\n    </div>\n</div>";
+module.exports = "<div class=\"col-xs-12 full-width copy-container-wrapper\" ng-class=\"{hidden: pb.hidden()}\" auto-height adjust=\"175\" breakpoint=\"992\">\n    <div class=\"copy-container\" id=\"pb.type\">\n        <preview-header tree=\"pb.tree\" results=\"pb.results\"/>\n        <div class=\"flex-992\" auto-height adjust=\"275\" breakpoint=\"992\">\n            <objects-in-virtual-work-preview tree=\"pb.tree\" results=\"pb.results\" ng-if=\"pb.showObjectsInVirtualWorkPreview()\"/>\n            <objects-in-copy-preview tree=\"pb.tree\" results=\"pb.results\" ng-if=\"pb.showObjectsInCopyPreview()\"/>\n            <copies-in-work-preview tree=\"pb.tree\" results=\"pb.results\" ng-if=\"pb.showCopiesInWorkPreview()\" to-top-on-broadcast=\"searchCtrl::changeResult\"/>\n            <preview-selection tree=\"pb.tree\" results=\"pb.results\" ng-if=\"pb.tree != 'work'\"/>\n            <object-result-highlight type=\"pb.type\" tree=\"pb.tree\" results=\"pb.results\" ng-if=\"pb.tree != 'work'\"/>\n        </div><!-- end flex results -->\n        <previous-next results=\"pb.results\" type=\"pb.type\"/>\n    </div>\n</div>";
 
 /***/ }),
 /* 127 */
