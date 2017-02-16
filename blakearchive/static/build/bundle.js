@@ -3315,7 +3315,7 @@ angular.module("blake").directive('blakeMenu', function () {
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-angular.module("blake").controller('clientPpiController', ["$http", "$rootScope", "$cookies", function ($http, $rootScope, $cookies) {
+angular.module("blake").controller('ClientPPIController', ["$http", "$rootScope", "$cookies", function ($http, $rootScope, $cookies) {
 
     var vm = this;
 
@@ -3365,8 +3365,8 @@ angular.module("blake").controller('clientPpiController', ["$http", "$rootScope"
         $rootScope.$broadcast('clientPpi::savedPpi');
     };
 
-    $http.get('/static/directives/client-ppi/screens.json').success(function (data) {
-        vm.screens = data;
+    $http.get('/static/directives/client-ppi/screens.json').then(function (response) {
+        vm.screens = response.data;
     });
 
     vm.screenQuery = '';
@@ -3374,7 +3374,7 @@ angular.module("blake").controller('clientPpiController', ["$http", "$rootScope"
     return {
         restrict: 'EA',
         template: __webpack_require__(101),
-        controller: "ClientPpiController",
+        controller: "ClientPPIController",
         controllerAs: 'ppi',
         bindToController: true
     };
