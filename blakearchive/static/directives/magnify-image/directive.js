@@ -69,7 +69,7 @@ angular.module("blake").directive('magnifyImage', function($interval, $window, $
 
         // Add the magnifying glass
         if (ui.magnifier.length) {
-            var div = document.createElement('div');
+            let div = document.createElement('div');
             div.setAttribute('class', 'glass');
             ui.glass = angular.element(div);
 
@@ -77,19 +77,19 @@ angular.module("blake").directive('magnifyImage', function($interval, $window, $
         }
 
 
-        var mouseMove = function(e) {
+        let mouseMove = function(e) {
 
             // Container offset relative to document
-            var magnify_offset = cur_img.offset();
+            let checkWidth, checkHeight, magnify_offset = cur_img.offset();
 
             // Mouse position relative to container
             // pageX/pageY - container's offsetLeft/offetTop
             if((imageManipulation.transform.rotate % 180) != 0){
-                var checkHeight = cur_img.width();
-                var checkWidth = cur_img.height();
+                checkHeight = cur_img.width();
+                checkWidth = cur_img.height();
             } else {
-                var checkHeight = cur_img.height();
-                var checkWidth = cur_img.width();
+                checkHeight = cur_img.height();
+                checkWidth = cur_img.width();
             }
             mouse.x = e.pageX - magnify_offset.left;
             mouse.y = e.pageY - magnify_offset.top;
@@ -106,14 +106,12 @@ angular.module("blake").directive('magnifyImage', function($interval, $window, $
             }
         };
 
-        magnify =
-
         ele.on('mousemove', function() {
             if($rootScope.zoom){
 
                 cur_img = angular.element(this);
 
-                var src = cur_img.attr('src');
+                let src = cur_img.attr('src');
                 src = src.replace('100','300');
 
                 if (src) {
@@ -131,7 +129,7 @@ angular.module("blake").directive('magnifyImage', function($interval, $window, $
                     // We cannot directly get the dimensions from .small because of the
                     // width specified to 200px in the html. To get the actual dimensions we have
                     // created this image object.
-                    var image_object = new Image();
+                    let image_object = new Image();
 
                     image_object.onload = function() {
                         // This code is wrapped in the .load function which is important.
