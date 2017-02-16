@@ -4787,15 +4787,15 @@ angular.module("blake").directive("previewBox", function () {
 /* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-angular.module("blake").controller("PreviewHeaderController", ["$scope", "SearchService", function ($scope, SearchService) {
+angular.module("blake").controller("PreviewHeaderController", ["SearchService", function (SearchService) {
     let vm = this;
     vm.s = SearchService;
 
     vm.showCopiesDropdown = function () {
         try {
-            let multipleCopies = $scope.results[$scope.s.selectedWork][2].length > 1,
-                isVirtual = $scope.results[$scope.s.selectedWork][0].virtual;
-            return multipleCopies && $scope.s.tree == 'object' && !isVirtual;
+            let multipleCopies = vm.results[vm.s.selectedWork][2].length > 1,
+                isVirtual = vm.results[vm.s.selectedWork][0].virtual;
+            return multipleCopies && vm.tree == 'object' && !isVirtual;
         } catch (e) {
             return false;
         }
@@ -4806,6 +4806,7 @@ angular.module("blake").directive("previewHeader", function () {
     return {
         template: __webpack_require__(120),
         controller: "PreviewHeaderController",
+        bindToController: true,
         scope: {
             results: '<results',
             tree: '<tree'
@@ -32928,7 +32929,7 @@ module.exports = "<!-- copies in work -->\n<div>\n    <div class=\"copies-in-wor
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = "<header class=\"page-header\">\n    <button class=\"close-copies\" ng-click=\"ph.s.selectedWork = -1\" scroll-to-element offset=\"254\"><span class=\"glyphicon glyphicon-remove\"></span></button>\n    <h1>\n        <a href=\"/work/{{results[ph.s.selectedWork][0].bad_id}}\">{{results[ph.s.selectedWork][0].title}} (Composed {{results[ph.s.selectedWork][0].composition_date_string}})</a>&nbsp;\n        <span dropdown class=\"dropdown\" ng-if=\"ph.showCopiesDropdown()\">\n            <button class=\"dropdown-toggle\" dropdown-toggle role=\"button\" aria-expanded=\"false\">\n                <span>Copy {{results[ph.s.selectedWork][2][ph.s.selectedCopy][0].archive_copy_id}}</span>&nbsp;\n                <span>(Printed {{results[ph.s.selectedWork][2][ph.s.selectedCopy][0].print_date_string}})</span>&nbsp;\n                <span class=\"caret\"></span>\n            </button>\n            <ul class=\"dropdown-menu\" role=\"menu\">\n                <li ng-repeat=\"copy in results[ph.s.selectedWork][2] track by $index\">\n                    <a ng-click=\"ph.s.showObjects($index)\">Copy {{copy[0].archive_copy_id}} (Printed {{copy[0].print_date_string}}) ({{copy[1]}} Objects)</a>\n                </li>\n            </ul>\n        </span>\n    </h1>\n</header>";
+module.exports = "<header class=\"page-header\">\n    <button class=\"close-copies\" ng-click=\"ph.s.selectedWork = -1\" scroll-to-element offset=\"254\"><span class=\"glyphicon glyphicon-remove\"></span></button>\n    <h1>\n        <a href=\"/work/{{ph.results[ph.s.selectedWork][0].bad_id}}\">{{ph.results[ph.s.selectedWork][0].title}} (Composed {{ph.results[ph.s.selectedWork][0].composition_date_string}})</a>&nbsp;\n        <span dropdown class=\"dropdown\" ng-if=\"ph.showCopiesDropdown()\">\n            <button class=\"dropdown-toggle\" dropdown-toggle role=\"button\" aria-expanded=\"false\">\n                <span>Copy {{ph.results[ph.s.selectedWork][2][ph.s.selectedCopy][0].archive_copy_id}}</span>&nbsp;\n                <span>(Printed {{ph.results[ph.s.selectedWork][2][ph.s.selectedCopy][0].print_date_string}})</span>&nbsp;\n                <span class=\"caret\"></span>\n            </button>\n            <ul class=\"dropdown-menu\" role=\"menu\">\n                <li ng-repeat=\"copy in ph.results[ph.s.selectedWork][2] track by $index\">\n                    <a ng-click=\"ph.s.showObjects($index)\">Copy {{copy[0].archive_copy_id}} (Printed {{copy[0].print_date_string}}) ({{copy[1]}} Objects)</a>\n                </li>\n            </ul>\n        </span>\n    </h1>\n</header>";
 
 /***/ }),
 /* 121 */
