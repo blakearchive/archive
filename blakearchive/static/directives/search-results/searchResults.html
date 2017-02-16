@@ -4,7 +4,7 @@
     </button>
         <ul class="dropdown-menu" role="menu" style="z-index: 10000;">
             <li ng-repeat="work in esr.results track by $index">
-                <a scroll-to-element="#{{esr.type}}" offset="125" ng-click="esr.s.showCopies(esr.type, $index);">{{work[0].title}} (Composed {{work[0].composition_date_string}})</a>
+                <a scroll-to-element="#{{esr.type}}" offset="125" ng-click="esr.s.showCopies(esr.type, esr.results, $index);">{{work[0].title}} (Composed {{work[0].composition_date_string}})</a>
             </li>
         </ul>
 </span>
