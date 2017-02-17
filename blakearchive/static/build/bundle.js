@@ -4657,9 +4657,10 @@ angular.module("blake").directive('resize', ["$window", "$timeout", "WindowSize"
 //TODO make this a true scroll to element, rather than simple offset of current element
 angular.module("blake").directive('scrollToElement', ["$timeout", function ($timeout) {
     var link = function (scope, element, attr) {
+        let startingOffset = element.offset();
         element.on('click', function () {
             $timeout(function () {
-                var elementOffset = attr.scrollToElement && $(attr.scrollToElement).offset() || element.offset(),
+                let elementOffset = attr.scrollToElement ? $(attr.scrollToElement).offset() : startingOffset,
                     offset = scope.offset ? parseInt(scope.offset) : 0;
                 $('html, body').animate({ scrollTop: elementOffset.top - offset }, 'slow');
             }, 300);
@@ -7770,6 +7771,7 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
 
     s.search = function () {
         delete s.type;
+        s.highlight = s.searchConfig.searchString;
         let objectSearch = BlakeDataService.queryObjects(s.searchConfig),
             copySearch = BlakeDataService.queryCopies(s.searchConfig),
             workSearch = BlakeDataService.queryWorks(s.searchConfig);
