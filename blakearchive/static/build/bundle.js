@@ -4657,8 +4657,8 @@ angular.module("blake").directive('resize', ["$window", "$timeout", "WindowSize"
 //TODO make this a true scroll to element, rather than simple offset of current element
 angular.module("blake").directive('scrollToElement', ["$timeout", function ($timeout) {
     var link = function (scope, element, attr) {
-        let startingOffset = element.offset();
         element.on('click', function () {
+            let startingOffset = element.offset();
             $timeout(function () {
                 let elementOffset = attr.scrollToElement ? $(attr.scrollToElement).offset() : startingOffset,
                     offset = scope.offset ? parseInt(scope.offset) : 0;
