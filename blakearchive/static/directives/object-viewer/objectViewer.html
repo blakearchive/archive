@@ -4,7 +4,7 @@
         <div class="carousel-inner" role="listbox">
             <!-- regular object viewer -->
             <div class="item col-xs-12 col-md-8 col-md-offset-2 active" ng-class="{hidden:supplemental && viewer.bds.object.supplemental_objects.length}" ng-swipe-left="viewer.changeObject(viewer.getNextObject())" ng-swipe-right="viewer.changeObject(viewer.getPreviousObject())">
-                <div class="flex" auto-height adjust="270" breakpoint="992" style="height:77vh">
+                <div class="flex" auto-height adjust="270" breakpoint="992">
                     <a href="/images/{{ viewer.bds.object.dbi }}.{{dpi}}.jpg" target="_blank" class="object-img-container" ng-class="{hidden: view.scope == 'text'}" ovp-image>
                         <img ng-src="/images/{{ viewer.bds.object.dbi }}.{{dpi}}.jpg" magnify-image>
                     </a>
