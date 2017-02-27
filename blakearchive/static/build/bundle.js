@@ -4912,6 +4912,7 @@ angular.module("blake").directive("objectsInVirtualWorkPreview", function () {
 angular.module("blake").controller("PreviewSelectionController", ["SearchService", function (SearchService) {
     let vm = this;
     vm.s = SearchService;
+    console.log(vm.type);
 }]);
 
 angular.module("blake").directive("previewSelection", function () {
