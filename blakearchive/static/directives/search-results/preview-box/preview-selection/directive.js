@@ -10,6 +10,7 @@ angular.module("blake").directive("previewSelection", function () {
         bindToController: true,
         scope: {
             results: '<results',
+            type: '<type',
             tree: '<tree'
         },
         controllerAs: "ps",
