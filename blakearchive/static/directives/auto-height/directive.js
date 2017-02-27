@@ -4,7 +4,7 @@ angular.module("blake").directive('autoHeight', function (WindowSize) {
             breakpoint = scope.$eval(attrs.breakpoint),
             divide = scope.$eval(attrs.divide);
 
-        scope.setStyles = function (element, windowSize) {
+        scope.setStyles = function (windowSize) {
             if(windowSize.width < breakpoint){
                 element.height('auto');
             } else {
@@ -21,7 +21,7 @@ angular.module("blake").directive('autoHeight', function (WindowSize) {
 
 
         scope.$on('resize::resize', function (e, w) {
-            scope.setStyles(e, w)
+            scope.setStyles(w)
         });
     };
     return {
