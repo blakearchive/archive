@@ -1,7 +1,7 @@
 <!-- preview -->
 <div class="object-preview col-sm-12 text-center" auto-width adjust="100" breakpoint="992" divide="3">
-    <h5 ng-if="ps.type != 'copy-info'" style="">Selected Object</h5>
-    <h5 ng-if="ps.type == 'copy-info'" style="">Selected Copy</h5>
+    <h5 ng-if="ps.s.type != 'copy-info'" style="">Selected Object</h5>
+    <h5 ng-if="ps.s.type == 'copy-info'" style="">Selected Copy</h5>
     <br>
     <div class="object-img-container text-center" auto-height adjust="350" breakpoint="992">
         <a ng-href="/copy/{{ps.s.getPreviewHref(ps.tree, ps.results)}}">
