@@ -1,7 +1,6 @@
 angular.module("blake").controller("PreviewSelectionController", function (SearchService) {
     let vm = this;
     vm.s = SearchService;
-    console.log(vm);
 });
 
 angular.module("blake").directive("previewSelection", function () {
