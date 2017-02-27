@@ -229,6 +229,7 @@ class BlakeWork(db.Model):
     composition_date_string = db.Column(db.UnicodeText)
     related_works = db.Column(JSON)
     virtual = db.Column(db.Boolean)
+    preview = db.Column(db.Boolean)
 
     @property
     def to_dict(self):
@@ -242,7 +243,8 @@ class BlakeWork(db.Model):
             "composition_date": self.composition_date,
             "composition_date_string": self.composition_date_string,
             "related_works": self.related_works,
-            "virtual": self.virtual
+            "virtual": self.virtual,
+            "preview": self.preview
         }
 
 
