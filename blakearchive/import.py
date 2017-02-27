@@ -16,6 +16,7 @@ import titlecase
 from tqdm import tqdm
 import logging
 from collections import namedtuple
+import socket
 
 logging.basicConfig()
 logger = logging.getLogger('import')
@@ -139,9 +140,12 @@ class BlakeDocumentImporter(BlakeImporter):
     # region Work processing
     def process_works(self):
         for entry in self.works_df.itertuples():
-            Record = namedtuple('Work',['index','title','medium','composition_date','image','copies','bad_id','info','info_filename','virtual','virtual_objects'])
+            Record = namedtuple('Work',['index','title','medium','composition_date','image','copies','bad_id','info','info_filename','virtual','virtual_objects','preview'])
             entry = Record(*entry)
-            self.process_work(entry)
+            if(socket.gethostname() == 'london.lib.unc.edu' && bool(entry.preview)):
+                continue
+            else:
+                self.process_work(entry)
 
     def process_work(self, entry):
         bad_id = entry.bad_id or entry.info_filename.split(".", 1)[0]
@@ -150,6 +154,7 @@ class BlakeDocumentImporter(BlakeImporter):
         work.medium = entry.medium
         work.bad_id = bad_id
         work.virtual = bool(entry.virtual)
+        work.preview = bool(entry.preview)
         work.composition_date = self.extract_date(entry.composition_date)
         work.composition_date_string = entry.composition_date.encode('utf-8')
         work.image = entry.image.encode('utf-8')
