@@ -3237,6 +3237,7 @@ angular.module("blake").directive('autoHeight', ["WindowSize", function (WindowS
                     newHeight = newHeight / divide;
                 }
                 console.log("setting height: " + newHeight);
+                console.log(element);
                 element.height(newHeight);
             }
         };
