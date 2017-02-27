@@ -4656,14 +4656,13 @@ angular.module("blake").directive('resize', ["$window", "$timeout", "WindowSize"
 
 //TODO make this a true scroll to element, rather than simple offset of current element
 angular.module("blake").directive('scrollToElement', ["$timeout", function ($timeout) {
-
     var link = function (scope, element, attr) {
         element.on('click', function () {
-            let startingOffset = element.offset() - 10;
+            let startingOffset = element.offset();
             $timeout(function () {
                 let elementOffset = attr.scrollToElement ? $(attr.scrollToElement).offset() : startingOffset,
                     offset = scope.offset ? parseInt(scope.offset) : 0;
-                $('html, body').animate({ scrollTop: elementOffset.top - offset }, 'slow');
+                $('html, body').animate({ scrollTop: elementOffset.top - offset - 10 }, 'slow');
             }, 300);
         });
     };
