@@ -13,6 +13,6 @@ angular.module("blake").directive("previewSelection", function () {
             type: '<type',
             tree: '<tree'
         },
-        controllerAs: "ps",
+        controllerAs: "ps"
     }
 });
