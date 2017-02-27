@@ -4921,11 +4921,10 @@ angular.module("blake").directive("previewSelection", function () {
         bindToController: true,
         scope: {
             results: '<results',
-            tree: '<tree',
-            type: '<type'
+            type: '<type',
+            tree: '<tree'
         },
-        controllerAs: "ps",
-        bindToController: true
+        controllerAs: "ps"
     };
 });
 
