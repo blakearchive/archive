@@ -14,7 +14,5 @@ angular.module("blake").directive("previewSelection", function () {
             tree: '<tree'
         },
         controllerAs: "ps",
-        bindToController: true,
-        replace: true
     }
 });
