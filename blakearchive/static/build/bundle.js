@@ -4659,7 +4659,7 @@ angular.module("blake").directive('scrollToElement', ["$timeout", function ($tim
 
     var link = function (scope, element, attr) {
         element.on('click', function () {
-            let startingOffset = element.offset() - 100;
+            let startingOffset = element.offset() - 10;
             $timeout(function () {
                 let elementOffset = attr.scrollToElement ? $(attr.scrollToElement).offset() : startingOffset,
                     offset = scope.offset ? parseInt(scope.offset) : 0;
