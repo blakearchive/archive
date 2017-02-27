@@ -159,12 +159,17 @@ class BlakeDocumentImporter(BlakeImporter):
         work.composition_date_string = entry.composition_date.encode('utf-8')
         work.image = entry.image.encode('utf-8')
         work.info = entry.info.encode('utf-8')
+        work.preview_copies = entry.preview_copies.split(",")
         if entry.info_filename in self.work_info:
             work.related_works = self.work_info[entry.info_filename]
         else:
             logger.error("info file does not exist: %s" % entry.info_filename)
         self.works[bad_id] = work
-        work.copies = self.copy_importer.get(self.split_ids(entry.copies))
+        if(socket.gethostname() == 'london.lib.unc.edu'):
+            all_non_preview_copies = list(set(self.split_ids(entry.copies)) - set(work.preview_copies))
+            work.copies = self.copy_importer.get(all_non_preview_copies)
+        else:
+            work.copies = self.copy_importer.get(self.split_ids(entry.copies))
         if work.virtual:
             self.process_virtual_work(entry, work)
         return work
