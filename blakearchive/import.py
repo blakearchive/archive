@@ -140,7 +140,7 @@ class BlakeDocumentImporter(BlakeImporter):
     # region Work processing
     def process_works(self):
         for entry in self.works_df.itertuples():
-            Record = namedtuple('Work',['index','title','medium','composition_date','image','copies','bad_id','info','info_filename','virtual','virtual_objects','preview'])
+            Record = namedtuple('Work',['index','title','medium','composition_date','image','copies','bad_id','info','info_filename','virtual','virtual_objects','preview','preview_copies'])
             entry = Record(*entry)
             if(socket.gethostname() == 'islington.lib.unc.edu' and bool(entry.preview)):
                 continue
