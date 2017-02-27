@@ -3244,6 +3244,7 @@ angular.module("blake").directive('autoHeight', ["WindowSize", function (WindowS
         scope.setStyles(WindowSize);
 
         scope.$on('resize::resize', function (e, w) {
+            element = e;
             scope.setStyles(w);
         });
     };

@@ -21,6 +21,7 @@ angular.module("blake").directive('autoHeight', function (WindowSize) {
 
 
         scope.$on('resize::resize', function (e, w) {
+            element = e
             scope.setStyles(w)
         });
     };
