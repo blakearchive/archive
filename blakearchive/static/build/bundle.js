@@ -4662,7 +4662,7 @@ angular.module("blake").directive('scrollToElement', ["$timeout", function ($tim
             $timeout(function () {
                 let elementOffset = attr.scrollToElement ? $(attr.scrollToElement).offset() : startingOffset,
                     offset = scope.offset ? parseInt(scope.offset) : 0;
-                $('html, body').animate({ scrollTop: elementOffset.top - offset - 100 }, 'slow');
+                $('html, body').animate({ scrollTop: elementOffset.top - offset }, 'slow');
             }, 300);
         });
     };
