@@ -2,33 +2,11 @@
     <div id="object-container" class="row" ng-class="{'tray-open': copyCtrl.trayOpen, 'tray-closed': !copyCtrl.trayOpen || view.mode == 'read'}">
         <info-tray ng-if="persistentmode != 'reading'" toggle="copyCtrl.toggleTray()" adjust-height="view.mode == 'object' ? 134 : 10"></info-tray>
         <div id="object-view" ng-class="{'show-tools': copyCtrl.showTools, 'hide-tools': !copyCtrl.showTools,'view-objects': persistentmode == 'gallery','reading-view': persistentmode == 'reading','compare-objects': view.mode == 'compare'}">
-
             <object-viewer ng-if="persistentmode == 'gallery' && view.mode != 'compare'"></object-viewer>
-
             <object-compare ng-if="view.mode == 'compare'"></object-compare>
-
             <object-reading ng-show="persistentmode == 'reading'"></object-reading>
-
-            <!--Edit buttons-->
-            <div id="object-tools" ng-if="persistentmode != 'reading'" class="hidden-xs">
-                <div id="object-tools-inner">
-                    <div class="btn-group edit-object" role="group">
-                        <!--<button type="button" class="btn btn-default add-lightbox hidden-sm"><span class="edit-icon"></span> Add To Lightbox</button>-->
-                        <button type="button" class="btn btn-default rotate" ng-click="copyCtrl.rotate(copyCtrl.bds.object)"><span class="edit-icon"></span> Rotate</button>
-                        <button type="button" class="btn btn-default zoom hidden-sm" ng-class="{hover: zoom}" ng-click="copyCtrl.zoom()" tooltip="Mouse over the image"  tooltip-trigger="click" tooltip-placement="top"><span class="edit-icon"></span> Magnify</button>
-                        <button type="button" class="btn btn-default true-size hidden-xs" ng-click="copyCtrl.trueSizeOpen(copyCtrl.bds.object)"><span class="edit-icon"></span> True Size</button>
-                        <button type="button" class="btn btn-default new-window" show-me="enlargement" object="copyCtrl.bds.object" copy-bad="{{copyCtrl.bds.copy.bad_id}}"><span class="edit-icon"></span> Enlargement</button>
-                        <button type="button" class="btn btn-default show-transcription hidden-sm" ng-click="copyCtrl.toggleTranscription()"><span class="edit-icon"></span> Diplomatic Transcription</button>
-                        <button type="button" class="btn btn-default show-supplemental" ng-class="{hover: supplemental}" ng-if="copyCtrl.bds.object.supplemental_objects.length && view.mode != 'compare'"  ng-click="copyCtrl.toggleSupplemental()"><span class="edit-icon"></span> Supplemental Views</button>
-                        <!--<button type="button" class="btn btn-default cite"><span class="edit-icon"></span> Generate Citation</button>-->
-                    </div>
-                    <!--<div class="show-hide-tools" ng-click="copyCtrl.toggleTools()"><span>+</span></div>-->
-                </div>
-            </div>
-
+            <object-edit-buttons ng-if="persistentmode != 'reading'"/>
         </div>
-
-
     </div>
 </div>
 <div id="archive-tabs" role="tabpanel" ng-if="persistentmode != 'reading'">

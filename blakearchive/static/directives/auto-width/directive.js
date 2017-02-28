@@ -1,16 +1,21 @@
 angular.module("blake").directive('autoWidth', function (WindowSize) {
     let link = function (scope, element, attrs) {
 
+        let adjust = scope.$eval(attrs.adjust),
+            breakpoint = scope.$eval(attrs.breakpoint),
+            divide = scope.$eval(attrs.divide),
+            percent = scope.$eval(attrs.percent);
+
         scope.setStyles = function (windowSize) {
-            if(windowSize.width < scope.breakpoint){
+            if(windowSize.width < breakpoint){
                 element.width('');
             } else {
-                let newWidth = (windowSize.width - scope.adjust);
-                if(scope.percent){
-                    newWidth = newWidth * scope.percent;
+                let newWidth = (windowSize.width - adjust);
+                if (percent){
+                    newWidth = newWidth * percent;
                 }
-                if(scope.divide){
-                    newWidth = newWidth / scope.divide;
+                if (divide){
+                    newWidth = newWidth / divide;
                 }
                 element.width(newWidth);
             }
@@ -25,12 +30,6 @@ angular.module("blake").directive('autoWidth', function (WindowSize) {
 
     return {
         restrict: 'A',
-        link: link,
-        scope: {
-            'adjust': '@adjust',
-            'breakpoint': '@breakpoint',
-            'divide': '@divide',
-            'percent': '@percent'
-        }
+        link: link
     };
 });
