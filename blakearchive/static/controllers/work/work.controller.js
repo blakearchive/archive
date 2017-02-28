@@ -10,10 +10,4 @@ angular.module('blake').controller("WorkController", function($rootScope,$routeP
 
     $rootScope.worksNavState = false;
     $rootScope.showWorkTitle = 'work';
-
-    vm.getInfo = function(info){
-        return info.split('<br />')
-    }
-
-
 });
