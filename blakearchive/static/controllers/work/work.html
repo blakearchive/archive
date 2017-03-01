@@ -21,6 +21,6 @@
             <p>Related works currently available in the William Blake Archive appear as links below. Works not currently available appear as plain text.</p>
         </div>-->
         <all-known-copies work="workCtrl.bds.work" ng-if="workCtrl.bds.work.medium=='illbk'"></all-known-copies>
-        <all-known-related-items work="workCtrl.bds.work" ng-if="workCtrl.bds.work.related_works.length > 0 ? '' : 'hidden'"></all-known-related-items>
+        <all-known-related-items work="workCtrl.bds.work" ng-class="workCtrl.bds.work.related_works.length > 0 ? '' : 'hidden'"></all-known-related-items>
     </div>
 </div>
