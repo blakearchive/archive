@@ -4,16 +4,16 @@ angular.module("blake").controller("ObjectViewerController", function($rootScope
     vm.bds = BlakeDataService;
 
     $rootScope.onWorkPage = false;
-    vm.dpi = $rootScope.dpivalue;
-
-    $scope.$watch(_ => $rootScope.dpivalue, function() {
-            if ($rootScope.dpivalue == '300') {
-                    vm.dpi = "300";
-            }
-            else {
-                    vm.dpi = "100";
-            }
-        }, true);
+    // vm.dpi = $rootScope.dpivalue;
+    //
+    // $scope.$watch(_ => $rootScope.dpivalue, function() {
+    //         if ($rootScope.dpivalue == '300') {
+    //                 vm.dpi = "300";
+    //         }
+    //         else {
+    //                 vm.dpi = "100";
+    //         }
+    //     }, true);
 });
 
 angular.module('blake').directive("objectViewer", function(){

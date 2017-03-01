@@ -100,4 +100,6 @@ angular.module("blake").factory("ObjectViewerService", function (BlakeDataServic
     ovs.changeObject = function(object){
         ovs.bds.changeObject(object);
     };
+
+    return ovs;
 });

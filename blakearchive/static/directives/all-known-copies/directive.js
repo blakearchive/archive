@@ -9,7 +9,7 @@ angular.module("blake").controller("AllKnownCopiesController", function(){
 angular.module('blake').directive('allKnownCopies', function(){
     return {
         restrict: 'E',
-        template: require('html-loader!./searchResults.html'),
+        template: require('html-loader!./template.html'),
         controller: "AllKnownCopiesController",
         controllerAs: 'akc',
         replace: true,
