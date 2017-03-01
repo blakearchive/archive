@@ -1,5 +1,5 @@
 angular.module("blake").controller("CopyController", function ($scope,$routeParams,$rootScope,$window,$modal,$cookies,BlakeDataService,imageManipulation,CompareObjectsFactory) {
-    var vm = this;
+    let vm = this;
 
     $rootScope.worksNavState = false;
     $rootScope.showWorkTitle = 'copy';
@@ -19,7 +19,7 @@ angular.module("blake").controller("CopyController", function ($scope,$routePara
         vm.cof.resetComparisonObjects();
         $rootScope.view.mode = 'object';
         $rootScope.view.scope = 'image';
-    })
+    });
 
     /*
      * Toolbar manipulation
@@ -29,19 +29,19 @@ angular.module("blake").controller("CopyController", function ($scope,$routePara
     vm.toggleTray = function(){
         $rootScope.worksNavState = false;
         vm.trayOpen = !vm.trayOpen;
-    }
+    };
 
     vm.toggleTools = function(){
         vm.showTools = !vm.showTools;
         $scope.$broadcast('copyCtrl::toggleTools',vm.showTools);
-    }
+    };
 
     /*
      * OVP Toolbar
      */
     vm.getObjectToTransform = function(){
 
-        var object = {};
+        let object = {};
 
         if($rootScope.view.mode == 'object'){
             object =  vm.bds.object;
@@ -51,19 +51,7 @@ angular.module("blake").controller("CopyController", function ($scope,$routePara
         }
 
         return object;
-    }
-
-    vm.trueSizeOpen = function(object){
-        if(!angular.isDefined($cookies.getObject('clientPpi'))){
-            var clientDpiModalInstance = $modal.open({
-                template: '<client-ppi object="{{object}}"></client-ppi>',
-                controller: 'ModalController',
-                size: 'lg'
-            });
-        } else {
-            $window.open('/new-window/truesize/'+vm.bds.copy.bad_id+'?descId='+object.desc_id, '_blank', 'width=800, height=600');
-        }
-    }
+    };
 
     $scope.$on('clientPpi::savedPpi',function(){
         $window.open('/new-window/truesize/'+vm.bds.copy.bad_id+'?descId='+vm.bds.object.desc_id, '_blank', 'width=800, height=600');
@@ -72,26 +60,4 @@ angular.module("blake").controller("CopyController", function ($scope,$routePara
     $scope.$on('change::selectedObject',function(){
         imageManipulation.reset();
     });
-
-    vm.rotate = function(){
-        imageManipulation.rotate();
-    }
-
-    vm.zoom = function(){
-        $rootScope.zoom = !$rootScope.zoom;
-    }
-
-    vm.toggleTranscription = function(){
-        if($rootScope.view.scope == 'image') {
-            $rootScope.view.scope = 'both';
-        }
-        else {
-            $rootScope.view.scope = 'image';
-        }
-    }
-
-    vm.toggleSupplemental = function(){
-        $rootScope.supplemental = !$rootScope.supplemental;
-    }
-
 });

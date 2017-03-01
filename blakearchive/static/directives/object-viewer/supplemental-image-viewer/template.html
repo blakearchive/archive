@@ -1,0 +1,29 @@
+<!-- supplemental image viewer -->
+<div class="item col-xs-12 col-md-8 col-md-offset-2 active" id="suppImages" ng-class="{hidden: !siv.rs.supplemental || !siv.bds.object.supplemental_objects.length}">
+    <div class="flexsupp" auto-height adjust="270" breakpoint="992">
+        <!-- original image for supplemental view-->
+        <handprint-block ng-if="siv.bds.object.supplemental" ng-repeat="obj in siv.bds.copyObjects | filter:{'desc_id': siv.bds.object.supplemental}:true"
+                     action="siv.ovs.changeObject(obj); siv.ovs.toggleSupplemental();"
+                     image="{{ obj.dbi }}.100.jpg"
+                     footer="Original View">
+        </handprint-block>
+
+        <!-- original image for original view-->
+        <handprint-block ng-if="!siv.bds.object.supplemental"
+                         action="siv.ovs.changeObject(siv.bds.object); siv.ovs.toggleSupplemental();"
+                         image="{{ siv.bds.object.dbi }}.100.jpg"
+                         footer="Original View">
+        </handprint-block>
+
+        <!-- the supplemental views -->
+        <handprint-block ng-repeat="obj in siv.bds.object.supplemental_objects"
+                         action="siv.ovs.changeObject(obj); siv.ovs.toggleSupplemental();"
+                         image="{{ obj.dbi }}.100.jpg"
+                         footer="{{ obj.full_object_id }}">
+        </handprint-block>
+    </div>
+    <p class="object-subtitle">{{siv.bds.object.title}}, {{ siv.bds.object.full_object_id }},
+        <span>{{ siv.bds.object.physical_description.objsize['#text'] }} </span>
+        <a style="color:#168bc1" ng-click="siv.ovs.userestrictOpen(siv.bds.copy)">&#169;</a>
+    </p>
+</div>

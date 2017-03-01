@@ -1,0 +1,22 @@
+<!-- regular object viewer -->
+<div class="item col-xs-12 col-md-8 col-md-offset-2 active" ng-class="{hidden:rov.rs.supplemental && rov.bds.object.supplemental_objects.length}" ng-swipe-left="rov.ovs.changeObject(rov.ovs.getNextObject())" ng-swipe-right="rov.ovs.changeObject(rov.ovs.getPreviousObject())">
+    <div class="flex" auto-height adjust="270" breakpoint="992">
+        <a href="/images/{{ rov.bds.object.dbi }}.{{dpi}}.jpg" target="_blank" class="object-img-container" ng-class="{hidden: rov.rs.view.scope == 'text'}" ovp-image>
+            <img ng-src="/images/{{ rov.bds.object.dbi }}.{{rov.rs.dpivalue}}.jpg" magnify-image>
+        </a>
+        <div to-top-on-broadcast="change::selectedObject" class="reading-copy" ng-class="{hidden: rov.rs.view.scope == 'image'}">
+            <div class="reading-copy-inner">
+                <text-transcription object="rov.bds.object"></text-transcription>
+            </div>
+        </div>
+    </div>
+    <p class="object-subtitle">
+        <span ng-if="rov.bds.work.virtual && rov.bds.copy.bad_id != 'letters'"><span>{{ rov.bds.object.title }}, </span><span class="object-no">{{ rov.bds.object.full_object_id }}, {{rov.bds.object.source.objdescid.compdate['#text']}}, {{rov.bds.object.source.repository.institution['#text']}}, </span></span>
+        <span ng-if="rov.bds.work.virtual && rov.bds.copy.bad_id == 'letters'"><span>{{ rov.bds.object.title }}, </span><span class="object-no">{{ rov.bds.object.full_object_id }}, </span></span>
+        <span class="object-no" ng-if="!rov.bds.work.virtual && !rov.bds.object.title">{{ rov.bds.object.full_object_id }}, </span>
+        <span class="object-no" ng-if="!rov.bds.work.virtual && rov.bds.object.title && rov.bds.work.medium != 'exhibit'">{{rov.bds.object.title}}, {{ rov.bds.object.full_object_id }}, </span>
+        <span class="object-no" ng-if="!rov.bds.work.virtual && rov.bds.object.title && rov.bds.work.medium == 'exhibit'">{{rov.bds.object.title}}</span>
+        <span ng-if="rov.bds.work.medium != 'exhibit'">{{ rov.bds.object.physical_description.objsize['#text'] }} </span>
+        <a ng-if="rov.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="rov.ovs.userestrictOpen(rov.bds.copy,rov.bds.object)">&#169;</a>
+    </p>
+</div>
