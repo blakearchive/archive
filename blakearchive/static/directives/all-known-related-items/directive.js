@@ -9,7 +9,7 @@ angular.module("blake").controller("AllKnownRelatedItemsController", function(){
 angular.module('blake').directive('allKnownRelatedItems', function(){
     return {
         restrict: 'E',
-        template: require('html-loader!./searchResults.html'),
+        template: require('html-loader!./template.html'),
         controller: "AllKnownRelatedItemsController",
         controllerAs: 'akri',
         replace: true,
