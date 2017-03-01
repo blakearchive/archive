@@ -1,7 +1,7 @@
 <!-- regular object viewer -->
 <div class="item col-xs-12 col-md-8 col-md-offset-2 active" ng-class="{hidden:rov.rs.supplemental && rov.bds.object.supplemental_objects.length}" ng-swipe-left="rov.ovs.changeObject(rov.ovs.getNextObject())" ng-swipe-right="rov.ovs.changeObject(rov.ovs.getPreviousObject())">
     <div class="flex" auto-height adjust="270" breakpoint="992">
-        <a href="/images/{{ rov.bds.object.dbi }}.{{dpi}}.jpg" target="_blank" class="object-img-container" ng-class="{hidden: rov.rs.view.scope == 'text'}" ovp-image>
+        <a href="/images/{{ rov.bds.object.dbi }}.{{rov.rs.dpivalue}}.jpg" target="_blank" class="object-img-container" ng-class="{hidden: rov.rs.view.scope == 'text'}" ovp-image>
             <img ng-src="/images/{{ rov.bds.object.dbi }}.{{rov.rs.dpivalue}}.jpg" magnify-image>
         </a>
         <div to-top-on-broadcast="change::selectedObject" class="reading-copy" ng-class="{hidden: rov.rs.view.scope == 'image'}">
