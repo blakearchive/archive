@@ -8,7 +8,7 @@
                         <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
                     </span>
                     <span style="font-weight:bold;" ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
-                    <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info.trim() | markdown"></span>
+                    <span ng-repeat="info in akc.getInfo(copy.info) track by $index" ng-bind-html="info.trim() | markdown"></span>
                 </div>
             </div>
         </div>
