@@ -1,0 +1,25 @@
+<div class="featured-object-controls hidden-sm" ng-if="ovpn.bds.object.objectsInGroup.length > 1 || ovpn.bds.copyObjects.length > 1">
+    <a scroll-to-top ng-if="ovpn.ovs.getPreviousObject()" class="left carousel-control" role="button" ng-click="ovpn.ovs.changeObject(ovpn.ovs.getPreviousObject())" role="button">
+        <span class="object-thumb" style="background-image:url(/images/{{ ovpn.ovs.getPreviousObject().dbi }}.100.jpg)"></span>
+
+        <!-- virtual -->
+        <span class="object-text" ng-if="ovpn.bds.work.virtual">{{ ovpn.ovs.getPreviousObject().title }}<br>{{ ovpn.ovs.getPreviousObject().full_object_id }}</span>
+        <!-- everything else -->
+        <span class="object-text" ng-if="!ovpn.bds.work.virtual && !ovpn.ovs.getPreviousObject().title">{{ ovpn.ovs.getPreviousObject().full_object_id }}</span>
+        <span class="object-text" ng-if="!ovpn.bds.work.virtual && ovpn.ovs.getPreviousObject().title">{{ovpn.ovs.getPreviousObject().title}}<br>{{ ovpn.ovs.getPreviousObject().full_object_id }}</span>
+
+
+        <span class="sr-only">Previous</span>
+    </a>
+    <a scroll-to-top ng-if="ovpn.ovs.getNextObject()" class="right carousel-control" ng-click="ovpn.ovs.changeObject(ovpn.ovs.getNextObject())" role="button">
+        <span class="object-thumb" style="background-image:url(/images/{{ ovpn.ovs.getNextObject().dbi }}.100.jpg)"></span>
+
+        <!-- virtual -->
+        <span class="object-text" ng-if="ovpn.bds.work.virtual">{{ ovpn.ovs.getNextObject().title }}<br>{{ ovpn.ovs.getNextObject().full_object_id }}</span>
+        <!-- everything else -->
+        <span class="object-text" ng-if="!ovpn.bds.work.virtual && !ovpn.ovs.getNextObject().title">{{ ovpn.ovs.getNextObject().full_object_id }}</span>
+        <span class="object-text" ng-if="!ovpn.bds.work.virtual && ovpn.ovs.getNextObject().title">{{ovpn.ovs.getNextObject().title}}<br>{{ ovpn.ovs.getNextObject().full_object_id }}</span>
+
+        <span class="sr-only">Next</span>
+    </a>
+</div>
