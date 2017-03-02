@@ -4946,13 +4946,9 @@ angular.module("blake").directive("objectsInVirtualWorkPreview", function () {
 /* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-angular.module("blake").controller("PreviewSelectionController", ["SearchService", "scope", function (SearchService, scope) {
+angular.module("blake").controller("PreviewSelectionController", ["SearchService", function (SearchService) {
     let vm = this;
     vm.s = SearchService;
-
-    let results = scope.$eval(attrs.results),
-        type = scope.$eval(attrs.type),
-        tree = scope.$eval(attrs.tree);
 }]);
 
 angular.module("blake").directive("previewSelection", function () {
