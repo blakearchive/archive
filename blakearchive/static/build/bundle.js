@@ -4944,9 +4944,26 @@ angular.module("blake").directive("objectsInVirtualWorkPreview", function () {
 
 /***/ }),
 /* 70 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: Unexpected token, expected ; (5:14)\n\n\u001b[0m \u001b[90m 3 | \u001b[39m    vm\u001b[33m.\u001b[39ms \u001b[33m=\u001b[39m \u001b[33mSearchService\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 4 | \u001b[39m    \n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 5 | \u001b[39m        let vm\u001b[33m.\u001b[39mresults \u001b[33m=\u001b[39m scope\u001b[33m.\u001b[39mresults\u001b[33m,\u001b[39m\n \u001b[90m   | \u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 6 | \u001b[39m            vm\u001b[33m.\u001b[39ms\u001b[33m.\u001b[39mtype \u001b[33m=\u001b[39m scope\u001b[33m.\u001b[39mtype\u001b[33m,\u001b[39m\n \u001b[90m 7 | \u001b[39m            vm\u001b[33m.\u001b[39mtree \u001b[33m=\u001b[39m scope\u001b[33m.\u001b[39mtree\u001b[33m;\u001b[39m\n \u001b[90m 8 | \u001b[39m})\u001b[33m;\u001b[39m\u001b[0m\n");
+angular.module("blake").controller("PreviewSelectionController", ["SearchService", function (SearchService) {
+    let vm = this;
+    vm.s = SearchService;
+}]);
+
+angular.module("blake").directive("previewSelection", function () {
+    return {
+        template: __webpack_require__(137),
+        controller: "PreviewSelectionController",
+        bindToController: true,
+        scope: {
+            results: '<results',
+            type: '<type',
+            tree: '<tree'
+        },
+        controllerAs: "ps"
+    };
+});
 
 /***/ }),
 /* 71 */
@@ -33207,7 +33224,12 @@ module.exports = "<!-- objects in copy -->\n<div>\n    <div class=\"objects-in-c
 module.exports = "<!-- objects in virtual work -->\n<div>\n    <div class=\"objects-in-copy col-sm-12 text-center\" auto-width adjust=\"200\" breakpoint=\"992\" divide=\"3\">\n        <h5 style=\"\">Matching Objects</h5>\n        <br>\n        <div class=\"flex-wrap\">\n            <div ng-repeat=\"copy in ovw.results[ovw.s.selectedWork][2] track by $index\">\n                <div class=\"handprint-block-small\"\n                     ng-repeat=\"object in copy[2] track by $index\"\n                     ng-class=\"{selected: ovw.s.selectedObject == $index && ovw.s.selectedCopy == $parent.$index}\">\n                    <a ng-click=\"ovw.s.showHighlight(ovw.tree, $index,$parent.$index)\">\n                        <span class=\"object-img\" style=\"background-image: url(/images/{{ object[0].dbi }}.100.jpg);\"></span>\n                        <span ng-if=\"ovw.results[ovw.s.selectedWork][0].bad_id == 'letters'\" class=\"description\">{{object[0].object_group}}</span>\n                        <span ng-if=\"object[0].title && ovw.results[ovw.s.selectedWork][0].bad_id != 'letters'\" class=\"description\">{{object[0].title}}</span>\n                        <span ng-if=\"ovw.results[ovw.s.selectedWork][0].bad_id != 'letters'\" class=\"description text-capitalize\">{{object[0].full_object_id.replace(\"Object 1\",\"\")}}</span>\n                        <span ng-if=\"ovw.results[ovw.s.selectedWork][0].bad_id == 'letters'\" class=\"description text-capitalize\">{{object[0].full_object_id}}</span>\n                    </a>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
 
 /***/ }),
-/* 137 */,
+/* 137 */
+/***/ (function(module, exports) {
+
+module.exports = "<!-- preview -->\n<div class=\"object-preview col-sm-12 text-center\" auto-width adjust=\"100\" breakpoint=\"992\" divide=\"3\">\n    <h5 ng-if=\"ps.s.type != 'copy-info'\" style=\"\">Selected Object</h5>\n    <h5 ng-if=\"ps.s.type == 'copy-info'\" style=\"\">Selected Copy</h5>\n    <br>\n    <div class=\"object-img-container text-center\" auto-height adjust=\"350\" breakpoint=\"992\">\n        <a ng-href=\"/copy/{{ps.s.getPreviewHref(ps.tree, ps.results)}}\">\n            <img ng-src=\"/images/{{ ps.s.getPreviewImage(ps.tree, ps.results) }}.100.jpg\">\n            <p></p>\n            <p class=\"object-subtitle\">\n                <span ng-if=\"ps.tree == 'object' && ps.s.getPreviewTitle(ps.tree, ps.results) != null\" class=\"object-no\">{{ps.getPreviewTitle(ps.tree, ps.results)}}<br></span>\n                <span ng-if=\"ps.results[ps.s.selectedWork][0].virtual && ps.results[ps.s.selectedWork][0].bad_id != 'letters'\" class=\"object-no\">{{ps.s.getPreviewLabel(ps.tree, ps.results).replace(\"Object 1\",\"\")}}</span>\n                <span ng-if=\"ps.results[ps.s.selectedWork][0].virtual && ps.results[ps.s.selectedWork][0].bad_id == 'letters'\" class=\"object-no\">{{ps.s.getPreviewLabel(ps.tree, ps.results)}}</span>\n                <span ng-if=\"!ps.results[ps.s.selectedWork][0].virtual\" class=\"object-no\">{{ps.s.getPreviewLabel(ps.tree, ps.results)}}</span></p>\n        </a>\n    </div>\n</div>\n";
+
+/***/ }),
 /* 138 */
 /***/ (function(module, exports) {
 
