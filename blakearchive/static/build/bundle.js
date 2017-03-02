@@ -8283,8 +8283,8 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
 /***/ (function(module, exports) {
 
 /**
- * @license AngularJS v1.6.1
- * (c) 2010-2016 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.6.2
+ * (c) 2010-2017 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function (window, angular) {
@@ -10420,9 +10420,9 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
       }
     }
 
-    function isAllowed(ruleType, element, currentAnimation, previousAnimation) {
+    function isAllowed(ruleType, currentAnimation, previousAnimation) {
       return rules[ruleType].some(function (fn) {
-        return fn(element, currentAnimation, previousAnimation);
+        return fn(currentAnimation, previousAnimation);
       });
     }
 
@@ -10432,40 +10432,40 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
       return and ? a && b : a || b;
     }
 
-    rules.join.push(function (element, newAnimation, currentAnimation) {
+    rules.join.push(function (newAnimation, currentAnimation) {
       // if the new animation is class-based then we can just tack that on
       return !newAnimation.structural && hasAnimationClasses(newAnimation);
     });
 
-    rules.skip.push(function (element, newAnimation, currentAnimation) {
+    rules.skip.push(function (newAnimation, currentAnimation) {
       // there is no need to animate anything if no classes are being added and
       // there is no structural animation that will be triggered
       return !newAnimation.structural && !hasAnimationClasses(newAnimation);
     });
 
-    rules.skip.push(function (element, newAnimation, currentAnimation) {
+    rules.skip.push(function (newAnimation, currentAnimation) {
       // why should we trigger a new structural animation if the element will
       // be removed from the DOM anyway?
       return currentAnimation.event === 'leave' && newAnimation.structural;
     });
 
-    rules.skip.push(function (element, newAnimation, currentAnimation) {
+    rules.skip.push(function (newAnimation, currentAnimation) {
       // if there is an ongoing current animation then don't even bother running the class-based animation
       return currentAnimation.structural && currentAnimation.state === RUNNING_STATE && !newAnimation.structural;
     });
 
-    rules.cancel.push(function (element, newAnimation, currentAnimation) {
+    rules.cancel.push(function (newAnimation, currentAnimation) {
       // there can never be two structural animations running at the same time
       return currentAnimation.structural && newAnimation.structural;
     });
 
-    rules.cancel.push(function (element, newAnimation, currentAnimation) {
+    rules.cancel.push(function (newAnimation, currentAnimation) {
       // if the previous animation is already running, but the new animation will
       // be triggered, but the new animation is structural
       return currentAnimation.state === RUNNING_STATE && newAnimation.structural;
     });
 
-    rules.cancel.push(function (element, newAnimation, currentAnimation) {
+    rules.cancel.push(function (newAnimation, currentAnimation) {
       // cancel the animation if classes added / removed in both animation cancel each other out,
       // but only if the current animation isn't structural
 
@@ -10484,10 +10484,10 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
       return hasMatchingClasses(nA, cR) || hasMatchingClasses(nR, cA);
     });
 
-    this.$get = ['$$rAF', '$rootScope', '$rootElement', '$document', '$$HashMap', '$$animation', '$$AnimateRunner', '$templateRequest', '$$jqLite', '$$forceReflow', '$$isDocumentHidden', function ($$rAF, $rootScope, $rootElement, $document, $$HashMap, $$animation, $$AnimateRunner, $templateRequest, $$jqLite, $$forceReflow, $$isDocumentHidden) {
+    this.$get = ['$$rAF', '$rootScope', '$rootElement', '$document', '$$Map', '$$animation', '$$AnimateRunner', '$templateRequest', '$$jqLite', '$$forceReflow', '$$isDocumentHidden', function ($$rAF, $rootScope, $rootElement, $document, $$Map, $$animation, $$AnimateRunner, $templateRequest, $$jqLite, $$forceReflow, $$isDocumentHidden) {
 
-      var activeAnimationsLookup = new $$HashMap();
-      var disabledElementsLookup = new $$HashMap();
+      var activeAnimationsLookup = new $$Map();
+      var disabledElementsLookup = new $$Map();
       var animationsEnabled = null;
 
       function postDigestTaskFactory() {
@@ -10559,10 +10559,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
         return this === arg || !!(this.compareDocumentPosition(arg) & 16);
       };
 
-      function findCallbacks(parent, element, event) {
-        var targetNode = getDomNode(element);
-        var targetParentNode = getDomNode(parent);
-
+      function findCallbacks(targetParentNode, targetNode, event) {
         var matches = [];
         var entries = callbackRegistry[event];
         if (entries) {
@@ -10586,11 +10583,11 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
         });
       }
 
-      function cleanupEventListeners(phase, element) {
-        if (phase === 'close' && !element[0].parentNode) {
+      function cleanupEventListeners(phase, node) {
+        if (phase === 'close' && !node.parentNode) {
           // If the element is not attached to a parentNode, it has been removed by
           // the domOperation, and we can safely remove the event callbacks
-          $animate.off(element);
+          $animate.off(node);
         }
       }
 
@@ -10669,7 +10666,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
                 bool = !disabledElementsLookup.get(node);
               } else {
                 // (element, bool) - Element setter
-                disabledElementsLookup.put(node, !bool);
+                disabledElementsLookup.set(node, !bool);
               }
             }
           }
@@ -10680,18 +10677,15 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
 
       return $animate;
 
-      function queueAnimation(element, event, initialOptions) {
+      function queueAnimation(originalElement, event, initialOptions) {
         // we always make a copy of the options since
         // there should never be any side effects on
         // the input data when running `$animateCss`.
         var options = copy(initialOptions);
 
-        var node, parent;
-        element = stripCommentsFromElement(element);
-        if (element) {
-          node = getDomNode(element);
-          parent = element.parent();
-        }
+        var element = stripCommentsFromElement(originalElement);
+        var node = getDomNode(element);
+        var parentNode = node && node.parentNode;
 
         options = prepareAnimationOptions(options);
 
@@ -10756,7 +10750,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
         // there is no point in traversing the same collection of parent ancestors if a followup
         // animation will be run on the same element that already did all that checking work
         if (!skipAnimations && (!hasExistingAnimation || existingAnimation.state !== PRE_DIGEST_STATE)) {
-          skipAnimations = !areAnimationsAllowed(element, parent, event);
+          skipAnimations = !areAnimationsAllowed(node, parentNode, event);
         }
 
         if (skipAnimations) {
@@ -10768,7 +10762,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
         }
 
         if (isStructural) {
-          closeChildAnimations(element);
+          closeChildAnimations(node);
         }
 
         var newAnimation = {
@@ -10783,7 +10777,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
         };
 
         if (hasExistingAnimation) {
-          var skipAnimationFlag = isAllowed('skip', element, newAnimation, existingAnimation);
+          var skipAnimationFlag = isAllowed('skip', newAnimation, existingAnimation);
           if (skipAnimationFlag) {
             if (existingAnimation.state === RUNNING_STATE) {
               close();
@@ -10793,7 +10787,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
               return existingAnimation.runner;
             }
           }
-          var cancelAnimationFlag = isAllowed('cancel', element, newAnimation, existingAnimation);
+          var cancelAnimationFlag = isAllowed('cancel', newAnimation, existingAnimation);
           if (cancelAnimationFlag) {
             if (existingAnimation.state === RUNNING_STATE) {
               // this will end the animation right away and it is safe
@@ -10815,7 +10809,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
             // a joined animation means that this animation will take over the existing one
             // so an example would involve a leave animation taking over an enter. Then when
             // the postDigest kicks in the enter will be ignored.
-            var joinAnimationFlag = isAllowed('join', element, newAnimation, existingAnimation);
+            var joinAnimationFlag = isAllowed('join', newAnimation, existingAnimation);
             if (joinAnimationFlag) {
               if (existingAnimation.state === RUNNING_STATE) {
                 normalizeAnimationDetails(element, newAnimation);
@@ -10848,7 +10842,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
 
         if (!isValidAnimation) {
           close();
-          clearElementAnimationState(element);
+          clearElementAnimationState(node);
           return runner;
         }
 
@@ -10856,9 +10850,18 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
         var counter = (existingAnimation.counter || 0) + 1;
         newAnimation.counter = counter;
 
-        markElementAnimationState(element, PRE_DIGEST_STATE, newAnimation);
+        markElementAnimationState(node, PRE_DIGEST_STATE, newAnimation);
 
         $rootScope.$$postDigest(function () {
+          // It is possible that the DOM nodes inside `originalElement` have been replaced. This can
+          // happen if the animated element is a transcluded clone and also has a `templateUrl`
+          // directive on it. Therefore, we must recreate `element` in order to interact with the
+          // actual DOM nodes.
+          // Note: We still need to use the old `node` for certain things, such as looking up in
+          //       HashMaps where it was used as the key.
+
+          element = stripCommentsFromElement(originalElement);
+
           var animationDetails = activeAnimationsLookup.get(node);
           var animationCancelled = !animationDetails;
           animationDetails = animationDetails || {};
@@ -10894,7 +10897,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
             // isn't allowed to animate from here then we need to clear the state of the element
             // so that any future animations won't read the expired animation data.
             if (!isValidAnimation) {
-              clearElementAnimationState(element);
+              clearElementAnimationState(node);
             }
 
             return;
@@ -10904,7 +10907,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
           // so long as a structural event did not take over the animation
           event = !animationDetails.structural && hasAnimationClasses(animationDetails, true) ? 'setClass' : animationDetails.event;
 
-          markElementAnimationState(element, RUNNING_STATE);
+          markElementAnimationState(node, RUNNING_STATE);
           var realRunner = $$animation(element, event, animationDetails.options);
 
           // this will update the runner's flow-control events based on
@@ -10916,7 +10919,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
             close(!status);
             var animationDetails = activeAnimationsLookup.get(node);
             if (animationDetails && animationDetails.counter === counter) {
-              clearElementAnimationState(getDomNode(element));
+              clearElementAnimationState(node);
             }
             notifyProgress(runner, event, 'close', {});
           });
@@ -10926,7 +10929,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
 
         function notifyProgress(runner, event, phase, data) {
           runInNextPostDigestOrNow(function () {
-            var callbacks = findCallbacks(parent, element, event);
+            var callbacks = findCallbacks(parentNode, node, event);
             if (callbacks.length) {
               // do not optimize this call here to RAF because
               // we don't know how heavy the callback code here will
@@ -10936,10 +10939,10 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
                 forEach(callbacks, function (callback) {
                   callback(element, phase, data);
                 });
-                cleanupEventListeners(phase, element);
+                cleanupEventListeners(phase, node);
               });
             } else {
-              cleanupEventListeners(phase, element);
+              cleanupEventListeners(phase, node);
             }
           });
           runner.progress(event, phase, data);
@@ -10954,8 +10957,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
         }
       }
 
-      function closeChildAnimations(element) {
-        var node = getDomNode(element);
+      function closeChildAnimations(node) {
         var children = node.querySelectorAll('[' + NG_ANIMATE_ATTR_NAME + ']');
         forEach(children, function (child) {
           var state = parseInt(child.getAttribute(NG_ANIMATE_ATTR_NAME), 10);
@@ -10966,21 +10968,16 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
                 animationDetails.runner.end();
               /* falls through */
               case PRE_DIGEST_STATE:
-                activeAnimationsLookup.remove(child);
+                activeAnimationsLookup.delete(child);
                 break;
             }
           }
         });
       }
 
-      function clearElementAnimationState(element) {
-        var node = getDomNode(element);
+      function clearElementAnimationState(node) {
         node.removeAttribute(NG_ANIMATE_ATTR_NAME);
-        activeAnimationsLookup.remove(node);
-      }
-
-      function isMatchingElement(nodeOrElmA, nodeOrElmB) {
-        return getDomNode(nodeOrElmA) === getDomNode(nodeOrElmB);
+        activeAnimationsLookup.delete(node);
       }
 
       /**
@@ -10990,54 +10987,54 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
        * c) the element is not a child of the body
        * d) the element is not a child of the $rootElement
        */
-      function areAnimationsAllowed(element, parentElement, event) {
-        var bodyElement = jqLite($document[0].body);
-        var bodyElementDetected = isMatchingElement(element, bodyElement) || element[0].nodeName === 'HTML';
-        var rootElementDetected = isMatchingElement(element, $rootElement);
-        var parentAnimationDetected = false;
-        var animateChildren;
-        var elementDisabled = disabledElementsLookup.get(getDomNode(element));
+      function areAnimationsAllowed(node, parentNode, event) {
+        var bodyNode = $document[0].body;
+        var rootNode = getDomNode($rootElement);
 
-        var parentHost = jqLite.data(element[0], NG_ANIMATE_PIN_DATA);
+        var bodyNodeDetected = node === bodyNode || node.nodeName === 'HTML';
+        var rootNodeDetected = node === rootNode;
+        var parentAnimationDetected = false;
+        var elementDisabled = disabledElementsLookup.get(node);
+        var animateChildren;
+
+        var parentHost = jqLite.data(node, NG_ANIMATE_PIN_DATA);
         if (parentHost) {
-          parentElement = parentHost;
+          parentNode = getDomNode(parentHost);
         }
 
-        parentElement = getDomNode(parentElement);
-
-        while (parentElement) {
-          if (!rootElementDetected) {
+        while (parentNode) {
+          if (!rootNodeDetected) {
             // angular doesn't want to attempt to animate elements outside of the application
             // therefore we need to ensure that the rootElement is an ancestor of the current element
-            rootElementDetected = isMatchingElement(parentElement, $rootElement);
+            rootNodeDetected = parentNode === rootNode;
           }
 
-          if (parentElement.nodeType !== ELEMENT_NODE) {
+          if (parentNode.nodeType !== ELEMENT_NODE) {
             // no point in inspecting the #document element
             break;
           }
 
-          var details = activeAnimationsLookup.get(parentElement) || {};
+          var details = activeAnimationsLookup.get(parentNode) || {};
           // either an enter, leave or move animation will commence
           // therefore we can't allow any animations to take place
           // but if a parent animation is class-based then that's ok
           if (!parentAnimationDetected) {
-            var parentElementDisabled = disabledElementsLookup.get(parentElement);
+            var parentNodeDisabled = disabledElementsLookup.get(parentNode);
 
-            if (parentElementDisabled === true && elementDisabled !== false) {
+            if (parentNodeDisabled === true && elementDisabled !== false) {
               // disable animations if the user hasn't explicitly enabled animations on the
               // current element
               elementDisabled = true;
               // element is disabled via parent element, no need to check anything else
               break;
-            } else if (parentElementDisabled === false) {
+            } else if (parentNodeDisabled === false) {
               elementDisabled = false;
             }
             parentAnimationDetected = details.structural;
           }
 
           if (isUndefined(animateChildren) || animateChildren === true) {
-            var value = jqLite.data(parentElement, NG_ANIMATE_CHILDREN_DATA);
+            var value = jqLite.data(parentNode, NG_ANIMATE_CHILDREN_DATA);
             if (isDefined(value)) {
               animateChildren = value;
             }
@@ -11046,45 +11043,44 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
           // there is no need to continue traversing at this point
           if (parentAnimationDetected && animateChildren === false) break;
 
-          if (!bodyElementDetected) {
+          if (!bodyNodeDetected) {
             // we also need to ensure that the element is or will be a part of the body element
             // otherwise it is pointless to even issue an animation to be rendered
-            bodyElementDetected = isMatchingElement(parentElement, bodyElement);
+            bodyNodeDetected = parentNode === bodyNode;
           }
 
-          if (bodyElementDetected && rootElementDetected) {
+          if (bodyNodeDetected && rootNodeDetected) {
             // If both body and root have been found, any other checks are pointless,
             // as no animation data should live outside the application
             break;
           }
 
-          if (!rootElementDetected) {
-            // If no rootElement is detected, check if the parentElement is pinned to another element
-            parentHost = jqLite.data(parentElement, NG_ANIMATE_PIN_DATA);
+          if (!rootNodeDetected) {
+            // If `rootNode` is not detected, check if `parentNode` is pinned to another element
+            parentHost = jqLite.data(parentNode, NG_ANIMATE_PIN_DATA);
             if (parentHost) {
               // The pin target element becomes the next parent element
-              parentElement = getDomNode(parentHost);
+              parentNode = getDomNode(parentHost);
               continue;
             }
           }
 
-          parentElement = parentElement.parentNode;
+          parentNode = parentNode.parentNode;
         }
 
         var allowAnimation = (!parentAnimationDetected || animateChildren) && elementDisabled !== true;
-        return allowAnimation && rootElementDetected && bodyElementDetected;
+        return allowAnimation && rootNodeDetected && bodyNodeDetected;
       }
 
-      function markElementAnimationState(element, state, details) {
+      function markElementAnimationState(node, state, details) {
         details = details || {};
         details.state = state;
 
-        var node = getDomNode(element);
         node.setAttribute(NG_ANIMATE_ATTR_NAME, state);
 
         var oldValue = activeAnimationsLookup.get(node);
         var newValue = oldValue ? extend(oldValue, details) : details;
-        activeAnimationsLookup.put(node, newValue);
+        activeAnimationsLookup.set(node, newValue);
       }
     }];
   }];
@@ -11110,7 +11106,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
       return element.data(RUNNER_STORAGE_KEY);
     }
 
-    this.$get = ['$$jqLite', '$rootScope', '$injector', '$$AnimateRunner', '$$HashMap', '$$rAFScheduler', function ($$jqLite, $rootScope, $injector, $$AnimateRunner, $$HashMap, $$rAFScheduler) {
+    this.$get = ['$$jqLite', '$rootScope', '$injector', '$$AnimateRunner', '$$Map', '$$rAFScheduler', function ($$jqLite, $rootScope, $injector, $$AnimateRunner, $$Map, $$rAFScheduler) {
 
       var animationQueue = [];
       var applyAnimationClasses = applyAnimationClassesFactory($$jqLite);
@@ -11118,13 +11114,13 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
       function sortAnimations(animations) {
         var tree = { children: [] };
         var i,
-            lookup = new $$HashMap();
+            lookup = new $$Map();
 
-        // this is done first beforehand so that the hashmap
+        // this is done first beforehand so that the map
         // is filled with a list of the elements that will be animated
         for (i = 0; i < animations.length; i++) {
           var animation = animations[i];
-          lookup.put(animation.domNode, animations[i] = {
+          lookup.set(animation.domNode, animations[i] = {
             domNode: animation.domNode,
             fn: animation.fn,
             children: []
@@ -11143,7 +11139,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
 
           var elementNode = entry.domNode;
           var parentNode = elementNode.parentNode;
-          lookup.put(elementNode, entry);
+          lookup.set(elementNode, entry);
 
           var parentEntry;
           while (parentNode) {
@@ -12377,8 +12373,8 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
 /***/ (function(module, exports) {
 
 /**
- * @license AngularJS v1.6.1
- * (c) 2010-2016 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.6.2
+ * (c) 2010-2017 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function (window, angular) {
@@ -13038,8 +13034,8 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
 /***/ (function(module, exports) {
 
 /**
- * @license AngularJS v1.6.1
- * (c) 2010-2016 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.6.2
+ * (c) 2010-2017 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function (window, angular) {
@@ -13080,6 +13076,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
   var isArray;
   var isObject;
   var isDefined;
+  var noop;
 
   /**
    * @ngdoc module
@@ -13124,6 +13121,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
     isArray = angular.isArray;
     isObject = angular.isObject;
     isDefined = angular.isDefined;
+    noop = angular.noop;
 
     function inherit(parent, extra) {
       return angular.extend(Object.create(parent), extra);
@@ -13394,7 +13392,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
       return isEagerInstantiationEnabled;
     };
 
-    this.$get = ['$rootScope', '$location', '$routeParams', '$q', '$injector', '$templateRequest', '$sce', function ($rootScope, $location, $routeParams, $q, $injector, $templateRequest, $sce) {
+    this.$get = ['$rootScope', '$location', '$routeParams', '$q', '$injector', '$templateRequest', '$sce', '$browser', function ($rootScope, $location, $routeParams, $q, $injector, $templateRequest, $sce, $browser) {
 
       /**
        * @ngdoc service
@@ -13722,6 +13720,8 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
 
           var nextRoutePromise = $q.resolve(nextRoute);
 
+          $browser.$$incOutstandingRequestCount();
+
           nextRoutePromise.then(getRedirectionData).then(handlePossibleRedirection).then(function (keepProcessingRoute) {
             return keepProcessingRoute && nextRoutePromise.then(resolveLocals).then(function (locals) {
               // after route change
@@ -13737,6 +13737,13 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
             if (nextRoute === $route.current) {
               $rootScope.$broadcast('$routeChangeError', nextRoute, lastRoute, error);
             }
+          }).finally(function () {
+            // Because `commitRoute()` is called from a `$rootScope.$evalAsync` block (see
+            // `$locationWatch`), this `$$completeOutstandingRequest()` call will not cause
+            // `outstandingRequestCount` to hit zero.  This is important in case we are redirecting
+            // to a new route which also requires some asynchronous work.
+
+            $browser.$$completeOutstandingRequest(noop);
           });
         }
       }
@@ -14211,8 +14218,8 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
 /***/ (function(module, exports) {
 
 /**
- * @license AngularJS v1.6.1
- * (c) 2010-2016 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.6.2
+ * (c) 2010-2017 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function (window, angular) {
@@ -14911,8 +14918,8 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
 /***/ (function(module, exports) {
 
 /**
- * @license AngularJS v1.6.1
- * (c) 2010-2016 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.6.2
+ * (c) 2010-2017 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function (window, angular) {
@@ -15653,8 +15660,8 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
 /***/ (function(module, exports) {
 
 /**
- * @license AngularJS v1.6.1
- * (c) 2010-2016 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.6.2
+ * (c) 2010-2017 Google, Inc. http://angularjs.org
  * License: MIT
  */(function(window){'use strict';/**
  * @description
@@ -15684,7 +15691,7 @@ angular.module("blake").factory('WindowSize', ["$window", function ($window) {
  * @param {function} ErrorConstructor Custom error constructor to be instantiated when returning
  *   error from returned function, for cases when a particular type of error is useful.
  * @returns {function(code:string, template:string, ...templateArgs): Error} minErr instance
- */function minErr(module,ErrorConstructor){ErrorConstructor=ErrorConstructor||Error;return function(){var SKIP_INDEXES=2;var templateArgs=arguments,code=templateArgs[0],message='['+(module?module+':':'')+code+'] ',template=templateArgs[1],paramPrefix,i;message+=template.replace(/\{\d+\}/g,function(match){var index=+match.slice(1,-1),shiftedIndex=index+SKIP_INDEXES;if(shiftedIndex<templateArgs.length){return toDebugString(templateArgs[shiftedIndex]);}return match;});message+='\nhttp://errors.angularjs.org/1.6.1/'+(module?module+'/':'')+code;for(i=SKIP_INDEXES,paramPrefix='?';i<templateArgs.length;i++,paramPrefix='&'){message+=paramPrefix+'p'+(i-SKIP_INDEXES)+'='+encodeURIComponent(toDebugString(templateArgs[i]));}return new ErrorConstructor(message);};}/* We need to tell ESLint what variables are being exported *//* exported
+ */function minErr(module,ErrorConstructor){ErrorConstructor=ErrorConstructor||Error;return function(){var SKIP_INDEXES=2;var templateArgs=arguments,code=templateArgs[0],message='['+(module?module+':':'')+code+'] ',template=templateArgs[1],paramPrefix,i;message+=template.replace(/\{\d+\}/g,function(match){var index=+match.slice(1,-1),shiftedIndex=index+SKIP_INDEXES;if(shiftedIndex<templateArgs.length){return toDebugString(templateArgs[shiftedIndex]);}return match;});message+='\nhttp://errors.angularjs.org/1.6.2/'+(module?module+'/':'')+code;for(i=SKIP_INDEXES,paramPrefix='?';i<templateArgs.length;i++,paramPrefix='&'){message+=paramPrefix+'p'+(i-SKIP_INDEXES)+'='+encodeURIComponent(toDebugString(templateArgs[i]));}return new ErrorConstructor(message);};}/* We need to tell ESLint what variables are being exported *//* exported
   angular,
   msie,
   jqLite,
@@ -16385,7 +16392,7 @@ element.empty();}catch(e){/* empty */}var elemHtml=jqLite('<div>').append(elemen
  *    pct-encoded   = "%" HEXDIG HEXDIG
  *    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
  *                     / "*" / "+" / "," / ";" / "="
- */function encodeUriQuery(val,pctEncodeSpaces){return encodeURIComponent(val).replace(/%40/gi,'@').replace(/%3A/gi,':').replace(/%24/g,'$').replace(/%2C/gi,',').replace(/%3B/gi,';').replace(/%20/g,pctEncodeSpaces?'%20':'+');}var ngAttrPrefixes=['ng-','data-ng-','ng:','x-ng-'];function getNgAttribute(element,ngAttr){var attr,i,ii=ngAttrPrefixes.length;for(i=0;i<ii;++i){attr=ngAttrPrefixes[i]+ngAttr;if(isString(attr=element.getAttribute(attr))){return attr;}}return null;}function allowAutoBootstrap(document){if(!document.currentScript){return true;}var src=document.currentScript.getAttribute('src');var link=document.createElement('a');link.href=src;if(document.location.origin===link.origin){// Same-origin resources are always allowed, even for non-whitelisted schemes.
+ */function encodeUriQuery(val,pctEncodeSpaces){return encodeURIComponent(val).replace(/%40/gi,'@').replace(/%3A/gi,':').replace(/%24/g,'$').replace(/%2C/gi,',').replace(/%3B/gi,';').replace(/%20/g,pctEncodeSpaces?'%20':'+');}var ngAttrPrefixes=['ng-','data-ng-','ng:','x-ng-'];function getNgAttribute(element,ngAttr){var attr,i,ii=ngAttrPrefixes.length;for(i=0;i<ii;++i){attr=ngAttrPrefixes[i]+ngAttr;if(isString(attr=element.getAttribute(attr))){return attr;}}return null;}function allowAutoBootstrap(document){var script=document.currentScript;var src=script&&script.getAttribute('src');if(!src){return true;}var link=document.createElement('a');link.href=src;if(document.location.origin===link.origin){// Same-origin resources are always allowed, even for non-whitelisted schemes.
 return true;}// Disabled bootstrapping unless angular.js was loaded from a known scheme used on the web.
 // This is to prevent angular.js bundled with browser extensions from being used to bypass the
 // content security policy in web pages and other browser extensions.
@@ -16608,7 +16615,7 @@ window[jqName];// use jQuery specified by `ngJq`
 // Angular 1.2+ requires jQuery 1.7+ for on()/off() support.
 // Angular 1.3+ technically requires at least jQuery 2.1+ but it may work with older
 // versions. It will not work for sure with jQuery <1.7, though.
-if(jQuery&&jQuery.fn.on){jqLite=jQuery;extend(jQuery.fn,{scope:JQLitePrototype.scope,isolateScope:JQLitePrototype.isolateScope,controller:JQLitePrototype.controller,injector:JQLitePrototype.injector,inheritedData:JQLitePrototype.inheritedData});// All nodes removed from the DOM via various jQuery APIs like .remove()
+if(jQuery&&jQuery.fn.on){jqLite=jQuery;extend(jQuery.fn,{scope:JQLitePrototype.scope,isolateScope:JQLitePrototype.isolateScope,controller:/** @type {?} */JQLitePrototype.controller,injector:JQLitePrototype.injector,inheritedData:JQLitePrototype.inheritedData});// All nodes removed from the DOM via various jQuery APIs like .remove()
 // are passed through jQuery.cleanData. Monkey-patch this method to fire
 // the $destroy event on all removed nodes.
 originalCleanData=jQuery.cleanData;jQuery.cleanData=function(elems){var events;for(var i=0,elem;(elem=elems[i])!=null;i++){events=jQuery._data(elem,'events');if(events&&events.$destroy){jQuery(elem).triggerHandler('$destroy');}}originalCleanData(elems);};}else{jqLite=JQLite;}angular.element=jqLite;// Prevent double-proxying.
@@ -16943,7 +16950,6 @@ _invokeQueue:invokeQueue,_configBlocks:configBlocks,_runBlocks:runBlocks,/**
   $$ForceReflowProvider,
   $InterpolateProvider,
   $IntervalProvider,
-  $$HashMapProvider,
   $HttpProvider,
   $HttpParamSerializerProvider,
   $HttpParamSerializerJQLikeProvider,
@@ -16952,6 +16958,7 @@ _invokeQueue:invokeQueue,_configBlocks:configBlocks,_runBlocks:runBlocks,/**
   $jsonpCallbacksProvider,
   $LocationProvider,
   $LogProvider,
+  $$MapProvider,
   $ParseProvider,
   $RootScopeProvider,
   $QProvider,
@@ -16984,8 +16991,8 @@ _invokeQueue:invokeQueue,_configBlocks:configBlocks,_runBlocks:runBlocks,/**
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */var version={// These placeholder strings will be replaced by grunt's `build` task.
 // They need to be double- or single-quoted.
-full:'1.6.1',major:1,minor:6,dot:1,codeName:'promise-rectification'};function publishExternalAPI(angular){extend(angular,{'bootstrap':bootstrap,'copy':copy,'extend':extend,'merge':merge,'equals':equals,'element':jqLite,'forEach':forEach,'injector':createInjector,'noop':noop,'bind':bind,'toJson':toJson,'fromJson':fromJson,'identity':identity,'isUndefined':isUndefined,'isDefined':isDefined,'isString':isString,'isFunction':isFunction,'isObject':isObject,'isNumber':isNumber,'isElement':isElement,'isArray':isArray,'version':version,'isDate':isDate,'lowercase':lowercase,'uppercase':uppercase,'callbacks':{$$counter:0},'getTestability':getTestability,'reloadWithDebugInfo':reloadWithDebugInfo,'$$minErr':minErr,'$$csp':csp,'$$encodeUriSegment':encodeUriSegment,'$$encodeUriQuery':encodeUriQuery,'$$stringify':stringify});angularModule=setupModuleLoader(window);angularModule('ng',['ngLocale'],['$provide',function ngModule($provide){// $$sanitizeUriProvider needs to be before $compileProvider as it is used by it.
-$provide.provider({$$sanitizeUri:$$SanitizeUriProvider});$provide.provider('$compile',$CompileProvider).directive({a:htmlAnchorDirective,input:inputDirective,textarea:inputDirective,form:formDirective,script:scriptDirective,select:selectDirective,option:optionDirective,ngBind:ngBindDirective,ngBindHtml:ngBindHtmlDirective,ngBindTemplate:ngBindTemplateDirective,ngClass:ngClassDirective,ngClassEven:ngClassEvenDirective,ngClassOdd:ngClassOddDirective,ngCloak:ngCloakDirective,ngController:ngControllerDirective,ngForm:ngFormDirective,ngHide:ngHideDirective,ngIf:ngIfDirective,ngInclude:ngIncludeDirective,ngInit:ngInitDirective,ngNonBindable:ngNonBindableDirective,ngPluralize:ngPluralizeDirective,ngRepeat:ngRepeatDirective,ngShow:ngShowDirective,ngStyle:ngStyleDirective,ngSwitch:ngSwitchDirective,ngSwitchWhen:ngSwitchWhenDirective,ngSwitchDefault:ngSwitchDefaultDirective,ngOptions:ngOptionsDirective,ngTransclude:ngTranscludeDirective,ngModel:ngModelDirective,ngList:ngListDirective,ngChange:ngChangeDirective,pattern:patternDirective,ngPattern:patternDirective,required:requiredDirective,ngRequired:requiredDirective,minlength:minlengthDirective,ngMinlength:minlengthDirective,maxlength:maxlengthDirective,ngMaxlength:maxlengthDirective,ngValue:ngValueDirective,ngModelOptions:ngModelOptionsDirective}).directive({ngInclude:ngIncludeFillContentDirective}).directive(ngAttributeAliasDirectives).directive(ngEventDirectives);$provide.provider({$anchorScroll:$AnchorScrollProvider,$animate:$AnimateProvider,$animateCss:$CoreAnimateCssProvider,$$animateJs:$$CoreAnimateJsProvider,$$animateQueue:$$CoreAnimateQueueProvider,$$AnimateRunner:$$AnimateRunnerFactoryProvider,$$animateAsyncRun:$$AnimateAsyncRunFactoryProvider,$browser:$BrowserProvider,$cacheFactory:$CacheFactoryProvider,$controller:$ControllerProvider,$document:$DocumentProvider,$$isDocumentHidden:$$IsDocumentHiddenProvider,$exceptionHandler:$ExceptionHandlerProvider,$filter:$FilterProvider,$$forceReflow:$$ForceReflowProvider,$interpolate:$InterpolateProvider,$interval:$IntervalProvider,$http:$HttpProvider,$httpParamSerializer:$HttpParamSerializerProvider,$httpParamSerializerJQLike:$HttpParamSerializerJQLikeProvider,$httpBackend:$HttpBackendProvider,$xhrFactory:$xhrFactoryProvider,$jsonpCallbacks:$jsonpCallbacksProvider,$location:$LocationProvider,$log:$LogProvider,$parse:$ParseProvider,$rootScope:$RootScopeProvider,$q:$QProvider,$$q:$$QProvider,$sce:$SceProvider,$sceDelegate:$SceDelegateProvider,$sniffer:$SnifferProvider,$templateCache:$TemplateCacheProvider,$templateRequest:$TemplateRequestProvider,$$testability:$$TestabilityProvider,$timeout:$TimeoutProvider,$window:$WindowProvider,$$rAF:$$RAFProvider,$$jqLite:$$jqLiteProvider,$$HashMap:$$HashMapProvider,$$cookieReader:$$CookieReaderProvider});}]);}/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+full:'1.6.2',major:1,minor:6,dot:2,codeName:'llamacorn-lovehug'};function publishExternalAPI(angular){extend(angular,{'bootstrap':bootstrap,'copy':copy,'extend':extend,'merge':merge,'equals':equals,'element':jqLite,'forEach':forEach,'injector':createInjector,'noop':noop,'bind':bind,'toJson':toJson,'fromJson':fromJson,'identity':identity,'isUndefined':isUndefined,'isDefined':isDefined,'isString':isString,'isFunction':isFunction,'isObject':isObject,'isNumber':isNumber,'isElement':isElement,'isArray':isArray,'version':version,'isDate':isDate,'lowercase':lowercase,'uppercase':uppercase,'callbacks':{$$counter:0},'getTestability':getTestability,'reloadWithDebugInfo':reloadWithDebugInfo,'$$minErr':minErr,'$$csp':csp,'$$encodeUriSegment':encodeUriSegment,'$$encodeUriQuery':encodeUriQuery,'$$stringify':stringify});angularModule=setupModuleLoader(window);angularModule('ng',['ngLocale'],['$provide',function ngModule($provide){// $$sanitizeUriProvider needs to be before $compileProvider as it is used by it.
+$provide.provider({$$sanitizeUri:$$SanitizeUriProvider});$provide.provider('$compile',$CompileProvider).directive({a:htmlAnchorDirective,input:inputDirective,textarea:inputDirective,form:formDirective,script:scriptDirective,select:selectDirective,option:optionDirective,ngBind:ngBindDirective,ngBindHtml:ngBindHtmlDirective,ngBindTemplate:ngBindTemplateDirective,ngClass:ngClassDirective,ngClassEven:ngClassEvenDirective,ngClassOdd:ngClassOddDirective,ngCloak:ngCloakDirective,ngController:ngControllerDirective,ngForm:ngFormDirective,ngHide:ngHideDirective,ngIf:ngIfDirective,ngInclude:ngIncludeDirective,ngInit:ngInitDirective,ngNonBindable:ngNonBindableDirective,ngPluralize:ngPluralizeDirective,ngRepeat:ngRepeatDirective,ngShow:ngShowDirective,ngStyle:ngStyleDirective,ngSwitch:ngSwitchDirective,ngSwitchWhen:ngSwitchWhenDirective,ngSwitchDefault:ngSwitchDefaultDirective,ngOptions:ngOptionsDirective,ngTransclude:ngTranscludeDirective,ngModel:ngModelDirective,ngList:ngListDirective,ngChange:ngChangeDirective,pattern:patternDirective,ngPattern:patternDirective,required:requiredDirective,ngRequired:requiredDirective,minlength:minlengthDirective,ngMinlength:minlengthDirective,maxlength:maxlengthDirective,ngMaxlength:maxlengthDirective,ngValue:ngValueDirective,ngModelOptions:ngModelOptionsDirective}).directive({ngInclude:ngIncludeFillContentDirective}).directive(ngAttributeAliasDirectives).directive(ngEventDirectives);$provide.provider({$anchorScroll:$AnchorScrollProvider,$animate:$AnimateProvider,$animateCss:$CoreAnimateCssProvider,$$animateJs:$$CoreAnimateJsProvider,$$animateQueue:$$CoreAnimateQueueProvider,$$AnimateRunner:$$AnimateRunnerFactoryProvider,$$animateAsyncRun:$$AnimateAsyncRunFactoryProvider,$browser:$BrowserProvider,$cacheFactory:$CacheFactoryProvider,$controller:$ControllerProvider,$document:$DocumentProvider,$$isDocumentHidden:$$IsDocumentHiddenProvider,$exceptionHandler:$ExceptionHandlerProvider,$filter:$FilterProvider,$$forceReflow:$$ForceReflowProvider,$interpolate:$InterpolateProvider,$interval:$IntervalProvider,$http:$HttpProvider,$httpParamSerializer:$HttpParamSerializerProvider,$httpParamSerializerJQLike:$HttpParamSerializerJQLikeProvider,$httpBackend:$HttpBackendProvider,$xhrFactory:$xhrFactoryProvider,$jsonpCallbacks:$jsonpCallbacksProvider,$location:$LocationProvider,$log:$LogProvider,$parse:$ParseProvider,$rootScope:$RootScopeProvider,$q:$QProvider,$$q:$$QProvider,$sce:$SceProvider,$sceDelegate:$SceDelegateProvider,$sniffer:$SnifferProvider,$templateCache:$TemplateCacheProvider,$templateRequest:$TemplateRequestProvider,$$testability:$$TestabilityProvider,$timeout:$TimeoutProvider,$window:$WindowProvider,$$rAF:$$RAFProvider,$$jqLite:$$jqLiteProvider,$$Map:$$MapProvider,$$cookieReader:$$CookieReaderProvider});}]);}/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *     Any commits to this file should be reviewed with security in mind.  *
  *   Changes to this file can potentially create security vulnerabilities. *
  *          An approval from 2 Core members with history of modifying      *
@@ -17208,19 +17215,16 @@ JQLite.prototype.bind=JQLite.prototype.on;JQLite.prototype.unbind=JQLite.prototy
  * @param obj
  * @returns {string} hash string such that the same input will have the same hash string.
  *         The resulting string key is in 'type:hashKey' format.
- */function hashKey(obj,nextUidFn){var key=obj&&obj.$$hashKey;if(key){if(typeof key==='function'){key=obj.$$hashKey();}return key;}var objType=typeof obj;if(objType==='function'||objType==='object'&&obj!==null){key=obj.$$hashKey=objType+':'+(nextUidFn||nextUid)();}else{key=objType+':'+obj;}return key;}/**
- * HashMap which can use objects as keys
- */function HashMap(array,isolatedUid){if(isolatedUid){var uid=0;this.nextUid=function(){return++uid;};}forEach(array,this.put,this);}HashMap.prototype={/**
-   * Store key value pair
-   * @param key key to store can be any type
-   * @param value value to store can be any type
-   */put:function(key,value){this[hashKey(key,this.nextUid)]=value;},/**
-   * @param key
-   * @returns {Object} the value for the key
-   */get:function(key){return this[hashKey(key,this.nextUid)];},/**
-   * Remove the key/value pair
-   * @param key
-   */remove:function(key){var value=this[key=hashKey(key,this.nextUid)];delete this[key];return value;}};var $$HashMapProvider=[/** @this */function(){this.$get=[function(){return HashMap;}];}];/**
+ */function hashKey(obj,nextUidFn){var key=obj&&obj.$$hashKey;if(key){if(typeof key==='function'){key=obj.$$hashKey();}return key;}var objType=typeof obj;if(objType==='function'||objType==='object'&&obj!==null){key=obj.$$hashKey=objType+':'+(nextUidFn||nextUid)();}else{key=objType+':'+obj;}return key;}// A minimal ES2015 Map implementation.
+// Should be bug/feature equivalent to the native implementations of supported browsers
+// (for the features required in Angular).
+// See https://kangax.github.io/compat-table/es6/#test-Map
+var nanKey=Object.create(null);function NgMapShim(){this._keys=[];this._values=[];this._lastKey=NaN;this._lastIndex=-1;}NgMapShim.prototype={_idx:function(key){if(key===this._lastKey){return this._lastIndex;}this._lastKey=key;this._lastIndex=this._keys.indexOf(key);return this._lastIndex;},_transformKey:function(key){return isNumberNaN(key)?nanKey:key;},get:function(key){key=this._transformKey(key);var idx=this._idx(key);if(idx!==-1){return this._values[idx];}},set:function(key,value){key=this._transformKey(key);var idx=this._idx(key);if(idx===-1){idx=this._lastIndex=this._keys.length;}this._keys[idx]=key;this._values[idx]=value;// Support: IE11
+// Do not `return this` to simulate the partial IE11 implementation
+},delete:function(key){key=this._transformKey(key);var idx=this._idx(key);if(idx===-1){return false;}this._keys.splice(idx,1);this._values.splice(idx,1);this._lastKey=NaN;this._lastIndex=-1;return true;}};// For now, always use `NgMapShim`, even if `window.Map` is available. Some native implementations
+// are still buggy (often in subtle ways) and can cause hard-to-debug failures. When native `Map`
+// implementations get more stable, we can reconsider switching to `window.Map` (when available).
+var NgMap=NgMapShim;var $$MapProvider=[/** @this */function(){this.$get=[function(){return NgMap;}];}];/**
  * @ngdoc function
  * @module ng
  * @name angular.injector
@@ -17278,11 +17282,7 @@ JQLite.prototype.bind=JQLite.prototype.on;JQLite.prototype.unbind=JQLite.prototy
  * @description
  *
  * Implicit module which gets automatically added to each {@link auto.$injector $injector}.
- */var ARROW_ARG=/^([^(]+?)=>/;var FN_ARGS=/^[^(]*\(\s*([^)]*)\)/m;var FN_ARG_SPLIT=/,/;var FN_ARG=/^\s*(_?)(\S+?)\1\s*$/;var STRIP_COMMENTS=/((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;var $injectorMinErr=minErr('$injector');function stringifyFn(fn){// Support: Chrome 50-51 only
-// Creating a new string by adding `' '` at the end, to hack around some bug in Chrome v50/51
-// (See https://github.com/angular/angular.js/issues/14487.)
-// TODO (gkalpak): Remove workaround when Chrome v52 is released
-return Function.prototype.toString.call(fn)+' ';}function extractArgs(fn){var fnText=stringifyFn(fn).replace(STRIP_COMMENTS,''),args=fnText.match(ARROW_ARG)||fnText.match(FN_ARGS);return args;}function anonFn(fn){// For anonymous functions, showing at the very least the function signature can help in
+ */var ARROW_ARG=/^([^(]+?)=>/;var FN_ARGS=/^[^(]*\(\s*([^)]*)\)/m;var FN_ARG_SPLIT=/,/;var FN_ARG=/^\s*(_?)(\S+?)\1\s*$/;var STRIP_COMMENTS=/((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;var $injectorMinErr=minErr('$injector');function stringifyFn(fn){return Function.prototype.toString.call(fn);}function extractArgs(fn){var fnText=stringifyFn(fn).replace(STRIP_COMMENTS,''),args=fnText.match(ARROW_ARG)||fnText.match(FN_ARGS);return args;}function anonFn(fn){// For anonymous functions, showing at the very least the function signature can help in
 // debugging.
 var args=extractArgs(fn);if(args){return'function('+(args[1]||'').replace(/[\s\r\n]+/,' ')+')';}return'fn';}function annotate(fn,strictDi,name){var $inject,argDecl,last;if(typeof fn==='function'){if(!($inject=fn.$inject)){$inject=[];if(fn.length){if(strictDi){if(!isString(name)||!name){name=fn.name||anonFn(fn);}throw $injectorMinErr('strictdi','{0} is not using explicit annotation and cannot be invoked in strict mode',name);}argDecl=extractArgs(fn);forEach(argDecl[1].split(FN_ARG_SPLIT),function(arg){arg.replace(FN_ARG,function(all,underscore,name){$inject.push(name);});});}fn.$inject=$inject;}}else if(isArray(fn)){last=fn.length-1;assertArgFn(fn[last],'fn');$inject=fn.slice(0,last);}else{assertArgFn(fn,'fn',true);}return $inject;}///////////////////////////////////////
 /**
@@ -17765,13 +17765,13 @@ var args=extractArgs(fn);if(args){return'function('+(args[1]||'').replace(/[\s\r
  *     return $delegate;
  *   }]);
  * ```
- */function createInjector(modulesToLoad,strictDi){strictDi=strictDi===true;var INSTANTIATING={},providerSuffix='Provider',path=[],loadedModules=new HashMap([],true),providerCache={$provide:{provider:supportObject(provider),factory:supportObject(factory),service:supportObject(service),value:supportObject(value),constant:supportObject(constant),decorator:decorator}},providerInjector=providerCache.$injector=createInternalInjector(providerCache,function(serviceName,caller){if(angular.isString(caller)){path.push(caller);}throw $injectorMinErr('unpr','Unknown provider: {0}',path.join(' <- '));}),instanceCache={},protoInstanceInjector=createInternalInjector(instanceCache,function(serviceName,caller){var provider=providerInjector.get(serviceName+providerSuffix,caller);return instanceInjector.invoke(provider.$get,provider,undefined,serviceName);}),instanceInjector=protoInstanceInjector;providerCache['$injector'+providerSuffix]={$get:valueFn(protoInstanceInjector)};var runBlocks=loadModules(modulesToLoad);instanceInjector=protoInstanceInjector.get('$injector');instanceInjector.strictDi=strictDi;forEach(runBlocks,function(fn){if(fn)instanceInjector.invoke(fn);});return instanceInjector;////////////////////////////////////
+ */function createInjector(modulesToLoad,strictDi){strictDi=strictDi===true;var INSTANTIATING={},providerSuffix='Provider',path=[],loadedModules=new NgMap(),providerCache={$provide:{provider:supportObject(provider),factory:supportObject(factory),service:supportObject(service),value:supportObject(value),constant:supportObject(constant),decorator:decorator}},providerInjector=providerCache.$injector=createInternalInjector(providerCache,function(serviceName,caller){if(angular.isString(caller)){path.push(caller);}throw $injectorMinErr('unpr','Unknown provider: {0}',path.join(' <- '));}),instanceCache={},protoInstanceInjector=createInternalInjector(instanceCache,function(serviceName,caller){var provider=providerInjector.get(serviceName+providerSuffix,caller);return instanceInjector.invoke(provider.$get,provider,undefined,serviceName);}),instanceInjector=protoInstanceInjector;providerCache['$injector'+providerSuffix]={$get:valueFn(protoInstanceInjector)};var runBlocks=loadModules(modulesToLoad);instanceInjector=protoInstanceInjector.get('$injector');instanceInjector.strictDi=strictDi;forEach(runBlocks,function(fn){if(fn)instanceInjector.invoke(fn);});return instanceInjector;////////////////////////////////////
 // $provider
 ////////////////////////////////////
 function supportObject(delegate){return function(key,value){if(isObject(key)){forEach(key,reverseParams(delegate));}else{return delegate(key,value);}};}function provider(name,provider_){assertNotHasOwnProperty(name,'service');if(isFunction(provider_)||isArray(provider_)){provider_=providerInjector.instantiate(provider_);}if(!provider_.$get){throw $injectorMinErr('pget','Provider \'{0}\' must define $get factory method.',name);}return providerCache[name+providerSuffix]=provider_;}function enforceReturnValue(name,factory){return(/** @this */function enforcedReturnValue(){var result=instanceInjector.invoke(factory,this);if(isUndefined(result)){throw $injectorMinErr('undef','Provider \'{0}\' must return a value from $get factory method.',name);}return result;});}function factory(name,factoryFn,enforce){return provider(name,{$get:enforce!==false?enforceReturnValue(name,factoryFn):factoryFn});}function service(name,constructor){return factory(name,['$injector',function($injector){return $injector.instantiate(constructor);}]);}function value(name,val){return factory(name,valueFn(val),false);}function constant(name,value){assertNotHasOwnProperty(name,'constant');providerCache[name]=value;instanceCache[name]=value;}function decorator(serviceName,decorFn){var origProvider=providerInjector.get(serviceName+providerSuffix),orig$get=origProvider.$get;origProvider.$get=function(){var origInstance=instanceInjector.invoke(orig$get,origProvider);return instanceInjector.invoke(decorFn,null,{$delegate:origInstance});};}////////////////////////////////////
 // Module Loading
 ////////////////////////////////////
-function loadModules(modulesToLoad){assertArg(isUndefined(modulesToLoad)||isArray(modulesToLoad),'modulesToLoad','not an array');var runBlocks=[],moduleFn;forEach(modulesToLoad,function(module){if(loadedModules.get(module))return;loadedModules.put(module,true);function runInvokeQueue(queue){var i,ii;for(i=0,ii=queue.length;i<ii;i++){var invokeArgs=queue[i],provider=providerInjector.get(invokeArgs[0]);provider[invokeArgs[1]].apply(provider,invokeArgs[2]);}}try{if(isString(module)){moduleFn=angularModule(module);runBlocks=runBlocks.concat(loadModules(moduleFn.requires)).concat(moduleFn._runBlocks);runInvokeQueue(moduleFn._invokeQueue);runInvokeQueue(moduleFn._configBlocks);}else if(isFunction(module)){runBlocks.push(providerInjector.invoke(module));}else if(isArray(module)){runBlocks.push(providerInjector.invoke(module));}else{assertArgFn(module,'module');}}catch(e){if(isArray(module)){module=module[module.length-1];}if(e.message&&e.stack&&e.stack.indexOf(e.message)===-1){// Safari & FF's stack traces don't contain error.message content
+function loadModules(modulesToLoad){assertArg(isUndefined(modulesToLoad)||isArray(modulesToLoad),'modulesToLoad','not an array');var runBlocks=[],moduleFn;forEach(modulesToLoad,function(module){if(loadedModules.get(module))return;loadedModules.set(module,true);function runInvokeQueue(queue){var i,ii;for(i=0,ii=queue.length;i<ii;i++){var invokeArgs=queue[i],provider=providerInjector.get(invokeArgs[0]);provider[invokeArgs[1]].apply(provider,invokeArgs[2]);}}try{if(isString(module)){moduleFn=angularModule(module);runBlocks=runBlocks.concat(loadModules(moduleFn.requires)).concat(moduleFn._runBlocks);runInvokeQueue(moduleFn._invokeQueue);runInvokeQueue(moduleFn._configBlocks);}else if(isFunction(module)){runBlocks.push(providerInjector.invoke(module));}else if(isArray(module)){runBlocks.push(providerInjector.invoke(module));}else{assertArgFn(module,'module');}}catch(e){if(isArray(module)){module=module[module.length-1];}if(e.message&&e.stack&&e.stack.indexOf(e.message)===-1){// Safari & FF's stack traces don't contain error.message content
 // unlike those of Chrome and IE
 // So if stack doesn't contain message, we create a new string that contains both.
 // Since error.stack is read-only in Safari, I'm overriding e and not e.stack here.
@@ -17985,9 +17985,9 @@ if(klass.length){obj[klass]=true;}});return obj;}// if any other type of options
 // are wiped clean incase a callback function is provided.
 function prepareAnimateOptions(options){return isObject(options)?options:{};}var $$CoreAnimateJsProvider=/** @this */function(){this.$get=noop;};// this is prefixed with Core since it conflicts with
 // the animateQueueProvider defined in ngAnimate/animateQueue.js
-var $$CoreAnimateQueueProvider=/** @this */function(){var postDigestQueue=new HashMap();var postDigestElements=[];this.$get=['$$AnimateRunner','$rootScope',function($$AnimateRunner,$rootScope){return{enabled:noop,on:noop,off:noop,pin:noop,push:function(element,event,options,domOperation){if(domOperation){domOperation();}options=options||{};if(options.from){element.css(options.from);}if(options.to){element.css(options.to);}if(options.addClass||options.removeClass){addRemoveClassesPostDigest(element,options.addClass,options.removeClass);}var runner=new $$AnimateRunner();// since there are no animations to run the runner needs to be
+var $$CoreAnimateQueueProvider=/** @this */function(){var postDigestQueue=new NgMap();var postDigestElements=[];this.$get=['$$AnimateRunner','$rootScope',function($$AnimateRunner,$rootScope){return{enabled:noop,on:noop,off:noop,pin:noop,push:function(element,event,options,domOperation){if(domOperation){domOperation();}options=options||{};if(options.from){element.css(options.from);}if(options.to){element.css(options.to);}if(options.addClass||options.removeClass){addRemoveClassesPostDigest(element,options.addClass,options.removeClass);}var runner=new $$AnimateRunner();// since there are no animations to run the runner needs to be
 // notified that the animation call is complete.
-runner.complete();return runner;}};function updateData(data,classes,value){var changed=false;if(classes){classes=isString(classes)?classes.split(' '):isArray(classes)?classes:[];forEach(classes,function(className){if(className){changed=true;data[className]=value;}});}return changed;}function handleCSSClassChanges(){forEach(postDigestElements,function(element){var data=postDigestQueue.get(element);if(data){var existing=splitClasses(element.attr('class'));var toAdd='';var toRemove='';forEach(data,function(status,className){var hasClass=!!existing[className];if(status!==hasClass){if(status){toAdd+=(toAdd.length?' ':'')+className;}else{toRemove+=(toRemove.length?' ':'')+className;}}});forEach(element,function(elm){if(toAdd){jqLiteAddClass(elm,toAdd);}if(toRemove){jqLiteRemoveClass(elm,toRemove);}});postDigestQueue.remove(element);}});postDigestElements.length=0;}function addRemoveClassesPostDigest(element,add,remove){var data=postDigestQueue.get(element)||{};var classesAdded=updateData(data,add,true);var classesRemoved=updateData(data,remove,false);if(classesAdded||classesRemoved){postDigestQueue.put(element,data);postDigestElements.push(element);if(postDigestElements.length===1){$rootScope.$$postDigest(handleCSSClassChanges);}}}}];};/**
+runner.complete();return runner;}};function updateData(data,classes,value){var changed=false;if(classes){classes=isString(classes)?classes.split(' '):isArray(classes)?classes:[];forEach(classes,function(className){if(className){changed=true;data[className]=value;}});}return changed;}function handleCSSClassChanges(){forEach(postDigestElements,function(element){var data=postDigestQueue.get(element);if(data){var existing=splitClasses(element.attr('class'));var toAdd='';var toRemove='';forEach(data,function(status,className){var hasClass=!!existing[className];if(status!==hasClass){if(status){toAdd+=(toAdd.length?' ':'')+className;}else{toRemove+=(toRemove.length?' ':'')+className;}}});forEach(element,function(elm){if(toAdd){jqLiteAddClass(elm,toAdd);}if(toRemove){jqLiteRemoveClass(elm,toRemove);}});postDigestQueue.delete(element);}});postDigestElements.length=0;}function addRemoveClassesPostDigest(element,add,remove){var data=postDigestQueue.get(element)||{};var classesAdded=updateData(data,add,true);var classesRemoved=updateData(data,remove,false);if(classesAdded||classesRemoved){postDigestQueue.set(element,data);postDigestElements.push(element);if(postDigestElements.length===1){$rootScope.$$postDigest(handleCSSClassChanges);}}}}];};/**
  * @ngdoc provider
  * @name $animateProvider
  *
@@ -18398,7 +18398,7 @@ self.$$completeOutstandingRequest=completeOutstandingRequest;self.$$incOutstandi
 // URL API
 //////////////////////////////////////////////////////////////
 var cachedState,lastHistoryState,lastBrowserUrl=location.href,baseElement=document.find('base'),pendingLocation=null,getCurrentState=!$sniffer.history?noop:function getCurrentState(){try{return history.state;}catch(e){// MSIE can reportedly throw when there is no state (UNCONFIRMED).
-}};cacheState();lastHistoryState=cachedState;/**
+}};cacheState();/**
    * @name $browser#url
    *
    * @description
@@ -18429,8 +18429,7 @@ if(lastBrowserUrl===url&&(!$sniffer.history||sameState)){return self;}var sameBa
 // due to a bug in IE10/IE11 which leads
 // to not firing a `hashchange` nor `popstate` event
 // in some cases (see #9143).
-if($sniffer.history&&(!sameBase||!sameState)){history[replace?'replaceState':'pushState'](state,'',url);cacheState();// Do the assignment again so that those two variables are referentially identical.
-lastHistoryState=cachedState;}else{if(!sameBase){pendingLocation=url;}if(replace){location.replace(url);}else if(!sameBase){location.href=url;}else{location.hash=getHash(url);}if(location.href!==url){pendingLocation=url;}}if(pendingLocation){pendingLocation=url;}return self;// getter
+if($sniffer.history&&(!sameBase||!sameState)){history[replace?'replaceState':'pushState'](state,'',url);cacheState();}else{if(!sameBase){pendingLocation=url;}if(replace){location.replace(url);}else if(!sameBase){location.href=url;}else{location.hash=getHash(url);}if(location.href!==url){pendingLocation=url;}}if(pendingLocation){pendingLocation=url;}return self;// getter
 }else{// - pendingLocation is needed as browsers don't allow to read out
 //   the new location.href if a reload happened or if there is a bug like in iOS 9 (see
 //   https://openradar.appspot.com/22186109).
@@ -18444,10 +18443,10 @@ return pendingLocation||location.href.replace(/%27/g,'\'');}};/**
    * Return history.state or null if history.state is undefined.
    *
    * @returns {object} state
-   */self.state=function(){return cachedState;};var urlChangeListeners=[],urlChangeInit=false;function cacheStateAndFireUrlChange(){pendingLocation=null;cacheState();fireUrlChange();}// This variable should be used *only* inside the cacheState function.
+   */self.state=function(){return cachedState;};var urlChangeListeners=[],urlChangeInit=false;function cacheStateAndFireUrlChange(){pendingLocation=null;fireStateOrUrlChange();}// This variable should be used *only* inside the cacheState function.
 var lastCachedState=null;function cacheState(){// This should be the only place in $browser where `history.state` is read.
 cachedState=getCurrentState();cachedState=isUndefined(cachedState)?null:cachedState;// Prevent callbacks fo fire twice if both hashchange & popstate were fired.
-if(equals(cachedState,lastCachedState)){cachedState=lastCachedState;}lastCachedState=cachedState;}function fireUrlChange(){if(lastBrowserUrl===self.url()&&lastHistoryState===cachedState){return;}lastBrowserUrl=self.url();lastHistoryState=cachedState;forEach(urlChangeListeners,function(listener){listener(self.url(),cachedState);});}/**
+if(equals(cachedState,lastCachedState)){cachedState=lastCachedState;}lastCachedState=cachedState;lastHistoryState=cachedState;}function fireStateOrUrlChange(){var prevLastHistoryState=lastHistoryState;cacheState();if(lastBrowserUrl===self.url()&&prevLastHistoryState===cachedState){return;}lastBrowserUrl=self.url();lastHistoryState=cachedState;forEach(urlChangeListeners,function(listener){listener(self.url(),cachedState);});}/**
    * @name $browser#onUrlChange
    *
    * @description
@@ -18482,7 +18481,7 @@ jqLite(window).on('hashchange',cacheStateAndFireUrlChange);urlChangeInit=true;}u
    * Checks whether the url has changed outside of Angular.
    * Needs to be exported to be able to check for changes that have been done in sync,
    * as hashchange/popstate events fire in async.
-   */self.$$checkUrlChange=fireUrlChange;//////////////////////////////////////////////////////////////
+   */self.$$checkUrlChange=fireStateOrUrlChange;//////////////////////////////////////////////////////////////
 // Misc API
 //////////////////////////////////////////////////////////////
 /**
@@ -18891,7 +18890,8 @@ if(prevEntry)prevEntry.n=nextEntry;//n stands for next, 'next' didn't minify
  * * `$onChanges(changesObj)` - Called whenever one-way (`<`) or interpolation (`@`) bindings are updated. The
  *   `changesObj` is a hash whose keys are the names of the bound properties that have changed, and the values are an
  *   object of the form `{ currentValue, previousValue, isFirstChange() }`. Use this hook to trigger updates within a
- *   component such as cloning the bound value to prevent accidental mutation of the outer value.
+ *   component such as cloning the bound value to prevent accidental mutation of the outer value. Note that this will
+ *   also be called when your bindings are initialized.
  * * `$doCheck()` - Called on each turn of the digest cycle. Provides an opportunity to detect and act on
  *   changes. Any actions that you wish to take in response to the changes that you detect must be
  *   invoked from this hook; implementing this has no effect on when `$onChanges` is called. For example, this hook
@@ -19724,7 +19724,7 @@ if(prevEntry)prevEntry.n=nextEntry;//n stands for next, 'next' didn't minify
  */$CompileProvider.$inject=['$provide','$$sanitizeUriProvider'];/** @this */function $CompileProvider($provide,$$sanitizeUriProvider){var hasDirectives={},Suffix='Directive',COMMENT_DIRECTIVE_REGEXP=/^\s*directive:\s*([\w-]+)\s+(.*)$/,CLASS_DIRECTIVE_REGEXP=/(([\w-]+)(?::([^;]+))?;?)/,ALL_OR_NOTHING_ATTRS=makeMap('ngSrc,ngSrcset,src,srcset'),REQUIRE_PREFIX_REGEXP=/^(?:(\^\^?)?(\?)?(\^\^?)?)?/;// Ref: http://developers.whatwg.org/webappapis.html#event-handler-idl-attributes
 // The assumption is that future DOM event attribute names will begin with
 // 'on' and be composed of only English letters.
-var EVENT_HANDLER_ATTR_REGEXP=/^(on[a-z]+|formaction)$/;var bindingCache=createMap();function parseIsolateBindings(scope,directiveName,isController){var LOCAL_REGEXP=/^\s*([@&<]|=(\*?))(\??)\s*(\w*)\s*$/;var bindings=createMap();forEach(scope,function(definition,scopeName){if(definition in bindingCache){bindings[scopeName]=bindingCache[definition];return;}var match=definition.match(LOCAL_REGEXP);if(!match){throw $compileMinErr('iscp','Invalid {3} for directive \'{0}\'.'+' Definition: {... {1}: \'{2}\' ...}',directiveName,scopeName,definition,isController?'controller bindings definition':'isolate scope definition');}bindings[scopeName]={mode:match[1][0],collection:match[2]==='*',optional:match[3]==='?',attrName:match[4]||scopeName};if(match[4]){bindingCache[definition]=bindings[scopeName];}});return bindings;}function parseDirectiveBindings(directive,directiveName){var bindings={isolateScope:null,bindToController:null};if(isObject(directive.scope)){if(directive.bindToController===true){bindings.bindToController=parseIsolateBindings(directive.scope,directiveName,true);bindings.isolateScope={};}else{bindings.isolateScope=parseIsolateBindings(directive.scope,directiveName,false);}}if(isObject(directive.bindToController)){bindings.bindToController=parseIsolateBindings(directive.bindToController,directiveName,true);}if(bindings.bindToController&&!directive.controller){// There is no controller
+var EVENT_HANDLER_ATTR_REGEXP=/^(on[a-z]+|formaction)$/;var bindingCache=createMap();function parseIsolateBindings(scope,directiveName,isController){var LOCAL_REGEXP=/^\s*([@&<]|=(\*?))(\??)\s*([\w$]*)\s*$/;var bindings=createMap();forEach(scope,function(definition,scopeName){if(definition in bindingCache){bindings[scopeName]=bindingCache[definition];return;}var match=definition.match(LOCAL_REGEXP);if(!match){throw $compileMinErr('iscp','Invalid {3} for directive \'{0}\'.'+' Definition: {... {1}: \'{2}\' ...}',directiveName,scopeName,definition,isController?'controller bindings definition':'isolate scope definition');}bindings[scopeName]={mode:match[1][0],collection:match[2]==='*',optional:match[3]==='?',attrName:match[4]||scopeName};if(match[4]){bindingCache[definition]=bindings[scopeName];}});return bindings;}function parseDirectiveBindings(directive,directiveName){var bindings={isolateScope:null,bindToController:null};if(isObject(directive.scope)){if(directive.bindToController===true){bindings.bindToController=parseIsolateBindings(directive.scope,directiveName,true);bindings.isolateScope={};}else{bindings.isolateScope=parseIsolateBindings(directive.scope,directiveName,false);}}if(isObject(directive.bindToController)){bindings.bindToController=parseIsolateBindings(directive.bindToController,directiveName,true);}if(bindings.bindToController&&!directive.controller){// There is no controller
 throw $compileMinErr('noctrl','Cannot bind to controller without directive \'{0}\'s controller.',directiveName);}return bindings;}function assertValidDirectiveName(name){var letter=name.charAt(0);if(!letter||letter!==lowercase(letter)){throw $compileMinErr('baddir','Directive/Component name \'{0}\' is invalid. The first character must be a lowercase letter',name);}if(name!==name.trim()){throw $compileMinErr('baddir','Directive/Component name \'{0}\' is invalid. The name should not contain leading or trailing whitespaces',name);}}function getDirectiveRequire(directive){var require=directive.require||directive.controller&&directive.name;if(!isArray(require)&&isObject(require)){forEach(require,function(value,key){var match=value.match(REQUIRE_PREFIX_REGEXP);var name=value.substring(match[0].length);if(!name)require[key]=match[0]+key;});}return require;}function getDirectiveRestrict(restrict,name){if(restrict&&!(isString(restrict)&&/[EACM]/.test(restrict))){throw $compileMinErr('badrestrict','Restrict property \'{0}\' of directive \'{1}\' is invalid',restrict,name);}return restrict||'EA';}/**
    * @ngdoc method
    * @name $compileProvider#directive
@@ -20310,7 +20310,7 @@ if(!dst.hasOwnProperty(key)&&key.charAt(0)!=='$'){dst[key]=value;if(key!=='class
 // an isolate scope
 markDirectiveScope(templateDirectives,true);}directives=templateDirectives.concat(directives);mergeTemplateAttributes(tAttrs,tempTemplateAttrs);}else{compileNode=beforeTemplateCompileNode;$compileNode.html(content);}directives.unshift(derivedSyncDirective);afterTemplateNodeLinkFn=applyDirectivesToNode(directives,compileNode,tAttrs,childTranscludeFn,$compileNode,origAsyncDirective,preLinkFns,postLinkFns,previousCompileContext);forEach($rootElement,function(node,i){if(node===compileNode){$rootElement[i]=$compileNode[0];}});afterTemplateChildLinkFn=compileNodes($compileNode[0].childNodes,childTranscludeFn);while(linkQueue.length){var scope=linkQueue.shift(),beforeTemplateLinkNode=linkQueue.shift(),linkRootElement=linkQueue.shift(),boundTranscludeFn=linkQueue.shift(),linkNode=$compileNode[0];if(scope.$$destroyed)continue;if(beforeTemplateLinkNode!==beforeTemplateCompileNode){var oldClasses=beforeTemplateLinkNode.className;if(!(previousCompileContext.hasElementTranscludeDirective&&origAsyncDirective.replace)){// it was cloned therefore we have to clone as well.
 linkNode=jqLiteClone(compileNode);}replaceWith(linkRootElement,jqLite(beforeTemplateLinkNode),linkNode);// Copy in CSS classes from original node
-safeAddClass(jqLite(linkNode),oldClasses);}if(afterTemplateNodeLinkFn.transcludeOnThisElement){childBoundTranscludeFn=createBoundTranscludeFn(scope,afterTemplateNodeLinkFn.transclude,boundTranscludeFn);}else{childBoundTranscludeFn=boundTranscludeFn;}afterTemplateNodeLinkFn(afterTemplateChildLinkFn,scope,linkNode,$rootElement,childBoundTranscludeFn);}linkQueue=null;}).catch(function(error){if(error instanceof Error){$exceptionHandler(error);}}).catch(noop);return function delayedNodeLinkFn(ignoreChildLinkFn,scope,node,rootElement,boundTranscludeFn){var childBoundTranscludeFn=boundTranscludeFn;if(scope.$$destroyed)return;if(linkQueue){linkQueue.push(scope,node,rootElement,childBoundTranscludeFn);}else{if(afterTemplateNodeLinkFn.transcludeOnThisElement){childBoundTranscludeFn=createBoundTranscludeFn(scope,afterTemplateNodeLinkFn.transclude,boundTranscludeFn);}afterTemplateNodeLinkFn(afterTemplateChildLinkFn,scope,node,rootElement,childBoundTranscludeFn);}};}/**
+safeAddClass(jqLite(linkNode),oldClasses);}if(afterTemplateNodeLinkFn.transcludeOnThisElement){childBoundTranscludeFn=createBoundTranscludeFn(scope,afterTemplateNodeLinkFn.transclude,boundTranscludeFn);}else{childBoundTranscludeFn=boundTranscludeFn;}afterTemplateNodeLinkFn(afterTemplateChildLinkFn,scope,linkNode,$rootElement,childBoundTranscludeFn);}linkQueue=null;}).catch(function(error){if(error instanceof Error){$exceptionHandler(error);}});return function delayedNodeLinkFn(ignoreChildLinkFn,scope,node,rootElement,boundTranscludeFn){var childBoundTranscludeFn=boundTranscludeFn;if(scope.$$destroyed)return;if(linkQueue){linkQueue.push(scope,node,rootElement,childBoundTranscludeFn);}else{if(afterTemplateNodeLinkFn.transcludeOnThisElement){childBoundTranscludeFn=createBoundTranscludeFn(scope,afterTemplateNodeLinkFn.transclude,boundTranscludeFn);}afterTemplateNodeLinkFn(afterTemplateChildLinkFn,scope,node,rootElement,childBoundTranscludeFn);}};}/**
      * Sorting function for bound directives.
      */function byPriority(a,b){var diff=b.priority-a.priority;if(diff!==0)return diff;if(a.name!==b.name)return a.name<b.name?-1:1;return a.index-b.index;}function assertNoDuplicate(what,previousDirective,directive,element){function wrapModuleNameIfDefined(moduleName){return moduleName?' (module: '+moduleName+')':'';}if(previousDirective){throw $compileMinErr('multidir','Multiple directives [{0}{1}, {2}{3}] asking for {4} on: {5}',previousDirective.name,wrapModuleNameIfDefined(previousDirective.$$moduleName),directive.name,wrapModuleNameIfDefined(directive.$$moduleName),what,startingTag(element));}}function addTextInterpolateDirective(directives,text){var interpolateFn=$interpolate(text,true);if(interpolateFn){directives.push({priority:0,compile:function textInterpolateCompileFn(templateNode){var templateNodeParent=templateNode.parent(),hasCompileParent=!!templateNodeParent.length;// When transcluding a template that has bindings in the root
 // we don't have a parent and thus need to add the class during linking fn.
@@ -21398,7 +21398,7 @@ var resp=extend({},response);resp.data=transformData(response.data,response.head
 // our DOM and JS space.  So we require that the URL satisfies SCE.RESOURCE_URL.
 url=$sce.getTrustedResourceUrl(url);}else if(!isString(url)){// If it is not a string then the URL must be a $sce trusted object
 url=$sce.valueOf(url);}url=buildUrl(url,config.paramSerializer(config.params));if(isJsonp){// Check the url and add the JSONP callback placeholder
-url=sanitizeJsonpCallbackParam(url,config.jsonpCallbackParam);}$http.pendingRequests.push(config);promise.then(removePendingReq,removePendingReq);if((config.cache||defaults.cache)&&config.cache!==false&&(config.method==='GET'||config.method==='JSONP')){cache=isObject(config.cache)?config.cache:isObject(defaults.cache)?defaults.cache:defaultCache;}if(cache){cachedResp=cache.get(url);if(isDefined(cachedResp)){if(isPromiseLike(cachedResp)){// cached request has already been sent, but there is no response yet
+url=sanitizeJsonpCallbackParam(url,config.jsonpCallbackParam);}$http.pendingRequests.push(config);promise.then(removePendingReq,removePendingReq);if((config.cache||defaults.cache)&&config.cache!==false&&(config.method==='GET'||config.method==='JSONP')){cache=isObject(config.cache)?config.cache:isObject(/** @type {?} */defaults.cache)?/** @type {?} */defaults.cache:defaultCache;}if(cache){cachedResp=cache.get(url);if(isDefined(cachedResp)){if(isPromiseLike(cachedResp)){// cached request has already been sent, but there is no response yet
 cachedResp.then(resolvePromiseWithResult,resolvePromiseWithResult);}else{// serving from cache
 if(isArray(cachedResp)){resolvePromise(cachedResp[1],cachedResp[0],shallowCopy(cachedResp[2]),cachedResp[3]);}else{resolvePromise(cachedResp,200,{},'OK');}}}else{// put the promise for the non-transformed response into cache as a placeholder
 cache.put(url,promise);}}// if we won't have the response in cache, set the xsrf headers and
@@ -21892,7 +21892,7 @@ if(locationObj.$$path&&locationObj.$$path.charAt(0)!=='/'){locationObj.$$path='/
    * Compose url and update `absUrl` property
    * @private
    */this.$$compose=function(){var search=toKeyValue(this.$$search),hash=this.$$hash?'#'+encodeUriSegment(this.$$hash):'';this.$$url=encodePath(this.$$path)+(search?'?'+search:'')+hash;this.$$absUrl=appBaseNoFile+this.$$url.substr(1);// first char is always '/'
-};this.$$parseLinkUrl=function(url,relHref){if(relHref&&relHref[0]==='#'){// special case for links to hash fragments:
+this.$$urlUpdatedByLocation=true;};this.$$parseLinkUrl=function(url,relHref){if(relHref&&relHref[0]==='#'){// special case for links to hash fragments:
 // keep the old url and only replace the hash fragment
 this.hash(relHref.slice(1));return true;}var appUrl,prevAppUrl;var rewrittenUrl;if(isDefined(appUrl=stripBaseUrl(appBase,url))){prevAppUrl=appUrl;if(basePrefix&&isDefined(appUrl=stripBaseUrl(basePrefix,appUrl))){rewrittenUrl=appBaseNoFile+(stripBaseUrl('/',appUrl)||appUrl);}else{rewrittenUrl=appBase+prevAppUrl;}}else if(isDefined(appUrl=stripBaseUrl(appBaseNoFile,url))){rewrittenUrl=appBaseNoFile+appUrl;}else if(appBaseNoFile===url+'/'){rewrittenUrl=appBaseNoFile;}if(rewrittenUrl){this.$$parse(rewrittenUrl);}return!!rewrittenUrl;};}/**
  * LocationHashbangUrl represents URL
@@ -21913,7 +21913,7 @@ withoutHashUrl=stripBaseUrl(hashPrefix,withoutBaseUrl);if(isUndefined(withoutHas
 withoutHashUrl=withoutBaseUrl;}}else{// There was no hashbang path nor hash fragment:
 // If we are in HTML5 mode we use what is left as the path;
 // Otherwise we ignore what is left
-if(this.$$html5){withoutHashUrl=withoutBaseUrl;}else{withoutHashUrl='';if(isUndefined(withoutBaseUrl)){appBase=url;this.replace();}}}parseAppUrl(withoutHashUrl,this);this.$$path=removeWindowsDriveName(this.$$path,withoutHashUrl,appBase);this.$$compose();/*
+if(this.$$html5){withoutHashUrl=withoutBaseUrl;}else{withoutHashUrl='';if(isUndefined(withoutBaseUrl)){appBase=url;/** @type {?} */this.replace();}}}parseAppUrl(withoutHashUrl,this);this.$$path=removeWindowsDriveName(this.$$path,withoutHashUrl,appBase);this.$$compose();/*
      * In Windows, on an anchor node on documents loaded from
      * the filesystem, the browser will return a pathname
      * prefixed with the drive name ('/C:/path') when a
@@ -21931,7 +21931,7 @@ if(startsWith(url,base)){url=url.replace(base,'');}// The input URL intentionall
 if(windowsFilePathExp.exec(url)){return path;}firstPathSegmentMatch=windowsFilePathExp.exec(path);return firstPathSegmentMatch?firstPathSegmentMatch[1]:path;}};/**
    * Compose hashbang URL and update `absUrl` property
    * @private
-   */this.$$compose=function(){var search=toKeyValue(this.$$search),hash=this.$$hash?'#'+encodeUriSegment(this.$$hash):'';this.$$url=encodePath(this.$$path)+(search?'?'+search:'')+hash;this.$$absUrl=appBase+(this.$$url?hashPrefix+this.$$url:'');};this.$$parseLinkUrl=function(url,relHref){if(stripHash(appBase)===stripHash(url)){this.$$parse(url);return true;}return false;};}/**
+   */this.$$compose=function(){var search=toKeyValue(this.$$search),hash=this.$$hash?'#'+encodeUriSegment(this.$$hash):'';this.$$url=encodePath(this.$$path)+(search?'?'+search:'')+hash;this.$$absUrl=appBase+(this.$$url?hashPrefix+this.$$url:'');this.$$urlUpdatedByLocation=true;};this.$$parseLinkUrl=function(url,relHref){if(stripHash(appBase)===stripHash(url)){this.$$parse(url);return true;}return false;};}/**
  * LocationHashbangUrl represents URL
  * This object is exposed as $location service when html5 history api is enabled but the browser
  * does not support it.
@@ -21943,7 +21943,7 @@ if(windowsFilePathExp.exec(url)){return path;}firstPathSegmentMatch=windowsFileP
  */function LocationHashbangInHtml5Url(appBase,appBaseNoFile,hashPrefix){this.$$html5=true;LocationHashbangUrl.apply(this,arguments);this.$$parseLinkUrl=function(url,relHref){if(relHref&&relHref[0]==='#'){// special case for links to hash fragments:
 // keep the old url and only replace the hash fragment
 this.hash(relHref.slice(1));return true;}var rewrittenUrl;var appUrl;if(appBase===stripHash(url)){rewrittenUrl=url;}else if(appUrl=stripBaseUrl(appBaseNoFile,url)){rewrittenUrl=appBase+hashPrefix+appUrl;}else if(appBaseNoFile===url+'/'){rewrittenUrl=appBaseNoFile;}if(rewrittenUrl){this.$$parse(rewrittenUrl);}return!!rewrittenUrl;};this.$$compose=function(){var search=toKeyValue(this.$$search),hash=this.$$hash?'#'+encodeUriSegment(this.$$hash):'';this.$$url=encodePath(this.$$path)+(search?'?'+search:'')+hash;// include hashPrefix in $$absUrl when $$url is empty so IE9 does not reload page because of removal of '#'
-this.$$absUrl=appBase+hashPrefix+this.$$url;};}var locationPrototype={/**
+this.$$absUrl=appBase+hashPrefix+this.$$url;this.$$urlUpdatedByLocation=true;};}var locationPrototype={/**
    * Ensure absolute URL is initialized.
    * @private
    */$$absUrl:'',/**
@@ -22165,7 +22165,7 @@ forEach(search,function(value,key){if(value==null)delete search[key];});this.$$s
    */Location.prototype.state=function(state){if(!arguments.length){return this.$$state;}if(Location!==LocationHtml5Url||!this.$$html5){throw $locationMinErr('nostate','History API state support is available only '+'in HTML5 mode and only in browsers supporting HTML5 History API');}// The user might modify `stateObject` after invoking `$location.state(stateObject)`
 // but we're changing the $$state reference to $browser.state() during the $digest
 // so the modification window is narrow.
-this.$$state=isUndefined(state)?null:state;return this;};});function locationGetter(property){return(/** @this */function(){return this[property];});}function locationGetterSetter(property,preprocess){return(/** @this */function(value){if(isUndefined(value)){return this[property];}this[property]=preprocess(value);this.$$compose();return this;});}/**
+this.$$state=isUndefined(state)?null:state;this.$$urlUpdatedByLocation=true;return this;};});function locationGetter(property){return(/** @this */function(){return this[property];});}function locationGetterSetter(property,preprocess){return(/** @this */function(value){if(isUndefined(value)){return this[property];}this[property]=preprocess(value);this.$$compose();return this;});}/**
  * @ngdoc service
  * @name $location
  *
@@ -22285,9 +22285,9 @@ $browser.onUrlChange(function(newUrl,newState){if(!startsWith(newUrl,appBaseNoFi
 $window.location.href=newUrl;return;}$rootScope.$evalAsync(function(){var oldUrl=$location.absUrl();var oldState=$location.$$state;var defaultPrevented;newUrl=trimEmptyHash(newUrl);$location.$$parse(newUrl);$location.$$state=newState;defaultPrevented=$rootScope.$broadcast('$locationChangeStart',newUrl,oldUrl,newState,oldState).defaultPrevented;// if the location was changed by a `$locationChangeStart` handler then stop
 // processing this location change
 if($location.absUrl()!==newUrl)return;if(defaultPrevented){$location.$$parse(oldUrl);$location.$$state=oldState;setBrowserUrlWithFallback(oldUrl,false,oldState);}else{initializing=false;afterLocationChange(oldUrl,oldState);}});if(!$rootScope.$$phase)$rootScope.$digest();});// update browser
-$rootScope.$watch(function $locationWatch(){var oldUrl=trimEmptyHash($browser.url());var newUrl=trimEmptyHash($location.absUrl());var oldState=$browser.state();var currentReplace=$location.$$replace;var urlOrStateChanged=oldUrl!==newUrl||$location.$$html5&&$sniffer.history&&oldState!==$location.$$state;if(initializing||urlOrStateChanged){initializing=false;$rootScope.$evalAsync(function(){var newUrl=$location.absUrl();var defaultPrevented=$rootScope.$broadcast('$locationChangeStart',newUrl,oldUrl,$location.$$state,oldState).defaultPrevented;// if the location was changed by a `$locationChangeStart` handler then stop
+$rootScope.$watch(function $locationWatch(){if(initializing||$location.$$urlUpdatedByLocation){$location.$$urlUpdatedByLocation=false;var oldUrl=trimEmptyHash($browser.url());var newUrl=trimEmptyHash($location.absUrl());var oldState=$browser.state();var currentReplace=$location.$$replace;var urlOrStateChanged=oldUrl!==newUrl||$location.$$html5&&$sniffer.history&&oldState!==$location.$$state;if(initializing||urlOrStateChanged){initializing=false;$rootScope.$evalAsync(function(){var newUrl=$location.absUrl();var defaultPrevented=$rootScope.$broadcast('$locationChangeStart',newUrl,oldUrl,$location.$$state,oldState).defaultPrevented;// if the location was changed by a `$locationChangeStart` handler then stop
 // processing this location change
-if($location.absUrl()!==newUrl)return;if(defaultPrevented){$location.$$parse(oldUrl);$location.$$state=oldState;}else{if(urlOrStateChanged){setBrowserUrlWithFallback(newUrl,currentReplace,oldState===$location.$$state?null:$location.$$state);}afterLocationChange(oldUrl,oldState);}});}$location.$$replace=false;// we don't need to return anything because $evalAsync will make the digest loop dirty when
+if($location.absUrl()!==newUrl)return;if(defaultPrevented){$location.$$parse(oldUrl);$location.$$state=oldState;}else{if(urlOrStateChanged){setBrowserUrlWithFallback(newUrl,currentReplace,oldState===$location.$$state?null:$location.$$state);}afterLocationChange(oldUrl,oldState);}});}}$location.$$replace=false;// we don't need to return anything because $evalAsync will make the digest loop dirty when
 // there is a change
 });return $location;function afterLocationChange(oldUrl,oldState){$rootScope.$broadcast('$locationChangeSuccess',$location.absUrl(),oldUrl,$location.$$state,oldState);}}];}/**
  * @ngdoc service
@@ -22417,7 +22417,7 @@ return(ch.charCodeAt(0)<<10)+ch.charCodeAt(1)-0x35FDC00;},peekMultichar:function
 AST.NGValueParameter='NGValueParameter';AST.prototype={ast:function(text){this.text=text;this.tokens=this.lexer.lex(text);var value=this.program();if(this.tokens.length!==0){this.throwError('is an unexpected token',this.tokens[0]);}return value;},program:function(){var body=[];while(true){if(this.tokens.length>0&&!this.peek('}',')',';',']'))body.push(this.expressionStatement());if(!this.expect(';')){return{type:AST.Program,body:body};}}},expressionStatement:function(){return{type:AST.ExpressionStatement,expression:this.filterChain()};},filterChain:function(){var left=this.expression();while(this.expect('|')){left=this.filter(left);}return left;},expression:function(){return this.assignment();},assignment:function(){var result=this.ternary();if(this.expect('=')){if(!isAssignable(result)){throw $parseMinErr('lval','Trying to assign a value to a non l-value');}result={type:AST.AssignmentExpression,left:result,right:this.assignment(),operator:'='};}return result;},ternary:function(){var test=this.logicalOR();var alternate;var consequent;if(this.expect('?')){alternate=this.expression();if(this.consume(':')){consequent=this.expression();return{type:AST.ConditionalExpression,test:test,alternate:alternate,consequent:consequent};}}return test;},logicalOR:function(){var left=this.logicalAND();while(this.expect('||')){left={type:AST.LogicalExpression,operator:'||',left:left,right:this.logicalAND()};}return left;},logicalAND:function(){var left=this.equality();while(this.expect('&&')){left={type:AST.LogicalExpression,operator:'&&',left:left,right:this.equality()};}return left;},equality:function(){var left=this.relational();var token;while(token=this.expect('==','!=','===','!==')){left={type:AST.BinaryExpression,operator:token.text,left:left,right:this.relational()};}return left;},relational:function(){var left=this.additive();var token;while(token=this.expect('<','>','<=','>=')){left={type:AST.BinaryExpression,operator:token.text,left:left,right:this.additive()};}return left;},additive:function(){var left=this.multiplicative();var token;while(token=this.expect('+','-')){left={type:AST.BinaryExpression,operator:token.text,left:left,right:this.multiplicative()};}return left;},multiplicative:function(){var left=this.unary();var token;while(token=this.expect('*','/','%')){left={type:AST.BinaryExpression,operator:token.text,left:left,right:this.unary()};}return left;},unary:function(){var token;if(token=this.expect('+','-','!')){return{type:AST.UnaryExpression,operator:token.text,prefix:true,argument:this.unary()};}else{return this.primary();}},primary:function(){var primary;if(this.expect('(')){primary=this.filterChain();this.consume(')');}else if(this.expect('[')){primary=this.arrayDeclaration();}else if(this.expect('{')){primary=this.object();}else if(this.selfReferential.hasOwnProperty(this.peek().text)){primary=copy(this.selfReferential[this.consume().text]);}else if(this.options.literals.hasOwnProperty(this.peek().text)){primary={type:AST.Literal,value:this.options.literals[this.consume().text]};}else if(this.peek().identifier){primary=this.identifier();}else if(this.peek().constant){primary=this.constant();}else{this.throwError('not a primary expression',this.peek());}var next;while(next=this.expect('(','[','.')){if(next.text==='('){primary={type:AST.CallExpression,callee:primary,arguments:this.parseArguments()};this.consume(')');}else if(next.text==='['){primary={type:AST.MemberExpression,object:primary,property:this.expression(),computed:true};this.consume(']');}else if(next.text==='.'){primary={type:AST.MemberExpression,object:primary,property:this.identifier(),computed:false};}else{this.throwError('IMPOSSIBLE');}}return primary;},filter:function(baseExpression){var args=[baseExpression];var result={type:AST.CallExpression,callee:this.identifier(),arguments:args,filter:true};while(this.expect(':')){args.push(this.expression());}return result;},parseArguments:function(){var args=[];if(this.peekToken().text!==')'){do{args.push(this.filterChain());}while(this.expect(','));}return args;},identifier:function(){var token=this.consume();if(!token.identifier){this.throwError('is not a valid identifier',token);}return{type:AST.Identifier,name:token.text};},constant:function(){// TODO check that it is a constant
 return{type:AST.Literal,value:this.consume().value};},arrayDeclaration:function(){var elements=[];if(this.peekToken().text!==']'){do{if(this.peek(']')){// Support trailing commas per ES5.1.
 break;}elements.push(this.expression());}while(this.expect(','));}this.consume(']');return{type:AST.ArrayExpression,elements:elements};},object:function(){var properties=[],property;if(this.peekToken().text!=='}'){do{if(this.peek('}')){// Support trailing commas per ES5.1.
-break;}property={type:AST.Property,kind:'init'};if(this.peek().constant){property.key=this.constant();property.computed=false;this.consume(':');property.value=this.expression();}else if(this.peek().identifier){property.key=this.identifier();property.computed=false;if(this.peek(':')){this.consume(':');property.value=this.expression();}else{property.value=property.key;}}else if(this.peek('[')){this.consume('[');property.key=this.expression();this.consume(']');property.computed=true;this.consume(':');property.value=this.expression();}else{this.throwError('invalid key',this.peek());}properties.push(property);}while(this.expect(','));}this.consume('}');return{type:AST.ObjectExpression,properties:properties};},throwError:function(msg,token){throw $parseMinErr('syntax','Syntax Error: Token \'{0}\' {1} at column {2} of the expression [{3}] starting at [{4}].',token.text,msg,token.index+1,this.text,this.text.substring(token.index));},consume:function(e1){if(this.tokens.length===0){throw $parseMinErr('ueoe','Unexpected end of expression: {0}',this.text);}var token=this.expect(e1);if(!token){this.throwError('is unexpected, expecting ['+e1+']',this.peek());}return token;},peekToken:function(){if(this.tokens.length===0){throw $parseMinErr('ueoe','Unexpected end of expression: {0}',this.text);}return this.tokens[0];},peek:function(e1,e2,e3,e4){return this.peekAhead(0,e1,e2,e3,e4);},peekAhead:function(i,e1,e2,e3,e4){if(this.tokens.length>i){var token=this.tokens[i];var t=token.text;if(t===e1||t===e2||t===e3||t===e4||!e1&&!e2&&!e3&&!e4){return token;}}return false;},expect:function(e1,e2,e3,e4){var token=this.peek(e1,e2,e3,e4);if(token){this.tokens.shift();return token;}return false;},selfReferential:{'this':{type:AST.ThisExpression},'$locals':{type:AST.LocalsExpression}}};function ifDefined(v,d){return typeof v!=='undefined'?v:d;}function plusFn(l,r){if(typeof l==='undefined')return r;if(typeof r==='undefined')return l;return l+r;}function isStateless($filter,filterName){var fn=$filter(filterName);return!fn.$stateful;}function findConstantAndWatchExpressions(ast,$filter){var allConstants;var argsToWatch;var isStatelessFilter;switch(ast.type){case AST.Program:allConstants=true;forEach(ast.body,function(expr){findConstantAndWatchExpressions(expr.expression,$filter);allConstants=allConstants&&expr.expression.constant;});ast.constant=allConstants;break;case AST.Literal:ast.constant=true;ast.toWatch=[];break;case AST.UnaryExpression:findConstantAndWatchExpressions(ast.argument,$filter);ast.constant=ast.argument.constant;ast.toWatch=ast.argument.toWatch;break;case AST.BinaryExpression:findConstantAndWatchExpressions(ast.left,$filter);findConstantAndWatchExpressions(ast.right,$filter);ast.constant=ast.left.constant&&ast.right.constant;ast.toWatch=ast.left.toWatch.concat(ast.right.toWatch);break;case AST.LogicalExpression:findConstantAndWatchExpressions(ast.left,$filter);findConstantAndWatchExpressions(ast.right,$filter);ast.constant=ast.left.constant&&ast.right.constant;ast.toWatch=ast.constant?[]:[ast];break;case AST.ConditionalExpression:findConstantAndWatchExpressions(ast.test,$filter);findConstantAndWatchExpressions(ast.alternate,$filter);findConstantAndWatchExpressions(ast.consequent,$filter);ast.constant=ast.test.constant&&ast.alternate.constant&&ast.consequent.constant;ast.toWatch=ast.constant?[]:[ast];break;case AST.Identifier:ast.constant=false;ast.toWatch=[ast];break;case AST.MemberExpression:findConstantAndWatchExpressions(ast.object,$filter);if(ast.computed){findConstantAndWatchExpressions(ast.property,$filter);}ast.constant=ast.object.constant&&(!ast.computed||ast.property.constant);ast.toWatch=[ast];break;case AST.CallExpression:isStatelessFilter=ast.filter?isStateless($filter,ast.callee.name):false;allConstants=isStatelessFilter;argsToWatch=[];forEach(ast.arguments,function(expr){findConstantAndWatchExpressions(expr,$filter);allConstants=allConstants&&expr.constant;if(!expr.constant){argsToWatch.push.apply(argsToWatch,expr.toWatch);}});ast.constant=allConstants;ast.toWatch=isStatelessFilter?argsToWatch:[ast];break;case AST.AssignmentExpression:findConstantAndWatchExpressions(ast.left,$filter);findConstantAndWatchExpressions(ast.right,$filter);ast.constant=ast.left.constant&&ast.right.constant;ast.toWatch=[ast];break;case AST.ArrayExpression:allConstants=true;argsToWatch=[];forEach(ast.elements,function(expr){findConstantAndWatchExpressions(expr,$filter);allConstants=allConstants&&expr.constant;if(!expr.constant){argsToWatch.push.apply(argsToWatch,expr.toWatch);}});ast.constant=allConstants;ast.toWatch=argsToWatch;break;case AST.ObjectExpression:allConstants=true;argsToWatch=[];forEach(ast.properties,function(property){findConstantAndWatchExpressions(property.value,$filter);allConstants=allConstants&&property.value.constant&&!property.computed;if(!property.value.constant){argsToWatch.push.apply(argsToWatch,property.value.toWatch);}});ast.constant=allConstants;ast.toWatch=argsToWatch;break;case AST.ThisExpression:ast.constant=false;ast.toWatch=[];break;case AST.LocalsExpression:ast.constant=false;ast.toWatch=[];break;}}function getInputs(body){if(body.length!==1)return;var lastExpression=body[0].expression;var candidate=lastExpression.toWatch;if(candidate.length!==1)return candidate;return candidate[0]!==lastExpression?candidate:undefined;}function isAssignable(ast){return ast.type===AST.Identifier||ast.type===AST.MemberExpression;}function assignableAST(ast){if(ast.body.length===1&&isAssignable(ast.body[0].expression)){return{type:AST.AssignmentExpression,left:ast.body[0].expression,right:{type:AST.NGValueParameter},operator:'='};}}function isLiteral(ast){return ast.body.length===0||ast.body.length===1&&(ast.body[0].expression.type===AST.Literal||ast.body[0].expression.type===AST.ArrayExpression||ast.body[0].expression.type===AST.ObjectExpression);}function isConstant(ast){return ast.constant;}function ASTCompiler(astBuilder,$filter){this.astBuilder=astBuilder;this.$filter=$filter;}ASTCompiler.prototype={compile:function(expression){var self=this;var ast=this.astBuilder.ast(expression);this.state={nextId:0,filters:{},fn:{vars:[],body:[],own:{}},assign:{vars:[],body:[],own:{}},inputs:[]};findConstantAndWatchExpressions(ast,self.$filter);var extra='';var assignable;this.stage='assign';if(assignable=assignableAST(ast)){this.state.computing='assign';var result=this.nextId();this.recurse(assignable,result);this.return_(result);extra='fn.assign='+this.generateFunction('assign','s,v,l');}var toWatch=getInputs(ast.body);self.stage='inputs';forEach(toWatch,function(watch,key){var fnKey='fn'+key;self.state[fnKey]={vars:[],body:[],own:{}};self.state.computing=fnKey;var intoId=self.nextId();self.recurse(watch,intoId);self.return_(intoId);self.state.inputs.push(fnKey);watch.watchId=key;});this.state.computing='fn';this.stage='main';this.recurse(ast);var fnString=// The build and minification steps remove the string "use strict" from the code, but this is done using a regex.
+break;}property={type:AST.Property,kind:'init'};if(this.peek().constant){property.key=this.constant();property.computed=false;this.consume(':');property.value=this.expression();}else if(this.peek().identifier){property.key=this.identifier();property.computed=false;if(this.peek(':')){this.consume(':');property.value=this.expression();}else{property.value=property.key;}}else if(this.peek('[')){this.consume('[');property.key=this.expression();this.consume(']');property.computed=true;this.consume(':');property.value=this.expression();}else{this.throwError('invalid key',this.peek());}properties.push(property);}while(this.expect(','));}this.consume('}');return{type:AST.ObjectExpression,properties:properties};},throwError:function(msg,token){throw $parseMinErr('syntax','Syntax Error: Token \'{0}\' {1} at column {2} of the expression [{3}] starting at [{4}].',token.text,msg,token.index+1,this.text,this.text.substring(token.index));},consume:function(e1){if(this.tokens.length===0){throw $parseMinErr('ueoe','Unexpected end of expression: {0}',this.text);}var token=this.expect(e1);if(!token){this.throwError('is unexpected, expecting ['+e1+']',this.peek());}return token;},peekToken:function(){if(this.tokens.length===0){throw $parseMinErr('ueoe','Unexpected end of expression: {0}',this.text);}return this.tokens[0];},peek:function(e1,e2,e3,e4){return this.peekAhead(0,e1,e2,e3,e4);},peekAhead:function(i,e1,e2,e3,e4){if(this.tokens.length>i){var token=this.tokens[i];var t=token.text;if(t===e1||t===e2||t===e3||t===e4||!e1&&!e2&&!e3&&!e4){return token;}}return false;},expect:function(e1,e2,e3,e4){var token=this.peek(e1,e2,e3,e4);if(token){this.tokens.shift();return token;}return false;},selfReferential:{'this':{type:AST.ThisExpression},'$locals':{type:AST.LocalsExpression}}};function ifDefined(v,d){return typeof v!=='undefined'?v:d;}function plusFn(l,r){if(typeof l==='undefined')return r;if(typeof r==='undefined')return l;return l+r;}function isStateless($filter,filterName){var fn=$filter(filterName);return!fn.$stateful;}function findConstantAndWatchExpressions(ast,$filter){var allConstants;var argsToWatch;var isStatelessFilter;switch(ast.type){case AST.Program:allConstants=true;forEach(ast.body,function(expr){findConstantAndWatchExpressions(expr.expression,$filter);allConstants=allConstants&&expr.expression.constant;});ast.constant=allConstants;break;case AST.Literal:ast.constant=true;ast.toWatch=[];break;case AST.UnaryExpression:findConstantAndWatchExpressions(ast.argument,$filter);ast.constant=ast.argument.constant;ast.toWatch=ast.argument.toWatch;break;case AST.BinaryExpression:findConstantAndWatchExpressions(ast.left,$filter);findConstantAndWatchExpressions(ast.right,$filter);ast.constant=ast.left.constant&&ast.right.constant;ast.toWatch=ast.left.toWatch.concat(ast.right.toWatch);break;case AST.LogicalExpression:findConstantAndWatchExpressions(ast.left,$filter);findConstantAndWatchExpressions(ast.right,$filter);ast.constant=ast.left.constant&&ast.right.constant;ast.toWatch=ast.constant?[]:[ast];break;case AST.ConditionalExpression:findConstantAndWatchExpressions(ast.test,$filter);findConstantAndWatchExpressions(ast.alternate,$filter);findConstantAndWatchExpressions(ast.consequent,$filter);ast.constant=ast.test.constant&&ast.alternate.constant&&ast.consequent.constant;ast.toWatch=ast.constant?[]:[ast];break;case AST.Identifier:ast.constant=false;ast.toWatch=[ast];break;case AST.MemberExpression:findConstantAndWatchExpressions(ast.object,$filter);if(ast.computed){findConstantAndWatchExpressions(ast.property,$filter);}ast.constant=ast.object.constant&&(!ast.computed||ast.property.constant);ast.toWatch=[ast];break;case AST.CallExpression:isStatelessFilter=ast.filter?isStateless($filter,ast.callee.name):false;allConstants=isStatelessFilter;argsToWatch=[];forEach(ast.arguments,function(expr){findConstantAndWatchExpressions(expr,$filter);allConstants=allConstants&&expr.constant;if(!expr.constant){argsToWatch.push.apply(argsToWatch,expr.toWatch);}});ast.constant=allConstants;ast.toWatch=isStatelessFilter?argsToWatch:[ast];break;case AST.AssignmentExpression:findConstantAndWatchExpressions(ast.left,$filter);findConstantAndWatchExpressions(ast.right,$filter);ast.constant=ast.left.constant&&ast.right.constant;ast.toWatch=[ast];break;case AST.ArrayExpression:allConstants=true;argsToWatch=[];forEach(ast.elements,function(expr){findConstantAndWatchExpressions(expr,$filter);allConstants=allConstants&&expr.constant;if(!expr.constant){argsToWatch.push.apply(argsToWatch,expr.toWatch);}});ast.constant=allConstants;ast.toWatch=argsToWatch;break;case AST.ObjectExpression:allConstants=true;argsToWatch=[];forEach(ast.properties,function(property){findConstantAndWatchExpressions(property.value,$filter);allConstants=allConstants&&property.value.constant&&!property.computed;if(!property.value.constant){argsToWatch.push.apply(argsToWatch,property.value.toWatch);}if(property.computed){findConstantAndWatchExpressions(property.key,$filter);if(!property.key.constant){argsToWatch.push.apply(argsToWatch,property.key.toWatch);}}});ast.constant=allConstants;ast.toWatch=argsToWatch;break;case AST.ThisExpression:ast.constant=false;ast.toWatch=[];break;case AST.LocalsExpression:ast.constant=false;ast.toWatch=[];break;}}function getInputs(body){if(body.length!==1)return;var lastExpression=body[0].expression;var candidate=lastExpression.toWatch;if(candidate.length!==1)return candidate;return candidate[0]!==lastExpression?candidate:undefined;}function isAssignable(ast){return ast.type===AST.Identifier||ast.type===AST.MemberExpression;}function assignableAST(ast){if(ast.body.length===1&&isAssignable(ast.body[0].expression)){return{type:AST.AssignmentExpression,left:ast.body[0].expression,right:{type:AST.NGValueParameter},operator:'='};}}function isLiteral(ast){return ast.body.length===0||ast.body.length===1&&(ast.body[0].expression.type===AST.Literal||ast.body[0].expression.type===AST.ArrayExpression||ast.body[0].expression.type===AST.ObjectExpression);}function isConstant(ast){return ast.constant;}function ASTCompiler(astBuilder,$filter){this.astBuilder=astBuilder;this.$filter=$filter;}ASTCompiler.prototype={compile:function(expression){var self=this;var ast=this.astBuilder.ast(expression);this.state={nextId:0,filters:{},fn:{vars:[],body:[],own:{}},assign:{vars:[],body:[],own:{}},inputs:[]};findConstantAndWatchExpressions(ast,self.$filter);var extra='';var assignable;this.stage='assign';if(assignable=assignableAST(ast)){this.state.computing='assign';var result=this.nextId();this.recurse(assignable,result);this.return_(result);extra='fn.assign='+this.generateFunction('assign','s,v,l');}var toWatch=getInputs(ast.body);self.stage='inputs';forEach(toWatch,function(watch,key){var fnKey='fn'+key;self.state[fnKey]={vars:[],body:[],own:{}};self.state.computing=fnKey;var intoId=self.nextId();self.recurse(watch,intoId);self.return_(intoId);self.state.inputs.push(fnKey);watch.watchId=key;});this.state.computing='fn';this.stage='main';this.recurse(ast);var fnString=// The build and minification steps remove the string "use strict" from the code, but this is done using a regex.
 // This is a workaround for this until we do a better job at only removing the prefix only when we should.
 '"'+this.USE+' '+this.STRICT+'";\n'+this.filterPrefix()+'var fn='+this.generateFunction('fn','s,l,a,i')+extra+this.watchFns()+'return fn;';// eslint-disable-next-line no-new-func
 var fn=new Function('$filter','getStringValue','ifDefined','plus',fnString)(this.$filter,getStringValue,ifDefined,plusFn);this.state=this.stage=undefined;fn.literal=isLiteral(ast);fn.constant=isConstant(ast);return fn;},USE:'use',STRICT:'strict',watchFns:function(){var result=[];var fns=this.state.inputs;var self=this;forEach(fns,function(name){result.push('var '+name+'='+self.generateFunction(name,'s'));});if(fns.length){result.push('fn.inputs=['+fns.join(',')+'];');}return result.join('');},generateFunction:function(name,params){return'function('+params+'){'+this.varsPrefix(name)+this.body(name)+'};';},filterPrefix:function(){var parts=[];var self=this;forEach(this.state.filters,function(id,filter){parts.push(id+'=$filter('+self.escape(filter)+')');});if(parts.length)return'var '+parts.join(',')+';';return'';},varsPrefix:function(section){return this.state[section].vars.length?'var '+this.state[section].vars.join(',')+';':'';},body:function(section){return this.state[section].body.join('');},recurse:function(ast,intoId,nameId,recursionFn,create,skipWatchIdCheck){var left,right,self=this,args,expression,computed;recursionFn=recursionFn||noop;if(!skipWatchIdCheck&&isDefined(ast.watchId)){intoId=intoId||this.nextId();this.if_('i',this.lazyAssign(intoId,this.computedMember('i',ast.watchId)),this.lazyRecurse(ast,intoId,nameId,recursionFn,create,true));return;}switch(ast.type){case AST.Program:forEach(ast.body,function(expression,pos){self.recurse(expression.expression,undefined,undefined,function(expr){right=expr;});if(pos!==ast.body.length-1){self.current().body.push(right,';');}else{self.return_(right);}});break;case AST.Literal:expression=this.escape(ast.value);this.assign(intoId,expression);recursionFn(intoId||expression);break;case AST.UnaryExpression:this.recurse(ast.argument,undefined,undefined,function(expr){right=expr;});expression=ast.operator+'('+this.ifDefined(right,0)+')';this.assign(intoId,expression);recursionFn(expression);break;case AST.BinaryExpression:this.recurse(ast.left,undefined,undefined,function(expr){left=expr;});this.recurse(ast.right,undefined,undefined,function(expr){right=expr;});if(ast.operator==='+'){expression=this.plus(left,right);}else if(ast.operator==='-'){expression=this.ifDefined(left,0)+ast.operator+this.ifDefined(right,0);}else{expression='('+left+')'+ast.operator+'('+right+')';}this.assign(intoId,expression);recursionFn(expression);break;case AST.LogicalExpression:intoId=intoId||this.nextId();self.recurse(ast.left,intoId);self.if_(ast.operator==='&&'?intoId:self.not(intoId),self.lazyRecurse(ast.right,intoId));recursionFn(intoId);break;case AST.ConditionalExpression:intoId=intoId||this.nextId();self.recurse(ast.test,intoId);self.if_(intoId,self.lazyRecurse(ast.alternate,intoId),self.lazyRecurse(ast.consequent,intoId));recursionFn(intoId);break;case AST.Identifier:intoId=intoId||this.nextId();if(nameId){nameId.context=self.stage==='inputs'?'s':this.assign(this.nextId(),this.getHasOwnProperty('l',ast.name)+'?l:s');nameId.computed=false;nameId.name=ast.name;}self.if_(self.stage==='inputs'||self.not(self.getHasOwnProperty('l',ast.name)),function(){self.if_(self.stage==='inputs'||'s',function(){if(create&&create!==1){self.if_(self.isNull(self.nonComputedMember('s',ast.name)),self.lazyAssign(self.nonComputedMember('s',ast.name),'{}'));}self.assign(intoId,self.nonComputedMember('s',ast.name));});},intoId&&self.lazyAssign(intoId,self.nonComputedMember('l',ast.name)));recursionFn(intoId);break;case AST.MemberExpression:left=nameId&&(nameId.context=this.nextId())||this.nextId();intoId=intoId||this.nextId();self.recurse(ast.object,left,undefined,function(){self.if_(self.notNull(left),function(){if(ast.computed){right=self.nextId();self.recurse(ast.property,right);self.getStringValue(right);if(create&&create!==1){self.if_(self.not(self.computedMember(left,right)),self.lazyAssign(self.computedMember(left,right),'{}'));}expression=self.computedMember(left,right);self.assign(intoId,expression);if(nameId){nameId.computed=true;nameId.name=right;}}else{if(create&&create!==1){self.if_(self.isNull(self.nonComputedMember(left,ast.property.name)),self.lazyAssign(self.nonComputedMember(left,ast.property.name),'{}'));}expression=self.nonComputedMember(left,ast.property.name);self.assign(intoId,expression);if(nameId){nameId.computed=false;nameId.name=ast.property.name;}}},function(){self.assign(intoId,'undefined');});recursionFn(intoId);},!!create);break;case AST.CallExpression:intoId=intoId||this.nextId();if(ast.filter){right=self.filter(ast.callee.name);args=[];forEach(ast.arguments,function(expr){var argument=self.nextId();self.recurse(expr,argument);args.push(argument);});expression=right+'('+args.join(',')+')';self.assign(intoId,expression);recursionFn(intoId);}else{right=self.nextId();left={};args=[];self.recurse(ast.callee,right,left,function(){self.if_(self.notNull(right),function(){forEach(ast.arguments,function(expr){self.recurse(expr,ast.constant?undefined:self.nextId(),undefined,function(argument){args.push(argument);});});if(left.name){expression=self.member(left.context,left.name,left.computed)+'('+args.join(',')+')';}else{expression=right+'('+args.join(',')+')';}self.assign(intoId,expression);},function(){self.assign(intoId,'undefined');});recursionFn(intoId);});}break;case AST.AssignmentExpression:right=this.nextId();left={};this.recurse(ast.left,undefined,left,function(){self.if_(self.notNull(left.context),function(){self.recurse(ast.right,right);expression=self.member(left.context,left.name,left.computed)+ast.operator+right;self.assign(intoId,expression);recursionFn(intoId||expression);});},1);break;case AST.ArrayExpression:args=[];forEach(ast.elements,function(expr){self.recurse(expr,ast.constant?undefined:self.nextId(),undefined,function(argument){args.push(argument);});});expression='['+args.join(',')+']';this.assign(intoId,expression);recursionFn(intoId||expression);break;case AST.ObjectExpression:args=[];computed=false;forEach(ast.properties,function(property){if(property.computed){computed=true;}});if(computed){intoId=intoId||this.nextId();this.assign(intoId,'{}');forEach(ast.properties,function(property){if(property.computed){left=self.nextId();self.recurse(property.key,left);}else{left=property.key.type===AST.Identifier?property.key.name:''+property.key.value;}right=self.nextId();self.recurse(property.value,right);self.assign(self.member(intoId,left,property.computed),right);});}else{forEach(ast.properties,function(property){self.recurse(property.value,ast.constant?undefined:self.nextId(),undefined,function(expr){args.push(self.escape(property.key.type===AST.Identifier?property.key.name:''+property.key.value)+':'+expr);});});expression='{'+args.join(',')+'}';this.assign(intoId,expression);}recursionFn(intoId||expression);break;case AST.ThisExpression:this.assign(intoId,'s');recursionFn(intoId||'s');break;case AST.LocalsExpression:this.assign(intoId,'l');recursionFn(intoId||'l');break;case AST.NGValueParameter:this.assign(intoId,'v');recursionFn(intoId||'v');break;}},getHasOwnProperty:function(element,property){var key=element+'.'+property;var own=this.current().own;if(!own.hasOwnProperty(key)){own[key]=this.nextId(false,element+'&&('+this.escape(property)+' in '+element+')');}return own[key];},assign:function(id,value){if(!id)return;this.current().body.push(id,'=',value,';');return id;},filter:function(filterName){if(!this.state.filters.hasOwnProperty(filterName)){this.state.filters[filterName]=this.nextId(true);}return this.state.filters[filterName];},ifDefined:function(id,defaultValue){return'ifDefined('+id+','+this.escape(defaultValue)+')';},plus:function(left,right){return'plus('+left+','+right+')';},return_:function(id){this.current().body.push('return ',id,';');},if_:function(test,alternate,consequent){if(test===true){alternate();}else{var body=this.current().body;body.push('if(',test,'){');alternate();body.push('}');if(consequent){body.push('else{');consequent();body.push('}');}}},not:function(expression){return'!('+expression+')';},isNull:function(expression){return expression+'==null';},notNull:function(expression){return expression+'!=null';},nonComputedMember:function(left,right){var SAFE_IDENTIFIER=/^[$_a-zA-Z][$_a-zA-Z0-9]*$/;var UNSAFE_CHARACTERS=/[^$_a-zA-Z0-9]/g;if(SAFE_IDENTIFIER.test(right)){return left+'.'+right;}else{return left+'["'+right.replace(UNSAFE_CHARACTERS,this.stringEscapeFn)+'"]';}},computedMember:function(left,right){return left+'['+right+']';},member:function(left,right,computed){if(computed)return this.computedMember(left,right);return this.nonComputedMember(left,right);},getStringValue:function(item){this.assign(item,'getStringValue('+item+')');},lazyRecurse:function(ast,intoId,nameId,recursionFn,create,skipWatchIdCheck){var self=this;return function(){self.recurse(ast,intoId,nameId,recursionFn,create,skipWatchIdCheck);};},lazyAssign:function(id,value){var self=this;return function(){self.assign(id,value);};},stringEscapeRegex:/[^ a-zA-Z0-9]/g,stringEscapeFn:function(c){return'\\u'+('0000'+c.charCodeAt(0).toString(16)).slice(-4);},escape:function(value){if(isString(value))return'\''+value.replace(this.stringEscapeRegex,this.stringEscapeFn)+'\'';if(isNumber(value))return value.toString();if(value===true)return'true';if(value===false)return'false';if(value===null)return'null';if(typeof value==='undefined')return'undefined';throw $parseMinErr('esc','IMPOSSIBLE');},nextId:function(skip,init){var id='v'+this.state.nextId++;if(!skip){this.current().vars.push(id+(init?'='+init:''));}return id;},current:function(){return this.state[this.state.computing];}};function ASTInterpreter(astBuilder,$filter){this.astBuilder=astBuilder;this.$filter=$filter;}ASTInterpreter.prototype={compile:function(expression){var self=this;var ast=this.astBuilder.ast(expression);findConstantAndWatchExpressions(ast,self.$filter);var assignable;var assign;if(assignable=assignableAST(ast)){assign=this.recurse(assignable);}var toWatch=getInputs(ast.body);var inputs;if(toWatch){inputs=[];forEach(toWatch,function(watch,key){var input=self.recurse(watch);watch.input=input;inputs.push(input);watch.watchId=key;});}var expressions=[];forEach(ast.body,function(expression){expressions.push(self.recurse(expression.expression));});var fn=ast.body.length===0?noop:ast.body.length===1?expressions[0]:function(scope,locals){var lastValue;forEach(expressions,function(exp){lastValue=exp(scope,locals);});return lastValue;};if(assign){fn.assign=function(scope,value,locals){return assign(scope,locals,value);};}if(inputs){fn.inputs=inputs;}fn.literal=isLiteral(ast);fn.constant=isConstant(ast);return fn;},recurse:function(ast,context,create){var left,right,self=this,args;if(ast.input){return this.inputs(ast.input,ast.watchId);}switch(ast.type){case AST.Literal:return this.value(ast.value,context);case AST.UnaryExpression:right=this.recurse(ast.argument);return this['unary'+ast.operator](right,context);case AST.BinaryExpression:left=this.recurse(ast.left);right=this.recurse(ast.right);return this['binary'+ast.operator](left,right,context);case AST.LogicalExpression:left=this.recurse(ast.left);right=this.recurse(ast.right);return this['binary'+ast.operator](left,right,context);case AST.ConditionalExpression:return this['ternary?:'](this.recurse(ast.test),this.recurse(ast.alternate),this.recurse(ast.consequent),context);case AST.Identifier:return self.identifier(ast.name,context,create);case AST.MemberExpression:left=this.recurse(ast.object,false,!!create);if(!ast.computed){right=ast.property.name;}if(ast.computed)right=this.recurse(ast.property);return ast.computed?this.computedMember(left,right,context,create):this.nonComputedMember(left,right,context,create);case AST.CallExpression:args=[];forEach(ast.arguments,function(expr){args.push(self.recurse(expr));});if(ast.filter)right=this.$filter(ast.callee.name);if(!ast.filter)right=this.recurse(ast.callee,true);return ast.filter?function(scope,locals,assign,inputs){var values=[];for(var i=0;i<args.length;++i){values.push(args[i](scope,locals,assign,inputs));}var value=right.apply(undefined,values,inputs);return context?{context:undefined,name:undefined,value:value}:value;}:function(scope,locals,assign,inputs){var rhs=right(scope,locals,assign,inputs);var value;if(rhs.value!=null){var values=[];for(var i=0;i<args.length;++i){values.push(args[i](scope,locals,assign,inputs));}value=rhs.value.apply(rhs.context,values);}return context?{value:value}:value;};case AST.AssignmentExpression:left=this.recurse(ast.left,true,1);right=this.recurse(ast.right);return function(scope,locals,assign,inputs){var lhs=left(scope,locals,assign,inputs);var rhs=right(scope,locals,assign,inputs);lhs.context[lhs.name]=rhs;return context?{value:rhs}:rhs;};case AST.ArrayExpression:args=[];forEach(ast.elements,function(expr){args.push(self.recurse(expr));});return function(scope,locals,assign,inputs){var value=[];for(var i=0;i<args.length;++i){value.push(args[i](scope,locals,assign,inputs));}return context?{value:value}:value;};case AST.ObjectExpression:args=[];forEach(ast.properties,function(property){if(property.computed){args.push({key:self.recurse(property.key),computed:true,value:self.recurse(property.value)});}else{args.push({key:property.key.type===AST.Identifier?property.key.name:''+property.key.value,computed:false,value:self.recurse(property.value)});}});return function(scope,locals,assign,inputs){var value={};for(var i=0;i<args.length;++i){if(args[i].computed){value[args[i].key(scope,locals,assign,inputs)]=args[i].value(scope,locals,assign,inputs);}else{value[args[i].key]=args[i].value(scope,locals,assign,inputs);}}return context?{value:value}:value;};case AST.ThisExpression:return function(scope){return context?{value:scope}:scope;};case AST.LocalsExpression:return function(scope,locals){return context?{value:locals}:locals;};case AST.NGValueParameter:return function(scope,locals,assign){return context?{value:assign}:assign;};}},'unary+':function(argument,context){return function(scope,locals,assign,inputs){var arg=argument(scope,locals,assign,inputs);if(isDefined(arg)){arg=+arg;}else{arg=0;}return context?{value:arg}:arg;};},'unary-':function(argument,context){return function(scope,locals,assign,inputs){var arg=argument(scope,locals,assign,inputs);if(isDefined(arg)){arg=-arg;}else{arg=-0;}return context?{value:arg}:arg;};},'unary!':function(argument,context){return function(scope,locals,assign,inputs){var arg=!argument(scope,locals,assign,inputs);return context?{value:arg}:arg;};},'binary+':function(left,right,context){return function(scope,locals,assign,inputs){var lhs=left(scope,locals,assign,inputs);var rhs=right(scope,locals,assign,inputs);var arg=plusFn(lhs,rhs);return context?{value:arg}:arg;};},'binary-':function(left,right,context){return function(scope,locals,assign,inputs){var lhs=left(scope,locals,assign,inputs);var rhs=right(scope,locals,assign,inputs);var arg=(isDefined(lhs)?lhs:0)-(isDefined(rhs)?rhs:0);return context?{value:arg}:arg;};},'binary*':function(left,right,context){return function(scope,locals,assign,inputs){var arg=left(scope,locals,assign,inputs)*right(scope,locals,assign,inputs);return context?{value:arg}:arg;};},'binary/':function(left,right,context){return function(scope,locals,assign,inputs){var arg=left(scope,locals,assign,inputs)/right(scope,locals,assign,inputs);return context?{value:arg}:arg;};},'binary%':function(left,right,context){return function(scope,locals,assign,inputs){var arg=left(scope,locals,assign,inputs)%right(scope,locals,assign,inputs);return context?{value:arg}:arg;};},'binary===':function(left,right,context){return function(scope,locals,assign,inputs){var arg=left(scope,locals,assign,inputs)===right(scope,locals,assign,inputs);return context?{value:arg}:arg;};},'binary!==':function(left,right,context){return function(scope,locals,assign,inputs){var arg=left(scope,locals,assign,inputs)!==right(scope,locals,assign,inputs);return context?{value:arg}:arg;};},'binary==':function(left,right,context){return function(scope,locals,assign,inputs){// eslint-disable-next-line eqeqeq
@@ -22504,8 +22504,8 @@ var arg=left(scope,locals,assign,inputs)!=right(scope,locals,assign,inputs);retu
   *   a valid identifier start character.
   * @param {function=} identifierContinue The function that will decide whether the given character is
   *   a valid identifier continue character.
-  */this.setIdentifierFns=function(identifierStart,identifierContinue){identStart=identifierStart;identContinue=identifierContinue;return this;};this.$get=['$filter',function($filter){var noUnsafeEval=csp().noUnsafeEval;var $parseOptions={csp:noUnsafeEval,literals:copy(literals),isIdentifierStart:isFunction(identStart)&&identStart,isIdentifierContinue:isFunction(identContinue)&&identContinue};return $parse;function $parse(exp,interceptorFn){var parsedExpression,oneTime,cacheKey;switch(typeof exp){case'string':exp=exp.trim();cacheKey=exp;parsedExpression=cache[cacheKey];if(!parsedExpression){if(exp.charAt(0)===':'&&exp.charAt(1)===':'){oneTime=true;exp=exp.substring(2);}var lexer=new Lexer($parseOptions);var parser=new Parser(lexer,$filter,$parseOptions);parsedExpression=parser.parse(exp);if(parsedExpression.constant){parsedExpression.$$watchDelegate=constantWatchDelegate;}else if(oneTime){parsedExpression.$$watchDelegate=parsedExpression.literal?oneTimeLiteralWatchDelegate:oneTimeWatchDelegate;}else if(parsedExpression.inputs){parsedExpression.$$watchDelegate=inputsWatchDelegate;}cache[cacheKey]=parsedExpression;}return addInterceptor(parsedExpression,interceptorFn);case'function':return addInterceptor(exp,interceptorFn);default:return addInterceptor(noop,interceptorFn);}}function expressionInputDirtyCheck(newValue,oldValueOfValue){if(newValue==null||oldValueOfValue==null){// null/undefined
-return newValue===oldValueOfValue;}if(typeof newValue==='object'){// attempt to convert the value to a primitive type
+  */this.setIdentifierFns=function(identifierStart,identifierContinue){identStart=identifierStart;identContinue=identifierContinue;return this;};this.$get=['$filter',function($filter){var noUnsafeEval=csp().noUnsafeEval;var $parseOptions={csp:noUnsafeEval,literals:copy(literals),isIdentifierStart:isFunction(identStart)&&identStart,isIdentifierContinue:isFunction(identContinue)&&identContinue};return $parse;function $parse(exp,interceptorFn){var parsedExpression,oneTime,cacheKey;switch(typeof exp){case'string':exp=exp.trim();cacheKey=exp;parsedExpression=cache[cacheKey];if(!parsedExpression){if(exp.charAt(0)===':'&&exp.charAt(1)===':'){oneTime=true;exp=exp.substring(2);}var lexer=new Lexer($parseOptions);var parser=new Parser(lexer,$filter,$parseOptions);parsedExpression=parser.parse(exp);if(parsedExpression.constant){parsedExpression.$$watchDelegate=constantWatchDelegate;}else if(oneTime){parsedExpression.$$watchDelegate=parsedExpression.literal?oneTimeLiteralWatchDelegate:oneTimeWatchDelegate;}else if(parsedExpression.inputs){parsedExpression.$$watchDelegate=inputsWatchDelegate;}cache[cacheKey]=parsedExpression;}return addInterceptor(parsedExpression,interceptorFn);case'function':return addInterceptor(exp,interceptorFn);default:return addInterceptor(noop,interceptorFn);}}function expressionInputDirtyCheck(newValue,oldValueOfValue,compareObjectIdentity){if(newValue==null||oldValueOfValue==null){// null/undefined
+return newValue===oldValueOfValue;}if(typeof newValue==='object'&&!compareObjectIdentity){// attempt to convert the value to a primitive type
 // TODO(docs): add a note to docs that by implementing valueOf even objects and arrays can
 //             be cheaply dirty-checked
 newValue=getValueOf(newValue);if(typeof newValue==='object'){// objects/arrays are not supported - deep-watching them would be too expensive
@@ -22513,8 +22513,8 @@ return false;}// fall-through to the primitive equality check
 }//Primitive or NaN
 // eslint-disable-next-line no-self-compare
 return newValue===oldValueOfValue||newValue!==newValue&&oldValueOfValue!==oldValueOfValue;}function inputsWatchDelegate(scope,listener,objectEquality,parsedExpression,prettyPrintExpression){var inputExpressions=parsedExpression.inputs;var lastResult;if(inputExpressions.length===1){var oldInputValueOf=expressionInputDirtyCheck;// init to something unique so that equals check fails
-inputExpressions=inputExpressions[0];return scope.$watch(function expressionInputWatch(scope){var newInputValue=inputExpressions(scope);if(!expressionInputDirtyCheck(newInputValue,oldInputValueOf)){lastResult=parsedExpression(scope,undefined,undefined,[newInputValue]);oldInputValueOf=newInputValue&&getValueOf(newInputValue);}return lastResult;},listener,objectEquality,prettyPrintExpression);}var oldInputValueOfValues=[];var oldInputValues=[];for(var i=0,ii=inputExpressions.length;i<ii;i++){oldInputValueOfValues[i]=expressionInputDirtyCheck;// init to something unique so that equals check fails
-oldInputValues[i]=null;}return scope.$watch(function expressionInputsWatch(scope){var changed=false;for(var i=0,ii=inputExpressions.length;i<ii;i++){var newInputValue=inputExpressions[i](scope);if(changed||(changed=!expressionInputDirtyCheck(newInputValue,oldInputValueOfValues[i]))){oldInputValues[i]=newInputValue;oldInputValueOfValues[i]=newInputValue&&getValueOf(newInputValue);}}if(changed){lastResult=parsedExpression(scope,undefined,undefined,oldInputValues);}return lastResult;},listener,objectEquality,prettyPrintExpression);}function oneTimeWatchDelegate(scope,listener,objectEquality,parsedExpression,prettyPrintExpression){var unwatch,lastValue;if(parsedExpression.inputs){unwatch=inputsWatchDelegate(scope,oneTimeListener,objectEquality,parsedExpression,prettyPrintExpression);}else{unwatch=scope.$watch(oneTimeWatch,oneTimeListener,objectEquality);}return unwatch;function oneTimeWatch(scope){return parsedExpression(scope);}function oneTimeListener(value,old,scope){lastValue=value;if(isFunction(listener)){listener(value,old,scope);}if(isDefined(value)){scope.$$postDigest(function(){if(isDefined(lastValue)){unwatch();}});}}}function oneTimeLiteralWatchDelegate(scope,listener,objectEquality,parsedExpression){var unwatch,lastValue;unwatch=scope.$watch(function oneTimeWatch(scope){return parsedExpression(scope);},function oneTimeListener(value,old,scope){lastValue=value;if(isFunction(listener)){listener(value,old,scope);}if(isAllDefined(value)){scope.$$postDigest(function(){if(isAllDefined(lastValue))unwatch();});}},objectEquality);return unwatch;function isAllDefined(value){var allDefined=true;forEach(value,function(val){if(!isDefined(val))allDefined=false;});return allDefined;}}function constantWatchDelegate(scope,listener,objectEquality,parsedExpression){var unwatch=scope.$watch(function constantWatch(scope){unwatch();return parsedExpression(scope);},listener,objectEquality);return unwatch;}function addInterceptor(parsedExpression,interceptorFn){if(!interceptorFn)return parsedExpression;var watchDelegate=parsedExpression.$$watchDelegate;var useInputs=false;var regularWatch=watchDelegate!==oneTimeLiteralWatchDelegate&&watchDelegate!==oneTimeWatchDelegate;var fn=regularWatch?function regularInterceptedExpression(scope,locals,assign,inputs){var value=useInputs&&inputs?inputs[0]:parsedExpression(scope,locals,assign,inputs);return interceptorFn(value,scope,locals);}:function oneTimeInterceptedExpression(scope,locals,assign,inputs){var value=parsedExpression(scope,locals,assign,inputs);var result=interceptorFn(value,scope,locals);// we only return the interceptor's result if the
+inputExpressions=inputExpressions[0];return scope.$watch(function expressionInputWatch(scope){var newInputValue=inputExpressions(scope);if(!expressionInputDirtyCheck(newInputValue,oldInputValueOf,parsedExpression.literal)){lastResult=parsedExpression(scope,undefined,undefined,[newInputValue]);oldInputValueOf=newInputValue&&getValueOf(newInputValue);}return lastResult;},listener,objectEquality,prettyPrintExpression);}var oldInputValueOfValues=[];var oldInputValues=[];for(var i=0,ii=inputExpressions.length;i<ii;i++){oldInputValueOfValues[i]=expressionInputDirtyCheck;// init to something unique so that equals check fails
+oldInputValues[i]=null;}return scope.$watch(function expressionInputsWatch(scope){var changed=false;for(var i=0,ii=inputExpressions.length;i<ii;i++){var newInputValue=inputExpressions[i](scope);if(changed||(changed=!expressionInputDirtyCheck(newInputValue,oldInputValueOfValues[i],parsedExpression.literal))){oldInputValues[i]=newInputValue;oldInputValueOfValues[i]=newInputValue&&getValueOf(newInputValue);}}if(changed){lastResult=parsedExpression(scope,undefined,undefined,oldInputValues);}return lastResult;},listener,objectEquality,prettyPrintExpression);}function oneTimeWatchDelegate(scope,listener,objectEquality,parsedExpression,prettyPrintExpression){var unwatch,lastValue;if(parsedExpression.inputs){unwatch=inputsWatchDelegate(scope,oneTimeListener,objectEquality,parsedExpression,prettyPrintExpression);}else{unwatch=scope.$watch(oneTimeWatch,oneTimeListener,objectEquality);}return unwatch;function oneTimeWatch(scope){return parsedExpression(scope);}function oneTimeListener(value,old,scope){lastValue=value;if(isFunction(listener)){listener(value,old,scope);}if(isDefined(value)){scope.$$postDigest(function(){if(isDefined(lastValue)){unwatch();}});}}}function oneTimeLiteralWatchDelegate(scope,listener,objectEquality,parsedExpression){var unwatch,lastValue;unwatch=scope.$watch(function oneTimeWatch(scope){return parsedExpression(scope);},function oneTimeListener(value,old,scope){lastValue=value;if(isFunction(listener)){listener(value,old,scope);}if(isAllDefined(value)){scope.$$postDigest(function(){if(isAllDefined(lastValue))unwatch();});}},objectEquality);return unwatch;function isAllDefined(value){var allDefined=true;forEach(value,function(val){if(!isDefined(val))allDefined=false;});return allDefined;}}function constantWatchDelegate(scope,listener,objectEquality,parsedExpression){var unwatch=scope.$watch(function constantWatch(scope){unwatch();return parsedExpression(scope);},listener,objectEquality);return unwatch;}function addInterceptor(parsedExpression,interceptorFn){if(!interceptorFn)return parsedExpression;var watchDelegate=parsedExpression.$$watchDelegate;var useInputs=false;var regularWatch=watchDelegate!==oneTimeLiteralWatchDelegate&&watchDelegate!==oneTimeWatchDelegate;var fn=regularWatch?function regularInterceptedExpression(scope,locals,assign,inputs){var value=useInputs&&inputs?inputs[0]:parsedExpression(scope,locals,assign,inputs);return interceptorFn(value,scope,locals);}:function oneTimeInterceptedExpression(scope,locals,assign,inputs){var value=parsedExpression(scope,locals,assign,inputs);var result=interceptorFn(value,scope,locals);// we only return the interceptor's result if the
 // initial value is defined (for bind-once)
 return isDefined(value)?result:value;};// Propagate $$watchDelegates other then inputsWatchDelegate
 useInputs=!parsedExpression.inputs;if(parsedExpression.$$watchDelegate&&parsedExpression.$$watchDelegate!==inputsWatchDelegate){fn.$$watchDelegate=parsedExpression.$$watchDelegate;fn.inputs=parsedExpression.inputs;}else if(!interceptorFn.$stateful){// If there is an interceptor, but no watchDelegate then treat the interceptor like
@@ -23315,7 +23315,9 @@ dirty=false;break traverseScopesLoop;}}}catch(e){$exceptionHandler(e);}}}// Insa
 // this piece should be kept in sync with the traversal in $broadcast
 if(!(next=current.$$watchersCount&&current.$$childHead||current!==target&&current.$$nextSibling)){while(current!==target&&!(next=current.$$nextSibling)){current=current.$parent;}}}while(current=next);// `break traverseScopesLoop;` takes us to here
 if((dirty||asyncQueue.length)&&!ttl--){clearPhase();throw $rootScopeMinErr('infdig','{0} $digest() iterations reached. Aborting!\n'+'Watchers fired in the last 5 iterations: {1}',TTL,watchLog);}}while(dirty||asyncQueue.length);clearPhase();// postDigestQueuePosition isn't local here because this loop can be reentered recursively.
-while(postDigestQueuePosition<postDigestQueue.length){try{postDigestQueue[postDigestQueuePosition++]();}catch(e){$exceptionHandler(e);}}postDigestQueue.length=postDigestQueuePosition=0;},/**
+while(postDigestQueuePosition<postDigestQueue.length){try{postDigestQueue[postDigestQueuePosition++]();}catch(e){$exceptionHandler(e);}}postDigestQueue.length=postDigestQueuePosition=0;// Check for changes to browser url that happened during the $digest
+// (for which no event is fired; e.g. via `history.pushState()`)
+$browser.$$checkUrlChange();},/**
        * @ngdoc event
        * @name $rootScope.Scope#$destroy
        * @eventType broadcast on scope being destroyed
@@ -24381,7 +24383,8 @@ var parse=sce.parseAs,getTrusted=sce.getTrusted,trustAs=sce.trustAs;forEach(SCE_
 // (see https://developer.chrome.com/apps/api_index). If sandboxed, they can be detected by
 // the presence of an extension runtime ID and the absence of other Chrome runtime APIs
 // (see https://developer.chrome.com/apps/manifest/sandbox).
-isChromePackagedApp=$window.chrome&&($window.chrome.app&&$window.chrome.app.runtime||!$window.chrome.app&&$window.chrome.runtime&&$window.chrome.runtime.id),hasHistoryPushState=!isChromePackagedApp&&$window.history&&$window.history.pushState,android=toInt((/android (\d+)/.exec(lowercase(($window.navigator||{}).userAgent))||[])[1]),boxee=/Boxee/i.test(($window.navigator||{}).userAgent),document=$document[0]||{},bodyStyle=document.body&&document.body.style,transitions=false,animations=false;if(bodyStyle){// Support: Android <5, Blackberry Browser 10, default Chrome in Android 4.4.x
+// (NW.js apps have access to Chrome APIs, but do support `history`.)
+isNw=$window.nw&&$window.nw.process,isChromePackagedApp=!isNw&&$window.chrome&&($window.chrome.app&&$window.chrome.app.runtime||!$window.chrome.app&&$window.chrome.runtime&&$window.chrome.runtime.id),hasHistoryPushState=!isChromePackagedApp&&$window.history&&$window.history.pushState,android=toInt((/android (\d+)/.exec(lowercase(($window.navigator||{}).userAgent))||[])[1]),boxee=/Boxee/i.test(($window.navigator||{}).userAgent),document=$document[0]||{},bodyStyle=document.body&&document.body.style,transitions=false,animations=false;if(bodyStyle){// Support: Android <5, Blackberry Browser 10, default Chrome in Android 4.4.x
 // Mentioned browsers need a -webkit- prefix for transitions & animations.
 transitions=!!('transition'in bodyStyle||'webkitTransition'in bodyStyle);animations=!!('animation'in bodyStyle||'webkitAnimation'in bodyStyle);}return{// Android has history.pushState, but it does not update location correctly
 // so let's not use the history API at all.
@@ -26041,7 +26044,8 @@ if(!element.attr(href)){event.preventDefault();}});};}}});/**
  *
  * @description
  *
- * This directive sets the `disabled` attribute on the element if the
+ * This directive sets the `disabled` attribute on the element (typically a form control,
+ * e.g. `input`, `button`, `select` etc.) if the
  * {@link guide/expression expression} inside `ngDisabled` evaluates to truthy.
  *
  * A special directive is necessary because we cannot use interpolation inside the `disabled`
@@ -27734,9 +27738,9 @@ return value&&!(value.getTime&&value.getTime()!==value.getTime());}function pars
 return(num|0)===num;}function countDecimals(num){var numString=num.toString();var decimalSymbolIndex=numString.indexOf('.');if(decimalSymbolIndex===-1){if(-1<num&&num<1){// It may be in the exponential notation format (`1e-X`)
 var match=/e-(\d+)$/.exec(numString);if(match){return Number(match[1]);}}return 0;}return numString.length-decimalSymbolIndex-1;}function isValidForStep(viewValue,stepBase,step){// At this point `stepBase` and `step` are expected to be non-NaN values
 // and `viewValue` is expected to be a valid stringified number.
-var value=Number(viewValue);// Due to limitations in Floating Point Arithmetic (e.g. `0.3 - 0.2 !== 0.1` or
+var value=Number(viewValue);var isNonIntegerValue=!isNumberInteger(value);var isNonIntegerStepBase=!isNumberInteger(stepBase);var isNonIntegerStep=!isNumberInteger(step);// Due to limitations in Floating Point Arithmetic (e.g. `0.3 - 0.2 !== 0.1` or
 // `0.5 % 0.1 !== 0`), we need to convert all numbers to integers.
-if(!isNumberInteger(value)||!isNumberInteger(stepBase)||!isNumberInteger(step)){var decimalCount=Math.max(countDecimals(value),countDecimals(stepBase),countDecimals(step));var multiplier=Math.pow(10,decimalCount);value=value*multiplier;stepBase=stepBase*multiplier;step=step*multiplier;}return(value-stepBase)%step===0;}function numberInputType(scope,element,attr,ctrl,$sniffer,$browser){badInputChecker(scope,element,attr,ctrl);numberFormatterParser(ctrl);baseInputType(scope,element,attr,ctrl,$sniffer,$browser);var minVal;var maxVal;if(isDefined(attr.min)||attr.ngMin){ctrl.$validators.min=function(value){return ctrl.$isEmpty(value)||isUndefined(minVal)||value>=minVal;};attr.$observe('min',function(val){minVal=parseNumberAttrVal(val);// TODO(matsko): implement validateLater to reduce number of validations
+if(isNonIntegerValue||isNonIntegerStepBase||isNonIntegerStep){var valueDecimals=isNonIntegerValue?countDecimals(value):0;var stepBaseDecimals=isNonIntegerStepBase?countDecimals(stepBase):0;var stepDecimals=isNonIntegerStep?countDecimals(step):0;var decimalCount=Math.max(valueDecimals,stepBaseDecimals,stepDecimals);var multiplier=Math.pow(10,decimalCount);value=value*multiplier;stepBase=stepBase*multiplier;step=step*multiplier;if(isNonIntegerValue)value=Math.round(value);if(isNonIntegerStepBase)stepBase=Math.round(stepBase);if(isNonIntegerStep)step=Math.round(step);}return(value-stepBase)%step===0;}function numberInputType(scope,element,attr,ctrl,$sniffer,$browser){badInputChecker(scope,element,attr,ctrl);numberFormatterParser(ctrl);baseInputType(scope,element,attr,ctrl,$sniffer,$browser);var minVal;var maxVal;if(isDefined(attr.min)||attr.ngMin){ctrl.$validators.min=function(value){return ctrl.$isEmpty(value)||isUndefined(minVal)||value>=minVal;};attr.$observe('min',function(val){minVal=parseNumberAttrVal(val);// TODO(matsko): implement validateLater to reduce number of validations
 ctrl.$validate();});}if(isDefined(attr.max)||attr.ngMax){ctrl.$validators.max=function(value){return ctrl.$isEmpty(value)||isUndefined(maxVal)||value<=maxVal;};attr.$observe('max',function(val){maxVal=parseNumberAttrVal(val);// TODO(matsko): implement validateLater to reduce number of validations
 ctrl.$validate();});}if(isDefined(attr.step)||attr.ngStep){var stepVal;ctrl.$validators.step=function(modelValue,viewValue){return ctrl.$isEmpty(viewValue)||isUndefined(stepVal)||isValidForStep(viewValue,minVal||0,stepVal);};attr.$observe('step',function(val){stepVal=parseNumberAttrVal(val);// TODO(matsko): implement validateLater to reduce number of validations
 ctrl.$validate();});}}function rangeInputType(scope,element,attr,ctrl,$sniffer,$browser){badInputChecker(scope,element,attr,ctrl);numberFormatterParser(ctrl);baseInputType(scope,element,attr,ctrl,$sniffer,$browser);var supportsRange=ctrl.$$hasNativeValidators&&element[0].type==='range',minVal=supportsRange?0:undefined,maxVal=supportsRange?100:undefined,stepVal=supportsRange?1:undefined,validity=element[0].validity,hasMinAttr=isDefined(attr.min),hasMaxAttr=isDefined(attr.max),hasStepAttr=isDefined(attr.step);var originalRender=ctrl.$render;ctrl.$render=supportsRange&&isDefined(validity.rangeUnderflow)&&isDefined(validity.rangeOverflow)?//Browsers that implement range will set these values automatically, but reading the adjusted values after
@@ -28012,7 +28016,9 @@ ctrl.$isEmpty=function(value){return value===false;};ctrl.$formatters.push(funct
    *  Once the value property has been set (by adding input), it will not react to changes to
    *  the value attribute anymore. Setting both attribute and property fixes this behavior, and
    *  makes it possible to use ngValue as a sort of one-way bind.
-   */function updateElementValue(element,attr,value){element.prop('value',value);attr.$set('value',value);}return{restrict:'A',priority:100,compile:function(tpl,tplAttr){if(CONSTANT_VALUE_REGEXP.test(tplAttr.ngValue)){return function ngValueConstantLink(scope,elm,attr){var value=scope.$eval(attr.ngValue);updateElementValue(elm,attr,value);};}else{return function ngValueLink(scope,elm,attr){scope.$watch(attr.ngValue,function valueWatchAction(value){updateElementValue(elm,attr,value);});};}}};};/**
+   */function updateElementValue(element,attr,value){// Support: IE9 only
+// In IE9 values are converted to string (e.g. `input.value = null` results in `input.value === 'null'`).
+var propValue=isDefined(value)?value:msie===9?'':null;element.prop('value',propValue);attr.$set('value',value);}return{restrict:'A',priority:100,compile:function(tpl,tplAttr){if(CONSTANT_VALUE_REGEXP.test(tplAttr.ngValue)){return function ngValueConstantLink(scope,elm,attr){var value=scope.$eval(attr.ngValue);updateElementValue(elm,attr,value);};}else{return function ngValueLink(scope,elm,attr){scope.$watch(attr.ngValue,function valueWatchAction(value){updateElementValue(elm,attr,value);});};}}};};/**
  * @ngdoc directive
  * @name ngBind
  * @restrict AC
@@ -29031,11 +29037,11 @@ flatValue.push(undefined);}}return flatValue;}}/**
  */var ngEventDirectives={};// For events that might fire synchronously during DOM manipulation
 // we need to execute their event handlers asynchronously using $evalAsync,
 // so that they are not executed in an inconsistent state.
-var forceAsyncEvents={'blur':true,'focus':true};forEach('click dblclick mousedown mouseup mouseover mouseout mousemove mouseenter mouseleave keydown keyup keypress submit focus blur copy cut paste'.split(' '),function(eventName){var directiveName=directiveNormalize('ng-'+eventName);ngEventDirectives[directiveName]=['$parse','$rootScope',function($parse,$rootScope){return{restrict:'A',compile:function($element,attr){// We expose the powerful $event object on the scope that provides access to the Window,
-// etc. that isn't protected by the fast paths in $parse.  We explicitly request better
-// checks at the cost of speed since event handler expressions are not executed as
-// frequently as regular change detection.
-var fn=$parse(attr[directiveName],/* interceptorFn */null,/* expensiveChecks */true);return function ngEventHandler(scope,element){element.on(eventName,function(event){var callback=function(){fn(scope,{$event:event});};if(forceAsyncEvents[eventName]&&$rootScope.$$phase){scope.$evalAsync(callback);}else{scope.$apply(callback);}});};}};}];});/**
+var forceAsyncEvents={'blur':true,'focus':true};forEach('click dblclick mousedown mouseup mouseover mouseout mousemove mouseenter mouseleave keydown keyup keypress submit focus blur copy cut paste'.split(' '),function(eventName){var directiveName=directiveNormalize('ng-'+eventName);ngEventDirectives[directiveName]=['$parse','$rootScope',function($parse,$rootScope){return{restrict:'A',compile:function($element,attr){// NOTE:
+// We expose the powerful `$event` object on the scope that provides access to the Window,
+// etc. This is OK, because expressions are not sandboxed any more (and the expression
+// sandbox was never meant to be a security feature anyway).
+var fn=$parse(attr[directiveName]);return function ngEventHandler(scope,element){element.on(eventName,function(event){var callback=function(){fn(scope,{$event:event});};if(forceAsyncEvents[eventName]&&$rootScope.$$phase){scope.$evalAsync(callback);}else{scope.$apply(callback);}});};}};}];});/**
  * @ngdoc directive
  * @name ngDblclick
  *
@@ -30289,7 +30295,25 @@ this.$$exceptionHandler(e);}},this);},/**
    * @param {*} value value from the view.
    * @param {string} trigger Event that triggered the update.
    */$setViewValue:function(value,trigger){this.$viewValue=value;if(this.$options.getOption('updateOnDefault')){this.$$debounceViewValueCommit(trigger);}},$$debounceViewValueCommit:function(trigger){var debounceDelay=this.$options.getOption('debounce');if(isNumber(debounceDelay[trigger])){debounceDelay=debounceDelay[trigger];}else if(isNumber(debounceDelay['default'])){debounceDelay=debounceDelay['default'];}this.$$timeout.cancel(this.$$pendingDebounce);var that=this;if(debounceDelay>0){// this fails if debounceDelay is an object
-this.$$pendingDebounce=this.$$timeout(function(){that.$commitViewValue();},debounceDelay);}else if(this.$$scope.$root.$$phase){this.$commitViewValue();}else{this.$$scope.$apply(function(){that.$commitViewValue();});}}};function setupModelWatcher(ctrl){// model -> value
+this.$$pendingDebounce=this.$$timeout(function(){that.$commitViewValue();},debounceDelay);}else if(this.$$scope.$root.$$phase){this.$commitViewValue();}else{this.$$scope.$apply(function(){that.$commitViewValue();});}},/**
+   * @ngdoc method
+   *
+   * @name ngModel.NgModelController#$overrideModelOptions
+   *
+   * @description
+   *
+   * Override the current model options settings programmatically.
+   *
+   * The previous `ModelOptions` value will not be modified. Instead, a
+   * new `ModelOptions` object will inherit from the previous one overriding
+   * or inheriting settings that are defined in the given parameter.
+   *
+   * See {@link ngModelOptions} for information about what options can be specified
+   * and how model option inheritance works.
+   *
+   * @param {Object} options a hash of settings to override the previous options
+   *
+   */$overrideModelOptions:function(options){this.$options=this.$options.createChild(options);}};function setupModelWatcher(ctrl){// model -> value
 // Note: we cannot use a normal scope.$watch as we want to detect the following:
 // 1. scope value is 'a'
 // 2. user enters 'b'
@@ -31675,11 +31699,13 @@ block.clone=clone;nextBlockMap[block.id]=block;updateScope(block.scope,index,val
  * @multiElement
  *
  * @description
- * The `ngShow` directive shows or hides the given HTML element based on the expression
- * provided to the `ngShow` attribute. The element is shown or hidden by removing or adding
- * the `.ng-hide` CSS class onto the element. The `.ng-hide` CSS class is predefined
- * in AngularJS and sets the display style to none (using an !important flag).
- * For CSP mode please add `angular-csp.css` to your html file (see {@link ng.directive:ngCsp ngCsp}).
+ * The `ngShow` directive shows or hides the given HTML element based on the expression provided to
+ * the `ngShow` attribute.
+ *
+ * The element is shown or hidden by removing or adding the `.ng-hide` CSS class onto the element.
+ * The `.ng-hide` CSS class is predefined in AngularJS and sets the display style to none (using an
+ * `!important` flag). For CSP mode please add `angular-csp.css` to your HTML file (see
+ * {@link ng.directive:ngCsp ngCsp}).
  *
  * ```html
  * <!-- when $scope.myValue is truthy (element is visible) -->
@@ -31689,31 +31715,32 @@ block.clone=clone;nextBlockMap[block.id]=block;updateScope(block.scope,index,val
  * <div ng-show="myValue" class="ng-hide"></div>
  * ```
  *
- * When the `ngShow` expression evaluates to a falsy value then the `.ng-hide` CSS class is added to the class
- * attribute on the element causing it to become hidden. When truthy, the `.ng-hide` CSS class is removed
- * from the element causing the element not to appear hidden.
+ * When the `ngShow` expression evaluates to a falsy value then the `.ng-hide` CSS class is added
+ * to the class attribute on the element causing it to become hidden. When truthy, the `.ng-hide`
+ * CSS class is removed from the element causing the element not to appear hidden.
  *
- * ## Why is !important used?
+ * ## Why is `!important` used?
  *
- * You may be wondering why !important is used for the `.ng-hide` CSS class. This is because the `.ng-hide` selector
- * can be easily overridden by heavier selectors. For example, something as simple
- * as changing the display style on a HTML list item would make hidden elements appear visible.
- * This also becomes a bigger issue when dealing with CSS frameworks.
+ * You may be wondering why `!important` is used for the `.ng-hide` CSS class. This is because the
+ * `.ng-hide` selector can be easily overridden by heavier selectors. For example, something as
+ * simple as changing the display style on a HTML list item would make hidden elements appear
+ * visible. This also becomes a bigger issue when dealing with CSS frameworks.
  *
- * By using !important, the show and hide behavior will work as expected despite any clash between CSS selector
- * specificity (when !important isn't used with any conflicting styles). If a developer chooses to override the
- * styling to change how to hide an element then it is just a matter of using !important in their own CSS code.
+ * By using `!important`, the show and hide behavior will work as expected despite any clash between
+ * CSS selector specificity (when `!important` isn't used with any conflicting styles). If a
+ * developer chooses to override the styling to change how to hide an element then it is just a
+ * matter of using `!important` in their own CSS code.
  *
  * ### Overriding `.ng-hide`
  *
- * By default, the `.ng-hide` class will style the element with `display: none!important`. If you wish to change
- * the hide behavior with ngShow/ngHide then this can be achieved by restating the styles for the `.ng-hide`
- * class CSS. Note that the selector that needs to be used is actually `.ng-hide:not(.ng-hide-animate)` to cope
- * with extra animation classes that can be added.
+ * By default, the `.ng-hide` class will style the element with `display: none !important`. If you
+ * wish to change the hide behavior with `ngShow`/`ngHide`, you can simply overwrite the styles for
+ * the `.ng-hide` CSS class. Note that the selector that needs to be used is actually
+ * `.ng-hide:not(.ng-hide-animate)` to cope with extra animation classes that can be added.
  *
  * ```css
  * .ng-hide:not(.ng-hide-animate) {
- *   /&#42; this is just another form of hiding an element &#42;/
+ *   /&#42; These are just alternative ways of hiding an element &#42;/
  *   display: block!important;
  *   position: absolute;
  *   top: -9999px;
@@ -31721,29 +31748,20 @@ block.clone=clone;nextBlockMap[block.id]=block;updateScope(block.scope,index,val
  * }
  * ```
  *
- * By default you don't need to override in CSS anything and the animations will work around the display style.
+ * By default you don't need to override anything in CSS and the animations will work around the
+ * display style.
  *
  * ## A note about animations with `ngShow`
  *
- * Animations in ngShow/ngHide work with the show and hide events that are triggered when the directive expression
- * is true and false. This system works like the animation system present with ngClass except that
- * you must also include the !important flag to override the display property
- * so that you can perform an animation when the element is hidden during the time of the animation.
+ * Animations in `ngShow`/`ngHide` work with the show and hide events that are triggered when the
+ * directive expression is true and false. This system works like the animation system present with
+ * `ngClass` except that you must also include the `!important` flag to override the display
+ * property so that the elements are not actually hidden during the animation.
  *
  * ```css
- * //
- * //a working example can be found at the bottom of this page
- * //
+ * /&#42; A working example can be found at the bottom of this page. &#42;/
  * .my-element.ng-hide-add, .my-element.ng-hide-remove {
- *   /&#42; this is required as of 1.3x to properly
- *      apply all styling in a show/hide animation &#42;/
- *   transition: 0s linear all;
- * }
- *
- * .my-element.ng-hide-add-active,
- * .my-element.ng-hide-remove-active {
- *   /&#42; the transition is defined in the active class &#42;/
- *   transition: 1s linear all;
+ *   transition: all 0.5s linear;
  * }
  *
  * .my-element.ng-hide-add { ... }
@@ -31752,76 +31770,108 @@ block.clone=clone;nextBlockMap[block.id]=block;updateScope(block.scope,index,val
  * .my-element.ng-hide-remove.ng-hide-remove-active { ... }
  * ```
  *
- * Keep in mind that, as of AngularJS version 1.3, there is no need to change the display
- * property to block during animation states--ngAnimate will handle the style toggling automatically for you.
+ * Keep in mind that, as of AngularJS version 1.3, there is no need to change the display property
+ * to block during animation states - ngAnimate will automatically handle the style toggling for you.
  *
  * @animations
- * | Animation                        | Occurs                              |
- * |----------------------------------|-------------------------------------|
- * | {@link $animate#addClass addClass} `.ng-hide`  | after the `ngShow` expression evaluates to a non truthy value and just before the contents are set to hidden |
- * | {@link $animate#removeClass removeClass}  `.ng-hide`  | after the `ngShow` expression evaluates to a truthy value and just before contents are set to visible |
+ * | Animation                                           | Occurs                                                                                                        |
+ * |-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
+ * | {@link $animate#addClass addClass} `.ng-hide`       | After the `ngShow` expression evaluates to a non truthy value and just before the contents are set to hidden. |
+ * | {@link $animate#removeClass removeClass} `.ng-hide` | After the `ngShow` expression evaluates to a truthy value and just before contents are set to visible.        |
  *
  * @element ANY
- * @param {expression} ngShow If the {@link guide/expression expression} is truthy
- *     then the element is shown or hidden respectively.
+ * @param {expression} ngShow If the {@link guide/expression expression} is truthy/falsy then the
+ *                            element is shown/hidden respectively.
  *
  * @example
-  <example module="ngAnimate" deps="angular-animate.js" animations="true" name="ng-show">
+ * A simple example, animating the element's opacity:
+ *
+  <example module="ngAnimate" deps="angular-animate.js" animations="true" name="ng-show-simple">
     <file name="index.html">
-      Click me: <input type="checkbox" ng-model="checked" aria-label="Toggle ngHide"><br/>
-      <div>
-        Show:
-        <div class="check-element animate-show" ng-show="checked">
-          <span class="glyphicon glyphicon-thumbs-up"></span> I show up when your checkbox is checked.
-        </div>
+      Show: <input type="checkbox" ng-model="checked" aria-label="Toggle ngShow"><br />
+      <div class="check-element animate-show-hide" ng-show="checked">
+        I show up when your checkbox is checked.
       </div>
-      <div>
-        Hide:
-        <div class="check-element animate-show" ng-hide="checked">
-          <span class="glyphicon glyphicon-thumbs-down"></span> I hide when your checkbox is checked.
-        </div>
-      </div>
-    </file>
-    <file name="glyphicons.css">
-      @import url(../../components/bootstrap-3.1.1/css/bootstrap.css);
     </file>
     <file name="animations.css">
-      .animate-show {
-        line-height: 20px;
-        opacity: 1;
-        padding: 10px;
-        border: 1px solid black;
-        background: white;
+      .animate-show-hide.ng-hide {
+        opacity: 0;
       }
 
-      .animate-show.ng-hide-add, .animate-show.ng-hide-remove {
+      .animate-show-hide.ng-hide-add,
+      .animate-show-hide.ng-hide-remove {
         transition: all linear 0.5s;
       }
 
-      .animate-show.ng-hide {
-        line-height: 0;
-        opacity: 0;
-        padding: 0 10px;
-      }
-
       .check-element {
-        padding: 10px;
         border: 1px solid black;
-        background: white;
+        opacity: 1;
+        padding: 10px;
       }
     </file>
     <file name="protractor.js" type="protractor">
-      var thumbsUp = element(by.css('span.glyphicon-thumbs-up'));
-      var thumbsDown = element(by.css('span.glyphicon-thumbs-down'));
+      it('should check ngShow', function() {
+        var checkbox = element(by.model('checked'));
+        var checkElem = element(by.css('.check-element'));
 
-      it('should check ng-show / ng-hide', function() {
-        expect(thumbsUp.isDisplayed()).toBeFalsy();
-        expect(thumbsDown.isDisplayed()).toBeTruthy();
+        expect(checkElem.isDisplayed()).toBe(false);
+        checkbox.click();
+        expect(checkElem.isDisplayed()).toBe(true);
+      });
+    </file>
+  </example>
+ *
+ * <hr />
+ * @example
+ * A more complex example, featuring different show/hide animations:
+ *
+  <example module="ngAnimate" deps="angular-animate.js" animations="true" name="ng-show-complex">
+    <file name="index.html">
+      Show: <input type="checkbox" ng-model="checked" aria-label="Toggle ngShow"><br />
+      <div class="check-element funky-show-hide" ng-show="checked">
+        I show up when your checkbox is checked.
+      </div>
+    </file>
+    <file name="animations.css">
+      body {
+        overflow: hidden;
+        perspective: 1000px;
+      }
 
-        element(by.model('checked')).click();
+      .funky-show-hide.ng-hide-add {
+        transform: rotateZ(0);
+        transform-origin: right;
+        transition: all 0.5s ease-in-out;
+      }
 
-        expect(thumbsUp.isDisplayed()).toBeTruthy();
-        expect(thumbsDown.isDisplayed()).toBeFalsy();
+      .funky-show-hide.ng-hide-add.ng-hide-add-active {
+        transform: rotateZ(-135deg);
+      }
+
+      .funky-show-hide.ng-hide-remove {
+        transform: rotateY(90deg);
+        transform-origin: left;
+        transition: all 0.5s ease;
+      }
+
+      .funky-show-hide.ng-hide-remove.ng-hide-remove-active {
+        transform: rotateY(0);
+      }
+
+      .check-element {
+        border: 1px solid black;
+        opacity: 1;
+        padding: 10px;
+      }
+    </file>
+    <file name="protractor.js" type="protractor">
+      it('should check ngShow', function() {
+        var checkbox = element(by.model('checked'));
+        var checkElem = element(by.css('.check-element'));
+
+        expect(checkElem.isDisplayed()).toBe(false);
+        checkbox.click();
+        expect(checkElem.isDisplayed()).toBe(true);
       });
     </file>
   </example>
@@ -31835,11 +31885,13 @@ $animate[value?'removeClass':'addClass'](element,NG_HIDE_CLASS,{tempClasses:NG_H
  * @multiElement
  *
  * @description
- * The `ngHide` directive shows or hides the given HTML element based on the expression
- * provided to the `ngHide` attribute. The element is shown or hidden by removing or adding
- * the `ng-hide` CSS class onto the element. The `.ng-hide` CSS class is predefined
- * in AngularJS and sets the display style to none (using an !important flag).
- * For CSP mode please add `angular-csp.css` to your html file (see {@link ng.directive:ngCsp ngCsp}).
+ * The `ngHide` directive shows or hides the given HTML element based on the expression provided to
+ * the `ngHide` attribute.
+ *
+ * The element is shown or hidden by removing or adding the `.ng-hide` CSS class onto the element.
+ * The `.ng-hide` CSS class is predefined in AngularJS and sets the display style to none (using an
+ * `!important` flag). For CSP mode please add `angular-csp.css` to your HTML file (see
+ * {@link ng.directive:ngCsp ngCsp}).
  *
  * ```html
  * <!-- when $scope.myValue is truthy (element is hidden) -->
@@ -31849,30 +31901,32 @@ $animate[value?'removeClass':'addClass'](element,NG_HIDE_CLASS,{tempClasses:NG_H
  * <div ng-hide="myValue"></div>
  * ```
  *
- * When the `ngHide` expression evaluates to a truthy value then the `.ng-hide` CSS class is added to the class
- * attribute on the element causing it to become hidden. When falsy, the `.ng-hide` CSS class is removed
- * from the element causing the element not to appear hidden.
+ * When the `ngHide` expression evaluates to a truthy value then the `.ng-hide` CSS class is added
+ * to the class attribute on the element causing it to become hidden. When falsy, the `.ng-hide`
+ * CSS class is removed from the element causing the element not to appear hidden.
  *
- * ## Why is !important used?
+ * ## Why is `!important` used?
  *
- * You may be wondering why !important is used for the `.ng-hide` CSS class. This is because the `.ng-hide` selector
- * can be easily overridden by heavier selectors. For example, something as simple
- * as changing the display style on a HTML list item would make hidden elements appear visible.
- * This also becomes a bigger issue when dealing with CSS frameworks.
+ * You may be wondering why `!important` is used for the `.ng-hide` CSS class. This is because the
+ * `.ng-hide` selector can be easily overridden by heavier selectors. For example, something as
+ * simple as changing the display style on a HTML list item would make hidden elements appear
+ * visible. This also becomes a bigger issue when dealing with CSS frameworks.
  *
- * By using !important, the show and hide behavior will work as expected despite any clash between CSS selector
- * specificity (when !important isn't used with any conflicting styles). If a developer chooses to override the
- * styling to change how to hide an element then it is just a matter of using !important in their own CSS code.
+ * By using `!important`, the show and hide behavior will work as expected despite any clash between
+ * CSS selector specificity (when `!important` isn't used with any conflicting styles). If a
+ * developer chooses to override the styling to change how to hide an element then it is just a
+ * matter of using `!important` in their own CSS code.
  *
  * ### Overriding `.ng-hide`
  *
- * By default, the `.ng-hide` class will style the element with `display: none!important`. If you wish to change
- * the hide behavior with ngShow/ngHide then this can be achieved by restating the styles for the `.ng-hide`
- * class in CSS:
+ * By default, the `.ng-hide` class will style the element with `display: none !important`. If you
+ * wish to change the hide behavior with `ngShow`/`ngHide`, you can simply overwrite the styles for
+ * the `.ng-hide` CSS class. Note that the selector that needs to be used is actually
+ * `.ng-hide:not(.ng-hide-animate)` to cope with extra animation classes that can be added.
  *
  * ```css
- * .ng-hide {
- *   /&#42; this is just another form of hiding an element &#42;/
+ * .ng-hide:not(.ng-hide-animate) {
+ *   /&#42; These are just alternative ways of hiding an element &#42;/
  *   display: block!important;
  *   position: absolute;
  *   top: -9999px;
@@ -31880,20 +31934,20 @@ $animate[value?'removeClass':'addClass'](element,NG_HIDE_CLASS,{tempClasses:NG_H
  * }
  * ```
  *
- * By default you don't need to override in CSS anything and the animations will work around the display style.
+ * By default you don't need to override in CSS anything and the animations will work around the
+ * display style.
  *
  * ## A note about animations with `ngHide`
  *
- * Animations in ngShow/ngHide work with the show and hide events that are triggered when the directive expression
- * is true and false. This system works like the animation system present with ngClass, except that the `.ng-hide`
- * CSS class is added and removed for you instead of your own CSS class.
+ * Animations in `ngShow`/`ngHide` work with the show and hide events that are triggered when the
+ * directive expression is true and false. This system works like the animation system present with
+ * `ngClass` except that you must also include the `!important` flag to override the display
+ * property so that the elements are not actually hidden during the animation.
  *
  * ```css
- * //
- * //a working example can be found at the bottom of this page
- * //
+ * /&#42; A working example can be found at the bottom of this page. &#42;/
  * .my-element.ng-hide-add, .my-element.ng-hide-remove {
- *   transition: 0.5s linear all;
+ *   transition: all 0.5s linear;
  * }
  *
  * .my-element.ng-hide-add { ... }
@@ -31902,74 +31956,109 @@ $animate[value?'removeClass':'addClass'](element,NG_HIDE_CLASS,{tempClasses:NG_H
  * .my-element.ng-hide-remove.ng-hide-remove-active { ... }
  * ```
  *
- * Keep in mind that, as of AngularJS version 1.3, there is no need to change the display
- * property to block during animation states--ngAnimate will handle the style toggling automatically for you.
+ * Keep in mind that, as of AngularJS version 1.3, there is no need to change the display property
+ * to block during animation states - ngAnimate will automatically handle the style toggling for you.
  *
  * @animations
- * | Animation                        | Occurs                              |
- * |----------------------------------|-------------------------------------|
- * | {@link $animate#addClass addClass} `.ng-hide`  | after the `ngHide` expression evaluates to a truthy value and just before the contents are set to hidden |
- * | {@link $animate#removeClass removeClass}  `.ng-hide`  | after the `ngHide` expression evaluates to a non truthy value and just before contents are set to visible |
+ * | Animation                                           | Occurs                                                                                                     |
+ * |-----------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+ * | {@link $animate#addClass addClass} `.ng-hide`       | After the `ngHide` expression evaluates to a truthy value and just before the contents are set to hidden.  |
+ * | {@link $animate#removeClass removeClass} `.ng-hide` | After the `ngHide` expression evaluates to a non truthy value and just before contents are set to visible. |
  *
  *
  * @element ANY
- * @param {expression} ngHide If the {@link guide/expression expression} is truthy then
- *     the element is shown or hidden respectively.
+ * @param {expression} ngHide If the {@link guide/expression expression} is truthy/falsy then the
+ *                            element is hidden/shown respectively.
  *
  * @example
-  <example module="ngAnimate" deps="angular-animate.js" animations="true" name="ng-hide">
+ * A simple example, animating the element's opacity:
+ *
+  <example module="ngAnimate" deps="angular-animate.js" animations="true" name="ng-hide-simple">
     <file name="index.html">
-      Click me: <input type="checkbox" ng-model="checked" aria-label="Toggle ngShow"><br/>
-      <div>
-        Show:
-        <div class="check-element animate-hide" ng-show="checked">
-          <span class="glyphicon glyphicon-thumbs-up"></span> I show up when your checkbox is checked.
-        </div>
+      Hide: <input type="checkbox" ng-model="checked" aria-label="Toggle ngHide"><br />
+      <div class="check-element animate-show-hide" ng-hide="checked">
+        I hide when your checkbox is checked.
       </div>
-      <div>
-        Hide:
-        <div class="check-element animate-hide" ng-hide="checked">
-          <span class="glyphicon glyphicon-thumbs-down"></span> I hide when your checkbox is checked.
-        </div>
-      </div>
-    </file>
-    <file name="glyphicons.css">
-      @import url(../../components/bootstrap-3.1.1/css/bootstrap.css);
     </file>
     <file name="animations.css">
-      .animate-hide {
-        transition: all linear 0.5s;
-        line-height: 20px;
-        opacity: 1;
-        padding: 10px;
-        border: 1px solid black;
-        background: white;
+      .animate-show-hide.ng-hide {
+        opacity: 0;
       }
 
-      .animate-hide.ng-hide {
-        line-height: 0;
-        opacity: 0;
-        padding: 0 10px;
+      .animate-show-hide.ng-hide-add,
+      .animate-show-hide.ng-hide-remove {
+        transition: all linear 0.5s;
       }
 
       .check-element {
-        padding: 10px;
         border: 1px solid black;
-        background: white;
+        opacity: 1;
+        padding: 10px;
       }
     </file>
     <file name="protractor.js" type="protractor">
-      var thumbsUp = element(by.css('span.glyphicon-thumbs-up'));
-      var thumbsDown = element(by.css('span.glyphicon-thumbs-down'));
+      it('should check ngHide', function() {
+        var checkbox = element(by.model('checked'));
+        var checkElem = element(by.css('.check-element'));
 
-      it('should check ng-show / ng-hide', function() {
-        expect(thumbsUp.isDisplayed()).toBeFalsy();
-        expect(thumbsDown.isDisplayed()).toBeTruthy();
+        expect(checkElem.isDisplayed()).toBe(true);
+        checkbox.click();
+        expect(checkElem.isDisplayed()).toBe(false);
+      });
+    </file>
+  </example>
+ *
+ * <hr />
+ * @example
+ * A more complex example, featuring different show/hide animations:
+ *
+  <example module="ngAnimate" deps="angular-animate.js" animations="true" name="ng-hide-complex">
+    <file name="index.html">
+      Hide: <input type="checkbox" ng-model="checked" aria-label="Toggle ngHide"><br />
+      <div class="check-element funky-show-hide" ng-hide="checked">
+        I hide when your checkbox is checked.
+      </div>
+    </file>
+    <file name="animations.css">
+      body {
+        overflow: hidden;
+        perspective: 1000px;
+      }
 
-        element(by.model('checked')).click();
+      .funky-show-hide.ng-hide-add {
+        transform: rotateZ(0);
+        transform-origin: right;
+        transition: all 0.5s ease-in-out;
+      }
 
-        expect(thumbsUp.isDisplayed()).toBeTruthy();
-        expect(thumbsDown.isDisplayed()).toBeFalsy();
+      .funky-show-hide.ng-hide-add.ng-hide-add-active {
+        transform: rotateZ(-135deg);
+      }
+
+      .funky-show-hide.ng-hide-remove {
+        transform: rotateY(90deg);
+        transform-origin: left;
+        transition: all 0.5s ease;
+      }
+
+      .funky-show-hide.ng-hide-remove.ng-hide-remove-active {
+        transform: rotateY(0);
+      }
+
+      .check-element {
+        border: 1px solid black;
+        opacity: 1;
+        padding: 10px;
+      }
+    </file>
+    <file name="protractor.js" type="protractor">
+      it('should check ngHide', function() {
+        var checkbox = element(by.model('checked'));
+        var checkElem = element(by.css('.check-element'));
+
+        expect(checkElem.isDisplayed()).toBe(true);
+        checkbox.click();
+        expect(checkElem.isDisplayed()).toBe(false);
       });
     </file>
   </example>
@@ -32368,7 +32457,7 @@ fallbackLinkFn($scope,function(clone){$element.append(clone);});}function notWhi
  * The controller for the `<select>` directive. This provides support for reading
  * and writing the selected value(s) of the control and also coordinates dynamically
  * added `<option>` elements, perhaps by an `ngRepeat` directive.
- */var SelectController=['$element','$scope',/** @this */function($element,$scope){var self=this,optionsMap=new HashMap();self.selectValueMap={};// Keys are the hashed values, values the original values
+ */var SelectController=['$element','$scope',/** @this */function($element,$scope){var self=this,optionsMap=new NgMap();self.selectValueMap={};// Keys are the hashed values, values the original values
 // If the ngModel doesn't get provided then provide a dummy noop version to prevent errors
 self.ngModelCtrl=noopNgModelController;self.multiple=false;// The "unknown" option is one that is prepended to the list if the viewValue
 // does not match any of the options. When it is rendered the value of the unknown
@@ -32392,10 +32481,10 @@ self.writeValue=function writeSingleValue(value){// Make sure to remove the sele
 var currentlySelectedOption=$element[0].options[$element[0].selectedIndex];if(currentlySelectedOption)currentlySelectedOption.removeAttribute('selected');if(self.hasOption(value)){self.removeUnknownOption();var hashedVal=hashKey(value);$element.val(hashedVal in self.selectValueMap?hashedVal:value);// Set selected attribute and property on selected option for screen readers
 var selectedOption=$element[0].options[$element[0].selectedIndex];setOptionAsSelected(jqLite(selectedOption));}else{if(value==null&&self.emptyOption){self.removeUnknownOption();self.selectEmptyOption();}else if(self.unknownOption.parent().length){self.updateUnknownOption(value);}else{self.renderUnknownOption(value);}}};// Tell the select control that an option, with the given value, has been added
 self.addOption=function(value,element){// Skip comment nodes, as they only pollute the `optionsMap`
-if(element[0].nodeType===NODE_TYPE_COMMENT)return;assertNotHasOwnProperty(value,'"option value"');if(value===''){self.hasEmptyOption=true;self.emptyOption=element;}var count=optionsMap.get(value)||0;optionsMap.put(value,count+1);// Only render at the end of a digest. This improves render performance when many options
+if(element[0].nodeType===NODE_TYPE_COMMENT)return;assertNotHasOwnProperty(value,'"option value"');if(value===''){self.hasEmptyOption=true;self.emptyOption=element;}var count=optionsMap.get(value)||0;optionsMap.set(value,count+1);// Only render at the end of a digest. This improves render performance when many options
 // are added during a digest and ensures all relevant options are correctly marked as selected
 scheduleRender();};// Tell the select control that an option, with the given value, has been removed
-self.removeOption=function(value){var count=optionsMap.get(value);if(count){if(count===1){optionsMap.remove(value);if(value===''){self.hasEmptyOption=false;self.emptyOption=undefined;}}else{optionsMap.put(value,count-1);}}};// Check whether the select control has an option matching the given value
+self.removeOption=function(value){var count=optionsMap.get(value);if(count){if(count===1){optionsMap.delete(value);if(value===''){self.hasEmptyOption=false;self.emptyOption=undefined;}}else{optionsMap.set(value,count-1);}}};// Check whether the select control has an option matching the given value
 self.hasOption=function(value){return!!optionsMap.get(value);};var renderScheduled=false;function scheduleRender(){if(renderScheduled)return;renderScheduled=true;$scope.$$postDigest(function(){renderScheduled=false;self.ngModelCtrl.$render();});}var updateScheduled=false;function scheduleViewValueUpdate(renderAfter){if(updateScheduled)return;updateScheduled=true;$scope.$$postDigest(function(){if($scope.$$destroyed)return;updateScheduled=false;self.ngModelCtrl.$setViewValue(self.readValue());if(renderAfter)self.ngModelCtrl.$render();});}self.registerOption=function(optionScope,optionElement,optionAttrs,interpolateValueFn,interpolateTextFn){if(optionAttrs.$attr.ngValue){// The value attribute is set by ngValue
 var oldVal,hashedVal=NaN;optionAttrs.$observe('value',function valueAttributeObserveAction(newVal){var removal;var previouslySelected=optionElement.prop('selected');if(isDefined(hashedVal)){self.removeOption(oldVal);delete self.selectValueMap[hashedVal];removal=true;}hashedVal=hashKey(newVal);oldVal=newVal;self.selectValueMap[hashedVal]=newVal;self.addOption(newVal,optionElement);// Set the attribute directly instead of using optionAttrs.$set - this stops the observer
 // from firing a second time. Other $observers on value will also get the result of the
@@ -32406,7 +32495,7 @@ self.readValue();var removal;var previouslySelected=optionElement.prop('selected
 optionScope.$watch(interpolateTextFn,function interpolateWatchAction(newVal,oldVal){optionAttrs.$set('value',newVal);var previouslySelected=optionElement.prop('selected');if(oldVal!==newVal){self.removeOption(oldVal);}self.addOption(newVal,optionElement);if(oldVal&&previouslySelected){scheduleViewValueUpdate();}});}else{// The value attribute is static
 self.addOption(optionAttrs.value,optionElement);}optionAttrs.$observe('disabled',function(newVal){// Since model updates will also select disabled options (like ngOptions),
 // we only have to handle options becoming disabled, not enabled
-if(newVal==='true'||newVal&&optionElement.prop('selected')){if(self.multiple){scheduleViewValueUpdate(true);}else{self.ngModelCtrl.$setViewValue(null);self.ngModelCtrl.$render();}}});optionElement.on('$destroy',function(){var currentValue=self.readValue();var removeValue=optionAttrs.value;self.removeOption(removeValue);self.ngModelCtrl.$render();if(self.multiple&&currentValue&&currentValue.indexOf(removeValue)!==-1||currentValue===removeValue){// When multiple (selected) options are destroyed at the same time, we don't want
+if(newVal==='true'||newVal&&optionElement.prop('selected')){if(self.multiple){scheduleViewValueUpdate(true);}else{self.ngModelCtrl.$setViewValue(null);self.ngModelCtrl.$render();}}});optionElement.on('$destroy',function(){var currentValue=self.readValue();var removeValue=optionAttrs.value;self.removeOption(removeValue);scheduleRender();if(self.multiple&&currentValue&&currentValue.indexOf(removeValue)!==-1||currentValue===removeValue){// When multiple (selected) options are destroyed at the same time, we don't want
 // to run a model update for each of them. Instead, run a single update in the $$postDigest
 scheduleViewValueUpdate(true);}});};function setOptionAsSelected(optionEl){optionEl.prop('selected',true);// needed for IE
 optionEl.attr('selected',true);}}];/**
@@ -32667,7 +32756,7 @@ element.on('change',function(){selectCtrl.removeUnknownOption();scope.$apply(fun
 // doesn't trigger rendering if only an item in the array changes.
 if(attr.multiple){selectCtrl.multiple=true;// Read value now needs to check each option to see if it is selected
 selectCtrl.readValue=function readMultipleValue(){var array=[];forEach(element.find('option'),function(option){if(option.selected&&!option.disabled){var val=option.value;array.push(val in selectCtrl.selectValueMap?selectCtrl.selectValueMap[val]:val);}});return array;};// Write value now needs to set the selected property of each matching option
-selectCtrl.writeValue=function writeMultipleValue(value){var items=new HashMap(value);forEach(element.find('option'),function(option){option.selected=isDefined(items.get(option.value))||isDefined(items.get(selectCtrl.selectValueMap[option.value]));});};// we have to do it on each watch since ngModel watches reference, but
+selectCtrl.writeValue=function writeMultipleValue(value){forEach(element.find('option'),function(option){option.selected=!!value&&(includes(value,option.value)||includes(value,selectCtrl.selectValueMap[option.value]));});};// we have to do it on each watch since ngModel watches reference, but
 // we need to work of an array, so we need to see if anything was inserted/removed
 var lastView,lastViewRef=NaN;scope.$watch(function selectMultipleWatch(){if(lastViewRef===ngModelCtrl.$viewValue&&!equals(lastView,ngModelCtrl.$viewValue)){lastView=shallowCopy(ngModelCtrl.$viewValue);ngModelCtrl.$render();}lastViewRef=ngModelCtrl.$viewValue;});// If we are a multiple select then value is now a collection
 // so the meaning of $isEmpty changes
