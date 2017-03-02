@@ -1,10 +1,6 @@
-angular.module("blake").controller("PreviewSelectionController", function (SearchService, scope) {
+angular.module("blake").controller("PreviewSelectionController", function (SearchService) {
     let vm = this;
     vm.s = SearchService;
-    
-        let vm.results = scope.results,
-            vm.s.type = scope.type,
-            vm.tree = scope.tree;
 });
 
 angular.module("blake").directive("previewSelection", function () {
