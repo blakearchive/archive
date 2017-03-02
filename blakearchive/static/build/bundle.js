@@ -4956,11 +4956,6 @@ angular.module("blake").directive("previewSelection", function () {
         template: __webpack_require__(137),
         controller: "PreviewSelectionController",
         bindToController: true,
-        scope: {
-            results: '<results',
-            type: '<type',
-            tree: '<tree'
-        },
         controllerAs: "ps"
     };
 });
