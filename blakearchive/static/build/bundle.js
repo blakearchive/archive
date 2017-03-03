@@ -7971,7 +7971,7 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
     };
 
     s.hasResults = function () {
-        return s.hasObjectResults() || s.hasCopyResults() || s.hasWorkResults();
+        return s.hasObjectResults() || s.hasCopyResults() || s.hasWorkResults() || !s.noresults;
     };
 
     s.loadSearchPage = function () {
