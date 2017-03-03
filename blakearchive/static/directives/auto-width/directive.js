@@ -1,4 +1,4 @@
-angular.module("blake").directive('autoWidth', function (WindowSize) {
+angular.module("blake").directive('autoWidth', function (WindowSize, $rootScope) {
     let link = function (scope, element, attrs) {
 
         let adjust = scope.$eval(attrs.adjust),
@@ -23,7 +23,7 @@ angular.module("blake").directive('autoWidth', function (WindowSize) {
 
         scope.setStyles(WindowSize);
 
-        scope.$on('resize::resize', function (e, w) {
+        scope.$watch(_ => WindowSize.width, function (e, w) {
             scope.setStyles(w)
         });
     };
