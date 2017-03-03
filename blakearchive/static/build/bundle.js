@@ -7971,6 +7971,9 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
     };
 
     s.hasResults = function () {
+        if (s.stopWords.indexOf(s.queryString) > -1) {
+            return false;
+        }
         return s.hasObjectResults() || s.hasCopyResults() || s.hasWorkResults() || !s.noresults;
     };
 
