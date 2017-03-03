@@ -1,4 +1,4 @@
-angular.module("blake").directive('resize', function ($window, $timeout, WindowSize) {
+angular.module("blake").directive('resize', function ($rootScope, $window, $timeout, WindowSize) {
     return function (scope, element) {
         var w = angular.element($window);
         scope.getWindowDimensions = function () {
@@ -15,7 +15,7 @@ angular.module("blake").directive('resize', function ($window, $timeout, WindowS
             scope.resizing = $timeout(function () {
                 WindowSize.height = newValue.h;
                 WindowSize.width = newValue.w;
-                scope.$broadcast('resize::resize', {height: WindowSize.height, width: WindowSize.width});
+                $rootScope.$broadcast('resize::resize', {height: WindowSize.height, width: WindowSize.width});
             }, 300);
 
 

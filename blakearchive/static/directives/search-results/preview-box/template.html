@@ -1,7 +1,7 @@
-<div class="col-xs-12 full-width copy-container-wrapper" ng-class="{hidden: pb.hidden()}" adjust="175" breakpoint="992">
+<div class="col-xs-12 full-width copy-container-wrapper" ng-class="{hidden: pb.hidden()}" auto-height adjust="175" breakpoint="992">
     <div class="copy-container" id="{{ pb.type }}">
         <preview-header tree="pb.tree" results="pb.results"/>
-        <div class="flex-992" auto-height adjust="275" breakpoint="992">
+        <div id="result-preview-body" class="flex-992" auto-height adjust="275" breakpoint="992">
             <objects-in-virtual-work-preview tree="pb.tree" results="pb.results" ng-if="pb.showObjectsInVirtualWorkPreview()"/>
             <objects-in-copy-preview tree="pb.tree" results="pb.results" ng-if="pb.showObjectsInCopyPreview()"/>
             <copies-in-work-preview tree="pb.tree" results="pb.results" ng-if="pb.showCopiesInWorkPreview()" to-top-on-broadcast="searchCtrl::changeResult"/>
