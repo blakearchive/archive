@@ -1,3 +1,8 @@
+input:focus::-webkit-input-placeholder 
+{
+    color: transparent;
+}
+
 .carousel-control.right {
   left: auto;
   right: -5px;
