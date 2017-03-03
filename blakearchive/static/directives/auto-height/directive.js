@@ -1,10 +1,10 @@
-angular.module("blake").directive('autoHeight', function (WindowSize) {
+angular.module("blake").directive('autoHeight', function (WindowSize, $rootScope) {
     let link = function (scope, element, attrs) {
         let adjust = scope.$eval(attrs.adjust),
             breakpoint = scope.$eval(attrs.breakpoint),
             divide = scope.$eval(attrs.divide);
 
-        scope.setStyles = function (windowSize) {
+        function setStyles (windowSize) {
             if(windowSize.width < breakpoint){
                 element.height('auto');
             } else {
@@ -15,13 +15,13 @@ angular.module("blake").directive('autoHeight', function (WindowSize) {
                 console.log("setting height: " + newHeight);
                 element.height(newHeight);
             }
-        };
+        }
 
-        scope.setStyles(WindowSize);
+        setStyles(WindowSize);
 
 
-        scope.$on('resize::resize', function (e, w) {
-            scope.setStyles(w)
+        $rootScope.$on('resize::resize', function (e, w) {
+            setStyles(w)
         });
     };
     return {
