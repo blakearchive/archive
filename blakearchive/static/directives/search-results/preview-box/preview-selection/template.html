@@ -4,8 +4,8 @@
     <h5 ng-if="ps.s.type == 'copy-info'" style="">Selected Copy</h5>
     <br>
     <div class="object-img-container text-center" auto-height adjust="350" breakpoint="992">
-        <a auto-height ng-href="/copy/{{ps.s.getPreviewHref(ps.tree, ps.results)}}">
-            <img auto-height ng-src="/images/{{ ps.s.getPreviewImage(ps.tree, ps.results) }}.100.jpg">
+        <a ng-href="/copy/{{ps.s.getPreviewHref(ps.tree, ps.results)}}">
+            <img ng-src="/images/{{ ps.s.getPreviewImage(ps.tree, ps.results) }}.100.jpg">
             <p></p>
             <p class="object-subtitle">
                 <span ng-if="ps.tree == 'object' && ps.s.getPreviewTitle(ps.tree, ps.results) != null" class="object-no">{{ps.getPreviewTitle(ps.tree, ps.results)}}<br></span>
