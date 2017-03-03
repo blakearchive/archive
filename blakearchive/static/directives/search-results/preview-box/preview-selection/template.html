@@ -3,7 +3,7 @@
     <h5 ng-if="ps.s.type != 'copy-info'" style="">Selected Object</h5>
     <h5 ng-if="ps.s.type == 'copy-info'" style="">Selected Copy</h5>
     <br>
-    <div class="object-img-container text-center" adjust="350" breakpoint="992">
+    <div class="object-img-container text-center flex-wrap" auto-height adjust="350" breakpoint="992">
         <a ng-href="/copy/{{ps.s.getPreviewHref(ps.tree, ps.results)}}">
             <img ng-src="/images/{{ ps.s.getPreviewImage(ps.tree, ps.results) }}.100.jpg">
             <p></p>
