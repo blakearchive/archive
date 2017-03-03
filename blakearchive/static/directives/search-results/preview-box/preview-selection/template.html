@@ -1,9 +1,9 @@
 <!-- preview -->
-<div class="object-preview col-sm-12 text-center" auto-width adjust="100" breakpoint="992" divide="3">
+<div class="object-preview col-sm-12 text-center" style="height:90%" auto-width adjust="100" breakpoint="992" divide="3">
     <h5 ng-if="ps.s.type != 'copy-info'" style="">Selected Object</h5>
     <h5 ng-if="ps.s.type == 'copy-info'" style="">Selected Copy</h5>
     <br>
-    <div class="object-img-container text-center flex-wrap" adjust="350" breakpoint="992">
+    <div class="object-img-container text-center flex-wrap" style="height:72%" adjust="350" breakpoint="992">
         <a ng-href="/copy/{{ps.s.getPreviewHref(ps.tree, ps.results)}}">
             <img ng-src="/images/{{ ps.s.getPreviewImage(ps.tree, ps.results) }}.100.jpg">
             <p></p>
