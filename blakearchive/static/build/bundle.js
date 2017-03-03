@@ -4946,34 +4946,9 @@ angular.module("blake").directive("objectsInVirtualWorkPreview", function () {
 /* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-angular.module("blake").controller("PreviewSelectionController", ["SearchService", "WindowSize", function (SearchService, WindowSize) {
+angular.module("blake").controller("PreviewSelectionController", ["SearchService", function (SearchService) {
     let vm = this;
     vm.s = SearchService;
-
-    let link = function (scope, element, attrs) {
-        let adjust = scope.$eval(attrs.adjust),
-            breakpoint = scope.$eval(attrs.breakpoint),
-            divide = scope.$eval(attrs.divide);
-
-        scope.setStyles = function (windowSize) {
-            if (windowSize.width < breakpoint) {
-                element.height('auto');
-            } else {
-                let newHeight = windowSize.height - adjust;
-                if (divide) {
-                    newHeight = newHeight / divide;
-                }
-                console.log("setting height: " + newHeight);
-                element.height(newHeight);
-            }
-        };
-
-        scope.setStyles(WindowSize);
-
-        scope.$on('resize::resize', function (e, w) {
-            scope.setStyles(w);
-        });
-    };
 }]);
 
 angular.module("blake").directive("previewSelection", function () {
@@ -4986,7 +4961,6 @@ angular.module("blake").directive("previewSelection", function () {
             type: '<type',
             tree: '<tree'
         },
-        link: link,
         controllerAs: "ps"
     };
 });
