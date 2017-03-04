@@ -16,10 +16,6 @@
     
     <div class="container-fluid main" id="search">
 
-        <div ng-if="!search.s.hasResults()">
-            NO RESULTS
-        </div>
-
         <div style="padding-top:20px; text-align:center">Search string with stopwords removed: <i style="color:blue">{{search.s.queryString}}</i></div>
         <search-results ng-if="search.s.searchConfig.searchTitle || search.s.searchConfig.searchAllFields" label="Title" results="search.s.objectResults['title']" type="title" tree="object"/>
         <search-results ng-if="search.s.searchConfig.searchText || search.s.searchConfig.searchAllFields" label="Transcription" results="search.s.objectResults['text']" type="text" tree="object"/>
@@ -28,6 +24,10 @@
         <search-results ng-if="search.s.searchConfig.searchNotes || search.s.searchConfig.searchAllFields" label="Editors' Note" results="search.s.objectResults['notes']" type="notes" tree="object"/>
         <search-results ng-if="search.s.searchConfig.searchCopyInformation || search.s.searchConfig.searchAllFields" label="Copy Information" results="search.s.copyResults['copy-info']" type="copy-info" tree="copy"/>
         <search-results ng-if="search.s.searchConfig.searchWorkInformation || search.s.searchConfig.searchAllFields" label="Work Information" results="search.s.workResults['info']" type="work-info" tree="work"/>
+
+        <div ng-if="!search.s.hasResults()" style="text-align:center">
+            NO RESULTS
+        </div>
 
     </div>
 </div>
