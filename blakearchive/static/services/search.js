@@ -6,14 +6,12 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
     s.selectedObject = 0;
     
     s.queryString = '';
-    s.searchdone = false;
 
 
     s.resetResults = function () {
         s.objectResults = [];
         s.copyResults = [];
         s.workResults = [];
-        s.searchdone = false;
     };
 
     s.resetResults();
@@ -234,7 +232,6 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
             }
             $rootScope.$broadcast('searchCtrl::newSearch');
             s.searchConfig.searchString = "";
-            s.searchdone = true;
         });
     };
 
