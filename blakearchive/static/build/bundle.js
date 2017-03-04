@@ -7905,6 +7905,7 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
     s.selectedObject = 0;
 
     s.queryString = '';
+    s.searchdone = false;
 
     s.resetResults = function () {
         s.objectResults = [];
@@ -7958,6 +7959,7 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
             }
             $rootScope.$broadcast('searchCtrl::newSearch');
             s.searchConfig.searchString = "";
+            s.searchdone = true;
         });
     };
 
