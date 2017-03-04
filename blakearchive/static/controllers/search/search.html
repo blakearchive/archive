@@ -26,7 +26,7 @@
         <search-results ng-if="search.s.searchConfig.searchCopyInformation || search.s.searchConfig.searchAllFields" label="Copy Information" results="search.s.copyResults['copy-info']" type="copy-info" tree="copy"/>
         <search-results ng-if="search.s.searchConfig.searchWorkInformation || search.s.searchConfig.searchAllFields" label="Work Information" results="search.s.workResults['info']" type="work-info" tree="work"/>
 
-        <div ng-if="!search.s.hasResults()" style="text-align:center">
+        <div ng-if="!search.s.hasResults() && search.s.searchdone" style="text-align:center">
             NO RESULTS
         </div>
 
