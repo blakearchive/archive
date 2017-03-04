@@ -2940,7 +2940,7 @@ angular.module('blake').controller('SearchController', ["$rootScope", "$routePar
             vm.rp.search = vm.s.searchConfig.searchString;
 
             if (vm.s.searchConfig.searchString == "") {
-                vm.s.noresults = true;
+                vm.s.blankstring = true;
             } else {
                 vm.s.noresults = false;
                 vm.s.search();
@@ -7911,6 +7911,7 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
 
     s.queryString = '';
     s.noresults = false;
+    s.blankstring = false;
     s.objectResults = [];
     s.copyResults = [];
     s.workResults = [];
@@ -7971,7 +7972,7 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
     };
 
     s.hasResults = function () {
-        return s.hasObjectResults() || s.hasCopyResults() || s.hasWorkResults() || !s.noresults;
+        return s.hasObjectResults() || s.hasCopyResults() || s.hasWorkResults() || s.blankstring || !s.noresults;
     };
 
     s.loadSearchPage = function () {
