@@ -16,7 +16,7 @@ angular.module('blake').controller('SearchController', function($rootScope, $rou
             vm.rp.search = vm.s.searchConfig.searchString;
 
             if(vm.s.searchConfig.searchString == "") {
-                vm.s.noresults = true;
+                vm.s.blankstring = true;
             }
             else {
                 vm.s.noresults = false;
