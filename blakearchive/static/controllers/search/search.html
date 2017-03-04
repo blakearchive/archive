@@ -16,7 +16,7 @@
     
     <div class="container-fluid main" id="search">
 
-        <div ng-if="!search.s.hasResults() || search.s.searchConfig.searchString == ''">
+        <div ng-if="!search.s.hasResults() || search.s.noresults == true">
             NO RESULTS
         </div>
 
