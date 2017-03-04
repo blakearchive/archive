@@ -247,7 +247,8 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         return (
             s.hasObjectResults() ||
             s.hasCopyResults() ||
-            s.hasWorkResults()
+            s.hasWorkResults() ||
+            !s.noresults
         );
     };
 
