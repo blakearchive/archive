@@ -13,6 +13,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         s.objectResults = [];
         s.copyResults = [];
         s.workResults = [];
+        s.searchdone = false;
     };
 
     s.resetResults();
