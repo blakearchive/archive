@@ -7,7 +7,6 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
     
     s.queryString = '';
     s.noresults = false;
-    s.blankstring = false;
     s.objectResults = [];
     s.copyResults = [];
     s.workResults = [];
@@ -248,9 +247,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         return (
             s.hasObjectResults() ||
             s.hasCopyResults() ||
-            s.hasWorkResults() ||
-            s.blankstring ||
-            !s.noresults
+            s.hasWorkResults()
         );
     };
 
