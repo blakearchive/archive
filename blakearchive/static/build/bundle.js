@@ -7910,7 +7910,7 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
     s.selectedObject = 0;
 
     s.queryString = '';
-    s.noresults = '';
+    s.noresults = false;
     s.objectResults = [];
     s.copyResults = [];
     s.workResults = [];
