@@ -20,7 +20,7 @@
             NO RESULTS
         </div>
 
-        <div>Search string with stopwords removed: <i style="color:blue">{{search.s.queryString}}</i></div>
+        <div style="padding-top:20px; text-align:center">Search string with stopwords removed: <i style="color:blue">{{search.s.queryString}}</i></div>
         <search-results ng-if="search.s.searchConfig.searchTitle || search.s.searchConfig.searchAllFields" label="Title" results="search.s.objectResults['title']" type="title" tree="object"/>
         <search-results ng-if="search.s.searchConfig.searchText || search.s.searchConfig.searchAllFields" label="Transcription" results="search.s.objectResults['text']" type="text" tree="object"/>
         <search-results ng-if="search.s.searchConfig.searchImageDescriptions || search.s.searchConfig.searchAllFields" label="Illustration Description" results="search.s.objectResults['description']" type="description" tree="object"/>
