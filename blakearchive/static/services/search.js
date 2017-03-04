@@ -193,6 +193,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
 
     s.search = function () {
         delete s.type;
+        s.queryString = s.searchConfig.searchString;
         s.highlight = s.searchConfig.searchString;
         s.resetResults();
         if (s.searchConfig.searchString == "") return;
