@@ -6,7 +6,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
     s.selectedObject = 0;
     
     s.queryString = '';
-    s.noresults = false;
+    s.noresults = '';
     s.objectResults = [];
     s.copyResults = [];
     s.workResults = [];
