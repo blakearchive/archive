@@ -7911,6 +7911,7 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
         s.objectResults = [];
         s.copyResults = [];
         s.workResults = [];
+        s.searchdone = false;
     };
 
     s.resetResults();
