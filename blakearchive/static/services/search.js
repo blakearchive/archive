@@ -6,10 +6,15 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
     s.selectedObject = 0;
     
     s.queryString = '';
-    s.noresults = false;
-    s.objectResults = [];
-    s.copyResults = [];
-    s.workResults = [];
+
+
+    s.resetResults = function () {
+        s.objectResults = [];
+        s.copyResults = [];
+        s.workResults = [];
+    };
+
+    s.resetResults();
 
     s.stopWords = ["a",
         "about",
@@ -189,6 +194,8 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
     s.search = function () {
         delete s.type;
         s.highlight = s.searchConfig.searchString;
+        s.resetResults();
+        if (s.searchConfig.searchString == "") return;
         let objectSearch = BlakeDataService.queryObjects(s.searchConfig),
             copySearch = BlakeDataService.queryCopies(s.searchConfig),
             workSearch = BlakeDataService.queryWorks(s.searchConfig);
@@ -223,6 +230,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
                 s.workResults[type] = arrayedResults;
             }
             $rootScope.$broadcast('searchCtrl::newSearch');
+            s.searchConfig.searchString = "";
         });
     };
 
@@ -247,7 +255,8 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         return (
             s.hasObjectResults() ||
             s.hasCopyResults() ||
-            s.hasWorkResults()
+            s.hasWorkResults() ||
+            !s.noresults
         );
     };
 
