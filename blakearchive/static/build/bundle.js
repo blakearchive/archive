@@ -7918,12 +7918,9 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
 
     s.search = function () {
         delete s.type;
-<<<<<<< HEAD
         s.queryString = s.searchConfig.searchString;
         s.highlight = s.searchConfig.searchString;
         s.resetResults();
-=======
->>>>>>> refactor
         if (s.searchConfig.searchString == "") return;
         s.resetResults();
         s.searching = true;
