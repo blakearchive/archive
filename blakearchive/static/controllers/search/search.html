@@ -16,7 +16,11 @@
     
     <div class="container-fluid main" id="search">
 
-        <div ng-if="!search.s.hasResults()">
+        <div ng-if="search.s.searching">
+            Search in progress...
+        </div>
+
+        <div ng-if="!search.s.hasResults() && !search.s.searching">
             NO RESULTS
         </div>
 

@@ -7903,7 +7903,7 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
     s.selectedWork = -1;
     s.selectedCopy = 0;
     s.selectedObject = 0;
-
+    s.searching = false;
     s.queryString = '';
 
     s.resetResults = function () {
@@ -7918,9 +7918,10 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
 
     s.search = function () {
         delete s.type;
-        s.highlight = s.searchConfig.searchString;
-        s.resetResults();
         if (s.searchConfig.searchString == "") return;
+        s.resetResults();
+        s.searching = true;
+        s.highlight = s.searchConfig.searchString;
         let objectSearch = BlakeDataService.queryObjects(s.searchConfig),
             copySearch = BlakeDataService.queryCopies(s.searchConfig),
             workSearch = BlakeDataService.queryWorks(s.searchConfig);
@@ -7956,7 +7957,7 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
                 s.workResults[type] = arrayedResults;
             }
             $rootScope.$broadcast('searchCtrl::newSearch');
-            s.searchConfig.searchString = "";
+            s.searching = false;
         });
     };
 
