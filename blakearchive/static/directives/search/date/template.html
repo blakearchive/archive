@@ -4,14 +4,14 @@
     <ul class="dropdown-menu" role="menu" ng-click="$event.stopPropagation()">
         <li class="list-header">Restrict Date Range:</li>
         <li>
-            <div range-slider min="1772" max="1827" show-values="true" model-min="dsf.s.searchConfig.minDate" model-max="dsf.s.searchConfig.maxDate" on-handle-up="dsf.s.search()"></div>
+            <div range-slider min="1772" max="1827" show-values="true" model-min="dsf.s.searchConfig.minDate" model-max="dsf.s.searchConfig.maxDate" on-handle-up="dsf.s.searchingFromFilter = true; dsf.s.search()"></div>
         </li>
         <li class="divider" role="separator"></li>
         <li>
-            <input type="checkbox" ng-model="dsf.s.useCompDate" ng-change="dsf.s.search()"> Composition Date
+            <input type="checkbox" ng-model="dsf.s.useCompDate" ng-change="dsf.s.searchingFromFilter = true; dsf.s.search();"> Composition Date
         </li>
         <li>
-            <input type="checkbox" ng-model="dsf.s.searchConfig.usePrintDate" ng-change="dsf.s.search()"> Printing Date
+            <input type="checkbox" ng-model="dsf.s.searchConfig.usePrintDate" ng-change="dsf.s.searchingFromFilter = true; dsf.s.search()"> Printing Date
         </li>
     </ul>
 </li>

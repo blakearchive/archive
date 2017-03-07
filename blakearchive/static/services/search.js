@@ -15,6 +15,31 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         s.workResults = [];
     };
 
+    s.resetFilters = function () {
+        s.searchConfig = {
+        useCompDate: true,
+        usePrintDate: false,
+        searchAllFields: true,
+        searchTitle: false,
+        searchText: false,
+        searchNotes: false,
+        searchImageDescriptions: false,
+        searchImageKeywords: false,
+        searchWorks: false,
+        searchCopies: false,
+        searchAllTypes: true,
+        searchIlluminatedBooks: false,
+        searchCommercialBookIllustrations: false,
+        searchCopyInformation: false,
+        searchSeparatePrints: false,
+        searchDrawingsPaintings: false,
+        searchManuscripts: false,
+        searchRelatedMaterials: false,
+        minDate: 1772,
+        maxDate: 1827
+        };
+    }
+
     s.resetResults();
 
     s.stopWords = ["a",
@@ -198,7 +223,14 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         //the search box but still modify the filters for the original query
         if(!s.searchingFromFilter) {
             s.queryString = s.searchConfig.searchString;
+            s.searchConfig.searchAllTypes = true;
             s.searchConfig.searchAllFields = true;
+            s.searchConfig.minDate = 1772;
+            s.searchConfig.maxDate = 1827;
+            s.searchConfig.useCompDate = true;
+            s.searchConfig.usePrintDate = false;
+            s.allFields();
+            s.allTypes();
         }
         else {
             s.searchConfig.searchString = s.queryString;
