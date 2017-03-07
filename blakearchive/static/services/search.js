@@ -324,8 +324,8 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         searchNotes: false,
         searchImageDescriptions: false,
         searchImageKeywords: false,
-        searchWorks: false,
-        searchCopies: false,
+        searchWorkInformation: false,
+        searchCopyInformation: false,
         searchAllTypes: true,
         searchIlluminatedBooks: false,
         searchCommercialBookIllustrations: false,
@@ -338,7 +338,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         maxDate: 1827
     };
 
-    s.searchFields = ['searchTitle','searchText','searchNotes','searchImageDescriptions','searchImageKeywords','searchWorks','searchCopies'];
+    s.searchFields = ['searchTitle','searchText','searchNotes','searchImageDescriptions','searchImageKeywords','searchWorkInformation','searchCopyInformation'];
 
     s.searchTypes = ['searchIlluminatedBooks','searchCommercialBookIllustrations','searchSeparatePrints','searchDrawingsPaintings','searchManuscripts','searchRelatedMaterials'];
 
