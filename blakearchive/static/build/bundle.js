@@ -7963,7 +7963,7 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
             s.searchConfig.searchString = s.persistingQueryString;
             //s.queryString = s.searchConfig.searchString;
         }
-        console.log(s.searchConfig.searchString);
+        //console.log(s.searchConfig.searchString);
         s.highlight = s.searchConfig.searchString;
         s.resetResults();
         //if (s.searchConfig.searchString == "") {
@@ -7987,7 +7987,7 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
                 });
             }
             s.copyResults = results[1];
-            console.log(s.copyResults);
+            //console.log(s.copyResults);
             for (let type in s.copyResults) {
                 let works = s.copyResults[type];
                 works.forEach((work, index) => {
