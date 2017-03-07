@@ -7945,10 +7945,11 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
 
     s.search = function () {
         delete s.type;
-        //this if/else uses queryString as a persisting variable so that a user can clear
+        //this if/else uses persistingQueryString as a persisting variable so that a user can clear
         //the search box but still modify the filters for the original query
         if (!s.searchingFromFilter) {
             s.queryString = s.searchConfig.searchString;
+            s.persistingQueryString = s.queryString;
             s.searchConfig.searchAllTypes = true;
             s.searchConfig.searchAllFields = true;
             s.searchConfig.minDate = 1772;
@@ -7958,15 +7959,17 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
             s.allFields();
             s.allTypes();
         } else {
-            s.searchConfig.searchString = s.queryString;
+            s.queryString = s.searchConfig.searchString;
+            s.searchConfig.searchString = s.persistingQueryString;
             //s.queryString = s.searchConfig.searchString;
         }
+        console.log(s.searchConfig.searchString);
         s.highlight = s.searchConfig.searchString;
         s.resetResults();
-        if (s.searchConfig.searchString == "") {
-            searchingFromFilter = false;
-            return;
-        }
+        //if (s.searchConfig.searchString == "") {
+        //    searchingFromFilter = false;
+        //    return;
+        //}
         s.resetResults();
         s.searching = true;
         s.highlight = s.searchConfig.searchString;
