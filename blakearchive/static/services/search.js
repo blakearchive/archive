@@ -201,7 +201,6 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         }
         else {
             s.searchConfig.searchString = s.queryString;
-            s.searchAllTypes = true;
             //s.queryString = s.searchConfig.searchString;
         }
         s.highlight = s.searchConfig.searchString;
