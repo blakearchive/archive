@@ -33198,7 +33198,7 @@ module.exports = "<!-- OBJECTS IN COPY -->\n<div role=\"tabpanel\" class=\"fadei
 /* 131 */
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"navbar-form\" role=\"search\" ng-submit=\"sb.s.loadSearchPage()\">\n<div class=\"input-group\">\n  <input ng-model=\"sb.s.searchConfig.searchString\" type=\"text\" class=\"form-control\" placeholder=\"Search\">\n  <span class=\"input-group-btn\">\n    <button class=\"btn btn-default\" type=\"submit\"><span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span></button>\n  </span>\n</div>\n</form>";
+module.exports = "<form class=\"navbar-form\" role=\"search\" ng-submit=\"sb.s.loadSearchPage()\">\n<div class=\"input-group\">\n  <input ng-model=\"sb.s.searchConfig.searchString\" type=\"text\" class=\"form-control\" placeholder=\"Search\" ng-click=\"sb.s.searchConfig.searchString = null\">\n  <span class=\"input-group-btn\">\n    <button class=\"btn btn-default\" type=\"submit\"><span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span></button>\n  </span>\n</div>\n</form>";
 
 /***/ }),
 /* 132 */
