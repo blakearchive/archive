@@ -25,7 +25,7 @@
             <tokenizer class="solr.StandardTokenizerFactory"/>
             <filter class="solr.StandardFilterFactory"/>
             <filter class="solr.LowerCaseFilterFactory"/>
-            <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
+            <!--<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>-->
         </analyzer>
     </fieldType>
 
