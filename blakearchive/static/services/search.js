@@ -324,7 +324,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
 
     s.allTypes = function(){
         if (s.searchConfig.searchAllTypes) {
-            s.types.forEach(type => s.searchConfig[type] = false);
+            s.searchTypes.forEach(type => s.searchConfig[type] = false);
         }
         s.search();
     };
