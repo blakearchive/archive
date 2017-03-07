@@ -6,6 +6,8 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
     s.selectedObject = 0;
     s.searching = false;
     s.queryString = '';
+    s.searchingFromFilter = false;
+    s.persistingQueryString = '';
 
     s.resetResults = function () {
         s.objectResults = [];
@@ -192,10 +194,21 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
 
     s.search = function () {
         delete s.type;
-        s.queryString = s.searchConfig.searchString;
+        //this if/else uses queryString as a persisting variable so that a user can clear
+        //the search box but still modify the filters for the original query
+        if(!s.searchingFromFilter) {
+            s.queryString = s.searchConfig.searchString;
+        }
+        else {
+            s.searchConfig.searchString = s.queryString;
+            //s.queryString = s.searchConfig.searchString;
+        }
         s.highlight = s.searchConfig.searchString;
         s.resetResults();
-        if (s.searchConfig.searchString == "") return;
+        if (s.searchConfig.searchString == "") {
+            searchingFromFilter = false;
+            return;
+        }
         s.resetResults();
         s.searching = true;
         s.highlight = s.searchConfig.searchString;
@@ -233,6 +246,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
                 s.workResults[type] = arrayedResults;
             }
             $rootScope.$broadcast('searchCtrl::newSearch');
+            s.searchingFromFilter = false;
             s.searching = false;
         });
     };
@@ -319,6 +333,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
             }
         });
         s.searchConfig.searchAllTypes = check <= 0;
+        s.searchingFromFilter = true;
         s.search();
     };
 
@@ -326,6 +341,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         if (s.searchConfig.searchAllTypes) {
             s.searchTypes.forEach(type => s.searchConfig[type] = false);
         }
+        s.searchingFromFilter = true;
         s.search();
     };
 
