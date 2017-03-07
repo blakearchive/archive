@@ -198,10 +198,10 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         //the search box but still modify the filters for the original query
         if(!s.searchingFromFilter) {
             s.queryString = s.searchConfig.searchString;
-            s.searchAllTypes = true;
         }
         else {
             s.searchConfig.searchString = s.queryString;
+            s.searchAllTypes = true;
             //s.queryString = s.searchConfig.searchString;
         }
         s.highlight = s.searchConfig.searchString;
