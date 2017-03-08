@@ -390,7 +390,7 @@ class BlakeObjectImporter(BlakeImporter):
     @staticmethod
     def get_object_title(obj):
         for title in obj.xpath("objtitle/title"):
-            return titlecase.titlecase(title.xpath("string()").rstrip().encode("utf-8"))
+            return title.xpath("string()").rstrip().encode("utf-8")
         else:
             for objnumber in obj.xpath(".//objnumber"):
                 if objnumber.attrib.get("code") == "A1":
