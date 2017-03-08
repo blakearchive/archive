@@ -176,7 +176,11 @@ class BlakeDocumentImporter(BlakeImporter):
 
     def process_virtual_work(self, entry, work):
         # Virtual works need to have a special copy created just for them
-        objects = self.objects_sorted_for_virtual_copy(self.split_ids(entry.virtual_objects))
+        if(socket.gethostname() == 'islington.lib.unc.edu'):
+            all_non_preview_objects = list(set(self.split_ids(entry.virtual_objects)) - set(work.preview_copies))
+            objects = self.objects_sorted_for_virtual_copy(self.split_ids(all_non_preview_objects))
+        else:
+            objects = self.objects_sorted_for_virtual_copy(self.split_ids(entry.virtual_objects))
         copy = models.BlakeCopy()
         copy.work_id = entry.bad_id
         copy.title = entry.title.encode('utf-8')
