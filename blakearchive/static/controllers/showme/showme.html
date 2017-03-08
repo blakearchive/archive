@@ -62,7 +62,7 @@
         <div class="row" id="trueSize" ng-if="showme.what == 'truesize'">
             <div class="col-xs-12 text-center img-enlarge-container">
                 <p>{{ showme.bds.object.physical_description.objsize['#text'] }}</p>
-                <img class="img-enlarge" ng-src="/images/{{ showme.bds.object.dbi }}.100.jpg" ng-style="showme.trueSize()">
+                <img class="img-enlarge" ng-src="/images/{{ showme.bds.object.dbi }}.{{dpi}}.jpg" ng-style="showme.trueSize()">
             </div>
             <div class="col-xs-12 text-center">
                 <p></p>

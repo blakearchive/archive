@@ -2953,11 +2953,23 @@ angular.module('blake').controller('ShowMeController', ["$rootScope", "$routePar
     vm.bds = BlakeDataService;
 
     $rootScope.showmePage = true;
+    $scope.dpi = $rootScope.dpivalue;
 
     vm.what = $routeParams.what;
     $rootScope.showmeType = $routeParams.what;
 
     BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.descId);
+
+    $scope.$watch(function () {
+        return $rootScope.dpivalue;
+    }, function () {
+
+        if ($rootScope.dpivalue == '300') {
+            $scope.dpi = "300";
+        } else {
+            $scope.dpi = "100";
+        }
+    }, true);
 
     vm.getOvpTitle = function () {
         if (angular.isDefined(vm.bds.copy)) {
