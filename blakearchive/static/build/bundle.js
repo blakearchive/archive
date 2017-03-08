@@ -2948,7 +2948,7 @@ angular.module('blake').controller('SearchController', ["$rootScope", "$routePar
 /* 26 */
 /***/ (function(module, exports) {
 
-angular.module('blake').controller('ShowMeController', ["$rootScope", "$routeParams", "$modal", "$cookies", "BlakeDataService", function ($rootScope, $routeParams, $modal, $cookies, BlakeDataService) {
+angular.module('blake').controller('ShowMeController', ["$rootScope", "$routeParams", "$modal", "$cookies", "BlakeDataService", "$scope", function ($rootScope, $routeParams, $modal, $cookies, BlakeDataService, $scope) {
     var vm = this;
     vm.bds = BlakeDataService;
 

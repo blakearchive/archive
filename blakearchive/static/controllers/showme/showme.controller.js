@@ -1,4 +1,4 @@
-angular.module('blake').controller('ShowMeController', function ($rootScope,$routeParams,$modal,$cookies,BlakeDataService) {
+angular.module('blake').controller('ShowMeController', function ($rootScope,$routeParams,$modal,$cookies,BlakeDataService,$scope) {
     var vm = this;
     vm.bds = BlakeDataService;
 
