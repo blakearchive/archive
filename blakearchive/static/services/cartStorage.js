@@ -14,7 +14,7 @@ angular.module('blake')
 		var STORAGE_ID = 'cart-items-angularjs';
 
 		var store = {
-			cartItems: [],
+			cartItems: JSON.parse(localStorage.getItem(STORAGE_ID) || '[]'),
 
 			_getFromLocalStorage: function () {
 				return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
