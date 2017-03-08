@@ -1,4 +1,4 @@
-angular.module("blake").controller("CopyController", function ($scope,$routeParams,$rootScope,$window,$modal,$cookies,BlakeDataService,imageManipulation,CompareObjectsFactory) {
+angular.module("blake").controller("CopyController", function ($scope,$routeParams,$rootScope,$window,$modal,$cookies,CartStorageService,BlakeDataService,imageManipulation,CompareObjectsFactory) {
     var vm = this;
 
     $rootScope.worksNavState = false;
@@ -10,7 +10,9 @@ angular.module("blake").controller("CopyController", function ($scope,$routePara
     $rootScope.dpivalue = '100';
     vm.bds = BlakeDataService;
     vm.cof = CompareObjectsFactory;
-
+    
+    var cartItems = CartStorageService.cartItems;
+    
     if(!angular.isDefined($rootScope.persistentmode)){
         $rootScope.persistentmode = 'gallery';
     }
@@ -93,5 +95,12 @@ angular.module("blake").controller("CopyController", function ($scope,$routePara
     vm.toggleSupplemental = function(){
         $rootScope.supplemental = !$rootScope.supplemental;
     }
-
+    
+    //TODO: cleanup logging statements.
+    vm.addToLightBox = function(){
+    	console.log("adding: "+$routeParams.descId);
+    	CartStorageService.insert($routeParams.descId);
+    	$scope.$broadcast('copyCtrl::addToLightBox',CartStorageService.count());
+    	console.log(CartStorageService.get());
+    }
 });
