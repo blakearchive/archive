@@ -6,11 +6,6 @@ angular.module("blake").controller("BlakeMenuController", ['$scope','$rootScope'
     // I suspect that this needs to be outside of the directive in the containing page's
     // controller or on its own dedicated controller...
     $rootScope.cartItems = CartStorageService.cartItems;
-    
-    // load pre-existing cart from local storage....
-    $rootScope.cartItems = CartStorageService._getFromLocalStorage();
-    
-    //console.log(CartStorageService)
 }]);
 
 angular.module("blake").directive('blakeMenu', function(){
