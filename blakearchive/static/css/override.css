@@ -136,7 +136,7 @@ h3 a {
 }
 
 div h3 {
-    color:black;
+    color:white;
 }
 
 .btn {
@@ -1043,6 +1043,7 @@ a.compare-selected-objects {
     }
     #search.container-fluid {
         padding: 0;
+        background: #1d1d1d;
     }
     .full-width {
         padding:0;
@@ -1088,6 +1089,7 @@ a.compare-selected-objects {
 @media (min-width:992px){
     .search-result-item .description{
         min-height: 24px;
+        color: #999;
     }
     .copy-container .object-img-container img {
         max-height: 80%;
