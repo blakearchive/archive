@@ -28,11 +28,11 @@
         <search-results ng-if="search.s.searchConfig.searchCopyInformation || search.s.searchConfig.searchAllFields" label="Copy Information" results="search.s.copyResults['copy-info']" type="copy-info" tree="copy"/>
         <search-results ng-if="search.s.searchConfig.searchWorkInformation || search.s.searchConfig.searchAllFields" label="Work Information" results="search.s.workResults['info']" type="work-info" tree="work"/>
 
-        <div ng-if="search.s.searching" style="padding-bottom:20px; text-align:center">
+        <div ng-if="search.s.searching" style="padding-bottom:20px; text-align:center; color:yellow">
             Search in progress...
         </div>
 
-        <div ng-if="!search.s.hasResults() && !search.s.searching" style="padding-bottom:20px; text-align:center">
+        <div ng-if="!search.s.hasResults() && !search.s.searching" style="padding-bottom:20px; text-align:center; color:yellow">
             NO RESULTS
         </div>
 
