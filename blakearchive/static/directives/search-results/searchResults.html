@@ -1,6 +1,6 @@
 <span dropdown class="dropdown" ng-if="esr.results.length > 0">
     <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">
-        <span><h3 style="padding-left:15px">{{ esr.label }} ({{ esr.results.length}})<span class="caret"></span></h3></span>&nbsp;
+        <span><h3>{{ esr.label }} ({{ esr.results.length}})<span class="caret"></span></h3></span>&nbsp;
     </button>
         <ul class="dropdown-menu" role="menu" style="z-index: 10000;">
             <li ng-repeat="work in esr.results track by $index">

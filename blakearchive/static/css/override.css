@@ -1320,6 +1320,7 @@ a.compare-selected-objects {
 #search .dropdown-toggle{
     background: transparent;
     border: none;
+    height: 55px;
 }
 #search header.page-header span.dropdown{
     display: block;
