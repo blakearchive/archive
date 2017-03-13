@@ -34,6 +34,7 @@ angular.module('blake').directive('handprintBlock', function () {
             link: '@link',
             title: '@title',
             action: '&action',
+            single: '&single',
             workId: '@workId'
         },
         controllerAs: 'handprint',

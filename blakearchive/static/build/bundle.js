@@ -3687,6 +3687,7 @@ angular.module('blake').directive('handprintBlock', function () {
             link: '@link',
             title: '@title',
             action: '&action',
+            single: '&single',
             workId: '@workId'
         },
         controllerAs: 'handprint',
@@ -8231,6 +8232,85 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
 
                 return string;
         }
+    };
+
+    s.searchSingleWork = function (results, workIndex) {
+        let title = results[workIndex][0].title;
+        //console.log(title);
+        delete s.type;
+        //this if/else uses persistingQueryString as a persisting variable so that a user can clear
+        //the search box but still modify the filters for the original query
+        if (!s.searchingFromFilter) {
+            s.queryString = s.searchConfig.searchString;
+            s.persistingQueryString = s.queryString;
+            s.searchConfig.searchAllTypes = true;
+            s.searchConfig.searchAllFields = true;
+            s.searchConfig.minDate = 1772;
+            s.searchConfig.maxDate = 1827;
+            s.searchConfig.useCompDate = true;
+            s.searchConfig.usePrintDate = false;
+            s.allFields();
+            s.allTypes();
+        } else {
+            s.queryString = s.searchConfig.searchString;
+            s.searchConfig.searchString = s.persistingQueryString;
+            //s.queryString = s.searchConfig.searchString;
+        }
+        //console.log(s.searchConfig.searchString);
+        s.highlight = s.searchConfig.searchString;
+        s.resetResults();
+        //if (s.searchConfig.searchString == "") {
+        //    searchingFromFilter = false;
+        //    return;
+        //}
+        s.resetResults();
+        s.searching = true;
+        s.highlight = s.searchConfig.searchString;
+        let objectSearch = BlakeDataService.queryObjects(s.searchConfig),
+            copySearch = BlakeDataService.queryCopies(s.searchConfig),
+            workSearch = BlakeDataService.queryWorks(s.searchConfig);
+        return $q.all([objectSearch, copySearch, workSearch]).then(function (results) {
+            s.objectResults = results[0];
+            for (let type in s.objectResults) {
+                let works = s.objectResults[type];
+                works.forEach((work, index) => {
+                    if (work.title == title) {
+                        BlakeDataService.getObject(s.objectResults[type][index][2][0][2][0][0]).then(results => {
+                            s.objectResults[type][index][2][0][2][0][0] = results;
+                        });
+                    }
+                });
+            }
+            s.copyResults = results[1];
+            //console.log(s.copyResults);
+            for (let type in s.copyResults) {
+                let works = s.copyResults[type];
+                works.forEach((work, index) => {
+                    //s.populateWorkCopies(type,index);
+                    if (work.title == title) {
+                        BlakeDataService.getCopy(s.copyResults[type][index][2][0][0]).then(results => {
+                            s.copyResults[type][index][2][0][0] = results;
+                        });
+                    }
+                });
+            }
+            s.workResults = results[2];
+            //console.log(workIndex);
+            for (let type in s.workResults) {
+                let results = s.workResults[type],
+                    arrayedResults = [];
+                results.results.forEach(work => {
+                    let array = [work, 1];
+                    if (work.title == title) {
+                        arrayedResults.push(array);
+                    }
+                });
+                s.workResults[type] = arrayedResults;
+            }
+            $rootScope.$broadcast('searchCtrl::newSearch');
+            s.searchingFromFilter = false;
+            s.searching = false;
+        });
     };
 
     s.getPreviewHref = function (tree, resultTree) {
@@ -33177,7 +33257,7 @@ module.exports = "<!-- Electronic Edition Info-->\n<div role=\"tabpanel\" class=
 /* 117 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"handprint-block\">\n    <a ng-href=\"{{handprint.link}}\" ng-click=\"$root.showOverlay = false; handprint.action()\">\n        <span class=\"handprint-header\">{{handprint.header}}</span>\n        <span class=\"object-img\" style=\"background-image: url({{ handprint.imagePath }}{{ handprint.image }});\">\n            <span class=\"handprint-title\" ng-if=\"!handprint.image\">{{handprint.title}}</span>\n        </span>\n        <span class=\"description\" ng-bind-html=\"handprint.footer\"></span>\n    </a>\n</div>";
+module.exports = "<div class=\"handprint-block\">\n    <a ng-href=\"{{handprint.link}}\" ng-click=\"$root.showOverlay = false; handprint.action()\">\n        <span class=\"handprint-header\">{{handprint.header}}</span>\n        <span class=\"object-img\" style=\"background-image: url({{ handprint.imagePath }}{{ handprint.image }});\">\n            <span class=\"handprint-title\" ng-if=\"!handprint.image\">{{handprint.title}}</span>\n        </span>\n    </a>\n        <span ng-click=\"handprint.single()\" class=\"description\" ng-bind-html=\"handprint.footer\"></span>\n</div>";
 
 /***/ }),
 /* 118 */
@@ -33315,7 +33395,7 @@ module.exports = "<div class=\"col-xs-12 full-width copy-container-wrapper\" ng-
 /* 140 */
 /***/ (function(module, exports) {
 
-module.exports = "<span dropdown class=\"dropdown\" ng-if=\"esr.results.length > 0\">\n    <button class=\"dropdown-toggle\" dropdown-toggle role=\"button\" aria-expanded=\"false\">\n        <span><h3 style=\"color:white\">{{ esr.label }} ({{ esr.results.length}})<span class=\"caret\"></span></h3></span>&nbsp;\n    </button>\n        <ul class=\"dropdown-menu\" role=\"menu\" style=\"z-index: 10000;\">\n            <li ng-repeat=\"work in esr.results track by $index\">\n                <a scroll-to-element=\"#{{esr.type}}\" offset=\"125\" ng-click=\"esr.s.showCopies(esr.type, esr.results, $index);\">{{work[0].title}} (Composed {{work[0].composition_date_string}})</a>\n            </li>\n        </ul>\n</span>\n\n<div class=\"row search-result-row\" ng-show=\"esr.results.length > 0\">\n    <div class=\"col-xs-12 full-width\">\n        <slide-box id=\"{{esr.type}}-slide-box\" type=\"esr.type\">\n            <div ng-repeat=\"(k,work) in esr.results\" class=\"search-result-item\" ng-class=\"{selected:k == esr.s.selectedWork && esr.type == esr.s.type}\">\n                <div scroll-to-element=\"#{{esr.type}}\" offset=\"125\">\n                    <!--to slide, put slideBox.scrollToResult($index); into action for handprint-blocks-->\n                    <handprint-block\n                        action=\"esr.s.showCopies(esr.type, esr.results, $index); slideBox.scrollToResult($index);\"\n                        image=\"{{ esr.s.getWorkImage(esr.tree, esr.results, $index) }}\"\n                        footer=\"{{ esr.s.getHandprintDescription(esr.tree, esr.results, $index, esr.label) }}\"\n                        ></handprint-block>\n                </div>\n            </div>\n        </slide-box>\n    </div>\n    <preview-box results=\"esr.results\" tree=\"esr.tree\" type=\"esr.type\"/>\n</div>";
+module.exports = "<span dropdown class=\"dropdown\" ng-if=\"esr.results.length > 0\">\n    <button class=\"dropdown-toggle\" dropdown-toggle role=\"button\" aria-expanded=\"false\">\n        <span><h3 style=\"color:white\">{{ esr.label }} ({{ esr.results.length}})<span class=\"caret\"></span></h3></span>&nbsp;\n    </button>\n        <ul class=\"dropdown-menu\" role=\"menu\" style=\"z-index: 10000;\">\n            <li ng-repeat=\"work in esr.results track by $index\">\n                <a scroll-to-element=\"#{{esr.type}}\" offset=\"125\" ng-click=\"esr.s.showCopies(esr.type, esr.results, $index);\">{{work[0].title}} (Composed {{work[0].composition_date_string}})</a>\n            </li>\n        </ul>\n</span>\n\n<div class=\"row search-result-row\" ng-show=\"esr.results.length > 0\">\n    <div class=\"col-xs-12 full-width\">\n        <slide-box id=\"{{esr.type}}-slide-box\" type=\"esr.type\">\n            <div ng-repeat=\"(k,work) in esr.results\" class=\"search-result-item\" ng-class=\"{selected:k == esr.s.selectedWork && esr.type == esr.s.type}\">\n                <div scroll-to-element=\"#{{esr.type}}\" offset=\"125\">\n                    <!--to slide, put slideBox.scrollToResult($index); into action for handprint-blocks-->\n                    <handprint-block\n                        action=\"esr.s.showCopies(esr.type, esr.results, $index); slideBox.scrollToResult($index);\"\n                        image=\"{{ esr.s.getWorkImage(esr.tree, esr.results, $index) }}\"\n                        footer=\"{{ esr.s.getHandprintDescription(esr.tree, esr.results, $index, esr.label) }}\"\n                        single=\"esr.s.searchSingleWork(esr.results, $index);\"\n                        ></handprint-block>\n                </div>\n            </div>\n        </slide-box>\n    </div>\n    <preview-box results=\"esr.results\" tree=\"esr.tree\" type=\"esr.type\"/>\n</div>";
 
 /***/ }),
 /* 141 */
