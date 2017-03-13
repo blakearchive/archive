@@ -199,7 +199,6 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         s.resetResults();
         if (s.searchConfig.searchString == "") return;
         s.searching = true;
-        s.highlight = s.searchConfig.searchString;
         let objectSearch = BlakeDataService.queryObjects(s.searchConfig),
             copySearch = BlakeDataService.queryCopies(s.searchConfig),
             workSearch = BlakeDataService.queryWorks(s.searchConfig);
