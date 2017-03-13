@@ -1,6 +1,6 @@
 <form class="navbar-form" role="search" ng-submit="sb.s.loadSearchPage()">
 <div class="input-group">
-  <input ng-model="sb.s.searchConfig.searchString" type="text" class="form-control" placeholder="Search">
+  <input ng-model="sb.s.searchConfig.searchString" type="text" class="form-control" placeholder="Search" ng-click="sb.s.searchConfig.searchString = null">
   <span class="input-group-btn">
     <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
   </span>
