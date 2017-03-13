@@ -545,25 +545,35 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
             s.objectResults = results[0];
             for (let type in s.objectResults) {
                 let works = s.objectResults[type];
+                singlework = [];
+                for item in works:
+                    if(item.title == title):
+                        singlework.append(item);
+                works = singlework;
                 works.forEach((work,index) =>{
-                    if(work.title == title) {
+                    
                         BlakeDataService.getObject(s.objectResults[type][index][2][0][2][0][0]).then(results => {
                            s.objectResults[type][index][2][0][2][0][0] = results;
                         });
-                    }
+                    
                 });
             }
             s.copyResults = results[1];
             //console.log(s.copyResults);
             for (let type in s.copyResults) {
                 let works = s.copyResults[type];
+                singlework = [];
+                for item in works:
+                    if(item.title == title):
+                        singlework.append(item);
+                works = singlework;
                 works.forEach((work,index) => {
                     //s.populateWorkCopies(type,index);
-                    if(work.title == title) {
+                    
                         BlakeDataService.getCopy(s.copyResults[type][index][2][0][0]).then(results => {
                             s.copyResults[type][index][2][0][0] = results;
                         });
-                    }
+                    
                 });
             }
             s.workResults = results[2];
