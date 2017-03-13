@@ -5571,7 +5571,7 @@ angular.module("blake").filter('highlight', ["$sce", function ($sce) {
             }
 
             if (phrase.indexOf(' ')) {
-                phraseArray = phrase.split(' ');
+                phraseArray = phrase.match(/\w+|"(?:\\"|[^"])+"/g).map(s => s.replace(/['"]/g, ''));
                 angular.forEach(phraseArray, function (ph) {
                     text = text.replace(new RegExp('(\\b' + ph + '\\b)', 'gi'), '<span class="highlighted">$1</span>');
                 });
@@ -7920,6 +7920,8 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
     s.searchingFromFilter = false;
     s.persistingQueryString = '';
 
+    s.types = ['searchIlluminatedBooks', 'searchCommercialBookIllustrations', 'searchSeparatePrints', 'searchDrawingsPaintings', 'searchManuscripts', 'searchRelatedMaterials'];
+
     s.resetResults = function () {
         s.objectResults = [];
         s.copyResults = [];
@@ -7984,7 +7986,6 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
         //}
         s.resetResults();
         s.searching = true;
-        s.highlight = s.searchConfig.searchString;
         let objectSearch = BlakeDataService.queryObjects(s.searchConfig),
             copySearch = BlakeDataService.queryCopies(s.searchConfig),
             workSearch = BlakeDataService.queryWorks(s.searchConfig);
