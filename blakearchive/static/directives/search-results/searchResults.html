@@ -19,6 +19,7 @@
                         action="esr.s.showCopies(esr.type, esr.results, $index); slideBox.scrollToResult($index);"
                         image="{{ esr.s.getWorkImage(esr.tree, esr.results, $index) }}"
                         footer="{{ esr.s.getHandprintDescription(esr.tree, esr.results, $index, esr.label) }}"
+                        single="esr.s.searchSingleWork(esr.results, $index);"
                         ></handprint-block>
                 </div>
             </div>
