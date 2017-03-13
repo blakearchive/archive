@@ -4,6 +4,6 @@
         <span class="object-img" style="background-image: url({{ handprint.imagePath }}{{ handprint.image }});">
             <span class="handprint-title" ng-if="!handprint.image">{{handprint.title}}</span>
         </span>
-        <span class="description" ng-bind-html="handprint.footer"></span>
     </a>
+        <span ng-click="handprint.single()" class="description" ng-bind-html="handprint.footer"></span>
 </div>
