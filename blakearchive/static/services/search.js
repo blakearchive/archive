@@ -9,6 +9,8 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
     s.searchingFromFilter = false;
     s.persistingQueryString = '';
 
+    s.types = ['searchIlluminatedBooks','searchCommercialBookIllustrations','searchSeparatePrints','searchDrawingsPaintings','searchManuscripts','searchRelatedMaterials']
+
     s.resetResults = function () {
         s.objectResults = [];
         s.copyResults = [];
@@ -247,7 +249,6 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         //}
         s.resetResults();
         s.searching = true;
-        s.highlight = s.searchConfig.searchString;
         let objectSearch = BlakeDataService.queryObjects(s.searchConfig),
             copySearch = BlakeDataService.queryCopies(s.searchConfig),
             workSearch = BlakeDataService.queryWorks(s.searchConfig);
