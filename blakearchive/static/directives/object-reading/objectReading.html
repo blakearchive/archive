@@ -25,9 +25,9 @@
                     <div class="reading-copy">
                         <div class="reading-copy-inner">
                             <h4 class="text-capitalize" ng-click="read.changeObject(o)">{{ o.full_object_id }}</h4>
-                            <text-transcription ng-class="{hidden: apparatus == 'illustrationdescriptions' || 'editorsnotes'}" object="o"></text-transcription>
-                            <illustration-description ng-class="{hidden: apparatus == 'transcriptions' || 'editorsnotes'}" object="o"></illustration-description>
-                            <editor-notes ng-class="{hidden: apparatus == 'illustrationdescriptions' || 'transcriptions'}" object="o"></editor-notes>
+                            <text-transcription ng-show="apparatus == 'transcriptions'" object="o"></text-transcription>
+                            <illustration-description ng-show="apparatus == 'illustrationdescriptions'" object="o"></illustration-description>
+                            <editor-notes ng-show="apparatus == 'editorsnotes'" object="o"></editor-notes>
                         </div>
                     </div>
                 </div>
