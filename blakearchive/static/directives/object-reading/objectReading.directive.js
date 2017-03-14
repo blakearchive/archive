@@ -5,18 +5,21 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     $scope.dpi = $rootScope.dpivalue;
     //$rootScope.view.scope = 'both';
     vm.apparatus = 'transcriptions';
-    $rootScope.defaultapparatus = 'transcriptions';
+    $rootScope.activeapparatus = 'transcriptions';
 
     vm.showIllustrationDescriptions = function() {
         vm.apparatus = 'illustrationdescriptions';
+        $rootScope.activeapparatus = 'illustrationdescriptions';
     }
 
     vm.showTranscriptions = function() {
         vm.apparatus = 'transcriptions';
+        $rootScope.activeapparatus = 'transcriptions';
     }
 
     vm.showEditorsNotes = function () {
         vm.apparatus = 'editorsnotes';
+        $rootScope.activeapparatus = 'editorsnotes';
     }
 
     vm.getOvpTitle = function(){
