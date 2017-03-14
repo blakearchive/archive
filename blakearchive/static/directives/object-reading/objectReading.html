@@ -1,13 +1,13 @@
 <div class="btn-group" style="position:absolute;left:0;z-index:999">
-        <button style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':apparatus == 'transcriptions'}" class="btn btn-gr-selection" ng-click="read.showTranscriptions()">
+        <button style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':vm.apparatus == 'transcriptions'}" class="btn btn-gr-selection" ng-click="read.showTranscriptions()">
             <span class="gr-abbreviation" style="height:21px;font-size:14px">Transcriptions</span>
             <span class="gr-title">Show transcriptions</span>
         </button>
-        <button style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':apparatus == 'illustrationdescriptions'}" class="btn btn-gr-selection" ng-click="read.showIllustrationDescriptions()">
+        <button style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':vm.apparatus == 'illustrationdescriptions'}" class="btn btn-gr-selection" ng-click="read.showIllustrationDescriptions()">
             <span class="gr-abbreviation" style="height:21px;font-size:14px">Illustration Descriptions</span>
             <span class="gr-title">Show illustration descriptions</span>
         </button>
-        <button style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':apparatus == 'editorsnotes'}" class="btn btn-gr-selection" ng-click="read.showEditorsNotes()">
+        <button style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':vm.apparatus == 'editorsnotes'}" class="btn btn-gr-selection" ng-click="read.showEditorsNotes()">
             <span class="gr-abbreviation" style="height:21px;font-size:14px">Editors' Notes</span>
             <span class="gr-title">Show editors' notes</span>
         </button>
@@ -23,11 +23,17 @@
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
                     <img ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" ng-click="read.changeObject(o)">
                     <div class="reading-copy">
-                        <div class="reading-copy-inner">
+                        <div class="reading-copy-inner" ng-show="read.apparatus == 'transcriptions'">
                             <h4 class="text-capitalize" ng-click="read.changeObject(o)">{{ o.full_object_id }}</h4>
-                            <text-transcription ng-show="read.apparatus == 'transcriptions'" object="o"></text-transcription>
-                            <illustration-description ng-show="read.apparatus == 'illustrationdescriptions'" object="o"></illustration-description>
-                            <editor-notes ng-show="read.apparatus == 'editorsnotes'" object="o"></editor-notes>
+                            <text-transcription object="o"></text-transcription>                   
+                        </div>
+                        <div class="reading-copy-inner" ng-show="read.apparatus == 'illustrationdescriptions'">
+                            <h4 class="text-capitalize" ng-click="read.changeObject(o)">{{ o.full_object_id }}</h4>
+                            <illustration-description ng-show="read.apparatus == 'illustrationdescriptions'" object="o"></illustration-description>                  
+                        </div>
+                        <div class="reading-copy-inner" ng-show="read.apparatus == 'editorsnotes'">
+                            <h4 class="text-capitalize" ng-click="read.changeObject(o)">{{ o.full_object_id }}</h4>
+                              <editor-notes ng-show="read.apparatus == 'editorsnotes'" object="o"></editor-notes>                 
                         </div>
                     </div>
                 </div>
