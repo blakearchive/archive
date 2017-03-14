@@ -1,3 +1,18 @@
+<div class="btn-group" style="position:absolute;left:0">
+        <button style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':apparatus == 'transcriptions'}" class="btn btn-gr-selection" ng-click="read.showTranscriptions()">
+            <span class="gr-abbreviation" style="height:21px;font-size:14px">Transcriptions</span>
+            <span class="gr-title">Show transcriptions</span>
+        </button>
+        <button style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':apparatus == 'illustrationdescriptions'}" class="btn btn-gr-selection" ng-click="showIllustrationDescriptions()">
+            <span class="gr-abbreviation" style="height:21px;font-size:14px">Illustration Descriptions</span>
+            <span class="gr-title">Show illustration descriptions</span>
+        </button>
+        <button style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':apparatus == 'editorsnotes'}" class="btn btn-gr-selection" ng-click="showEditorsNotes()">
+            <span class="gr-abbreviation" style="height:21px;font-size:14px">Editors' Notes</span>
+            <span class="gr-title">Show editors' notes</span>
+        </button>
+</div>
+
 <!--<p class="object-title">{{ read.getOvpTitle() }}</p>-->
 <!-- compare -->
 <div id="compare" class="scrollbar" ng-if="read.bds.copy.bad_id != 'illum'" left-on-broadcast="viewSubMenu::readingMode">
@@ -10,7 +25,9 @@
                     <div class="reading-copy">
                         <div class="reading-copy-inner">
                             <h4 class="text-capitalize" ng-click="read.changeObject(o)">{{ o.full_object_id }}</h4>
-                            <text-transcription object="o"></text-transcription>
+                            <text-transcription ng-if="apparatus == 'transcriptions'" object="o"></text-transcription>
+                            <illustration-description ng-if="apparatus == 'illustrationdescriptions'" object="o"></illustration-description>
+                            <editor-notes ng-if="apparatus == 'editorsnotes'" object="o"></editor-notes>
                         </div>
                     </div>
                 </div>
