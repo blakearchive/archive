@@ -5,6 +5,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     $scope.dpi = $rootScope.dpivalue;
     //$rootScope.view.scope = 'both';
     vm.apparatus = 'transcriptions';
+    $rootScope.defaultapparatus = 'transcriptions';
 
     vm.showIllustrationDescriptions = function() {
         vm.apparatus = 'illustrationdescriptions';

@@ -1,5 +1,5 @@
 <div class="btn-group" style="position:absolute;left:0;z-index:999">
-        <button style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':vm.apparatus == 'transcriptions'}" class="btn btn-gr-selection" ng-click="read.showTranscriptions()">
+        <button style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':defaultapparatus == 'transcriptions'}" class="btn btn-gr-selection" ng-click="read.showTranscriptions()">
             <span class="gr-abbreviation" style="height:21px;font-size:14px">Transcriptions</span>
             <span class="gr-title">Show transcriptions</span>
         </button>
@@ -23,11 +23,20 @@
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
                     <img ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" ng-click="read.changeObject(o)">
                     <div class="reading-copy">
-                        <div class="reading-copy-inner">
-                            <h4 class="text-capitalize" ng-click="read.changeObject(o)">{{ o.full_object_id }}</h4>
-                            <text-transcription ng-show="read.apparatus == 'transcriptions'" object="o"></text-transcription>
-                            <illustration-description ng-show="read.apparatus == 'illustrationdescriptions'" object="o"></illustration-description>
-                            <editor-notes ng-show="read.apparatus == 'editorsnotes'" object="o"></editor-notes>
+                        <div class="reading-copy-inner" ng-show="read.apparatus == 'transcriptions'">
+                            <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
+                            <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
+                            <text-transcription object="o"></text-transcription>
+                        </div>
+                        <div class="reading-copy-inner" ng-show="read.apparatus == 'illustrationdescriptions'" style="width:10px">
+                            <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
+                            <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
+                            <illustration-description object="o"></illustration-description>
+                        </div>
+                        <div class="reading-copy-inner" ng-show="read.apparatus == 'editorsnotes'" style="width:10px">
+                            <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
+                            <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
+                            <editor-notes object="o"></editor-notes>
                         </div>
                     </div>
                 </div>
