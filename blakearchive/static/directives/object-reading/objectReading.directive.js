@@ -4,6 +4,19 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     $rootScope.onWorkPage = false;
     $scope.dpi = $rootScope.dpivalue;
     //$rootScope.view.scope = 'both';
+    $rootScope.apparatus = 'transcriptions';
+
+    vm.showIllustrationDescriptions = function() {
+        $rootScope.apparatus = 'illustrationdescriptions';
+    }
+
+    vm.showTranscriptions = function() {
+        $rootScope.apparatus = 'transcriptions';
+    }
+
+    vm.showEditorsNotes = function () {
+        $rootScope.apparatus = 'editorsnotes';
+    }
 
     vm.getOvpTitle = function(){
         if(angular.isDefined(vm.bds.copy)){
