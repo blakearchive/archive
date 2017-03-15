@@ -4,24 +4,11 @@
         <a href="/images/{{ rov.bds.object.dbi }}.{{rov.rs.dpivalue}}.jpg" target="_blank" class="object-img-container" ng-class="{hidden: rov.rs.view.scope == 'text'}" ovp-image>
             <img ng-src="/images/{{ rov.bds.object.dbi }}.{{rov.rs.dpivalue}}.jpg" magnify-image>
         </a>
-        <div to-top-on-broadcast="change::selectedObject" class="reading-copy" ng-show="rov.rs.view.scope == 'both-transcription'">
+        <div to-top-on-broadcast="change::selectedObject" class="reading-copy" ng-class="{hidden: rov.rs.view.scope == 'image'}">
             <div class="reading-copy-inner">
                 <text-transcription object="rov.bds.object"></text-transcription>
             </div>
         </div>
-
-         <div style="text-align:left; overflow-y:auto; color:#ccc" to-top-on-broadcast="change::selectedObject" ng-show="rov.rs.view.scope == 'both-illustrationdescription'">
-            <div>
-                <illustration-description object="rov.bds.object"></illustration-description>
-            </div>
-        </div>
-         <div style="text-align:left; overflow-y:auto; color:#ccc" to-top-on-broadcast="change::selectedObject" ng-show="rov.rs.view.scope == 'both-editorsnotes'">
-            <div>
-                <editor-notes object="rov.bds.object"></editor-notes>
-            </div>
-        </div>
-
-
     </div>
     <p class="object-subtitle">
         <span ng-if="rov.bds.work.virtual && rov.bds.copy.bad_id != 'letters'"><span>{{ rov.bds.object.title }}, </span><span class="object-no">{{ rov.bds.object.full_object_id }}, {{rov.bds.object.source.objdescid.compdate['#text']}}, {{rov.bds.object.source.repository.institution['#text']}}, </span></span>

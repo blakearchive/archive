@@ -8,10 +8,6 @@
             <button type="button" class="btn btn-default true-size hidden-xs" ng-click="oeb.trueSizeOpen(oeb.bds.object)"><span class="edit-icon"></span> True Size</button>
             <button type="button" class="btn btn-default new-window" show-me="enlargement" object="oeb.bds.object" copy-bad="{{oeb.bds.copy.bad_id}}"><span class="edit-icon"></span> Enlargement</button>
             <button type="button" class="btn btn-default show-transcription hidden-sm" ng-click="oeb.toggleTranscription()"><span class="edit-icon"></span> Diplomatic Transcription</button>
-
-            <button type="button" class="btn btn-default show-transcription hidden-sm" ng-click="oeb.toggleIllustrationDescription()"><span class="edit-icon"></span> Illustration Description</button>
-            <button type="button" class="btn btn-default show-transcription hidden-sm" ng-click="oeb.toggleEditorsNotes()"><span class="edit-icon"></span> Editors' Notes</button>
-
             <button type="button" class="btn btn-default show-supplemental" ng-class="{hover: oeb.rs.supplemental}" ng-if="oeb.bds.object.supplemental_objects.length && oeb.rs.view.mode != 'compare'"  ng-click="oeb.toggleSupplemental()"><span class="edit-icon"></span> Supplemental Views</button>
             <!--<button type="button" class="btn btn-default cite"><span class="edit-icon"></span> Generate Citation</button>-->
         </div>
