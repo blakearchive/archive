@@ -24,8 +24,26 @@ angular.module("blake").controller("ObjectEditButtonsController", function ($roo
     };
 
     vm.toggleTranscription = function(){
-        if($rootScope.view.scope == 'image') {
-            $rootScope.view.scope = 'both';
+        if($rootScope.view.scope == 'image' || $rootScope.view.scope == 'both-illustrationdescription' || $rootScope.view.scope == 'both-editorsnotes') {
+            $rootScope.view.scope = 'both-transcription';
+        }
+        else {
+            $rootScope.view.scope = 'image';
+        }
+    };
+
+    vm.toggleIllustrationDescription = function(){
+        if($rootScope.view.scope == 'image' || $rootScope.view.scope == 'both-transcription' || $rootScope.view.scope == 'both-editorsnotes') {
+            $rootScope.view.scope = 'both-illustrationdescription';
+        }
+        else {
+            $rootScope.view.scope = 'image';
+        }
+    };
+
+    vm.toggleEditorsNotes = function(){
+        if($rootScope.view.scope == 'image' || $rootScope.view.scope == 'both-illustrationdescription' || $rootScope.view.scope == 'both-transcription') {
+            $rootScope.view.scope = 'both-editorsnotes';
         }
         else {
             $rootScope.view.scope = 'image';
