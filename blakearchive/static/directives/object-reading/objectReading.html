@@ -19,7 +19,7 @@
 <!-- compare -->
 <div id="compare" class="scrollbar" ng-if="read.bds.copy.bad_id != 'illum'" left-on-broadcast="viewSubMenu::readingMode">
     <div class="featured-object">
-        <div class="compare-inner" style="padding:11px">
+        <div class="compare-inner" style="padding:17px">
             <!-- for letters -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index" ng-if="read.bds.copy.bad_id == 'letters'">
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
