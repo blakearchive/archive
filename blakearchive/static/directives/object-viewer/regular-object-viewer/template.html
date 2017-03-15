@@ -10,13 +10,13 @@
             </div>
         </div>
 
-         <div style="text-align:left" to-top-on-broadcast="change::selectedObject" ng-show="rov.rs.view.scope == 'both-illustrationdescription'">
-            <div>
+         <div to-top-on-broadcast="change::selectedObject" class="reading-copy" ng-show="rov.rs.view.scope == 'both-illustrationdescription'">
+            <div class="reading-copy-inner">
                 <illustration-description object="rov.bds.object"></illustration-description>
             </div>
         </div>
-         <div style="text-align:left" to-top-on-broadcast="change::selectedObject" ng-show="rov.rs.view.scope == 'both-editorsnotes'">
-            <div>
+         <div to-top-on-broadcast="change::selectedObject" class="reading-copy" ng-show="rov.rs.view.scope == 'both-editorsnotes'">
+            <div class="reading-copy-inner">
                 <editor-notes object="rov.bds.object"></editor-notes>
             </div>
         </div>
