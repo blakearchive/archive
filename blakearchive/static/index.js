@@ -47,6 +47,12 @@ blake.config(function ($routeProvider, $locationProvider) {
         controllerAs: 'copyCtrl',
         reloadOnSearch: false
     });
+    $routeProvider.when(directoryPrefix + '/compare/:copyId', {
+        templateUrl: directoryPrefix + '/static/controllers/compare/compare.html',
+        controller: "CompareController",
+        controllerAs: 'compareCtrl',
+        reloadOnSearch: false
+    });
     $routeProvider.when(directoryPrefix + '/exhibit/:copyId', {
         templateUrl: directoryPrefix + '/static/controllers/exhibit/exhibit.html',
         controller: "ExhibitController",
