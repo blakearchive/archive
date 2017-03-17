@@ -8322,7 +8322,7 @@ a.new-window:hover {
 @media (min-width: 768px) {
   #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-wrapper {
     border-top: none;
-    border-right: 1px solid #333;
+    /*border-right: 1px solid #333;*/
     margin-top: 0;
     margin-left: 25px;
   }
