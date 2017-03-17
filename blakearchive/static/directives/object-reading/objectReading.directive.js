@@ -22,6 +22,11 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         $rootScope.activeapparatus = 'editorsnotes';
     }
 
+    vm.showImagesOnly = function () {
+        vm.apparatus = 'imagesonly';
+        $rootScope.activeapparatus = 'imagesonly';
+    }
+
     vm.getOvpTitle = function(){
         if(angular.isDefined(vm.bds.copy)){
             if(vm.bds.work.virtual == true){
