@@ -12,6 +12,10 @@
             <span class="gr-abbreviation" style="height:21px;font-size:14px">Editors' Notes</span>
             <span class="gr-title">Show editors' notes</span>
         </button>
+        <button style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':activeapparatus == 'imagesonly'}" class="btn btn-gr-selection" ng-click="read.showImagesOnly()">
+            <span class="gr-abbreviation" style="height:21px;font-size:14px">Images Only</span>
+            <span class="gr-title">Show images only</span>
+        </button>
 </div>
 </div>
 
@@ -24,7 +28,7 @@
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index" ng-if="read.bds.copy.bad_id == 'letters'">
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
                     <img ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" ng-click="read.changeObject(o)">
-                    <div class="reading-copy">
+                    <div class="reading-copy" ng-show="read.apparatus != 'imagesonly'">
                         <div class="reading-copy-inner" ng-show="read.apparatus == 'transcriptions'">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span></h4>
