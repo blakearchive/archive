@@ -1,24 +1,44 @@
 <div id="Overlay" class="overlay" ng-show="$root.showOverlay == true">
 
-   	<a style="text-decoration: none" href="" class="closebtn" ng-click="$root.showOverlay = false">&times;</a>
-   	<header class="page-header">
-   		<p class="subhead">{{ workTitle.bds.work.medium_pretty }}</p>
-   		<h1 style="color:rgba(233,188,71,1)">{{ workTitle.bds.work.title }} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>
-   	</header>
+    <a style="text-decoration: none" href="" class="closebtn" ng-click="$root.showOverlay = false">&times;</a>
+    <header class="page-header">
+      <p class="subhead">{{ workTitle.bds.work.medium_pretty }}</p>
+      <h1 style="color:rgba(233,188,71,1)">{{ workTitle.bds.work.title }} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>
+    </header>
 
-   	<article class="categories">
+    <article class="categories">
 
-   		<div style="color:white" class="container">
-   			<div class="section-group" ng-bind-html="workTitle.bds.work.info"></div>
-   			<hr>
-   			<p class="text-center"><em>Dates are the probable dates of {{ workTitle.bds.work.probable }}.</em></p>
+      <div style="color:white" class="container">
+        <div class="section-group" ng-bind-html="workTitle.bds.work.info"></div>
+        <hr>
+        <p class="text-center"><em>Dates are the probable dates of {{ workTitle.bds.work.probable }}.</em></p>
 
             <work-copies></work-copies>
 
 
-   		</div>
-	</article>
+      </div>
+  </article>
 
+</div>
+
+<div id="OverlayCopyInfo" class="overlay" ng-show="$root.showOverlayCopyInfo == true">
+
+    <a style="text-decoration: none" href="" class="closebtn" ng-click="$root.showOverlayCopyInfo = false">&times;</a>
+    <header class="page-header">
+      <p class="subhead">COPY INFORMATION</p>
+      <h1 style="color:rgba(233,188,71,1)">{{ workTitle.bds.work.title }} {{workTitle.getCopyPhrase()}} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>
+    </header>
+    <div id="archive-tabs" role="tabpanel">
+    <div class="container-fluid overlaycopyinfo">
+      <div class="container">
+        <div class="tab-content">
+          <div role="tabpanel" class="fadeinout tab-pane active in">
+          <copy-information copy="workTitle.bds.copy" object="tabs.bds.object"></copy-information>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
 </div>
 
 
@@ -26,25 +46,25 @@
   <span ng-if="showWorkTitle == 'static'" class="worktitle" style="padding: 19px;">
         <a scroll-to-top href="" style="color:white;">{{ workTitle.getStaticPageTitle() }}</a>
     </span>
-	<span ng-if="showWorkTitle == 'work'" class="worktitle" style="padding: 19px;">
+  <span ng-if="showWorkTitle == 'work'" class="worktitle" style="padding: 19px;">
         <span scroll-to-top style="color:white;">{{ workTitle.getTitle() }} (Composed {{workTitle.bds.work.composition_date_string}})</span>
     </span>
 
-	<span ng-if="showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
-		<span ng-if="workTitle.bds.copy.bad_id == 'letters'">
-			<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Letters (Composed {{workTitle.bds.work.composition_date_string}})</a>: {{ workTitle.getTitle() }}
-		</span>
-		<span ng-if="workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.work.medium != 'exhibit'">
-			<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} ({{workTitle.getCompOrPrintDateString()}})
-		</span>
+  <span ng-if="showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
+    <span ng-if="workTitle.bds.copy.bad_id == 'letters'">
+      <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Letters (Composed {{workTitle.bds.work.composition_date_string}})</a>: {{ workTitle.getTitle() }}
+    </span>
+    <span ng-if="workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.work.medium != 'exhibit'">
+      <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> <a scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true" style="color:white;">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}})
+    </span>
     <span ng-if="workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.work.medium == 'exhibit'">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a>
     </span>
 
-	</span>
+  </span>
 
-	<span ng-if="$root.view.mode == 'compare' && showWorkTitle != 'static' && showWorkTitle != 'work'" class="worktitle" style="padding: 19px;">
-		<a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> {{workTitle.getCopyPhrase()}} ({{workTitle.getCompOrPrintDateString()}}) (Selected)
-	</span>
+  <span ng-if="$root.view.mode == 'compare' && showWorkTitle != 'static' && showWorkTitle != 'work'" class="worktitle" style="padding: 19px;">
+    <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> <a scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true" style="color:white;">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}}) (Selected)
+  </span>
 
 </div>
