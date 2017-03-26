@@ -5,14 +5,14 @@
         <handprint-block ng-if="siv.bds.object.supplemental" ng-repeat="obj in siv.bds.copyObjects | filter:{'desc_id': siv.bds.object.supplemental}:true"
                      action="siv.ovs.changeObject(obj); siv.ovs.toggleSupplemental();"
                      image="{{ obj.dbi }}.100.jpg"
-                     footer="Original View">
+                     footer="{{obj.full_object_id}}">
         </handprint-block>
 
         <!-- original image for original view-->
         <handprint-block ng-if="!siv.bds.object.supplemental"
                          action="siv.ovs.changeObject(siv.bds.object); siv.ovs.toggleSupplemental();"
                          image="{{ siv.bds.object.dbi }}.100.jpg"
-                         footer="Original View">
+                         footer="{{siv.bds.object.full_object_id}}">
         </handprint-block>
 
         <!-- the supplemental views -->
