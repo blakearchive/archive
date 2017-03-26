@@ -64,7 +64,7 @@
   </span>
 
   <span ng-if="$root.view.mode == 'compare' && showWorkTitle != 'static' && showWorkTitle != 'work'" class="worktitle" style="padding: 19px;">
-    <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> <a scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true" style="color:white;">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}}) (Selected)
+    <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> <a scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true" style="color:white;">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}}) <span style="color:yellow">(Selected)</span>
   </span>
 
 </div>
