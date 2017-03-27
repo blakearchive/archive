@@ -1,6 +1,12 @@
 @media (min-width: 768px) {
-  #archive #object-view.compare-objects #compare .compare-inner .item.active {
+  #archive #object-view.compare-objects #compare .compare-inner .item img:hover {
     border: 2px solid yellow;
+  }
+}
+
+@media (min-width: 768px) {
+  #archive #object-view.compare-objects #compare .compare-inner .item.active p.object-subtitle a {
+    color: yellow;
   }
 }
 
@@ -999,6 +1005,10 @@ a.compare-selected-objects {
 }
 #archive .object-title a{
     color: #fff;
+}
+
+#archive .object-title.active a{
+    color: yellow;
 }
 
 /***********

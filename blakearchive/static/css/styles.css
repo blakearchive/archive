@@ -8174,7 +8174,7 @@ a.new-window:hover {
   }
 }
 #archive #object-view.compare-objects #compare .compare-inner .item.active img {
-  /*border-color: #51b1dd;*/
+  /*border-color: yellow;*/
 }
 #archive #object-view.compare-objects #object-tools-inner {
   text-align: center;
