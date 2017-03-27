@@ -4,6 +4,12 @@
   }
 }
 
+@media (min-width: 768px) {
+  #archive #object-view.compare-objects #compare .compare-inner .item:hover {
+    border: 2px solid white;
+  }
+}
+
 .container-fluid.overlaycopyinfo {
   padding-bottom: 3em;
   color:white;
