@@ -17,14 +17,14 @@
             <handprint-block ng-if="obj.work_title && !obj.copy_print_date_string"
                     link="/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
                     image="{{ obj.dbi }}.100.jpg"
-                    footer="<b>{{obj.work_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}"
+                    footer="<b>{{obj.work_title}}</b><br>{{obj.title}}, Composed {{obj.copy_composition_date_string}}<br>{{obj.full_object_id}}"
                     
                 >
             </handprint-block>
             <handprint-block ng-if="obj.work_title && obj.copy_print_date_string"
                     link="/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
                     image="{{ obj.dbi }}.100.jpg"
-                    footer="<b>{{obj.work_title}}, Printed {{obj.copy_print_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}"
+                    footer="<b>{{obj.work_title}}</b><br>{{obj.title}}, Printed {{obj.copy_print_date_string}}<br>{{obj.full_object_id}}"
                     
                 >
             </handprint-block>
