@@ -5386,7 +5386,7 @@ angular.module("blake").directive('twitterShare', function () {
 /* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
-angular.module("blake").controller("ViewSubMenuController", ["$rootScope", "$routeParams", "$modal", function ($rootScope, $routeParams, $modal) {
+angular.module("blake").controller("ViewSubMenuController", ["$rootScope", "$routeParams", "$modal", "CompareObjectsFactory", function ($rootScope, $routeParams, $modal, CompareObjectsFactory) {
     var vm = this;
 
     if (!angular.isDefined($rootScope.persistentmode)) {
@@ -5443,6 +5443,11 @@ angular.module("blake").controller("ViewSubMenuController", ["$rootScope", "$rou
         //$rootScope.worksNavState = false;
         if (mode == 'object') {
             $rootScope.persistentmode = 'gallery';
+
+            vm.compareText = "Select All Objects";
+            vm.selectedAll = false;
+            vm.cof.resetComparisonObjects();
+            $rootScope.view.scope = 'image';
         }
         if (mode == 'read') {
             //console.log($rootScope.descIDFromCompare);
