@@ -1,6 +1,7 @@
-angular.module("blake").controller("ObjectsInCopyTabController", function (BlakeDataService, rootScope) {
+angular.module("blake").controller("ObjectsInCopyTabController", function (BlakeDataService, $rootScope, CompareObjectsFactory) {
     let vm = this;
     vm.bds = BlakeDataService;
+    vm.cof = CompareObjectsFactory;
 
     vm.changeObject = function(object){
         if($rootScope.view.mode == 'compare') {
