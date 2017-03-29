@@ -4577,7 +4577,7 @@ angular.module('blake').directive('objectsFromSame', function () {
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-angular.module("blake").controller("ObjectsInCopyTabController", ["BlakeDataService", function (BlakeDataService) {
+angular.module("blake").controller("ObjectsInCopyTabController", ["BlakeDataService", "rootScope", function (BlakeDataService, rootScope) {
     let vm = this;
     vm.bds = BlakeDataService;
 
