@@ -1,4 +1,4 @@
-angular.module("blake").controller("ObjectsInCopyTabController", function (BlakeDataService) {
+angular.module("blake").controller("ObjectsInCopyTabController", function (BlakeDataService, rootScope) {
     let vm = this;
     vm.bds = BlakeDataService;
 
