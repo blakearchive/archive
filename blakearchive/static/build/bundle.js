@@ -4577,9 +4577,10 @@ angular.module('blake').directive('objectsFromSame', function () {
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-angular.module("blake").controller("ObjectsInCopyTabController", ["BlakeDataService", "rootScope", function (BlakeDataService, rootScope) {
+angular.module("blake").controller("ObjectsInCopyTabController", ["BlakeDataService", "$rootScope", "CompareObjectsFactory", function (BlakeDataService, $rootScope, CompareObjectsFactory) {
     let vm = this;
     vm.bds = BlakeDataService;
+    vm.cof = CompareObjectsFactory;
 
     vm.changeObject = function (object) {
         if ($rootScope.view.mode == 'compare') {
