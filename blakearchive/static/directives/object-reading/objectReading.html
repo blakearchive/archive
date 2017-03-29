@@ -52,8 +52,6 @@
             <!-- for everything else -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null}" ng-if="read.bds.copy.bad_id != 'letters'">
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
-                    <span>
-                    <span ng-if="read.apparatus == 'imagesonly'" class="text-capitalize">{{ o.full_object_id }}</span>
                     <img ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" ng-click="read.changeObject(o)">
                     <div class="reading-copy">
                         <div class="reading-copy-inner" ng-show="read.apparatus == 'transcriptions'">
