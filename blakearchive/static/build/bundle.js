@@ -5388,6 +5388,7 @@ angular.module("blake").directive('twitterShare', function () {
 
 angular.module("blake").controller("ViewSubMenuController", ["$rootScope", "$routeParams", "$modal", "CompareObjectsFactory", function ($rootScope, $routeParams, $modal, CompareObjectsFactory) {
     var vm = this;
+    vm.cof = CompareObjectsFactory;
 
     if (!angular.isDefined($rootScope.persistentmode)) {
         $rootScope.persistentmode = 'gallery';
