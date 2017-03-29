@@ -3,7 +3,7 @@ angular.module("blake").controller("ObjectsInCopyTabController", function (Blake
     vm.bds = BlakeDataService;
 
     vm.changeObject = function(object){
-        if($rootScope.view.mode = 'compare') {
+        if($rootScope.view.mode == 'compare') {
             vm.compareText = "Select All Objects";
             vm.selectedAll = false;
             vm.cof.resetComparisonObjects();
