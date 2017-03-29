@@ -1,5 +1,6 @@
 angular.module("blake").controller("ViewSubMenuController", function ($rootScope,$routeParams,$modal,CompareObjectsFactory) {
     var vm = this;
+    vm.cof = CompareObjectsFactory;
 
     if(!angular.isDefined($rootScope.persistentmode)){
         $rootScope.persistentmode = 'gallery';
