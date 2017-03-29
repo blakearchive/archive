@@ -6,6 +6,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     //$rootScope.view.scope = 'both';
     vm.apparatus = 'transcriptions';
     $rootScope.activeapparatus = 'transcriptions';
+    $rootScope.hover = false;
 
     vm.showIllustrationDescriptions = function() {
         vm.apparatus = 'illustrationdescriptions';
