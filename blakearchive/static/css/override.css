@@ -1,3 +1,7 @@
+#archive #object-view.reading-view #compare.scrollbar .compare-inner .item p {
+  width:115%;
+}
+
 @media (min-width: 768px) {
   #archive #object-view.reading-view #compare.scrollbar .compare-inner .item img {
     border: none;
