@@ -3106,7 +3106,7 @@ angular.module('blake').controller('StaticpageController', ["$scope", "$rootScop
         $rootScope.staticPageTitle = vm.title;
         if ($location.search().p) {
             vm.subSelection = $location.search().p;
-            console.log($location.search().p);
+            //console.log($location.search().p);
         } else {
             vm.subSelection = data[vm.page].initial;
         }
@@ -3266,7 +3266,7 @@ angular.module("blake").directive('autoHeight', ["WindowSize", "$rootScope", fun
                 if (divide) {
                     newHeight = newHeight / divide;
                 }
-                console.log("setting height: " + newHeight);
+                //console.log("setting height: " + newHeight);
                 element.height(newHeight);
             }
         }
@@ -3768,20 +3768,20 @@ angular.module("blake").controller("InfoTrayController", ["$rootScope", "$scope"
     };
 
     vm.resize = function (adjust) {
-        console.log('adjust before:' + adjust);
+        //console.log('adjust before:' + adjust);
         if (vm.view.mode == 'compare' && !angular.isDefined(adjust)) {
             adjust = 50;
         }
         var adjust = angular.isDefined(adjust) ? vm.adjustHeight - adjust : vm.adjustHeight;
-        console.log('adjust after:' + adjust);
+        //console.log('adjust after:' + adjust);
         vm.trayPixels = WindowSize.height - adjust;
-        console.log('trayPixels:' + vm.trayPixels);
+        //console.log('trayPixels:' + vm.trayPixels);
         if (WindowSize.width <= 992) {
             vm.trayHeight = 0;
         } else {
             vm.trayHeight = vm.trayPixels + 'px';
         }
-        console.log('trayHeight:' + vm.trayHeight);
+        //console.log('trayHeight:' + vm.trayHeight);
         vm.panelCount = 3;
         vm.trayBodyHeight = vm.trayPixels - vm.scrollBarHeight - vm.panelCount * vm.panelAdjust + 'px';
     };
@@ -4074,7 +4074,7 @@ angular.module("blake").controller("navMenu", ["$scope", "BlakeDataService", "$s
         });
     } else {
         vm.lists = $sessionStorage.menus;
-        console.log(vm.lists);
+        //console.log(vm.lists);
     }
 
     var category = function (item) {
@@ -4192,7 +4192,7 @@ angular.module("blake").controller("navMenu", ["$scope", "BlakeDataService", "$s
         });
 
         vm.lists = menus;
-        console.log(vm.lists);
+        //console.log(vm.lists);
         $sessionStorage.menus = menus;
     };
 }]);
@@ -7168,7 +7168,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.setSelectedWork = function (workId) {
         return $q.all([blakeData.getWork(workId), blakeData.getCopiesForWork(workId)]).then(function (data) {
             blakeData.work = data[0];
-            console.log(data[0]);
+            //console.log(data[0]);
             blakeData.workCopies = data[1];
             blakeData.setRelatedWorkObjectLinks();
             if (blakeData.work.virtual == true) {
@@ -7241,12 +7241,12 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
             blakeData.copy = data[0];
             blakeData.copyObjects = data[1];
 
-            console.log('selected Work');
-            console.log(blakeData.work);
-            console.log('selected Copy');
-            console.log(blakeData.copy);
-            console.log('selected Copy Objects');
-            console.log(blakeData.copyObjects);
+            //console.log('selected Work');
+            //console.log(blakeData.work);
+            //console.log('selected Copy');
+            //console.log(blakeData.copy);
+            //console.log('selected Copy Objects');
+            //console.log(blakeData.copyObjects);
 
             //Programatically order objects if "copy" is a virtual group, then replace number in full object id
             if (blakeData.work.virtual == true && blakeData.work.bad_id != 'letters') {
@@ -7308,8 +7308,8 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.changeObject = function (object) {
         return blakeData.setFromSameX(object).then(function () {
             blakeData.object = object;
-            console.log('object');
-            console.log(blakeData.object);
+            //console.log('object');
+            //console.log(blakeData.object);
             if (!object.supplemental) {
                 $location.search('descId', blakeData.object.desc_id);
                 var target = '#' + blakeData.object.desc_id.replace(/\./g, '-');

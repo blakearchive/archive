@@ -12,7 +12,7 @@ angular.module("blake").directive('autoHeight', function (WindowSize, $rootScope
                 if(divide){
                     newHeight = newHeight / divide;
                 }
-                console.log("setting height: " + newHeight);
+                //console.log("setting height: " + newHeight);
                 element.height(newHeight);
             }
         }

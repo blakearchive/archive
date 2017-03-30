@@ -357,7 +357,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
             blakeData.getCopiesForWork(workId)
         ]).then(function(data){
             blakeData.work = data[0];
-            console.log(data[0]);
+            //console.log(data[0]);
             blakeData.workCopies = data[1];
             blakeData.setRelatedWorkObjectLinks();
             if(blakeData.work.virtual == true){
@@ -431,12 +431,12 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
             blakeData.copy = data[0];
             blakeData.copyObjects = data[1];
 
-            console.log('selected Work');
-            console.log(blakeData.work);
-            console.log('selected Copy');
-            console.log(blakeData.copy);
-            console.log('selected Copy Objects');
-            console.log(blakeData.copyObjects);
+            //console.log('selected Work');
+            //console.log(blakeData.work);
+            //console.log('selected Copy');
+            //console.log(blakeData.copy);
+            //console.log('selected Copy Objects');
+            //console.log(blakeData.copyObjects);
 
             //Programatically order objects if "copy" is a virtual group, then replace number in full object id
             if (blakeData.work.virtual == true && blakeData.work.bad_id != 'letters') {
@@ -508,8 +508,8 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.changeObject = function(object){
         return blakeData.setFromSameX(object).then(function(){
             blakeData.object = object;
-            console.log('object');
-            console.log(blakeData.object);
+            //console.log('object');
+            //console.log(blakeData.object);
             if(!object.supplemental){
                 $location.search('descId',blakeData.object.desc_id);
                 var target = '#' + blakeData.object.desc_id.replace(/\./g,'-');

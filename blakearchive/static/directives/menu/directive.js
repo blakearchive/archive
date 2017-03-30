@@ -13,7 +13,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         });
     } else {
         vm.lists = $sessionStorage.menus;
-        console.log(vm.lists);
+        //console.log(vm.lists);
     }
 
     var category = function(item) {
@@ -127,7 +127,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         });
 
         vm.lists = menus;
-        console.log(vm.lists);
+        //console.log(vm.lists);
         $sessionStorage.menus = menus;
     }
 });
