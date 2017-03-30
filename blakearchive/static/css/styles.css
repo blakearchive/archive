@@ -8328,7 +8328,7 @@ a.new-window:hover {
   }
 }
 #archive #object-view.reading-view #compare.scrollbar .compare-inner .item p {
-  margin: 0 10px 10px;
+  /*margin: 0 10px 10px;*/
 }
 #archive #object-view.reading-view #compare.scrollbar .compare-inner .item img {
   margin: 20px 0;
