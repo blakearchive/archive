@@ -6889,7 +6889,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.queryObjects = function (config) {
         var url = directoryPrefix + '/api/query_objects';
 
-        $log.info('query objects in solr');
+        //$log.info('query objects in solr');
 
         return $http.post(url, config).then(queryObjectsComplete).catch(queryObjectsFailed);
 
@@ -6905,7 +6905,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.queryCopies = function (config) {
         var url = directoryPrefix + '/api/query_copies';
 
-        $log.info('query copies in solr');
+        //$log.info('query copies in solr');
 
         return $http.post(url, config).then(queryCopiesComplete).catch(queryCopiesFailed);
 
@@ -6921,7 +6921,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.queryWorks = function (config) {
         var url = directoryPrefix + '/api/query_works';
 
-        $log.info('query works in solr');
+        //$log.info('query works in solr');
 
         return $http.post(url, config).then(queryWorksComplete).catch(queryWorksFailed);
 
@@ -6937,7 +6937,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getObject = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId;
 
-        $log.info('getting object');
+        //$log.info('getting object');
 
         return $http.get(url).then(getObjectComplete).catch(getObjectFailed);
 
@@ -6953,7 +6953,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getObjects = function (descIds) {
         var url = directoryPrefix + '/api/object/';
 
-        $log.info('getting objects: multi');
+        //$log.info('getting objects: multi');
 
         return $http.get(url, { params: { desc_ids: descIds.join() } }).then(getObjectsComplete).catch(getObjectsFailed);
 
@@ -6969,7 +6969,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getObjectsWithSameMotif = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/objects_with_same_motif';
 
-        $log.info('getting objects w/ same motif');
+        //$log.info('getting objects w/ same motif');
 
         return $http.get(url).then(getObjectsWithSameMotifComplete).catch(getObjectsWithSameMotifFailed);
 
@@ -6985,7 +6985,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getObjectsFromSameMatrix = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/objects_from_same_matrix';
 
-        $log.info('getting objects from same matrix');
+        //$log.info('getting objects from same matrix');
 
         return $http.get(url).then(getObjectsFromSameMatrixComplete).catch(getObjectsFromSameMatrixFailed);
 
@@ -7001,7 +7001,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getObjectsFromSameProductionSequence = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/objects_from_same_production_sequence';
 
-        $log.info('getting objects from same production sequence');
+        //$log.info('getting objects from same production sequence');
 
         return $http.get(url).then(getObjectsFromSameSequenceComplete).catch(getObjectsFromSameSequenceFailed);
 
@@ -7017,7 +7017,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getSupplementalObjects = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/supplemental_objects';
 
-        $log.info('getting supplemental objects');
+        //$log.info('getting supplemental objects');
 
         return $http.get(url).then(getSupplementalObjectsComplete).catch(getSupplementalObjectsFailed);
 
@@ -7033,7 +7033,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getTextuallyReferencedMaterial = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/textually_referenced_materials';
 
-        $log.info('getting objects with textual references');
+        //$log.info('getting objects with textual references');
 
         return $http.get(url).then(getTextuallyReferencedMaterialComplete).catch(getTextuallyReferencedMaterialsFailed);
 
@@ -7053,7 +7053,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getCopy = function (copyId) {
         var url = directoryPrefix + '/api/copy/' + copyId;
 
-        $log.info('getting copy');
+        //$log.info('getting copy');
 
         return $http.get(url).then(getCopyComplete).catch(getCopyFailed);
 
@@ -7069,7 +7069,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getCopies = function (copyIds) {
         var url = directoryPrefix + '/api/copy/';
 
-        $log.info('getting copies: multi');
+        //$log.info('getting copies: multi');
 
         return $http.get(url, { params: { bad_ids: copyIds.join() } }).then(getCopiesComplete).catch(getCopiesFailed);
 
@@ -7085,7 +7085,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getObjectsForCopy = function (copyId) {
         var url = directoryPrefix + '/api/copy/' + copyId + '/objects';
 
-        $log.info('getting objects in copy');
+        //$log.info('getting objects in copy');
 
         return $http.get(url).then(getObjectsForCopyComplete).catch(getObjectsForCopyFailed);
 
@@ -7102,7 +7102,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getWork = function (workId) {
         var url = directoryPrefix + '/api/work/' + workId;
 
-        $log.info('getting work');
+        //$log.info('getting work');
 
         return $http.get(url).then(getWorkComplete).catch(getWorkFailed);
 
@@ -7118,7 +7118,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getWorks = function () {
         var url = directoryPrefix + '/api/work/';
 
-        $log.info('getting works: multi');
+        //$log.info('getting works: multi');
 
         return $http.get(url).then(getWorksComplete).catch(getWorksFailed);
 
@@ -7134,7 +7134,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getCopiesForWork = function (workId) {
         var url = directoryPrefix + '/api/work/' + workId + '/copies';
 
-        $log.info('getting copies in work');
+        //$log.info('getting copies in work');
 
         return $http.get(url).then(getCopiesForWorkComplete).catch(getCopiesForWorkFailed);
 
@@ -7150,13 +7150,13 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     blakeData.getFeaturedWorks = function () {
         var url = directoryPrefix + '/api/featured_work/';
 
-        $log.info('getting featured works');
+        //$log.info('getting featured works');
 
         return $http.get(url).then(getFeaturedWorksComplete).catch(getFeaturedWorksFailed);
 
         function getFeaturedWorksComplete(response) {
             //return BlakeWork.create(response.data.results);
-            $log.info(response.data.results);
+            //$log.info(response.data.results);
             return response.data.results;
         }
 

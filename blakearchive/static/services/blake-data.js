@@ -37,7 +37,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.queryObjects = function (config) {
         var url = directoryPrefix + '/api/query_objects';
 
-        $log.info('query objects in solr');
+        //$log.info('query objects in solr');
 
         return $http.post(url, config)
             .then(queryObjectsComplete)
@@ -55,7 +55,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.queryCopies = function (config) {
         var url = directoryPrefix + '/api/query_copies';
 
-        $log.info('query copies in solr');
+        //$log.info('query copies in solr');
 
         return $http.post(url, config)
             .then(queryCopiesComplete)
@@ -73,7 +73,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.queryWorks = function (config) {
         var url = directoryPrefix + '/api/query_works';
 
-        $log.info('query works in solr');
+        //$log.info('query works in solr');
 
         return $http.post(url, config)
             .then(queryWorksComplete)
@@ -91,7 +91,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getObject = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId;
 
-        $log.info('getting object');
+        //$log.info('getting object');
 
         return $http.get(url)
             .then(getObjectComplete)
@@ -109,7 +109,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getObjects = function (descIds) {
         var url = directoryPrefix + '/api/object/';
 
-        $log.info('getting objects: multi');
+        //$log.info('getting objects: multi');
 
         return $http.get(url, {params: {desc_ids: descIds.join()}})
             .then(getObjectsComplete)
@@ -127,7 +127,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getObjectsWithSameMotif = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/objects_with_same_motif';
 
-        $log.info('getting objects w/ same motif');
+        //$log.info('getting objects w/ same motif');
 
         return $http.get(url)
             .then(getObjectsWithSameMotifComplete)
@@ -146,7 +146,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getObjectsFromSameMatrix = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/objects_from_same_matrix';
 
-        $log.info('getting objects from same matrix');
+        //$log.info('getting objects from same matrix');
 
         return $http.get(url)
             .then(getObjectsFromSameMatrixComplete)
@@ -164,7 +164,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getObjectsFromSameProductionSequence = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/objects_from_same_production_sequence';
 
-        $log.info('getting objects from same production sequence');
+        //$log.info('getting objects from same production sequence');
 
         return $http.get(url)
             .then(getObjectsFromSameSequenceComplete)
@@ -182,7 +182,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getSupplementalObjects = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/supplemental_objects';
 
-        $log.info('getting supplemental objects');
+        //$log.info('getting supplemental objects');
 
         return $http.get(url)
             .then(getSupplementalObjectsComplete)
@@ -200,7 +200,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getTextuallyReferencedMaterial = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/textually_referenced_materials';
 
-        $log.info('getting objects with textual references');
+        //$log.info('getting objects with textual references');
 
         return $http.get(url)
             .then(getTextuallyReferencedMaterialComplete)
@@ -222,7 +222,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getCopy = function (copyId) {
         var url = directoryPrefix + '/api/copy/' + copyId;
 
-        $log.info('getting copy');
+        //$log.info('getting copy');
 
         return $http.get(url)
             .then(getCopyComplete)
@@ -240,7 +240,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getCopies = function (copyIds) {
         var url = directoryPrefix + '/api/copy/';
 
-        $log.info('getting copies: multi');
+        //$log.info('getting copies: multi');
 
         return $http.get(url, {params: {bad_ids: copyIds.join()}})
             .then(getCopiesComplete)
@@ -259,7 +259,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getObjectsForCopy = function (copyId) {
         var url = directoryPrefix + '/api/copy/' + copyId + '/objects';
 
-        $log.info('getting objects in copy');
+        //$log.info('getting objects in copy');
 
         return $http.get(url)
             .then(getObjectsForCopyComplete)
@@ -279,7 +279,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getWork = function (workId) {
         var url = directoryPrefix + '/api/work/' + workId;
 
-        $log.info('getting work');
+        //$log.info('getting work');
 
         return $http.get(url)
             .then(getWorkComplete)
@@ -297,7 +297,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getWorks = function () {
         var url = directoryPrefix + '/api/work/';
 
-        $log.info('getting works: multi');
+        //$log.info('getting works: multi');
 
         return $http.get(url)
             .then(getWorksComplete)
@@ -315,7 +315,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getCopiesForWork = function (workId) {
         var url = directoryPrefix + '/api/work/' + workId + '/copies';
 
-        $log.info('getting copies in work');
+        //$log.info('getting copies in work');
 
         return $http.get(url)
             .then(getCopiesForWorkComplete)
@@ -333,7 +333,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     blakeData.getFeaturedWorks = function () {
         var url = directoryPrefix + '/api/featured_work/';
 
-        $log.info('getting featured works');
+        //$log.info('getting featured works');
 
         return $http.get(url)
             .then(getFeaturedWorksComplete)
@@ -341,7 +341,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
 
         function getFeaturedWorksComplete(response){
             //return BlakeWork.create(response.data.results);
-            $log.info(response.data.results);
+            //$log.info(response.data.results);
             return response.data.results;
         }
 
