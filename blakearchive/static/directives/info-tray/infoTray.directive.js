@@ -17,20 +17,20 @@ angular.module("blake").controller("InfoTrayController", function($rootScope, $s
     };
 
     vm.resize = function(adjust){
-        console.log('adjust before:' + adjust);
+        //console.log('adjust before:' + adjust);
         if(vm.view.mode == 'compare' && !angular.isDefined(adjust)) {
             adjust = 50;
         }
         var adjust = angular.isDefined(adjust) ? vm.adjustHeight - adjust : vm.adjustHeight;
-        console.log('adjust after:' + adjust);
+        //console.log('adjust after:' + adjust);
         vm.trayPixels = ( WindowSize.height - adjust );
-        console.log('trayPixels:' + vm.trayPixels);
+        //console.log('trayPixels:' + vm.trayPixels);
         if(WindowSize.width <= 992){
             vm.trayHeight = 0
         } else {
             vm.trayHeight = vm.trayPixels + 'px';
         }
-        console.log('trayHeight:' + vm.trayHeight);
+        //console.log('trayHeight:' + vm.trayHeight);
         vm.panelCount = 3;
         vm.trayBodyHeight = (vm.trayPixels - vm.scrollBarHeight - (vm.panelCount * vm.panelAdjust)) + 'px';
     }
