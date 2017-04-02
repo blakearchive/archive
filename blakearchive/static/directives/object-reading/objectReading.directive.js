@@ -8,6 +8,23 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     $rootScope.activeapparatus = 'transcriptions';
     $rootScope.hover = false;
 
+    vm.showCompareWith = function (bad_id) {
+
+         BlakeDataService.getObjectsFromSameMatrix('urizen.a.illbk.03').then(function(result){
+                console.log(result);
+            });
+
+        
+
+            BlakeDataService.getSameMatrixObjectFromOtherCopy('urizen.a.illbk.03',bad_id).then(function(result){
+                console.log(result);
+            });
+
+
+        vm.apparatus = 'comparewith';
+        $rootScope.activeapparatus = 'comparewith';
+    }
+
     vm.showIllustrationDescriptions = function() {
         vm.apparatus = 'illustrationdescriptions';
         $rootScope.activeapparatus = 'illustrationdescriptions';
