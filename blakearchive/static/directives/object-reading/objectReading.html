@@ -16,6 +16,20 @@
             <span class="gr-abbreviation" style="height:21px;font-size:14px">Images Only</span>
             <span class="gr-title">Show images only</span>
         </button>
+
+            <span dropdown class="dropdown">
+            <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false" style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':activeapparatus == 'comparewith'}">
+                <span class="gr-abbreviation" style="height:21px;font-size:14px">Compare With</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="copy in read.bds.workCopies track by $index">
+                    <a ng-click="">Copy {{copy.archive_copy_id}} (Printed {{copy.print_date_string}})</a>
+                </li>
+            </ul>
+            </span>
+       
+
 </div>
 </div>
 
