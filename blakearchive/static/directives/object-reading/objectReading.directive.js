@@ -8,10 +8,14 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     $rootScope.activeapparatus = 'transcriptions';
     $rootScope.hover = false;
     vm.compareCopyObjects = [];
+    vm.compareCopyId = '';
+
+    console.log(vm.bds);
 
     vm.showCompareWith = function (bad_id) {
 
         vm.compareCopyObjects = [];
+
         vm.bds.copyObjects.forEach(function(copyObject) {
             BlakeDataService.getSameMatrixObjectFromOtherCopy(copyObject.desc_id,bad_id).then(function(result){
                 if(copyObject.desc_id != result.desc_id) {
@@ -22,8 +26,12 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 }
             });
         });
-        console.log(vm.compareCopyObjects);
 
+        /*BlakeDataService.getCopy(bad_id).then(function(result){
+            //console.log(result);
+            vm.compareCopyId = result.archive_copy_id;
+        });
+        */
 
         vm.apparatus = 'comparewith';
         $rootScope.activeapparatus = 'comparewith';
