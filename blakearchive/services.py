@@ -211,7 +211,7 @@ class BlakeDataService(object):
         if hasattr(obj, 'objects_from_same_matrix'):
             for myObject in obj.objects_from_same_matrix:
                 if(myObject.copy_bad_id == bad_id):
-                    return models.BlakeObject.query.filter(models.BlakeObject.desc_id == myObject.desc_id).first()
+                    return myObject
                 else:
                     continue
         else:
