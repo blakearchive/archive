@@ -17,6 +17,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 vm.compareCopyObjects.push(result);
             });
         });
+        console.log(vm.compareCopyObjects);
 
 
         vm.apparatus = 'comparewith';

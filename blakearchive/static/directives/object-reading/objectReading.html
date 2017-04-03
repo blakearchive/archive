@@ -18,7 +18,7 @@
         </button>
 
             <span dropdown class="dropdown">
-            <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false" style="margin-left:-1px;line-height:0.5;border-radius:0px;height:21px" ng-class="{'active':activeapparatus == 'comparewith'}">
+            <button class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false" style="border-radius:0px;height:21px" ng-class="{'active':activeapparatus == 'comparewith'}">
                 <span class="gr-abbreviation" style="height:21px;font-size:14px">Compare With</span>
                 <span class="caret"></span>
             </button>
@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <div style="color:white; font-size:11px; text-align:center" ng-if="read.hover == true && read.apparatus == 'imagesonly'">{{o.full_object_id}}</div>
-                    <div style="color:white; font-size:11px; text-align:center" ng-if="read.hover == true && read.apparatus == 'comparewith'">{{o.full_object_id}} / {{read.compareCopyObjects[$index].full_object_id}}</div>
+                    <div style="color:white; font-size:11px; text-align:center" ng-if="read.hover == true && read.apparatus == 'comparewith'">Copy {{o.archive_copy_id}} (Printed {{o.copy_print_date_string}}) {{o.full_object_id}} | <span style="color:yellow"> Copy {{read.compareCopyObjects[$index].archive_copy_id}} (Printed {{read.compareCopyObjects[$index].copy_print_date_string}}) {{read.compareCopyObjects[$index].full_object_id}}</span></div>
                 </div>
             </div>
         </div>
