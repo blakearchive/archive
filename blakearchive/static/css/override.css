@@ -963,7 +963,7 @@ a.compare-selected-objects {
 @media (min-width: 768px) {
     #archive #object-view #compare.scrollbar{
         overflow-x: scroll;
-        margin-bottom: 10px;
+        margin-bottom: 3px;
     }
     #archive #object-view.compare-objects #compare .compare-inner {
         white-space: nowrap;
