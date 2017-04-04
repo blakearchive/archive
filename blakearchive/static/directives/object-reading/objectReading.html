@@ -47,7 +47,7 @@
 
 </div>
 
-<div style="color:white; font-size:16px; padding-top:6px" ng-if="read.apparatus == 'comparewith'"><span>Copy {{read.bds.copy.archive_copy_id}} (Printed {{read.bds.copy.print_date_string}})</span> | <span style="color:yellow;"> Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</span></div>
+<div style="color:white; font-size:14px; padding-top:6px" ng-if="read.apparatus == 'comparewith'"><span>Copy {{read.bds.copy.archive_copy_id}} (Printed {{read.bds.copy.print_date_string}})</span> | <span style="color:yellow;"> Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</span></div>
 
 </div>
 
@@ -55,7 +55,7 @@
 <!-- compare -->
 <div id="compare" class="scrollbar" ng-if="read.bds.copy.bad_id != 'illum'" left-on-broadcast="viewSubMenu::readingMode">
     <div class="featured-object">
-        <div class="compare-inner" style="padding:17px;padding-top:6px">
+        <div class="compare-inner" style="padding:17px;padding-top:6px;" ng-style="read.apparatus=='comparewith' ? { 'padding-bottom':'6px' } : { 'padding-bottom':'17px' }">
             <!-- for letters -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index" ng-if="read.bds.copy.bad_id == 'letters'">
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
