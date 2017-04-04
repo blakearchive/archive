@@ -540,6 +540,12 @@ body {
     border-color: #cccccc;
 }
 
+.btn-gr-selection.inactive{
+    color: #666666;
+    background-color: #ffffff;
+    border-color: #cccccc;
+}
+
 .gr-display,.gr-abbreviation {
     display:none;
 }

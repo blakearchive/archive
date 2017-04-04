@@ -10,8 +10,21 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.compareCopyObjects = [];
     vm.compareCopyId = '';
     vm.compareCopyPrintDateString = '';
+    vm.rs = $rootScope;
+    vm.zoomMessage = 'Click, then mouse over the image';
 
     console.log(vm.bds);
+
+    vm.zoom = function(){
+        $rootScope.zoom = !$rootScope.zoom;
+        if($rootScope.zoom == false) {
+            vm.zoomMessage = 'Click, then mouse over the image';
+        }
+        else {
+            vm.zoomMessage = 'Click to turn off magnifer';
+        }
+        console.log($rootScope.zoom);
+    };
 
     vm.showCompareWith = function (bad_id) {
 
