@@ -30,6 +30,8 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
 
         vm.compareCopyObjects = [];
 
+        console.log(vm.bds.copyObjects);
+
         vm.bds.copyObjects.forEach(function(copyObject) {
             BlakeDataService.getSameMatrixObjectFromOtherCopy(copyObject.desc_id,bad_id).then(function(result){
                 console.log(result);
