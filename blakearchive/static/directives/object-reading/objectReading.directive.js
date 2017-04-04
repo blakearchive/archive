@@ -32,6 +32,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
 
         vm.bds.copyObjects.forEach(function(copyObject) {
             BlakeDataService.getSameMatrixObjectFromOtherCopy(copyObject.desc_id,bad_id).then(function(result){
+                console.log(result);
                 if(copyObject.desc_id != result.desc_id) {
                     vm.compareCopyObjects.push(result);
                     vm.compareCopyId = result.archive_copy_id;
