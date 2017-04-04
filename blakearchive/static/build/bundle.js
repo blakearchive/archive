@@ -4376,11 +4376,12 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
 
         console.log(vm.bds.copyObjects);
 
-        vm.bds.copyObjects.forEach(function (copyObject) {
-            BlakeDataService.getSameMatrixObjectFromOtherCopy(copyObject.desc_id, bad_id).then(function (result) {
-                console.log(copyObject);
+        angular.forEach(vm.bds.copyObjects, function (value, key) {
+
+            BlakeDataService.getSameMatrixObjectFromOtherCopy(value.desc_id, bad_id).then(function (result) {
+                console.log(value);
                 console.log(result);
-                if (copyObject.desc_id != result.desc_id) {
+                if (value.desc_id != result.desc_id) {
                     vm.compareCopyObjects.push(result);
                     vm.compareCopyId = result.archive_copy_id;
                     vm.compareCopyPrintDateString = result.copy_print_date_string;
