@@ -206,6 +206,18 @@ class BlakeDataService(object):
             return []
 
     @classmethod
+    def get_same_matrix_object_from_other_copy(cls, desc_id, bad_id):
+        obj = cls.get_sorted_object_query().filter(models.BlakeObject.desc_id == desc_id).first()
+        if hasattr(obj, 'objects_from_same_matrix'):
+            for myObject in obj.objects_from_same_matrix:
+                if(myObject.copy_bad_id == bad_id):
+                    return myObject
+                else:
+                    continue
+        else:
+            return None
+
+    @classmethod
     def get_textually_referenced_materials(cls, desc_id):
         obj = models.BlakeObject.query.filter(models.BlakeObject.desc_id == desc_id).first()
         return {
