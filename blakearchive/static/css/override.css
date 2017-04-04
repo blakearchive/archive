@@ -1,3 +1,8 @@
+.caret.caret-reversed {
+    border-top-width: 0;
+    border-bottom: 4px solid #000000;
+}
+
 #archive #object-view.reading-view #compare.scrollbar .compare-inner .item p {
   width:115%;
 }
@@ -540,6 +545,12 @@ body {
     border-color: #cccccc;
 }
 
+.btn-gr-selection.inactive{
+    color: #666666;
+    background-color: #ffffff;
+    border-color: #cccccc;
+}
+
 .gr-display,.gr-abbreviation {
     display:none;
 }
@@ -916,11 +927,12 @@ a.compare-selected-objects {
         white-space: nowrap;
         padding: 30px 0;
         float:left;
+        width:500%;
     }
 
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item{
         margin: 0;
-        padding-left:15px;
+        padding-left:30px;
         float:none;
         display: inline-block;
         white-space: normal;
@@ -951,7 +963,7 @@ a.compare-selected-objects {
 @media (min-width: 768px) {
     #archive #object-view #compare.scrollbar{
         overflow-x: scroll;
-        margin-bottom: 10px;
+        margin-bottom: 3px;
     }
     #archive #object-view.compare-objects #compare .compare-inner {
         white-space: nowrap;
