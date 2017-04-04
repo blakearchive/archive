@@ -161,24 +161,6 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
         }
     };
 
-    blakeData.getSameMatrixObjectFromOtherCopy = function (descId,badId) {
-        var url = directoryPrefix + '/api/object/' + descId + '/' + badId;
-
-        //$log.info('getting objects from same matrix');
-
-        return $http.get(url)
-            .then(getSameMatrixObjectFromOtherCopyComplete)
-            .catch(getSameMatrixObjectFromOtherCopyFailed);
-
-        function getSameMatrixObjectFromOtherCopyComplete(response){
-            return BlakeObject.create(response.data);
-        }
-
-        function getSameMatrixObjectFromOtherCopyFailed(error){
-            $log.error('XHR Failed for getSameMatrixObjectFromOtherCopy.\n' + angular.toJson(error.data, true));
-        }
-    };
-
     blakeData.getObjectsFromSameProductionSequence = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/objects_from_same_production_sequence';
 
