@@ -1,3 +1,8 @@
+.caret.caret-reversed {
+    border-top-width: 0;
+    border-bottom: 4px solid #000000;
+}
+
 #archive #object-view.reading-view #compare.scrollbar .compare-inner .item p {
   width:115%;
 }
