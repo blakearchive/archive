@@ -69,6 +69,15 @@ def get_objects_from_same_matrix(desc_id):
     results = blake_data_service.get_objects_from_same_matrix(desc_id)
     return jsonify({"results": [r.to_dict for r in results]})
 
+@api.route('/object/<desc_id>/<bad_id>')
+def get_same_matrix_object_from_other_copy(desc_id,bad_id):
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    result = blake_data_service.get_same_matrix_object_from_other_copy(desc_id, bad_id)
+    if(result != None):
+        return jsonify(result.to_dict)
+    else:
+        return jsonify(blake_data_service.get_object(desc_id).to_dict)
+
 @api.route('/object/<desc_id>/textually_referenced_materials')
 def get_textually_referenced_material(desc_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
