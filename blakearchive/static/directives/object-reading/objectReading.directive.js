@@ -9,6 +9,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     $rootScope.hover = false;
     vm.compareCopyObjects = [];
     vm.compareCopyId = '';
+    vm.compareCopyPrintDateString = '';
 
     console.log(vm.bds);
 
@@ -20,6 +21,8 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
             BlakeDataService.getSameMatrixObjectFromOtherCopy(copyObject.desc_id,bad_id).then(function(result){
                 if(copyObject.desc_id != result.desc_id) {
                     vm.compareCopyObjects.push(result);
+                    vm.compareCopyId = result.archive_copy_id;
+                    vm.compareCopyPrintDateString = result.copy_print_date_string;
                 }
                 else {
                     vm.compareCopyObjects.push(null);

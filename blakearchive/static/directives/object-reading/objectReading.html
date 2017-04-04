@@ -46,13 +46,16 @@
        
 
 </div>
+
+<div style="color:white; font-size:16px; padding-top:6px" ng-if="read.apparatus == 'comparewith'"><span>Copy {{read.bds.copy.archive_copy_id}} (Printed {{read.bds.copy.print_date_string}})</span> | <span style="color:yellow;"> Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</span></div>
+
 </div>
 
 <!--<p class="object-title">{{ read.getOvpTitle() }}</p>-->
 <!-- compare -->
 <div id="compare" class="scrollbar" ng-if="read.bds.copy.bad_id != 'illum'" left-on-broadcast="viewSubMenu::readingMode">
     <div class="featured-object">
-        <div class="compare-inner" style="padding:17px">
+        <div class="compare-inner" style="padding:17px;padding-top:6px">
             <!-- for letters -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index" ng-if="read.bds.copy.bad_id == 'letters'">
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
@@ -81,7 +84,6 @@
             <!-- for everything else -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null} track by $index" ng-if="read.bds.copy.bad_id != 'letters'">
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
-                    <div style="color:white; font-size:9px; padding-bottom:3px" ng-if="read.apparatus == 'comparewith'"><span>Copy {{o.archive_copy_id}} (Printed {{o.copy_print_date_string}})</span><span ng-if="read.compareCopyObjects[$index] != null" style="color:yellow;float:right"> Copy {{read.compareCopyObjects[$index].archive_copy_id}} (Printed {{read.compareCopyObjects[$index].copy_print_date_string}})</span></div>
 
                     <img ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" ng-click="read.changeObject(o)">
                     <img style="padding-left:10px" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[$index] != null" ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ read.compareCopyObjects[$index].dbi }}.{{dpi}}.jpg"> 
@@ -103,7 +105,7 @@
                         </div>
                     </div>
                     <div style="color:white; font-size:11px; text-align:center" ng-if="read.hover == true && read.apparatus == 'imagesonly'">{{o.full_object_id}}</div>
-                    <div style="color:white; font-size:9px;" ng-if="read.apparatus == 'comparewith'"><span>{{o.full_object_id}} </span><span ng-if="read.compareCopyObjects[$index] != null" style="color:yellow;float:right;">{{read.compareCopyObjects[$index].full_object_id}}</span></div>
+                    <div style="color:white; font-size:9px;" ng-if="read.hover == true && read.apparatus == 'comparewith'"><span>{{o.full_object_id}} </span><span ng-if="read.compareCopyObjects[$index] != null" style="color:yellow;float:right;">{{read.compareCopyObjects[$index].full_object_id}}</span></div>
                 </div>
             </div>
         </div>
