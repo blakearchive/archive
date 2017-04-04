@@ -41,7 +41,6 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                     vm.compareCopyObjects.push([]);
                 }
             });
-            console.log(compareCopyObjects);
         });
 
         /*BlakeDataService.getCopy(bad_id).then(function(result){
