@@ -4384,7 +4384,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
                     vm.compareCopyObjects.push([]);
                 }
             });
-            console.log(compareCopyObjects);
+            console.log(vm.compareCopyObjects);
         });
 
         /*BlakeDataService.getCopy(bad_id).then(function(result){
