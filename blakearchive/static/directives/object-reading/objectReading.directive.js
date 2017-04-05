@@ -7,7 +7,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.apparatus = 'transcriptions';
     $rootScope.activeapparatus = 'transcriptions';
     $rootScope.hover = false;
-    vm.compareCopyObjects = [];
+    vm.compareCopyObjects = {};
     vm.compareCopyId = '';
     vm.compareCopyPrintDateString = '';
     vm.rs = $rootScope;
@@ -28,12 +28,12 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
 
     vm.showCompareWith = function (bad_id) {
 
-        vm.compareCopyObjects = [];
+        vm.compareCopyObjects = {};
 
         vm.bds.copyObjects.forEach(function(copyObject) {
             BlakeDataService.getSameMatrixObjectFromOtherCopy(copyObject.desc_id,bad_id).then(function(result){
                 if(copyObject.desc_id != result.desc_id) {
-                    vm.compareCopyObjects.push(result);
+                    vm.compareCopyObjects[copyObject.desc_id] = result;
                     vm.compareCopyId = result.archive_copy_id;
                     vm.compareCopyPrintDateString = result.copy_print_date_string;
                 }
@@ -42,7 +42,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 }
             });
         });
-
+        console.log(vm.compareCopyObjects);
         /*BlakeDataService.getCopy(bad_id).then(function(result){
             //console.log(result);
             vm.compareCopyId = result.archive_copy_id;
