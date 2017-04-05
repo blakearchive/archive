@@ -916,6 +916,7 @@ a.compare-selected-objects {
         white-space: nowrap;
         padding: 30px 0;
         float:left;
+        width:500%;
     }
 
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item{
