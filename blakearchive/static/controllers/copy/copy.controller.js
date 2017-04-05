@@ -54,7 +54,9 @@ angular.module("blake").controller("CopyController", function ($scope,$routePara
     };
 
     $scope.$on('clientPpi::savedPpi',function(){
-        $window.open('/new-window/truesize/'+vm.bds.copy.bad_id+'?descId='+vm.bds.object.desc_id, '_blank', 'width=800, height=600');
+        if($rootScope.persistentmode != 'reading') {
+            $window.open('/new-window/truesize/'+vm.bds.copy.bad_id+'?descId='+vm.bds.object.desc_id, '_blank', 'width=800, height=600');
+        }
     });
 
     $scope.$on('change::selectedObject',function(){
