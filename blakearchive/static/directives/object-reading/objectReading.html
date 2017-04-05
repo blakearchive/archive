@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div style="color:white; font-size:9px; text-align:center" ng-if="read.apparatus == 'imagesonly'">{{o.full_object_id}}</div>
-                    <div style="color:white; font-size:9px;" ng-if="read.apparatus == 'comparewith'"><span>{{o.full_object_id}} </span><span ng-if="read.compareCopyObjects[$index] != null" style="color:yellow;float:right;">{{read.compareCopyObjects[$index].full_object_id}}</span></div>
+                    <div style="color:white; font-size:9px;" ng-if="read.apparatus == 'comparewith'"><span>{{o.full_object_id}} </span><span ng-if="read.compareCopyObjects[o.desc_id] != null" style="color:yellow;float:right;">{{read.compareCopyObjects[o.desc_id].full_object_id}}</span></div>
                 </div>
             </div>
             <span style="color:white;font-size:21px;position:absolute;top:50%;padding-left:30px">END</span>

@@ -38,7 +38,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                     vm.compareCopyPrintDateString = result.copy_print_date_string;
                 }
                 else {
-                    vm.compareCopyObjects.push(null);
+                    
                 }
             });
         });
