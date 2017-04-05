@@ -7,7 +7,8 @@
 <!-- compare -->
 <div ng-style="read.apparatus=='comparewith' ? { 'margin-top':'0px' } : { 'margin-top':'21px' }" id="compare" class="scrollbar" ng-if="read.bds.copy.bad_id != 'illum'" left-on-broadcast="viewSubMenu::readingMode">
     <div class="featured-object">
-        <div class="compare-inner" style="padding-bottom:12px;padding-top:6px;padding-left:0px;font-size:13px;height:83vh" ng-style="read.apparatus!='comparewith' && read.apparatus!='imagesonly' ? { 'padding-bottom':'15px' } : { 'padding-bottom':'6px' }">
+        <div class="compare-inner" style="padding-bottom:6px;padding-top:6px;padding-left:0px;font-size:13px;" ng-style="truesize ? { 'height':'83vh' } : { 'height':'inherit' }">
+
             <!-- for letters -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index" ng-if="read.bds.copy.bad_id == 'letters'">
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
