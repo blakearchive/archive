@@ -34,7 +34,6 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
 
         vm.bds.copyObjects.forEach(function(copyObject) {
             BlakeDataService.getSameMatrixObjectFromOtherCopy(copyObject.desc_id,bad_id).then(function(result){
-                console.log(copyObject);
                 console.log(result);
                 if(copyObject.desc_id != result.desc_id) {
                     vm.compareCopyObjects.push(result);
@@ -46,7 +45,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 }
             });
         });
-        //console.log(vm.compareCopyObjects);
+        console.log(vm.compareCopyObjects);
 
         /*BlakeDataService.getCopy(bad_id).then(function(result){
             //console.log(result);
