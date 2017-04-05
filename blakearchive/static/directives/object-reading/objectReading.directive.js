@@ -30,26 +30,25 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
 
         vm.compareCopyObjects = [];
 
-        //console.log(vm.bds.copyObjects);
+        console.log(vm.bds.copyObjects);
 
-        var tempArr = [];
-        angular.forEach(vm.bds.copyObjects, function(obj, key) {
-            key = obj.desc_id;
-            BlakeDataService.getSameMatrixObjectFromOtherCopy(obj.desc_id,bad_id).then(function(result){
-                if(obj.desc_id != result.desc_id) {
-                    tempArr.push( { key : result } );
-                    
-                    //console.log(vm.compareCopyObjects[obj.desc_id]);
+
+        angular.forEach(vm.bds.copyObjects, function(value, key) {
+
+            BlakeDataService.getSameMatrixObjectFromOtherCopy(value.desc_id,bad_id).then(function(result){
+                console.log(value);
+                console.log(result);
+                if(value.desc_id != result.desc_id) {
+                    vm.compareCopyObjects.push(result);
                     vm.compareCopyId = result.archive_copy_id;
                     vm.compareCopyPrintDateString = result.copy_print_date_string;
                 }
                 else {
-                    tempArr.push( { key : '' } );
+                    vm.compareCopyObjects.push(null);
                 }
             });
         });
-        vm.compareCopyObjects = tempArr;
-        console.log(vm.compareCopyObjects['0']);
+        //console.log(vm.compareCopyObjects);
 
         /*BlakeDataService.getCopy(bad_id).then(function(result){
             //console.log(result);
