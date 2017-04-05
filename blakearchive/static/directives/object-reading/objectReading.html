@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div style="color:white; font-size:9px; text-align:center" ng-if="read.apparatus == 'imagesonly'">{{o.full_object_id}}</div>
-                    <div style="color:white; font-size:9px;" ng-if="read.apparatus == 'comparewith'"><span>{{o.full_object_id}} </span><span ng-if="read.compareCopyObjects[$index] != null" style="color:yellow;float:right;">{{read.compareCopyObjects[$index].full_object_id}}</span></div>
+                    <div style="color:white; font-size:9px;" ng-if="read.apparatus == 'comparewith'"><span>{{o.full_object_id}} </span><span ng-if="read.compareCopyObjects[o.desc_id] != null" style="color:yellow;float:right;">{{read.compareCopyObjects[o.desc_id].full_object_id}}</span></div>
                 </div>
             </div>
             <span style="color:white;font-size:21px;position:absolute;top:50%;padding-left:30px">END</span>
@@ -118,7 +118,7 @@
         
         <span ng-if="read.bds.workCopies.length > 1" dropdown class="dropdown">
         <button dropdown-toggle type="button" class="btn btn-default" style="height:21px;line-height:0.6;margin-bottom:1px;margin-right:1px;border-radius:0px;border-left:0px" ng-class="{'hover':activeapparatus == 'comparewith'}">
-            <span class="gr-abbreviation" style="height:21px;font-size:13px">Compare with Other Copy</span>
+            <span class="gr-abbreviation" style="height:21px;font-size:13px">Compare with Another Copy</span>
             <span class="gr-title">Show compare with</span>
         </button>
             <ul class="dropdown-menu" style="border-radius:0px;top:inherit;bottom:100%;margin:2px 0 2px" role="menu">
