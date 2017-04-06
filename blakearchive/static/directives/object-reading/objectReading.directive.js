@@ -7,6 +7,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.apparatus = 'transcriptions';
     $rootScope.activeapparatus = 'transcriptions';
     $rootScope.hover = false;
+    vm.compareCopyObjectsTemp = [];
     vm.compareCopyObjects = {};
     vm.compareCopyId = '';
     vm.compareCopyPrintDateString = '';
@@ -103,6 +104,41 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         }
     }
 
+    vm.showCompareWithFaster = function(bad_id) {
+        vm.compareCopyObjects = {};
+        vm.compareCopyObjectsTemp = [];
+
+        BlakeDataService.getCopy(bad_id).then(function(resultingCopy) {
+            vm.compareCopy = resultingCopy;
+            vm.compareCopyId = vm.compareCopy.archive_copy_id;
+            vm.compareCopyPrintDateString = vm.compareCopy.print_date_string;
+        });
+        BlakeDataService.getObjectsForCopy(bad_id).then(function(resultingCopyObjects) {
+            vm.bds.copyObjects.forEach(function(copyObject) {
+                var keepGoing = true;
+            resultingCopyObjects.forEach(function(compareCopyObject) {
+                if(keepGoing == true) {
+                    if(copyObject.bentley_id == compareCopyObject.bentley_id) {
+                        vm.compareCopyObjects[copyObject.desc_id] = compareCopyObject;
+                        keepGoing = false;
+                    }
+                }
+                });
+            });
+            //console.log(resultingCopyObjects);
+        });
+
+        console.log(vm.compareCopyObjectsTemp);
+
+
+        vm.apparatus = 'comparewith';
+        $rootScope.activeapparatus = 'comparewith';
+        if ($rootScope.truesize == true) {
+            $rootScope.truesize = false;
+            vm.reverseTrueSize();
+        }
+    }
+
     vm.showCompareWith = function(bad_id) {
 
         vm.compareCopyObjects = {};
@@ -110,6 +146,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         BlakeDataService.getCopy(bad_id).then(function(resultingCopy) {
             vm.compareCopy = resultingCopy;
         });
+        console.log(vm.compareCopy);
 
         vm.bds.copyObjects.forEach(function(copyObject) {
             BlakeDataService.getSameMatrixObjectFromOtherCopy(copyObject.desc_id, bad_id).then(function(result) {
