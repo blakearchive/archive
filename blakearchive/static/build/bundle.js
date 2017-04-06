@@ -3356,7 +3356,7 @@ angular.module("blake").controller('ClientPPIController', ["$http", "$rootScope"
         'diagonals': [7, 11.6, 13.3, 14, 15.6, 17.3, 21, 27]
     };
 
-    vm.screens = {};
+    vm.screens = [];
 
     vm.calculatePpi = function () {
         var x = vm.config.x,
