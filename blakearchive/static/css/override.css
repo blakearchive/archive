@@ -300,6 +300,18 @@ td.c2 {
     right: 5px;
 }
 
+.closebtnleft {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+
+    position: absolute;
+    top: -11px;
+}
+
 @media screen and (max-height: 450px) {
   .overlay {overflow-y: auto;}
   .overlay a {font-size: 20px}

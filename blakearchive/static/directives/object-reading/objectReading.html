@@ -1,5 +1,28 @@
+<div id="OverlayCopyInfo" class="overlay" ng-show="$root.showOverlayCompareCopyInfo == true" style="top:52px">
+
+    <a style="text-decoration: none" href="" class="closebtnleft" style="right:inherit" ng-click="$root.showOverlayCompareCopyInfo = false">&times;</a>
+    <header class="page-header">
+      <p class="subhead">COPY INFORMATION</p>
+      <h1 style="color:rgba(233,188,71,1)">{{ read.compareCopy.title }} (Composed {{ read.compareCopy.composition_date_string }})</h1>
+    </header>
+    <div id="archive-tabs" role="tabpanel">
+    <div class="container-fluid overlaycopyinfo">
+      <div class="container">
+        <div class="tab-content">
+          <div role="tabpanel" class="fadeinout tab-pane active in">
+          <copy-information copy="read.compareCopy"></copy-information>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>
+
+
+
+
 <div style="text-align:center">
-<div style="color:white; font-size:13 px; padding-top:1px" ng-if="read.apparatus == 'comparewith'"><span>Compared with</span><span style="color:yellow;"> Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</span></div>
+<div style="color:white; font-size:13 px; padding-top:1px" ng-if="read.apparatus == 'comparewith'"><span>Compared with </span><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}}</a> (Printed {{read.compareCopyPrintDateString}})</span></div>
 
 </div>
 
