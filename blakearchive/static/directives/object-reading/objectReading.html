@@ -158,7 +158,7 @@
         </button>
             <ul class="dropdown-menu" style="border-radius:0px;top:inherit;bottom:100%;margin:2px 0 2px" role="menu">
                 <li ng-repeat="copy in read.bds.workCopies track by $index" ng-if="copy.archive_copy_id != read.bds.copy.archive_copy_id">
-                    <a ng-click="read.showCompareWith(copy.bad_id)">Copy {{copy.archive_copy_id}} (Printed {{copy.print_date_string}})</a>
+                    <a ng-click="read.showCompareWithFaster(copy.bad_id)">Copy {{copy.archive_copy_id}} (Printed {{copy.print_date_string}})</a>
                 </li>
             </ul>
         </span>
