@@ -13,6 +13,8 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.rs = $rootScope;
     vm.zoomMessage = 'Click, then mouse over the image';
     $rootScope.truesize = false;
+    vm.showOverlayCompareCopyInfo = false;
+    vm.compareCopy = null;
 
     console.log(vm.bds);
 
@@ -105,6 +107,10 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
 
         vm.compareCopyObjects = {};
 
+        BlakeDataService.getCopy(bad_id).then(function(resultingCopy) {
+            vm.compareCopy = resultingCopy;
+        });
+
         vm.bds.copyObjects.forEach(function(copyObject) {
             BlakeDataService.getSameMatrixObjectFromOtherCopy(copyObject.desc_id, bad_id).then(function(result) {
                 if (copyObject.desc_id != result.desc_id) {
@@ -116,7 +122,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 }
             });
         });
-        //console.log(vm.compareCopyObjects);
+        console.log(vm.compareCopyObjects);
 
         vm.apparatus = 'comparewith';
         $rootScope.activeapparatus = 'comparewith';
