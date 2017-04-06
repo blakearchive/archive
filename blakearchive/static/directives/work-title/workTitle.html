@@ -1,6 +1,6 @@
 <div id="Overlay" class="overlay" ng-show="$root.showOverlay == true">
 
-    <a style="text-decoration: none" href="" class="closebtn" ng-click="$root.showOverlay = false">&times;</a>
+    <a style="text-decoration: none" href="" class="closebtnleft" ng-click="$root.showOverlay = false">&times;</a>
     <header class="page-header">
       <p class="subhead">{{ workTitle.bds.work.medium_pretty }}</p>
       <h1 style="color:rgba(233,188,71,1)">{{ workTitle.bds.work.title }} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>
@@ -23,7 +23,7 @@
 
 <div id="OverlayCopyInfo" class="overlay" ng-show="$root.showOverlayCopyInfo == true">
 
-    <a style="text-decoration: none" href="" class="closebtn" ng-click="$root.showOverlayCopyInfo = false">&times;</a>
+    <a style="text-decoration: none" href="" class="closebtnleft" ng-click="$root.showOverlayCopyInfo = false">&times;</a>
     <header class="page-header">
       <p class="subhead">COPY INFORMATION</p>
       <h1 style="color:rgba(233,188,71,1)">{{ workTitle.bds.work.title }} {{workTitle.getCopyPhrase()}} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>
