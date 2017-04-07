@@ -7,6 +7,7 @@ import 'angular-loading-bar';
 import 'angular-rangeslider';
 import 'angular-cookies';
 import 'angular-touch';
+import 'fabric';
 import './js/angular.ngStorage';
 import './js/Sortable/Sortable.min';
 import './js/Sortable/ng-sortable.min';
@@ -14,6 +15,7 @@ import './js/angular-ui-bootstrap/0.12.1/ui-bootstrap.min';
 import './js/angular-fullscreen/angular-fullscreen.min';
 import 'script-loader!./js/angular-markdown-it/markdown-it.min';
 import './js/angular-markdown-it/angular-markdown-it';
+import './js/angular-fabric/fabric';
 
 let directoryPrefix = '';
 let carousel = angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition']);
@@ -21,7 +23,12 @@ let carousel = angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition
 carousel.controller('CarouselController', function ($scope, $timeout, $transition, $q) {});
 carousel.directive('carousel', function () { return {} });
 
-let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch','markdown','angular-loading-bar'])
+let blake = angular.module('blake', [
+  'ngRoute', 'ngSanitize', 'ui-rangeSlider',
+  'ui.bootstrap', 'ng-sortable', 'FBAngular',
+  'common.fabric','common.fabric.utilities','common.fabric.constants',
+  'ngAnimate', 'ngStorage','ngCookies','ngTouch',
+  'markdown','angular-loading-bar'])
 
 blake.value("directoryPrefix", directoryPrefix);
 
@@ -68,6 +75,12 @@ blake.config(function ($routeProvider, $locationProvider) {
         templateUrl: directoryPrefix + '/static/controllers/search/search.html',
         controller: "SearchController",
         controllerAs: 'search'
+    });
+    $routeProvider.when(directoryPrefix + '/lightbox', {
+        templateUrl: directoryPrefix + '/static/controllers/lightbox/lightbox.html',
+        controller: "LightboxController",
+        controllerAs: 'Lbc',
+        reloadOnSearch: false
     });
 
     $routeProvider.otherwise({redirectTo: directoryPrefix + '/'});

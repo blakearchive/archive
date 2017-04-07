@@ -1,12 +1,17 @@
-angular.module("blake").controller("BlakeMenuController", ['$scope','$rootScope','CartStorageService', function($scope,$rootScope,CartStorageService){
+angular.module("blake").controller("BlakeMenuController",
+  function($scope,$rootScope,CartStorageService){
     let vm = this;
     vm.rs = $rootScope;
-    // tie cartItems to the rootScope rather than scope?
-    // pros versus cons... TODO: analyze this! understand it!
-    // I suspect that this needs to be outside of the directive in the containing page's
-    // controller or on its own dedicated controller...
     $rootScope.cartItems = CartStorageService.cartItems;
-}]);
+    //$scope.$storage = $localStorage;
+
+    vm.openLightBox = function(){
+      var win = window.open('','_lightbox','',true);
+      if (win.location.href === 'about:blank'){
+        win.location.href = '/lightbox';
+      }
+    };
+});
 
 angular.module("blake").directive('blakeMenu', function(){
     return {
@@ -16,3 +21,14 @@ angular.module("blake").directive('blakeMenu', function(){
         controllerAs: "bm"
     }
 });
+
+/*
+'Add to Cart' button on copies will add to the storage service (local storage).
+
+hovering over the cart basket will pop up some options for removing specific of all cart items
+also should have an option to 'go' to the lightbox window (clicking the basket will also go to
+the lightbox window).
+
+The badge in the basket is bound to the count of items in $rootScope.cartItems (which is
+bound to the cartItems in the service).
+*/
