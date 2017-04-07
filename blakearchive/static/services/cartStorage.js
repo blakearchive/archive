@@ -5,12 +5,13 @@ angular.module('blake')
 		// I've taken out the 'api' option. This service could be greatly
 		// simplified, however... leaving it will allow us to add other storage
 		// methods should we want to do so.  (using redis to store state for example).
-		// appropriated from https://github.com/tastejs/todomvc/blob/gh-pages/examples/angularjs/js/services/cartItemstorage.js
+		// appropriated from https://github.com/tastejs/todomvc/blob/master/examples/angularjs/js/services/todoStorage.js
 		return $injector.get('localStorage');
 	})
 	.factory('localStorage', function ($q) {
 		'use strict';
-
+		// sigh... this could have just used ngStorage
+		// live and learn... (note for future refactor)
 		var STORAGE_ID = 'cart-items-angularjs';
 
 		var store = {
@@ -24,7 +25,7 @@ angular.module('blake')
 				localStorage.setItem(STORAGE_ID, JSON.stringify(cartItems));
 			},
 			// todos had a completed flag. we have no use for that but we do
-			// have the need to clear out our cart so, i'll rename it clearCart and 
+			// have the need to clear out our cart so, i'll rename it clearCart and
 			// set the cartItems to a (new) empty list.
 //			clearCompleted: function () {
 //				var deferred = $q.defer();
@@ -42,7 +43,7 @@ angular.module('blake')
 //			},
 			clearCart: function () {
 				var deferred = $q.defer();
-				
+
 				//store.cartItems = [];
 				// perhaps this is better than a new empty list...
 				store.cartItems.clear();
