@@ -33,7 +33,7 @@
       <div class="container">
         <div class="tab-content">
           <div role="tabpanel" class="fadeinout tab-pane active in">
-          <copy-information copy="workTitle.bds.copy" object="tabs.bds.object"></copy-information>
+          <copy-information ng-if="workTitle.bds.copy.virtual == false" copy="workTitle.bds.copy" object="tabs.bds.object"></copy-information>
           </div>
         </div>
       </div>

@@ -10,6 +10,7 @@ angular.module("blake").controller("CopyController", function ($scope,$routePara
     $rootScope.dpivalue = '100';
     vm.bds = BlakeDataService;
     vm.cof = CompareObjectsFactory;
+    $rootScope.doneSettingCopy = false;
 
     if(!angular.isDefined($rootScope.persistentmode)){
         $rootScope.persistentmode = 'gallery';
@@ -19,6 +20,7 @@ angular.module("blake").controller("CopyController", function ($scope,$routePara
         vm.cof.resetComparisonObjects();
         $rootScope.view.mode = 'object';
         $rootScope.view.scope = 'image';
+        $rootScope.doneSettingCopy = true;
     });
 
     /*
