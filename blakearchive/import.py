@@ -180,7 +180,7 @@ class BlakeDocumentImporter(BlakeImporter):
             all_non_preview_objects = list(set(self.split_ids(entry.virtual_objects)) - set(work.preview_copies))
             objects = self.objects_sorted_for_virtual_copy(all_non_preview_objects)
         else:
-            objects = self.split_ids(entry.virtual_objects)
+            objects = self.objects_sorted_for_virtual_copy(self.split_ids(entry.virtual_objects))
         copy = models.BlakeCopy()
         copy.work_id = entry.bad_id
         copy.title = entry.title.encode('utf-8')
