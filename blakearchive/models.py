@@ -229,7 +229,6 @@ class BlakeWork(db.Model):
     image = db.Column(db.UnicodeText)
     composition_date = db.Column(db.Integer)
     composition_date_string = db.Column(db.UnicodeText)
-    composition_date_value = db.Column(db.UnicodeText)
     related_works = db.Column(JSON)
     virtual = db.Column(db.Boolean)
     preview = db.Column(db.Boolean)
@@ -246,7 +245,6 @@ class BlakeWork(db.Model):
             "image": self.image,
             "composition_date": self.composition_date,
             "composition_date_string": self.composition_date_string,
-            "composition_date_value": self.composition_date_value,
             "related_works": self.related_works,
             "virtual": self.virtual,
             "preview": self.preview,
