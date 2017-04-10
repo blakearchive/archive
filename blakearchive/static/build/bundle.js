@@ -4144,7 +4144,7 @@ angular.module("blake").controller("navMenu", ["$scope", "BlakeDataService", "$s
         }
         // Sort before nesting
         data.sort(function (a, b) {
-            return a.composition_date - b.composition_date;
+            return a.composition_date_value - b.composition_date_value;
         });
 
         var menus = {
