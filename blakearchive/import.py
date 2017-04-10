@@ -172,7 +172,9 @@ class BlakeDocumentImporter(BlakeImporter):
             work.copies = self.copy_importer.get(self.split_ids(entry.copies))
         if work.virtual:
             self.process_virtual_work(entry, work)
-        work.composition_date_value = work.copies[0].composition_date_value
+        if (work.copies[0]) {
+            work.composition_date_value = work.copies[0].composition_date_value
+        }
         return work
 
     def process_virtual_work(self, entry, work):
