@@ -168,15 +168,10 @@ class BlakeDocumentImporter(BlakeImporter):
         if(socket.gethostname() == 'islington.lib.unc.edu'):
             all_non_preview_copies = list(set(self.split_ids(entry.copies)) - set(work.preview_copies))
             work.copies = self.copy_importer.get(all_non_preview_copies)
-            if(work.copies):
-                work.composition_date_value = work.copies[0].composition_date_value
         else:
             work.copies = self.copy_importer.get(self.split_ids(entry.copies))
-            if(work.copies):
-                work.composition_date_value = work.copies[0].composition_date_value
         if work.virtual:
             self.process_virtual_work(entry, work)
-
         return work
 
     def process_virtual_work(self, entry, work):
@@ -211,7 +206,6 @@ class BlakeDocumentImporter(BlakeImporter):
             obj.object_group = old_copy.title
             old_copy.effective_copy_id = copy.bad_id
             obj.copy_bad_id = copy.bad_id
-            work.composition_date_value = obj.copy_composition_date_value
         work.copies.append(copy)
         self.copy_importer.members[entry.bad_id] = copy
 
