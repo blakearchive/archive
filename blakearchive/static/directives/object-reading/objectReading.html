@@ -151,7 +151,7 @@
        
 
         
-        <span ng-if="read.bds.workCopies.length > 1" dropdown class="dropdown">
+        <span ng-if="read.bds.workCopies.length > 1 && read.bds.copy.virtual == false" dropdown class="dropdown">
         <button dropdown-toggle type="button" class="btn btn-default" style="height:21px;line-height:0.6;margin-bottom:1px;margin-right:1px;border-radius:0px;border-left:0px" ng-class="{'hover':activeapparatus == 'comparewith'}">
             <span class="gr-abbreviation" style="height:21px;font-size:13px">Compare with Another Copy</span>
             <span class="gr-title">Show compare with</span>
