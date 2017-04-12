@@ -197,7 +197,7 @@ div h3 {
 
 @media (min-width: 768px) {
   nav.navbar ul.navbar-nav > li {
-    width: 16.66666%;
+    width: 20%;
   }
 }
 
