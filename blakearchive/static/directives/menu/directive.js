@@ -13,14 +13,14 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         });
     } else {
         vm.lists = $sessionStorage.menus;
-        console.log(vm.lists);
+        //console.log(vm.lists);
     }
 
     var category = function(item) {
         switch(item) {
-            case "exhibit":
+            /*case "exhibit":
                 return "exhibits";
-                break;
+                break;*/
             case "illbk":
                 return "illuminated_books";
                 break;
@@ -104,8 +104,8 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                 manuscripts: [],
                 letters: [],
                 typographic: []
-            }],
-            exhibits: []
+            }]
+            //exhibits: []
         };
 
         // Add to menu categories
@@ -127,7 +127,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         });
 
         vm.lists = menus;
-        console.log(vm.lists);
+        //console.log(vm.lists);
         $sessionStorage.menus = menus;
     }
 });
