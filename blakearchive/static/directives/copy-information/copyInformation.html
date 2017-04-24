@@ -82,8 +82,8 @@
                 <span ng-bind-html="info.getSource().repository.institution['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-bind-html="info.getSource().repository.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-bind-html="info.getSource().repository.addressline[1]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
-                <span ng-bind-html="info.getSource().repository.addressline[2]['#text'].trim() | highlight:info.highlight | markdown"></span>
-                <span ng-if="info.getSource().repository.addressline[3]['#text'].indexOf(':') < 0" ng-bind-html="info.getSource().repository.addressline[3]['#text'].trim() | highlight:info.highlight | markdown"></span>
+                <span ng-bind-html="info.getSource().repository.addressline[2]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-if="info.getSource().repository.addressline[3]['#text'].indexOf(':') < 0" ng-bind-html="info.getSource().repository.addressline[3]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-if="info.getSource().repository.addressline[4]['#text'].indexOf(':') < 0" ng-bind-html="info.getSource().repository.addressline[4]['#text'].trim() | highlight:info.highlight | markdown"></span>
             </dd>
 
