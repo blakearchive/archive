@@ -97,11 +97,15 @@
             <dd ng-bind-html="info.getSource().repository.addressline[4]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
             </span>
 
+            <span ng-if="info.getSource().repository.addressline[5]['#text'] != null">
             <dt> {{ info.getSource().repository.addressline[5]['#text'].split(': ')[0] }}</dt>
             <dd ng-bind-html="info.getSource().repository.addressline[5]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
+            </span>
 
+            <span ng-if="info.getSource().repository.addressline[6]['#text'] != null">
             <dt> {{ info.getSource().repository.addressline[6]['#text'].split(': ')[0] }}</dt>
             <dd ng-bind-html="info.getSource().repository.addressline[6]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
+            </span>
 
             <span ng-if="info.getSource().repository.addressline[7]['#text'] != null">
             <dt> {{ info.getSource().repository.addressline[7]['#text'].split(': ')[0] }}</dt>
@@ -129,6 +133,14 @@
             <div ng-if="info.getSource().repository.repositoryid['@label']">
                 <dt>{{ info.getSource().repository.repositoryid['@label'] }}</dt>
                 <dd ng-bind-html="info.getSource().repository.repositoryid['#text'].trim() | highlight:info.highlight | markdown"></dd>
+            </div>
+            <div ng-if="info.getSource().repository.repositoryid[0]['@label']">
+                <dt>{{ info.getSource().repository.repositoryid[0]['@label'] }}</dt>
+                <dd ng-bind-html="info.getSource().repository.repositoryid[0]['#text'].trim() | highlight:info.highlight | markdown"></dd>
+            </div>
+            <div ng-if="info.getSource().repository.repositoryid[1]['@label']">
+                <dt>{{ info.getSource().repository.repositoryid[1]['@label'] }}</dt>
+                <dd ng-bind-html="info.getSource().repository.repositoryid[1]['#text'].trim() | highlight:info.highlight | markdown"></dd>
             </div>
 
         </dl>
