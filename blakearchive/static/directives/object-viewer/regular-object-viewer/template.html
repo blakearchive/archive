@@ -11,8 +11,8 @@
         </div>
     </div>
     <p class="object-subtitle">
-        <span ng-if="rov.bds.work.virtual && rov.bds.copy.bad_id != 'letters'"><span>{{ rov.bds.object.title }}, </span><span class="object-no">{{ rov.bds.object.full_object_id }}, {{rov.bds.object.source.objdescid.compdate['#text']}}, {{rov.bds.object.source.repository.institution['#text']}}, </span></span>
-        <span ng-if="rov.bds.work.virtual && rov.bds.copy.bad_id == 'letters'"><span>{{ rov.bds.object.title }}, </span><span class="object-no">{{ rov.bds.object.full_object_id }}, </span></span>
+        <span ng-if="rov.bds.work.virtual && rov.bds.copy.bad_id != 'letters'"><span>{{ rov.bds.object.title }}, </span><span class="object-no">Object {{ rov.bds.object.object_number }}, {{rov.bds.object.source.objdescid.compdate['#text']}}, {{rov.bds.object.source.repository.institution['#text']}}, </span></span>
+        <span ng-if="rov.bds.work.virtual && rov.bds.copy.bad_id == 'letters'"><span>{{ rov.bds.object.title }}, </span><span class="object-no">Object {{ rov.bds.object.object_number }}, </span></span>
         <span class="object-no" ng-if="!rov.bds.work.virtual && !rov.bds.object.title">{{ rov.bds.object.full_object_id }}, </span>
         <span class="object-no" ng-if="!rov.bds.work.virtual && rov.bds.object.title && rov.bds.work.medium != 'exhibit'">{{rov.bds.object.title}}, {{ rov.bds.object.full_object_id }}, </span>
         <span class="object-no" ng-if="!rov.bds.work.virtual && rov.bds.object.title && rov.bds.work.medium == 'exhibit'">{{rov.bds.object.title}}</span>

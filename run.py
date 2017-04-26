@@ -19,7 +19,6 @@ def get_bad_file(bad=None):
     return send_file(config.local_data_path+"works/"+bad)
 
 @app.route('/', defaults={'path': ''})
-
 @app.route('/<path:path>')
 def catch_all(path):
     """
