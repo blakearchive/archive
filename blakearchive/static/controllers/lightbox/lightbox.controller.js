@@ -7,10 +7,16 @@ angular.module("blake")
       FabricConstants) {
         var vm = this;
         $scope.fabric = {};
+        /* currently does not work...
+        $scope.ImagesConstants = {"lockUniScaling":true};
+        */
       	$scope.FabricConstants = FabricConstants;
 
+        // note: the cart items are from browsers local storage
         $scope.images = CartStorageService.cartItems;
-
+        $scope.isLightbox = true;
+        // bootstraps fabric to the canvas element
+        // called on canvas::created event... see below
         $scope.init = function() {
     		    $scope.fabric = new Fabric({
         			JSONExportProperties: FabricConstants.JSONExportProperties,
@@ -20,15 +26,18 @@ angular.module("blake")
     		    });
             console.log('canvas init complete.');
             $scope.fabric.setCanvasSize(window.innerWidth,window.innerHeight);
+
+            // for dev... may need to test if a load is required...
+            // not required on re-entry (when lbox window is already opened)
             $scope.loadFromCart();
     	  };
 
         $scope.loadFromCart = function(){
           $scope.images.forEach(function(entry){
-            var imgUrl = 'http://l7.oasis.unc.edu/images/' +entry;
+            var imgUrl = '/images/' +entry;
             console.log("attempting load of: "+entry);
-            $scope.fabric.addImageScaledToWidth(imgUrl,400);
-
+            var tmp = $scope.fabric.addImageScaledToWidth(imgUrl,400);
+            console.log("returned by fabric add method: "+tmp);
             //$scope.fabric.getActiveObject().scaleToWidth(300);
 
           });
