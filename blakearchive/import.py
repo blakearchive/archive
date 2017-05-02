@@ -194,11 +194,14 @@ class BlakeDocumentImporter(BlakeImporter):
             copy.header = self.element_to_dict(virtual_group_header)
             copy.header_html = self.header_to_html(virtual_group_header)
         # We need to clean-up since we're not using the previously generated copy, but the new virtual copy
-        for (i, obj) in enumerate(objects, 1):
+        i = 1
+        for obj in objects:
             old_copy = obj.copy
             obj.header = old_copy.header
             obj.source = old_copy.source
-            obj.object_number = i
+            if not obj.supplemental:
+                obj.object_number = i
+                i += 1
             obj.virtualwork_title = work.title
             # obj.full_object_id = re.sub(r"\s*Object 1\s*", "", obj.full_object_id, flags=re.IGNORECASE).rstrip()
             obj.full_object_id = obj.full_object_id.rstrip()
