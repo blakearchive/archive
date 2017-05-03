@@ -3,6 +3,7 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
     vm.bds = BlakeDataService;
     var title = "";
     vm.showOverlay = false;
+    vm.showOverlayCopyInfo = false;
 
     vm.getTitle = function(){
 

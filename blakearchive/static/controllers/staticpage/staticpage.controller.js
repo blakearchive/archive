@@ -15,7 +15,7 @@ angular.module('blake').controller('StaticpageController', function($scope,$root
         $rootScope.staticPageTitle = vm.title;
         if($location.search().p){
             vm.subSelection = $location.search().p;
-            console.log($location.search().p);
+            //console.log($location.search().p);
         } else {
             vm.subSelection = data[vm.page].initial;
         }

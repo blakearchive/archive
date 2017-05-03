@@ -1,5 +1,6 @@
-angular.module("blake").controller("ViewSubMenuController", function ($rootScope,$routeParams,$modal) {
+angular.module("blake").controller("ViewSubMenuController", function ($rootScope,$routeParams,$modal,CompareObjectsFactory) {
     var vm = this;
+    vm.cof = CompareObjectsFactory;
 
     if(!angular.isDefined($rootScope.persistentmode)){
         $rootScope.persistentmode = 'gallery';
@@ -56,6 +57,12 @@ angular.module("blake").controller("ViewSubMenuController", function ($rootScope
         //$rootScope.worksNavState = false;
         if(mode == 'object') {
             $rootScope.persistentmode = 'gallery';
+
+            vm.compareText = "Select All Objects";
+            vm.selectedAll = false;
+            vm.cof.resetComparisonObjects();
+            $rootScope.view.scope = 'image';
+
         }
         if(mode == 'read') {
             //console.log($rootScope.descIDFromCompare);

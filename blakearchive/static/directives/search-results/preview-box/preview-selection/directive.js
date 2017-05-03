@@ -7,6 +7,7 @@ angular.module("blake").directive("previewSelection", function () {
     return {
         template: require("html-loader!./template.html"),
         controller: "PreviewSelectionController",
+        replace: true,
         bindToController: true,
         scope: {
             results: '<results',

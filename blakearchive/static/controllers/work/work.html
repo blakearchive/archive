@@ -20,37 +20,7 @@
             <h2>Related Works</h2>
             <p>Related works currently available in the William Blake Archive appear as links below. Works not currently available appear as plain text.</p>
         </div>-->
-        <div class="section-group" ng-if="workCtrl.bds.work.medium=='illbk'">
-            <h3 style="font-weight:bold;">All Known Copies</h3>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="related-flex">
-                        <div class="related-item" ng-repeat="copy in workCtrl.bds.work.related_works | filter:{type:'copy'}">
-                            <span ng-if="copy.link">
-                                <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
-                            </span>
-                            <span style="font-weight:bold;" ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
-                            <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info.trim() | markdown"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="section-group" ng-class="workCtrl.bds.work.related_works.length > 0 ? '' : 'hidden'">
-            <h3 style="font-weight:bold;">All Known Related Items</h3>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="related-flex">
-                        <div class="related-item" ng-repeat="copy in workCtrl.bds.work.related_works | filter:{type:'!copy'}">
-                        <span ng-if="copy.link">
-                            <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
-                        </span>
-                            <span style="font-weight:bold;" ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
-                            <span ng-repeat="info in workCtrl.getInfo(copy.info) track by $index" ng-bind-html="info.trim() | markdown"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <all-known-copies work="workCtrl.bds.work" ng-if="workCtrl.bds.work.medium=='illbk'"></all-known-copies>
+        <all-known-related-items work="workCtrl.bds.work" ng-class="workCtrl.bds.work.related_works.length > 0 ? '' : 'hidden'"></all-known-related-items>
     </div>
 </div>

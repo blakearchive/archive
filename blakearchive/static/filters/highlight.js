@@ -11,7 +11,7 @@ angular.module("blake").filter('highlight', function($sce){
             }
 
             if (phrase.indexOf(' ')) {
-                phraseArray = phrase.split(' ');
+                phraseArray = phrase.match(/\w+|"(?:\\"|[^"])+"/g).map(s => s.replace(/['"]/g, ''));
                 angular.forEach(phraseArray, function (ph) {
                     text = text.replace(new RegExp('(\\b' + ph + '\\b)', 'gi'), '<span class="highlighted">$1</span>');
                 });
