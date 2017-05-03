@@ -10,7 +10,7 @@
                  ng-click="compare.changeObject(o)"
                  ng-dblclick="compare.goToObject(o)">
                 <!--<p class="object-title text-capitalize"><a href="/copy/{{o.copy_bad_id}}?objectId={{o.object_id}}">{{ o.copy_title }}</a></p>-->
-                <p class="object-title"><a href="/copy/{{o.copy_bad_id}}">{{ o.copy_title }}</a></p>
+                <p ng-class="{active:compare.cof.isMain(o)}" class="object-title"><a href="/copy/{{o.copy_bad_id}}">{{ o.copy_title }}</a></p>
                 <div class="compare-wrapper flex" auto-height adjust="270" breakpoint="768">
                     <div class="object-img-container" ng-class="{hidden: view.scope == 'text'}" ovp-image>
                         <img ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" magnify-image>

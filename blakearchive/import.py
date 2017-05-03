@@ -176,7 +176,11 @@ class BlakeDocumentImporter(BlakeImporter):
 
     def process_virtual_work(self, entry, work):
         # Virtual works need to have a special copy created just for them
-        objects = self.objects_sorted_for_virtual_copy(self.split_ids(entry.virtual_objects))
+        if(socket.gethostname() == 'islington.lib.unc.edu'):
+            all_non_preview_objects = list(set(self.split_ids(entry.virtual_objects)) - set(work.preview_copies))
+            objects = self.objects_sorted_for_virtual_copy(all_non_preview_objects)
+        else:
+            objects = self.objects_sorted_for_virtual_copy(self.split_ids(entry.virtual_objects))
         copy = models.BlakeCopy()
         copy.work_id = entry.bad_id
         copy.title = entry.title.encode('utf-8')
@@ -195,6 +199,7 @@ class BlakeDocumentImporter(BlakeImporter):
             obj.header = old_copy.header
             obj.source = old_copy.source
             obj.object_number = i
+            obj.virtualwork_title = work.title
             # obj.full_object_id = re.sub(r"\s*Object 1\s*", "", obj.full_object_id, flags=re.IGNORECASE).rstrip()
             obj.full_object_id = obj.full_object_id.rstrip()
             obj.copy = copy
@@ -390,11 +395,11 @@ class BlakeObjectImporter(BlakeImporter):
     @staticmethod
     def get_object_title(obj):
         for title in obj.xpath("objtitle/title"):
-            return titlecase.titlecase(title.xpath("string()").rstrip().encode("utf-8"))
-        else:
-            for objnumber in obj.xpath(".//objnumber"):
-                if objnumber.attrib.get("code") == "A1":
-                    return titlecase.titlecase(objnumber.xpath("string()").rstrip().encode("utf-8"))
+            return title.xpath("string()").rstrip().encode("utf-8")
+        #else:
+        #    for objnumber in obj.xpath(".//objnumber"):
+        #        if objnumber.attrib.get("code") == "A1":
+        #           return titlecase.titlecase(objnumber.xpath("string()").rstrip().encode("utf-8"))
 
     @classmethod
     def get_text(cls, obj):
@@ -446,7 +451,7 @@ class BlakeObjectImporter(BlakeImporter):
     @staticmethod
     def get_full_object_id(obj):
         for objid in obj.xpath("objtitle/objid"):
-            return titlecase.titlecase(objid.xpath("string()").encode("utf-8"))
+            return titlecase.titlecase(objid.xpath("string()").rstrip().encode("utf-8"))
 
     @staticmethod
     def get_object_number(obj):

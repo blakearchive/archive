@@ -4,12 +4,45 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
     s.selectedWork = -1;
     s.selectedCopy = 0;
     s.selectedObject = 0;
-    
+    s.searching = false;
     s.queryString = '';
-    s.noresults = false;
-    s.objectResults = [];
-    s.copyResults = [];
-    s.workResults = [];
+    s.searchingFromFilter = false;
+    s.persistingQueryString = '';
+
+    s.types = ['searchIlluminatedBooks','searchCommercialBookIllustrations','searchSeparatePrints','searchDrawingsPaintings','searchManuscripts','searchRelatedMaterials']
+
+    s.resetResults = function () {
+        s.objectResults = [];
+        s.copyResults = [];
+        s.workResults = [];
+    };
+
+    s.resetFilters = function () {
+        s.searchConfig = {
+        useCompDate: true,
+        usePrintDate: false,
+        searchAllFields: true,
+        searchTitle: false,
+        searchText: false,
+        searchNotes: false,
+        searchImageDescriptions: false,
+        searchImageKeywords: false,
+        searchWorks: false,
+        searchCopies: false,
+        searchAllTypes: true,
+        searchIlluminatedBooks: false,
+        searchCommercialBookIllustrations: false,
+        searchCopyInformation: false,
+        searchSeparatePrints: false,
+        searchDrawingsPaintings: false,
+        searchManuscripts: false,
+        searchRelatedMaterials: false,
+        minDate: 1772,
+        maxDate: 1827
+        };
+    }
+
+    s.resetResults();
 
     s.stopWords = ["a",
         "about",
@@ -188,7 +221,34 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
 
     s.search = function () {
         delete s.type;
+        //this if/else uses persistingQueryString as a persisting variable so that a user can clear
+        //the search box but still modify the filters for the original query
+        if(!s.searchingFromFilter) {
+            s.queryString = s.searchConfig.searchString;
+            s.persistingQueryString = s.queryString;
+            s.searchConfig.searchAllTypes = true;
+            s.searchConfig.searchAllFields = true;
+            s.searchConfig.minDate = 1772;
+            s.searchConfig.maxDate = 1827;
+            s.searchConfig.useCompDate = true;
+            s.searchConfig.usePrintDate = false;
+            s.allFields();
+            s.allTypes();
+        }
+        else {
+            s.queryString = s.searchConfig.searchString;
+            s.searchConfig.searchString = s.persistingQueryString;
+            //s.queryString = s.searchConfig.searchString;
+        }
+        //console.log(s.searchConfig.searchString);
         s.highlight = s.searchConfig.searchString;
+        s.resetResults();
+        //if (s.searchConfig.searchString == "") {
+        //    searchingFromFilter = false;
+        //    return;
+        //}
+        s.resetResults();
+        s.searching = true;
         let objectSearch = BlakeDataService.queryObjects(s.searchConfig),
             copySearch = BlakeDataService.queryCopies(s.searchConfig),
             workSearch = BlakeDataService.queryWorks(s.searchConfig);
@@ -203,7 +263,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
                 });
             }
             s.copyResults = results[1];
-            console.log(s.copyResults);
+            //console.log(s.copyResults);
             for (let type in s.copyResults) {
                 let works = s.copyResults[type];
                 works.forEach((work,index) => {
@@ -223,6 +283,8 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
                 s.workResults[type] = arrayedResults;
             }
             $rootScope.$broadcast('searchCtrl::newSearch');
+            s.searchingFromFilter = false;
+            s.searching = false;
         });
     };
 
@@ -247,8 +309,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         return (
             s.hasObjectResults() ||
             s.hasCopyResults() ||
-            s.hasWorkResults() ||
-            !s.noresults
+            s.hasWorkResults()
         );
     };
 
@@ -267,8 +328,8 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         searchNotes: false,
         searchImageDescriptions: false,
         searchImageKeywords: false,
-        searchWorks: false,
-        searchCopies: false,
+        searchWorkInformation: false,
+        searchCopyInformation: false,
         searchAllTypes: true,
         searchIlluminatedBooks: false,
         searchCommercialBookIllustrations: false,
@@ -281,7 +342,7 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
         maxDate: 1827
     };
 
-    s.searchFields = ['searchTitle','searchText','searchNotes','searchImageDescriptions','searchImageKeywords','searchWorks','searchCopies'];
+    s.searchFields = ['searchTitle','searchText','searchNotes','searchImageDescriptions','searchImageKeywords','searchWorkInformation','searchCopyInformation'];
 
     s.searchTypes = ['searchIlluminatedBooks','searchCommercialBookIllustrations','searchSeparatePrints','searchDrawingsPaintings','searchManuscripts','searchRelatedMaterials'];
 
@@ -309,13 +370,15 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
             }
         });
         s.searchConfig.searchAllTypes = check <= 0;
+        s.searchingFromFilter = true;
         s.search();
     };
 
     s.allTypes = function(){
         if (s.searchConfig.searchAllTypes) {
-            s.types.forEach(type => s.searchConfig[type] = false);
+            s.searchTypes.forEach(type => s.searchConfig[type] = false);
         }
+        s.searchingFromFilter = true;
         s.search();
     };
 

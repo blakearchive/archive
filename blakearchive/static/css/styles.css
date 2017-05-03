@@ -8174,7 +8174,7 @@ a.new-window:hover {
   }
 }
 #archive #object-view.compare-objects #compare .compare-inner .item.active img {
-  border-color: #51b1dd;
+  /*border-color: yellow;*/
 }
 #archive #object-view.compare-objects #object-tools-inner {
   text-align: center;
@@ -8322,13 +8322,13 @@ a.new-window:hover {
 @media (min-width: 768px) {
   #archive #object-view.reading-view #compare.scrollbar .compare-inner .item .reading-wrapper {
     border-top: none;
-    border-right: 1px solid #333;
+    /*border-right: 1px solid #333;*/
     margin-top: 0;
     margin-left: 25px;
   }
 }
 #archive #object-view.reading-view #compare.scrollbar .compare-inner .item p {
-  margin: 0 10px 10px;
+  /*margin: 0 10px 10px;*/
 }
 #archive #object-view.reading-view #compare.scrollbar .compare-inner .item img {
   margin: 20px 0;

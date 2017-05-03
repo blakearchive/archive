@@ -1,89 +1,10 @@
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
     <div class="featured-object">
-
         <div class="carousel-inner" role="listbox">
-            <!-- regular object viewer -->
-            <div class="item col-xs-12 col-md-8 col-md-offset-2 active" ng-class="{hidden:supplemental && viewer.bds.object.supplemental_objects.length}" ng-swipe-left="viewer.changeObject(viewer.getNextObject())" ng-swipe-right="viewer.changeObject(viewer.getPreviousObject())">
-                <div class="flex" auto-height adjust="270" breakpoint="992">
-                    <a href="/images/{{ viewer.bds.object.dbi }}.{{dpi}}.jpg" target="_blank" class="object-img-container" ng-class="{hidden: view.scope == 'text'}" ovp-image>
-                        <img ng-src="/images/{{ viewer.bds.object.dbi }}.{{dpi}}.jpg" magnify-image>
-                    </a>
-                    <div to-top-on-broadcast="change::selectedObject" class="reading-copy" ng-class="{hidden: view.scope == 'image'}">
-                        <div class="reading-copy-inner">
-                            <text-transcription object="viewer.bds.object"></text-transcription>
-                        </div>
-                    </div>
-                </div>
-                <p class="object-subtitle">
-                    <span ng-if="viewer.bds.work.virtual && viewer.bds.copy.bad_id != 'letters'"><span>{{ viewer.bds.object.title }}, </span><span class="object-no">{{ viewer.bds.object.full_object_id }}, {{viewer.bds.object.source.objdescid.compdate['#text']}}, {{viewer.bds.object.source.repository.institution['#text']}}, </span></span>
-                    <span ng-if="viewer.bds.work.virtual && viewer.bds.copy.bad_id == 'letters'"><span>{{ viewer.bds.object.title }}, </span><span class="object-no">{{ viewer.bds.object.full_object_id }}, </span></span>
-                    <span class="object-no" ng-if="!viewer.bds.work.virtual && !viewer.bds.object.title">{{ viewer.bds.object.full_object_id }}, </span>
-                    <span class="object-no" ng-if="!viewer.bds.work.virtual && viewer.bds.object.title && viewer.bds.work.medium != 'exhibit'">{{viewer.bds.object.title}}, {{ viewer.bds.object.full_object_id }}, </span>
-                    <span class="object-no" ng-if="!viewer.bds.work.virtual && viewer.bds.object.title && viewer.bds.work.medium == 'exhibit'">{{viewer.bds.object.title}}</span>
-                    <span ng-if="viewer.bds.work.medium != 'exhibit'">{{ viewer.bds.object.physical_description.objsize['#text'] }} </span>
-                    <a ng-if="viewer.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="viewer.userestrictOpen(viewer.bds.copy,viewer.bds.object)">&#169;</a>
-                </p>
-            </div>
-
-            <!-- supplemental image viewer -->
-
-            <div class="item col-xs-12 col-md-8 col-md-offset-2 active" id="suppImages" ng-class="{hidden: !supplemental || !viewer.bds.object.supplemental_objects.length}">
-                <div class="flexsupp" auto-height adjust="270" breakpoint="992">
-                    <!-- original image for supplemental view-->
-                    <handprint-block ng-if="viewer.bds.object.supplemental" ng-repeat="obj in viewer.bds.copyObjects | filter:{'desc_id': viewer.bds.object.supplemental}:true"
-                                 action="viewer.changeObject(obj); viewer.toggleSupplemental();"
-                                 image="{{ obj.dbi }}.100.jpg"
-                                 footer="Original View">
-                    </handprint-block>
-
-                    <!-- original image for original view-->
-                    <handprint-block ng-if="!viewer.bds.object.supplemental"
-                                     action="viewer.changeObject(viewer.bds.object); viewer.toggleSupplemental();"
-                                     image="{{ viewer.bds.object.dbi }}.100.jpg"
-                                     footer="Original View">
-                    </handprint-block>
-
-                    <!-- the supplemental views -->
-                    <handprint-block ng-repeat="obj in viewer.bds.object.supplemental_objects"
-                                     action="viewer.changeObject(obj); viewer.toggleSupplemental();"
-                                     image="{{ obj.dbi }}.100.jpg"
-                                     footer="{{ obj.full_object_id }}">
-                    </handprint-block>
-                </div>
-                <p class="object-subtitle">{{viewer.bds.object.title}}, {{ viewer.bds.object.full_object_id }},
-                    <span>{{ viewer.bds.object.physical_description.objsize['#text'] }} </span>
-                    <a style="color:#168bc1" ng-click="viewer.userestrictOpen(viewer.bds.copy)">&#169;</a>
-                </p>
-            </div>
+            <regular-object-viewer></regular-object-viewer>
+            <supplemental-image-viewer></supplemental-image-viewer>
         </div>
     </div>
-
-    <div class="featured-object-controls hidden-sm" ng-if="viewer.bds.object.objectsInGroup.length > 1 || viewer.bds.copyObjects.length > 1">
-        <a scroll-to-top ng-if="viewer.getPreviousObject()" class="left carousel-control" role="button" ng-click="viewer.changeObject(viewer.getPreviousObject())" role="button">
-            <span class="object-thumb" style="background-image:url(/images/{{ viewer.getPreviousObject().dbi }}.100.jpg)"></span>
-
-            <!-- virtual -->
-            <span class="object-text" ng-if="viewer.bds.work.virtual">{{ viewer.getPreviousObject().title }}<br>{{ viewer.getPreviousObject().full_object_id }}</span>
-            <!-- everything else -->
-            <span class="object-text" ng-if="!viewer.bds.work.virtual && !viewer.getPreviousObject().title">{{ viewer.getPreviousObject().full_object_id }}</span>
-            <span class="object-text" ng-if="!viewer.bds.work.virtual && viewer.getPreviousObject().title">{{viewer.getPreviousObject().title}}<br>{{ viewer.getPreviousObject().full_object_id }}</span>
-
-
-            <span class="sr-only">Previous</span>
-        </a>
-        <a scroll-to-top ng-if="viewer.getNextObject()" class="right carousel-control" ng-click="viewer.changeObject(viewer.getNextObject())" role="button">
-            <span class="object-thumb" style="background-image:url(/images/{{ viewer.getNextObject().dbi }}.100.jpg)"></span>
-
-            <!-- virtual -->
-            <span class="object-text" ng-if="viewer.bds.work.virtual">{{ viewer.getNextObject().title }}<br>{{ viewer.getNextObject().full_object_id }}</span>
-            <!-- everything else -->
-            <span class="object-text" ng-if="!viewer.bds.work.virtual && !viewer.getNextObject().title">{{ viewer.getNextObject().full_object_id }}</span>
-            <span class="object-text" ng-if="!viewer.bds.work.virtual && viewer.getNextObject().title">{{viewer.getNextObject().title}}<br>{{ viewer.getNextObject().full_object_id }}</span>
-
-
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-
+    <object-viewer-previous-next></object-viewer-previous-next>
 </div>
 
