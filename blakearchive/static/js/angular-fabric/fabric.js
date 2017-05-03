@@ -233,6 +233,8 @@ angular.module('common.fabric', [
 					object[p] = self.imageOptions[p];
 				}
 
+				object.lockUniScaling = true;
+
 				// Add a filter that can be used to turn the image
 				// into a solid colored shape.
 				var filter = new fabric.Image.filters.Tint({
@@ -245,7 +247,7 @@ angular.module('common.fabric', [
 					object.scaleToWidth(scaleToWidth);
 				};
 				self.addObjectToCanvas(object);
-			}, self.imageDefaults);
+			});
 		}
 
 		self.addImage = function(imageURL) {
