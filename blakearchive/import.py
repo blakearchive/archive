@@ -166,7 +166,10 @@ class BlakeDocumentImporter(BlakeImporter):
             logger.error("info file does not exist: %s" % entry.info_filename)
         self.works[bad_id] = work
         if(socket.gethostname() == 'islington.lib.unc.edu'):
-            all_non_preview_copies = list(set(self.split_ids(entry.copies)) - set(work.preview_copies))
+            diff = set(self.split_ids(entry.copies)) - set(work.preview_copies)
+            result = [o for o in self.split_ids(entry.copies) if o in diff]
+            all_non_preview_copies = list(result)
+
             work.copies = self.copy_importer.get(all_non_preview_copies)
         else:
             work.copies = self.copy_importer.get(self.split_ids(entry.copies))
