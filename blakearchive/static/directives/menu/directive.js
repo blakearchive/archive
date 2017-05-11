@@ -78,7 +78,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
     vm.organizeMenus = function(data) {
         if (!data) { return; }
         // Sort before nesting
-        data.sort(function(a, b) { return a.composition_date - b.composition_date; });
+        //data.sort(function(a, b) { return a.composition_date - b.composition_date; });
 
         var menus = {
             illuminated_books: [],
