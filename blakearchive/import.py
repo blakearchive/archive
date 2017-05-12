@@ -157,6 +157,7 @@ class BlakeDocumentImporter(BlakeImporter):
         work.preview = bool(entry.preview)
         work.composition_date = self.extract_date(entry.composition_date)
         work.composition_date_string = entry.composition_date.encode('utf-8')
+        work.composition_date_value = entry.composition_date_value.encode('utf-8')
         work.image = entry.image.encode('utf-8')
         work.info = entry.info.encode('utf-8')
         work.preview_copies = entry.preview_copies.split(",")
