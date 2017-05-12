@@ -79,8 +79,8 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         if (!data) { return; }
         // Sort before nesting
         data.sort(function(a, b) { 
-            if(a.title < b.title) return -1;
-            if(a.title > b.title) return 1;
+            if(a.composition_date_value < b.composition_date_value) return -1;
+            if(a.composition_date_value > b.composition_date_value) return 1;
             return 0;
         });
 
