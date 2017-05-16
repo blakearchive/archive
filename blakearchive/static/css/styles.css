@@ -6964,7 +6964,8 @@ footer {
 }
 @media (min-width: 768px) {
   footer {
-    padding: 30px 30px 70px;
+    /*padding: 30px 30px 70px;*/
+    padding: 10px 30px 70px;
   }
 }
 footer ul.nav.nav-pills {
