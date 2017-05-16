@@ -1407,7 +1407,7 @@ a.compare-selected-objects {
 
     .copies-in-work,.objects-in-copy,.object-result-highlight{
         max-height: 89%;
-        overflow: auto;
+        overflow: scroll;
         scrollbar-face-color: #666666;
         scrollbar-arrow-color: #666666;
         scrollbar-track-color: #0a0a0a;
