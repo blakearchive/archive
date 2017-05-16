@@ -7,7 +7,8 @@ angular.module('blake').controller('SearchController', function($rootScope, $rou
     $rootScope.worksNavState = false;
     $rootScope.showWorkTitle = false;
 
-    var isSafari = navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0;
+    vm.s.isSafari = navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0;
+    //console.log(isSafari);
 
     $rootScope.$on("$routeChangeSuccess", function () {
         if (vm.rp.search) {
