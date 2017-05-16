@@ -16,7 +16,7 @@
     
     <div class="container-fluid main" id="search">
 
-         <div style="padding-top:20px; text-align:center; color:white">Safari has a bug that prevents the search preview boxes from scrolling. Please use Chrome or Firefox for optimal searching.</div>
+         <div ng-if="isSafari" style="padding-top:20px; text-align:center; color:white">Safari has a bug that prevents the search preview boxes from scrolling. Please use Chrome or Firefox for optimal searching.</div>
         <div ng-if="search.s.queryString == ''" style="padding-top:20px; text-align:center; color:white">Search string with stopwords removed: <span style="color:yellow">NULL<span></div>
         <div ng-if="!search.s.queryString == ''" style="padding-top:20px; text-align:center; color:white">Search string with stopwords removed: <i style="color:yellow">{{search.s.queryString}}</i></div>
 
