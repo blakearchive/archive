@@ -19,6 +19,10 @@ angular.module("blake").filter('highlight', function($sce){
 
             }
 
+            if (phrase.indexOf('AND')) {
+                phrase = phrase.replace(/AND/g, '');
+            }
+
             text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
         }
 
