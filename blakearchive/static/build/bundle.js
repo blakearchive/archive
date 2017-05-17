@@ -33421,7 +33421,7 @@ module.exports = "<div ng-if=\"descCtrl.object.components == ''\" class=\"tei-wr
 /* 119 */
 /***/ (function(module, exports) {
 
-module.exports = "<a ng-click=\"imagetags.imageTagsOpen()\"><button title=\"Image Tags\" style=\"background-color:blanchedalmond\" class=\"btn btn-default\" type=\"\">IT</button></a>";
+module.exports = "<a ng-click=\"imagetags.imageTagsOpen()\"><button title=\"Searchable Image Tags\" style=\"background-color:blanchedalmond\" class=\"btn btn-default\" type=\"\">IT</button></a>";
 
 /***/ }),
 /* 120 */
