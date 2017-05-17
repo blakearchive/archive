@@ -1515,7 +1515,8 @@ handprint-block.supp-original .handprint-block{
     margin-bottom: 3em;
 }
 .static-page-wrapper .container-fluid.main {
-    padding-bottom: 0;
+    /*padding-bottom: 0;*/
+    padding-bottom: 25px;
 }
 .sidebar-wrapper {
     background: #fff;
