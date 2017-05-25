@@ -8560,7 +8560,7 @@ a.new-window:hover {
 @media (min-width: 1890px) {
   #home.container-fluid.main > .row {
     margin-left: 0;
-    width: 120%;
+    width: 100%;
   }
 }
 #home.container-fluid.main .row div[class^="col-"] {
