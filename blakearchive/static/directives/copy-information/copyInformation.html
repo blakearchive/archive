@@ -161,15 +161,14 @@
                 <span ng-bind-html="r.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-bind-html="r.addressline[1]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-if="r.addressline[2]['#text'].indexOf(':') < 0" ng-bind-html="r.addressline[2]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
-                {{r.addressline[2]['#text'].indexOf(':')}}
 
                 <span ng-if="r.addressline[2]['#text'].indexOf(':') > -1">
                 <dt> {{ r.addressline[2]['#text'].split(': ')[0] }}</dt>
                      <dd>
-                        <span ng-bind-html="r.addressline[2]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></span><br>
+                        <span ng-bind-html="r.addressline[2]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></span>
                     </dd>
 
-                </span>
+                </span><br>
 
                 <span ng-if="r.addressline[3]['#text'].indexOf(':') < 0" ng-bind-html="r.addressline[3]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-if="r.addressline[4]['#text'].indexOf(':') < 0 && r.addressline[3]['#text'].indexOf(':') < 0" ng-bind-html="r.addressline[4]['#text'].trim() | highlight:info.highlight | markdown"></span>
