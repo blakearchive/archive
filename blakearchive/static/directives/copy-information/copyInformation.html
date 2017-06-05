@@ -153,7 +153,7 @@
         </dl>
 
 
-        <dl ng-if="info.getSource().repositories" ng-repeat="r in info.getSource().repositories">
+        <dl ng-if="info.getSource().repositories" ng-repeat="r in info.getSource().repositories.repository">
             <dt>Address</dt>
             {{r}}
             <dd>
