@@ -76,10 +76,10 @@
         </dl>
 
         <h3>Present Location</h3>
-        <dl>
+        <dl ng-if="info.getSource().repositories == null">
             <dt>Address</dt>
             <dd>
-                <span ng-bind-html="info.getSource().repository.institution[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-bind-html="info.getSource().repository.institution['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-bind-html="info.getSource().repository.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-bind-html="info.getSource().repository.addressline[1]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-bind-html="info.getSource().repository.addressline[2]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
@@ -151,5 +151,84 @@
             </div>
 
         </dl>
+
+
+        <dl ng-if="info.getSource().repositories" ng-repeat="repository in info.getSource().repositories">
+            <dt>Address</dt>
+            <dd>
+                <span ng-bind-html="repository.institution['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-bind-html="repository.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-bind-html="repository.addressline[1]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-bind-html="repository.addressline[2]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-if="repository.addressline[3]['#text'].indexOf(':') < 0" ng-bind-html="repository.addressline[3]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-if="repository.addressline[4]['#text'].indexOf(':') < 0 && repository.addressline[3]['#text'].indexOf(':') < 0" ng-bind-html="repository.addressline[4]['#text'].trim() | highlight:info.highlight | markdown"></span>
+            </dd>
+
+            <span ng-if="repository.addressline[3]['#text'].indexOf(':') > -1">
+            <dt> {{ repository.addressline[3]['#text'].split(': ')[0] }}</dt>
+            <dd>
+                <span ng-bind-html="repository.addressline[3]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-if="repository.addressline[4]['#text'].indexOf(':') < 0" ng-bind-html="repository.addressline[4]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-if="repository.addressline[5]['#text'].indexOf(':') < 0" ng-bind-html="repository.addressline[5]['#text'].trim() | highlight:info.highlight | markdown"></span>
+
+
+            </dd>
+
+            </span>
+
+            <span ng-if="repository.addressline[4]['#text'].indexOf(':') > -1">
+            <dt> {{ repository.addressline[4]['#text'].split(': ')[0] }}</dt>
+            <dd ng-bind-html="repository.addressline[4]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
+            </span>
+
+            <span ng-if="repository.addressline[5]['#text'] != null && repository.addressline[3]['#text'].indexOf('Mail:') < 0">
+            <dt> {{ repository.addressline[5]['#text'].split(': ')[0] }}</dt>
+            <dd ng-bind-html="repository.addressline[5]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
+            </span>
+
+            <span ng-if="repository.addressline[6]['#text'] != null">
+            <dt> {{ repository.addressline[6]['#text'].split(': ')[0] }}</dt>
+            <dd ng-bind-html="repository.addressline[6]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
+            </span>
+
+            <span ng-if="repository.addressline[7]['#text'] != null">
+            <dt> {{ repository.addressline[7]['#text'].split(': ')[0] }}</dt>
+            <dd ng-bind-html="repository.addressline[7]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
+            </span>
+
+            <span ng-if="repository.addressline[8]['#text'] != null">
+            <dt> {{ repository.addressline[8]['#text'].split(': ')[0] }}</dt>
+            <dd ng-bind-html="repository.addressline[8]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
+            </span>
+
+            <span ng-if="repository.addressline[9]['#text'] != null">
+            <dt> {{ repository.addressline[9]['#text'].split(': ')[0] }}</dt>
+            <dd ng-bind-html="repository.addressline[9]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
+            </span>
+
+            <div ng-if="repository.department['#text']">
+                <dt>Department</dt>
+                <dd ng-bind-html="repository.department['#text'].trim() | highlight:info.highlight | markdown"></dd>
+            </div>
+            <div ng-if="repository.collection['#text']">
+                <dt>Collection</dt>
+                <dd ng-bind-html="repository.collection['#text'].trim() | highlight:info.highlight | markdown"></dd>
+            </div>
+            <div ng-if="repository.repositoryid['@label']">
+                <dt>{{ repository.repositoryid['@label'] }}</dt>
+                <dd ng-bind-html="repository.repositoryid['#text'].trim() | highlight:info.highlight | markdown"></dd>
+            </div>
+            <div ng-if="repository.repositoryid[0]['@label']">
+                <dt>{{ repository.repositoryid[0]['@label'] }}</dt>
+                <dd ng-bind-html="repository.repositoryid[0]['#text'].trim() | highlight:info.highlight | markdown"></dd>
+            </div>
+            <div ng-if="repository.repositoryid[1]['@label']">
+                <dt>{{ repository.repositoryid[1]['@label'] }}</dt>
+                <dd ng-bind-html="repository.repositoryid[1]['#text'].trim() | highlight:info.highlight | markdown"></dd>
+            </div>
+
+        </dl>
+
+
     </div>
 </div>
