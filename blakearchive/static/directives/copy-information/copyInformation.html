@@ -79,7 +79,7 @@
         <dl>
             <dt>Address</dt>
             <dd>
-                <span ng-bind-html="info.getSource().repository.institution['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-bind-html="info.getSource().repository.institution[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-bind-html="info.getSource().repository.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-bind-html="info.getSource().repository.addressline[1]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-bind-html="info.getSource().repository.addressline[2]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
