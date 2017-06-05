@@ -155,7 +155,7 @@
 
         <dl ng-if="info.getSource().repositories" ng-repeat="r in info.getSource().repositories.repository">
             <dt>Address</dt>
-            {{r}}
+        
             <dd>
                 <span ng-bind-html="r.institution['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-bind-html="r.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
