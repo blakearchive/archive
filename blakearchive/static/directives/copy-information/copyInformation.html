@@ -153,7 +153,7 @@
         </dl>
 
 
-        <dl ng-if="info.getSource().repositories" ng-repeat="r in info.getSource().repositories.repository">
+        <dl ng-if="info.getSource().repositories" ng-repeat="r in info.getSource().repositories.repository track by $index">
             <dt>Address</dt>
         
             <dd>
@@ -238,7 +238,7 @@
                 <dd ng-bind-html="r.repositoryid[1]['#text'].trim() | highlight:info.highlight | markdown"></dd>
             </div>
 
-            <div style="border-bottom:1px solid #f1f1f1; padding-top:14px"></div>
+            <div ng-if="$index < info.getSource().repositories.repository.length" style="border-bottom:1px solid #f1f1f1; padding-top:14px"></div>
 
         </dl>
 
