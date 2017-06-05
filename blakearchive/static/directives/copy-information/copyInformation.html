@@ -238,7 +238,7 @@
                 <dd ng-bind-html="r.repositoryid[1]['#text'].trim() | highlight:info.highlight | markdown"></dd>
             </div>
 
-            <div ng-if="$index < info.getSource().repositories.repository.length" style="border-bottom:1px solid #f1f1f1; padding-top:14px"></div>
+            <div ng-if="$index < info.getSource().repositories.repository.length - 1" style="border-bottom:1px solid #f1f1f1; padding-top:14px"></div>
 
         </dl>
 
