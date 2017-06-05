@@ -164,7 +164,7 @@
 
                 <span ng-if="r.addressline[2]['#text'].indexOf(':') > -1">
                 <dt ng-if="r.addressline[2]['#text'].indexOf(':') > -1"> {{ r.addressline[2]['#text'].split(': ')[0] }}</dt>
-                     <dd>
+                     <dd ng-if="r.addressline[2]['#text'].indexOf(':') > -1">
                         <span ng-bind-html="r.addressline[2]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></span>
                     </dd>
                    
@@ -237,7 +237,7 @@
                 <dd ng-bind-html="r.repositoryid[1]['#text'].trim() | highlight:info.highlight | markdown"></dd>
             </div>
 
-            <div style="border-bottom:1px solid black"></div>
+            <div style="border-bottom:1px solid black; padding-top:14px"></div>
 
         </dl>
 
