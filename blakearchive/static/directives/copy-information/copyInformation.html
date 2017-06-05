@@ -158,7 +158,7 @@
         
             <dd>
                 <span ng-bind-html="r.institution['#text'].trim() | highlight:info.highlight | markdown"></span><br>
-                <span ng-if="r.addressline" ng-bind-html="r.addressline['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="r.addressline">
+                <span ng-if="r.addressline" ng-bind-html="r.addressline['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="r.addressline[0] == null">
                 <span ng-bind-html="r.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="r.addressline[0]">
                 <span ng-bind-html="r.addressline[1]['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="r.addressline[1]">
                 <span ng-if="r.addressline[2]['#text'].indexOf(':') < 0" ng-bind-html="r.addressline[2]['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="r.addressline[2]['#text'].indexOf(':') < 0">
