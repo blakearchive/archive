@@ -14,8 +14,10 @@ angular.module('blake').controller("CopyInformationController", function () {
     vm.getSource = function(){
         if(vm.copy){
             if (vm.copy.virtual) {
+                console.log(vm.object.source);
                 return vm.object.source;
             } else {
+                console.log(vm.copy.source);
                 return vm.copy.source;
             }
         }
