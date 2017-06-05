@@ -79,19 +79,19 @@
         <dl ng-if="info.getSource().repositories == null">
             <dt>Address</dt>
             <dd>
-                <span ng-bind-html="info.getSource().repository.institution['#text'].trim() | highlight:info.highlight | markdown"><br></span>
-                <span ng-bind-html="info.getSource().repository.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"><br></span>
-                <span ng-bind-html="info.getSource().repository.addressline[1]['#text'].trim() | highlight:info.highlight | markdown"><br></span>
-                <span ng-bind-html="info.getSource().repository.addressline[2]['#text'].trim() | highlight:info.highlight | markdown"><br></span>
-                <span ng-if="info.getSource().repository.addressline[3]['#text'].indexOf(':') < 0" ng-bind-html="info.getSource().repository.addressline[3]['#text'].trim() | highlight:info.highlight | markdown"><br></span>
+                <span ng-bind-html="info.getSource().repository.institution['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-bind-html="info.getSource().repository.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-bind-html="info.getSource().repository.addressline[1]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-bind-html="info.getSource().repository.addressline[2]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-if="info.getSource().repository.addressline[3]['#text'].indexOf(':') < 0" ng-bind-html="info.getSource().repository.addressline[3]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-if="info.getSource().repository.addressline[4]['#text'].indexOf(':') < 0 && info.getSource().repository.addressline[3]['#text'].indexOf(':') < 0" ng-bind-html="info.getSource().repository.addressline[4]['#text'].trim() | highlight:info.highlight | markdown"></span>
             </dd>
 
             <span ng-if="info.getSource().repository.addressline[3]['#text'].indexOf(':') > -1">
             <dt> {{ info.getSource().repository.addressline[3]['#text'].split(': ')[0] }}</dt>
             <dd>
-                <span ng-bind-html="info.getSource().repository.addressline[3]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"><br></span>
-                <span ng-if="info.getSource().repository.addressline[4]['#text'].indexOf(':') < 0" ng-bind-html="info.getSource().repository.addressline[4]['#text'].trim() | highlight:info.highlight | markdown"><br></span>
+                <span ng-bind-html="info.getSource().repository.addressline[3]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-if="info.getSource().repository.addressline[4]['#text'].indexOf(':') < 0" ng-bind-html="info.getSource().repository.addressline[4]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-if="info.getSource().repository.addressline[5]['#text'].indexOf(':') < 0" ng-bind-html="info.getSource().repository.addressline[5]['#text'].trim() | highlight:info.highlight | markdown"></span>
 
 
@@ -157,9 +157,9 @@
             <dt>Address</dt>
         
             <dd>
-                <span ng-bind-html="r.institution['#text'].trim() | highlight:info.highlight | markdown"><br></span>
-                <span ng-bind-html="r.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"><br></span>
-                <span ng-bind-html="r.addressline[1]['#text'].trim() | highlight:info.highlight | markdown"><br></span>
+                <span ng-bind-html="r.institution['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-bind-html="r.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-bind-html="r.addressline[1]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <span ng-if="r.addressline[2]['#text'].indexOf(':') < 0" ng-bind-html="r.addressline[2]['#text'].trim() | highlight:info.highlight | markdown"><br></span>
 
                 <span ng-if="r.addressline[2]['#text'].indexOf(':') > -1">
@@ -178,8 +178,8 @@
             <dt> {{ r.addressline[3]['#text'].split(': ')[0] }}</dt>
             <dd>
                 <span ng-bind-html="r.addressline[3]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"><br></span>
-                <span ng-if="r.addressline[4]['#text'].indexOf(':') < 0" ng-bind-html="r.addressline[4]['#text'].trim() | highlight:info.highlight | markdown"><br></span>
-                <span ng-if="r.addressline[5]['#text'].indexOf(':') < 0" ng-bind-html="r.addressline[5]['#text'].trim() | highlight:info.highlight | markdown"><br></span>
+                <span ng-if="r.addressline[4]['#text'].indexOf(':') < 0" ng-bind-html="r.addressline[4]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
+                <span ng-if="r.addressline[5]['#text'].indexOf(':') < 0" ng-bind-html="r.addressline[5]['#text'].trim() | highlight:info.highlight | markdown"></span><br>
 
 
             </dd>
