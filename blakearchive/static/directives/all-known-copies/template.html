@@ -5,8 +5,8 @@
             <div class="related-flex">
                 <div class="related-item" ng-repeat="copy in akc.work.related_works | filter:{type:'copy'}">
                     <span ng-if="copy.link">
-                        <a ng-if="copy.link != 'none'" href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
-                        <span ng-if="copy.link == 'none'" ng-bind-html="copy.displayTitle.trim() | markdown">
+                        <a ng-if="!copy.link.match(/.*none.*/)" href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
+                        <span ng-if="copy.link.match(/.*none.*/)" ng-bind-html="copy.displayTitle.trim() | markdown">
                         </span>
                     </span>
                     <span style="font-weight:bold;" ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
