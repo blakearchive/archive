@@ -4,7 +4,7 @@
         <div class="col-xs-12">
             <div class="related-flex">
                 <div class="related-item" ng-repeat="copy in akc.work.related_works | filter:{type:'copy'}">
-                    <span ng-if="copy.link">
+                    <span ng-if="copy.link && copy.link != 'none'">
                         <a href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
                     </span>
                     <span style="font-weight:bold;" ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
