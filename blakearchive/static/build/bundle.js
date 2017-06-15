@@ -33376,7 +33376,7 @@ module.exports = "\n<div class=\"modal-header\">\n    <button type=\"button\" cl
 /* 111 */
 /***/ (function(module, exports) {
 
-module.exports = "<div ng-if=\"dl.infoObject['#text']\">\n    <dt>{{ dl.dt }} </dt>\n    <dd ng-bind-html=\"dl.infoObject['#text'].trim() | markdown | highlight:dl.highlight\"></dd>\n    <div ng-if=\"dl.infoObject.note\" class=\"indent-dl\">\n        <dt><li></li></dt>\n        <dd ng-if=\"!dl.infoObject.note[0]\" ng-bind-html=\"dl.infoObject.note['#text'].trim() | markdown | highlight:dl.highlight\"></dd>\n        <dd ng-if=\"dl.infoObject.note[0]\" ng-bind-html=\"dl.infoObject.note[0]['#text'].trim() | markdown | highlight:dl.highlight\"></dd>\n        <dd ng-if=\"dl.infoObject.note[1]\" ng-bind-html=\"dl.infoObject.note[1]'#text'].trim() | markdown | highlight:dl.highlight\"></dd>\n    </div>\n</div>\n";
+module.exports = "<div ng-if=\"dl.infoObject['#text']\">\n    <dt>{{ dl.dt }} </dt>\n    <dd ng-bind-html=\"dl.infoObject['#text'].trim() | markdown | highlight:dl.highlight\"></dd>\n    <div ng-if=\"dl.infoObject.note\" class=\"indent-dl\">\n        <dt><li></li></dt>\n        <dd ng-if=\"!dl.infoObject.note[0]\" ng-bind-html=\"dl.infoObject.note['#text'].trim() | markdown | highlight:dl.highlight\"></dd>\n        <dd ng-if=\"dl.infoObject.note[0]\" ng-bind-html=\"dl.infoObject.note[0]['#text'].trim() | markdown | highlight:dl.highlight\"></dd>\n        <dd ng-if=\"dl.infoObject.note[1]\" ng-bind-html=\"dl.infoObject.note[1]['#text'].trim() | markdown | highlight:dl.highlight\"></dd>\n    </div>\n</div>\n";
 
 /***/ }),
 /* 112 */
