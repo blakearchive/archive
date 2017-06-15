@@ -26,10 +26,12 @@
 
             <copy-info-dl dt="Composition Date" highlight="{{ info.highlight }}" info-object="info.getSource().objdescid.compdate"></copy-info-dl>
 
-            <div ng-if="copy.print_date">
+            <copy-info-dl ng-if="info.getSource().objinfo.printdate" dt="Print Date" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.printdate"></copy-info-dl>
+
+            <!--<div ng-if="copy.print_date">
                 <dt>Print Date</dt>
                 <dd ng-bind-html="copy.print_date.trim() | markdown | highlight:info.highlight"></dd>
-            </div>
+            </div>-->
 
             <copy-info-dl dt="Number of Objects" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.numberobj"></copy-info-dl>
 
