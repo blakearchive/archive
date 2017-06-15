@@ -6,7 +6,7 @@
         <dd ng-if="!dl.infoObject.note[0]" ng-bind-html="dl.infoObject.note['#text'].trim() | markdown | highlight:dl.highlight"></dd>
     </div>
     <div ng-if="dl.infoObject.note[0]" class="indent-dl">
-        <dt><li></li></dt>
+        <dt></dt>
         <dd ng-if="dl.infoObject.note[0]" ng-bind-html="dl.infoObject.note[0]['#text'].trim() | markdown | highlight:dl.highlight"></dd>
     </div>
     <div ng-if="dl.infoObject.note[1]" class="indent-dl">
