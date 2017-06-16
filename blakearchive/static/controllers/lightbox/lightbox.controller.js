@@ -141,8 +141,22 @@ angular.module("blake")
         };
 
         $scope.performCrop = function(){
-          // TODO: make this work!!!
+          // TODO: cropping is suboptimal. it crops the canvas not the image and
+          // only at scaled resolution. What needs to happen is that we have to
+          // calculate the cropping rectangle onto the full resolution image...
+          // digging into the toDataURL source provides hints... we require a
+          // temporary canvas that is sized to the image at full size and resolution.
+          // We have to perform a calculation on the cropbox relative to the
+          // onscreen image and scale it to the full image. we perform the crop
+          // and then rescale the image down prior to adding it back to the
+          // original canvas!  furthermore, scaling an image beyond the canvas bounds,
+          // hides the crop controls -- suggesting that we need a fixed toolbar!
+          // also uniscaling needs to be locked. it should be but it isn't ... sigh.
+
+          // but for now here is the rudimentary cropping method...
           var data = FabricCanvas.getCanvas().toDataURL({
+            quality: 1.0,
+            format: 'jpg',
             left: $scope.cropBox.left+2,
             top: $scope.cropBox.top+2,
             width: $scope.cropBox.width-4,
@@ -152,7 +166,7 @@ angular.module("blake")
             // img.lockUniScaling = true;
             // $scope.addImageScaledToWidth(img,-1);
             $scope.fabric.addObjectToCanvas(img);
-            
+
           });
         };
 

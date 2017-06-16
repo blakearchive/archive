@@ -16899,6 +16899,8 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
   $scope.performCrop = function () {
     // TODO: make this work!!!
     var data = FabricCanvas.getCanvas().toDataURL({
+      quality: 1.0,
+      format: 'jpg',
       left: $scope.cropBox.left + 2,
       top: $scope.cropBox.top + 2,
       width: $scope.cropBox.width - 4,
