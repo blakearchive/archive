@@ -21,6 +21,7 @@ angular.module('common.fabric', [
 		var canvas;
 		var JSONObject;
 		var self = angular.extend({
+			canvas:null,  //NOTE: added by TL
 			canvasBackgroundColor: '#ffffff',
 			canvasWidth: 300,
 			canvasHeight: 300,
@@ -133,7 +134,7 @@ angular.module('common.fabric', [
 			canvas.calcOffset();
 			canvas.renderAll();
 			self.renderCount++;
-			console.log('Render cycle:', self.renderCount);
+			//console.log('Render cycle:', self.renderCount);
 		};
 
 		self.setCanvas = function(newCanvas) {
@@ -225,6 +226,9 @@ angular.module('common.fabric', [
 		//
 		// Image
 		// ==============================================================
+		// TL: I added this method, it is not part of the fabric libary
+		// that was downloaded.  'imageOptions' doesn't seem to work
+		// this method allows me to add images at a certain width
 		self.addImageScaledToWidth = function(imageURL, scaleToWidth){
 			fabric.Image.fromURL(imageURL, function(object) {
 				object.id = self.createId();
@@ -250,6 +254,7 @@ angular.module('common.fabric', [
 			});
 		}
 
+		// TL: I externalized the code to addImageScaledToWidth... see above
 		self.addImage = function(imageURL) {
 			self.addImageScaledToWidth(imageURL,-1);
 		};
@@ -897,6 +902,7 @@ angular.module('common.fabric', [
 		self.init = function() {
 			canvas = FabricCanvas.getCanvas();
 			self.canvasId = FabricCanvas.getCanvasId();
+			self.canvas = canvas; // NOTE: added by TL
 			canvas.clear();
 
 			// For easily accessing the json

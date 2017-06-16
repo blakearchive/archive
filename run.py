@@ -17,6 +17,9 @@ def get_image(image=None):
 @app.route('/lightbox')
 def get_lightbox(path=None):
     return send_file("static/html/lightbox.html")
+@app.route('/icon/<icon>')
+def get_icon(icon=None):
+    return send_file("static/img/global/"+icon)
 
 @app.route('/bad/<bad>')
 def get_bad_file(bad=None):

@@ -10,8 +10,6 @@ angular.module('blake')
 	})
 	.factory('localStorage', function ($q) {
 		'use strict';
-		// sigh... this could have just used ngStorage
-		// live and learn... (note for future refactor)
 		var STORAGE_ID = 'cart-items-angularjs';
 
 		var store = {
@@ -24,23 +22,7 @@ angular.module('blake')
 			_saveToLocalStorage: function (cartItems) {
 				localStorage.setItem(STORAGE_ID, JSON.stringify(cartItems));
 			},
-			// todos had a completed flag. we have no use for that but we do
-			// have the need to clear out our cart so, i'll rename it clearCart and
-			// set the cartItems to a (new) empty list.
-//			clearCompleted: function () {
-//				var deferred = $q.defer();
-//
-//				var incompletecartItems = store.cartItems.filter(function (cartItem) {
-//					return !cartItem.completed;
-//				});
-//
-//				angular.copy(incompletecartItems, store.cartItems);
-//
-//				store._saveToLocalStorage(store.cartItems);
-//				deferred.resolve(store.cartItems);
-//
-//				return deferred.promise;
-//			},
+
 			clearCart: function () {
 				var deferred = $q.defer();
 
