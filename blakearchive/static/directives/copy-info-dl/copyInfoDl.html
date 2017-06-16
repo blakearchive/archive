@@ -1,6 +1,6 @@
 <div ng-if="dl.infoObject['#text']">
-	<dt ng-if="dl.infoObject == 'info.getSource().objdescid.imprint.publisher'" style="margin-top:-18px">{{ dl.dt }} </dt>
-    <dt ng-if="dl.infoObject != 'info.getSource().objdescid.imprint.publisher'">{{ dl.dt }} </dt>
+	<dt ng-if="dl.dt == 'Publisher'" style="margin-top:-18px">{{ dl.dt }} </dt>
+    <dt ng-if="dl.dt != 'Publisher'">{{ dl.dt }} </dt>
     <dd ng-bind-html="dl.infoObject['#text'].trim() | markdown | highlight:dl.highlight"></dd>
     <div ng-if="dl.infoObject.note" class="indent-dl">
         <dt><li></li></dt>
