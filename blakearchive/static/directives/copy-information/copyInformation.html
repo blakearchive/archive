@@ -19,15 +19,15 @@
             </div>
 
             <div style="float:left;margin-left:-50px" ng-if="info.getSource().objdescid.imprint">Imprint</div>
-            <div style="border-left:1px solid black">
+            <div style="border-left:1px solid black; float:right">
             <copy-info-dl dt="Publisher" highlight="{{ info.highlight }}" info-object="info.getSource().objdescid.imprint.publisher"></copy-info-dl>
 
             <copy-info-dl dt="Place of Publication" highlight="{{ info.highlight }}" info-object="info.getSource().objdescid.imprint.pubplace"></copy-info-dl>
 
             <copy-info-dl dt="Date" highlight="{{ info.highlight }}" info-object="info.getSource().objdescid.imprint.date"></copy-info-dl>
+            </div>
 
             <copy-info-dl dt="Composition Date" highlight="{{ info.highlight }}" info-object="info.getSource().objdescid.compdate"></copy-info-dl>
-            </div>
 
             <copy-info-dl ng-if="info.getSource().objinfo.printdate" dt="Print Date" highlight="{{ info.highlight }}" info-object="info.getSource().objinfo.printdate"></copy-info-dl>
 
