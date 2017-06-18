@@ -13,7 +13,7 @@
                 <dt>Origination</dt>
                 <dd><span ng-bind-html="origination['#text'].trim() | markdown | highlight:info.highlight"></span>: <span ng-bind-html="info.getOriginationRole(origination.role) | markdown | highlight:info.highlight"></span></dd>
                 <div ng-if="origination.note" class="indent-dl">
-                    <dt><li></li></dt>
+                    <dt><li style="margin-left:90%"></li></dt>
                     <dd ng-bind-html="origination.note['#text'].trim() | markdown | highlight:info.highlight"></dd>
                 </div>
             </div>
@@ -76,7 +76,7 @@
             <copy-info-dl dt="Date" highlight="{{ info.highlight }}" info-object="info.getSource().provenance.date"></copy-info-dl>
             <copy-info-dl dt="Dealer" highlight="{{ info.highlight }}" info-object="info.getSource().provenance.dealer"></copy-info-dl>
             <copy-info-dl dt="Price" highlight="{{ info.highlight }}" info-object="info.getSource().provenance.price"></copy-info-dl>
-            <dt><li></li></dt>
+            <dt><li style="margin-left:90%"></li></dt>
             <dd><span ng-bind-html="info.getSource().provenance.note['#text'].trim() | markdown | highlight:info.highlight"></span></dd>
         </dl>
 

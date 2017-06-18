@@ -3,7 +3,7 @@
     <dt ng-if="dl.dt != 'Publisher'">{{ dl.dt }} </dt>
     <dd ng-bind-html="dl.infoObject['#text'].trim() | markdown | highlight:dl.highlight"></dd>
     <div ng-if="dl.infoObject.note" class="indent-dl">
-        <dt><li></li></dt>
+        <dt><li style="margin-left:90%"></li></dt>
         <dd ng-if="!dl.infoObject.note[0]" ng-bind-html="dl.infoObject.note['#text'].trim() | markdown | highlight:dl.highlight"></dd>
     </div>
     <div ng-if="dl.infoObject.note[0]" class="indent-dl">
@@ -11,7 +11,7 @@
         <dd ng-if="dl.infoObject.note[0]" ng-bind-html="dl.infoObject.note[0]['#text'].trim() | markdown | highlight:dl.highlight"></dd>
     </div>
     <div ng-if="dl.infoObject.note[1]" class="indent-dl">
-        <dt><li></li></dt>
+        <dt><li style="margin-left:90%"></li></dt>
         <dd ng-if="dl.infoObject.note[1]" ng-bind-html="dl.infoObject.note[1]['#text'].trim() | markdown | highlight:dl.highlight"></dd>
     </div>
 </div>
