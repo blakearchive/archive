@@ -218,6 +218,45 @@ sup a:hover img {
     top: 1.25em;
 }
 
+a.footnote {
+   text-decoration:none;
+   background-color: #FEF6BB;
+   padding-left: 2px;
+   padding-right: 2px;
+   margin-right: 2px;
+   -webkit-transition: all 2s ease;
+   -moz-transition: all 2s ease;
+   -o-transition: all 2s ease;
+   transition: all 2s ease;
+} 
+
+a.footnote span {
+   text-align: justify;
+        z-index: 10;
+        display: none; 
+        padding: 5px;
+        line-height: 16px;
+        opacity: 0.9;
+        border-radius: 4px;
+        box-shadow: 5px 5px 8px #D4D4D4;
+       left:-300%;
+    top: 1.25em;
+        transform: translate(-50%, 0);
+        position: relative; 
+        width: 250px;
+}
+
+a.footnote:hover span {
+   display: inline; 
+        color: #111;
+        position: absolute;
+        border: 1px solid #eaeaea;
+        background-color: #fffcfc;
+   
+}
+
+
+
 td.c2 {
   padding: 0px;
   text-align: left;
