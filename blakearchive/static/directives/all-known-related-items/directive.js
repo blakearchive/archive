@@ -1,10 +1,9 @@
-angular.module("blake").controller("AllKnownRelatedItemsController", function($rootScope,$scope){
+angular.module("blake").controller("AllKnownRelatedItemsController", function(){
     const vm = this;
 
     vm.getInfo = function(info){
         return info.split('<br />')
     }
-    
 });
 
 angular.module('blake').directive('allKnownRelatedItems', function(){

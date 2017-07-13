@@ -2709,11 +2709,6 @@ angular.module("blake").controller("CopyController", ["$scope", "$routeParams", 
         $rootScope.persistentmode = 'gallery';
     }
 
-    if ($routeParams.plate == 'true') {
-        $rootScope.view.mode = 'compare';
-        $routeParams.plate = 'false';
-    }
-
     BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.descId).then(function () {
         vm.cof.resetComparisonObjects();
         $rootScope.view.mode = 'object';
@@ -3238,13 +3233,13 @@ angular.module('blake').directive('allKnownCopies', function () {
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
-angular.module("blake").controller("AllKnownRelatedItemsController", ["$rootScope", "$scope", function ($rootScope, $scope) {
+angular.module("blake").controller("AllKnownRelatedItemsController", function () {
     const vm = this;
 
     vm.getInfo = function (info) {
         return info.split('<br />');
     };
-}]);
+});
 
 angular.module('blake').directive('allKnownRelatedItems', function () {
     return {
