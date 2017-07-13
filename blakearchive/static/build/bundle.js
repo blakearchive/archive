@@ -7845,7 +7845,6 @@ angular.module("blake").factory("BlakeWork", ["GenericService", "BlakeCopy", fun
                     case 'plate':
                         v.type = 'plate';
                         v.link = v.title.link;
-                        break;
                     default:
                         v.type = "none";
                         v.link = false;
