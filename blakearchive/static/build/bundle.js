@@ -3239,6 +3239,12 @@ angular.module("blake").controller("AllKnownRelatedItemsController", function ()
     vm.getInfo = function (info) {
         return info.split('<br />');
     };
+
+    vm.activateCompare = function () {
+        $rootScope.worksNavState = false;
+        $rootScope.view.mode = 'compare';
+        $rootScope.view.scope = 'image';
+    };
 });
 
 angular.module('blake').directive('allKnownRelatedItems', function () {
@@ -33358,7 +33364,7 @@ module.exports = "<div class=\"section-group\">\n    <h3 style=\"font-weight:bol
 /* 108 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"section-group\">\n    <h3 style=\"font-weight:bold;\">All Known Related Items</h3>\n    <div class=\"row\">\n        <div class=\"col-xs-12\">\n            <div class=\"related-flex\">\n                <div class=\"related-item\" ng-repeat=\"copy in akri.work.related_works | filter:{type:'!copy'}\">\n                <span ng-if=\"copy.link && copy.plate != 'true'\">\n                    <a href=\"{{ copy.link }}\" ng-bind-html=\"copy.displayTitle.trim() | markdown\"></a>\n                </span>\n                <span ng-if=\"copy.link && copy.plate == 'true'\">\n                    <a href=\"{{ copy.link }}adsfasf\" ng-bind-html=\"copy.displayTitle.trim() | markdown\"></a>\n                </span>\n                    <span style=\"font-weight:bold;\" ng-if=\"!copy.link && copy.displayTitle\" ng-bind-html=\"copy.displayTitle.trim() | markdown\"></span>\n                    <span ng-repeat=\"info in akri.getInfo(copy.info) track by $index\" ng-bind-html=\"info.trim() | markdown\"></span>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
+module.exports = "<div class=\"section-group\">\n    <h3 style=\"font-weight:bold;\">All Known Related Items</h3>\n    <div class=\"row\">\n        <div class=\"col-xs-12\">\n            <div class=\"related-flex\">\n                <div class=\"related-item\" ng-repeat=\"copy in akri.work.related_works | filter:{type:'!copy'}\">\n                <span ng-if=\"copy.link\">\n                    <a ng-if=\"copy.type != 'plate'\" href=\"{{ copy.link }}\" ng-bind-html=\"copy.displayTitle.trim() | markdown\"></a>\n                    <a ng-if=\"copy.type == 'plate'\" ng-click=\"akri.activateCompare()\" href=\"{{ copy.link }}\" ng-bind-html=\"copy.displayTitle.trim() | markdown\"></a>\n                </span>\n                \n                    <span style=\"font-weight:bold;\" ng-if=\"!copy.link && copy.displayTitle\" ng-bind-html=\"copy.displayTitle.trim() | markdown\"></span>\n                    <span ng-repeat=\"info in akri.getInfo(copy.info) track by $index\" ng-bind-html=\"info.trim() | markdown\"></span>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
 
 /***/ }),
 /* 109 */
