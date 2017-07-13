@@ -1,4 +1,4 @@
-angular.module("blake").controller("AllKnownRelatedItemsController", function($rootScope){
+angular.module("blake").controller("AllKnownRelatedItemsController", function($rootScope,$scope){
     const vm = this;
 
     vm.getInfo = function(info){
@@ -6,9 +6,12 @@ angular.module("blake").controller("AllKnownRelatedItemsController", function($r
     }
 
     vm.activateCompare = function(){
-        $rootScope.worksNavState = false;
-        $rootScope.view.mode = 'compare';
-        $rootScope.view.scope = 'image';
+        $scope.$on('$viewContentLoaded', function(){
+            $rootScope.worksNavState = false;
+            $rootScope.view.mode = 'compare';
+            $rootScope.view.scope = 'image';
+        });
+       
     }
     
 });
