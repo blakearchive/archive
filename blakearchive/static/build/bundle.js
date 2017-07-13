@@ -3233,7 +3233,7 @@ angular.module('blake').directive('allKnownCopies', function () {
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
-angular.module("blake").controller("AllKnownRelatedItemsController", function () {
+angular.module("blake").controller("AllKnownRelatedItemsController", ["$rootScope", function ($rootScope) {
     const vm = this;
 
     vm.getInfo = function (info) {
@@ -3245,7 +3245,7 @@ angular.module("blake").controller("AllKnownRelatedItemsController", function ()
         $rootScope.view.mode = 'compare';
         $rootScope.view.scope = 'image';
     };
-});
+}]);
 
 angular.module('blake').directive('allKnownRelatedItems', function () {
     return {
