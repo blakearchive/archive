@@ -4,15 +4,6 @@ angular.module("blake").controller("AllKnownRelatedItemsController", function($r
     vm.getInfo = function(info){
         return info.split('<br />')
     }
-
-    vm.activateCompare = function(){
-        $scope.$on('$viewContentLoaded', function(){
-            $rootScope.worksNavState = false;
-            $rootScope.view.mode = 'compare';
-            $rootScope.view.scope = 'image';
-        });
-       
-    }
     
 });
 
