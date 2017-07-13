@@ -16,6 +16,11 @@ angular.module("blake").controller("CopyController", function ($scope,$routePara
         $rootScope.persistentmode = 'gallery';
     }
 
+    if($routeParams.plate == 'true') {
+        $rootScope.view.mode = 'compare';
+        $routeParams.plate = 'false';
+    }
+
     BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.descId).then(function(){
         vm.cof.resetComparisonObjects();
         $rootScope.view.mode = 'object';
