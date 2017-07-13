@@ -4,6 +4,7 @@
         <div class="col-xs-12">
             <div class="related-flex">
                 <div class="related-item" ng-repeat="copy in akri.work.related_works | filter:{type:'!copy'}">
+                {{copy.link}}
                 <span ng-if="copy.link">
                     <a ng-if="copy.type != 'plate'" href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
                     <a ng-if="copy.type == 'plate'" ng-click="akri.activateCompare()" href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
