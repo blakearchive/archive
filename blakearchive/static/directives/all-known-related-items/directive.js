@@ -1,4 +1,4 @@
-angular.module("blake").controller("AllKnownRelatedItemsController", function(){
+angular.module("blake").controller("AllKnownRelatedItemsController", function($rootScope){
     const vm = this;
 
     vm.getInfo = function(info){
