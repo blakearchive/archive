@@ -91,7 +91,8 @@ class BlakeDocumentImporter(BlakeImporter):
             title = {
                 "text": link[0].xpath("string()").encode("utf-8"),
                 "link": link[0].attrib["ptr"].encode("utf-8"),
-                "type": link[0].attrib["type"].encode("utf-8")
+                "type": link[0].attrib["type"].encode("utf-8"),
+                "plate": link[0].attrib["plate"].encode("utf-8")
             }
         else:
             title = {"text": "".join(i.xpath("string()").encode("utf-8").strip() for i in rel.xpath("i"))}
