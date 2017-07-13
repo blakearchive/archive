@@ -4,6 +4,13 @@ angular.module("blake").controller("AllKnownRelatedItemsController", function(){
     vm.getInfo = function(info){
         return info.split('<br />')
     }
+
+    vm.activateCompare = function(){
+        $rootScope.worksNavState = false;
+        $rootScope.view.mode = 'compare';
+        $rootScope.view.scope = 'image';
+    }
+    
 });
 
 angular.module('blake').directive('allKnownRelatedItems', function(){
