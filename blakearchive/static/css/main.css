@@ -363,7 +363,7 @@ p.object-subtitle span.object-no {
 }
 
 p.object-subtitle span.object-no:first-letter {
-  text-transform: capitalize;
+  /*text-transform: capitalize;*/
 }
 
 #archive #object-detail-tray .panel-group .panel.panel-default > .panel-heading .accordion-toggle a {
