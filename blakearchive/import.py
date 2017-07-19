@@ -460,7 +460,7 @@ class BlakeObjectImporter(BlakeImporter):
     @staticmethod
     def get_full_object_id(obj):
         for objid in obj.xpath("objtitle/objid"):
-            return titlecase.titlecase(objid.xpath("string()").rstrip().encode("utf-8"))
+            return objid.xpath("string()").rstrip().encode("utf-8")
 
     @staticmethod
     def get_object_number(obj):
