@@ -206,12 +206,12 @@
             <dd ng-bind-html="r.addressline[5]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
             </span>
 
-            <span ng-if="r.addressline[6]['#text'] != null">
+            <span ng-if="r.addressline[6]['#text'] != null && r.addressline[6]['#text'].indexOf(':') > -1">
             <dt> {{ r.addressline[6]['#text'].split(': ')[0] }}</dt>
             <dd ng-bind-html="r.addressline[6]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
             </span>
 
-            <span ng-if="r.addressline[7]['#text'] != null">
+            <span ng-if="r.addressline[7]['#text'] != null r.addressline[7]['#text'].indexOf(':') > -1">
             <dt> {{ r.addressline[7]['#text'].split(': ')[0] }}</dt>
             <dd ng-bind-html="r.addressline[7]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
             </span>
