@@ -169,11 +169,6 @@
                 <span ng-if="r.addressline[2]['#text'].indexOf(':') < 0" ng-bind-html="r.addressline[2]['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="r.addressline[2]['#text'].indexOf(':') < 0">
 
                 
-                <dt ng-if="r.addressline[2]['#text'].indexOf(':') > -1"> {{ r.addressline[2]['#text'].split(': ')[0] }}</dt>
-                     <dd ng-if="r.addressline[2]['#text'].indexOf(':') > -1">
-                        <span ng-bind-html="r.addressline[2]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></span>
-                    </dd>
-                   
 
                 <span ng-if="r.addressline[3]['#text'].indexOf(':') < 0" ng-bind-html="r.addressline[3]['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="r.addressline[3]['#text'].indexOf(':') < 0">
                 <span ng-if="r.addressline[4]['#text'].indexOf(':') < 0 && r.addressline[3]['#text'].indexOf(':') < 0" ng-bind-html="r.addressline[4]['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="r.addressline[4]['#text'].indexOf(':') < 0">
