@@ -201,7 +201,7 @@
             <dd ng-bind-html="r.addressline[4]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
             </span>
 
-            <span ng-if="r.addressline[5]['#text'] != null && r.addressline[3]['#text'].indexOf('Mail:') < 0">
+            <span ng-if="r.addressline[5]['#text'] != null && r.addressline[3]['#text'].indexOf('Mail:') < 0 && r.addressline[5]['#text'].indexOf(':') > -1">
             <dt> {{ r.addressline[5]['#text'].split(': ')[0] }}</dt>
             <dd ng-bind-html="r.addressline[5]['#text'].split(': ')[1].trim() | highlight:info.highlight | markdown"></dd>
             </span>
