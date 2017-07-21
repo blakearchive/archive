@@ -9,6 +9,11 @@
 
             <dt>Title</dt>
             <dd ng-bind-html=" info.getSource().objdescid.objtitle.title['#text'].trim() | markdown | highlight:info.highlight"></dd>
+            <div ng-if="oinfo.getSource().objdescid.objtitle.title.note" class="indent-dl">
+                    <dt><li style="margin-left:90%"></li></dt>
+                    <dd ng-bind-html="info.getSource().objdescid.objtitle.title.note['#text'].trim() | markdown | highlight:info.highlight"></dd>
+                </div>
+            
             <div ng-repeat="origination in info.getOrigination() track by $index">
                 <dt>Origination</dt>
                 <dd><span ng-bind-html="origination['#text'].trim() | markdown | highlight:info.highlight"></span>: <span ng-bind-html="info.getOriginationRole(origination.role) | markdown | highlight:info.highlight"></span></dd>
