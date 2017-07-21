@@ -9,7 +9,7 @@
 
             <dt>Title</dt>
             <dd ng-bind-html=" info.getSource().objdescid.objtitle.title['#text'].trim() | markdown | highlight:info.highlight"></dd>
-            <div ng-if="oinfo.getSource().objdescid.objtitle.title.note" class="indent-dl">
+            <div ng-if="info.getSource().objdescid.objtitle.title.note" class="indent-dl">
                     <dt><li style="margin-left:90%"></li></dt>
                     <dd ng-bind-html="info.getSource().objdescid.objtitle.title.note['#text'].trim() | markdown | highlight:info.highlight"></dd>
                 </div>
