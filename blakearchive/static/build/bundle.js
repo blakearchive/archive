@@ -33412,7 +33412,7 @@ module.exports = "<!-- Electronic Edition Info-->\n<div role=\"tabpanel\" class=
 /* 117 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"handprint-block\">\n    <a ng-href=\"{{handprint.link}}\" ng-click=\"$root.showOverlay = false; handprint.action()\">\n        <span class=\"handprint-header\">{{handprint.header}}</span>\n        <span class=\"object-img\" style=\"background-image: url({{ handprint.imagePath }}{{ handprint.image }});\">\n            <span class=\"handprint-title\" ng-if=\"!handprint.image\">{{handprint.title}}</span>\n        </span>\n        <span class=\"description\" ng-bind-html=\"handprint.footer\"></span>\n    </a>\n</div>";
+module.exports = "<div class=\"handprint-block\">\n    <a ng-href=\"{{handprint.link}}\" ng-click=\"$root.showOverlay = false; handprint.action()\">\n        <span class=\"handprint-header\">{{handprint.header}}</span>\n        <span class=\"object-img\">\n        \t<img data-src=\"{{ handprint.imagePath }}{{ handprint.image }}\"/>\n            <span class=\"handprint-title\" ng-if=\"!handprint.image\">{{handprint.title}}</span>\n        </span>\n        <span class=\"description\" ng-bind-html=\"handprint.footer\"></span>\n    </a>\n</div>";
 
 /***/ }),
 /* 118 */
@@ -33490,7 +33490,7 @@ module.exports = "<div class=\"row\">\n    <!--<p class=\"text-center\"><em>Date
 /* 130 */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- OBJECTS IN COPY -->\n<div role=\"tabpanel\" class=\"fadeinout tab-pane active in\" id=\"objects-in-copy\">\n    <header class=\"page-header\">\n        <!--<p class=\"subhead\">Objects In {{ oic.getCopyOrGroup() }}</p>-->\n    </header>\n    <p ng-if=\"oic.bds.work.virtual && oic.bds.copy.bad_id != 'letters'\" class=\"text-center\"><em>Dates are the probable dates of {{ oic.bds.work.probable }}.</em></p>\n    <br>\n    <div class=\"row\">\n        <!-- for letters (multi object groups) -->\n        <div ng-repeat=\"obj in oic.bds.copyObjects | filter:{object_group: oic.bds.object.object_group}:true track by $index\" class=\"col-sm-6 col-md-3\" ng-if=\"oic.bds.copy.bad_id == 'letters'\">\n            <handprint-block scroll-to-top\n                             action=\"oic.changeObject(obj)\"\n                             image=\"{{ obj.dbi }}.100.jpg\"\n                             footer=\"{{ obj.title }}<br>{{ obj.full_object_id }}\">\n            </handprint-block>\n        </div>\n\n        <!-- for everything else -->\n        <div ng-repeat=\"obj in oic.bds.copyObjects | filter:{supplemental:null} track by $index\" class=\"col-sm-6 col-md-3\" ng-if=\"oic.bds.copy.bad_id != 'letters'\">\n                <span ng-if=\"oic.bds.work.probable == 'printing'\">\n                    <handprint-block scroll-to-top ng-if=\"!obj.title\"\n                                     action=\"oic.changeObject(obj)\"\n                                     image=\"{{ obj.dbi }}.100.jpg\"\n                                     footer=\"{{ obj.full_object_id }}\">\n                    </handprint-block>\n                    <handprint-block scroll-to-top ng-if=\"obj.title && !oic.bds.work.virtual\"\n                                     action=\"oic.changeObject(obj)\"\n                                     image=\"{{ obj.dbi }}.100.jpg\"\n                                     footer=\"{{obj.title}}<br>{{ obj.full_object_id }}\">\n                    </handprint-block>\n                    <handprint-block scroll-to-top ng-if=\"obj.title && oic.bds.work.virtual\"\n                                     action=\"oic.changeObject(obj)\"\n                                     image=\"{{ obj.dbi }}.100.jpg\"\n                                     footer=\"{{obj.title}}<br>{{ obj.full_object_id }}\">\n                    </handprint-block>\n                </span>\n                <span ng-if=\"oic.bds.work.probable != 'printing'\">\n                    <handprint-block scroll-to-top ng-if=\"!obj.title\"\n                                     action=\"oic.changeObject(obj)\"\n                                     image=\"{{ obj.dbi }}.100.jpg\"\n                                     footer=\"{{ obj.full_object_id }}\">\n                    </handprint-block>\n                    <handprint-block scroll-to-top ng-if=\"obj.title && !oic.bds.work.virtual\"\n                                     action=\"oic.changeObject(obj)\"\n                                     image=\"{{ obj.dbi }}.100.jpg\"\n                                     footer=\"{{obj.title}}<br>{{ obj.full_object_id }}\">\n                    </handprint-block>\n                    <handprint-block scroll-to-top ng-if=\"obj.title && oic.bds.work.virtual\"\n                                     action=\"oic.changeObject(obj)\"\n                                     image=\"{{ obj.dbi }}.100.jpg\"\n                                     footer=\"{{obj.title}}<br>{{ obj.full_object_id }}, {{obj.source.objdescid.compdate['#text']}}, {{obj.source.repository.institution['#text']}}\">\n                    </handprint-block>\n                </span>\n        </div>\n    </div>\n</div>";
+module.exports = "<!-- OBJECTS IN COPY -->\n<div angular-lazy-load role=\"tabpanel\" class=\"fadeinout tab-pane active in\" id=\"objects-in-copy\">\n    <header class=\"page-header\">\n        <!--<p class=\"subhead\">Objects In {{ oic.getCopyOrGroup() }}</p>-->\n    </header>\n    <p ng-if=\"oic.bds.work.virtual && oic.bds.copy.bad_id != 'letters'\" class=\"text-center\"><em>Dates are the probable dates of {{ oic.bds.work.probable }}.</em></p>\n    <br>\n    <div class=\"row\">\n        <!-- for letters (multi object groups) -->\n        <div ng-repeat=\"obj in oic.bds.copyObjects | filter:{object_group: oic.bds.object.object_group}:true track by $index\" class=\"col-sm-6 col-md-3\" ng-if=\"oic.bds.copy.bad_id == 'letters'\">\n            <handprint-block scroll-to-top\n                             action=\"oic.changeObject(obj)\"\n                             image=\"{{ obj.dbi }}.100.jpg\"\n                             footer=\"{{ obj.title }}<br>{{ obj.full_object_id }}\">\n            </handprint-block>\n        </div>\n\n        <!-- for everything else -->\n        <div ng-repeat=\"obj in oic.bds.copyObjects | filter:{supplemental:null} track by $index\" class=\"col-sm-6 col-md-3\" ng-if=\"oic.bds.copy.bad_id != 'letters'\">\n                <span ng-if=\"oic.bds.work.probable == 'printing'\">\n                    <handprint-block scroll-to-top ng-if=\"!obj.title\"\n                                     action=\"oic.changeObject(obj)\"\n                                     image=\"{{ obj.dbi }}.100.jpg\"\n                                     footer=\"{{ obj.full_object_id }}\">\n                    </handprint-block>\n                    <handprint-block scroll-to-top ng-if=\"obj.title && !oic.bds.work.virtual\"\n                                     action=\"oic.changeObject(obj)\"\n                                     image=\"{{ obj.dbi }}.100.jpg\"\n                                     footer=\"{{obj.title}}<br>{{ obj.full_object_id }}\">\n                    </handprint-block>\n                    <handprint-block scroll-to-top ng-if=\"obj.title && oic.bds.work.virtual\"\n                                     action=\"oic.changeObject(obj)\"\n                                     image=\"{{ obj.dbi }}.100.jpg\"\n                                     footer=\"{{obj.title}}<br>{{ obj.full_object_id }}\">\n                    </handprint-block>\n                </span>\n                <span ng-if=\"oic.bds.work.probable != 'printing'\">\n                    <handprint-block scroll-to-top ng-if=\"!obj.title\"\n                                     action=\"oic.changeObject(obj)\"\n                                     image=\"{{ obj.dbi }}.100.jpg\"\n                                     footer=\"{{ obj.full_object_id }}\">\n                    </handprint-block>\n                    <handprint-block scroll-to-top ng-if=\"obj.title && !oic.bds.work.virtual\"\n                                     action=\"oic.changeObject(obj)\"\n                                     image=\"{{ obj.dbi }}.100.jpg\"\n                                     footer=\"{{obj.title}}<br>{{ obj.full_object_id }}\">\n                    </handprint-block>\n                    <handprint-block scroll-to-top ng-if=\"obj.title && oic.bds.work.virtual\"\n                                     action=\"oic.changeObject(obj)\"\n                                     image=\"{{ obj.dbi }}.100.jpg\"\n                                     footer=\"{{obj.title}}<br>{{ obj.full_object_id }}, {{obj.source.objdescid.compdate['#text']}}, {{obj.source.repository.institution['#text']}}\">\n                    </handprint-block>\n                </span>\n        </div>\n    </div>\n</div>";
 
 /***/ }),
 /* 131 */
@@ -33636,20 +33636,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angular_cookies___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_angular_cookies__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular_touch__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular_touch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_angular_touch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__js_angular_ngStorage__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__js_angular_ngStorage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__js_angular_ngStorage__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__js_Sortable_Sortable_min__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__js_Sortable_Sortable_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__js_Sortable_Sortable_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__js_Sortable_ng_sortable_min__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__js_Sortable_ng_sortable_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__js_Sortable_ng_sortable_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__js_angular_ui_bootstrap_0_12_1_ui_bootstrap_min__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__js_angular_ui_bootstrap_0_12_1_ui_bootstrap_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__js_angular_ui_bootstrap_0_12_1_ui_bootstrap_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__js_angular_fullscreen_angular_fullscreen_min__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__js_angular_fullscreen_angular_fullscreen_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__js_angular_fullscreen_angular_fullscreen_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_script_loader_js_angular_markdown_it_markdown_it_min__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_script_loader_js_angular_markdown_it_markdown_it_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_script_loader_js_angular_markdown_it_markdown_it_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__js_angular_markdown_it_angular_markdown_it__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__js_angular_markdown_it_angular_markdown_it___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__js_angular_markdown_it_angular_markdown_it__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular_lazy_loader__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angular_lazy_loader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_angular_lazy_loader__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__js_angular_ngStorage__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__js_angular_ngStorage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__js_angular_ngStorage__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__js_Sortable_Sortable_min__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__js_Sortable_Sortable_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__js_Sortable_Sortable_min__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__js_Sortable_ng_sortable_min__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__js_Sortable_ng_sortable_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__js_Sortable_ng_sortable_min__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__js_angular_ui_bootstrap_0_12_1_ui_bootstrap_min__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__js_angular_ui_bootstrap_0_12_1_ui_bootstrap_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__js_angular_ui_bootstrap_0_12_1_ui_bootstrap_min__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__js_angular_fullscreen_angular_fullscreen_min__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__js_angular_fullscreen_angular_fullscreen_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__js_angular_fullscreen_angular_fullscreen_min__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_script_loader_js_angular_markdown_it_markdown_it_min__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_script_loader_js_angular_markdown_it_markdown_it_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_script_loader_js_angular_markdown_it_markdown_it_min__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__js_angular_markdown_it_angular_markdown_it__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__js_angular_markdown_it_angular_markdown_it___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__js_angular_markdown_it_angular_markdown_it__);
+
 
 
 
@@ -33675,7 +33678,7 @@ carousel.directive('carousel', function () {
     return {};
 });
 
-let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage', 'ngCookies', 'ngTouch', 'markdown', 'angular-loading-bar']);
+let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage', 'ngCookies', 'ngTouch', 'markdown', 'angular-loading-bar', 'angular-lazy-loader']);
 
 blake.value("directoryPrefix", directoryPrefix);
 
@@ -33755,6 +33758,35 @@ requireAll(__webpack_require__(5));
 requireAll(__webpack_require__(2));
 requireAll(__webpack_require__(3));
 requireAll(__webpack_require__(4));
+
+/***/ }),
+/* 152 */
+/***/ (function(module, exports) {
+
+!function () {
+  "use strict";
+  angular.module("angular-lazy-loader", []).directive("angularLazyLoad", ["$window", "$timeout", "$rootScope", function (e, t, n) {
+    return { restrict: "EA", scope: !0, link: function (r, o, a) {
+        function i() {
+          s = Array.prototype.slice.call(o[0].querySelectorAll("img[data-src], iframe[data-src], div[data-src]")), console.log(s), s.length > 0 && l();
+        }function c(e) {
+          var t = e.getBoundingClientRect();return t.bottom + g >= 0 && t.left >= 0 && t.top - g <= (window.innerHeight || document.documentElement.clientHeight) && t.right <= (window.innerWidth || document.documentElement.clientWidth);
+        }function l() {
+          s = s.reduce(function (e, t) {
+            var n = t.getAttribute("data-src");if (!c(t)) return e.push(t), e;switch (t.tagName) {case "IMG":case "IFRAME":
+                t.src = n;break;case "DIV":
+                t.style.backgroundImage = "url(" + n + ")";break;default:
+                e.push(t);}return e;
+          }, []);
+        }function u() {
+          t(i, 0);
+        }function d() {
+          t(l, 0);
+        }var s = [],
+            g = Number(a.threshold) || 0;i(), r.$on("$includeContentLoaded", u), n.$on("selectiveLoad", u), angular.element(e).bind("scroll", d), angular.element(e).bind("resize", d), angular.element(o).bind("scroll", d);
+      } };
+  }]);
+}();
 
 /***/ })
 /******/ ]);
