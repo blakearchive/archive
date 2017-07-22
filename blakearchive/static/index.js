@@ -7,7 +7,6 @@ import 'angular-loading-bar';
 import 'angular-rangeslider';
 import 'angular-cookies';
 import 'angular-touch';
-import 'angular-lazy-loader'
 import './js/angular.ngStorage';
 import './js/Sortable/Sortable.min';
 import './js/Sortable/ng-sortable.min';
@@ -22,7 +21,7 @@ let carousel = angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition
 carousel.controller('CarouselController', function ($scope, $timeout, $transition, $q) {});
 carousel.directive('carousel', function () { return {} });
 
-let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch','markdown','angular-loading-bar','angular-lazy-loader'])
+let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'ngAnimate', 'ngStorage','ngCookies','ngTouch','markdown','angular-loading-bar'])
 
 blake.value("directoryPrefix", directoryPrefix);
 
