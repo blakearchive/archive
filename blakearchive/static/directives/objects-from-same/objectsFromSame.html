@@ -16,49 +16,49 @@
             <span class="selected" ng-click="fromSame.selectOne(obj);"><span class="icon" ng-if="fromSame.cof.isComparisonObject(obj)"></span></span>
             <handprint-block ng-if="obj.virtualwork_title && !obj.copy_print_date_string"
                     link="/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
-                    image="{{ obj.dbi }}.300.thumb.jpg"
+                    image="{{ obj.dbi }}.100.thumb.jpg"
                     footer="<b>{{obj.virtualwork_title}}</b><br>{{obj.title}}, Composed {{obj.copy_composition_date_string}}<br>Object {{obj.object_number}}"
                     
                 >
             </handprint-block>
             <handprint-block ng-if="obj.virtualwork_title && obj.copy_print_date_string"
                     link="/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
-                    image="{{ obj.dbi }}.300.thumb.jpg"
+                    image="{{ obj.dbi }}.100.thumb.jpg"
                     footer="<b>{{obj.virtualwork_title}}</b><br>{{obj.title}}, Printed {{obj.copy_print_date_string}}<br>Object {{obj.object_number}}"
                     
                 >
             </handprint-block>
             <handprint-block ng-if="obj.title && !obj.virtualwork_title && obj.copy_print_date_string"
                     link="/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
-                    image="{{ obj.dbi }}.300.thumb.jpg"
+                    image="{{ obj.dbi }}.100.thumb.jpg"
                     footer="<b>{{obj.copy_title}}, Printed {{obj.copy_print_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}"
                     
                 >
             </handprint-block>
             <handprint-block ng-if="obj.title && !obj.virtualwork_title && !obj.copy_print_date_string && !obj.source.repository.institution['#text']"
                     link="/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
-                    image="{{ obj.dbi }}.300.thumb.jpg"
+                    image="{{ obj.dbi }}.100.thumb.jpg"
                     footer="<b>{{obj.copy_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}"
                     
                 >
             </handprint-block>
             <handprint-block ng-if="obj.title && !obj.virtualwork_title && !obj.copy_print_date_string && obj.source.repository.institution['#text']"
                     link="/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
-                    image="{{ obj.dbi }}.300.thumb.jpg"
+                    image="{{ obj.dbi }}.100.thumb.jpg"
                     footer="<b>{{obj.copy_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}"
                     
                 >
             </handprint-block>
             <handprint-block ng-if="!obj.title && obj.copy_print_date_string"
                     link="/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
-                    image="{{ obj.dbi }}.300.thumb.jpg"
+                    image="{{ obj.dbi }}.100.thumb.jpg"
                     footer="<b>{{obj.copy_title}}, Printed {{obj.copy_print_date_string}}</b><br>{{obj.full_object_id}}"
                     
                 >
             </handprint-block>
              <handprint-block ng-if="!obj.title && !obj.copy_print_date_string"
                     link="/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
-                    image="{{ obj.dbi }}.300.thumb.jpg"
+                    image="{{ obj.dbi }}.100.thumb.jpg"
                     footer="<b>{{obj.copy_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.full_object_id}}"
                     
                 >
