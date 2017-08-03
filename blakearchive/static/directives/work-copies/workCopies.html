@@ -4,28 +4,28 @@
 	<div ng-repeat="copy in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && copy.source.objinfo.printdate['#text'] && copy.archive_copy_id">
 		<handprint-block
 				link="/copy/{{copy.bad_id}}"
-				image="{{ copy.image }}.300.thumb.jpg"
+				image="{{ copy.image }}.100.thumb.jpg"
 				footer="Copy {{copy.archive_copy_id}}, {{copy.source.objinfo.printdate['#text']}}, {{copy.institution}}">
 		</handprint-block>
 	</div>
 	<div ng-repeat="copy in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && copy.source.objinfo.printdate['#text'] && !copy.archive_copy_id">
 		<handprint-block
 				link="/copy/{{copy.bad_id}}"
-				image="{{ copy.image }}.300.thumb.jpg"
+				image="{{ copy.image }}.100.thumb.jpg"
 				footer="{{copy.source.objinfo.printdate['#text']}}, {{copy.institution}}">
 		</handprint-block>
 	</div>
 	<div ng-repeat="copy in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && !copy.source.objinfo.printdate['#text'] && copy.archive_copy_id">
 		<handprint-block
 				link="/copy/{{copy.bad_id}}"
-				image="{{ copy.image }}.300.thumb.jpg"
+				image="{{ copy.image }}.100.thumb.jpg"
 				footer="Copy {{copy.archive_copy_id}}, {{copy.source.objdescid.compdate['#text']}}, {{copy.institution}}">
 		</handprint-block>
 	</div>
 	<div ng-repeat="copy in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && !copy.source.objinfo.printdate['#text'] && !copy.archive_copy_id">
 		<handprint-block
 				link="/copy/{{copy.bad_id}}"
-				image="{{ copy.image }}.300.thumb.jpg"
+				image="{{ copy.image }}.100.thumb.jpg"
 				footer="{{copy.source.objdescid.compdate['#text']}}, {{copy.institution}}">
 		</handprint-block>
 	</div>
@@ -35,7 +35,7 @@
 		<handprint-block
 				link="/copy/{{ workCopies.bds.work.bad_id }}?descId={{obj.desc_id}}"
 				action="workCopies.bds.changeObject(obj)"
-				image="{{ obj.dbi }}.300.thumb.jpg"
+				image="{{ obj.dbi }}.100.thumb.jpg"
 				footer="{{obj.title}}<br>{{obj.full_object_id}}, {{obj.source.objdescid.compdate['#text']}}, {{obj.source.provenance.name['#text']}}">
 		</handprint-block>
 	</div>
@@ -45,7 +45,7 @@
 		<handprint-block
 				link="/copy/{{ workCopies.bds.work.bad_id }}?descId={{obj.desc_id}}"
 				action="workCopies.bds.changeObject(obj)"
-				image="{{ obj.dbi }}.300.thumb.jpg"
+				image="{{ obj.dbi }}.100.thumb.jpg"
 				footer="{{obj.object_group}}">
 		</handprint-block>
 	</div>
