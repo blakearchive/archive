@@ -10,7 +10,7 @@
         <div ng-repeat="obj in oic.bds.copyObjects | filter:{object_group: oic.bds.object.object_group}:true track by $index" class="col-sm-6 col-md-3" ng-if="oic.bds.copy.bad_id == 'letters'">
             <handprint-block scroll-to-top
                              action="oic.changeObject(obj)"
-                             image="{{ obj.dbi }}.300.thumb.jpg"
+                             image="{{ obj.dbi }}.100.thumb.jpg"
                              footer="{{ obj.title }}<br>{{ obj.full_object_id }}">
             </handprint-block>
         </div>
@@ -20,34 +20,34 @@
                 <span ng-if="oic.bds.work.probable == 'printing'">
                     <handprint-block scroll-to-top ng-if="!obj.title"
                                      action="oic.changeObject(obj)"
-                                     image="{{ obj.dbi }}.300.thumb.jpg"
+                                     image="{{ obj.dbi }}.100.thumb.jpg"
                                      footer="{{ obj.full_object_id }}">
                     </handprint-block>
                     <handprint-block scroll-to-top ng-if="obj.title && !oic.bds.work.virtual"
                                      action="oic.changeObject(obj)"
-                                     image="{{ obj.dbi }}.300.thumb.jpg"
+                                     image="{{ obj.dbi }}.100.thumb.jpg"
                                      footer="{{obj.title}}<br>{{ obj.full_object_id }}">
                     </handprint-block>
                     <handprint-block scroll-to-top ng-if="obj.title && oic.bds.work.virtual"
                                      action="oic.changeObject(obj)"
-                                     image="{{ obj.dbi }}.300.thumb.jpg"
+                                     image="{{ obj.dbi }}.100.thumb.jpg"
                                      footer="{{obj.title}}<br>{{ obj.full_object_id }}">
                     </handprint-block>
                 </span>
                 <span ng-if="oic.bds.work.probable != 'printing'">
                     <handprint-block scroll-to-top ng-if="!obj.title"
                                      action="oic.changeObject(obj)"
-                                     image="{{ obj.dbi }}.300.thumb.jpg"
+                                     image="{{ obj.dbi }}.100.thumb.jpg"
                                      footer="{{ obj.full_object_id }}">
                     </handprint-block>
                     <handprint-block scroll-to-top ng-if="obj.title && !oic.bds.work.virtual"
                                      action="oic.changeObject(obj)"
-                                     image="{{ obj.dbi }}.300.thumb.jpg"
+                                     image="{{ obj.dbi }}.100.thumb.jpg"
                                      footer="{{obj.title}}<br>{{ obj.full_object_id }}">
                     </handprint-block>
                     <handprint-block scroll-to-top ng-if="obj.title && oic.bds.work.virtual"
                                      action="oic.changeObject(obj)"
-                                     image="{{ obj.dbi }}.300.thumb.jpg"
+                                     image="{{ obj.dbi }}.100.thumb.jpg"
                                      footer="{{obj.title}}<br>{{ obj.full_object_id }}, {{obj.source.objdescid.compdate['#text']}}, {{obj.source.repository.institution['#text']}}">
                     </handprint-block>
                 </span>
