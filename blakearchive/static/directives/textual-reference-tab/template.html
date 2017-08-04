@@ -6,12 +6,12 @@
         <div ng-repeat="obj in tr.bds.object.text_ref.objects track by $index" class="col-sm-6 col-md-3">
             <handprint-block ng-if="obj.object_group !== null"
                              link="/copy/letters?descId={{ obj.desc_id }}"
-                             image="{{ obj.dbi }}.100.jpg"
+                             image="{{ obj.dbi }}.300.thumb.jpg"
                              footer="{{ obj.object_group }}">
             </handprint-block>
             <handprint-block ng-if="obj.object_group === null"
                              link="/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
-                             image="{{ obj.dbi }}.100.jpg"
+                             image="{{ obj.dbi }}.300.thumb.jpg"
                              footer="{{ obj.full_object_id }}">
             </handprint-block>
         </div>
@@ -22,7 +22,7 @@
         <h3>Copies</h3>
         <div ng-repeat="cp in tr.bds.object.text_ref.copies track by $index" class="col-sm-6 col-md-3">
             <handprint-block link="/copy/{{cp.bad_id}}"
-                             image="{{ cp.image }}.100.jpg"
+                             image="{{ cp.image }}.300.thumb.jpg"
                              footer="Copy {{cp.archive_copy_id}}, {{cp.source.objinfo.printdate['#text']}}, {{cp.institution}}">
             </handprint-block>
         </div>
