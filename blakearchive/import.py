@@ -273,7 +273,7 @@ class BlakeCopyImporter(BlakeImporter):
         copy.header = self.get_header(root)
         copy.source = self.get_source(root)
         copy.header_html = self.get_header_html(root)
-        copy.bad_xml = bad_xml
+        #copy.bad_xml = bad_xml
         copy.objects = [self.object_importer.process(element) for element in root.xpath(".//desc")]
         copy.effective_copy_id = copy.bad_id
         copy.title = self.get_copy_title(root)
