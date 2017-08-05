@@ -160,7 +160,7 @@ class BlakeObject(db.Model):
             "illustration_description": self.illustration_description,
             "components": self.components,
             "text": self.text,
-            "markup_text": self.markup_text,
+            #"markup_text": self.markup_text,
             "physical_description": self.physical_description,
             "title": self.title,
             "header": self.header,
@@ -191,7 +191,7 @@ class BlakeCopy(db.Model):
     print_date_string = db.Column(db.UnicodeText)
     print_date_value = db.Column(db.UnicodeText)
     effective_copy_id = db.Column(db.UnicodeText, index=True)
-    bad_xml = db.Column(db.Text)
+    #bad_xml = db.Column(db.Text)
 
     def __init__(self, *args, **kwargs):
         super(BlakeCopy, self).__init__(*args, **kwargs)
@@ -214,7 +214,6 @@ class BlakeCopy(db.Model):
             "print_date_string": self.print_date_string,
             "print_date": self.print_date,
             "effective_copy_id": self.effective_copy_id,
-            "bad_xml": self.bad_xml
         }
 
 
