@@ -160,7 +160,7 @@ class BlakeObject(db.Model):
             "illustration_description": self.illustration_description,
             "components": self.components,
             "text": self.text,
-            #"markup_text": self.markup_text,
+            "markup_text": self.markup_text,
             "physical_description": self.physical_description,
             "title": self.title,
             "header": self.header,
