@@ -19,3 +19,4 @@ xmltodict==0.9.2
 titlecase
 pandas
 tqdm
+flask_profiler
