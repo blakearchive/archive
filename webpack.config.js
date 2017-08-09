@@ -8,20 +8,21 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'blakearchive/static/build')
     },
-    devtool: "source-map",
     module: {
         rules: [
             {
                 test: /\.js$/,
-                use: ['babel-loader', 'source-map-loader']
+                use: [{
+                    loader: 'babel-loader'
+                }]
             }
-        ],
+        ]
     },
     plugins: [
         new ngAnnotatePlugin({
             add: true,
             // other ng-annotate options here
-        }),/*
+        })/*,
         new ClosureCompilerPlugin({
           compiler: {
             compilation_level: 'SIMPLE'
