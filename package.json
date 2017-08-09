@@ -34,6 +34,8 @@
     "ng-annotate-webpack-plugin": "^0.2.1-pre",
     "script-loader": "^0.7.0",
     "sortable": "^2.0.0",
+    "source-map": "^0.5.6",
+    "source-map-loader": "^0.2.1",
     "style-loader": "^0.13.1",
     "webpack": "^2.2.0",
     "webpack-closure-compiler": "^2.1.3"
