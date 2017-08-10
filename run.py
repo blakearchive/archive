@@ -1,7 +1,5 @@
-# import flask_profiler
 from flask import send_file
 from blakearchive import app, models, services, config
-
 # from test.mock import MockBlakeDataService
 
 # Configuration for local test runs belongs here
@@ -12,31 +10,13 @@ app.config["BLAKE_DATA_SERVICE"] = services.BlakeDataService
 # The database object must initialize the app in order to be able to perform queries
 models.db.init_app(app)
 
-app.config["FLASK_PROFILER"] = {
-    "enabled": True,
-    "storage": {
-        "engine": "sqlite"
-    },
-    "basicAuth": {
-        "enabled": False
-    },
-    "ignore": [
-        "^/static/.*"
-    ]
-}
-
-
-# flask_profiler.init_app(app)
-
 @app.route('/images/<image>')
 def get_image(image=None):
-    return send_file(config.local_image_path + image)
-
+    return send_file(config.local_image_path+image)
 
 @app.route('/bad/<bad>')
 def get_bad_file(bad=None):
-    return send_file(config.local_data_path + "works/" + bad)
-
+    return send_file(config.local_data_path+"works/"+bad)
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
