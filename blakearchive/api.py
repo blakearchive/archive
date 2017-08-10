@@ -153,3 +153,10 @@ def get_featured_works():
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     results = blake_data_service.get_featured_works()
     return jsonify({"results": [r.to_dict for r in results]})
+
+@api.after_request
+def add_header(response):
+    day_seconds = 86400
+    response.cache_control.max_age = 365 * day_seconds
+    response.cache_control.public = True
+    return response
