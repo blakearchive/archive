@@ -18,6 +18,13 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.compareCopy = null;
     $rootScope.activeId = '';
 
+
+    $scope.$on('$viewContentLoaded', function() {
+        vm.bds.copyObjects.forEach(function(copyObject) {
+            copyObject.apparatus = 'transcriptions';
+        });
+    });
+
     console.log(vm.bds);
 
     vm.zoom = function() {
