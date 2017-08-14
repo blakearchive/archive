@@ -242,8 +242,14 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         $rootScope.$broadcast('viewSubMenu::readingMode',{'target': target});
     }
 
-    vm.setActiveId = function(id) {
-        $rootScope.activeId = id;
+    vm.setActiveId = function(index) {
+        if($index > 2) {
+            $rootScope.activeId = vm.cssSafeId(vm.bds.copyObjects[$index-2].desc_id);
+        }
+        else {
+            $rootScope.activeId = vm.cssSafeId(vm.bds.copyObjects[$index].desc_id);
+        }
+        //$rootScope.activeId = id;
         console.log($rootScope.activeId);
     }
 
