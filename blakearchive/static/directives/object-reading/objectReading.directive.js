@@ -24,7 +24,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.initApparatusArray = function() {
         console.log('called');
         vm.bds.copyObjects.forEach(function(copyObject) {
-            vm.apparatusArray.push($rootScope.activeapparatus);
+            vm.apparatusArray.push('');
             console.log(vm.apparatusArray);
         });
     };
