@@ -50,7 +50,7 @@
             </div>
             <!-- for everything else -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null} track by $index" ng-if="read.bds.copy.bad_id != 'letters'">
-                <div class="btn-group edit-object" role="group" style="margin-bottom:0px;margin-left:28px">
+                <div ng-if="read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes'" class="btn-group edit-object" role="group" style="margin-bottom:0px;margin-left:28px">
                         <button type="button" style="height:21px;line-height:0.6" ng-class="{'hover':read.apparatusArray[$index] == 'transcriptions'}" class="btn btn-default" ng-click="read.showIndividualTranscriptions($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:13px;">DT</span>
                             <span class="gr-title">Show diplomatic transcriptions</span>
@@ -87,8 +87,8 @@
                             <editor-notes object="o"></editor-notes>
                         </div>
                     </div>
-                    <div style="color:white; font-size:9px; text-align:center" ng-if="read.apparatus == 'imagesonly' && truesize == false && read.apparatusArray[$index] == ''">{{o.full_object_id}}</div>
-                    <div style="color:white; font-size:9px; text-align:center" ng-if="read.apparatus == 'imagesonly' && truesize == true && read.apparatusArray[$index] == ''">{{o.full_object_id}}</br>{{ o.physical_description.objsize['#text'] }}</div>
+                    <div style="color:white; font-size:9px; text-align:center" ng-if="read.apparatus == 'imagesonly' && truesize == false">{{o.full_object_id}}</div>
+                    <div style="color:white; font-size:9px; text-align:center" ng-if="read.apparatus == 'imagesonly' && truesize == true">{{o.full_object_id}}</br>{{ o.physical_description.objsize['#text'] }}</div>
                     <div style="color:white; font-size:7px;" ng-if="read.apparatus == 'comparewith'">{{o.full_object_id}}<span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span><span ng-if="read.compareCopyObjects[o.desc_id] != null && truesize == true" style="color:yellow;float:right;">{{read.compareCopyObjects[o.desc_id].full_object_id}}, {{ read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span><span ng-if="read.compareCopyObjects[o.desc_id] != null && truesize == false" style="color:yellow;float:right;">{{read.compareCopyObjects[o.desc_id].full_object_id}}</span></div>
                 </div>
             </div>
