@@ -4757,15 +4757,14 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     vm.compareCopy = null;
     $rootScope.activeId = '';
     vm.apparatusArray = [];
+    vm.isApparatusArrayInit = 'false';
 
-    vm.init = function () {
+    vm.initApparatusArray = function () {
         vm.bds.copyObjects.forEach(function (copyObject) {
             vm.apparatusArray.push('transcriptions');
             console.log(vm.apparatusArray);
         });
     };
-
-    vm.init();
 
     console.log(vm.bds);
 
@@ -4939,6 +4938,9 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     };
 
     vm.showIndividualIllustrationDescriptions = function (index) {
+        if (vm.initApparatusArray == 'false') {
+            vm.initApparatusArray();
+        }
         console.log(vm.apparatusArray[index]);
         vm.apparatusArray[index] = 'illustrationdescriptions';
         console.log(index);
