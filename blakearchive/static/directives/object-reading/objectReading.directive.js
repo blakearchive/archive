@@ -18,7 +18,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.compareCopy = null;
     $rootScope.activeId = '';
     vm.apparatusArray = {};
-    vm.isApparatusArrayInit = 'false';
+    vm.isApparatusArrayInit = false;
 
 
     vm.initApparatusArray = function() {
@@ -209,7 +209,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     }
 
     vm.showIndividualIllustrationDescriptions = function(index) {
-        if(vm.initApparatusArray == 'false') {
+        if(vm.initApparatusArray == false) {
             vm.initApparatusArray();
         }
         console.log(vm.apparatusArray[index]);
