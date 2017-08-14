@@ -4945,14 +4945,14 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
         vm.apparatusArray[index] = 'illustrationdescriptions';
     };
 
-    vm.showIndividualTranscriptions = function (id) {
+    vm.showIndividualTranscriptions = function (index) {
         if (vm.isApparatusArrayInit == false) {
             vm.initApparatusArray();
         }
         vm.apparatusArray[index] = 'transcriptions';
     };
 
-    vm.showIndividualEditorsNotes = function (id) {
+    vm.showIndividualEditorsNotes = function (index) {
         if (vm.isApparatusArrayInit == false) {
             vm.initApparatusArray();
         }
