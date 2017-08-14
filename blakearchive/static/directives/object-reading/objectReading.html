@@ -52,15 +52,15 @@
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null} track by $index" ng-if="read.bds.copy.bad_id != 'letters'">
                 <div ng-if="read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes'" class="btn-group edit-object" role="group" style="margin-bottom:0px;margin-left:28px">
                         <button type="button" style="height:21px;line-height:0.6" ng-class="{'hover':read.apparatusArray[$index] == 'transcriptions'}" class="btn btn-default" ng-click="read.showIndividualTranscriptions($index)">
-                            <span class="gr-abbreviation" style="height:21px;font-size:13px;">DT</span>
+                            <span class="gr-abbreviation" style="height:21px;font-size:13px;">Diplomatic Transcription</span>
                             <span class="gr-title">Show diplomatic transcriptions</span>
                         </button>
                         <button type="button" style="height:21px;line-height:0.6" ng-class="{'hover':read.apparatusArray[$index] == 'illustrationdescriptions'}" class="btn btn-default" ng-click="read.showIndividualIllustrationDescriptions($index)">
-                            <span class="gr-abbreviation" style="height:21px;font-size:14px">ID</span>
+                            <span class="gr-abbreviation" style="height:21px;font-size:14px">Illustration Description</span>
                             <span class="gr-title">Show illustration descriptions</span>
                         </button>
                         <button type="button" class="btn btn-default" style="height:21px;line-height:0.6" ng-class="{'hover':read.apparatusArray[$index] == 'editorsnotes'}" class="btn btn-gr-selection" ng-click="read.showIndividualEditorsNotes($index)">
-                            <span class="gr-abbreviation" style="height:21px;font-size:13px">EN</span>
+                            <span class="gr-abbreviation" style="height:21px;font-size:13px">Editors' Notes</span>
                             <span class="gr-title">Show editors' notes</span>
                         </button>
                     </div>
