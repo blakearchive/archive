@@ -56,32 +56,32 @@
                 -->
                     <img id="{{read.getStrippedDescId(o.desc_id)}}" magnify-image ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" ng-click="read.changeObject(o)">
                     <div class="btn-group-vertical edit-object" role="group" style="width:5%">
-                        <button type="button" style="height:21px;line-height:0.6" ng-class="{'hover':activeapparatus == 'transcriptions'}" class="btn btn-default" ng-click="read.showIndividualTranscriptions(read.cssSafeId(o.desc_id))">
+                        <button type="button" style="height:21px;line-height:0.6" ng-class="{'hover':activeapparatus == 'transcriptions'}" class="btn btn-default" ng-click="read.showIndividualTranscriptions($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:13px;">DT</span>
                             <span class="gr-title">Show diplomatic transcriptions</span>
                         </button>
-                        <button type="button" style="height:21px;line-height:0.6" ng-class="{'hover':activeapparatus == 'illustrationdescriptions'}" class="btn btn-default" ng-click="read.showIndividualIllustrationDescriptions(read.cssSafeId(o.desc_id))">
+                        <button type="button" style="height:21px;line-height:0.6" ng-class="{'hover':activeapparatus == 'illustrationdescriptions'}" class="btn btn-default" ng-click="read.showIndividualIllustrationDescriptions($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:14px">ID</span>
                             <span class="gr-title">Show illustration descriptions</span>
                         </button>
-                        <button type="button" class="btn btn-default" style="height:21px;line-height:0.6" ng-class="{'hover':activeapparatus == 'editorsnotes'}" class="btn btn-gr-selection" ng-click="read.showIndividualEditorsNotes(read.cssSafeId(o.desc_id))">
+                        <button type="button" class="btn btn-default" style="height:21px;line-height:0.6" ng-class="{'hover':activeapparatus == 'editorsnotes'}" class="btn btn-gr-selection" ng-click="read.showIndividualEditorsNotes($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:13px">EN</span>
                             <span class="gr-title">Show editors' notes</span>
                         </button>
                     </div>
                     <img id="{{read.getStrippedDescId(read.compareCopyObjects[o.desc_id].desc_id)}}" magnify-image style="padding-left:10px" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ read.compareCopyObjects[o.desc_id].dbi }}.{{dpi}}.jpg">
                     <div style="float:right" class="reading-copy">
-                        <div id="{{ read.cssSafeId(o.desc_id) }}" class="reading-copy-inner" ng-show="read.apparatus == 'transcriptions' && $root.{{ read.cssSafeId(o.desc_id) }} != 'illustrationdescriptions' && $root.{{ read.cssSafeId(o.desc_id) }} != 'editorsnotes'">
+                        <div class="reading-copy-inner" ng-show="read.apparatus == 'transcriptions' && read.copyObjects[$index].apparatus != 'illustrationdescriptions' && read.copyObjects[$index].apparatus != 'editorsnotes'">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <text-transcription object="o"></text-transcription>
                         </div>
-                        <div id="{{ read.cssSafeId(o.desc_id) }}" class="reading-copy-inner" ng-show="read.apparatus == 'illustrationdescriptions' || read.{{ read.cssSafeId(o.desc_id) }} == 'illustrationdescriptions'" style="width:10px">
+                        <div class="reading-copy-inner" ng-show="read.apparatus == 'illustrationdescriptions' || read.{{ read.cssSafeId(o.desc_id) }} == 'illustrationdescriptions'" style="width:10px">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <illustration-description object="o"></illustration-description>
                         </div>
-                        <div id="{{ read.cssSafeId(o.desc_id) }}" class="reading-copy-inner" ng-show="read.apparatus == 'editorsnotes'" style="width:10px">
+                        <div class="reading-copy-inner" ng-show="read.apparatus == 'editorsnotes'" style="width:10px">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <editor-notes object="o"></editor-notes>
