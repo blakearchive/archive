@@ -4757,7 +4757,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     vm.compareCopy = null;
     $rootScope.activeId = '';
     vm.apparatusArray = {};
-    vm.isApparatusArrayInit = 'false';
+    vm.isApparatusArrayInit = false;
 
     vm.initApparatusArray = function () {
         console.log('called');
@@ -4939,7 +4939,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     };
 
     vm.showIndividualIllustrationDescriptions = function (index) {
-        if (vm.initApparatusArray == 'false') {
+        if (vm.initApparatusArray == false) {
             vm.initApparatusArray();
         }
         console.log(vm.apparatusArray[index]);
