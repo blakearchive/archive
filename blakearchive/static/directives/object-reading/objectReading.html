@@ -65,7 +65,7 @@
                 -->
                     <img id="{{read.getStrippedDescId(o.desc_id)}}" magnify-image ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" ng-click="read.changeObject(o)">
 
-        <div class="btn-group-vertical edit-object" role="group">
+        <div class="btn-group-vertical edit-object" role="group" style="width:6%">
         <button type="button" style="height:21px;line-height:0.6" ng-class="{'hover':activeapparatus == 'transcriptions'}" class="btn btn-default" ng-click="read.showTranscriptions()">
             <span class="gr-abbreviation" style="height:21px;font-size:13px;">DT</span>
             <span class="gr-title">Show diplomatic transcriptions</span>
@@ -90,6 +90,7 @@
             <span class="gr-abbreviation" style="height:21px;font-size:13px">TS</span>
             <span class="gr-title">True Size</span>
         </button>
+        </div>
 
                     <img id="{{read.getStrippedDescId(read.compareCopyObjects[o.desc_id].desc_id)}}" magnify-image style="padding-left:10px" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ read.compareCopyObjects[o.desc_id].dbi }}.{{dpi}}.jpg"> 
                     <div class="reading-copy">
