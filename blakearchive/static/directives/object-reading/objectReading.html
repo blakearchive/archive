@@ -71,7 +71,7 @@
                     </div>
                     <img id="{{read.getStrippedDescId(read.compareCopyObjects[o.desc_id].desc_id)}}" magnify-image style="padding-left:10px" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ read.compareCopyObjects[o.desc_id].dbi }}.{{dpi}}.jpg">
                     <div style="float:right" class="reading-copy">
-                        <div id="{{ read.cssSafeId(o.desc_id) }}" class="reading-copy-inner" ng-if="read.apparatus == 'transcriptions' && individualId.{{read.cssSafeId(o.desc_id) }} != 'illustrationdescriptions' && individualId.{{read.cssSafeId(o.desc_id) }} != 'editorsnotes'">
+                        <div id="{{ read.cssSafeId(o.desc_id) }}" class="reading-copy-inner" ng-if="read.apparatus == 'transcriptions' && $root.individualId.{{read.cssSafeId(o.desc_id) }} != 'illustrationdescriptions' && $root.individualId.{{read.cssSafeId(o.desc_id) }} != 'editorsnotes'">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <text-transcription object="o"></text-transcription>
