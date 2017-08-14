@@ -199,6 +199,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
 
     vm.showIndividualIllustrationDescriptions = function(id) {
         vm.id.apparatus = 'illustrationdescriptions';
+        console.log(vm.id.apparatus);
     }
 
     vm.showIndividualTranscriptions = function(id) {
