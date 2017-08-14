@@ -4588,7 +4588,8 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     };
 
     vm.setActiveId = function (index) {
-        if (index > 2) {
+        //note to mike: if (images only is pressed)
+        if ($rootScope.activeapparatus == 'imagesonly' && index > 2) {
             $rootScope.activeId = vm.cssSafeId(vm.bds.copyObjects[index - 2].desc_id);
         } else {
             $rootScope.activeId = vm.cssSafeId(vm.bds.copyObjects[index].desc_id);
