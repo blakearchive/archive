@@ -1,3 +1,34 @@
+#archive #object-view .btn-group-vertical.edit-object {
+  margin-bottom: 14px;
+}
+#archive #object-view .btn-group-vertical.edit-object .btn.btn-default {
+  color: #d5d5d5;
+  font-size: 13px;
+  background-color: #222;
+  border-color: #393939;
+  -webkit-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+}
+@media (max-width: 767px) {
+  #archive #object-view .btn-group-vertical.edit-object .btn.btn-default {
+    text-align: left;
+    border-radius: 0;
+    width: 90%;
+    float: none;
+  }
+  #archive #object-view .btn-group-vertical.edit-object .btn.btn-default:not(:last-child) {
+    border-bottom: none;
+  }
+}
+#archive #object-view .btn-group-vertical.edit-object .btn.btn-default:hover,#archive #object-view .btn-group.edit-object .btn.btn-default.hover {
+  color: #5b5b5b;
+  background-color: #f8f8f8;
+  border-color: #dadada;
+}
+
+
+
 #archive #object-view.reading-view #compare.scrollbar .compare-inner .item p {
   width:115%;
 }
