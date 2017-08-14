@@ -4575,7 +4575,8 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     };
 
     vm.scrollTo = function (id) {
-        $rootScope.$broadcast('viewSubMenu::readingMode', { 'target': id });
+        var target = '#' + id.replace(/\./g, '-');
+        $rootScope.$broadcast('viewSubMenu::readingMode', { 'target': target });
     };
 
     $scope.$watch(function () {
