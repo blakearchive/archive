@@ -212,20 +212,21 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         if(vm.isApparatusArrayInit == false) {
             vm.initApparatusArray();
         }
-        console.log(vm.apparatusArray[index]);
         vm.apparatusArray[index] = 'illustrationdescriptions';
-        console.log(index);
-        console.log(vm.apparatusArray[index]);
     }
 
     vm.showIndividualTranscriptions = function(id) {
-        var el = angular.element('#'+id);
-        el.attr('ng-show', "read.apparatus == 'transcriptions'");
+        if(vm.isApparatusArrayInit == false) {
+            vm.initApparatusArray();
+        }
+        vm.apparatusArray[index] = 'transcriptions';
     }
 
     vm.showIndividualEditorsNotes = function(id) {
-        var el = angular.element('#'+id);
-        el.attr('ng-show', "read.apparatus == 'editorsnotes'");
+       if(vm.isApparatusArrayInit == false) {
+            vm.initApparatusArray();
+        }
+        vm.apparatusArray[index] = 'editorsnotes';
     }
 
     vm.showImagesOnly = function() {
