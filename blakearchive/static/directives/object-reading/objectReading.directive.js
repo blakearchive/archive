@@ -243,7 +243,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     }
 
     vm.setActiveId = function(index) {
-        if($index > 2) {
+        if(index > 2) {
             $rootScope.activeId = vm.cssSafeId(vm.bds.copyObjects[index-2].desc_id);
         }
         else {
