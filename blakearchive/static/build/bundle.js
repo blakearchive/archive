@@ -4963,7 +4963,9 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     };
 
     vm.showImagesOnly = function () {
-        vm.apparatusArray = [];
+        if (vm.isApparatusArrayInit == false) {
+            vm.initApparatusArray();
+        }
         vm.apparatus = 'imagesonly';
         $rootScope.activeapparatus = 'imagesonly';
         //vm.scrollTo();
