@@ -46,6 +46,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 vm.reverseTrueSize();
             }
         }
+        vm.scrollTo();
     }
 
     $scope.$on('clientPpi::savedPpi', function() {
@@ -70,7 +71,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 }
             });
         }
-
+        vm.scrollTo();
 
     }
 
@@ -138,6 +139,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
             $rootScope.truesize = false;
             vm.reverseTrueSize();
         }
+        vm.scrollTo();
     }
 
     vm.showCompareWith = function(bad_id) {
@@ -168,21 +170,25 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
             $rootScope.truesize = false;
             vm.reverseTrueSize();
         }
+        vm.scrollTo();
     }
 
     vm.showIllustrationDescriptions = function() {
         vm.apparatus = 'illustrationdescriptions';
         $rootScope.activeapparatus = 'illustrationdescriptions';
+        vm.scrollTo();
     }
 
     vm.showTranscriptions = function() {
         vm.apparatus = 'transcriptions';
         $rootScope.activeapparatus = 'transcriptions';
+        vm.scrollTo();
     }
 
     vm.showEditorsNotes = function() {
         vm.apparatus = 'editorsnotes';
         $rootScope.activeapparatus = 'editorsnotes';
+        vm.scrollTo();
     }
 
     vm.showImagesOnly = function() {
