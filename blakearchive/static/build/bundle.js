@@ -4757,11 +4757,13 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     vm.compareCopy = null;
     $rootScope.activeId = '';
 
-    $scope.$on('$viewContentLoaded', function () {
+    var init = function () {
         vm.bds.copyObjects.forEach(function (copyObject) {
             copyObject.apparatus = 'transcriptions';
         });
-    });
+    };
+
+    init();
 
     console.log(vm.bds);
 
