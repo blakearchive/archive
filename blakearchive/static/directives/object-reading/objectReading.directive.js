@@ -17,12 +17,10 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.showOverlayCompareCopyInfo = false;
     vm.compareCopy = null;
     $rootScope.activeId = '';
-    vm.CopyObjectsTemp;
 
 
     var init = function() {
-        vm.CopyObjectsTemp = vm.bds.copyObjects;
-        vm.CopyObjectsTemp.forEach(function(copyObject) {
+        vm.bds.copyObjects.forEach(function(copyObject) {
             copyObject.apparatus = 'transcriptions';
             console.log(copyObject.apparatus);
         });
@@ -210,10 +208,10 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     }
 
     vm.showIndividualIllustrationDescriptions = function(index) {
-        console.log(vm.CopyObjectsTemp[index].apparatus);
-        vm.CopyObjectsTemp[index].apparatus = 'illustrationdescriptions';
+        console.log(vm.bds.copyObjects[index].apparatus);
+        vm.bds.copyObjects[index].apparatus = 'illustrationdescriptions';
         console.log(index);
-        console.log(vm.CopyObjectsTemp[index].apparatus);
+        console.log(vm.bds.copyObjects[index].apparatus);
     }
 
     vm.showIndividualTranscriptions = function(id) {
