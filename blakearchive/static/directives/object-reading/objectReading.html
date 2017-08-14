@@ -88,7 +88,7 @@
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <text-transcription object="o"></text-transcription>
                         </div>
-                        <div id="{{ read.cssSafeId(o.desc_id) }}" class="reading-copy-inner" ng-show="read.apparatus == 'illustrationdescriptions' || read.{{ read.cssSafeId(o.desc_id) }}.apparatus == 'illustrationdescriptions'" style="width:10px">
+                        <div id="{{ read.cssSafeId(o.desc_id) }}" class="reading-copy-inner" ng-show="read.apparatus == 'illustrationdescriptions' || read.{{ read.cssSafeId(o.desc_id) }} == 'illustrationdescriptions'" style="width:10px">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <illustration-description object="o"></illustration-description>
