@@ -4520,20 +4520,29 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
 
     vm.showIllustrationDescriptions = function () {
         vm.apparatus = 'illustrationdescriptions';
+        vm.currentApparatus = $rootScope.activeapparatus;
         $rootScope.activeapparatus = 'illustrationdescriptions';
-        vm.scrollTo();
+        if (vm.currentApparatus == 'imagesonly') {
+            vm.scrollTo();
+        }
     };
 
     vm.showTranscriptions = function () {
         vm.apparatus = 'transcriptions';
+        vm.currentApparatus = $rootScope.activeapparatus;
         $rootScope.activeapparatus = 'transcriptions';
-        vm.scrollTo();
+        if (vm.currentApparatus == 'imagesonly') {
+            vm.scrollTo();
+        }
     };
 
     vm.showEditorsNotes = function () {
         vm.apparatus = 'editorsnotes';
+        vm.currentApparatus = $rootScope.activeapparatus;
         $rootScope.activeapparatus = 'editorsnotes';
-        vm.scrollTo();
+        if (vm.currentApparatus == 'imagesonly') {
+            vm.scrollTo();
+        }
     };
 
     vm.showImagesOnly = function () {
