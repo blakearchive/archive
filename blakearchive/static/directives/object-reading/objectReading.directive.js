@@ -232,7 +232,8 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
 
     vm.scrollTo = function() {
         var taget = '';
-        angular.element("#allObjects").withinviewport().first(function() {
+        var elementsInView = angular.element("#allObjects").withinviewport();
+        elementsInView.first(function() {
             target = '#'+$(this)[0].id.replace(/\./g,'-');
         });
 
