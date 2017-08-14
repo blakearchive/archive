@@ -199,7 +199,6 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
 
     vm.showIndividualIllustrationDescriptions = function(index) {
         vm.bds.copyObjects[index].apparatus = 'illustrationdescriptions';
-        $scope.$apply();
         console.log(index);
         console.log(vm.bds.copyObjects[index].apparatus);
     }
