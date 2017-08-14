@@ -188,6 +188,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         vm.apparatus = 'illustrationdescriptions';
         vm.currentApparatus = $rootScope.activeapparatus;
         $rootScope.activeapparatus = 'illustrationdescriptions';
+        vm.apparatusArray = [];
         //if(vm.currentApparatus == 'imagesonly' || vm.currentApparatus == 'transcriptions') {
         //    vm.scrollTo();
         //}
@@ -196,6 +197,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.showTranscriptions = function() {
         vm.apparatus = 'transcriptions';
         $rootScope.activeapparatus = 'transcriptions';
+        vm.apparatusArray = [];
         //vm.scrollTo();
     }
 
@@ -203,6 +205,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         vm.apparatus = 'editorsnotes';
         vm.currentApparatus = $rootScope.activeapparatus;
         $rootScope.activeapparatus = 'editorsnotes';
+        vm.apparatusArray = [];
         //if(vm.currentApparatus == 'imagesonly' || vm.currentApparatus == 'transcriptions') {
         //    vm.scrollTo();
         //}
