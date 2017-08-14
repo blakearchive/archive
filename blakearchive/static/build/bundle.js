@@ -4531,6 +4531,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     vm.showImagesOnly = function () {
         vm.apparatus = 'imagesonly';
         $rootScope.activeapparatus = 'imagesonly';
+        vm.scrollTo(cssSafeId('b-los.a.illbk.03'));
     };
 
     vm.getOvpTitle = function () {
@@ -4571,6 +4572,10 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
 
     vm.cssSafeId = function (string) {
         return string.replace(/\./g, '-');
+    };
+
+    vm.scrollTo = function (id) {
+        $rootScope.$broadcast('viewSubMenu::readingMode', { 'target': id });
     };
 
     $scope.$watch(function () {
