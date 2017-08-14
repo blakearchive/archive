@@ -221,6 +221,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.showIndividualTranscriptions = function(index) {
         if(vm.isApparatusArrayInit == false) {
             vm.initApparatusArray();
+            vm.isApparatusArrayInit = true;
         }
         vm.apparatusArray[index] = 'transcriptions';
     }
@@ -228,6 +229,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.showIndividualEditorsNotes = function(index) {
        if(vm.isApparatusArrayInit == false) {
             vm.initApparatusArray();
+            vm.isApparatusArrayInit = true;
         }
         vm.apparatusArray[index] = 'editorsnotes';
     }
