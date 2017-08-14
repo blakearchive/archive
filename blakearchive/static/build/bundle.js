@@ -4522,9 +4522,9 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
         vm.apparatus = 'illustrationdescriptions';
         vm.currentApparatus = $rootScope.activeapparatus;
         $rootScope.activeapparatus = 'illustrationdescriptions';
-        if (vm.currentApparatus == 'imagesonly' || vm.currentApparatus == 'transcriptions') {
-            vm.scrollTo();
-        }
+        //if(vm.currentApparatus == 'imagesonly' || vm.currentApparatus == 'transcriptions') {
+        //    vm.scrollTo();
+        //}
     };
 
     vm.showTranscriptions = function () {
