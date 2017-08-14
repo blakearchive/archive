@@ -187,7 +187,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.showImagesOnly = function() {
         vm.apparatus = 'imagesonly';
         $rootScope.activeapparatus = 'imagesonly';
-        vm.scrollTo();
+        vm.scrollTo(vm.cssSafeId('b-los.a.illbk.03'));
     }
 
     vm.getOvpTitle = function() {
@@ -230,14 +230,8 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         return string.replace(/\./g, '-');
     }
 
-    vm.scrollTo = function() {
-        var taget = '';
-        var withinviewport = require('withinviewport');
-        var elementsInView = angular.element("#allObjects").withinviewport();
-        elementsInView.first(function() {
-            target = '#'+$(this)[0].id.replace(/\./g,'-');
-        });
-
+    vm.scrollTo = function(id) {
+        var target = '#'+id.replace(/\./g,'-');
         $rootScope.$broadcast('viewSubMenu::readingMode',{'target': target});
     }
 

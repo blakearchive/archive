@@ -4531,7 +4531,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     vm.showImagesOnly = function () {
         vm.apparatus = 'imagesonly';
         $rootScope.activeapparatus = 'imagesonly';
-        vm.scrollTo();
+        vm.scrollTo(vm.cssSafeId('b-los.a.illbk.03'));
     };
 
     vm.getOvpTitle = function () {
@@ -4574,14 +4574,8 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
         return string.replace(/\./g, '-');
     };
 
-    vm.scrollTo = function () {
-        var taget = '';
-        var withinviewport = __webpack_require__(152);
-        var elementsInView = angular.element("#allObjects").withinviewport();
-        elementsInView.first(function () {
-            target = '#' + $(this)[0].id.replace(/\./g, '-');
-        });
-
+    vm.scrollTo = function (id) {
+        var target = '#' + id.replace(/\./g, '-');
         $rootScope.$broadcast('viewSubMenu::readingMode', { 'target': target });
     };
 
@@ -33466,7 +33460,7 @@ module.exports = "<!--Edit buttons-->\n<div id=\"object-tools\" class=\"hidden-x
 /* 124 */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"OverlayCopyInfo\" class=\"overlay\" ng-show=\"$root.showOverlayCompareCopyInfo == true\" style=\"top:52px\">\n\n    <a style=\"text-decoration: none\" href=\"\" class=\"closebtnleft\" style=\"right:inherit\" ng-click=\"$root.showOverlayCompareCopyInfo = false\">&times;</a>\n    <header class=\"page-header\">\n      <p class=\"subhead\">COPY INFORMATION</p>\n      <h1 style=\"color:rgba(233,188,71,1)\">{{ read.compareCopy.title }} (Composed {{ read.compareCopy.composition_date_string }})</h1>\n    </header>\n    <div id=\"archive-tabs\" role=\"tabpanel\">\n    <div class=\"container-fluid overlaycopyinfo\">\n      <div class=\"container\">\n        <div class=\"tab-content\">\n          <div role=\"tabpanel\" class=\"fadeinout tab-pane active in\">\n          <copy-information copy=\"read.compareCopy\"></copy-information>\n          </div>\n        </div>\n      </div>\n    </div>\n    </div>\n</div>\n\n\n\n\n<div style=\"text-align:center\">\n<div style=\"color:white; font-size:13 px; padding-top:1px\" ng-if=\"read.apparatus == 'comparewith'\"><span>Compared with </span><a scroll-to-top href=\"\" ng-click=\"$root.showOverlayCompareCopyInfo = true\" style=\"color:yellow;\">Copy {{read.compareCopyId}}</a> (Printed {{read.compareCopyPrintDateString}})</span></div>\n\n</div>\n\n<!--<p class=\"object-title\">{{ read.getOvpTitle() }}</p>-->\n<!-- compare -->\n<div ng-style=\"read.apparatus=='comparewith' ? { 'margin-top':'0px' } : { 'margin-top':'21px' }\" id=\"compare\" class=\"scrollbar\" ng-if=\"read.bds.copy.bad_id != 'illum'\" left-on-broadcast=\"viewSubMenu::readingMode\">\n    <div class=\"featured-object\">\n        <div class=\"compare-inner\" style=\"padding-bottom:6px;padding-top:6px;padding-left:0px;font-size:13px;\" ng-style=\"truesize ? { 'height':'83vh' } : { 'height':'inherit' }\">\n\n            <!-- for letters -->\n            <div class=\"item\" ng-repeat=\"o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index\" ng-if=\"read.bds.copy.bad_id == 'letters'\">\n                <div class=\"reading-wrapper\" auto-height adjust=\"150\" breakpoint=\"768\" id=\"{{ read.cssSafeId(o.desc_id) }}\">\n                    <img magnify-image ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeObject(o)\">\n                    <div class=\"reading-copy\" ng-show=\"read.apparatus != 'imagesonly'\">\n                        <div class=\"reading-copy-inner\" ng-show=\"read.apparatus == 'transcriptions'\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <text-transcription object=\"o\"></text-transcription>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"read.apparatus == 'illustrationdescriptions'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <illustration-description object=\"o\"></illustration-description>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"read.apparatus == 'editorsnotes'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <editor-notes object=\"o\"></editor-notes>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n\n            <!-- for everything else -->\n            <div class=\"item\" ng-repeat=\"o in read.bds.copyObjects | filter:{supplemental:null} track by $index\" ng-if=\"read.bds.copy.bad_id != 'letters'\" id=\"allObjects\">\n                <div class=\"reading-wrapper\" auto-height adjust=\"150\" breakpoint=\"768\" id=\"{{ read.cssSafeId(o.desc_id) }}\">\n\n                    <img id=\"{{read.getStrippedDescId(o.desc_id)}}\" magnify-image ng-mouseover=\"read.hover = true;\" ng-mouseleave=\"read.hover = false;\" ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeObject(o)\">\n                    <img id=\"{{read.getStrippedDescId(read.compareCopyObjects[o.desc_id].desc_id)}}\" magnify-image style=\"padding-left:10px\" ng-if=\"read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null\" ng-mouseover=\"read.hover = true;\" ng-mouseleave=\"read.hover = false;\" ng-src=\"/images/{{ read.compareCopyObjects[o.desc_id].dbi }}.{{dpi}}.jpg\"> \n                    <div class=\"reading-copy\">\n                        <div class=\"reading-copy-inner\" ng-show=\"read.apparatus == 'transcriptions'\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <text-transcription object=\"o\"></text-transcription>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"read.apparatus == 'illustrationdescriptions'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <illustration-description object=\"o\"></illustration-description>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"read.apparatus == 'editorsnotes'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <editor-notes object=\"o\"></editor-notes>\n                        </div>\n                    </div>\n                    <div style=\"color:white; font-size:9px; text-align:center\" ng-if=\"read.apparatus == 'imagesonly' && truesize == false\">{{o.full_object_id}}</div>\n\n                    <div style=\"color:white; font-size:9px; text-align:center\" ng-if=\"read.apparatus == 'imagesonly' && truesize == true\">{{o.full_object_id}}</br>{{ o.physical_description.objsize['#text'] }}</div>\n\n                    <div style=\"color:white; font-size:7px;\" ng-if=\"read.apparatus == 'comparewith'\">{{o.full_object_id}}<span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span><span ng-if=\"read.compareCopyObjects[o.desc_id] != null && truesize == true\" style=\"color:yellow;float:right;\">{{read.compareCopyObjects[o.desc_id].full_object_id}}, {{ read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span><span ng-if=\"read.compareCopyObjects[o.desc_id] != null && truesize == false\" style=\"color:yellow;float:right;\">{{read.compareCopyObjects[o.desc_id].full_object_id}}</span></div>\n                    \n                </div>\n            </div>\n            <span style=\"color:white;font-size:21px;position:absolute;top:50%;padding-left:30px\">END</span>\n        </div>\n    </div>\n</div>\n\n<!--for exhibits-->\n<div auto-height adjust=\"70\" breakpoint=\"768\" style=\"overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white\" id=\"compare\" ng-if=\"read.bds.copy.bad_id == 'illum'\"\">\n    \n           \n                \n                    <ng-include src=\"'/static/html/illuminatedprinting.exhibit.html'\"></ng-include>\n                   \n   \n</div>\n<div style=\"float:right; width:67%\" id=\"compare\" class=\"scrollbar\" ng-if=\"read.bds.copy.bad_id == 'illum'\" left-on-broadcast=\"viewSubMenu::readingMode\">\n    <div class=\"featured-object\">\n        <div class=\"compare-inner\">\n            <div class=\"item\" ng-repeat=\"o in read.bds.copyObjects | filter:{supplemental:null}\" ng-if=\"read.bds.copy.bad_id != 'letters'\">\n                <div class=\"reading-wrapper\" auto-height adjust=\"150\" breakpoint=\"768\" id=\"{{ read.cssSafeId(o.desc_id) }}\">\n                    <img magnify-image ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeObject(o)\">\n                    <div class=\"reading-copy\">\n                        <div class=\"reading-copy-inner\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <text-transcription object=\"o\"></text-transcription>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n<div id=\"object-tools\" class=\"hidden-xs\">\n    <div id=\"object-tools-inner\" style=\"text-align:center\">\n        <div class=\"btn-group edit-object\" role=\"group\">\n        <button type=\"button\" style=\"height:21px;line-height:0.6\" ng-class=\"{'hover':activeapparatus == 'transcriptions'}\" class=\"btn btn-default\" ng-click=\"read.showTranscriptions()\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px;\">Diplomatic Transcriptions</span>\n            <span class=\"gr-title\">Show diplomatic transcriptions</span>\n        </button>\n        <button type=\"button\" style=\"height:21px;line-height:0.6\" ng-class=\"{'hover':activeapparatus == 'illustrationdescriptions'}\" class=\"btn btn-default\" ng-click=\"read.showIllustrationDescriptions()\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:14px\">Illustration Descriptions</span>\n            <span class=\"gr-title\">Show illustration descriptions</span>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6\" ng-class=\"{'hover':activeapparatus == 'editorsnotes'}\" class=\"btn btn-gr-selection\" ng-click=\"read.showEditorsNotes()\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">Editors' Notes</span>\n            <span class=\"gr-title\">Show editors' notes</span>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6\" ng-class=\"{'hover':activeapparatus == 'imagesonly'}\" class=\"btn btn-gr-selection\" ng-click=\"read.showImagesOnly()\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">Images Only</span>\n            <span class=\"gr-title\">Show images only</span>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6\" ng-class=\"{'hover':zoom == true,'inactive':zoom == false}\" class=\"btn btn-default\" ng-click=\"read.zoom()\" tooltip=\"Mouse over an image\" tooltip-placement=\"top\" tooltip-trigger=\"click\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">Magnify</span>\n        </button>\n\n        <button type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6\" ng-class=\"{'hover':truesize == true,'inactive':truesize == false}\" class=\"btn btn-gr-selection\" ng-click=\"read.showTrueSize()\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">True Size</span>\n            <span class=\"gr-title\">True Size</span>\n        </button>\n\n       \n\n        \n        <span ng-if=\"read.bds.workCopies.length > 1 && read.bds.copy.virtual == false\" dropdown class=\"dropdown\">\n        <button dropdown-toggle type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6;margin-bottom:1px;margin-right:1px;border-radius:0px;border-left:0px\" ng-class=\"{'hover':activeapparatus == 'comparewith'}\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">Compare with Another Copy</span>\n            <span class=\"gr-title\">Show compare with</span>\n        </button>\n            <ul class=\"dropdown-menu\" style=\"border-radius:0px;top:inherit;bottom:100%;margin:2px 0 2px\" role=\"menu\">\n                <li ng-repeat=\"copy in read.bds.workCopies track by $index\" ng-if=\"copy.archive_copy_id != read.bds.copy.archive_copy_id\">\n                    <a ng-click=\"read.showCompareWithFaster(copy.bad_id)\">Copy {{copy.archive_copy_id}} (Printed {{copy.print_date_string}})</a>\n                </li>\n            </ul>\n        </span>\n        \n\n       \n  </div>\n    </div>\n</div>\n<!--/.compare-->";
+module.exports = "<div id=\"OverlayCopyInfo\" class=\"overlay\" ng-show=\"$root.showOverlayCompareCopyInfo == true\" style=\"top:52px\">\n\n    <a style=\"text-decoration: none\" href=\"\" class=\"closebtnleft\" style=\"right:inherit\" ng-click=\"$root.showOverlayCompareCopyInfo = false\">&times;</a>\n    <header class=\"page-header\">\n      <p class=\"subhead\">COPY INFORMATION</p>\n      <h1 style=\"color:rgba(233,188,71,1)\">{{ read.compareCopy.title }} (Composed {{ read.compareCopy.composition_date_string }})</h1>\n    </header>\n    <div id=\"archive-tabs\" role=\"tabpanel\">\n    <div class=\"container-fluid overlaycopyinfo\">\n      <div class=\"container\">\n        <div class=\"tab-content\">\n          <div role=\"tabpanel\" class=\"fadeinout tab-pane active in\">\n          <copy-information copy=\"read.compareCopy\"></copy-information>\n          </div>\n        </div>\n      </div>\n    </div>\n    </div>\n</div>\n\n\n\n\n<div style=\"text-align:center\">\n<div style=\"color:white; font-size:13 px; padding-top:1px\" ng-if=\"read.apparatus == 'comparewith'\"><span>Compared with </span><a scroll-to-top href=\"\" ng-click=\"$root.showOverlayCompareCopyInfo = true\" style=\"color:yellow;\">Copy {{read.compareCopyId}}</a> (Printed {{read.compareCopyPrintDateString}})</span></div>\n\n</div>\n\n<!--<p class=\"object-title\">{{ read.getOvpTitle() }}</p>-->\n<!-- compare -->\n<div ng-style=\"read.apparatus=='comparewith' ? { 'margin-top':'0px' } : { 'margin-top':'21px' }\" id=\"compare\" class=\"scrollbar\" ng-if=\"read.bds.copy.bad_id != 'illum'\" left-on-broadcast=\"viewSubMenu::readingMode\">\n    <div class=\"featured-object\">\n        <div class=\"compare-inner\" style=\"padding-bottom:6px;padding-top:6px;padding-left:0px;font-size:13px;\" ng-style=\"truesize ? { 'height':'83vh' } : { 'height':'inherit' }\">\n\n            <!-- for letters -->\n            <div class=\"item\" ng-repeat=\"o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index\" ng-if=\"read.bds.copy.bad_id == 'letters'\">\n                <div class=\"reading-wrapper\" auto-height adjust=\"150\" breakpoint=\"768\" id=\"{{ read.cssSafeId(o.desc_id) }}\">\n                    <img magnify-image ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeObject(o)\">\n                    <div class=\"reading-copy\" ng-show=\"read.apparatus != 'imagesonly'\">\n                        <div class=\"reading-copy-inner\" ng-show=\"read.apparatus == 'transcriptions'\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <text-transcription object=\"o\"></text-transcription>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"read.apparatus == 'illustrationdescriptions'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <illustration-description object=\"o\"></illustration-description>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"read.apparatus == 'editorsnotes'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <editor-notes object=\"o\"></editor-notes>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n\n            <!-- for everything else -->\n            <div class=\"item\" ng-repeat=\"o in read.bds.copyObjects | filter:{supplemental:null} track by $index\" ng-if=\"read.bds.copy.bad_id != 'letters'\">\n                <div class=\"reading-wrapper\" auto-height adjust=\"150\" breakpoint=\"768\" id=\"{{ read.cssSafeId(o.desc_id) }}\">\n\n                    <img id=\"{{read.getStrippedDescId(o.desc_id)}}\" magnify-image ng-mouseover=\"read.hover = true;\" ng-mouseleave=\"read.hover = false;\" ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeObject(o)\">\n                    <img id=\"{{read.getStrippedDescId(read.compareCopyObjects[o.desc_id].desc_id)}}\" magnify-image style=\"padding-left:10px\" ng-if=\"read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null\" ng-mouseover=\"read.hover = true;\" ng-mouseleave=\"read.hover = false;\" ng-src=\"/images/{{ read.compareCopyObjects[o.desc_id].dbi }}.{{dpi}}.jpg\"> \n                    <div class=\"reading-copy\">\n                        <div class=\"reading-copy-inner\" ng-show=\"read.apparatus == 'transcriptions'\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <text-transcription object=\"o\"></text-transcription>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"read.apparatus == 'illustrationdescriptions'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <illustration-description object=\"o\"></illustration-description>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"read.apparatus == 'editorsnotes'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <editor-notes object=\"o\"></editor-notes>\n                        </div>\n                    </div>\n                    <div style=\"color:white; font-size:9px; text-align:center\" ng-if=\"read.apparatus == 'imagesonly' && truesize == false\">{{o.full_object_id}}</div>\n\n                    <div style=\"color:white; font-size:9px; text-align:center\" ng-if=\"read.apparatus == 'imagesonly' && truesize == true\">{{o.full_object_id}}</br>{{ o.physical_description.objsize['#text'] }}</div>\n\n                    <div style=\"color:white; font-size:7px;\" ng-if=\"read.apparatus == 'comparewith'\">{{o.full_object_id}}<span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span><span ng-if=\"read.compareCopyObjects[o.desc_id] != null && truesize == true\" style=\"color:yellow;float:right;\">{{read.compareCopyObjects[o.desc_id].full_object_id}}, {{ read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span><span ng-if=\"read.compareCopyObjects[o.desc_id] != null && truesize == false\" style=\"color:yellow;float:right;\">{{read.compareCopyObjects[o.desc_id].full_object_id}}</span></div>\n                    \n                </div>\n            </div>\n            <span style=\"color:white;font-size:21px;position:absolute;top:50%;padding-left:30px\">END</span>\n        </div>\n    </div>\n</div>\n\n<!--for exhibits-->\n<div auto-height adjust=\"70\" breakpoint=\"768\" style=\"overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white\" id=\"compare\" ng-if=\"read.bds.copy.bad_id == 'illum'\"\">\n    \n           \n                \n                    <ng-include src=\"'/static/html/illuminatedprinting.exhibit.html'\"></ng-include>\n                   \n   \n</div>\n<div style=\"float:right; width:67%\" id=\"compare\" class=\"scrollbar\" ng-if=\"read.bds.copy.bad_id == 'illum'\" left-on-broadcast=\"viewSubMenu::readingMode\">\n    <div class=\"featured-object\">\n        <div class=\"compare-inner\">\n            <div class=\"item\" ng-repeat=\"o in read.bds.copyObjects | filter:{supplemental:null}\" ng-if=\"read.bds.copy.bad_id != 'letters'\">\n                <div class=\"reading-wrapper\" auto-height adjust=\"150\" breakpoint=\"768\" id=\"{{ read.cssSafeId(o.desc_id) }}\">\n                    <img magnify-image ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeObject(o)\">\n                    <div class=\"reading-copy\">\n                        <div class=\"reading-copy-inner\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span class=\"text-capitalize\">{{ o.full_object_id }}</span></h4>\n                            <text-transcription object=\"o\"></text-transcription>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n<div id=\"object-tools\" class=\"hidden-xs\">\n    <div id=\"object-tools-inner\" style=\"text-align:center\">\n        <div class=\"btn-group edit-object\" role=\"group\">\n        <button type=\"button\" style=\"height:21px;line-height:0.6\" ng-class=\"{'hover':activeapparatus == 'transcriptions'}\" class=\"btn btn-default\" ng-click=\"read.showTranscriptions()\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px;\">Diplomatic Transcriptions</span>\n            <span class=\"gr-title\">Show diplomatic transcriptions</span>\n        </button>\n        <button type=\"button\" style=\"height:21px;line-height:0.6\" ng-class=\"{'hover':activeapparatus == 'illustrationdescriptions'}\" class=\"btn btn-default\" ng-click=\"read.showIllustrationDescriptions()\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:14px\">Illustration Descriptions</span>\n            <span class=\"gr-title\">Show illustration descriptions</span>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6\" ng-class=\"{'hover':activeapparatus == 'editorsnotes'}\" class=\"btn btn-gr-selection\" ng-click=\"read.showEditorsNotes()\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">Editors' Notes</span>\n            <span class=\"gr-title\">Show editors' notes</span>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6\" ng-class=\"{'hover':activeapparatus == 'imagesonly'}\" class=\"btn btn-gr-selection\" ng-click=\"read.showImagesOnly()\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">Images Only</span>\n            <span class=\"gr-title\">Show images only</span>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6\" ng-class=\"{'hover':zoom == true,'inactive':zoom == false}\" class=\"btn btn-default\" ng-click=\"read.zoom()\" tooltip=\"Mouse over an image\" tooltip-placement=\"top\" tooltip-trigger=\"click\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">Magnify</span>\n        </button>\n\n        <button type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6\" ng-class=\"{'hover':truesize == true,'inactive':truesize == false}\" class=\"btn btn-gr-selection\" ng-click=\"read.showTrueSize()\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">True Size</span>\n            <span class=\"gr-title\">True Size</span>\n        </button>\n\n       \n\n        \n        <span ng-if=\"read.bds.workCopies.length > 1 && read.bds.copy.virtual == false\" dropdown class=\"dropdown\">\n        <button dropdown-toggle type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6;margin-bottom:1px;margin-right:1px;border-radius:0px;border-left:0px\" ng-class=\"{'hover':activeapparatus == 'comparewith'}\">\n            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">Compare with Another Copy</span>\n            <span class=\"gr-title\">Show compare with</span>\n        </button>\n            <ul class=\"dropdown-menu\" style=\"border-radius:0px;top:inherit;bottom:100%;margin:2px 0 2px\" role=\"menu\">\n                <li ng-repeat=\"copy in read.bds.workCopies track by $index\" ng-if=\"copy.archive_copy_id != read.bds.copy.archive_copy_id\">\n                    <a ng-click=\"read.showCompareWithFaster(copy.bad_id)\">Copy {{copy.archive_copy_id}} (Printed {{copy.print_date_string}})</a>\n                </li>\n            </ul>\n        </span>\n        \n\n       \n  </div>\n    </div>\n</div>\n<!--/.compare-->";
 
 /***/ }),
 /* 125 */
@@ -33767,243 +33761,6 @@ requireAll(__webpack_require__(5));
 requireAll(__webpack_require__(2));
 requireAll(__webpack_require__(3));
 requireAll(__webpack_require__(4));
-
-/***/ }),
-/* 152 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
- * Within Viewport
- *
- * @description Determines whether an element is completely within the browser viewport
- * @author      Craig Patik, http://patik.com/
- * @version     2.0.0
- * @date        2016-12-19
- */
-(function (root, name, factory) {
-    // AMD
-    if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    }
-    // Node and CommonJS-like environments
-    else if (typeof module !== 'undefined' && typeof exports === 'object') {
-            module.exports = factory();
-        }
-        // Browser global
-        else {
-                root[name] = factory();
-            }
-})(this, 'withinviewport', function () {
-    var canUseWindowDimensions = window.innerHeight !== undefined; // IE 8 and lower fail this
-
-    /**
-     * Determines whether an element is within the viewport
-     * @param  {Object}  elem       DOM Element (required)
-     * @param  {Object}  options    Optional settings
-     * @return {Boolean}            Whether the element was completely within the viewport
-    */
-    var withinviewport = function withinviewport(elem, options) {
-        var result = false;
-        var metadata = {};
-        var config = {};
-        var settings;
-        var isWithin;
-        var isContainerTheWindow;
-        var elemBoundingRect;
-        var containerBoundingRect;
-        var scrollBarWidths = [0, 0];
-        var sideNamesPattern;
-        var sides;
-        var side;
-        var i;
-
-        // If invoked by the jQuery plugin, get the actual DOM element
-        if (typeof jQuery !== 'undefined' && elem instanceof jQuery) {
-            elem = elem.get(0);
-        }
-
-        if (typeof elem !== 'object' || elem.nodeType !== 1) {
-            throw new Error('First argument must be an element');
-        }
-
-        // Look for inline settings on the element
-        if (elem.getAttribute('data-withinviewport-settings') && window.JSON) {
-            metadata = JSON.parse(elem.getAttribute('data-withinviewport-settings'));
-        }
-
-        // Settings argument may be a simple string (`top`, `right`, etc)
-        if (typeof options === 'string') {
-            settings = { sides: options };
-        } else {
-            settings = options || {};
-        }
-
-        // Build configuration from defaults and user-provided settings and metadata
-        config.container = settings.container || metadata.container || withinviewport.defaults.container || window;
-        config.sides = settings.sides || metadata.sides || withinviewport.defaults.sides || 'all';
-        config.top = settings.top || metadata.top || withinviewport.defaults.top || 0;
-        config.right = settings.right || metadata.right || withinviewport.defaults.right || 0;
-        config.bottom = settings.bottom || metadata.bottom || withinviewport.defaults.bottom || 0;
-        config.left = settings.left || metadata.left || withinviewport.defaults.left || 0;
-
-        // Extract the DOM node from a jQuery collection
-        if (typeof jQuery !== 'undefined' && config.container instanceof jQuery) {
-            config.container = config.container.get(0);
-        }
-
-        // Use the window as the container if the user specified the body or a non-element
-        if (config.container === document.body || !config.container.nodeType === 1) {
-            config.container = window;
-        }
-
-        isContainerTheWindow = config.container === window;
-
-        // Element testing methods
-        isWithin = {
-            // Element is below the top edge of the viewport
-            top: function _isWithin_top() {
-                if (isContainerTheWindow) {
-                    return elemBoundingRect.top >= config.top;
-                } else {
-                    return elemBoundingRect.top >= containerScrollTop - (containerScrollTop - containerBoundingRect.top) + config.top;
-                }
-            },
-
-            // Element is to the left of the right edge of the viewport
-            right: function _isWithin_right() {
-                // Note that `elemBoundingRect.right` is the distance from the *left* of the viewport to the element's far right edge
-
-                if (isContainerTheWindow) {
-                    return elemBoundingRect.right <= containerBoundingRect.right + containerScrollLeft - config.right;
-                } else {
-                    return elemBoundingRect.right <= containerBoundingRect.right - scrollBarWidths[0] - config.right;
-                }
-            },
-
-            // Element is above the bottom edge of the viewport
-            bottom: function _isWithin_bottom() {
-                var containerHeight;
-
-                if (isContainerTheWindow) {
-                    if (canUseWindowDimensions) {
-                        containerHeight = config.container.innerHeight;
-                    } else {
-                        containerHeight = document.documentElement.clientHeight;
-                    }
-                } else {
-                    containerHeight = containerBoundingRect.bottom;
-                }
-
-                // Note that `elemBoundingRect.bottom` is the distance from the *top* of the viewport to the element's bottom edge
-                return elemBoundingRect.bottom <= containerHeight - scrollBarWidths[1] - config.bottom;
-            },
-
-            // Element is to the right of the left edge of the viewport
-            left: function _isWithin_left() {
-                if (isContainerTheWindow) {
-                    return elemBoundingRect.left >= config.left;
-                } else {
-                    return elemBoundingRect.left >= containerScrollLeft - (containerScrollLeft - containerBoundingRect.left) + config.left;
-                }
-            },
-
-            // Element is within all four boundaries
-            all: function _isWithin_all() {
-                // Test each boundary in order of efficiency and likeliness to be false. This way we can avoid running all four functions on most elements.
-                //     1. Top: Quickest to calculate + most likely to be false
-                //     2. Bottom: Note quite as quick to calculate, but also very likely to be false
-                //     3-4. Left and right are both equally unlikely to be false since most sites only scroll vertically, but left is faster
-                return isWithin.top() && isWithin.bottom() && isWithin.left() && isWithin.right();
-            }
-        };
-
-        // Get the element's bounding rectangle with respect to the viewport
-        elemBoundingRect = elem.getBoundingClientRect();
-
-        // Get viewport dimensions and offsets
-        if (isContainerTheWindow) {
-            containerBoundingRect = document.documentElement.getBoundingClientRect();
-            containerScrollTop = document.body.scrollTop;
-            containerScrollLeft = document.body.scrollLeft;
-        } else {
-            containerBoundingRect = config.container.getBoundingClientRect();
-            containerScrollTop = config.container.scrollTop;
-            containerScrollLeft = config.container.scrollLeft;
-        }
-
-        // Don't count the space consumed by scrollbars
-        if (containerScrollLeft) {
-            scrollBarWidths[0] = 18;
-        }
-
-        if (containerScrollTop) {
-            scrollBarWidths[1] = 16;
-        }
-
-        // Test the element against each side of the viewport that was requested
-        sideNamesPattern = /^top$|^right$|^bottom$|^left$|^all$/;
-        // Loop through all of the sides
-        sides = config.sides.split(' ');
-        i = sides.length;
-        while (i--) {
-            side = sides[i].toLowerCase();
-
-            if (sideNamesPattern.test(side)) {
-                if (isWithin[side]()) {
-                    result = true;
-                } else {
-                    result = false;
-
-                    // Quit as soon as the first failure is found
-                    break;
-                }
-            }
-        }
-
-        return result;
-    };
-
-    // Default settings
-    withinviewport.prototype.defaults = {
-        container: document.body,
-        sides: 'all',
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0
-    };
-
-    withinviewport.defaults = withinviewport.prototype.defaults;
-
-    /**
-     * Optional enhancements and shortcuts
-     *
-     * @description Uncomment or comment these pieces as they apply to your project and coding preferences
-     */
-
-    // Shortcut methods for each side of the viewport
-    // Example: `withinviewport.top(elem)` is the same as `withinviewport(elem, 'top')`
-    withinviewport.prototype.top = function _withinviewport_top(element) {
-        return withinviewport(element, 'top');
-    };
-
-    withinviewport.prototype.right = function _withinviewport_right(element) {
-        return withinviewport(element, 'right');
-    };
-
-    withinviewport.prototype.bottom = function _withinviewport_bottom(element) {
-        return withinviewport(element, 'bottom');
-    };
-
-    withinviewport.prototype.left = function _withinviewport_left(element) {
-        return withinviewport(element, 'left');
-    };
-
-    return withinviewport;
-});
 
 /***/ })
 /******/ ]);
