@@ -197,6 +197,21 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         //}
     }
 
+    vm.showIndividualIllustrationDescriptions = function(id) {
+        var el = angular.element('#'+id);
+        el.attr('ng-show', "read.apparatus == 'illustrationdescriptions'");
+    }
+
+    vm.showIndividualTranscriptions = function(id) {
+        var el = angular.element('#'+id);
+        el.attr('ng-show', "read.apparatus == 'transcriptions'");
+    }
+
+    vm.showIndividualEditorsNotes = function(id) {
+        var el = angular.element('#'+id);
+        el.attr('ng-show', "read.apparatus == 'editorsnotes'");
+    }
+
     vm.showImagesOnly = function() {
         vm.apparatus = 'imagesonly';
         $rootScope.activeapparatus = 'imagesonly';
