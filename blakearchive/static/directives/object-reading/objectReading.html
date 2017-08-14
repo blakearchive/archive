@@ -71,12 +71,12 @@
                     </div>
                     <img id="{{read.getStrippedDescId(read.compareCopyObjects[o.desc_id].desc_id)}}" magnify-image style="padding-left:10px" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ read.compareCopyObjects[o.desc_id].dbi }}.{{dpi}}.jpg">
                     <div style="float:right" class="reading-copy">
-                        <div class="reading-copy-inner" ng-show="read.apparatus == 'transcriptions' && $root.apparatusArray[$index] != 'illustrationdescriptions' && $root.apparatusArray[$index] != 'editorsnotes'">
+                        <div class="reading-copy-inner" ng-show="read.apparatus == 'transcriptions' && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes'">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <text-transcription object="o"></text-transcription>
                         </div>
-                        <div class="reading-copy-inner" ng-show="read.apparatus == 'illustrationdescriptions' || $root.apparatusArray[$index] == 'illustrationdescriptions'" style="width:10px">
+                        <div class="reading-copy-inner" ng-show="read.apparatus == 'illustrationdescriptions' || read.apparatusArray[$index] == 'illustrationdescriptions'" style="width:10px">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <illustration-description object="o"></illustration-description>
