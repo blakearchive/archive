@@ -4756,7 +4756,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     vm.showOverlayCompareCopyInfo = false;
     vm.compareCopy = null;
     $rootScope.activeId = '';
-    vm.apparatusArray = {};
+    vm.apparatusArray = [];
     vm.isApparatusArrayInit = false;
 
     vm.initApparatusArray = function () {
