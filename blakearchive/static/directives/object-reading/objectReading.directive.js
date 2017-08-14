@@ -187,7 +187,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.showImagesOnly = function() {
         vm.apparatus = 'imagesonly';
         $rootScope.activeapparatus = 'imagesonly';
-        vm.scrollTo(cssSafeId('b-los.a.illbk.03'));
+        vm.scrollTo(vm.cssSafeId('b-los.a.illbk.03'));
     }
 
     vm.getOvpTitle = function() {
