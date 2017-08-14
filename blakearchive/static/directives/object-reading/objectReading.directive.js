@@ -19,11 +19,13 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     $rootScope.activeId = '';
 
 
-    $scope.$on('$viewContentLoaded', function() {
+    var init = function() {
         vm.bds.copyObjects.forEach(function(copyObject) {
             copyObject.apparatus = 'transcriptions';
         });
-    });
+    };
+
+    init();
 
     console.log(vm.bds);
 
