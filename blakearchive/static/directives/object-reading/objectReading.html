@@ -50,12 +50,7 @@
             </div>
             <!-- for everything else -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null} track by $index" ng-if="read.bds.copy.bad_id != 'letters'">
-                <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
-                    <!--use the following for anchoring images
-                <div in-view="read.setActiveId($index)" class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
-                -->
-                    <img id="{{read.getStrippedDescId(o.desc_id)}}" magnify-image ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" ng-click="read.changeObject(o)">
-                    <div class="btn-group-vertical edit-object" role="group" style="width:5%">
+                <div class="btn-group edit-object" role="group" style="width:5%">
                         <button type="button" style="height:21px;line-height:0.6" ng-class="{'hover':activeapparatus == 'transcriptions'}" class="btn btn-default" ng-click="read.showIndividualTranscriptions($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:13px;">DT</span>
                             <span class="gr-title">Show diplomatic transcriptions</span>
@@ -69,6 +64,11 @@
                             <span class="gr-title">Show editors' notes</span>
                         </button>
                     </div>
+                <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
+                    <!--use the following for anchoring images
+                <div in-view="read.setActiveId($index)" class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
+                -->
+                    <img id="{{read.getStrippedDescId(o.desc_id)}}" magnify-image ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" ng-click="read.changeObject(o)">
                     <img id="{{read.getStrippedDescId(read.compareCopyObjects[o.desc_id].desc_id)}}" magnify-image style="padding-left:10px" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ read.compareCopyObjects[o.desc_id].dbi }}.{{dpi}}.jpg">
                     <div style="float:right" class="reading-copy">
                         <div class="reading-copy-inner" ng-show="read.apparatus == 'transcriptions' && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes'">
