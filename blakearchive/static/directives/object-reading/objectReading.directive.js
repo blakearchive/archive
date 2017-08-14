@@ -17,7 +17,6 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.showOverlayCompareCopyInfo = false;
     vm.compareCopy = null;
     $rootScope.activeId = '';
-    vm.individualId = '';
 
     console.log(vm.bds);
 
@@ -198,8 +197,8 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         //}
     }
 
-    vm.showIndividualIllustrationDescriptions = function(id) {
-        vm.individualId.id = 'illustrationdescriptions';
+    vm.showIndividualIllustrationDescriptions = function(index) {
+        vm.bds.copyObjects[index].apparatus = 'illustrationdescriptions';
         console.log(id);
         console.log(vm.id);
     }
