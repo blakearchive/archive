@@ -64,6 +64,37 @@
                 <div in-view="read.setActiveId($index)" class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
                 -->
                     <img id="{{read.getStrippedDescId(o.desc_id)}}" magnify-image ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" ng-click="read.changeObject(o)">
+
+                    <div id="object-tools" class="hidden-xs">
+    <div id="object-tools-inner" style="text-align:center">
+        <div class="btn-group-vertical edit-object" role="group">
+        <button type="button" style="height:21px;line-height:0.6" ng-class="{'hover':activeapparatus == 'transcriptions'}" class="btn btn-default" ng-click="read.showTranscriptions()">
+            <span class="gr-abbreviation" style="height:21px;font-size:13px;">DT</span>
+            <span class="gr-title">Show diplomatic transcriptions</span>
+        </button>
+        <button type="button" style="height:21px;line-height:0.6" ng-class="{'hover':activeapparatus == 'illustrationdescriptions'}" class="btn btn-default" ng-click="read.showIllustrationDescriptions()">
+            <span class="gr-abbreviation" style="height:21px;font-size:14px">ID</span>
+            <span class="gr-title">Show illustration descriptions</span>
+        </button>
+        <button type="button" class="btn btn-default" style="height:21px;line-height:0.6" ng-class="{'hover':activeapparatus == 'editorsnotes'}" class="btn btn-gr-selection" ng-click="read.showEditorsNotes()">
+            <span class="gr-abbreviation" style="height:21px;font-size:13px">EN</span>
+            <span class="gr-title">Show editors' notes</span>
+        </button>
+        <button type="button" class="btn btn-default" style="height:21px;line-height:0.6" ng-class="{'hover':activeapparatus == 'imagesonly'}" class="btn btn-gr-selection" ng-click="read.showImagesOnly()">
+            <span class="gr-abbreviation" style="height:21px;font-size:13px">IO</span>
+            <span class="gr-title">Show images only</span>
+        </button>
+        <button type="button" class="btn btn-default" style="height:21px;line-height:0.6" ng-class="{'hover':zoom == true,'inactive':zoom == false}" class="btn btn-default" ng-click="read.zoom()" tooltip="Mouse over an image" tooltip-placement="top" tooltip-trigger="click">
+            <span class="gr-abbreviation" style="height:21px;font-size:13px">M</span>
+        </button>
+
+        <button type="button" class="btn btn-default" style="height:21px;line-height:0.6" ng-class="{'hover':truesize == true,'inactive':truesize == false}" class="btn btn-gr-selection" ng-click="read.showTrueSize()">
+            <span class="gr-abbreviation" style="height:21px;font-size:13px">TS</span>
+            <span class="gr-title">True Size</span>
+        </button>
+        </div>
+        </div>
+
                     <img id="{{read.getStrippedDescId(read.compareCopyObjects[o.desc_id].desc_id)}}" magnify-image style="padding-left:10px" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ read.compareCopyObjects[o.desc_id].dbi }}.{{dpi}}.jpg"> 
                     <div class="reading-copy">
                         <div class="reading-copy-inner" ng-show="read.apparatus == 'transcriptions'">
