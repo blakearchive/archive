@@ -26,7 +26,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         });
     };
 
-    init();
+    vm.init();
 
     console.log(vm.bds);
 

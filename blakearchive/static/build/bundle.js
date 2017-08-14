@@ -4764,7 +4764,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
         });
     };
 
-    init();
+    vm.init();
 
     console.log(vm.bds);
 
