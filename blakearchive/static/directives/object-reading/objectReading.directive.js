@@ -46,7 +46,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 vm.reverseTrueSize();
             }
         }
-        vm.scrollTo();
+        //vm.scrollTo();
     }
 
     $scope.$on('clientPpi::savedPpi', function() {
@@ -71,7 +71,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 }
             });
         }
-        vm.scrollTo();
+        //vm.scrollTo();
 
     }
 
@@ -139,7 +139,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
             $rootScope.truesize = false;
             vm.reverseTrueSize();
         }
-        vm.scrollTo();
+        //vm.scrollTo();
     }
 
     vm.showCompareWith = function(bad_id) {
@@ -170,7 +170,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
             $rootScope.truesize = false;
             vm.reverseTrueSize();
         }
-        vm.scrollTo();
+        //vm.scrollTo();
     }
 
     vm.showIllustrationDescriptions = function() {
@@ -184,26 +184,23 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
 
     vm.showTranscriptions = function() {
         vm.apparatus = 'transcriptions';
-        //vm.currentApparatus = $rootScope.activeapparatus;
         $rootScope.activeapparatus = 'transcriptions';
-        //if(vm.currentApparatus == 'imagesonly') {
-            vm.scrollTo();
-        //}
+        //vm.scrollTo();
     }
 
     vm.showEditorsNotes = function() {
         vm.apparatus = 'editorsnotes';
         vm.currentApparatus = $rootScope.activeapparatus;
         $rootScope.activeapparatus = 'editorsnotes';
-        if(vm.currentApparatus == 'imagesonly' || vm.currentApparatus == 'transcriptions') {
-            vm.scrollTo();
-        }
+        //if(vm.currentApparatus == 'imagesonly' || vm.currentApparatus == 'transcriptions') {
+        //    vm.scrollTo();
+        //}
     }
 
     vm.showImagesOnly = function() {
         vm.apparatus = 'imagesonly';
         $rootScope.activeapparatus = 'imagesonly';
-        vm.scrollTo();
+        //vm.scrollTo();
     }
 
     vm.getOvpTitle = function() {
