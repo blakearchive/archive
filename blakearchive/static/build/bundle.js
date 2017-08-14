@@ -4930,6 +4930,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
 
     vm.showIndividualIllustrationDescriptions = function (id) {
         vm.id = 'illustrationdescriptions';
+        console.log(id);
         console.log(vm.id);
     };
 
