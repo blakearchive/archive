@@ -4939,7 +4939,9 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     };
 
     vm.showIndividualIllustrationDescriptions = function (index) {
+        console.log(vm.initApparatusArray);
         if (vm.initApparatusArray == false) {
+            console.log('about to call');
             vm.initApparatusArray();
         }
         console.log(vm.apparatusArray[index]);
