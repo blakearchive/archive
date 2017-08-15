@@ -24,7 +24,7 @@
 <!-- compare -->
 <div ng-style="read.apparatus=='comparewith' ? { 'margin-top':'0px' } : { 'margin-top':'0px' }" id="compare" class="scrollbar" ng-if="read.bds.copy.bad_id != 'illum'" left-on-broadcast="viewSubMenu::readingMode">
     <div class="featured-object">
-        <div class="compare-inner" style="padding-bottom:6px;padding-top:6px;padding-left:0px;font-size:13px;" ng-style="truesize ? { 'height':'83vh' } : { 'height':'inherit' }">
+        <div class="compare-inner" style="padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px;" ng-style="truesize ? { 'height':'83vh' } : { 'height':'inherit' }">
             <!-- for letters -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index" ng-if="read.bds.copy.bad_id == 'letters'">
                 <div ng-if="read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes' || read.apparatus == 'imagesonly'" class="btn-group edit-object" role="group" style="margin-bottom:0px;margin-left:28px">
