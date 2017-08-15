@@ -4761,6 +4761,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
 
     vm.initApparatusArray = function () {
         console.log('called');
+        vm.apparatusArray = [];
         vm.bds.copyObjects.forEach(function (copyObject) {
             vm.apparatusArray.push('');
             console.log(vm.apparatusArray);
