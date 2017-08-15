@@ -22,19 +22,19 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
 
 
     vm.initApparatusArray = function() {
-        console.log('called');
+        //console.log('called');
         vm.apparatusArray = [];
         vm.bds.copyObjects.forEach(function(copyObject) {
             vm.apparatusArray.push('');
-            console.log(vm.apparatusArray);
+            //console.log(vm.apparatusArray);
         });
     };
 
-    console.log(vm.bds);
+    //console.log(vm.bds);
 
     vm.zoom = function() {
         $rootScope.zoom = !$rootScope.zoom;
-        //console.log($rootScope.zoom);
+        ////console.log($rootScope.zoom);
     };
 
     vm.getStrippedDescId = function(desc_id) {
@@ -104,7 +104,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                     width = width * 10;
                     height = height * 10;
                 }
-                //console.log(height);
+                ////console.log(height);
                 var myEl = angular.element(document.querySelector('#' + vm.getStrippedDescId(copyObject.desc_id)));
                 myEl.attr('style', 'height:' + height + 'px;' + 'width:' + width + 'px;' + 'margin-right:' + '15px');
 
@@ -139,10 +139,10 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 }
                 });
             });
-            //console.log(resultingCopyObjects);
+            ////console.log(resultingCopyObjects);
         });
 
-        console.log(vm.compareCopyObjectsTemp);
+        //console.log(vm.compareCopyObjectsTemp);
 
 
         vm.apparatus = 'comparewith';
@@ -161,7 +161,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         BlakeDataService.getCopy(bad_id).then(function(resultingCopy) {
             vm.compareCopy = resultingCopy;
         });
-        console.log(vm.compareCopy);
+        //console.log(vm.compareCopy);
 
         vm.bds.copyObjects.forEach(function(copyObject) {
             BlakeDataService.getSameMatrixObjectFromOtherCopy(copyObject.desc_id, bad_id).then(function(result) {
@@ -174,7 +174,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 }
             });
         });
-        console.log(vm.compareCopyObjects);
+        //console.log(vm.compareCopyObjects);
 
         vm.apparatus = 'comparewith';
         $rootScope.activeapparatus = 'comparewith';
@@ -299,7 +299,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
             $rootScope.activeId = vm.cssSafeId(vm.bds.copyObjects[index].desc_id);
         }
         //$rootScope.activeId = id;
-        console.log($rootScope.activeId);
+        //console.log($rootScope.activeId);
     }
 
     $scope.$watch(function() {
