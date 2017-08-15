@@ -214,6 +214,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.showIndividualIllustrationDescriptions = function(index) {
         if(vm.isApparatusArrayInit == false) {
             vm.initApparatusArray();
+            vm.isApparatusArrayInit = true;
         }
         vm.apparatusArray[index] = 'illustrationdescriptions';
     }
