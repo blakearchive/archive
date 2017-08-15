@@ -50,23 +50,19 @@
             </div>
             <!-- for everything else -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null} track by $index" ng-if="read.bds.copy.bad_id != 'letters'">
-                <div id="object-tools " class="hidden-xs ">
-                <div id="object-tools-inner " style="text-align:center ">
                 <div ng-if="read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes' || read.apparatus == 'imagesonly'" class="btn-group edit-object" role="group" style="margin-bottom:0px;margin-left:28px">
-                        <button tooltip="Diplomatic Transcription" tooltip-placement="bottom" type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px" ng-class="{'hover':read.apparatusArray[$index] == 'transcriptions'}" class="btn btn-default" ng-click="read.showIndividualTranscriptions($index)">
+                        <button type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px" ng-class="{'hover':read.apparatusArray[$index] == 'transcriptions'}" class="btn btn-default" ng-click="read.showIndividualTranscriptions($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:13px;"></span>
                             <span class="gr-title">Show diplomatic transcriptions</span>
                         </button>
-                        <button tooltip="Illustration Description" tooltip-placement="bottom" type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -121px" ng-class="{'hover':read.apparatusArray[$index] == 'illustrationdescriptions'}" class="btn btn-default" ng-click="read.showIndividualIllustrationDescriptions($index)">
+                        <button type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -121px" ng-class="{'hover':read.apparatusArray[$index] == 'illustrationdescriptions'}" class="btn btn-default" ng-click="read.showIndividualIllustrationDescriptions($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:14px"></span>
                             <span class="gr-title">Show illustration descriptions</span>
                         </button>
-                        <button tooltip="Editors' Notes" tooltip-placement="bottom" type="button" class="btn btn-default" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -245px" ng-class="{'hover':read.apparatusArray[$index] == 'editorsnotes'}" class="btn btn-gr-selection" ng-click="read.showIndividualEditorsNotes($index)">
+                        <button type="button" class="btn btn-default" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -245px" ng-class="{'hover':read.apparatusArray[$index] == 'editorsnotes'}" class="btn btn-gr-selection" ng-click="read.showIndividualEditorsNotes($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:13px"></span>
                             <span class="gr-title">Show editors' notes</span>
                         </button>
-                    </div>
-                    </div>
                     </div>
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
                     <!--use the following for anchoring images
