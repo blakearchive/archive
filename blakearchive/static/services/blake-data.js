@@ -542,6 +542,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
         return blakeData.setSelectedCopy(copyId,descId).then(function(){
             $location.path('/copy/'+copyId,false);
             $location.search('descId',descId);
+            $rootScope.$broadcast('change::selectedObject')
         });
     };
 
