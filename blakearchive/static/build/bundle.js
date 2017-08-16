@@ -6109,6 +6109,7 @@ angular.module("blake").controller("ViewSubMenuController", ["$rootScope", "$rou
                 return;
             }
             var target = $routeParams.descId ? '#' + $routeParams.descId.replace(/\./g, '-') : '';
+            console.log(target);
             $rootScope.$broadcast('viewSubMenu::readingMode', { 'target': target });
             $rootScope.persistentmode = 'reading';
         }
@@ -7981,9 +7982,6 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
         return blakeData.setSelectedCopy(copyId, descId).then(function () {
             $location.path('/copy/' + copyId, false);
             $location.search('descId', descId);
-            var target = '#' + descId.replace(/\./g, '-');
-            console.log(target);
-            $rootScope.$broadcast('viewSubMenu::readingMode', { 'target': target });
         });
     };
 
