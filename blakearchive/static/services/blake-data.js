@@ -466,6 +466,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
             if (descId) {
 
                 blakeData.getObject(descId).then(function(data){
+                    console.log('object being changed');
                     blakeData.changeObject(data);
                 });
 
