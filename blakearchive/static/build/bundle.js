@@ -4854,6 +4854,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     vm.showCompareWithFaster = function (bad_id) {
         vm.compareCopyObjects = {};
         vm.compareCopyObjectsTemp = [];
+        vm.apparatusArray = [];
 
         BlakeDataService.getCopy(bad_id).then(function (resultingCopy) {
             vm.compareCopy = resultingCopy;
