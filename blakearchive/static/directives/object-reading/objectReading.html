@@ -16,10 +16,10 @@
         </div>
     </div>
 </div>
-<div style="text-align:center">
+<!--<div style="text-align:center">
     <div style="color:white; font-size:13 px; padding-top:1px" ng-if="read.apparatus == 'comparewith'"><span>Compared with </span><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}}</a> (Printed {{read.compareCopyPrintDateString}})</span>
     </div>
-</div>
+</div>-->
 <!--<p class="object-title">{{ read.getOvpTitle() }}</p>-->
 <!-- compare -->
 <div ng-style="read.apparatus=='comparewith' ? { 'margin-top':'-20px' } : { 'margin-top':'0px' }" id="compare" class="scrollbar" ng-if="read.bds.copy.bad_id != 'illum'" left-on-broadcast="viewSubMenu::readingMode">
@@ -77,6 +77,7 @@
                             <span class="gr-abbreviation" style="height:21px;font-size:13px"></span>
                             <span class="gr-title">Show editors' notes</span>
                         </button>
+                        <span ng-if="read.apparatus == 'comparewith'" style="float:right;"><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}}</a> (Printed {{read.compareCopyPrintDateString}})</span>
                     </div>
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
                     <!--use the following for anchoring images
