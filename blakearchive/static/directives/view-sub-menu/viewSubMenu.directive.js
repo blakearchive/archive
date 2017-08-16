@@ -75,6 +75,14 @@ angular.module("blake").controller("ViewSubMenuController", function ($rootScope
                 $rootScope.descIDFromCompare = null;
                 return;
             }
+            if($rootScope.descIdFromReadingCompare != null) {
+                var target = $rootScope.descIdFromReadingCompare ? '#'+$rootScope.descIdFromReadingCompare.replace(/\./g,'-') : '';
+                $rootScope.$broadcast('viewSubMenu::readingMode',{'target': target});
+                $rootScope.persistentmode = 'reading';
+                $routeParams.descId = $rootScope.descIdFromReadingCompare;
+                $rootScope.descIdFromReadingCompare = null;
+                return;
+            }
             var target = $routeParams.descId ? '#'+$routeParams.descId.replace(/\./g,'-') : '';
             console.log(target);
             $rootScope.$broadcast('viewSubMenu::readingMode',{'target': target});

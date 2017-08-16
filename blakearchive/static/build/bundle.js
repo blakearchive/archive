@@ -4761,6 +4761,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
     $rootScope.activeId = '';
     vm.apparatusArray = [];
     vm.isApparatusArrayInit = false;
+    $rootScope.descIdFromReadingCompare = '';
 
     vm.initApparatusArray = function () {
         //console.log('called');
@@ -5020,6 +5021,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
         vm.apparatus = 'transcriptions';
         $rootScope.activeapparatus = 'transcriptions';
         vm.apparatusArray = [];
+        $rootScope.descIdFromReadingCompare = desc_id;
         //}
     };
 
@@ -6106,6 +6108,14 @@ angular.module("blake").controller("ViewSubMenuController", ["$rootScope", "$rou
                 $rootScope.persistentmode = 'reading';
                 $routeParams.descId = $rootScope.descIDFromCompare;
                 $rootScope.descIDFromCompare = null;
+                return;
+            }
+            if ($rootScope.descIdFromReadingCompare != null) {
+                var target = $rootScope.descIdFromReadingCompare ? '#' + $rootScope.descIdFromReadingCompare.replace(/\./g, '-') : '';
+                $rootScope.$broadcast('viewSubMenu::readingMode', { 'target': target });
+                $rootScope.persistentmode = 'reading';
+                $routeParams.descId = $rootScope.descIdFromReadingCompare;
+                $rootScope.descIdFromReadingCompare = null;
                 return;
             }
             var target = $routeParams.descId ? '#' + $routeParams.descId.replace(/\./g, '-') : '';
