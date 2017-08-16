@@ -120,20 +120,21 @@
                             <editor-notes object="read.compareCopyObjects[o.desc_id]"></editor-notes>
                         </div>
 
-                        <div class="reading-copy-inner" ng-show="(read.apparatusArray[$index] == 'editorsnotes' || read.apparatusArray[$index] == 'illustrationdescriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null" style="width:10px">
+                        <!--<div class="reading-copy-inner" ng-show="(read.apparatusArray[$index] == 'editorsnotes' || read.apparatusArray[$index] == 'illustrationdescriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null" style="width:10px">
                             <h4>Copy {{read.compareCopyId}} contains no copy for this object.</h4>
-                        </div>
+                        </div>-->
 
 
                     </div>
                     <img id="{{read.getStrippedDescId(read.compareCopyObjects[o.desc_id].desc_id)}}" magnify-image style="padding-left:10px" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ read.compareCopyObjects[o.desc_id].dbi }}.{{dpi}}.jpg" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)">
+                    <div ng-if="read.compareCopyObjects[o.desc_id] == null"><h4>Copy {{read.compareCopyId}} contains no copy for this object.</h4></div>
                     <!--
                     <div style="color:white; font-size:9px; text-align:center" ng-if="read.apparatus == 'imagesonly' && truesize == false">{{o.full_object_id}}</div>
                     <div style="color:white; font-size:9px; text-align:center" ng-if="read.apparatus == 'imagesonly' && truesize == true">{{o.full_object_id}}</br>{{ o.physical_description.objsize['#text'] }}</div>
                     -->
                     <div style="color:white; font-size:7px;" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null"><span style="float:left">{{o.full_object_id}}</span><span ng-if="truesize == true" style="float:left">, {{o.physical_description.objsize['#text'] }}</span><span ng-if="read.compareCopyObjects[o.desc_id] != null && truesize == true" style="color:yellow;float:right;">{{read.compareCopyObjects[o.desc_id].full_object_id}}, {{ read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span><span ng-if="read.compareCopyObjects[o.desc_id] != null && truesize == false" style="color:yellow;float:right;">{{read.compareCopyObjects[o.desc_id].full_object_id}}</span></div>
 
-                    <div style="color:white; font-size:7px;" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null"><span style="float:left">{{o.full_object_id}}</span><span ng-if="truesize == true" style="float:left">, {{o.physical_description.objsize['#text'] }}</span><span ng-if="read.compareCopyObjects[o.desc_id] == null && truesize == true" style="color:yellow;float:right;">Copy {{read.compareCopyId}} contains no copy for this object.</span><span ng-if="read.compareCopyObjects[o.desc_id] == null && truesize == false" style="color:yellow;float:right;">Copy {{read.compareCopyId}} contains no copy for this object.</span></div>
+                    <!--<div style="color:white; font-size:7px;" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null"><span style="float:left">{{o.full_object_id}}</span><span ng-if="truesize == true" style="float:left">, {{o.physical_description.objsize['#text'] }}</span><span ng-if="read.compareCopyObjects[o.desc_id] == null && truesize == true" style="color:yellow;float:right;">Copy {{read.compareCopyId}} contains no copy for this object.</span><span ng-if="read.compareCopyObjects[o.desc_id] == null && truesize == false" style="color:yellow;float:right;">Copy {{read.compareCopyId}} contains no copy for this object.</span></div>-->
                     
                 </div>
             </div>
