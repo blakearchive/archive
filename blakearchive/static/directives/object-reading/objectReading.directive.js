@@ -282,11 +282,11 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         $rootScope.view.scope = 'image';
         $rootScope.persistentmode = 'gallery';
         $rootScope.states.activeItem = 'gallery';
-        if($rootScope.activeapparatus = 'comparewith') {
+        //if($rootScope.activeapparatus = 'comparewith') {
             vm.apparatus = 'transcriptions';
             $rootScope.activeapparatus = 'transcriptions';
             vm.apparatusArray = [];
-        }
+        //}
     }
 
     vm.cssSafeId = function(string) {
