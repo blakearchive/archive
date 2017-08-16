@@ -19,6 +19,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     $rootScope.activeId = '';
     vm.apparatusArray = [];
     vm.isApparatusArrayInit = false;
+    $rootScope.descIdFromReadingCompare = '';
 
 
     vm.initApparatusArray = function() {
@@ -286,6 +287,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
             vm.apparatus = 'transcriptions';
             $rootScope.activeapparatus = 'transcriptions';
             vm.apparatusArray = [];
+        $rootScope.descIdFromReadingCompare = desc_id;
         //}
     }
 
