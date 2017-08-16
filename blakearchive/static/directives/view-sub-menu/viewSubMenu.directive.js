@@ -66,7 +66,7 @@ angular.module("blake").controller("ViewSubMenuController", function ($rootScope
         }
         if(mode == 'read') {
             //console.log($rootScope.descIDFromCompare);
-            console.log($routeParams.descId);
+            //console.log($routeParams.descId);
             if($rootScope.descIDFromCompare != null) {
                 var target = $rootScope.descIDFromCompare ? '#'+$rootScope.descIDFromCompare.replace(/\./g,'-') : '';
                 $rootScope.$broadcast('viewSubMenu::readingMode',{'target': target});
@@ -76,7 +76,6 @@ angular.module("blake").controller("ViewSubMenuController", function ($rootScope
                 return;
             }
             var target = $routeParams.descId ? '#'+$routeParams.descId.replace(/\./g,'-') : '';
-            console.log(target);
             $rootScope.$broadcast('viewSubMenu::readingMode',{'target': target});
             $rootScope.persistentmode = 'reading';
         }
