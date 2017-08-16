@@ -5009,11 +5009,14 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
         //console.log(copy_id);
         //console.log(desc_id);
         vm.bds.changeCopy(copy_id, desc_id);
-        vm.bds.changeObject(vm.bds.getObject(desc_id));
         $rootScope.view.mode = 'object';
         $rootScope.view.scope = 'image';
         $rootScope.persistentmode = 'gallery';
         $rootScope.states.activeItem = 'gallery';
+        if ($rootScope.activeapparatus = 'comparewith') {
+            vm.apparatus = 'transcriptions';
+            $rootScope.activeapparatus = 'transcriptions';
+        }
     };
 
     vm.cssSafeId = function (string) {
