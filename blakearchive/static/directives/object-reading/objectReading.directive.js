@@ -19,7 +19,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     $rootScope.activeId = '';
     vm.apparatusArray = [];
     vm.isApparatusArrayInit = false;
-    $rootScope.descIdFromReadingCompare = '';
+    $rootScope.descIdFromReadingCompare = null;
 
 
     vm.initApparatusArray = function() {
