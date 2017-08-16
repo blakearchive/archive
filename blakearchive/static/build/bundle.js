@@ -4232,6 +4232,9 @@ angular.module("blake").directive('leftOnBroadcast', ["$timeout", "$rootScope", 
             scope.$on(attr.leftOnBroadcast, function ($event, $data) {
                 if ($data.target && $rootScope.doneSettingCopy) {
                     $timeout(function () {
+                        console.log(element);
+                        console.log($data.target);
+                        console.log(find($data.target)[0]);
                         var offset = $(element).find($data.target)[0].offsetLeft;
                         $(element).animate({ scrollLeft: offset }, 'fast');
                     }, 300);
@@ -6096,7 +6099,7 @@ angular.module("blake").controller("ViewSubMenuController", ["$rootScope", "$rou
         }
         if (mode == 'read') {
             //console.log($rootScope.descIDFromCompare);
-            console.log($routeParams.descId);
+            //console.log($routeParams.descId);
             if ($rootScope.descIDFromCompare != null) {
                 var target = $rootScope.descIDFromCompare ? '#' + $rootScope.descIDFromCompare.replace(/\./g, '-') : '';
                 $rootScope.$broadcast('viewSubMenu::readingMode', { 'target': target });
@@ -6106,7 +6109,6 @@ angular.module("blake").controller("ViewSubMenuController", ["$rootScope", "$rou
                 return;
             }
             var target = $routeParams.descId ? '#' + $routeParams.descId.replace(/\./g, '-') : '';
-            console.log(target);
             $rootScope.$broadcast('viewSubMenu::readingMode', { 'target': target });
             $rootScope.persistentmode = 'reading';
         }
