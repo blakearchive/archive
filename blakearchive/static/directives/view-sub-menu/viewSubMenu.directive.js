@@ -76,6 +76,7 @@ angular.module("blake").controller("ViewSubMenuController", function ($rootScope
                 return;
             }
             var target = $routeParams.descId ? '#'+$routeParams.descId.replace(/\./g,'-') : '';
+            console.log(target);
             $rootScope.$broadcast('viewSubMenu::readingMode',{'target': target});
             $rootScope.persistentmode = 'reading';
         }
