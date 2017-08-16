@@ -27,7 +27,7 @@
         <div class="compare-inner" style="padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px;" ng-style="truesize ? { 'height':'83vh' } : { 'height':'inherit' }">
             <!-- for letters -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index" ng-if="read.bds.copy.bad_id == 'letters'">
-                <div ng-if="read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes' || read.apparatus == 'imagesonly'" class="btn-group edit-object" role="group" style="margin-bottom:0px;margin-left:28px">
+                <div ng-if="read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes' || read.apparatus == 'imagesonly' || read.apparatus == 'comparewith'" class="btn-group edit-object" role="group" style="margin-bottom:0px;margin-left:28px">
                         <button type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px" ng-class="{'hover':read.apparatusArray[$index] == 'transcriptions'}" class="btn btn-default" ng-click="read.showIndividualTranscriptions($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:13px;"></span>
                             <span class="gr-title">Show diplomatic transcriptions</span>
@@ -96,7 +96,7 @@
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
                             <text-transcription object="o"></text-transcription>
                         </div>
-
+                        
                         <div class="reading-copy-inner" ng-show="(read.apparatus == 'illustrationdescriptions' || read.apparatusArray[$index] == 'illustrationdescriptions') && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatus != 'comparewith'" style="width:10px">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span class="text-capitalize">{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
