@@ -5009,7 +5009,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
         //console.log(copy_id);
         //console.log(desc_id);
         vm.bds.changeCopy(copy_id, desc_id);
-        vm.bds.changeObject(vm.bds.getObject(descId));
+        vm.bds.changeObject(vm.bds.getObject(desc_id));
         $rootScope.view.mode = 'object';
         $rootScope.view.scope = 'image';
         $rootScope.persistentmode = 'gallery';
