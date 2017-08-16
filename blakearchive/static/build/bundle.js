@@ -4232,6 +4232,7 @@ angular.module("blake").directive('leftOnBroadcast', ["$timeout", "$rootScope", 
             scope.$on(attr.leftOnBroadcast, function ($event, $data) {
                 if ($data.target && $rootScope.doneSettingCopy) {
                     $timeout(function () {
+                        console.log($(element).find($data.target)[0]);
                         var offset = $(element).find($data.target)[0].offsetLeft;
                         $(element).animate({ scrollLeft: offset }, 'fast');
                     }, 300);
