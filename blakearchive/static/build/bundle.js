@@ -5016,6 +5016,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
         if ($rootScope.activeapparatus = 'comparewith') {
             vm.apparatus = 'transcriptions';
             $rootScope.activeapparatus = 'transcriptions';
+            vm.apparatusArray = [];
         }
     };
 
