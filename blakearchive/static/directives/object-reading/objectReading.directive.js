@@ -123,6 +123,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         vm.compareCopyObjects = {};
         vm.compareCopyObjectsTemp = [];
         vm.apparatusArray = [];
+        vm.initApparatusArray();
 
         BlakeDataService.getCopy(bad_id).then(function(resultingCopy) {
             vm.compareCopy = resultingCopy;
