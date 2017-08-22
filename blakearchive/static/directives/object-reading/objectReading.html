@@ -78,8 +78,8 @@
                             <span class="gr-title">Show editors' notes</span>
                         </button>
                     </div>
-                    <div ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null && read.apparatusArray[$index] == ''" style="float:right;color:white"><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</a></div>
-                    <div ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null && read.apparatusArray[$index] != ''" style="margin-left:50%;color:white"><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</a></div>
+                    <div ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null && read.apparatusArray == null" style="float:right;color:white"><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</a></div>
+                    <div ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null && read.apparatusArray != null" style="margin-left:50%;color:white"><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</a></div>
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
                     <!--use the following for anchoring images
                 <div in-view="read.setActiveId($index)" class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
@@ -93,7 +93,7 @@
                             <text-transcription object="o"></text-transcription>
                         </div>
                         <div class="reading-copy-inner" ng-show="(read.apparatus == 'transcriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null">
-                            <h4 ng-if="o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)">{{read.compareCopyObjects[o.desc_id].title}}<br><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
+                            <h4 ng-if="o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)">{{read.compareCopyObjects[o.desc_id].title}}<br><span>{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)"><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
                             <text-transcription object="read.compareCopyObjects[o.desc_id]"></text-transcription>
                         </div>
@@ -104,7 +104,7 @@
                             <illustration-description object="o"></illustration-description>
                         </div>
                         <div class="reading-copy-inner" ng-show="(read.apparatus == 'illustrationdescriptions' || read.apparatusArray[$index] == 'illustrationdescriptions') && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" style="width:10px">
-                            <h4 ng-if="o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)">{{read.compareCopyObjects[o.desc_id].title}}<br><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
+                            <h4 ng-if="o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)">{{read.compareCopyObjects[o.desc_id].title}}<br><span>{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)"><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
                             <illustration-description object="read.compareCopyObjects[o.desc_id]"></illustration-description>
                         </div>
@@ -116,7 +116,7 @@
                             <editor-notes object="o"></editor-notes>
                         </div>
                         <div class="reading-copy-inner" ng-show="(read.apparatus == 'editorsnotes' || read.apparatusArray[$index] == 'editorsnotes') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" style="width:10px">
-                            <h4 ng-if="o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)">{{read.compareCopyObjects[o.desc_id].title}}<br><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
+                            <h4 ng-if="o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)">{{read.compareCopyObjects[o.desc_id].title}}<br><span>{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)"><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
                             <editor-notes object="read.compareCopyObjects[o.desc_id]"></editor-notes>
                         </div>
