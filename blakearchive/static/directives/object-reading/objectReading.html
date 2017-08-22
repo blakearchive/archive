@@ -78,7 +78,7 @@
                             <span class="gr-title">Show editors' notes</span>
                         </button>
                     </div>
-                    <div ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null && read.isApparatusArrayInit == false" style="float:right;color:white"><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</a></div>
+                    <div ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null && read.apparatusArray[$index] == ''" style="float:right;color:white"><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</a></div>
                     <div ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null && read.apparatusArray[$index] != ''" style="margin-left:50%;color:white"><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</a></div>
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
                     <!--use the following for anchoring images
