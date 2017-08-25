@@ -39,6 +39,7 @@ angular.module("blake").controller("ObjectEditButtonsController", function ($roo
 
     // add object to the cart... possible error if not an image!
     vm.addToLightBox = function(){
+      // TODO: pass a map, with title and caption as well as the image url
       CartStorageService.insert(vm.bds.object.dbi+".300.jpg");
     	//$scope.$broadcast('copyCtrl::addToLightBox',CartStorageService.count());
     }

@@ -8,6 +8,7 @@ import 'angular-rangeslider';
 import 'angular-cookies';
 import 'angular-touch';
 import 'fabric';
+import 'ng-cropperjs';
 import './js/angular.ngStorage';
 import './js/Sortable/Sortable.min';
 import './js/Sortable/ng-sortable.min';
@@ -27,7 +28,7 @@ let blake = angular.module('blake', [
   'ngRoute', 'ngSanitize', 'ui-rangeSlider',
   'ui.bootstrap', 'ng-sortable', 'FBAngular',
   'common.fabric','common.fabric.utilities','common.fabric.constants',
-  'ngAnimate', 'ngStorage','ngCookies','ngTouch',
+  'ngAnimate', 'ngStorage','ngCookies','ngTouch','ngCropper',
   'markdown','angular-loading-bar'])
 
 blake.value("directoryPrefix", directoryPrefix);
@@ -80,6 +81,12 @@ blake.config(function ($routeProvider, $locationProvider) {
         templateUrl: directoryPrefix + '/static/controllers/lightbox/lightbox.html',
         controller: "LightboxController",
         controllerAs: 'Lbc',
+        reloadOnSearch: false
+    });
+    $routeProvider.when(directoryPrefix + '/cropper/:imgUrl', {
+        templateUrl: directoryPrefix + '/static/controllers/lightbox/cropper.html',
+        controller: "CropperController",
+        controllerAs: 'crc',
         reloadOnSearch: false
     });
 

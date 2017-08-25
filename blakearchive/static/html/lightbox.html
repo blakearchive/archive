@@ -22,6 +22,8 @@
   <link rel="stylesheet" href="/static/css/magnify.css">
   <link rel="stylesheet" href="/static/css/override.css">
   <link rel="stylesheet" href="/static/css/tei.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.css">
+
   <base href="/">
   <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon">
 
@@ -32,9 +34,13 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
 </head>
-<body ng-app="blake" resize scroll>
-  <div ng-view style="top:0px;position:absolute;overflow:scroll;" ></div>
+<body ng-app="blake" resize scroll id="erdmanBody">
+
+  <div ng-view class="container-fluid" style="padding:0px;margin:0px;"></div>
+
 </body>
 <script src="/static/build/bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.js"></script>
+
 <!--<script src="/static/js/minified/output.min.js"></script>-->
 </html>
