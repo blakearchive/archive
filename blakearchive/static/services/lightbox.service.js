@@ -1,4 +1,4 @@
-/*
+/* TODO: this is not used... remove it.
 manages lightbox state: are we in crop mode or not.
 provide state transition functions for attachment to control buttons
 */
