@@ -7,11 +7,11 @@
 
 <ul ng-if="noteCtrl.objectNoteImages()">
 	<div ng-repeat="object_note_image in noteCtrl.object.object_note_images | filter:{type:'text'} track by $index">
-		<img src="/images/{{object_note_image.filename}}">
+		<img style="width:100%" src="/images/{{object_note_image.filename}}">
 	</div>
 </ul>
 
-<p><strong>Text</strong></p>
+<p style="float:left"><strong>Text</strong></p>
 <ul ng-if="noteCtrl.textNotes()">
     <li ng-repeat="note in noteCtrl.object.notes | filter:{type:'text'} track by $index">
         Line {{ note.line }}: <span ng-bind-html="note.note.trim() | markdown | highlight:noteCtrl.highlight"></span>
