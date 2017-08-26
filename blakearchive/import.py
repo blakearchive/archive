@@ -500,7 +500,7 @@ class BlakeObjectImporter(BlakeImporter):
         object_note_images = []
         for object_note_image in obj.xpath("./physdesc/objnote//illus"):
             filename = object_note_image.get("filename")
-            result = {"filename": text, "type": "text"}
+            result = {"filename": filename, "type": "text"}
             object_note_images.append(result)
         return object_note_images
 
