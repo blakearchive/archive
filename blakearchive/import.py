@@ -491,6 +491,8 @@ class BlakeObjectImporter(BlakeImporter):
                 result = {"note": text, "type": "text", "line": line}
             else:
                 result = {"note": text, "type": "desc"}
+                object_note_image = note.xpath("/illus").get("filename")
+
             notes.append(result)
         return notes
 
