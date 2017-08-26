@@ -86,7 +86,6 @@ class BlakeObject(db.Model):
     header = db.Column(JSON)
     source = db.Column(JSON)
     notes = db.Column(JSON)
-    object_note_image = db.Column(db.UnicodeText)
     object_group = db.Column(db.UnicodeText)
     supplemental = db.Column(db.UnicodeText)
     objects_from_same_matrix = db.relationship(
