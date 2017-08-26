@@ -7,7 +7,7 @@
 
 <ul ng-if="noteCtrl.objectNoteImages()">
 	<span ng-repeat="object_note_image in noteCtrl.object.object_note_images | filter:{type:'text'} track by $index">
-		<img src="/images/{{object_note_image.filename}}">
+		<img ng-if="noteCtrl.object_note_image.filename" src="/images/{{object_note_image.filename}}">
 	</span>
 </ul>
 
