@@ -482,6 +482,7 @@ class BlakeObjectImporter(BlakeImporter):
     @staticmethod
     def get_object_notes(obj):
         notes = []
+        object_note_image = ''
         #return [note.xpath("string()") for note in obj.xpath(".//note") + obj.xpath(".//objnote")]
         for note in obj.xpath("./phystext//note") + obj.xpath("./physdesc//objnote"):
             text = note.xpath("string()")
@@ -491,7 +492,9 @@ class BlakeObjectImporter(BlakeImporter):
                 result = {"note": text, "type": "text", "line": line}
             else:
                 result = {"note": text, "type": "desc"}
-                object_note_image = note.xpath("/illus").get("filename")
+                object_note_image = note.xpath("/illus")
+                if (object_note_image):
+                    object_note_image.get("filename").encode("utf-8")
 
             notes.append(result)
         return notes
