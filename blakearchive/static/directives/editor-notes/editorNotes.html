@@ -5,11 +5,13 @@
 </ul>
 <p ng-if="!noteCtrl.objectNotes()"><em>[There are no object notes for this object.]</em></p>
 
+<div>
 <ul ng-if="noteCtrl.objectNoteImages()">
 	<div ng-repeat="object_note_image in noteCtrl.object.object_note_images | filter:{type:'text'} track by $index">
 		<img style="width:100%" src="/images/{{object_note_image.filename}}">
 	</div>
 </ul>
+</div>
 
 <div>
 <p><strong>Text</strong></p>
