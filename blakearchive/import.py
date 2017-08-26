@@ -492,7 +492,7 @@ class BlakeObjectImporter(BlakeImporter):
                 result = {"note": text, "type": "text", "line": line}
             else:
                 result = {"note": text, "type": "desc"}
-                object_note_image = note.xpath("/illus")
+                object_note_image = note.xpath("./illus")
                 if (object_note_image):
                     object_note_image.get("filename").encode("utf-8")
 
