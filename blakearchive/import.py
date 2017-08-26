@@ -500,7 +500,7 @@ class BlakeObjectImporter(BlakeImporter):
     def get_object_note_image(obj):
         filename = []
         for note in obj.xpath("./phystext//note") + obj.xpath("./physdesc//objnote"):
-            for illus in note.xpath("./illus"):
+            for illus in note.xpath("./illus")
                 filename = illus.get("filename").encode("utf-8")
         return filename
 
