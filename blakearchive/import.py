@@ -388,6 +388,7 @@ class BlakeObjectImporter(BlakeImporter):
         obj.characteristics = self.get_characteristics(element)
         obj.illustration_description = self.get_illustration_description(element)
         obj.notes = self.get_object_notes(element)
+        obj.object_note_image = self.get_object_note_image(element)
         obj.title = self.get_object_title(element)
         obj.text = self.get_text(element)
         obj.markup_text = self.get_markuptext(element)
@@ -482,7 +483,6 @@ class BlakeObjectImporter(BlakeImporter):
     @staticmethod
     def get_object_notes(obj):
         notes = []
-        object_note_image = ''
         #return [note.xpath("string()") for note in obj.xpath(".//note") + obj.xpath(".//objnote")]
         for note in obj.xpath("./phystext//note") + obj.xpath("./physdesc//objnote"):
             text = note.xpath("string()")
@@ -492,12 +492,19 @@ class BlakeObjectImporter(BlakeImporter):
                 result = {"note": text, "type": "text", "line": line}
             else:
                 result = {"note": text, "type": "desc"}
-                object_note_image = note.xpath("./illus")
-                if (object_note_image):
-                    object_note_image.get("filename").encode("utf-8")
 
             notes.append(result)
         return notes
+
+    @staticmethod
+    def get_object_note_image(obj):
+        filename = ''
+        for note in obj.xpath("./phystext//note") + obj.xpath("./physdesc//objnote"):
+            object_note_image = note.xpath("./illus")
+                if (object_note_image):
+                    filename = object_note_image.get("filename").encode("utf-8")
+        return filename
+
 
     @classmethod
     def get_physical_description(cls, obj):
