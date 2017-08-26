@@ -8,6 +8,13 @@ angular.module('blake').controller("EditorNotesController", function($routeParam
                 }).length > 0
         }
     }
+    vm.objectNoteImages = function () {
+        if (angular.isDefined(vm.object) && angular.isDefined(vm.object.object_note_images)) {
+            return vm.object.object_note_images.filter(function (o) {
+                    return o.type == "text"
+                }).length > 0
+        }
+    }
     vm.textNotes = function () {
         if (angular.isDefined(vm.object) && angular.isDefined(vm.object.notes)) {
             return vm.object.notes.filter(function (o) {
