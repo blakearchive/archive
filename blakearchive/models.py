@@ -168,7 +168,7 @@ class BlakeObject(db.Model):
             "source": self.source,
             "supplemental": self.supplemental,
             "notes": self.notes,
-            "object_note_images": self.object_note_image,
+            "object_note_images": self.object_note_images,
             "object_group": self.object_group
         }
 
