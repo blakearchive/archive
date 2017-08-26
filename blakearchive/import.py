@@ -494,6 +494,15 @@ class BlakeObjectImporter(BlakeImporter):
             notes.append(result)
         return notes
 
+    @staticmethod
+    def get_object_note_image(obj):
+        object_note_image = []
+        for object_note_image in obj.xpath("./physdesc/objnote//illus")
+            filename = object_note_image.get("filename")
+            object_note_images.append(filename)
+        return object_note_images
+
+
     @classmethod
     def get_physical_description(cls, obj):
         for physdesc in obj.xpath("physdesc"):
