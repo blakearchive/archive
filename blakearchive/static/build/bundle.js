@@ -4004,7 +4004,7 @@ angular.module('blake').controller("EditorNotesController", ["$routeParams", fun
         }
     };
     vm.objectNoteImages = function () {
-        if (angular.isDefined(vm.object) && angular.isDefined(vm.object.object_note_images) && vm.object.object_note_images[0].filename != null) {
+        if (angular.isDefined(vm.object) && angular.isDefined(vm.object.object_note_images)) {
             return vm.object.object_note_images.filter(function (o) {
                 return o.type == "text";
             }).length > 0;
@@ -33888,7 +33888,7 @@ module.exports = "<div class=\"btn-group\" style=\"position:absolute;right:0\">\
 /* 116 */
 /***/ (function(module, exports) {
 
-module.exports = "<p><strong>Object</strong></p>\n\n<ul ng-if=\"noteCtrl.objectNotes()\">\n    <li ng-repeat=\"note in noteCtrl.object.notes | filter:{type:'desc'} track by $index\" ng-bind-html=\"note.note.trim() | markdown | highlight:noteCtrl.highlight\"></li>\n</ul>\n<p ng-if=\"!noteCtrl.objectNotes()\"><em>[There are no object notes for this object.]</em></p>\n\n<ul ng-if=\"noteCtrl.objectNoteImages()\">\n\t<span ng-repeat=\"object_note_image in noteCtrl.object.object_note_images | filter:{type:'text'} track by $index\">\n\t\t<img src=\"/images/{{object_note_image.filename}}\">\n\t</span>\n</ul>\n\n<p><strong>Text</strong></p>\n<ul ng-if=\"noteCtrl.textNotes()\">\n    <li ng-repeat=\"note in noteCtrl.object.notes | filter:{type:'text'} track by $index\">\n        Line {{ note.line }}: <span ng-bind-html=\"note.note.trim() | markdown | highlight:noteCtrl.highlight\"></span>\n    </li>\n</ul>\n<p ng-if=\"!noteCtrl.textNotes()\"><em>[There are no textual notes for this object.]</em></p>\n";
+module.exports = "<p><strong>Object</strong></p>\n\n<ul ng-if=\"noteCtrl.objectNotes()\">\n    <li ng-repeat=\"note in noteCtrl.object.notes | filter:{type:'desc'} track by $index\" ng-bind-html=\"note.note.trim() | markdown | highlight:noteCtrl.highlight\"></li>\n</ul>\n<p ng-if=\"!noteCtrl.objectNotes()\"><em>[There are no object notes for this object.]</em></p>\n\n<ul ng-if=\"noteCtrl.objectNoteImages()\">\n\t<span ng-repeat=\"object_note_image in noteCtrl.object.object_note_images | filter:{type:'text'} track by $index\">\n\t\t<img ng-if=\"noteCtrl.object_note_image.filename\" src=\"/images/{{object_note_image.filename}}\">\n\t</span>\n</ul>\n\n<p><strong>Text</strong></p>\n<ul ng-if=\"noteCtrl.textNotes()\">\n    <li ng-repeat=\"note in noteCtrl.object.notes | filter:{type:'text'} track by $index\">\n        Line {{ note.line }}: <span ng-bind-html=\"note.note.trim() | markdown | highlight:noteCtrl.highlight\"></span>\n    </li>\n</ul>\n<p ng-if=\"!noteCtrl.textNotes()\"><em>[There are no textual notes for this object.]</em></p>\n";
 
 /***/ }),
 /* 117 */
