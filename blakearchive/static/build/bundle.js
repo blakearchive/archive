@@ -4004,7 +4004,7 @@ angular.module('blake').controller("EditorNotesController", ["$routeParams", fun
         }
     };
     vm.objectNoteImages = function () {
-        if (angular.isDefined(vm.object) && vm.object.object_note_images.length > 0) {
+        if (angular.isDefined(vm.object) && angular.isDefined(vm.object.object_note_images)) {
             return vm.object.object_note_images.filter(function (o) {
                 return o.type == "text";
             }).length > 0;
