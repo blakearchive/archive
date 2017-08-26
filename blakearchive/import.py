@@ -501,9 +501,10 @@ class BlakeObjectImporter(BlakeImporter):
         filename = ''
         for note in obj.xpath("./phystext//note") + obj.xpath("./physdesc//objnote"):
             object_note_image = note.xpath("./illus")
-            if (object_note_image):
-                filename = object_note_image.get("filename").encode("utf-8")
+                if (object_note_image):
+                    filename = object_note_image.get("filename").encode("utf-8")
         return filename
+
 
     @classmethod
     def get_physical_description(cls, obj):
