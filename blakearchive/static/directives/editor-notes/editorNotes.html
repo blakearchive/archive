@@ -6,12 +6,13 @@
 <p ng-if="!noteCtrl.objectNotes()"><em>[There are no object notes for this object.]</em></p>
 
 <ul ng-if="noteCtrl.objectNoteImages()">
-	<div ng-repeat="object_note_image in noteCtrl.object.object_note_images | filter:{type:'text'} track by $index">
+	<div style="width:100%" ng-repeat="object_note_image in noteCtrl.object.object_note_images | filter:{type:'text'} track by $index">
 		<img src="/images/{{object_note_image.filename}}">
 	</div>
 </ul>
 
-<p><strong>Text</strong></p>
+<p ng-if="persistentmode != 'reading'"><strong>Text</strong></p>
+<p style="float:left" ng-if="persistentmode == 'reading'"><strong>Text</strong></p>
 <ul ng-if="noteCtrl.textNotes()">
     <li ng-repeat="note in noteCtrl.object.notes | filter:{type:'text'} track by $index">
         Line {{ note.line }}: <span ng-bind-html="note.note.trim() | markdown | highlight:noteCtrl.highlight"></span>
