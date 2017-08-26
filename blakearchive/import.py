@@ -388,6 +388,7 @@ class BlakeObjectImporter(BlakeImporter):
         obj.characteristics = self.get_characteristics(element)
         obj.illustration_description = self.get_illustration_description(element)
         obj.notes = self.get_object_notes(element)
+        obj.object_note_images = self.get_object_note_images(element)
         obj.title = self.get_object_title(element)
         obj.text = self.get_text(element)
         obj.markup_text = self.get_markuptext(element)
@@ -495,8 +496,8 @@ class BlakeObjectImporter(BlakeImporter):
         return notes
 
     @staticmethod
-    def get_object_note_image(obj):
-        object_note_image = []
+    def get_object_note_images(obj):
+        object_note_images = []
         for object_note_image in obj.xpath("./physdesc/objnote//illus"):
             filename = object_note_image.get("filename")
             object_note_images.append(filename)
