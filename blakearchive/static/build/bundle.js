@@ -3993,7 +3993,7 @@ angular.module("blake").directive("dpi", function () {
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-angular.module('blake').controller("EditorNotesController", ["$routeParams", "$rootScope", function ($routeParams, $rootScope) {
+angular.module('blake').controller("EditorNotesController", ["$routeParams", function ($routeParams) {
     var vm = this;
     //console.log(vm.object.object_note_images);
     vm.objectNotes = function () {
@@ -4004,7 +4004,7 @@ angular.module('blake').controller("EditorNotesController", ["$routeParams", "$r
         }
     };
     vm.objectNoteImages = function () {
-        if (angular.isDefined(vm.object) && angular.isDefined(vm.object.object_note_images) && $rootScope.doneSettingCopy) {
+        if (angular.isDefined(vm.object) && angular.isDefined(vm.object.object_note_images)) {
             return vm.object.object_note_images.filter(function (o) {
                 return o.type == "text";
             }).length > 0;
