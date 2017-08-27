@@ -491,7 +491,7 @@ class BlakeObjectImporter(BlakeImporter):
             if len(parent):
                 line = parent[0].attrib["n"].rsplit("." , 1)[1]
                 if len(text_note_image):
-                    text_note_image_filename = text_note_image.filename
+                    text_note_image_filename = text_note_image.attrib["filename"]
                 else:
                     text_note_image_filename = ''
                 result = {"note": text, "type": "text", "line": line, "text_note_image_filename": text_note_image_filename}
