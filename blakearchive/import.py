@@ -487,7 +487,7 @@ class BlakeObjectImporter(BlakeImporter):
         for note in obj.xpath("./phystext//note") + obj.xpath("./physdesc//objnote"):
             text = note.xpath("string()")
             parent = note.xpath('parent::l')
-            text_note_image = note.xpath(".//illus")
+            text_note_image = note.xpath("./illus")
             if len(parent):
                 line = parent[0].attrib["n"].rsplit("." , 1)[1]
                 if len(text_note_image):
