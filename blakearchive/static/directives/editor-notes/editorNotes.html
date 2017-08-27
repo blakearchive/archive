@@ -18,6 +18,13 @@
 <ul ng-if="noteCtrl.textNotes()">
     <li ng-repeat="note in noteCtrl.object.notes | filter:{type:'text'} track by $index">
         Line {{ note.line }}: <span ng-bind-html="note.note.trim() | markdown | highlight:noteCtrl.highlight"></span>
+
+        
+				<div style="display:inline-block" ng-if="note.text_note_image_filename">
+					<img style="width:100%" ng-src="/images/{{note.text_note_image_filename}}">
+				</div>
+		
+
     </li>
 </ul>
 <p ng-if="!noteCtrl.textNotes()"><em>[There are no textual notes for this object.]</em></p>
