@@ -191,7 +191,7 @@ class BlakeCopy(db.Model):
     print_date_string = db.Column(db.UnicodeText)
     print_date_value = db.Column(db.UnicodeText)
     effective_copy_id = db.Column(db.UnicodeText, index=True)
-    bad_xml = db.Column(db.Text)
+    #bad_xml = db.Column(db.Text)
 
     def __init__(self, *args, **kwargs):
         super(BlakeCopy, self).__init__(*args, **kwargs)
@@ -214,7 +214,6 @@ class BlakeCopy(db.Model):
             "print_date_string": self.print_date_string,
             "print_date": self.print_date,
             "effective_copy_id": self.effective_copy_id,
-            "bad_xml": self.bad_xml
         }
 
 
@@ -229,6 +228,7 @@ class BlakeWork(db.Model):
     image = db.Column(db.UnicodeText)
     composition_date = db.Column(db.Integer)
     composition_date_string = db.Column(db.UnicodeText)
+    composition_date_value = db.Column(db.UnicodeText)
     related_works = db.Column(JSON)
     virtual = db.Column(db.Boolean)
     preview = db.Column(db.Boolean)
@@ -245,6 +245,7 @@ class BlakeWork(db.Model):
             "image": self.image,
             "composition_date": self.composition_date,
             "composition_date_string": self.composition_date_string,
+            "composition_date_value": self.composition_date_value,
             "related_works": self.related_works,
             "virtual": self.virtual,
             "preview": self.preview,

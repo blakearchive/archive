@@ -88,6 +88,11 @@ angular.module("blake")
         $scope.addImage = function(imgUrl, width){
           $scope.fabric.addImageScaledToWidth(imgUrl,width);
         };
+        $scope.addImageMyWay = function(options){
+          fabric.Image.fromURL(imageURL,function(object){
+
+          });
+        }
 
         // ===================================================================
         // Event Handlers.
@@ -147,6 +152,8 @@ angular.module("blake")
           // works for image name... dataUrl will break this!
           window.open("/cropper/"+imgName,'_cropper');
 
+          // TODO: a workaround is to pass the image name || dataUrl via more localStorage
+          // have the cropper page use the value from localstorage.
         }
         $scope.trashButtonClicked = function(){
           console.log("So, you want to remove this: "+FabricCanvas.getCanvas().getActiveObject());

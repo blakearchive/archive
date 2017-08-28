@@ -26,7 +26,7 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
             return vm.bds.work.title;
         }
         //For rest
-        if(vm.bds.copy.header){
+        if(vm.bds.copy.header && $rootScope.doneSettingCopy){
             title = vm.bds.copy.header.filedesc.titlestmt.title['@reg'];
 
         }

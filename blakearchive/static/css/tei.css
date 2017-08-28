@@ -1,177 +1,183 @@
-.tei-sic {
-    color: #eee;
-    text-decoration: line-through;
-}
-
-.tei-rep-overwrite {
-    color: #eee;
-    background-color: #168bc1;
-}
-
-.tei-rep {
-    color: #168bc1;
-}
-
-.tei-del-overwrite {
-    color: red;
-    text-decoration:line-through;
-}
-
-.tei-del-erasure {
-    color: red;
-    text-decoration:line-through;
-    background-color:lightgray;
-}
-
-.tei-del-obscured {
-    text-decoration:line-through;
-    background-color:lightgray;
-}
-
-.tei-del-overstrike {
-    color: #eee;
-    text-decoration:line-through;
-}
-
-.tei-del {
-    color: #eee;
-    text-decoration: line-through;
-}
-
-.tei-instr-pencil {
-    color: #626262;
-}
-
-.tei-hr {
-    border:1px solid #eee;
-    color:#eee;
-    background-color:#eee;
-    height:1px;
-    position:relative;
-}
-
-.tei-unclear-hi {
-    color: #e085c2;
-}
-
-.tei-subst {
-    background-color: #e9bb01;
-}
-
-.tei-del-overstrike-subst {
-    color:#303030;
-    text-decoration:line-through;
-    background-color: #e9bb01;
-}
-
-.tei-del-overstrike-substspan {
-    color:#303030;
-    text-decoration:line-through;
-    background-color: #e9bb01;
-}
-
-.tei-addspan-substspan {
-    color: #168bc1;
-    background-color:#e9bb01;
-}
-
-.tei-add-substspan {
-    color: #168bc1;
-    background-color:#e9bb01;
-}
-
-.tei-add {
-    color: #168bc1;
-}
-
-.tei-gap-cancellation {
-    color:red;
-    background-color:lightgray;
-    text-decoration:line-through;
-}
-
-.tei-gap {
-    background-color:lightgray;
-}
-
-.tei-hspace {
-    background-color:#e9bb01;
-}
-
-.tei-columns-table-data {
-    vertical-align: top;
-}
-
-.tei-vspace {
-    font-size: 12pt;
-    height: 1em;
-}
-
-.tei-table-extra-small {
-    width: 266px;
-}
-
-.tei-table-small {
-    width: 360px;
-}
-
-.tei-table {
-    border-collapse: separate;
-    text-align: left;
-    min-width: 400px;
-     /*padding: 10px;*/
-    padding:0px;
-}
-
-.tei-preceding-delspan-substspan {
-    color:#303030;
-    background-color:#e9bb01;
-    text-decoration:line-through;
-}
-
-.tei-preceding-delspan {
-    color:#303030;
-    background-color: #e9bb01;
-    text-decoration:line-through;
-}
-
-.tei-preceding-addspan-substspan {
-    color: #168bc1;
-    background-color:#e9bb01;
-}
-
-.tei-preceding-addspan {
-     color: #168bc1;
-}
-
-.tei-line-number {
-    width: 5%;
-    color:gray;
-    text-align:end;
-}
-
-.tei-line-note {
-    width: 5%;
-}
-
-.tei-line-text {
-    width: 90%;
-    color: #eee;
-}
-#showme .tei-line-text{
-    color: #eee;
-}
-.tei-line-text span{
-    white-space: nowrap;
-}
-#colorKeyTable, #colorKeyTable tbody tr, #colorKeyTable tbody tr td{
-    border: none;
-    color: #eee;
-}
-#colorKeyTable tbody tr th{
-    margin-top: 10px;
-    color: #eee;
-}
-.tei-hi-italic{
-    font-style:italic;
+.tei-sic {
+    color: #eee;
+    text-decoration: line-through;
+}
+
+.tei-rep-overwrite {
+    color: #eee;
+    background-color: #168bc1;
+}
+
+.tei-rep {
+    color: #168bc1;
+}
+
+.tei-del-overwrite {
+    color: red;
+    text-decoration:line-through;
+}
+
+.tei-del-erasure {
+    color: red;
+    text-decoration:line-through;
+    background-color:lightgray;
+}
+
+.tei-del-wash {
+    color: red;
+    text-decoration:line-through;
+    background-color:lightgray;
+}
+
+.tei-del-obscured {
+    text-decoration:line-through;
+    background-color:lightgray;
+}
+
+.tei-del-overstrike {
+    color: #eee;
+    text-decoration:line-through;
+}
+
+.tei-del {
+    color: #eee;
+    text-decoration: line-through;
+}
+
+.tei-instr-pencil {
+    color: #626262;
+}
+
+.tei-hr {
+    border:1px solid #eee;
+    color:#eee;
+    background-color:#eee;
+    height:1px;
+    position:relative;
+}
+
+.tei-unclear-hi {
+    color: #e085c2;
+}
+
+.tei-subst {
+    background-color: #e9bb01;
+}
+
+.tei-del-overstrike-subst {
+    color:#303030;
+    text-decoration:line-through;
+    background-color: #e9bb01;
+}
+
+.tei-del-overstrike-substspan {
+    color:#303030;
+    text-decoration:line-through;
+    background-color: #e9bb01;
+}
+
+.tei-addspan-substspan {
+    color: #168bc1;
+    background-color:#e9bb01;
+}
+
+.tei-add-substspan {
+    color: #168bc1;
+    background-color:#e9bb01;
+}
+
+.tei-add {
+    color: #168bc1;
+}
+
+.tei-gap-cancellation {
+    color:red;
+    background-color:lightgray;
+    text-decoration:line-through;
+}
+
+.tei-gap {
+    background-color:lightgray;
+}
+
+.tei-hspace {
+    background-color:#e9bb01;
+}
+
+.tei-columns-table-data {
+    vertical-align: top;
+}
+
+.tei-vspace {
+    font-size: 12pt;
+    height: 1em;
+}
+
+.tei-table-extra-small {
+    width: 266px;
+}
+
+.tei-table-small {
+    width: 360px;
+}
+
+.tei-table {
+    border-collapse: separate;
+    text-align: left;
+    min-width: 400px;
+     /*padding: 10px;*/
+    padding:0px;
+}
+
+.tei-preceding-delspan-substspan {
+    color:#303030;
+    background-color:#e9bb01;
+    text-decoration:line-through;
+}
+
+.tei-preceding-delspan {
+    color:#303030;
+    background-color: #e9bb01;
+    text-decoration:line-through;
+}
+
+.tei-preceding-addspan-substspan {
+    color: #168bc1;
+    background-color:#e9bb01;
+}
+
+.tei-preceding-addspan {
+     color: #168bc1;
+}
+
+.tei-line-number {
+    width: 5%;
+    color:gray;
+    text-align:end;
+}
+
+.tei-line-note {
+    width: 5%;
+}
+
+.tei-line-text {
+    width: 90%;
+    color: #eee;
+}
+#showme .tei-line-text{
+    color: #eee;
+}
+.tei-line-text span{
+    white-space: nowrap;
+}
+#colorKeyTable, #colorKeyTable tbody tr, #colorKeyTable tbody tr td{
+    border: none;
+    color: #eee;
+}
+#colorKeyTable tbody tr th{
+    margin-top: 10px;
+    color: #eee;
+}
+.tei-hi-italic{
+    font-style:italic;
 }

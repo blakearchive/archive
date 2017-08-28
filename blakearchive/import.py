@@ -140,7 +140,7 @@ class BlakeDocumentImporter(BlakeImporter):
     # region Work processing
     def process_works(self):
         for entry in self.works_df.itertuples():
-            Record = namedtuple('Work',['index','title','medium','composition_date','image','copies','bad_id','info','info_filename','virtual','virtual_objects','preview','preview_copies'])
+            Record = namedtuple('Work',['index','title','medium','composition_date','composition_date_value','image','copies','bad_id','info','info_filename','virtual','virtual_objects','preview','preview_copies'])
             entry = Record(*entry)
             if(socket.gethostname() == 'islington.lib.unc.edu' and bool(entry.preview)):
                 continue
@@ -157,6 +157,7 @@ class BlakeDocumentImporter(BlakeImporter):
         work.preview = bool(entry.preview)
         work.composition_date = self.extract_date(entry.composition_date)
         work.composition_date_string = entry.composition_date.encode('utf-8')
+        work.composition_date_value = entry.composition_date_value.encode('utf-8')
         work.image = entry.image.encode('utf-8')
         work.info = entry.info.encode('utf-8')
         work.preview_copies = entry.preview_copies.split(",")
@@ -166,7 +167,10 @@ class BlakeDocumentImporter(BlakeImporter):
             logger.error("info file does not exist: %s" % entry.info_filename)
         self.works[bad_id] = work
         if(socket.gethostname() == 'islington.lib.unc.edu'):
-            all_non_preview_copies = list(set(self.split_ids(entry.copies)) - set(work.preview_copies))
+            diff = set(self.split_ids(entry.copies)) - set(work.preview_copies)
+            result = [o for o in self.split_ids(entry.copies) if o in diff]
+            all_non_preview_copies = list(result)
+
             work.copies = self.copy_importer.get(all_non_preview_copies)
         else:
             work.copies = self.copy_importer.get(self.split_ids(entry.copies))
@@ -177,7 +181,9 @@ class BlakeDocumentImporter(BlakeImporter):
     def process_virtual_work(self, entry, work):
         # Virtual works need to have a special copy created just for them
         if(socket.gethostname() == 'islington.lib.unc.edu'):
-            all_non_preview_objects = list(set(self.split_ids(entry.virtual_objects)) - set(work.preview_copies))
+            diff = set(self.split_ids(entry.virtual_objects)) - set(work.preview_copies)
+            result = [o for o in self.split_ids(entry.virtual_objects) if o in diff]
+            all_non_preview_objects = list(result)
             objects = self.objects_sorted_for_virtual_copy(all_non_preview_objects)
         else:
             objects = self.objects_sorted_for_virtual_copy(self.split_ids(entry.virtual_objects))
@@ -194,11 +200,14 @@ class BlakeDocumentImporter(BlakeImporter):
             copy.header = self.element_to_dict(virtual_group_header)
             copy.header_html = self.header_to_html(virtual_group_header)
         # We need to clean-up since we're not using the previously generated copy, but the new virtual copy
-        for (i, obj) in enumerate(objects, 1):
+        i = 1
+        for obj in objects:
             old_copy = obj.copy
             obj.header = old_copy.header
             obj.source = old_copy.source
-            obj.object_number = i
+            if not obj.supplemental:
+                obj.object_number = i
+                i += 1
             obj.virtualwork_title = work.title
             # obj.full_object_id = re.sub(r"\s*Object 1\s*", "", obj.full_object_id, flags=re.IGNORECASE).rstrip()
             obj.full_object_id = obj.full_object_id.rstrip()
@@ -264,7 +273,7 @@ class BlakeCopyImporter(BlakeImporter):
         copy.header = self.get_header(root)
         copy.source = self.get_source(root)
         copy.header_html = self.get_header_html(root)
-        copy.bad_xml = bad_xml
+        #copy.bad_xml = bad_xml
         copy.objects = [self.object_importer.process(element) for element in root.xpath(".//desc")]
         copy.effective_copy_id = copy.bad_id
         copy.title = self.get_copy_title(root)
@@ -451,7 +460,7 @@ class BlakeObjectImporter(BlakeImporter):
     @staticmethod
     def get_full_object_id(obj):
         for objid in obj.xpath("objtitle/objid"):
-            return titlecase.titlecase(objid.xpath("string()").rstrip().encode("utf-8"))
+            return objid.xpath("string()").rstrip().encode("utf-8")
 
     @staticmethod
     def get_object_number(obj):
