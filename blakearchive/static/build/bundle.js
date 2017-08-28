@@ -4568,6 +4568,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "Bl
         //if(vm.currentApparatus == 'imagesonly' || vm.currentApparatus == 'transcriptions') {
         //    vm.scrollTo();
         //}
+        console.log($rootScope.persistentmode);
     };
 
     vm.showIndividualIllustrationDescriptions = function (index) {
