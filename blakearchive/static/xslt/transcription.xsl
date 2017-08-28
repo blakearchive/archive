@@ -195,6 +195,7 @@ transforms transcriptions
         </xsl:choose>
     </xsl:template>
     <xsl:template match="l">
+        <xsl:variable name="lg-indent"><xsl:value-of select="number(ancestor::lg[1]/@indent)"/></xsl:variable>
         <tr>
             <td class="tei-line-number"> <!-- "width: 5%; font-family:Times New Roman;font-size:8pt;color:gray;" -->
                 <xsl:choose>
@@ -213,6 +214,15 @@ transforms transcriptions
                 <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/></xsl:attribute>
                 <span>
                     <xsl:choose>
+                      <!-- LINE GROUP INDENTATION -->
+                        <xsl:when test="$lg-indent &gt; 0">
+                          <xsl:call-template name="spacemaker">
+                            <xsl:with-param name="spaces">
+                              <xsl:value-of select="round($lg-indent * 1.75)"/>
+                            </xsl:with-param>
+                          </xsl:call-template>
+                        </xsl:when>
+                      <!-- LINE GROUP INDENTATION ENDS -->
                         <xsl:when test="@justify ='left'">
                             <xsl:if test="@indent">
                                 <xsl:call-template name="spacemaker">

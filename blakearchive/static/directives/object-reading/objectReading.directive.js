@@ -16,12 +16,26 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     $rootScope.truesize = false;
     vm.showOverlayCompareCopyInfo = false;
     vm.compareCopy = null;
+    $rootScope.activeId = '';
+    vm.apparatusArray = [];
+    vm.isApparatusArrayInit = false;
+    $rootScope.descIdFromReadingCompare = null;
 
-    console.log(vm.bds);
+
+    vm.initApparatusArray = function() {
+        //console.log('called');
+        vm.apparatusArray = [];
+        vm.bds.copyObjects.forEach(function(copyObject) {
+            vm.apparatusArray.push('');
+            //console.log(vm.apparatusArray);
+        });
+    };
+
+    //console.log(vm.bds);
 
     vm.zoom = function() {
         $rootScope.zoom = !$rootScope.zoom;
-        //console.log($rootScope.zoom);
+        ////console.log($rootScope.zoom);
     };
 
     vm.getStrippedDescId = function(desc_id) {
@@ -45,6 +59,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 vm.reverseTrueSize();
             }
         }
+        //vm.scrollTo();
     }
 
     $scope.$on('clientPpi::savedPpi', function() {
@@ -69,7 +84,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 }
             });
         }
-
+        //vm.scrollTo();
 
     }
 
@@ -90,7 +105,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                     width = width * 10;
                     height = height * 10;
                 }
-                //console.log(height);
+                ////console.log(height);
                 var myEl = angular.element(document.querySelector('#' + vm.getStrippedDescId(copyObject.desc_id)));
                 myEl.attr('style', 'height:' + height + 'px;' + 'width:' + width + 'px;' + 'margin-right:' + '15px');
 
@@ -107,6 +122,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.showCompareWithFaster = function(bad_id) {
         vm.compareCopyObjects = {};
         vm.compareCopyObjectsTemp = [];
+        vm.apparatusArray = [];
 
         BlakeDataService.getCopy(bad_id).then(function(resultingCopy) {
             vm.compareCopy = resultingCopy;
@@ -125,10 +141,10 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 }
                 });
             });
-            //console.log(resultingCopyObjects);
+            ////console.log(resultingCopyObjects);
         });
 
-        console.log(vm.compareCopyObjectsTemp);
+        //console.log(vm.compareCopyObjectsTemp);
 
 
         vm.apparatus = 'comparewith';
@@ -137,6 +153,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
             $rootScope.truesize = false;
             vm.reverseTrueSize();
         }
+        //vm.scrollTo();
     }
 
     vm.showCompareWith = function(bad_id) {
@@ -146,7 +163,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         BlakeDataService.getCopy(bad_id).then(function(resultingCopy) {
             vm.compareCopy = resultingCopy;
         });
-        console.log(vm.compareCopy);
+        //console.log(vm.compareCopy);
 
         vm.bds.copyObjects.forEach(function(copyObject) {
             BlakeDataService.getSameMatrixObjectFromOtherCopy(copyObject.desc_id, bad_id).then(function(result) {
@@ -159,7 +176,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
                 }
             });
         });
-        console.log(vm.compareCopyObjects);
+        //console.log(vm.compareCopyObjects);
 
         vm.apparatus = 'comparewith';
         $rootScope.activeapparatus = 'comparewith';
@@ -167,26 +184,67 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
             $rootScope.truesize = false;
             vm.reverseTrueSize();
         }
+        //vm.scrollTo();
     }
 
     vm.showIllustrationDescriptions = function() {
         vm.apparatus = 'illustrationdescriptions';
+        vm.currentApparatus = $rootScope.activeapparatus;
         $rootScope.activeapparatus = 'illustrationdescriptions';
+        vm.apparatusArray = [];
+        //if(vm.currentApparatus == 'imagesonly' || vm.currentApparatus == 'transcriptions') {
+        //    vm.scrollTo();
+        //}
     }
 
     vm.showTranscriptions = function() {
         vm.apparatus = 'transcriptions';
         $rootScope.activeapparatus = 'transcriptions';
+        vm.apparatusArray = [];
+        //vm.scrollTo();
     }
 
     vm.showEditorsNotes = function() {
         vm.apparatus = 'editorsnotes';
+        vm.currentApparatus = $rootScope.activeapparatus;
         $rootScope.activeapparatus = 'editorsnotes';
+        vm.apparatusArray = [];
+        //if(vm.currentApparatus == 'imagesonly' || vm.currentApparatus == 'transcriptions') {
+        //    vm.scrollTo();
+        //}
+    }
+
+    vm.showIndividualIllustrationDescriptions = function(index) {
+        if(vm.isApparatusArrayInit == false) {
+            vm.initApparatusArray();
+            vm.isApparatusArrayInit = true;
+        }
+        vm.apparatusArray[index] = 'illustrationdescriptions';
+    }
+
+    vm.showIndividualTranscriptions = function(index) {
+        if(vm.isApparatusArrayInit == false) {
+            vm.initApparatusArray();
+            vm.isApparatusArrayInit = true;
+        }
+        vm.apparatusArray[index] = 'transcriptions';
+    }
+
+    vm.showIndividualEditorsNotes = function(index) {
+       if(vm.isApparatusArrayInit == false) {
+            vm.initApparatusArray();
+            vm.isApparatusArrayInit = true;
+        }
+        vm.apparatusArray[index] = 'editorsnotes';
     }
 
     vm.showImagesOnly = function() {
+        if(vm.isApparatusArrayInit == true) {
+            vm.initApparatusArray();
+        }
         vm.apparatus = 'imagesonly';
         $rootScope.activeapparatus = 'imagesonly';
+        //vm.scrollTo();
     }
 
     vm.getOvpTitle = function() {
@@ -218,15 +276,40 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     }
 
     vm.changeCopy = function(copy_id, desc_id) {
+        //console.log(copy_id);
+        //console.log(desc_id);
         vm.bds.changeCopy(copy_id, desc_id);
         $rootScope.view.mode = 'object';
         $rootScope.view.scope = 'image';
         $rootScope.persistentmode = 'gallery';
         $rootScope.states.activeItem = 'gallery';
+        //if($rootScope.activeapparatus = 'comparewith') {
+            vm.apparatus = 'transcriptions';
+            $rootScope.activeapparatus = 'transcriptions';
+            vm.apparatusArray = [];
+        $rootScope.descIdFromReadingCompare = desc_id;
+        //}
     }
 
     vm.cssSafeId = function(string) {
         return string.replace(/\./g, '-');
+    }
+
+    vm.scrollTo = function() {
+        var target = '#'+vm.cssSafeId($rootScope.activeId).replace(/\./g,'-');
+        $rootScope.$broadcast('viewSubMenu::readingMode',{'target': target});
+    }
+
+    vm.setActiveId = function(index) {
+        //note to mike: if (images only is pressed)
+        if($rootScope.activeapparatus == 'imagesonly' && index > 2) {
+            $rootScope.activeId = vm.cssSafeId(vm.bds.copyObjects[index-2].desc_id);
+        }
+        else {
+            $rootScope.activeId = vm.cssSafeId(vm.bds.copyObjects[index].desc_id);
+        }
+        //$rootScope.activeId = id;
+        //console.log($rootScope.activeId);
     }
 
     $scope.$watch(function() {

@@ -154,8 +154,11 @@ class BlakeDataService(object):
 
     @staticmethod
     def get_virtual_sorted_query():
+        #query = models.BlakeObject.query \
+        #    .order_by(models.BlakeObject.butnumber) \
+        #    .filter(models.BlakeObject.supplemental == None)
         query = models.BlakeObject.query \
-            .order_by(models.BlakeObject.butnumber) \
+            .order_by(models.BlakeObject.object_number) \
             .filter(models.BlakeObject.supplemental == None)
         return query
 

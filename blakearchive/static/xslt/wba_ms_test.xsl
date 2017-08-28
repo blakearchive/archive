@@ -59,6 +59,14 @@
                                 </font>
                             </span>
                         </xsl:when>
+                        <xsl:when test="@type='wash'">
+                            <span class="tei-del-erasure"> <!-- style="color: red; text-decoration:line-through;background-color:lightgray" -->
+                                <font>
+                                    <xsl:attribute name="color">red</xsl:attribute>
+                                    <xsl:apply-templates/>
+                                </font>
+                            </span>
+                        </xsl:when>
                         <xsl:when test="@type='obscured'">
                             <span class="tei-del-obscured"> <!-- style="text-decoration:line-through;background-color:lightgray" -->
                                 <xsl:apply-templates/>

@@ -1,3 +1,34 @@
+#archive #object-view .btn-group-vertical.edit-object {
+  margin-bottom: 14px;
+}
+#archive #object-view .btn-group-vertical.edit-object .btn.btn-default {
+  color: #d5d5d5;
+  font-size: 13px;
+  background-color: #222;
+  border-color: #393939;
+  -webkit-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+}
+@media (max-width: 767px) {
+  #archive #object-view .btn-group-vertical.edit-object .btn.btn-default {
+    text-align: left;
+    border-radius: 0;
+    width: 90%;
+    float: none;
+  }
+  #archive #object-view .btn-group-vertical.edit-object .btn.btn-default:not(:last-child) {
+    border-bottom: none;
+  }
+}
+#archive #object-view .btn-group-vertical.edit-object .btn.btn-default:hover,#archive #object-view .btn-group.edit-object .btn.btn-default.hover {
+  color: #5b5b5b;
+  background-color: #f8f8f8;
+  border-color: #dadada;
+}
+
+
+
 #archive #object-view.reading-view #compare.scrollbar .compare-inner .item p {
   width:115%;
 }
@@ -217,6 +248,45 @@ sup a:hover img {
     right: 0;
     top: 1.25em;
 }
+
+a.footnote {
+   text-decoration:none;
+   background-color: #FEF6BB;
+   padding-left: 2px;
+   padding-right: 2px;
+   margin-right: 2px;
+   -webkit-transition: all 2s ease;
+   -moz-transition: all 2s ease;
+   -o-transition: all 2s ease;
+   transition: all 2s ease;
+} 
+
+a.footnote span {
+   text-align: justify;
+        z-index: 10;
+        display: none; 
+        padding: 5px;
+        line-height: 16px;
+        opacity: 0.9;
+        border-radius: 4px;
+        box-shadow: 5px 5px 8px #D4D4D4;
+       left:-300%;
+    top: 1.25em;
+        transform: translate(-50%, 0);
+        position: relative; 
+        width: 250px;
+}
+
+a.footnote:hover span {
+   display: inline; 
+        color: #111;
+        position: absolute;
+        border: 1px solid #eaeaea;
+        background-color: #fffcfc;
+   
+}
+
+
 
 td.c2 {
   padding: 0px;
@@ -1407,7 +1477,7 @@ a.compare-selected-objects {
 
     .copies-in-work,.objects-in-copy,.object-result-highlight{
         max-height: 89%;
-        overflow: auto;
+        overflow-y: scroll;
         scrollbar-face-color: #666666;
         scrollbar-arrow-color: #666666;
         scrollbar-track-color: #0a0a0a;
@@ -1515,7 +1585,8 @@ handprint-block.supp-original .handprint-block{
     margin-bottom: 3em;
 }
 .static-page-wrapper .container-fluid.main {
-    padding-bottom: 0;
+    /*padding-bottom: 0;*/
+    padding-bottom: 25px;
 }
 .sidebar-wrapper {
     background: #fff;
