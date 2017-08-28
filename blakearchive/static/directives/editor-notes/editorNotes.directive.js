@@ -1,7 +1,7 @@
 angular.module('blake').controller("EditorNotesController", function($routeParams, $rootScope) {
     var vm = this;
     //console.log(vm.object.object_note_images);
-    console.log(hello);
+    console.log('hello');
     console.log($rootScope.persistentmode);
     vm.objectNotes = function () {
         if (angular.isDefined(vm.object) && angular.isDefined(vm.object.notes)) {
