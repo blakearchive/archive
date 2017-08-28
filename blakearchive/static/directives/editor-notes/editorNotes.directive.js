@@ -1,4 +1,4 @@
-angular.module('blake').controller("EditorNotesController", function($routeParams) {
+angular.module('blake').controller("EditorNotesController", function($routeParams, $rootScope) {
     var vm = this;
     //console.log(vm.object.object_note_images);
     vm.objectNotes = function () {

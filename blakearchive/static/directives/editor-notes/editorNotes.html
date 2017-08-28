@@ -20,10 +20,13 @@
         Line {{ note.line }}: <span ng-bind-html="note.note.trim() | markdown | highlight:noteCtrl.highlight"></span>
 
         
-				<div style="display:inline-block; padding-bottom:15px" ng-if="note.text_note_image_filename">
+				<div style="display:inline-block; padding-bottom:15px" ng-if="note.text_note_image_filename && persistentmode != 'reading'">
 					<img style="width:100%" ng-src="/images/{{note.text_note_image_filename}}">
 				</div>
 		
+				<div style="display:inline-block; padding-bottom:0px" ng-if="note.text_note_image_filename && persistentmode == 'reading'">
+					<img style="width:100%" ng-src="/images/{{note.text_note_image_filename}}">
+				</div>
 
     </li>
 </ul>
