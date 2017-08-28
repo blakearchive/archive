@@ -3607,7 +3607,7 @@ angular.module("blake").directive("dpi", function () {
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-angular.module('blake').controller("EditorNotesController", ["$routeParams", function ($routeParams) {
+angular.module('blake').controller("EditorNotesController", ["$routeParams", "$rootScope", function ($routeParams, $rootScope) {
     var vm = this;
     //console.log(vm.object.object_note_images);
     vm.objectNotes = function () {
