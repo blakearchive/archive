@@ -22,6 +22,7 @@
         
 				<div style="display:inline-block; padding-bottom:15px" ng-if="note.text_note_image_filename && persistentmode != 'reading'">
 					<img style="width:100%" ng-src="/images/{{note.text_note_image_filename}}">
+					{{persistentmode}}
 				</div>
 		
 				<div style="display:inline-block; padding-bottom:0px" ng-if="note.text_note_image_filename && persistentmode == 'reading'">
