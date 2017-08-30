@@ -38,9 +38,18 @@ angular.module("blake").controller("ObjectEditButtonsController", function ($roo
     };
 
     // add object to the cart... possible error if not an image!
+    // the cart is an array in local storage.  each item in the array will...
+    // todo: be a map s.t. {imgUrl:url,title:title, caption:caption}
     vm.addToLightBox = function(){
       // TODO: pass a map, with title and caption as well as the image url
-      CartStorageService.insert(vm.bds.object.dbi+".300.jpg");
+      //console.log("===> adding: "+JSON.stringify(vm.bds.object));
+      var item = {};
+      item.url = "/images/"+vm.bds.object.dbi+".300.jpg";
+      item.title = "Calculated title - todo: calculate this!";
+      item.caption = "Calculated caption - todo: calculate this!";
+      CartStorageService.insert(item);
+
+      //CartStorageService.insert(vm.bds.object.dbi+".300.jpg");
     	//$scope.$broadcast('copyCtrl::addToLightBox',CartStorageService.count());
     }
 });

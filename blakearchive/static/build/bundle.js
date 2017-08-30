@@ -21221,7 +21221,7 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
     // has max 5 objects width.
     var icount = 0;
     $scope.images.forEach(function (entry) {
-      var imgUrl = '/images/' + entry;
+      var imgUrl = entry.url;
       //console.log("attempting load of: "+entry+" with width: "+sensibleWidth);
       $scope.addImage(imgUrl, sensibleWidth);
       icount++;
@@ -21237,6 +21237,9 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
   // ===============
   $scope.addImage = function (imgUrl, width) {
     $scope.fabric.addImageScaledToWidth(imgUrl, width);
+  };
+  $scope.addImageMyWay = function (options) {
+    fabric.Image.fromURL(imageURL, function (object) {});
   };
 
   // ===================================================================
@@ -21296,6 +21299,9 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
 
     // works for image name... dataUrl will break this!
     window.open("/cropper/" + imgName, '_cropper');
+
+    // TODO: a workaround is to pass the image name || dataUrl via more localStorage
+    // have the cropper page use the value from localstorage.
   };
   $scope.trashButtonClicked = function () {
     console.log("So, you want to remove this: " + FabricCanvas.getCanvas().getActiveObject());
@@ -22840,9 +22846,18 @@ angular.module("blake").controller("ObjectEditButtonsController", ["$rootScope",
     };
 
     // add object to the cart... possible error if not an image!
+    // the cart is an array in local storage.  each item in the array will...
+    // todo: be a map s.t. {imgUrl:url,title:title, caption:caption}
     vm.addToLightBox = function () {
         // TODO: pass a map, with title and caption as well as the image url
-        CartStorageService.insert(vm.bds.object.dbi + ".300.jpg");
+        //console.log("===> adding: "+JSON.stringify(vm.bds.object));
+        var item = {};
+        item.url = "/images/" + vm.bds.object.dbi + ".300.jpg";
+        item.title = "Calculated title - todo: calculate this!";
+        item.caption = "Calculated caption - todo: calculate this!";
+        CartStorageService.insert(item);
+
+        //CartStorageService.insert(vm.bds.object.dbi+".300.jpg");
         //$scope.$broadcast('copyCtrl::addToLightBox',CartStorageService.count());
     };
 }]);
