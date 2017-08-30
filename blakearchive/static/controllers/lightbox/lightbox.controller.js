@@ -89,7 +89,7 @@ angular.module("blake")
           if (divisor < 1) divisor = 1;
           return containerWidth/(divisor+1);
         };
-        
+
         // ===============
         $scope.addImage = function(imgUrl, width){
           $scope.fabric.addImageScaledToWidth(imgUrl,width);
@@ -125,23 +125,7 @@ angular.module("blake")
         // Event Handlers.
         // ===================================================================
         $scope.handleObjectAdded = function(evt){
-          // TODO: find out what's up with this... still adds to the middle!
-          // also! this should only happen on initial loading of the page
-          // if (evt.target instanceof fabric.Image){
-          //   var itemsInCanvas = FabricCanvas.getCanvas().getObjects().length;
-          //   console.log("there are now "+itemsInCanvas+" item(s) added to the canvas");
-          //   //console.log(' >>> just added this: '+evt.target);
-          //   var c = $scope.loaded % 5;
-          //   var r = Math.floor($scope.loaded / 5);
-          //   var vtop = (r * 50)+30;
-          //   var vleft =  c* $scope.determineLoadingWidth(window.innerWidth);
-          //   $scope.loaded++;
-          //
-          //   evt.target.setTop(vtop);
-          //   evt.target.setLeft(vleft);
-          //   evt.target.setCoords();
-          //
-          // }
+
         };
         $scope.handleObjectSelected = function(evt){
           // when an image is selected, we need to enable control buttons in the nav!
@@ -174,13 +158,12 @@ angular.module("blake")
           // assumes activeObject is not null, could not click cropButton if that were the case!
           var imgSrc = FabricCanvas.getCanvas().getActiveObject().getSrc();
           var imgName = imgSrc.slice(imgSrc.lastIndexOf("/images/")+8);
-          console.log("So, you want to crop this: "+imgName);
+          window.localStorage.setItem("cropper-image-to-crop", imgSrc);
+          //console.log("So, you want to crop this: "+imgName);
 
-          // works for image name... dataUrl will break this!
-          window.open("/cropper/"+imgName,'_cropper');
+          // parameter no longer required... setting it to 1
+          window.open("/cropper/1",'_cropper');
 
-          // TODO: a workaround is to pass the image name || dataUrl via more localStorage
-          // have the cropper page use the value from localstorage.
         }
         $scope.trashButtonClicked = function(){
           //console.log("So, you want to remove this: "+FabricCanvas.getCanvas().getActiveObject());
