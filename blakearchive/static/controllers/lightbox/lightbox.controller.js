@@ -8,6 +8,7 @@ angular.module("blake")
         $scope.fabric = {};
         $scope.loaded = 0;            // number of images loaded
       	$scope.FabricConstants = FabricConstants;
+        $scope.maxHeight = 0;
 
         // note: the cart items are from browsers local storage
         $scope.images = CartStorageService.cartItems;
@@ -44,9 +45,9 @@ angular.module("blake")
                 var cart = JSON.parse(e.newValue);
                 var last = cart.pop();
 
-                console.log("Item was added to the cart: "+last);
+                console.log("Item was added to the cart: "+JSON.stringify(last));
 
-                $scope.addImage("/images/"+last,400);
+                $scope.addImage(last.url,400);
               }
             }else if (e.key == 'lbox-cropped-image'){
               if (e.newValue != null){
@@ -67,13 +68,17 @@ angular.module("blake")
         $scope.loadFromCart = function(){
           var sensibleWidth = $scope.determineLoadingWidth(window.innerWidth);
 
-          // TODO: when loading from cart, load into a "grid" that
-          // has max 5 objects width.
           var icount = 0;
           $scope.images.forEach(function(entry){
             var imgUrl = entry.url;
             //console.log("attempting load of: "+entry+" with width: "+sensibleWidth);
-            $scope.addImage(imgUrl,sensibleWidth);
+            //$scope.addImage(imgUrl,sensibleWidth);
+
+            $scope.addImageMyWay({
+              imageIdx: icount,
+              imageURL: imgUrl
+            });
+
             icount++;
           });
         };
@@ -84,13 +89,35 @@ angular.module("blake")
           if (divisor < 1) divisor = 1;
           return containerWidth/(divisor+1);
         };
+        
         // ===============
         $scope.addImage = function(imgUrl, width){
           $scope.fabric.addImageScaledToWidth(imgUrl,width);
         };
-        $scope.addImageMyWay = function(options){
-          fabric.Image.fromURL(imageURL,function(object){
 
+        // add images (from the cart) and place them just so....
+        // ... rows of 5 images
+        $scope.addImageMyWay = function(options){
+          var imageURL = options.imageURL;
+          var sensibleWidth = Math.floor($scope.determineLoadingWidth(window.innerWidth));
+
+          fabric.Image.fromURL(imageURL,function(image){
+            var scale = sensibleWidth/image.width;
+            var scaledHeight = image.height * scale;
+
+            if (scaledHeight > $scope.maxHeight) {
+              // the next row is governed as a multiple of the scaled max height
+              $scope.maxHeight = scaledHeight;
+            }
+            var rowNum = Math.floor(options.imageIdx/5);
+            var colNum = options.imageIdx % 5;
+
+            image.top = $scope.maxHeight*rowNum;
+            image.left = sensibleWidth*colNum;
+            image.scaleToWidth(sensibleWidth);
+            image.lockUniScaling = true;
+
+            FabricCanvas.getCanvas().add(image);
           });
         }
 
@@ -156,7 +183,7 @@ angular.module("blake")
           // have the cropper page use the value from localstorage.
         }
         $scope.trashButtonClicked = function(){
-          console.log("So, you want to remove this: "+FabricCanvas.getCanvas().getActiveObject());
+          //console.log("So, you want to remove this: "+FabricCanvas.getCanvas().getActiveObject());
           FabricCanvas.getCanvas().getActiveObject().remove();
           // TODO: consider removing the image from the cart?
           $scope.disableCropControls();
