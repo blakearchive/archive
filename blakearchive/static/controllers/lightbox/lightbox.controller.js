@@ -71,7 +71,7 @@ angular.module("blake")
           // has max 5 objects width.
           var icount = 0;
           $scope.images.forEach(function(entry){
-            var imgUrl = '/images/' +entry;
+            var imgUrl = entry.url;
             //console.log("attempting load of: "+entry+" with width: "+sensibleWidth);
             $scope.addImage(imgUrl,sensibleWidth);
             icount++;
