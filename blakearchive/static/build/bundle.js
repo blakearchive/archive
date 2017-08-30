@@ -21091,7 +21091,7 @@ angular.module("blake").controller("CropperController", ["$rootScope", "$routePa
   // use the fabric canvas service to get the active object...
   //$scope.imageToCrop = FabricCanvas.getCanvas().getActiveObject().getSrc();
   $scope.cropper;
-  $scope.imageToCrop = "/images/" + $routeParams.imgUrl;
+  $scope.imageToCrop = window.localStorage.getItem("cropper-image-to-crop");
   var image = document.getElementById('image');
 
   $scope.init = function () {
@@ -21124,7 +21124,7 @@ angular.module("blake").controller("CropperController", ["$rootScope", "$routePa
     $scope.init();
   });
 }]);
-// TODO: remove all ngCropper stuff that was added... it did not work
+// TODO: remove (almost) all ngCropper stuff that was added... it did not work
 //     Cropper.encode(file=$scope.imageToCrop).then(function(dataUrl){
 //        $scope.dataUrl = dataUrl;
 //        $timeout(showCropper);
@@ -21274,25 +21274,7 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
   // ===================================================================
   // Event Handlers.
   // ===================================================================
-  $scope.handleObjectAdded = function (evt) {
-    // TODO: find out what's up with this... still adds to the middle!
-    // also! this should only happen on initial loading of the page
-    // if (evt.target instanceof fabric.Image){
-    //   var itemsInCanvas = FabricCanvas.getCanvas().getObjects().length;
-    //   console.log("there are now "+itemsInCanvas+" item(s) added to the canvas");
-    //   //console.log(' >>> just added this: '+evt.target);
-    //   var c = $scope.loaded % 5;
-    //   var r = Math.floor($scope.loaded / 5);
-    //   var vtop = (r * 50)+30;
-    //   var vleft =  c* $scope.determineLoadingWidth(window.innerWidth);
-    //   $scope.loaded++;
-    //
-    //   evt.target.setTop(vtop);
-    //   evt.target.setLeft(vleft);
-    //   evt.target.setCoords();
-    //
-    // }
-  };
+  $scope.handleObjectAdded = function (evt) {};
   $scope.handleObjectSelected = function (evt) {
     // when an image is selected, we need to enable control buttons in the nav!
     var img = FabricCanvas.getCanvas().getActiveObject();
@@ -21324,13 +21306,11 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
     // assumes activeObject is not null, could not click cropButton if that were the case!
     var imgSrc = FabricCanvas.getCanvas().getActiveObject().getSrc();
     var imgName = imgSrc.slice(imgSrc.lastIndexOf("/images/") + 8);
-    console.log("So, you want to crop this: " + imgName);
+    window.localStorage.setItem("cropper-image-to-crop", imgSrc);
+    //console.log("So, you want to crop this: "+imgName);
 
-    // works for image name... dataUrl will break this!
-    window.open("/cropper/" + imgName, '_cropper');
-
-    // TODO: a workaround is to pass the image name || dataUrl via more localStorage
-    // have the cropper page use the value from localstorage.
+    // parameter no longer required... setting it to 1
+    window.open("/cropper/1", '_cropper');
   };
   $scope.trashButtonClicked = function () {
     //console.log("So, you want to remove this: "+FabricCanvas.getCanvas().getActiveObject());

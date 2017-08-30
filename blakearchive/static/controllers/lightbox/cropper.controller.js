@@ -7,7 +7,7 @@ function($rootScope, $routeParams, BlakeDataService, $scope, $timeout,
     // use the fabric canvas service to get the active object...
     //$scope.imageToCrop = FabricCanvas.getCanvas().getActiveObject().getSrc();
     $scope.cropper;
-    $scope.imageToCrop = "/images/"+$routeParams.imgUrl;
+    $scope.imageToCrop = window.localStorage.getItem("cropper-image-to-crop");
     var image = document.getElementById('image');
 
     $scope.init = function(){
@@ -41,7 +41,7 @@ function($rootScope, $routeParams, BlakeDataService, $scope, $timeout,
       $scope.init();
     });
 });
-// TODO: remove all ngCropper stuff that was added... it did not work
+// TODO: remove (almost) all ngCropper stuff that was added... it did not work
 //     Cropper.encode(file=$scope.imageToCrop).then(function(dataUrl){
 //        $scope.dataUrl = dataUrl;
 //        $timeout(showCropper);
