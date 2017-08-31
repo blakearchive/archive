@@ -23,7 +23,7 @@
             <div class="well" ng-repeat="obj in info.bds.copyObjects | filter:{supplemental:null} track by $index">
                 <h4>{{ obj.full_object_id }}</h4>
                 <p><strong>Title:</strong> {{ obj.title }}</p>
-                <p><a href="/bad/{{ obj.copy_bad_id }}.xml" target="_blank">View XML</a> <small>(may not work in all browsers)</small></p>
+                <p><a href="/bad/{{ obj.copy_id }}.xml" target="_blank">View XML</a> <small>(may not work in all browsers)</small></p>
             </div>
         </div>
     </div>
