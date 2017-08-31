@@ -2,7 +2,8 @@ angular.module("blake").controller("CropperController",
 function($rootScope, $routeParams, BlakeDataService, $scope, $timeout,
   Fabric,
   FabricCanvas,
-  FabricConstants
+  FabricConstants,
+  alertFactory
 ){
     // use the fabric canvas service to get the active object...
     //$scope.imageToCrop = FabricCanvas.getCanvas().getActiveObject().getSrc();
@@ -15,6 +16,7 @@ function($rootScope, $routeParams, BlakeDataService, $scope, $timeout,
         viewMode: 0,
         autoCropArea: .4,
         ratio: 1.0,
+        checkOrientation: false,
         dragMode: 'crop', /* crop/move/none - double click to switch on the fly*/
         //preview: 'preview', /* element or selector - element will show preview of cropped image*/
         zoom: function(e) {
@@ -34,6 +36,7 @@ function($rootScope, $routeParams, BlakeDataService, $scope, $timeout,
       //console.log("crop the image to our lightbox!!!");
       // lightbox should listen for this value to change...
       window.localStorage.setItem('lbox-cropped-image',$scope.cropper.getCroppedCanvas().toDataURL());
+      alertFactory.add("success","Cropped image sent to the lightbox!");
     });
 
     // new Cropper is not available even on doc ready?!!!

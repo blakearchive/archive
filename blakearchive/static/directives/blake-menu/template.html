@@ -20,6 +20,8 @@
       <div title="Lightbox" class="lightbox hidden-xs" ng-class="{'hidden':showmePage}">
         <a class="lb-amount" target="_lightbox" href="/lightbox" ng-click="openLightbox();">
           <span ng-bind="bm.rs.cartItems.length">0</span></a>
+          <a class="lb-amount" style="background-color: red;margin-bottom: 12px;" target="_lightbox" href="#" ng-click="openLightbox();">
+            <span>X</span></a>
       </div>
 
       <div id="custom-tweet-button" class="custom-tweet-button"><a twitter-share href="" onclick="window.open('https://twitter.com/share?text=@BlakeArchive','name','width=600,height=400')"></a></div>

@@ -4,7 +4,9 @@ angular.module("blake")
       $rootScope,CartStorageService,
       Fabric,
       FabricCanvas,
-      FabricConstants) {
+      FabricConstants,
+      alertFactory
+    ) {
         $scope.fabric = {};
         $scope.loaded = 0;            // number of images loaded
       	$scope.FabricConstants = FabricConstants;
@@ -170,17 +172,23 @@ angular.module("blake")
           FabricCanvas.getCanvas().getActiveObject().remove();
           // TODO: consider removing the image from the cart?
           $scope.disableCropControls();
+          alertFactory.add("warning","Image was removed!");
         }
         $scope.infoButtonClicked = function(){
-          console.log("So, you want to toggle captions...");
+          console.log("So, you want to toggle captions....");
+          alertFactory.add("success","Info button clicked!!!");
+          //FabricCanvas.getCanvas().renderAll();
+          $('#erdmanBody').focus();
         }
         $scope.saveButtonClicked = function(){
-          console.log("So, you want to save your work...");
+          //console.log("So, you want to save your work...");
           window.localStorage.setItem('saved-light-box',JSON.stringify(FabricCanvas.getCanvas()));
+          alertFactory.add("success","Lightbox has been saved!");
         }
         $scope.loadButtonClicked = function(){
           console.log("So, you want to load previous work...");
           FabricCanvas.getCanvas().loadFromJSON(window.localStorage.getItem('saved-light-box'));
+          alertFactory.add("success","Lightbox was loaded!");
         }
         // ===============> End of Event Handlers
 

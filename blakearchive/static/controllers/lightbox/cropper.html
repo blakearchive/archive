@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default navbar-fixed-top">
-	<div class="container-fluid">
+	<div class="container-fluid site-header-container">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -8,7 +8,9 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="http://www.blakearchive.org" target="_blank"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
+					<a class="navbar-brand" href="http://www.blakearchive.org" target="_blank">
+						<span class="name">The William Blake Archive</span><span class="sig"></span></a>
+						<span class="gr-display">CROPPER MODE</span>
 			</div>
 
 			<div class="collapse navbar-collapse" style="text-align: center">
@@ -27,6 +29,7 @@
             </a></li>
 
 					</ul>
+					<alert ng-repeat="alert in alerts" class="nav alert alert-{{alert.type}}" type="alert.type">{{alert.msg}}</alert>
 			</div>
 	</div>
 </nav>
