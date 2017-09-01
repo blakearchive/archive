@@ -69,15 +69,15 @@ angular.module("blake")
     	  }; /// ===> End of $scope.init()
 
         $scope.findCaption = function(){
-          console.log("=== finding caption!");
-          $scope.caption = "";
+          //console.log("=== finding caption!");
+          $scope.caption = null;
           var ao = FabricCanvas.getCanvas().getActiveObject();
           if (ao){
             // look through the cart...
             $scope.images.forEach(function(entry){
                 if (ao.getSrc().endsWith(entry.url)){
                   // found it!
-                  console.log("!!! found it: "+entry.title+": "+entry.caption);
+                  //console.log("!!! found it: "+entry.title+": "+entry.caption);
                   $scope.caption = entry.title+": "+entry.caption;
                 }
 
