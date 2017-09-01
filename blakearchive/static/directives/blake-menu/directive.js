@@ -11,6 +11,11 @@ angular.module("blake").controller("BlakeMenuController",
         win.location.href = '/lightbox';
       }
     };
+    vm.clearLightbox = function(){
+      console.log("clearing cart!!!");
+      CartStorageService.clearCart();
+      //window.localStorage.setItem("cart-items-angularjs", "[]");
+    }
 });
 
 angular.module("blake").directive('blakeMenu', function(){

@@ -1,6 +1,7 @@
-angular.module("blake").controller("ObjectEditButtonsController", function ($rootScope, $window, $cookies, $modal, BlakeDataService, CartStorageService,imageManipulation) {
+angular.module("blake").controller("ObjectEditButtonsController", function ($rootScope, $window, $cookies, $modal, worktitleService, BlakeDataService, CartStorageService,imageManipulation) {
     let vm = this;
     vm.bds = BlakeDataService;
+    vm.wts = worktitleService;
     vm.rs = $rootScope;
     var cartItems = CartStorageService.cartItems;
 
@@ -41,16 +42,13 @@ angular.module("blake").controller("ObjectEditButtonsController", function ($roo
     // the cart is an array in local storage.  each item in the array will...
     // todo: be a map s.t. {imgUrl:url,title:title, caption:caption}
     vm.addToLightBox = function(){
-      // TODO: pass a map, with title and caption as well as the image url
       //console.log("===> adding: "+JSON.stringify(vm.bds.object));
       var item = {};
       item.url = "/images/"+vm.bds.object.dbi+".300.jpg";
-      item.title = "Calculated title - todo: calculate this!";
-      item.caption = "Calculated caption - todo: calculate this!";
+      item.title = vm.wts.getWorkTitle();
+      item.caption = vm.wts.getCaption();
       CartStorageService.insert(item);
 
-      //CartStorageService.insert(vm.bds.object.dbi+".300.jpg");
-    	//$scope.$broadcast('copyCtrl::addToLightBox',CartStorageService.count());
     }
 });
 

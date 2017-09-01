@@ -5,12 +5,15 @@ angular.module("blake")
       Fabric,
       FabricCanvas,
       FabricConstants,
-      alertFactory
+      alertFactory,
+      worktitleService
     ) {
         $scope.fabric = {};
         $scope.loaded = 0;            // number of images loaded
       	$scope.FabricConstants = FabricConstants;
         $scope.maxHeight = 0;
+        $scope.showCaption= false;
+        $scope.caption = null;
 
         // note: the cart items are from browsers local storage
         $scope.images = CartStorageService.cartItems;
@@ -37,6 +40,7 @@ angular.module("blake")
           $('#lb-info-btn').on('click',$scope.infoButtonClicked);
           $('#lb-save-btn').on('click',$scope.saveButtonClicked);
           $('#lb-load-btn').on('click',$scope.loadButtonClicked);
+          $('#lb-clear-btn').on('click',$scope.clearButtonClicked);
 
           // deal with cropping and cart changes ... we assume that the clients
           // browser supports localStorage (html5)
@@ -63,6 +67,23 @@ angular.module("blake")
           // not required on re-entry (when lbox window is already opened)
           $scope.loadFromCart();
     	  }; /// ===> End of $scope.init()
+
+        $scope.findCaption = function(){
+          console.log("=== finding caption!");
+          $scope.caption = "";
+          var ao = FabricCanvas.getCanvas().getActiveObject();
+          if (ao){
+            // look through the cart...
+            $scope.images.forEach(function(entry){
+                if (ao.getSrc().endsWith(entry.url)){
+                  // found it!
+                  console.log("!!! found it: "+entry.title+": "+entry.caption);
+                  $scope.caption = entry.title+": "+entry.caption;
+                }
+
+            });
+          }
+        };
 
         // ===================================================================
         // Methods dealing with loading images into fabric from the cart
@@ -138,6 +159,7 @@ angular.module("blake")
             // also bring the image to the front
             //console.log("bring the selected to the front!!!");
             img.bringToFront();
+            if ($scope.showCaption) $scope.findCaption();
           }
         };
         $scope.handleCanvasClicked = function(evt){
@@ -145,6 +167,7 @@ angular.module("blake")
           if (FabricCanvas.getCanvas().getActiveObject() == null){
             //console.log("canvas clicked, active object deselected!");
             $scope.disableCropControls();
+            if ($scope.showCaption) $scope.findCaption();
           }
         };
         // disable/enable cropping controls is a matter of bootstrap css classing...
@@ -175,8 +198,9 @@ angular.module("blake")
           alertFactory.add("warning","Image was removed!");
         }
         $scope.infoButtonClicked = function(){
-          console.log("So, you want to toggle captions....");
+          //console.log("So, you want to toggle captions....");
           alertFactory.add("success","Info button clicked!!!");
+          $scope.showCaption = ! $scope.showCaption;
           //FabricCanvas.getCanvas().renderAll();
           $('#erdmanBody').focus();
         }
@@ -189,6 +213,14 @@ angular.module("blake")
           console.log("So, you want to load previous work...");
           FabricCanvas.getCanvas().loadFromJSON(window.localStorage.getItem('saved-light-box'));
           alertFactory.add("success","Lightbox was loaded!");
+        }
+        $scope.clearButtonClicked = function(){
+          //CartStorageService.clearCart(); // doesn't work!!!!!
+          window.localStorage.setItem('cart-items-angularjs',[]);
+
+          alertFactory.add("success","Lightbox cart was cleared!");
+          // this works, marginally, need to update the gallery pages'
+          // cart counter via refresh... no doubt there's a better way to do it.
         }
         // ===============> End of Event Handlers
 
