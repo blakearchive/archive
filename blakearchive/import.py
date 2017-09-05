@@ -388,7 +388,7 @@ class BlakeObjectImporter(BlakeImporter):
         obj.characteristics = self.get_characteristics(element)
         obj.illustration_description = self.get_illustration_description(element)
         obj.notes = self.get_object_notes(element)
-        obj.object_note_images = self.get_object_note_images(element)
+        #obj.object_note_images = self.get_object_note_images(element)
         obj.title = self.get_object_title(element)
         obj.text = self.get_text(element)
         obj.markup_text = self.get_markuptext(element)
@@ -496,7 +496,11 @@ class BlakeObjectImporter(BlakeImporter):
                     text_note_image_filename = ''
                 result = {"note": text, "type": "text", "line": line, "text_note_image_filename": text_note_image_filename}
             else:
-                result = {"note": text, "type": "desc"}
+                if len(text_note_image):
+                    text_note_image_filename = text_note_image[0].attrib["filename"]
+                else:
+                    text_note_image_filename = ''
+                result = {"note": text, "type": "desc", "text_note_image_filename": text_note_image_filename}
             notes.append(result)
         return notes
 
