@@ -1000,6 +1000,7 @@ a.compare-selected-objects {
     }
     #archive #object-view.view-objects .item .reading-copy .reading-copy-inner{
         min-width: 400px;
+        padding-top: 10px;
     }
     #archive #object-view.view-objects .item .reading-copy{
         max-height: 100%;
