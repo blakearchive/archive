@@ -1,3 +1,29 @@
+.containerForRelatedInOverlay {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  color:white;
+}
+@media (min-width: 768px) {
+  .containerForRelatedInOverlay {
+    width: 750px;
+    color:white;
+  }
+}
+@media (min-width: 992px) {
+  .containerForRelatedInOverlay {
+    width: 970px;
+    color:white;
+  }
+}
+@media (min-width: 1200px) {
+  .containerForRelatedInOverlay {
+    width: 1170px;
+    color:white;
+  }
+}
+
 #archive #object-view .btn-group-vertical.edit-object {
   margin-bottom: 14px;
 }
@@ -202,6 +228,10 @@ h3 a {
 
 div h3 {
     color:black;
+}
+
+div h3.containerForRelatedInOverlay {
+    color:white;
 }
 
 .btn {
