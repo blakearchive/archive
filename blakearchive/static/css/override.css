@@ -230,7 +230,7 @@ div h3 {
     color:black;
 }
 
-div h3.containerForRelatedInOverlay {
+div .containerForRelatedInOverlay h3 {
     color:white;
 }
 
