@@ -3609,10 +3609,9 @@ angular.module("blake").directive("dpi", function () {
 
 angular.module('blake').controller("EditorNotesController", ["$routeParams", function ($routeParams) {
     var vm = this;
-    //console.log(vm.object.object_note_images);
+    console.log(vm.object.notes);
     vm.objectNotes = function () {
         if (angular.isDefined(vm.object) && angular.isDefined(vm.object.notes)) {
-            console.log(vm.object.notes);
             return vm.object.notes.filter(function (o) {
                 return o.type == "desc";
             }).length > 0;
