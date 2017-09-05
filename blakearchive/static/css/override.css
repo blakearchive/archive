@@ -231,7 +231,7 @@ div h3 {
 }
 
 div .containerForRelatedInOverlay h3 {
-    color:white;
+    color:gray;
 }
 
 .btn {
@@ -467,7 +467,7 @@ td.c2 {
 
 .containerForRelatedInOverlay .related-item span:first-child{
     font-weight: 600;
-    color:gray;
+    color:tan;
 }
 
 @media (min-width: 768px) {
