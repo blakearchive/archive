@@ -1,4 +1,4 @@
-.container {
+.overlay.container {
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
@@ -6,7 +6,7 @@
   color:white;
 }
 
-.containerForRelatedInOverlay .h3 {
+.overlay.container.containerForRelatedInOverlay.h3 {
   color: white;
   font-size: 17px;
   line-height: 22px;
