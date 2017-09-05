@@ -1,18 +1,3 @@
-.overlay.container {
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 15px;
-  padding-right: 15px;
-  color:white;
-}
-
-.overlay.container.containerForRelatedInOverlay.h3 {
-  color: white;
-  font-size: 17px;
-  line-height: 22px;
-  font-family: "Lato", Arial, "Helvetica Neue", Helvetica, sans-serif;
-}
-
 #archive #object-view .btn-group-vertical.edit-object {
   margin-bottom: 14px;
 }
