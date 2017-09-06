@@ -483,27 +483,27 @@ class BlakeObjectImporter(BlakeImporter):
     @staticmethod
     def get_object_notes(obj):
         notes = []
-        text_note_image_filename = ''
+        text_note_image_filenames = []
         #return [note.xpath("string()") for note in obj.xpath(".//note") + obj.xpath(".//objnote")]
         for note in obj.xpath("./phystext//note") + obj.xpath("./physdesc/objnote//p"):
             text = note.xpath("string()")
             parent = note.xpath('parent::l')
-            text_note_image = note.xpath(".//illus")
+            text_note_images = note.xpath(".//illus")
             if len(parent):
                 line = parent[0].attrib["n"].rsplit("." , 1)[1]
-                if len(text_note_image):
-                    text_note_image_filename = text_note_image[0].attrib["filename"]
+                if len(text_note_images):
+                    for text_note_image in text_note_images:
+                        text_note_image_filenames.append(text_note_image.attrib["filename"])
                 else:
-                    text_note_image_filename = ''
-                result = {"note": text, "type": "text", "line": line, "text_note_image_filename": text_note_image_filename}
+                    text_note_image_filenames = []
+                result = {"note": text, "type": "text", "line": line, "text_note_image_filenames": text_note_image_filenames}
             else:
-                if len(text_note_image):
-                    text_note_image_filename = text_note_image[0].attrib["filename"]
+                if len(text_note_images):
+                    for text_note_image in text_note_images:
+                        text_note_image_filenames.append(text_note_image.attrib["filename"])
                 else:
-                    text_note_image_filename = ''
-                result = {"note": text, "type": "desc", "text_note_image_filename": text_note_image_filename}
-            if text_note_image_filename == "bb203.11a.note.jpg":
-                print(result)
+                    text_note_image_filenames = []
+                result = {"note": text, "type": "desc", "text_note_image_filenames": text_note_image_filenames}
             notes.append(result)
         return notes
 
