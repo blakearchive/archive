@@ -488,7 +488,8 @@ class BlakeObjectImporter(BlakeImporter):
             text = note.xpath("string()")
             parent = note.xpath('parent::l')
             text_note_image = note.xpath(".//illus")
-            print(text_note_image)
+            if obj.bad_id == 'bb203.1':
+                print(text_note_image[0].attrib["filename"])
             if len(parent):
                 line = parent[0].attrib["n"].rsplit("." , 1)[1]
                 if len(text_note_image):
