@@ -483,6 +483,7 @@ class BlakeObjectImporter(BlakeImporter):
     @staticmethod
     def get_object_notes(obj):
         notes = []
+        text_note_image_filename = ''
         #return [note.xpath("string()") for note in obj.xpath(".//note") + obj.xpath(".//objnote")]
         for note in obj.xpath("./phystext//note") + obj.xpath("./physdesc/objnote//p"):
             text = note.xpath("string()")
