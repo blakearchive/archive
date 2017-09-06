@@ -494,6 +494,7 @@ class BlakeObjectImporter(BlakeImporter):
                 if len(text_note_images):
                     for text_note_image in text_note_images:
                         text_note_image_filenames.append(text_note_image.attrib["filename"])
+                    text_note_image_filenames = []
                 else:
                     text_note_image_filenames = []
                 result = {"note": text, "type": "text", "line": line, "text_note_image_filenames": text_note_image_filenames}
@@ -501,6 +502,7 @@ class BlakeObjectImporter(BlakeImporter):
                 if len(text_note_images):
                     for text_note_image in text_note_images:
                         text_note_image_filenames.append(text_note_image.attrib["filename"])
+                    text_note_image_filenames = []
                 else:
                     text_note_image_filenames = []
                 result = {"note": text, "type": "desc", "text_note_image_filenames": text_note_image_filenames}
