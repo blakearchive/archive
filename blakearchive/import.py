@@ -498,11 +498,12 @@ class BlakeObjectImporter(BlakeImporter):
                 result = {"note": text, "type": "text", "line": line, "text_note_image_filename": text_note_image_filename}
             else:
                 if len(text_note_image):
-                    print(text_note_image[0].attrib["filename"])
                     text_note_image_filename = text_note_image[0].attrib["filename"]
                 else:
                     text_note_image_filename = ''
                 result = {"note": text, "type": "desc", "text_note_image_filename": text_note_image_filename}
+            if text_note_image_filename == "bb203.11a.note.jpg":
+                print(result)
             notes.append(result)
         return notes
 
