@@ -1513,7 +1513,7 @@ a.compare-selected-objects {
 
     .copies-in-work,.objects-in-copy,.object-result-highlight{
         max-height: 89%;
-        height:70vh;
+        height:55vh;
         overflow-y: auto;
         scrollbar-face-color: #666666;
         scrollbar-arrow-color: #666666;
