@@ -93,7 +93,7 @@
         <dl ng-if="info.getSource().repositories == null">
             <!--<dt>Address</dt>-->
             <dd>
-                <dt>Institution</dt>
+                <dt>Institution </dt>
                 <span ng-bind-html="info.getSource().repository.institution['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <!--<span ng-bind-html="info.getSource().repository.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="info.getSource().repository.addressline[0]">
                 <span ng-bind-html="info.getSource().repository.addressline[1]['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="info.getSource().repository.addressline[1]">
@@ -165,6 +165,11 @@
                 <dd ng-bind-html="info.getSource().repository.repositoryid[1]['#text'].trim() | highlight:info.highlight | markdown"></dd>
             </div>
 
+            <div>
+                <dt>Contact Information</dt>
+                <dd>See <a href="http://london.lib.unc.edu/staticpage/archiveataglance?p=contributingcollections">Contributing Collections</a> under About the Archive</dd>
+            </div>
+
         </dl>
 
 
@@ -172,6 +177,7 @@
             <!--<dt>Address</dt>-->
         
             <dd>
+                <dt>Institution </dt>
                 <span ng-bind-html="r.institution['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <!--<span ng-if="r.addressline" ng-bind-html="r.addressline['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="r.addressline[0] == null">
                 <span ng-bind-html="r.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="r.addressline[0]">
@@ -256,6 +262,11 @@
             <div ng-if="r.repositoryid[1]['@label']">
                 <dt>{{ r.repositoryid[1]['@label'] }}</dt>
                 <dd ng-bind-html="r.repositoryid[1]['#text'].trim() | highlight:info.highlight | markdown"></dd>
+            </div>
+
+            <div>
+                <dt>Contact Information</dt>
+                <dd>See <a href="http://london.lib.unc.edu/staticpage/archiveataglance?p=contributingcollections">Contributing Collections</a> under About the Archive</dd>
             </div>
 
             <div ng-if="$index < info.getSource().repositories.repository.length - 1" style="border-bottom:1px solid #f1f1f1; padding-top:14px"></div>
