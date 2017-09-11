@@ -93,6 +93,7 @@
         <dl ng-if="info.getSource().repositories == null">
             <!--<dt>Address</dt>-->
             <dd>
+                <dt>Institution</dt>
                 <span ng-bind-html="info.getSource().repository.institution['#text'].trim() | highlight:info.highlight | markdown"></span><br>
                 <!--<span ng-bind-html="info.getSource().repository.addressline[0]['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="info.getSource().repository.addressline[0]">
                 <span ng-bind-html="info.getSource().repository.addressline[1]['#text'].trim() | highlight:info.highlight | markdown"></span><br ng-if="info.getSource().repository.addressline[1]">
