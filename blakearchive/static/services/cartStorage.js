@@ -26,9 +26,9 @@ angular.module('blake')
 			clearCart: function () {
 				var deferred = $q.defer();
 
-				//store.cartItems = [];
+				store.cartItems = [];
 				// perhaps this is better than a new empty list...
-				store.cartItems.clear();
+				//store.cartItems.clear();
 
 				store._saveToLocalStorage(store.cartItems);
 				deferred.resolve(store.cartItems);

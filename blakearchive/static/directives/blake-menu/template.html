@@ -17,10 +17,13 @@
         <span class="icon-bar"></span>
       </button>
 
-      <div title="Lightbox" class="lightbox hidden-xs" ng-class="{'hidden':showmePage}">
-        <a class="lb-amount" target="_lightbox" href="/lightbox" ng-click="openLightbox();">
+      <div title="Lightbox" class="lightbox hidden-xs" ng-class="{'hidden':showmePage}" style="width:40px;">
+        <a class="lb-amount" target="_lightbox" href="/lightbox" style="float:left;display:inline;">
           <span ng-bind="bm.rs.cartItems.length">0</span></a>
+          <a id="clear-cart-link" class="lb-amount glyphicon glyphicon-remove"
+            style="background-color: #a94442;float:right;display:inline;"/>
       </div>
+
 
 
       <div id="custom-tweet-button" class="custom-tweet-button"><a twitter-share href="" onclick="window.open('https://twitter.com/share?text=@BlakeArchive','name','width=600,height=400')"></a></div>

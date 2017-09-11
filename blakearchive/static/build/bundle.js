@@ -21103,7 +21103,7 @@ angular.module("blake").controller("CropperController", ["$rootScope", "$routePa
       autoCropArea: .4,
       ratio: 1.0,
       checkOrientation: false,
-      dragMode: 'crop', /* crop/move/none - double click to switch on the fly*/
+      dragMode: 'move', /* crop/move/none - double click to switch on the fly*/
       //preview: 'preview', /* element or selector - element will show preview of cropped image*/
       zoom: function (e) {
         // zoom event...
@@ -21159,12 +21159,12 @@ angular.module("blake").controller("CropperController", ["$rootScope", "$routePa
 /* 50 */
 /***/ (function(module, exports) {
 
-angular.module("blake").controller("LightboxController", ["$scope", "$rootScope", "CartStorageService", "Fabric", "FabricCanvas", "FabricConstants", "alertFactory", "worktitleService", function ($scope, $rootScope, CartStorageService, Fabric, FabricCanvas, FabricConstants, alertFactory, worktitleService) {
+angular.module("blake").controller("LightboxController", ["$scope", "$rootScope", "CartStorageService", "Fabric", "FabricCanvas", "FabricConstants", "worktitleService", function ($scope, $rootScope, CartStorageService, Fabric, FabricCanvas, FabricConstants, worktitleService) {
   $scope.fabric = {};
   $scope.loaded = 0; // number of images loaded
   $scope.FabricConstants = FabricConstants;
   $scope.maxHeight = 0;
-  $scope.showCaption = false;
+  $scope.showCaption = true;
   $scope.caption = null;
 
   // note: the cart items are from browsers local storage
@@ -21193,6 +21193,7 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
     $('#lb-save-btn').on('click', $scope.saveButtonClicked);
     $('#lb-load-btn').on('click', $scope.loadButtonClicked);
     $('#lb-clear-btn').on('click', $scope.clearButtonClicked);
+    $('#loadfile').on('change', $scope.loadFileSelected);
 
     // deal with cropping and cart changes ... we assume that the clients
     // browser supports localStorage (html5)
@@ -21221,15 +21222,15 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
   }; /// ===> End of $scope.init()
 
   $scope.findCaption = function () {
-    console.log("=== finding caption!");
-    $scope.caption = "";
+    //console.log("=== finding caption!");
+    $scope.caption = null;
     var ao = FabricCanvas.getCanvas().getActiveObject();
     if (ao) {
       // look through the cart...
       $scope.images.forEach(function (entry) {
         if (ao.getSrc().endsWith(entry.url)) {
           // found it!
-          console.log("!!! found it: " + entry.title + ": " + entry.caption);
+          //console.log("!!! found it: "+entry.title+": "+entry.caption);
           $scope.caption = entry.title + ": " + entry.caption;
         }
       });
@@ -21343,30 +21344,51 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
     FabricCanvas.getCanvas().getActiveObject().remove();
     // TODO: consider removing the image from the cart?
     $scope.disableCropControls();
-    alertFactory.add("warning", "Image was removed!");
   };
   $scope.infoButtonClicked = function () {
     //console.log("So, you want to toggle captions....");
-    alertFactory.add("success", "Info button clicked!!!");
     $scope.showCaption = !$scope.showCaption;
     //FabricCanvas.getCanvas().renderAll();
     $('#erdmanBody').focus();
   };
   $scope.saveButtonClicked = function () {
     //console.log("So, you want to save your work...");
-    window.localStorage.setItem('saved-light-box', JSON.stringify(FabricCanvas.getCanvas()));
-    alertFactory.add("success", "Lightbox has been saved!");
+    // the following saves data to the localStorage...
+    //window.localStorage.setItem('saved-light-box',JSON.stringify(FabricCanvas.getCanvas()));
+
+    // ... instead, we want to stream the data out as a download (text/json)
+    // here's some js shenanigans I found...
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(FabricCanvas.getCanvas()));
+    var dlAnchorElem = document.getElementById('saver');
+    dlAnchorElem.setAttribute("href", dataStr);
+    dlAnchorElem.setAttribute("download", "lightbox.json");
+    dlAnchorElem.click();
   };
   $scope.loadButtonClicked = function () {
-    console.log("So, you want to load previous work...");
-    FabricCanvas.getCanvas().loadFromJSON(window.localStorage.getItem('saved-light-box'));
-    alertFactory.add("success", "Lightbox was loaded!");
+    //console.log("So, you want to load previous work...");
+    //FabricCanvas.getCanvas().loadFromJSON(window.localStorage.getItem('saved-light-box'));
+
+    $('#loadfile').click();
   };
+  $scope.loadFileSelected = function (evt) {
+    var file = document.getElementById('loadfile').files[0];
+    console.log("load file: " + file.name);
+    var reader = new FileReader();
+    reader.addEventListener("load", function () {
+      console.log("file was read by the reader: " + reader.result);
+
+      FabricCanvas.getCanvas().loadFromJSON(reader.result);
+    }, false);
+
+    if (file) {
+      reader.readAsText(file);
+    }
+  };
+
   $scope.clearButtonClicked = function () {
     //CartStorageService.clearCart(); // doesn't work!!!!!
     window.localStorage.setItem('cart-items-angularjs', []);
 
-    alertFactory.add("success", "Lightbox cart was cleared!");
     // this works, marginally, need to update the gallery pages'
     // cart counter via refresh... no doubt there's a better way to do it.
   };
@@ -21831,17 +21853,10 @@ angular.module("blake").controller("BlakeMenuController", ["$scope", "$rootScope
   $rootScope.cartItems = CartStorageService.cartItems;
   //$scope.$storage = $localStorage;
 
-  vm.openLightBox = function () {
-    var win = window.open('', '_lightbox', '', true);
-    if (win.location.href === 'about:blank') {
-      win.location.href = '/lightbox';
-    }
-  };
-  vm.clearLightbox = function () {
-    console.log("clearing cart!!!");
+  $('#clear-cart-link').on('click', function (evt) {
     CartStorageService.clearCart();
-    //window.localStorage.setItem("cart-items-angularjs", "[]");
-  };
+    location.reload();
+  });
 }]);
 
 angular.module("blake").directive('blakeMenu', function () {
@@ -26948,9 +26963,9 @@ angular.module('blake').factory('CartStorageService', ["$http", "$injector", fun
 		clearCart: function () {
 			var deferred = $q.defer();
 
-			//store.cartItems = [];
+			store.cartItems = [];
 			// perhaps this is better than a new empty list...
-			store.cartItems.clear();
+			//store.cartItems.clear();
 
 			store._saveToLocalStorage(store.cartItems);
 			deferred.resolve(store.cartItems);
@@ -54787,7 +54802,7 @@ module.exports = "<div class=\"section-group\">\n    <h3 style=\"font-weight:bol
 /* 171 */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\"\n  ng-class=\"{'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}\">\n  <div class=\"site-header-container\">\n    <div class=\"container-fluid site-header\">\n      <a class=\"navbar-brand\" ng-href=\"{{showmePage ? '':'/'}}\"><span class=\"name\">The William Blake Archive</span><span class=\"sig\"></span></a>\n      <span ng-if=\"bm.rs.persistentmode == 'gallery' && !bm.rs.showmePage\" class=\"gr-display\">GALLERY MODE</span>\n      <span ng-if=\"bm.rs.persistentmode == 'reading' && !bm.rs.showmePage\" class=\"gr-display\">READING MODE</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'text'\" class=\"gr-display\">DIPLOMATIC TRANSCRIPTION</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'desc'\" class=\"gr-display\">ILLUSTRATION DESCRIPTION</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'note'\" class=\"gr-display\">EDITORS' NOTES</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'enlargement'\" class=\"gr-display\">ENLARGEMENT</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'truesize'\" class=\"gr-display\">TRUE SIZE</span>\n      <button ng-click=\"bm.rs.worksNavState = !bm.rs.worksNavState\" type=\"button\" class=\"collapse-archive\" ng-class=\"{'hidden':bm.rs.showmePage, 'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n      </button>\n\n      <div title=\"Lightbox\" class=\"lightbox hidden-xs\" ng-class=\"{'hidden':showmePage}\">\n        <a class=\"lb-amount\" target=\"_lightbox\" href=\"/lightbox\" ng-click=\"openLightbox();\">\n          <span ng-bind=\"bm.rs.cartItems.length\">0</span></a>\n      </div>\n\n\n      <div id=\"custom-tweet-button\" class=\"custom-tweet-button\"><a twitter-share href=\"\" onclick=\"window.open('https://twitter.com/share?text=@BlakeArchive','name','width=600,height=400')\"></a></div>\n\n      <!-- Use any element to open/show the overlay navigation menu -->\n      <work-title ng-if=\"bm.rs.showWorkTitle\"></work-title>\n    </div>\n  </div>\n  <!-- /.container -->\n  <nav class=\"navbar navbar-default\" role=\"navigation\" ng-class=\"{'hidden':bm.rs.showmePage}\">\n    <div class=\"container-fluid\">\n      <view-sub-menu ng-class=\"{'hidden':bm.rs.showmePage}\"></view-sub-menu>\n      <search-box/>\n      <nav-menu></nav-menu>\n    </div>\n  </nav>\n  <dpi ng-if=\"bm.rs.help != 'home' && bm.rs.help != 'work' && bm.rs.help != 'static' && bm.rs.help != 'search' && bm.rs.showmeType != 'text' && bm.rs.showmeType != 'desc' && bm.rs.showmeType != 'note' && bm.rs.showmeType != 'enlargement'\"></dpi>\n</nav>\n";
+module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\"\n  ng-class=\"{'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}\">\n  <div class=\"site-header-container\">\n    <div class=\"container-fluid site-header\">\n      <a class=\"navbar-brand\" ng-href=\"{{showmePage ? '':'/'}}\"><span class=\"name\">The William Blake Archive</span><span class=\"sig\"></span></a>\n      <span ng-if=\"bm.rs.persistentmode == 'gallery' && !bm.rs.showmePage\" class=\"gr-display\">GALLERY MODE</span>\n      <span ng-if=\"bm.rs.persistentmode == 'reading' && !bm.rs.showmePage\" class=\"gr-display\">READING MODE</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'text'\" class=\"gr-display\">DIPLOMATIC TRANSCRIPTION</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'desc'\" class=\"gr-display\">ILLUSTRATION DESCRIPTION</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'note'\" class=\"gr-display\">EDITORS' NOTES</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'enlargement'\" class=\"gr-display\">ENLARGEMENT</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'truesize'\" class=\"gr-display\">TRUE SIZE</span>\n      <button ng-click=\"bm.rs.worksNavState = !bm.rs.worksNavState\" type=\"button\" class=\"collapse-archive\" ng-class=\"{'hidden':bm.rs.showmePage, 'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n      </button>\n\n      <div title=\"Lightbox\" class=\"lightbox hidden-xs\" ng-class=\"{'hidden':showmePage}\" style=\"width:40px;\">\n        <a class=\"lb-amount\" target=\"_lightbox\" href=\"/lightbox\" style=\"float:left;display:inline;\">\n          <span ng-bind=\"bm.rs.cartItems.length\">0</span></a>\n          <a id=\"clear-cart-link\" class=\"lb-amount glyphicon glyphicon-remove\"\n            style=\"background-color: #a94442;float:right;display:inline;\"/>\n      </div>\n\n\n\n      <div id=\"custom-tweet-button\" class=\"custom-tweet-button\"><a twitter-share href=\"\" onclick=\"window.open('https://twitter.com/share?text=@BlakeArchive','name','width=600,height=400')\"></a></div>\n\n      <!-- Use any element to open/show the overlay navigation menu -->\n      <work-title ng-if=\"bm.rs.showWorkTitle\"></work-title>\n    </div>\n  </div>\n  <!-- /.container -->\n  <nav class=\"navbar navbar-default\" role=\"navigation\" ng-class=\"{'hidden':bm.rs.showmePage}\">\n    <div class=\"container-fluid\">\n      <view-sub-menu ng-class=\"{'hidden':bm.rs.showmePage}\"></view-sub-menu>\n      <search-box/>\n      <nav-menu></nav-menu>\n    </div>\n  </nav>\n  <dpi ng-if=\"bm.rs.help != 'home' && bm.rs.help != 'work' && bm.rs.help != 'static' && bm.rs.help != 'search' && bm.rs.showmeType != 'text' && bm.rs.showmeType != 'desc' && bm.rs.showmeType != 'note' && bm.rs.showmeType != 'enlargement'\"></dpi>\n</nav>\n";
 
 /***/ }),
 /* 172 */
