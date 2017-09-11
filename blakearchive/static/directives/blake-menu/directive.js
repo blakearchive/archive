@@ -5,17 +5,10 @@ angular.module("blake").controller("BlakeMenuController",
     $rootScope.cartItems = CartStorageService.cartItems;
     //$scope.$storage = $localStorage;
 
-    vm.openLightBox = function(){
-      var win = window.open('','_lightbox','',true);
-      if (win.location.href === 'about:blank'){
-        win.location.href = '/lightbox';
-      }
-    };
-    vm.clearLightbox = function(){
-      console.log("clearing cart!!!");
+    $('#clear-cart-link').on('click',function(evt){
       CartStorageService.clearCart();
-      //window.localStorage.setItem("cart-items-angularjs", "[]");
-    }
+      location.reload();
+    });
 });
 
 angular.module("blake").directive('blakeMenu', function(){

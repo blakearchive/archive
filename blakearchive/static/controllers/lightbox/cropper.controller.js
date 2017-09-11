@@ -17,7 +17,7 @@ function($rootScope, $routeParams, BlakeDataService, $scope, $timeout,
         autoCropArea: .4,
         ratio: 1.0,
         checkOrientation: false,
-        dragMode: 'crop', /* crop/move/none - double click to switch on the fly*/
+        dragMode: 'move', /* crop/move/none - double click to switch on the fly*/
         //preview: 'preview', /* element or selector - element will show preview of cropped image*/
         zoom: function(e) {
           // zoom event...

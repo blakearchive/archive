@@ -5,14 +5,13 @@ angular.module("blake")
       Fabric,
       FabricCanvas,
       FabricConstants,
-      alertFactory,
       worktitleService
     ) {
         $scope.fabric = {};
         $scope.loaded = 0;            // number of images loaded
       	$scope.FabricConstants = FabricConstants;
         $scope.maxHeight = 0;
-        $scope.showCaption= false;
+        $scope.showCaption= true;
         $scope.caption = null;
 
         // note: the cart items are from browsers local storage
@@ -41,6 +40,7 @@ angular.module("blake")
           $('#lb-save-btn').on('click',$scope.saveButtonClicked);
           $('#lb-load-btn').on('click',$scope.loadButtonClicked);
           $('#lb-clear-btn').on('click',$scope.clearButtonClicked);
+          $('#loadfile').on('change',$scope.loadFileSelected);
 
           // deal with cropping and cart changes ... we assume that the clients
           // browser supports localStorage (html5)
@@ -195,30 +195,52 @@ angular.module("blake")
           FabricCanvas.getCanvas().getActiveObject().remove();
           // TODO: consider removing the image from the cart?
           $scope.disableCropControls();
-          alertFactory.add("warning","Image was removed!");
         }
         $scope.infoButtonClicked = function(){
           //console.log("So, you want to toggle captions....");
-          alertFactory.add("success","Info button clicked!!!");
           $scope.showCaption = ! $scope.showCaption;
           //FabricCanvas.getCanvas().renderAll();
           $('#erdmanBody').focus();
         }
         $scope.saveButtonClicked = function(){
           //console.log("So, you want to save your work...");
-          window.localStorage.setItem('saved-light-box',JSON.stringify(FabricCanvas.getCanvas()));
-          alertFactory.add("success","Lightbox has been saved!");
+          // the following saves data to the localStorage...
+          //window.localStorage.setItem('saved-light-box',JSON.stringify(FabricCanvas.getCanvas()));
+
+          // ... instead, we want to stream the data out as a download (text/json)
+          // here's some js shenanigans I found...
+          var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(FabricCanvas.getCanvas()));
+          var dlAnchorElem = document.getElementById('saver');
+          dlAnchorElem.setAttribute("href",     dataStr     );
+          dlAnchorElem.setAttribute("download", "lightbox.json");
+          dlAnchorElem.click();
         }
         $scope.loadButtonClicked = function(){
-          console.log("So, you want to load previous work...");
-          FabricCanvas.getCanvas().loadFromJSON(window.localStorage.getItem('saved-light-box'));
-          alertFactory.add("success","Lightbox was loaded!");
+          //console.log("So, you want to load previous work...");
+          //FabricCanvas.getCanvas().loadFromJSON(window.localStorage.getItem('saved-light-box'));
+
+          $('#loadfile').click();
+
         }
+        $scope.loadFileSelected = function(evt){
+          var file = document.getElementById('loadfile').files[0]
+          console.log("load file: "+file.name);
+          var reader = new FileReader();
+          reader.addEventListener("load",function(){
+            console.log("file was read by the reader: "+reader.result);
+
+            FabricCanvas.getCanvas().loadFromJSON(reader.result);
+          },false);
+
+          if (file){
+            reader.readAsText(file);
+          }
+        }
+
         $scope.clearButtonClicked = function(){
           //CartStorageService.clearCart(); // doesn't work!!!!!
           window.localStorage.setItem('cart-items-angularjs',[]);
 
-          alertFactory.add("success","Lightbox cart was cleared!");
           // this works, marginally, need to update the gallery pages'
           // cart counter via refresh... no doubt there's a better way to do it.
         }
