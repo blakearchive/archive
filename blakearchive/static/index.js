@@ -9,7 +9,7 @@ import 'angular-cookies';
 import 'angular-touch';
 import 'fabric';
 import 'ng-cropperjs';
-import 'angular-inview';
+//import 'angular-inview';
 import './js/angular.ngStorage';
 import './js/Sortable/Sortable.min';
 import './js/Sortable/ng-sortable.min';
@@ -25,8 +25,7 @@ let carousel = angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition
 carousel.controller('CarouselController', function ($scope, $timeout, $transition, $q) {});
 carousel.directive('carousel', function () { return {} });
 
-let blake = angular.module('blake', [
-  'angular-inview','ngRoute', 'ngSanitize', 'ui-rangeSlider',
+let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider',
   'ui.bootstrap', 'ng-sortable', 'FBAngular',
   'common.fabric','common.fabric.utilities','common.fabric.constants',
   'ngAnimate', 'ngStorage','ngCookies','ngTouch','ngCropper',
