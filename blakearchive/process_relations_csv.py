@@ -1,6 +1,9 @@
 import logging
 import argparse
 import pandas as pd
+import difflib
+import numpy as np
+
 
 logging.basicConfig()
 logger = logging.getLogger('blake_relations')
@@ -25,23 +28,27 @@ def load(file_name):
         assert col in df, "{} not in {}".format(col, file_name)
         
     return df
-    
+
+
 def flatten_to_series(df):
     """converts dataframe into series"""
     
-    series=[]
+    series = []
     for index, row in df.iterrows():
         series.append((index, ','.join(row.dropna().keys())))
     pd.Series()
-    
+
+
 def mapped_relations_to_output_df(mapped_relations_df, in_df):
-    
+
+    out_dict = {}
+
     for key in keys:
-        out_dict.update({key:flatten_to_series(df[key])})
+        out_dict.update({key: flatten_to_series(in_df[key])})
         
     df = pd.DataFrame(out_dict)
     
-    df.merge(in_df, left_on='desc_id', right_on='desc_id', inplace=True) # add id columns back on
+    df.merge(in_df, left_on='desc_id', right_on='desc_id', inplace=True)  # add id columns back on
     
     return df
 
@@ -57,25 +64,25 @@ def normalize_relations(df):
     for k in keys:
         key_df = pd.DataFrame(index=df.index, columns=df.index)
 
-        for desc_id,row in df[[k]].iterrows():
+        for desc_id, row in df[[k]].iterrows():
             if isinstance(desc_id, basestring):
                 try:
                     desc_ids = row.str.split(',')[k]
                     if isinstance(desc_ids, list):
                         try:
                             key_df.loc[[desc_id], desc_ids] = True
-                            key_df.loc[desc_ids, [desc_id]] = True # make link in both directions, a->b and b->a
+                            key_df.loc[desc_ids, [desc_id]] = True  # make link in both directions, a->b and b->a
                         except KeyError as e:
                             logger.info(e)
 
                 except ValueError as e:
-                    assert np.isnan(desc_id_map)
+                    assert np.isnan(desc_ids) # TODO: is this right?
 
         result[k] = key_df
 
-    dff = mapped_relations_to_output_df(mapped_relations_df, in_df)
     
-    return dff
+    return mapped_relations_to_output_df(result, in_df)
+
 
 def diff(in_file, out_file):
     logger.info("""Executing DIFF""")
@@ -106,13 +113,13 @@ if __name__ == '__main__':
 
     in_df = load(args.file)
 
-    dff = update_relations(in_df)
+    dff = normalize_relations(in_df)
     
     (prefix, sep, suffix) = args.file.rpartition('.')
     out_file = prefix+_+args.out_suffix+sep+suffix
     
-    write(dff, out_file)
-    
+    dff.to_csv(out_file)
+
     if args.diff:
         diff(args.file, out_file)
         
