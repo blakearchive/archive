@@ -21090,7 +21090,7 @@ angular.module('blake').controller('HomeController', ["$scope", "$rootScope", "B
 /* 49 */
 /***/ (function(module, exports) {
 
-angular.module("blake").controller("CropperController", ["$rootScope", "$routeParams", "BlakeDataService", "$scope", "$timeout", "Fabric", "FabricCanvas", "FabricConstants", "alertFactory", function ($rootScope, $routeParams, BlakeDataService, $scope, $timeout, Fabric, FabricCanvas, FabricConstants, alertFactory) {
+angular.module("blake").controller("CropperController", ["$rootScope", "$routeParams", "BlakeDataService", "$scope", "$timeout", "Fabric", "FabricCanvas", "FabricConstants", function ($rootScope, $routeParams, BlakeDataService, $scope, $timeout, Fabric, FabricCanvas, FabricConstants) {
   // use the fabric canvas service to get the active object...
   //$scope.imageToCrop = FabricCanvas.getCanvas().getActiveObject().getSrc();
   $scope.cropper;
@@ -21121,7 +21121,14 @@ angular.module("blake").controller("CropperController", ["$rootScope", "$routePa
     //console.log("crop the image to our lightbox!!!");
     // lightbox should listen for this value to change...
     window.localStorage.setItem('lbox-cropped-image', $scope.cropper.getCroppedCanvas().toDataURL());
-    alertFactory.add("success", "Cropped image sent to the lightbox!");
+
+    // New Method. add the cropped image as an object along with its
+    // title and caption.  the lightbox will listen for the change to
+    // localstorage and act accordingly....
+    // var imageInfo = window.localStorage.getItem('cropper-image-to-crop-info');
+    // imageInfo = JSON.parse(imageInfo);
+    // imageInfo.url = $scope.cropper.getCroppedCanvas().toDataURL();
+    // window.localStorage.setItem('lbox-cropped-image',JSON.stringify(imageInfo));
   });
 
   // new Cropper is not available even on doc ready?!!!
@@ -21129,31 +21136,6 @@ angular.module("blake").controller("CropperController", ["$rootScope", "$routePa
     $scope.init();
   });
 }]);
-// TODO: remove (almost) all ngCropper stuff that was added... it did not work
-//     Cropper.encode(file=$scope.imageToCrop).then(function(dataUrl){
-//        $scope.dataUrl = dataUrl;
-//        $timeout(showCropper);
-//     });
-//
-//     var data;
-//     $scope.cropper = {};
-//     $scope.cropperProxy = 'cropper.first';
-//
-//     $scope.options = {
-//       maximize: true,
-//       aspectRatio: 1.0,
-//       crop: function(dataNew) {
-//         data = dataNew;
-//       }
-//     };
-//
-//     $scope.showEvent = 'show';
-//     $scope.hideEvent = 'hide';
-//     function showCropper() { $scope.$broadcast($scope.showEvent); }
-//     function hideCropper() { $scope.$broadcast($scope.hideEvent); }
-//
-//     showCropper();
-// });
 
 /***/ }),
 /* 50 */
@@ -21211,8 +21193,12 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
       } else if (e.key == 'lbox-cropped-image') {
         if (e.newValue != null) {
           console.log("An Image was cropped!");
-          // TODO: add it at natural resolution... not width contrained!!!
           $scope.addImage(e.newValue, 400);
+
+          // new method: add the cropped image to the cart.
+          // it should be noted that the new value is no longer a dataUrl, instead
+          // it is a cart item object with url, title, and caption....
+          //CartStorageService.insert(JSON.parse(e.newValue));
         }
       }
     }, false);
@@ -21221,6 +21207,11 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
     $scope.loadFromCart();
   }; /// ===> End of $scope.init()
 
+  // the 'title/caption' for each image is determined when it was added to the cart
+  // from the object-edit-buttons directive. it was determined and then
+  // added to the cart as a map along with the images url.  Here we take the
+  // active object's url and see if it matches one in the cart. If it does,
+  // we pull the predetermined 'title/caption' directly from the cart.
   $scope.findCaption = function () {
     //console.log("=== finding caption!");
     $scope.caption = null;
@@ -21331,13 +21322,30 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
   };
   $scope.cropButtonClicked = function () {
     // assumes activeObject is not null, could not click cropButton if that were the case!
-    var imgSrc = FabricCanvas.getCanvas().getActiveObject().getSrc();
-    var imgName = imgSrc.slice(imgSrc.lastIndexOf("/images/") + 8);
-    window.localStorage.setItem("cropper-image-to-crop", imgSrc);
+    var item = {};
+    item.url = FabricCanvas.getCanvas().getActiveObject().getSrc();
+    item.title = "";
+    item.caption = "";
+
+    var ao = FabricCanvas.getCanvas().getActiveObject();
+    if (ao) {
+      // look through the cart...
+      $scope.images.forEach(function (entry) {
+        if (ao.getSrc().endsWith(entry.url)) {
+          // found it!
+          //console.log("!!! found it: "+entry.title+": "+entry.caption);
+          item.title = entry.title;
+          item.caption = entry.caption;
+        }
+      });
+    }
+
+    window.localStorage.setItem("cropper-image-to-crop", item.url);
+    window.localStorage.setItem("cropper-image-to-crop-info", JSON.stringify(item));
     //console.log("So, you want to crop this: "+imgName);
 
     // parameter no longer required... setting it to 1
-    window.open("/cropper/1", '_cropper');
+    window.open("/cropper/crop", '_cropper');
   };
   $scope.trashButtonClicked = function () {
     //console.log("So, you want to remove this: "+FabricCanvas.getCanvas().getActiveObject());
@@ -21376,8 +21384,10 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
     var reader = new FileReader();
     reader.addEventListener("load", function () {
       console.log("file was read by the reader: " + reader.result);
-
-      FabricCanvas.getCanvas().loadFromJSON(reader.result);
+      var canvas = FabricCanvas.getCanvas();
+      FabricCanvas.getCanvas().loadFromJSON(reader.result, canvas.renderAll.bind(canvas), function (o, object) {
+        object.lockUniScaling = true;
+      });
     }, false);
 
     if (file) {
@@ -21855,7 +21865,8 @@ angular.module("blake").controller("BlakeMenuController", ["$scope", "$rootScope
 
   $('#clear-cart-link').on('click', function (evt) {
     CartStorageService.clearCart();
-    location.reload();
+    //location.reload();
+    vm.rs.cartItems = CartStorageService.cartItems;
   });
 }]);
 
@@ -22923,7 +22934,7 @@ angular.module("blake").controller("ObjectEditButtonsController", ["$rootScope",
         //console.log("===> adding: "+JSON.stringify(vm.bds.object));
         var item = {};
         item.url = "/images/" + vm.bds.object.dbi + ".300.jpg";
-        item.title = vm.wts.getWorkTitle();
+        item.title = vm.wts.getFullTitle();
         item.caption = vm.wts.getCaption();
         CartStorageService.insert(item);
     };
@@ -27965,6 +27976,10 @@ angular.module("blake").factory("worktitleService", ["BlakeDataService", "$rootS
   let svc = {};
   svc.bds = BlakeDataService;
 
+  svc.getFullTitle = function () {
+    return svc.getWorkTitle() + " " + svc.getCopyPhrase() + " " + svc.getCompOrPrintDateString();
+  };
+
   svc.getWorkTitle = function () {
     /* brazenly stolen from the workTitle directive's controller ... */
     if ($rootScope.showWorkTitle == 'work') {
@@ -27992,6 +28007,18 @@ angular.module("blake").factory("worktitleService", ["BlakeDataService", "$rootS
       title = "The " + title.match(/(.*), The/)[1];
     }
     return title.trim();
+  };
+
+  svc.getCompOrPrintDateString = function () {
+    if (svc.bds.work.probable == "printing") return "Printed " + svc.bds.copy.print_date_string;else return "Composed " + svc.bds.work.composition_date_string;
+  };
+
+  svc.getCopyPhrase = function () {
+    if (svc.bds.work.virtual) {
+      return '';
+    } else {
+      return svc.bds.copy.archive_copy_id == null ? '' : 'Copy ' + svc.bds.copy.archive_copy_id;
+    }
   };
 
   svc.getCaption = function () {
@@ -54802,7 +54829,7 @@ module.exports = "<div class=\"section-group\">\n    <h3 style=\"font-weight:bol
 /* 171 */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\"\n  ng-class=\"{'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}\">\n  <div class=\"site-header-container\">\n    <div class=\"container-fluid site-header\">\n      <a class=\"navbar-brand\" ng-href=\"{{showmePage ? '':'/'}}\"><span class=\"name\">The William Blake Archive</span><span class=\"sig\"></span></a>\n      <span ng-if=\"bm.rs.persistentmode == 'gallery' && !bm.rs.showmePage\" class=\"gr-display\">GALLERY MODE</span>\n      <span ng-if=\"bm.rs.persistentmode == 'reading' && !bm.rs.showmePage\" class=\"gr-display\">READING MODE</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'text'\" class=\"gr-display\">DIPLOMATIC TRANSCRIPTION</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'desc'\" class=\"gr-display\">ILLUSTRATION DESCRIPTION</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'note'\" class=\"gr-display\">EDITORS' NOTES</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'enlargement'\" class=\"gr-display\">ENLARGEMENT</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'truesize'\" class=\"gr-display\">TRUE SIZE</span>\n      <button ng-click=\"bm.rs.worksNavState = !bm.rs.worksNavState\" type=\"button\" class=\"collapse-archive\" ng-class=\"{'hidden':bm.rs.showmePage, 'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n      </button>\n\n      <div title=\"Lightbox\" class=\"lightbox hidden-xs\" ng-class=\"{'hidden':showmePage}\" style=\"width:40px;\">\n        <a class=\"lb-amount\" target=\"_lightbox\" href=\"/lightbox\" style=\"float:left;display:inline;\">\n          <span ng-bind=\"bm.rs.cartItems.length\">0</span></a>\n          <a id=\"clear-cart-link\" class=\"lb-amount glyphicon glyphicon-remove\"\n            style=\"background-color: #a94442;float:right;display:inline;\"/>\n      </div>\n\n\n\n      <div id=\"custom-tweet-button\" class=\"custom-tweet-button\"><a twitter-share href=\"\" onclick=\"window.open('https://twitter.com/share?text=@BlakeArchive','name','width=600,height=400')\"></a></div>\n\n      <!-- Use any element to open/show the overlay navigation menu -->\n      <work-title ng-if=\"bm.rs.showWorkTitle\"></work-title>\n    </div>\n  </div>\n  <!-- /.container -->\n  <nav class=\"navbar navbar-default\" role=\"navigation\" ng-class=\"{'hidden':bm.rs.showmePage}\">\n    <div class=\"container-fluid\">\n      <view-sub-menu ng-class=\"{'hidden':bm.rs.showmePage}\"></view-sub-menu>\n      <search-box/>\n      <nav-menu></nav-menu>\n    </div>\n  </nav>\n  <dpi ng-if=\"bm.rs.help != 'home' && bm.rs.help != 'work' && bm.rs.help != 'static' && bm.rs.help != 'search' && bm.rs.showmeType != 'text' && bm.rs.showmeType != 'desc' && bm.rs.showmeType != 'note' && bm.rs.showmeType != 'enlargement'\"></dpi>\n</nav>\n";
+module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\"\n  ng-class=\"{'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}\">\n  <div class=\"site-header-container\">\n    <div class=\"container-fluid site-header\">\n      <a class=\"navbar-brand\" ng-href=\"{{showmePage ? '':'/'}}\"><span class=\"name\">The William Blake Archive</span><span class=\"sig\"></span></a>\n      <span ng-if=\"bm.rs.persistentmode == 'gallery' && !bm.rs.showmePage\" class=\"gr-display\">GALLERY MODE</span>\n      <span ng-if=\"bm.rs.persistentmode == 'reading' && !bm.rs.showmePage\" class=\"gr-display\">READING MODE</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'text'\" class=\"gr-display\">DIPLOMATIC TRANSCRIPTION</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'desc'\" class=\"gr-display\">ILLUSTRATION DESCRIPTION</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'note'\" class=\"gr-display\">EDITORS' NOTES</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'enlargement'\" class=\"gr-display\">ENLARGEMENT</span>\n      <span ng-if=\"bm.rs.showmePage && bm.rs.showmeType == 'truesize'\" class=\"gr-display\">TRUE SIZE</span>\n      <button ng-click=\"bm.rs.worksNavState = !bm.rs.worksNavState\" type=\"button\" class=\"collapse-archive\" ng-class=\"{'hidden':bm.rs.showmePage, 'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n      </button>\n\n\n      <div class=\"lightbox hidden-xs\" ng-class=\"{'hidden':showmePage}\" style=\"width:40px;\">\n        <a title=\"Open Lightbox\" class=\"lb-amount\" target=\"_lightbox\" href=\"/lightbox\">\n          <span ng-bind=\"bm.rs.cartItems.length\" class=\"ng-binding\">0</span></a>\n          <a title=\"Reset Lightbox\" id=\"clear-cart-link\" style=\"float:right;color: black;font-size: 12px;margin-top: -65%;font-weight:bold;\">X</a>\n      </div>\n      <!--\n      <div title=\"Lightbox\" class=\"lightbox hidden-xs\" ng-class=\"{'hidden':showmePage}\" style=\"width:40px;\">\n        <a class=\"lb-amount\" target=\"_lightbox\" href=\"/lightbox\">\n          <span ng-bind=\"bm.rs.cartItems.length\">0</span></a>\n          <a id=\"clear-cart-link\" class=\"lb-amount glyphicon glyphicon-remove\"\n            style=\"background-color: #a94442;float:right;display:inline;margin-top:-5%\"/>\n      </div>\n      -->\n\n\n      <div id=\"custom-tweet-button\" class=\"custom-tweet-button\"><a twitter-share href=\"\" onclick=\"window.open('https://twitter.com/share?text=@BlakeArchive','name','width=600,height=400')\"></a></div>\n\n      <!-- Use any element to open/show the overlay navigation menu -->\n      <work-title ng-if=\"bm.rs.showWorkTitle\"></work-title>\n    </div>\n  </div>\n  <!-- /.container -->\n  <nav class=\"navbar navbar-default\" role=\"navigation\" ng-class=\"{'hidden':bm.rs.showmePage}\">\n    <div class=\"container-fluid\">\n      <view-sub-menu ng-class=\"{'hidden':bm.rs.showmePage}\"></view-sub-menu>\n      <search-box/>\n      <nav-menu></nav-menu>\n    </div>\n  </nav>\n  <dpi ng-if=\"bm.rs.help != 'home' && bm.rs.help != 'work' && bm.rs.help != 'static' && bm.rs.help != 'search' && bm.rs.showmeType != 'text' && bm.rs.showmeType != 'desc' && bm.rs.showmeType != 'note' && bm.rs.showmeType != 'enlargement'\"></dpi>\n</nav>\n";
 
 /***/ }),
 /* 172 */

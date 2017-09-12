@@ -7,7 +7,8 @@ angular.module("blake").controller("BlakeMenuController",
 
     $('#clear-cart-link').on('click',function(evt){
       CartStorageService.clearCart();
-      location.reload();
+      //location.reload();
+      vm.rs.cartItems = CartStorageService.cartItems;
     });
 });
 

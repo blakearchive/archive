@@ -2,8 +2,7 @@ angular.module("blake").controller("CropperController",
 function($rootScope, $routeParams, BlakeDataService, $scope, $timeout,
   Fabric,
   FabricCanvas,
-  FabricConstants,
-  alertFactory
+  FabricConstants
 ){
     // use the fabric canvas service to get the active object...
     //$scope.imageToCrop = FabricCanvas.getCanvas().getActiveObject().getSrc();
@@ -36,7 +35,14 @@ function($rootScope, $routeParams, BlakeDataService, $scope, $timeout,
       //console.log("crop the image to our lightbox!!!");
       // lightbox should listen for this value to change...
       window.localStorage.setItem('lbox-cropped-image',$scope.cropper.getCroppedCanvas().toDataURL());
-      alertFactory.add("success","Cropped image sent to the lightbox!");
+
+      // New Method. add the cropped image as an object along with its
+      // title and caption.  the lightbox will listen for the change to
+      // localstorage and act accordingly....
+      // var imageInfo = window.localStorage.getItem('cropper-image-to-crop-info');
+      // imageInfo = JSON.parse(imageInfo);
+      // imageInfo.url = $scope.cropper.getCroppedCanvas().toDataURL();
+      // window.localStorage.setItem('lbox-cropped-image',JSON.stringify(imageInfo));
     });
 
     // new Cropper is not available even on doc ready?!!!
@@ -44,28 +50,3 @@ function($rootScope, $routeParams, BlakeDataService, $scope, $timeout,
       $scope.init();
     });
 });
-// TODO: remove (almost) all ngCropper stuff that was added... it did not work
-//     Cropper.encode(file=$scope.imageToCrop).then(function(dataUrl){
-//        $scope.dataUrl = dataUrl;
-//        $timeout(showCropper);
-//     });
-//
-//     var data;
-//     $scope.cropper = {};
-//     $scope.cropperProxy = 'cropper.first';
-//
-//     $scope.options = {
-//       maximize: true,
-//       aspectRatio: 1.0,
-//       crop: function(dataNew) {
-//         data = dataNew;
-//       }
-//     };
-//
-//     $scope.showEvent = 'show';
-//     $scope.hideEvent = 'hide';
-//     function showCropper() { $scope.$broadcast($scope.showEvent); }
-//     function hideCropper() { $scope.$broadcast($scope.hideEvent); }
-//
-//     showCropper();
-// });
