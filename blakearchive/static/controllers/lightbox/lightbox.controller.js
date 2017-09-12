@@ -58,8 +58,12 @@ angular.module("blake")
             }else if (e.key == 'lbox-cropped-image'){
               if (e.newValue != null){
                 console.log("An Image was cropped!");
-                // TODO: add it at natural resolution... not width contrained!!!
                 $scope.addImage(e.newValue,400);
+
+                // new method: add the cropped image to the cart.
+                // it should be noted that the new value is no longer a dataUrl, instead
+                // it is a cart item object with url, title, and caption....
+                //CartStorageService.insert(JSON.parse(e.newValue));
               }
             }
           },false);
@@ -68,6 +72,11 @@ angular.module("blake")
           $scope.loadFromCart();
     	  }; /// ===> End of $scope.init()
 
+        // the 'title/caption' for each image is determined when it was added to the cart
+        // from the object-edit-buttons directive. it was determined and then
+        // added to the cart as a map along with the images url.  Here we take the
+        // active object's url and see if it matches one in the cart. If it does,
+        // we pull the predetermined 'title/caption' directly from the cart.
         $scope.findCaption = function(){
           //console.log("=== finding caption!");
           $scope.caption = null;
@@ -181,13 +190,31 @@ angular.module("blake")
         };
         $scope.cropButtonClicked = function(){
           // assumes activeObject is not null, could not click cropButton if that were the case!
-          var imgSrc = FabricCanvas.getCanvas().getActiveObject().getSrc();
-          var imgName = imgSrc.slice(imgSrc.lastIndexOf("/images/")+8);
-          window.localStorage.setItem("cropper-image-to-crop", imgSrc);
+          var item = {};
+          item.url = FabricCanvas.getCanvas().getActiveObject().getSrc();
+          item.title = "";
+          item.caption = "";
+
+          var ao = FabricCanvas.getCanvas().getActiveObject();
+          if (ao){
+            // look through the cart...
+            $scope.images.forEach(function(entry){
+                if (ao.getSrc().endsWith(entry.url)){
+                  // found it!
+                  //console.log("!!! found it: "+entry.title+": "+entry.caption);
+                  item.title = entry.title;
+                  item.caption = entry.caption;
+                }
+
+            });
+          }
+
+          window.localStorage.setItem("cropper-image-to-crop", item.url);
+          window.localStorage.setItem("cropper-image-to-crop-info", JSON.stringify(item));
           //console.log("So, you want to crop this: "+imgName);
 
           // parameter no longer required... setting it to 1
-          window.open("/cropper/1",'_cropper');
+          window.open("/cropper/crop",'_cropper');
 
         }
         $scope.trashButtonClicked = function(){
@@ -228,8 +255,10 @@ angular.module("blake")
           var reader = new FileReader();
           reader.addEventListener("load",function(){
             console.log("file was read by the reader: "+reader.result);
-
-            FabricCanvas.getCanvas().loadFromJSON(reader.result);
+            var canvas= FabricCanvas.getCanvas();
+            FabricCanvas.getCanvas().loadFromJSON(reader.result,canvas.renderAll.bind(canvas), function(o, object) {
+              object.lockUniScaling = true;
+            });
           },false);
 
           if (file){

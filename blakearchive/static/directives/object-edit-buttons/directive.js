@@ -45,7 +45,7 @@ angular.module("blake").controller("ObjectEditButtonsController", function ($roo
       //console.log("===> adding: "+JSON.stringify(vm.bds.object));
       var item = {};
       item.url = "/images/"+vm.bds.object.dbi+".300.jpg";
-      item.title = vm.wts.getWorkTitle();
+      item.title = vm.wts.getFullTitle();
       item.caption = vm.wts.getCaption();
       CartStorageService.insert(item);
 

@@ -3,6 +3,10 @@ angular.module("blake")
   let svc = {};
   svc.bds = BlakeDataService;
 
+  svc.getFullTitle = function(){
+    return svc.getWorkTitle()+" "+svc.getCopyPhrase()+" "+svc.getCompOrPrintDateString();
+  }
+
   svc.getWorkTitle = function(){
     /* brazenly stolen from the workTitle directive's controller ... */
     if($rootScope.showWorkTitle == 'work'){
@@ -32,6 +36,22 @@ angular.module("blake")
     }
     return title.trim();
   };
+
+  svc.getCompOrPrintDateString = function() {
+      if(svc.bds.work.probable == "printing")
+          return "Printed " + svc.bds.copy.print_date_string;
+      else
+          return "Composed " + svc.bds.work.composition_date_string;
+  }
+
+  svc.getCopyPhrase = function() {
+      if(svc.bds.work.virtual){
+          return '';
+      } else {
+          return svc.bds.copy.archive_copy_id == null ? '' : 'Copy '+svc.bds.copy.archive_copy_id;
+      }
+  }
+
 
   svc.getCaption = function(){
     var caption = "";
