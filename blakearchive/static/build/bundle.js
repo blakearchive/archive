@@ -21118,17 +21118,9 @@ angular.module("blake").controller("CropperController", ["$rootScope", "$routePa
   };
 
   $('#lb-crop-btn').on('click', function () {
-    //console.log("crop the image to our lightbox!!!");
+    console.log("crop the image to our lightbox!!!");
     // lightbox should listen for this value to change...
     window.localStorage.setItem('lbox-cropped-image', $scope.cropper.getCroppedCanvas().toDataURL());
-
-    // New Method. add the cropped image as an object along with its
-    // title and caption.  the lightbox will listen for the change to
-    // localstorage and act accordingly....
-    // var imageInfo = window.localStorage.getItem('cropper-image-to-crop-info');
-    // imageInfo = JSON.parse(imageInfo);
-    // imageInfo.url = $scope.cropper.getCroppedCanvas().toDataURL();
-    // window.localStorage.setItem('lbox-cropped-image',JSON.stringify(imageInfo));
   });
 
   // new Cropper is not available even on doc ready?!!!
@@ -21186,15 +21178,25 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
           var cart = JSON.parse(e.newValue);
           var last = cart.pop();
 
-          console.log("Item was added to the cart: " + JSON.stringify(last));
+          //console.log("Item was added to the cart: "+JSON.stringify(last));
 
-          $scope.addImage(last.url, 400);
+          //$scope.addImage(last.url,400);
+          $scope.addImageMyWay({
+            imageIdx: 2,
+            imageURL: last.url,
+            imageCaption: last.title + ": " + last.caption
+          });
         }
       } else if (e.key == 'lbox-cropped-image') {
         if (e.newValue != null) {
           console.log("An Image was cropped!");
-          $scope.addImage(e.newValue, 400);
+          //$scope.addImage(e.newValue,400);
 
+          $scope.addImageMyWay({
+            imageIdx: 2,
+            imageURL: e.newValue,
+            imageCaption: window.localStorage.getItem("cropper-image-to-crop-info")
+          });
           // new method: add the cropped image to the cart.
           // it should be noted that the new value is no longer a dataUrl, instead
           // it is a cart item object with url, title, and caption....
@@ -21207,25 +21209,13 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
     $scope.loadFromCart();
   }; /// ===> End of $scope.init()
 
-  // the 'title/caption' for each image is determined when it was added to the cart
-  // from the object-edit-buttons directive. it was determined and then
-  // added to the cart as a map along with the images url.  Here we take the
-  // active object's url and see if it matches one in the cart. If it does,
-  // we pull the predetermined 'title/caption' directly from the cart.
+  // the 'title/caption' for each image should now be embedded in the
+  // fabric.Image object.... so finding the caption is a cinch!
   $scope.findCaption = function () {
     //console.log("=== finding caption!");
     $scope.caption = null;
     var ao = FabricCanvas.getCanvas().getActiveObject();
-    if (ao) {
-      // look through the cart...
-      $scope.images.forEach(function (entry) {
-        if (ao.getSrc().endsWith(entry.url)) {
-          // found it!
-          //console.log("!!! found it: "+entry.title+": "+entry.caption);
-          $scope.caption = entry.title + ": " + entry.caption;
-        }
-      });
-    }
+    $scope.caption = ao.alt;
   };
 
   // ===================================================================
@@ -21242,7 +21232,8 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
 
       $scope.addImageMyWay({
         imageIdx: icount,
-        imageURL: imgUrl
+        imageURL: imgUrl,
+        imageCaption: entry.title + ": " + entry.caption
       });
 
       icount++;
@@ -21283,7 +21274,10 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
       image.scaleToWidth(sensibleWidth);
       image.lockUniScaling = true;
 
-      FabricCanvas.getCanvas().add(image);
+      image.alt = options.imageCaption;
+      console.log("image alt: " + JSON.stringify(image.alt));
+
+      FabricCanvas.getCanvas().add(image.set({ alt: options.imageCaption }));
     });
   };
 
@@ -21294,6 +21288,7 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
   $scope.handleObjectSelected = function (evt) {
     // when an image is selected, we need to enable control buttons in the nav!
     var img = FabricCanvas.getCanvas().getActiveObject();
+    console.log("selected alt: " + JSON.stringify(img.alt));
     if (img != null) {
       //console.log("this was selected: "+evt.target);
       $scope.enableCropControls();
@@ -21322,26 +21317,10 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
   };
   $scope.cropButtonClicked = function () {
     // assumes activeObject is not null, could not click cropButton if that were the case!
-    var item = {};
-    item.url = FabricCanvas.getCanvas().getActiveObject().getSrc();
-    item.title = "";
-    item.caption = "";
-
     var ao = FabricCanvas.getCanvas().getActiveObject();
-    if (ao) {
-      // look through the cart...
-      $scope.images.forEach(function (entry) {
-        if (ao.getSrc().endsWith(entry.url)) {
-          // found it!
-          //console.log("!!! found it: "+entry.title+": "+entry.caption);
-          item.title = entry.title;
-          item.caption = entry.caption;
-        }
-      });
-    }
 
-    window.localStorage.setItem("cropper-image-to-crop", item.url);
-    window.localStorage.setItem("cropper-image-to-crop-info", JSON.stringify(item));
+    window.localStorage.setItem("cropper-image-to-crop", ao.getSrc());
+    window.localStorage.setItem("cropper-image-to-crop-info", ao.alt);
     //console.log("So, you want to crop this: "+imgName);
 
     // parameter no longer required... setting it to 1
@@ -21366,7 +21345,7 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
 
     // ... instead, we want to stream the data out as a download (text/json)
     // here's some js shenanigans I found...
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(FabricCanvas.getCanvas()));
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(FabricCanvas.getCanvas().toDatalessJSON(['alt'])));
     var dlAnchorElem = document.getElementById('saver');
     dlAnchorElem.setAttribute("href", dataStr);
     dlAnchorElem.setAttribute("download", "lightbox.json");
