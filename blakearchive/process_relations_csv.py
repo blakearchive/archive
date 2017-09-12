@@ -8,7 +8,6 @@ import numpy as np
 logging.basicConfig()
 logger = logging.getLogger('blake_relations')
 
-
 id_cols = ['desc_id', 'dbi', 'bad_id', 'virtual_group']
 
 keys = ['same_matrix_ids',
@@ -39,12 +38,12 @@ def flatten_to_series(df):
     pd.Series()
 
 
-def mapped_relations_to_output_df(mapped_relations_df, in_df):
+def mapped_relations_to_output_df(mapped_relations_df_dict, in_df):
 
     out_dict = {}
 
     for key in keys:
-        out_dict.update({key: flatten_to_series(in_df[key])})
+        out_dict.update({key: flatten_to_series(mapped_relations_df_dict[key])})
         
     df = pd.DataFrame(out_dict)
     
@@ -81,7 +80,7 @@ def normalize_relations(df):
         result[k] = key_df
 
     
-    return mapped_relations_to_output_df(result, in_df)
+    return mapped_relations_to_output_df(result, df)
 
 
 def diff(in_file, out_file):
@@ -100,26 +99,28 @@ def diff(in_file, out_file):
                 logger.info(line)
 
 
+def main(args):
+
+    df = load(args.file)
+    normalize_df = normalize_relations(df)
+
+    normalize_df.to_csv(args.out_file)
+
+    if args.diff:
+        diff(args.file, args.out_file)
+
+
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
-    
-    parser.add_argument("out_suffix", default='reconciled')
-    parser.add_argument("-d", "--diff", action="store_true", default=False)    
-    parser.add_argument("-f","--file", default='blake_relations.csv')
-    
 
-    args = parser.parse_args()
+    parser.add_argument("-d", "--diff", action="store_true", default=False)
+    parser.add_argument("-o", "--out_suffix", default="reconciled")
+    parser.add_argument("-f", "--file", default="blake_relations.csv")
 
-    in_df = load(args.file)
+    _args = parser.parse_args()
 
-    dff = normalize_relations(in_df)
-    
-    (prefix, sep, suffix) = args.file.rpartition('.')
-    out_file = prefix+_+args.out_suffix+sep+suffix
-    
-    dff.to_csv(out_file)
+    (prefix, sep, suffix) = _args.file.rpartition('.')
+    _args.out_file = prefix + "_" + _args.out_suffix + sep+suffix
 
-    if args.diff:
-        diff(args.file, out_file)
-        
+    main(_args)
