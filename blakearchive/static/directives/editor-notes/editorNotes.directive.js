@@ -1,10 +1,18 @@
 angular.module('blake').controller("EditorNotesController", function($routeParams) {
     var vm = this;
-
+    //console.log(vm.object.object_note_images);
     vm.objectNotes = function () {
         if (angular.isDefined(vm.object) && angular.isDefined(vm.object.notes)) {
             return vm.object.notes.filter(function (o) {
                     return o.type == "desc"
+                }).length > 0
+        }
+    }
+    vm.objectNoteImages = function () {
+        if (angular.isDefined(vm.object) && angular.isDefined(vm.object.object_note_images)) {
+            //console.log(vm.object.object_note_images)
+            return vm.object.object_note_images.filter(function (o) {
+                    return o.type == "text"
                 }).length > 0
         }
     }

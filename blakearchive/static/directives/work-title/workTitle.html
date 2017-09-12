@@ -1,5 +1,6 @@
 <div id="Overlay" class="overlay" ng-if="$root.showOverlay == true">
 
+    <div>
     <a style="text-decoration: none" href="" class="closebtnleft" ng-click="$root.showOverlay = false">&times;</a>
     <header class="page-header">
       <p class="subhead">{{ workTitle.bds.work.medium_pretty }}</p>
@@ -18,6 +19,15 @@
 
       </div>
   </article>
+  </div>
+    <div class="containerForRelatedInOverlay">
+        <!--<div class="section-group">
+            <h2>Related Works</h2>
+            <p>Related works currently available in the William Blake Archive appear as links below. Works not currently available appear as plain text.</p>
+        </div>-->
+        <all-known-copies work="workTitle.bds.work" ng-if="workTitle.bds.work.medium=='illbk'"></all-known-copies>
+        <all-known-related-items work="workTitle.bds.work" ng-class="workTitle.bds.work.related_works.length > 0 ? '' : 'hidden'"></all-known-related-items>
+    </div>
 
 </div>
 

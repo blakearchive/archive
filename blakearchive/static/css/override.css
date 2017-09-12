@@ -1,3 +1,29 @@
+.containerForRelatedInOverlay {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  color:white;
+}
+@media (min-width: 768px) {
+  .containerForRelatedInOverlay {
+    width: 750px;
+    color:white;
+  }
+}
+@media (min-width: 992px) {
+  .containerForRelatedInOverlay {
+    width: 970px;
+    color:white;
+  }
+}
+@media (min-width: 1200px) {
+  .containerForRelatedInOverlay {
+    width: 1170px;
+    color:white;
+  }
+}
+
 #archive #object-view .btn-group-vertical.edit-object {
   margin-bottom: 14px;
 }
@@ -202,6 +228,10 @@ h3 a {
 
 div h3 {
     color:black;
+}
+
+div .containerForRelatedInOverlay h3 {
+    color:gray;
 }
 
 .btn {
@@ -433,6 +463,11 @@ td.c2 {
 
 .related-item span:first-child{
     font-weight: 600;
+}
+
+.containerForRelatedInOverlay .related-item span:first-child{
+    font-weight: 600;
+    color:tan;
 }
 
 @media (min-width: 768px) {
@@ -965,6 +1000,7 @@ a.compare-selected-objects {
     }
     #archive #object-view.view-objects .item .reading-copy .reading-copy-inner{
         min-width: 400px;
+        padding-top: 10px;
     }
     #archive #object-view.view-objects .item .reading-copy{
         max-height: 100%;
@@ -1477,7 +1513,8 @@ a.compare-selected-objects {
 
     .copies-in-work,.objects-in-copy,.object-result-highlight{
         max-height: 89%;
-        overflow-y: scroll;
+        height:55vh;
+        overflow-y: auto;
         scrollbar-face-color: #666666;
         scrollbar-arrow-color: #666666;
         scrollbar-track-color: #0a0a0a;
