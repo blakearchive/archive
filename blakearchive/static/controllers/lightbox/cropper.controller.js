@@ -32,17 +32,11 @@ function($rootScope, $routeParams, BlakeDataService, $scope, $timeout,
     }
 
     $('#lb-crop-btn').on('click',function(){
-      //console.log("crop the image to our lightbox!!!");
+      console.log("crop the image to our lightbox!!!");
       // lightbox should listen for this value to change...
       window.localStorage.setItem('lbox-cropped-image',$scope.cropper.getCroppedCanvas().toDataURL());
 
-      // New Method. add the cropped image as an object along with its
-      // title and caption.  the lightbox will listen for the change to
-      // localstorage and act accordingly....
-      // var imageInfo = window.localStorage.getItem('cropper-image-to-crop-info');
-      // imageInfo = JSON.parse(imageInfo);
-      // imageInfo.url = $scope.cropper.getCroppedCanvas().toDataURL();
-      // window.localStorage.setItem('lbox-cropped-image',JSON.stringify(imageInfo));
+
     });
 
     // new Cropper is not available even on doc ready?!!!
