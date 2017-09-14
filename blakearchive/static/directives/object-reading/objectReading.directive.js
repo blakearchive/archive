@@ -20,6 +20,8 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.apparatusArray = [];
     vm.isApparatusArrayInit = false;
     $rootScope.descIdFromReadingCompare = null;
+    vm.isSafari = navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0;
+
 
 
     vm.initApparatusArray = function() {
