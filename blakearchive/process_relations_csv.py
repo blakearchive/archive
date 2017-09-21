@@ -77,7 +77,7 @@ def normalize_relations(df):
                     if isinstance(desc_ids, list):
                         # any relationship not inserted into the index will be dropped forever,
                         # so we need to fail and force the user to fix the input file
-
+	# TODO : store the results of the first try block, diff against results of second
                         try:
                             key_df.loc[[desc_id], desc_ids] = True
                         except KeyError as e:
