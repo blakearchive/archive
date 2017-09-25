@@ -68,6 +68,7 @@ def normalize_relations(df):
         # TODO : to_lower everything, normalize names
 
         key_df = pd.DataFrame(index=df.index, columns=df.index)
+        diff_result = pd.DataFrame(index=df.index, columns=df.index)
 
         for desc_id, row in df[[k]].iterrows():
             if isinstance(desc_id, basestring):
@@ -80,12 +81,15 @@ def normalize_relations(df):
 	# TODO : store the results of the first try block, diff against results of second
                         try:
                             key_df.loc[[desc_id], desc_ids] = True
+                            pre_df = key_df
+
                         except KeyError as e:
                            # logger.exception(e)
                             error_message = "error trying to associate row {} with columns {} \n".format(desc_id, desc_ids)
 
                         try:
                             key_df.loc[desc_ids, [desc_id]] = True  # make link in both directions, a->b and b->a
+                            post_df = key_df
                         except KeyError as e:
                             #logger.exception(e)
                             error_message += "error trying to associate rows {} with columns {}".format(desc_ids, desc_id)
@@ -100,27 +104,14 @@ def normalize_relations(df):
 
         result[k] = key_df
 
+        out_lst = {}
+        for index, row in post_df.where(~pre_df).iterrows():
+                for new_edge in row.dropna().index.values:
+                    out_lst.update({index: new_edge})
+
+        diff_result[k] = out_lst
     
-    return mapped_relations_to_output_df(result, df)
-
-
-def diff(in_file, out_file):
-    logger.info("""Executing DIFF""")
-    logger.info("""--------------""")
-        
-    with open(in_file, 'r') as in_file:
-        with open(out_file, 'r') as out_file:
-            diff = difflib.unified_diff(
-                in_file.readlines(),
-                out_file.readlines(),
-                fromfile=in_file,
-                tofile=out_file,
-            )
-            
-            for line in diff:
-                logger.info(line)
-
-
+    return mapped_relations_to_output_df(result, df, func=flatten_to_series), diff_result
 
 def main(args):
     df = load(args.file)
@@ -133,12 +124,18 @@ def main(args):
 
     df.set_index('desc_id', inplace=True)
 
-    normalize_df = normalize_relations(df)
+    normalize_df, diff_df = normalize_relations(df)
 
     normalize_df.to_csv(args.out_file)
 
     if args.diff:
-        diff(args.file, args.out_file)
+        for k, val in diff_df.items():
+
+            logger.info("New edges added for {}".format(k))
+            logger.info("==================================")
+
+            for _k, _v, in val.items():
+                logger.info("{} -> {}".format(_k, _v))
 
 
 
