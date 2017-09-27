@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "fabric": "^1.7.19",
-    "ng-cropperjs": "^1.0.2"
+    "ng-cropperjs": "^1.0.2",
+    "ng-dexie": "0.0.18"
   }
 }

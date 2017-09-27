@@ -210,7 +210,7 @@ angular.module("blake")
           //console.log("So, you want to crop this: "+imgName);
 
           // parameter no longer required... setting it to 1
-          window.open("/cropper/crop",'_cropper');
+          window.open("/cropper/crop",'_blank',"toolbar=no,scrollbars=yes,resizable=yes,width=1200,height=800");
 
         }
         $scope.trashButtonClicked = function(){
