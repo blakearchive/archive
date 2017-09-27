@@ -41,5 +41,9 @@
   "scripts": {
     "build": "webpack",
     "build-watch": "webpack --watch"
+  },
+  "dependencies": {
+    "fabric": "^1.7.19",
+    "ng-cropperjs": "^1.0.2"
   }
 }
