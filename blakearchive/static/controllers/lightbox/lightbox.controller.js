@@ -13,6 +13,7 @@ angular.module("blake")
         $scope.maxHeight = 0;
         $scope.showCaption= true;
         $scope.caption = null;
+        $scope.focusedImage = null;
 
         // note: the cart items are from browsers local storage
         $scope.images = CartStorageService.cartItems;
@@ -34,6 +35,8 @@ angular.module("blake")
           FabricCanvas.getCanvas().on('object:added',$scope.handleObjectAdded);
           FabricCanvas.getCanvas().on('object:selected',$scope.handleObjectSelected);
           FabricCanvas.getCanvas().on('mouse:up',$scope.handleCanvasClicked);
+          FabricCanvas.getCanvas().on('mouse:over',$scope.handleMouseOver);
+          FabricCanvas.getCanvas().on('mouse:out',$scope.handleMouseOut);
           $('#lb-crop-btn').on('click',$scope.cropButtonClicked);
           $('#lb-trash-btn').on('click',$scope.trashButtonClicked);
           $('#lb-info-btn').on('click',$scope.infoButtonClicked);
@@ -83,16 +86,6 @@ angular.module("blake")
           $scope.loadFromCart();
     	  }; /// ===> End of $scope.init()
 
-        // the 'title/caption' for each image should now be embedded in the
-        // fabric.Image object.... so finding the caption is a cinch!
-        $scope.findCaption = function(){
-          //console.log("=== finding caption!");
-          $scope.caption = null;
-          var ao = FabricCanvas.getCanvas().getActiveObject();
-          $scope.caption = ao.alt;
-
-        };
-
         // ===================================================================
         // Methods dealing with loading images into fabric from the cart
         // ===================================================================
@@ -123,9 +116,9 @@ angular.module("blake")
         };
 
         // ===============
-        $scope.addImage = function(imgUrl, width){
-          $scope.fabric.addImageScaledToWidth(imgUrl,width);
-        };
+        // $scope.addImage = function(imgUrl, width){
+        //   $scope.fabric.addImageScaledToWidth(imgUrl,width);
+        // };
 
         // add images (from the cart) and place them just so....
         // ... rows of 5 images
@@ -153,6 +146,7 @@ angular.module("blake")
             console.log("image alt: "+JSON.stringify(image.alt));
 
             FabricCanvas.getCanvas().add(image.set({alt:options.imageCaption}));
+
           });
         }
 
@@ -165,14 +159,13 @@ angular.module("blake")
         $scope.handleObjectSelected = function(evt){
           // when an image is selected, we need to enable control buttons in the nav!
           var img = FabricCanvas.getCanvas().getActiveObject();
-          console.log("selected alt: "+JSON.stringify(img.alt));
+          //console.log("selected alt: "+JSON.stringify(img.alt));
           if (img != null){
             //console.log("this was selected: "+evt.target);
             $scope.enableCropControls();
             // also bring the image to the front
             //console.log("bring the selected to the front!!!");
             img.bringToFront();
-            if ($scope.showCaption) $scope.findCaption();
 
           }
         };
@@ -181,7 +174,22 @@ angular.module("blake")
           if (FabricCanvas.getCanvas().getActiveObject() == null){
             //console.log("canvas clicked, active object deselected!");
             $scope.disableCropControls();
-            if ($scope.showCaption) $scope.findCaption();
+          }
+        };
+        $scope.handleMouseOver = function(evt){
+          var t = evt.target;
+          if (t instanceof fabric.Image){
+            //console.log("Moused over image: "+t.alt);
+            $scope.focusedImage = t;
+            document.getElementById('caption').innerHTML = t.alt;
+            document.getElementById('caption').style.display = 'block';
+          }
+        };
+        $scope.handleMouseOut = function(evt){
+          if (evt.target instanceof fabric.Image){
+            //console.log("Moused out image: "+evt.target.alt);
+            $scope.focusedImage = null;
+            document.getElementById('caption').style.display = 'none';
           }
         };
         // disable/enable cropping controls is a matter of bootstrap css classing...

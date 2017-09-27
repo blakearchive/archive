@@ -1,5 +1,5 @@
 <div>
-    <div class="object-result-highlight col-sm-12" auto-width adjust="100" breakpoint="992" divide="3" to-top-on-broadcast="searchCtrl::changeResult">
+    <div class="object-result-highlight col-sm-12" auto-width adjust="100" breakpoint="992" divide="3" to-top-on-broadcast="searchCtrl::changeResult" ng-if="orh.tree != 'work'">
         <div ng-if="orh.type == 'title'" class="text-center">
             <h5 class="text-center">Title</h5>
             <span ng-bind-html="orh.results[orh.s.selectedWork][2][orh.s.selectedCopy][2][orh.s.selectedObject][0].title | highlight:orh.s.highlight"></span>
