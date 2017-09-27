@@ -25,12 +25,7 @@ let carousel = angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition
 carousel.controller('CarouselController', function ($scope, $timeout, $transition, $q) {});
 carousel.directive('carousel', function () { return {} });
 
-let blake = angular.module('blake', [
-  'angular-inview','ngRoute', 'ngSanitize', 'ui-rangeSlider',
-  'ui.bootstrap', 'ng-sortable', 'FBAngular',
-  'common.fabric','common.fabric.utilities','common.fabric.constants',
-  'ngAnimate', 'ngStorage','ngCookies','ngTouch','ngCropper',
-  'markdown','angular-loading-bar'])
+let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider','ui.bootstrap', 'ng-sortable', 'FBAngular','common.fabric','common.fabric.utilities','common.fabric.constants','ngAnimate', 'ngStorage','ngCookies','ngTouch','ngCropper','markdown','angular-loading-bar'])
 
 blake.value("directoryPrefix", directoryPrefix);
 

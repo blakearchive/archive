@@ -42,7 +42,7 @@
 <div id="loader" style="display:none">
 	<input name="Load" id="loadfile" type="file"/>
 </div>
-<div style="position:fixed;bottom:0px;width:100%;background-color:black;color:white;" ng-if="showCaption && caption">
-	{{caption}}
+<div id="caption" style="position:fixed;bottom:0px;width:100%;background-color:black;color:white;">
+	{{focusedImage.alt}}
 </div>
 <a style="display:none" id="saver"/>
