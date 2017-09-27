@@ -9,7 +9,6 @@ import 'angular-cookies';
 import 'angular-touch';
 import 'fabric';
 import 'ng-cropperjs';
-import 'angular-inview';
 import './js/angular.ngStorage';
 import './js/Sortable/Sortable.min';
 import './js/Sortable/ng-sortable.min';
