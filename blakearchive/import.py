@@ -214,7 +214,7 @@ class BlakeDocumentImporter(BlakeImporter):
             obj.copy = copy
             obj.object_group = old_copy.title
             old_copy.effective_copy_id = copy.bad_id
-            obj.copy_bad_id = copy.bad_id
+            obj.copy_bad_id = old_copy.bad_id
         work.copies.append(copy)
         self.copy_importer.members[entry.bad_id] = copy
 
@@ -388,7 +388,7 @@ class BlakeObjectImporter(BlakeImporter):
         obj.characteristics = self.get_characteristics(element)
         obj.illustration_description = self.get_illustration_description(element)
         obj.notes = self.get_object_notes(element)
-        obj.object_note_images = self.get_object_note_images(element)
+        #obj.object_note_images = self.get_object_note_images(element)
         obj.title = self.get_object_title(element)
         obj.text = self.get_text(element)
         obj.markup_text = self.get_markuptext(element)
@@ -483,16 +483,29 @@ class BlakeObjectImporter(BlakeImporter):
     @staticmethod
     def get_object_notes(obj):
         notes = []
+        text_note_image_filenames = []
         #return [note.xpath("string()") for note in obj.xpath(".//note") + obj.xpath(".//objnote")]
-        for note in obj.xpath("./phystext//note") + obj.xpath("./physdesc//objnote"):
+        for note in obj.xpath("./phystext//note") + obj.xpath("./physdesc/objnote//p"):
             text = note.xpath("string()")
             parent = note.xpath('parent::l')
+            text_note_images = note.xpath(".//illus")
             if len(parent):
                 line = parent[0].attrib["n"].rsplit("." , 1)[1]
-                result = {"note": text, "type": "text", "line": line}
+                if len(text_note_images):
+                    for text_note_image in text_note_images:
+                        text_note_image_filenames.append(text_note_image.attrib["filename"])
+                else:
+                    text_note_image_filenames = []
+                result = {"note": text, "type": "text", "line": line, "text_note_image_filenames": text_note_image_filenames}
             else:
-                result = {"note": text, "type": "desc"}
+                if len(text_note_images):
+                    for text_note_image in text_note_images:
+                        text_note_image_filenames.append(text_note_image.attrib["filename"])
+                else:
+                    text_note_image_filenames = []
+                result = {"note": text, "type": "desc", "text_note_image_filenames": text_note_image_filenames}
             notes.append(result)
+            text_note_image_filenames = []
         return notes
 
     @staticmethod
