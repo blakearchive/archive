@@ -363,3 +363,7 @@
     font-style:italic;
 
 }
+
+.tei-hi-underscore{
+    text-decoration:underline;
+}
