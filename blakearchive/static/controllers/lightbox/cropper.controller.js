@@ -1,17 +1,27 @@
 angular.module("blake").controller("CropperController",
 function($rootScope, $routeParams, BlakeDataService, $scope, $timeout,
+  lightbox_service,
   Fabric,
   FabricCanvas,
   FabricConstants
 ){
     // use the fabric canvas service to get the active object...
-    //$scope.imageToCrop = FabricCanvas.getCanvas().getActiveObject().getSrc();
     $scope.cropper;
-    $scope.imageToCrop = window.localStorage.getItem("cropper-image-to-crop");
-    var image = document.getElementById('image');
+    $scope.imageToCrop; // url of image to crop
+    $scope.imageToCropCaption;
 
+    lightbox_service.getImageToCrop().then(function(imageToCrop){
+      $scope.imageToCrop = imageToCrop.url;
+      $scope.imageToCropCaption = imageToCrop.fullCaption;
+      //console.log("=>imageToCrop url is fetched from db!")
+    });
+
+    // bootstrap cropperjs to the image element...
+    // which must be done after the image has loaded...
     $scope.init = function(){
-      $scope.cropper = new Cropper(image, {
+      console.log("=>init started!");
+
+      $scope.cropper = new Cropper($scope.imageElement, {
         viewMode: 0,
         autoCropArea: .4,
         ratio: 1.0,
@@ -28,19 +38,32 @@ function($rootScope, $routeParams, BlakeDataService, $scope, $timeout,
           }
         }
       });
-
+      console.log("=>init done!");
     }
 
     $('#lb-crop-btn').on('click',function(){
-      console.log("crop the image to our lightbox!!!");
       // lightbox should listen for this value to change...
-      window.localStorage.setItem('lbox-cropped-image',$scope.cropper.getCroppedCanvas().toDataURL());
+      //window.localStorage.setItem('lbox-cropped-image',$scope.cropper.getCroppedCanvas().toDataURL());
+      var croppedImage = {};
+      croppedImage.id = 1;
+      croppedImage.fullCaption = $scope.imageToCropCaption;
+      croppedImage.url =  $scope.cropper.getCroppedCanvas().toDataURL();
 
+      // the lightbox needs to be notified of this....
+      lightbox_service.setCroppedImage(croppedImage);
 
     });
 
     // new Cropper is not available even on doc ready?!!!
     $(document).ready(function(){
-      $scope.init();
+      //console.log("== document is ready!");
+      $scope.imageElement = document.getElementById('image');
+
+      // when the page is loaded... wait for the image element to load
+      // prior to bootstrapping the cropper!
+      $('#image').on("load",(function(){
+        //console.log("jquery detected image was loaded!")
+        $scope.init();
+      }));;
     });
 });

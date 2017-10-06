@@ -1,7 +1,8 @@
 angular.module("blake")
   .controller("LightboxController",
     function ($scope,
-      $rootScope,CartStorageService,
+      $rootScope,
+      lightbox_service,
       Fabric,
       FabricCanvas,
       FabricConstants,
@@ -15,8 +16,7 @@ angular.module("blake")
         $scope.caption = null;
         $scope.focusedImage = null;
 
-        // note: the cart items are from browsers local storage
-        $scope.images = CartStorageService.cartItems;
+        //lightbox_service.sayHi();
 
         // init(): bootstraps fabric to the canvas element
         // called on canvas::created event... see below
@@ -49,68 +49,80 @@ angular.module("blake")
           // browser supports localStorage (html5)
           window.addEventListener('storage',function(e){
             //console.log("storage event!"+e.type+":"+e.key+":"+e.newValue+":"+e.storageArea);
-            if (e.key == 'cart-items-angularjs'){
-              if (e.oldValue && (e.newValue.length > e.oldValue.length)){
-                var cart = JSON.parse(e.newValue);
-                var last = cart.pop();
+            if (e.key == 'cart-item-added'){
+              if (e.newValue != null){
+                // index of table row in newValue
+                console.log('==== item was added to the cart!!! ==> '+e.newValue);
 
-                //console.log("Item was added to the cart: "+JSON.stringify(last));
-
-                //$scope.addImage(last.url,400);
-                $scope.addImageMyWay({
-                  imageIdx: 2,
-                  imageURL: last.url,
-                  imageCaption: last.title+": "+last.caption
+                // === proves the new id is in the list
+                lightbox_service.listCartItems().then(function(data){
+                  var idx = 0;
+                  var cartLen = data.length;
+                  // get the last item
+                  var item = data[cartLen-1];
+                  if (item){
+                    //console.log(" === cart Item: "+JSON.stringify(item));
+                    $scope.addImageOnTheFly({
+                      imageIdx: 2,
+                      imageURL: item.url,
+                      imageCaption: item.title+": "+item.caption
+                    });
+                  };
                 });
 
+                // === getting item by id does not work!!!! why?
+                // lightbox_service.getCartItem(e.newValue).then(function(item){
+                //   console.log(" === cart Item: "+JSON.stringify(item));
+                // });
               }
-            }else if (e.key == 'lbox-cropped-image'){
+            }else if (e.key == 'image-cropped-indicator'){
               if (e.newValue != null){
                 console.log("An Image was cropped!");
                 //$scope.addImage(e.newValue,400);
+                //console.log("rootScope? "+$rootScope.croppedImage);
 
-                $scope.addImageMyWay({
-                  imageIdx: 2,
-                  imageURL: e.newValue,
-                  imageCaption: window.localStorage.getItem("cropper-image-to-crop-info")
+                lightbox_service.getCroppedImage().then(function(cropped){
+                    //console.log('==== cropped item ==> '+JSON.stringify(cropped));
+                    $scope.addImageOnTheFly({
+                        imageIdx: 2,
+                        imageURL: cropped.url,
+                        imageCaption: cropped.fullCaption
+                    });
                 });
-                // new method: add the cropped image to the cart.
+
+                // TODO: discuss this: new method: add the cropped image to the cart??
                 // it should be noted that the new value is no longer a dataUrl, instead
                 // it is a cart item object with url, title, and caption....
                 //CartStorageService.insert(JSON.parse(e.newValue));
               }
             }
           },false);
+
           // for dev... may need to test if a load is required...
           // not required on re-entry (when lbox window is already opened)
-          $scope.loadFromCart();
+          //$scope.loadFromCart();
+          lightbox_service.listCartItems().then(function(data){
+            var idx = 0;
+            var cartLen = data.length;
+            data.forEach(function(item){
+              $scope.addImageMyWay({
+                imageIdx: idx++,
+                imageURL: item.url,
+                imageCaption: item.title+": "+item.caption,
+                cartLen: cartLen
+              });
+            });
+          });
     	  }; /// ===> End of $scope.init()
 
         // ===================================================================
         // Methods dealing with loading images into fabric from the cart
         // ===================================================================
-        $scope.loadFromCart = function(){
-          var sensibleWidth = $scope.determineLoadingWidth(window.innerWidth);
 
-          var icount = 0;
-          $scope.images.forEach(function(entry){
-            var imgUrl = entry.url;
-            //console.log("attempting load of: "+entry+" with width: "+sensibleWidth);
-            //$scope.addImage(imgUrl,sensibleWidth);
-
-            $scope.addImageMyWay({
-              imageIdx: icount,
-              imageURL: imgUrl,
-              imageCaption: entry.title+": "+entry.caption
-            });
-
-            icount++;
-          });
-        };
         // ===============
-        $scope.determineLoadingWidth = function(containerWidth){
+        $scope.determineLoadingWidth = function(itemsCount,containerWidth){
           var divisor = 4;
-          if ($scope.images.length <= 4) divisor = $scope.images.length;
+          if (itemsCount <= 4) divisor = itemsCount;
           if (divisor < 1) divisor = 1;
           return containerWidth/(divisor+1);
         };
@@ -124,7 +136,7 @@ angular.module("blake")
         // ... rows of 5 images
         $scope.addImageMyWay = function(options){
           var imageURL = options.imageURL;
-          var sensibleWidth = Math.floor($scope.determineLoadingWidth(window.innerWidth));
+          var sensibleWidth = Math.floor($scope.determineLoadingWidth(options.cartLen,window.innerWidth));
 
           fabric.Image.fromURL(imageURL,function(image){
             var scale = sensibleWidth/image.width;
@@ -143,7 +155,30 @@ angular.module("blake")
             image.lockUniScaling = true;
 
             image.alt = options.imageCaption;
-            console.log("image alt: "+JSON.stringify(image.alt));
+            //console.log("image alt: "+JSON.stringify(image.alt));
+
+            FabricCanvas.getCanvas().add(image.set({alt:options.imageCaption}));
+
+          });
+        }
+        $scope.addImageOnTheFly = function(options){
+          var imageURL = options.imageURL;
+          var sensibleWidth = options.width || 200;
+
+          fabric.Image.fromURL(imageURL,function(image){
+            var scale = sensibleWidth/image.width;
+            var scaledHeight = image.height * scale;
+
+            if (scaledHeight > $scope.maxHeight) {
+              // the next row is governed as a multiple of the scaled max height
+              $scope.maxHeight = scaledHeight;
+            }
+
+            image.scaleToWidth(sensibleWidth);
+            image.lockUniScaling = true;
+
+            image.alt = options.imageCaption;
+            //console.log("image alt: "+JSON.stringify(image.alt));
 
             FabricCanvas.getCanvas().add(image.set({alt:options.imageCaption}));
 
@@ -205,8 +240,12 @@ angular.module("blake")
           // assumes activeObject is not null, could not click cropButton if that were the case!
           var ao = FabricCanvas.getCanvas().getActiveObject();
 
-          window.localStorage.setItem("cropper-image-to-crop", ao.getSrc());
-          window.localStorage.setItem("cropper-image-to-crop-info", ao.alt);
+          //window.localStorage.setItem("cropper-image-to-crop", ao.getSrc());
+          //window.localStorage.setItem("cropper-image-to-crop-info", ao.alt);
+          lightbox_service.setImageToCrop({
+            "url":ao.getSrc(),
+            "fullCaption":ao.alt
+          });
           //console.log("So, you want to crop this: "+imgName);
 
           // parameter no longer required... setting it to 1
@@ -226,11 +265,7 @@ angular.module("blake")
           $('#erdmanBody').focus();
         }
         $scope.saveButtonClicked = function(){
-          //console.log("So, you want to save your work...");
-          // the following saves data to the localStorage...
-          //window.localStorage.setItem('saved-light-box',JSON.stringify(FabricCanvas.getCanvas()));
-
-          // ... instead, we want to stream the data out as a download (text/json)
+          // we want to stream the data out as a download (text/json)
           // here's some js shenanigans I found...
           var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(FabricCanvas.getCanvas().toDatalessJSON(['alt'])));
           var dlAnchorElem = document.getElementById('saver');
@@ -239,11 +274,10 @@ angular.module("blake")
           dlAnchorElem.click();
         }
         $scope.loadButtonClicked = function(){
-          //console.log("So, you want to load previous work...");
-          //FabricCanvas.getCanvas().loadFromJSON(window.localStorage.getItem('saved-light-box'));
-
+          // there is a hidden <input type=file on the page... we click it to
+          // pull up a file dialog
           $('#loadfile').click();
-
+          // once a file is selected, it triggers 'loadFileSelected()' below...
         }
         $scope.loadFileSelected = function(evt){
           var file = document.getElementById('loadfile').files[0]
@@ -262,13 +296,6 @@ angular.module("blake")
           }
         }
 
-        $scope.clearButtonClicked = function(){
-          //CartStorageService.clearCart(); // doesn't work!!!!!
-          window.localStorage.setItem('cart-items-angularjs',[]);
-
-          // this works, marginally, need to update the gallery pages'
-          // cart counter via refresh... no doubt there's a better way to do it.
-        }
         // ===============> End of Event Handlers
 
 

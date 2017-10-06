@@ -1,14 +1,20 @@
 angular.module("blake").controller("BlakeMenuController",
-  function($scope,$rootScope,CartStorageService){
+  function($scope,$rootScope,lightbox_service){
     let vm = this;
     vm.rs = $rootScope;
-    $rootScope.cartItems = CartStorageService.cartItems;
-    //$scope.$storage = $localStorage;
+    //$rootScope.cartItems = CartStorageService.cartItems;
+    lightbox_service.listCartItems().then(function(data){
+      vm.rs.cartItems = data;
+      //console.log("===== "+JSON.stringify($rootScope.cartItems));
+    });
 
     $('#clear-cart-link').on('click',function(evt){
-      CartStorageService.clearCart();
-      //location.reload();
-      vm.rs.cartItems = CartStorageService.cartItems;
+      //CartStorageService.clearCart();
+      lightbox_service.clearCart();
+      lightbox_service.listCartItems().then(function(data){
+        vm.rs.cartItems = data;
+      });
+
     });
 });
 
