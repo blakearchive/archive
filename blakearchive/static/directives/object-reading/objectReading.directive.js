@@ -238,7 +238,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         vm.apparatusArray[index] = 'editorsnotes';
     }
 
-    vm.showIndividualObjectsWithSimilarDesign = function(o) {
+    vm.showIndividualObjectsWithSimilarDesign = function(index) {
        if(vm.isApparatusArrayInit == false) {
             vm.initApparatusArray();
             vm.isApparatusArrayInit = true;
