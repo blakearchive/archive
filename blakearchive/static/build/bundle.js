@@ -25848,7 +25848,9 @@ angular.module("blake").controller("CropperController", ["$rootScope", "$routePa
     croppedImage.url = $scope.cropper.getCroppedCanvas().toDataURL();
 
     // the lightbox needs to be notified of this....
-    lightbox_service.setCroppedImage(croppedImage);
+    lightbox_service.setCroppedImage(croppedImage, window);
+    // hackerish way to notify the lightbox controller...
+    window.localStorage.setItem('image-cropped-indicator', Date.now());
   });
 
   // new Cropper is not available even on doc ready?!!!
@@ -25938,7 +25940,7 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
           // });
         }
       } else if (e.key == 'image-cropped-indicator') {
-        if (e.newValue != null) {
+        if (e.newValue != e.oldValue) {
           console.log("An Image was cropped!");
           //$scope.addImage(e.newValue,400);
           //console.log("rootScope? "+$rootScope.croppedImage);
@@ -32206,11 +32208,14 @@ angular.module('blake').factory('lightbox_service', ["ngDexie", "$rootScope", fu
     getImageToCrop: function () {
       return ngDexie.get('imageToCrop', 1);
     },
-    setCroppedImage: function (cropped) {
+    setCroppedImage: function (cropped, windw) {
       cropped.id = 1;
-      alert(JSON.stringify(cropped).length + ":" + JSON.stringify(cropped));
+      //alert(JSON.stringify(cropped).length+":"+JSON.stringify(cropped));
       ngDexie.put('croppedImage', cropped).then(function () {
-        alert("success");
+        //alert("success");
+        if (windw) {
+          windw.close();
+        }
       }, function () {
         alert("failed");
       });

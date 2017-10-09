@@ -38,14 +38,18 @@ angular.module('blake')
       getImageToCrop: function(){
         return ngDexie.get('imageToCrop',1);
       },
-      setCroppedImage: function(cropped){
+      setCroppedImage: function(cropped,windw){
         cropped.id=1;
-        alert(JSON.stringify(cropped).length+":"+JSON.stringify(cropped));
+        //alert(JSON.stringify(cropped).length+":"+JSON.stringify(cropped));
         ngDexie.put('croppedImage',cropped).then(function(){
-          alert("success");
+          //alert("success");
+          if (windw){
+            windw.close();
+          }
         },function(){
           alert("failed");
         });
+
       },
       getCroppedImage: function(){
         return ngDexie.list('croppedImage').then(function(data){

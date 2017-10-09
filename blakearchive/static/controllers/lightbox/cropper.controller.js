@@ -50,8 +50,9 @@ function($rootScope, $routeParams, BlakeDataService, $scope, $timeout,
       croppedImage.url =  $scope.cropper.getCroppedCanvas().toDataURL();
 
       // the lightbox needs to be notified of this....
-      lightbox_service.setCroppedImage(croppedImage);
-
+      lightbox_service.setCroppedImage(croppedImage,window);
+      // hackerish way to notify the lightbox controller...
+      window.localStorage.setItem('image-cropped-indicator',Date.now());
     });
 
     // new Cropper is not available even on doc ready?!!!
