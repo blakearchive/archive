@@ -125,7 +125,7 @@
                         </div>
 
 
-                        <div class="reading-copy-inner" ng-show="read.apparatusArray[$index] == 'motif'" style="width:10px" ng-repeat="objectWithSimilarDesign in o.objects_with_same_motif">
+                        <div class="reading-copy-inner" ng-if="read.apparatusArray[$index] == 'motif'" style="width:10px" ng-repeat="objectWithSimilarDesign in o.objects_with_same_motif">
                                 <img src="{{ objectWithSimilarDesign.dbi }}.100.jpg">
                         </div>
 
