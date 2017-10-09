@@ -125,14 +125,8 @@
                         </div>
 
 
-                        <div class="reading-copy-inner" ng-show="read.apparatusArray[$index] == 'motif'" style="width:10px">
-                            <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
-                            <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
-                            
-                            <span ng-show="read.apparatusArray[$index] == 'motif'" ng-repeat="objectWithSimilarDesign in o.objects_with_same_motif">
+                        <div class="reading-copy-inner" ng-show="read.apparatusArray[$index] == 'motif'" style="width:10px" ng-repeat="objectWithSimilarDesign in o.objects_with_same_motif">
                                 <img src="{{ objectWithSimilarDesign.dbi }}.100.jpg">
-                            </span>
-
                         </div>
 
                         <!--<div class="reading-copy-inner" ng-show="(read.apparatusArray[$index] == 'editorsnotes' || read.apparatusArray[$index] == 'illustrationdescriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null" style="width:10px">
