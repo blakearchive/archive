@@ -76,7 +76,7 @@ angular.module("blake")
                 // });
               }
             }else if (e.key == 'image-cropped-indicator'){
-              if (e.newValue != null){
+              if (e.newValue != e.oldValue){
                 console.log("An Image was cropped!");
                 //$scope.addImage(e.newValue,400);
                 //console.log("rootScope? "+$rootScope.croppedImage);
