@@ -125,7 +125,7 @@
                         </div>
 
 
-                        <div class="reading-copy-inner" ng-show="read.apparatus == 'motif'" style="width:10px">
+                        <div class="reading-copy-inner" ng-show="read.apparatusArray[$index] == 'motif'" style="width:10px">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             
