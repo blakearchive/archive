@@ -129,9 +129,9 @@
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             
-                            <div ng-repeat="objectWithSimilarDesign in o.motif | filter:{supplemental:null} track by $index">
+                            <span ng-repeat="objectWithSimilarDesign in o.motif track by $index">
                                 <img src="{{ objectWithSimilarDesign.dbi }}.100.jpg">
-                            </div>
+                            </span>
 
                         </div>
 
