@@ -79,7 +79,7 @@
                         </button>
 
                         <button ng-if="read.apparatus != 'comparewith'" tooltip="Objects from the Same Matrix" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'samematrix'} " class="btn btn-gr-selection " ng-click="read.showObjectsSameMatrix($index,o) ">
-                            <span class="gr-abbreviation " style="height:21px;font-size:13px ">SM</span>
+                            <span class="gr-abbreviation " style="height:21px;font-size:13px ">M</span>
                             <span class="gr-title ">Show objects from the same matrix</span>
                         </button>
                         <button ng-if="read.apparatus != 'comparewith'" tooltip="Objects from the Same Production Sequence" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'productionsequence'} " class="btn btn-gr-selection " ng-click="read.showObjectsProductionSequence($index,o) ">
@@ -87,11 +87,11 @@
                             <span class="gr-title ">Show objects from the same production sequence</span>
                         </button>
                         <button ng-if="read.apparatus != 'comparewith'" tooltip="Objects with a Similar Design" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'motif'} " class="btn btn-gr-selection " ng-click="read.showObjectsWithSimilarDesign($index,o) ">
-                            <span class="gr-abbreviation " style="height:21px;font-size:13px ">SD</span>
+                            <span class="gr-abbreviation " style="height:21px;font-size:13px ">D</span>
                             <span class="gr-title ">Show objects with a similar design</span>
                         </button>
                         <button ng-if="read.apparatus != 'comparewith'" tooltip="Related texts or images" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'textreference'} " class="btn btn-gr-selection " ng-click="read.showObjectsTextReference($index,o) ">
-                            <span class="gr-abbreviation " style="height:21px;font-size:13px ">TR</span>
+                            <span class="gr-abbreviation " style="height:21px;font-size:13px ">T</span>
                             <span class="gr-title ">Show objects with textual references</span>
                         </button>
 
