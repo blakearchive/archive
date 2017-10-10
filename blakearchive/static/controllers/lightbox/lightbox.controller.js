@@ -166,6 +166,7 @@ angular.module("blake")
           var sensibleWidth = options.width || 200;
 
           fabric.Image.fromURL(imageURL,function(image){
+            sensibleWidth = window.innerWidth / 3.5;
             var scale = sensibleWidth/image.width;
             var scaledHeight = image.height * scale;
 
@@ -176,13 +177,15 @@ angular.module("blake")
 
             image.scaleToWidth(sensibleWidth);
             image.lockUniScaling = true;
+            image.center();
 
             image.alt = options.imageCaption;
             //console.log("image alt: "+JSON.stringify(image.alt));
 
             FabricCanvas.getCanvas().add(image.set({alt:options.imageCaption}));
-
+            
           });
+
         }
 
         // ===================================================================
