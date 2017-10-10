@@ -20,7 +20,8 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.apparatusArray = [];
     vm.isApparatusArrayInit = false;
     $rootScope.descIdFromReadingCompare = null;
-
+    vm.objectsWithSameMotif = '';
+    vm.HoveredObjectWithSameMotif;
 
     vm.initApparatusArray = function() {
         //console.log('called');
@@ -244,6 +245,21 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         }
         vm.apparatus = 'imagesonly';
         $rootScope.activeapparatus = 'imagesonly';
+        //vm.scrollTo();
+    }
+
+    vm.showObjectsWithSimilarDesign = function(index, obj) {
+        //if(vm.isApparatusArrayInit == false) {
+            vm.initApparatusArray();
+        //    vm.isApparatusArrayInit = true;
+        //}
+        vm.apparatusArray[index] = 'motif';
+        console.log(obj);
+
+        BlakeDataService.getObjectsWithSameMotif(obj.desc_id).then(function(result) {
+            vm.objectsWithSameMotif = result;
+        });
+
         //vm.scrollTo();
     }
 
