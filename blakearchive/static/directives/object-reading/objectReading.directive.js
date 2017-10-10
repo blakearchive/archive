@@ -23,6 +23,10 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.objectsWithSameMotif = '';
     vm.objectsSameMatrix = '';
     vm.HoveredObject;
+    vm.done1 = false;
+    vm.done2 = false;
+    vm.done3 = false;
+    vm.done4 = false;
 
     vm.initApparatusArray = function() {
         //console.log('called');
@@ -241,9 +245,9 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     }
 
     vm.showImagesOnly = function() {
-        if(vm.isApparatusArrayInit == true) {
+        //if(vm.isApparatusArrayInit == true) {
             vm.initApparatusArray();
-        }
+        //}
         vm.apparatus = 'imagesonly';
         $rootScope.activeapparatus = 'imagesonly';
         //vm.scrollTo();
@@ -252,14 +256,17 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.showObjectsWithSimilarDesign = function(index, obj) {
         //if(vm.isApparatusArrayInit == false) {
             vm.initApparatusArray();
+            //$rootScope.$broadcast('read::openRelation');
         //    vm.isApparatusArrayInit = true;
         //}
+        vm.done2 = false;
         vm.apparatusArray[index] = 'motif';
         vm.HoveredObject = '';
         console.log(obj);
 
         BlakeDataService.getObjectsWithSameMotif(obj.desc_id).then(function(result) {
             vm.objectsWithSameMotif = result;
+            vm.done2 = true;
         });
 
         //vm.scrollTo();
@@ -270,12 +277,14 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
             vm.initApparatusArray();
         //    vm.isApparatusArrayInit = true;
         //}
+        vm.done1 = false;
         vm.apparatusArray[index] = 'samematrix';
         vm.HoveredObject = '';
         console.log(obj);
 
         BlakeDataService.getObjectsFromSameMatrix(obj.desc_id).then(function(result) {
             vm.objectsSameMatrix = result;
+            vm.done1 = true;
         });
 
         //vm.scrollTo();
@@ -286,12 +295,14 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
             vm.initApparatusArray();
         //    vm.isApparatusArrayInit = true;
         //}
+        vm.done3 = false;
         vm.apparatusArray[index] = 'productionsequence';
         vm.HoveredObject = '';
         console.log(obj);
 
         BlakeDataService.getObjectsFromSameProductionSequence(obj.desc_id).then(function(result) {
             vm.objectsProductionSequence = result;
+            vm.done3 = true;
         });
 
         //vm.scrollTo();
@@ -302,12 +313,14 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
             vm.initApparatusArray();
         //    vm.isApparatusArrayInit = true;
         //}
+        vm.done4 = false;
         vm.apparatusArray[index] = 'textreference';
         vm.HoveredObject = '';
         console.log(obj);
 
         BlakeDataService.getTextuallyReferencedMaterial(obj.desc_id).then(function(result) {
             vm.objectsTextReference = result;
+            vm.done4 = true;
         });
 
         //vm.scrollTo();
