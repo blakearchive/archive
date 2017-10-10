@@ -78,7 +78,7 @@
                             <span class="gr-title">Show editors' notes</span>
                         </button>
 
-
+                    <span ng-if="read.apparatus != 'comparewith'">
                         <button tooltip="Objects from the Same Matrix" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'samematrix'} " class="btn btn-gr-selection " ng-click="read.showObjectsSameMatrix($index,o) ">
                             <span class="gr-abbreviation " style="height:21px;font-size:13px ">SM</span>
                             <span class="gr-title ">Show objects from the same matrix</span>
@@ -95,7 +95,7 @@
                             <span class="gr-abbreviation " style="height:21px;font-size:13px ">TR</span>
                             <span class="gr-title ">Show objects with textual references</span>
                         </button>
-
+                    </span>
 
                     </div>
                     <div ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" style="float:right;color:white"><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</a></div>
