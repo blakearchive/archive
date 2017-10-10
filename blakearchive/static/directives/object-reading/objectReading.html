@@ -143,7 +143,7 @@
                         </div>
 
 
-                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'samematrix' || read.apparatusArray[$index] == 'samematrix') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.bds.copy.virtual == false" style="width:100%">
+                        <div auto-height adjust="150 " breakpoint="768 " class="reading-copy-inner" ng-show="(read.apparatus == 'samematrix' || read.apparatusArray[$index] == 'samematrix') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.bds.copy.virtual == false" style="width:100%">
                             
                             <div ng-if="read.objectsSameMatrix != null && read.done1 == true" ng-mouseover="read.HoveredObject = sm" style="height:100%" ng-repeat="sm in read.objectsSameMatrix">
                             <img style="margin-bottom:10%" src="/images/{{ sm.dbi }}.{{dpi}}.jpg">
