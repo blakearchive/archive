@@ -21,7 +21,8 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.isApparatusArrayInit = false;
     $rootScope.descIdFromReadingCompare = null;
     vm.objectsWithSameMotif = '';
-    vm.HoveredObjectWithSameMotif;
+    vm.objectsSameMatrix = '';
+    vm.HoveredObject;
 
     vm.initApparatusArray = function() {
         //console.log('called');
@@ -254,10 +255,59 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
         //    vm.isApparatusArrayInit = true;
         //}
         vm.apparatusArray[index] = 'motif';
+        vm.HoveredObject = '';
         console.log(obj);
 
         BlakeDataService.getObjectsWithSameMotif(obj.desc_id).then(function(result) {
             vm.objectsWithSameMotif = result;
+        });
+
+        //vm.scrollTo();
+    }
+
+    vm.showObjectsSameMatrix = function(index, obj) {
+        //if(vm.isApparatusArrayInit == false) {
+            vm.initApparatusArray();
+        //    vm.isApparatusArrayInit = true;
+        //}
+        vm.apparatusArray[index] = 'samematrix';
+        vm.HoveredObject = '';
+        console.log(obj);
+
+        BlakeDataService.getObjectsFromSameMatrix(obj.desc_id).then(function(result) {
+            vm.objectsSameMatrix = result;
+        });
+
+        //vm.scrollTo();
+    }
+
+    vm.showObjectsProductionSequence = function(index, obj) {
+        //if(vm.isApparatusArrayInit == false) {
+            vm.initApparatusArray();
+        //    vm.isApparatusArrayInit = true;
+        //}
+        vm.apparatusArray[index] = 'productionsequence';
+        vm.HoveredObject = '';
+        console.log(obj);
+
+        BlakeDataService.getObjectsFromSameProductionSequence(obj.desc_id).then(function(result) {
+            vm.objectsProductionSequence = result;
+        });
+
+        //vm.scrollTo();
+    }
+
+    vm.showObjectsTextReference = function(index, obj) {
+        //if(vm.isApparatusArrayInit == false) {
+            vm.initApparatusArray();
+        //    vm.isApparatusArrayInit = true;
+        //}
+        vm.apparatusArray[index] = 'textreference';
+        vm.HoveredObject = '';
+        console.log(obj);
+
+        BlakeDataService.getTextuallyReferencedMaterial(obj.desc_id).then(function(result) {
+            vm.objectsTextReference = result;
         });
 
         //vm.scrollTo();

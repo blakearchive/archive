@@ -1039,7 +1039,7 @@ a.compare-selected-objects {
 
     #archive #object-view.reading-view #compare.scrollbar .compare-inner .item{
         margin: 0;
-        padding-left:15px;
+        padding-left:35px;
         float:none;
         display: inline-block;
         white-space: normal;
