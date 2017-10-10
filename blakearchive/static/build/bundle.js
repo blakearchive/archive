@@ -26029,6 +26029,7 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
     var sensibleWidth = options.width || 200;
 
     fabric.Image.fromURL(imageURL, function (image) {
+      sensibleWidth = window.innerWidth / 3.5;
       var scale = sensibleWidth / image.width;
       var scaledHeight = image.height * scale;
 
@@ -26039,6 +26040,7 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
 
       image.scaleToWidth(sensibleWidth);
       image.lockUniScaling = true;
+      image.center();
 
       image.alt = options.imageCaption;
       //console.log("image alt: "+JSON.stringify(image.alt));
