@@ -15,6 +15,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.zoomMessage = 'Click, then mouse over the image';
     $rootScope.truesize = false;
     vm.showOverlayCompareCopyInfo = false;
+    vm.showOverlayRelatedCopyInfoFlag = false;
     vm.compareCopy = null;
     $rootScope.activeId = '';
     vm.apparatusArray = [];
@@ -23,10 +24,19 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.objectsWithSameMotif = '';
     vm.objectsSameMatrix = '';
     vm.HoveredObject;
+    vm.RelatedCopy;
     vm.done1 = false;
     vm.done2 = false;
     vm.done3 = false;
     vm.done4 = false;
+
+    vm.showOverlayRelatedCopyInfo = function (copyId) {
+        BlakeDataService.getCopy(copyId).then(function(resultingCopy) {
+            vm.RelatedCopy = resultingCopy;     
+        });
+        vm.showOverlayRelatedCopyInfoFlag = true;
+        return vm.RelatedCopy;
+    }
 
     vm.initApparatusArray = function() {
         //console.log('called');
