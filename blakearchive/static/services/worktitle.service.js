@@ -53,7 +53,7 @@ angular.module("blake")
   }
 
 
-  svc.getCaption = function(){
+  svc.getCaption = function(obj){
     var caption = "";
 
     /*
@@ -61,9 +61,9 @@ angular.module("blake")
     <span ng-if="svc.bds.work.virtual && svc.bds.copy.bad_id == 'letters'"><span>{{ svc.bds.object.title }}, </span><span class="object-no">Object {{ svc.bds.object.object_number }}, </span></span>
     */
     if (svc.bds.work.virtual){
-      caption += svc.bds.object.title +", Object "+svc.bds.object.object_number;
+      caption += obj.title +", Object "+svc.bds.object.object_number;
       if (svc.bds.copy.bad_id != 'letters'){
-        caption += ", "+svc.bds.object.source.objdescid.compdate['#text']+", "+svc.bds.object.source.repository.institution['#text'];
+        caption += ", "+obj.source.objdescid.compdate['#text']+", "+obj.source.repository.institution['#text'];
       }
     }else{
       /*<span class="object-no" ng-if="!svc.bds.work.virtual && !svc.bds.object.title">{{ svc.bds.object.full_object_id }}, </span>
@@ -71,18 +71,18 @@ angular.module("blake")
       <span class="object-no" ng-if="!svc.bds.work.virtual && svc.bds.object.title && svc.bds.work.medium == 'exhibit'">{{svc.bds.object.title}}</span>
       <span ng-if="svc.bds.work.medium != 'exhibit'">{{ svc.bds.object.physical_description.objsize['#text'] }} </span>
       */
-      if (!svc.bds.object.title){
-        caption += svc.bds.object.full_object_id;
+      if (!obj.title){
+        caption += obj.full_object_id;
       }else{
         if(svc.bds.work.medium != 'exhibit'){
-          caption += svc.bds.object.title +", "+svc.bds.object.full_object_id +", ";
+          caption += obj.title +", "+obj.full_object_id +", ";
         }else{
-          caption += svc.bds.object.title;
+          caption += obj.title;
         }
 
       }
       if (svc.bds.work.medium != 'exhibit'){
-        caption += svc.bds.object.physical_description.objsize['#text'];
+        caption += obj.physical_description.objsize['#text'];
       }
 
     }

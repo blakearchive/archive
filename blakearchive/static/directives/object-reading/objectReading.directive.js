@@ -1,4 +1,4 @@
-angular.module("blake").controller("ObjectReadingController", function($rootScope, BlakeDataService, $scope, $modal, $cookies, $window) {
+angular.module("blake").controller("ObjectReadingController", function($rootScope, worktitleService, lightbox_service, BlakeDataService, $scope, $modal, $cookies, $window) {
     var vm = this;
     vm.bds = BlakeDataService;
     $rootScope.onWorkPage = false;
@@ -29,6 +29,25 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.done2 = false;
     vm.done3 = false;
     vm.done4 = false;
+    vm.wts = worktitleService;
+    vm.rs = $rootScope;
+
+    vm.addToLightBox = function(obj){
+      //console.log("===> adding: "+JSON.stringify(vm.bds.object));
+      var item = {};
+      item.url = "/images/"+obj.dbi+".300.jpg";
+      item.title = vm.wts.getFullTitle();
+      item.caption = vm.wts.getCaption(obj);
+      //CartStorageService.insert(item);
+      lightbox_service.addToCart(item);
+
+      // updates vm.rs so that cart counter is updated
+      lightbox_service.listCartItems().then(function(data){
+        vm.rs.cartItems = data;
+        //console.log("===== "+JSON.stringify($rootScope.cartItems));
+      });
+
+    }
 
     vm.showOverlayRelatedCopyInfo = function (copyId) {
         BlakeDataService.getCopy(copyId).then(function(resultingCopy) {
