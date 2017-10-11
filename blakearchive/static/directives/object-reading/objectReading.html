@@ -65,20 +65,42 @@
             <!-- for everything else -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null} track by $index" ng-if="read.bds.copy.bad_id != 'letters'">
                 <div ng-if="read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes' || read.apparatus == 'imagesonly' || read.apparatus == 'comparewith'" class="btn-group edit-object" role="group" style="margin-bottom:0px;margin-left:28px">
-                        <button type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px" ng-class="{'hover':read.apparatusArray[$index] == 'transcriptions'}" class="btn btn-default" ng-click="read.showIndividualTranscriptions($index)">
+                        <button tooltip="Diplomatic Transcription" tooltip-placement="bottom" type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px" ng-class="{'hover':read.apparatusArray[$index] == 'transcriptions'}" class="btn btn-default" ng-click="read.showIndividualTranscriptions($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:13px;"></span>
                             <span class="gr-title">Show diplomatic transcriptions</span>
                         </button>
-                        <button type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -121px" ng-class="{'hover':read.apparatusArray[$index] == 'illustrationdescriptions'}" class="btn btn-default" ng-click="read.showIndividualIllustrationDescriptions($index)">
+                        <button tooltip="Illustration Description" tooltip-placement="bottom" type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -121px" ng-class="{'hover':read.apparatusArray[$index] == 'illustrationdescriptions'}" class="btn btn-default" ng-click="read.showIndividualIllustrationDescriptions($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:14px"></span>
                             <span class="gr-title">Show illustration descriptions</span>
                         </button>
-                        <button type="button" class="btn btn-default" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -245px" ng-class="{'hover':read.apparatusArray[$index] == 'editorsnotes'}" class="btn btn-gr-selection" ng-click="read.showIndividualEditorsNotes($index)">
+                        <button tooltip="Editors' Notes" tooltip-placement="bottom" type="button" class="btn btn-default" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -245px" ng-class="{'hover':read.apparatusArray[$index] == 'editorsnotes'}" class="btn btn-gr-selection" ng-click="read.showIndividualEditorsNotes($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:13px"></span>
                             <span class="gr-title">Show editors' notes</span>
                         </button>
+
+                        <button ng-if="read.apparatus != 'comparewith'" tooltip="Objects from the Same Matrix" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'samematrix'} " class="btn btn-gr-selection " ng-click="read.showObjectsSameMatrix($index,o) ">
+                            <span class="gr-abbreviation " style="height:21px;font-size:13px ">M</span>
+                            <span class="gr-title ">Show objects from the same matrix</span>
+                        </button>
+                        <button ng-if="read.apparatus != 'comparewith'" tooltip="Objects from the Same Production Sequence" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'productionsequence'} " class="btn btn-gr-selection " ng-click="read.showObjectsProductionSequence($index,o) ">
+                            <span class="gr-abbreviation " style="height:21px;font-size:13px ">PS</span>
+                            <span class="gr-title ">Show objects from the same production sequence</span>
+                        </button>
+                        <button ng-if="read.apparatus != 'comparewith'" tooltip="Objects with a Similar Design" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'motif'} " class="btn btn-gr-selection " ng-click="read.showObjectsWithSimilarDesign($index,o) ">
+                            <span class="gr-abbreviation " style="height:21px;font-size:13px ">D</span>
+                            <span class="gr-title ">Show objects with a similar design</span>
+                        </button>
+                        <button ng-if="read.apparatus != 'comparewith'" tooltip="Related Texts or Images" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'textreference'} " class="btn btn-gr-selection " ng-click="read.showObjectsTextReference($index,o) ">
+                            <span class="gr-abbreviation " style="height:21px;font-size:13px ">T</span>
+                            <span class="gr-title ">Show objects with textual references</span>
+                        </button>
+
                     </div>
                     <div ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" style="float:right;color:white"><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</a></div>
+
+                    <div style="float:right;color:white;font-size:9px;margin-right:2%" ng-if="read.apparatusArray[$index] == 'motif' || read.apparatusArray[$index] == 'samematrix' || read.apparatusArray[$index] == 'productionsequence' || read.apparatusArray[$index] == 'textreference'">{{read.HoveredObject.copy_title}} {{read.HoveredObject.full_object_id}}</div>
+
+
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
                     <!--use the following for anchoring images
                 <div in-view="read.setActiveId($index)" class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
@@ -86,39 +108,96 @@
                     <img id="{{read.getStrippedDescId(o.desc_id)}}" magnify-image ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" ng-click="read.changeObject(o)">
                     
                     <div class="reading-copy">
-                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'transcriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes'">
+                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'transcriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <text-transcription object="o"></text-transcription>
                         </div>
-                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'transcriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null">
+                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'transcriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null">
                             <h4 ng-if="o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)">{{read.compareCopyObjects[o.desc_id].title}}<br><span style="color:yellow">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)"><span style="color:yellow">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
                             <text-transcription object="read.compareCopyObjects[o.desc_id]"></text-transcription>
                         </div>
                         
-                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'illustrationdescriptions' || read.apparatusArray[$index] == 'illustrationdescriptions') && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes'" style="width:10px">
+                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'illustrationdescriptions' || read.apparatusArray[$index] == 'illustrationdescriptions') && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'" style="width:10px">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <illustration-description object="o"></illustration-description>
                         </div>
-                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'illustrationdescriptions' || read.apparatusArray[$index] == 'illustrationdescriptions') && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" style="width:10px">
+                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'illustrationdescriptions' || read.apparatusArray[$index] == 'illustrationdescriptions') && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" style="width:10px">
                             <h4 ng-if="o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)">{{read.compareCopyObjects[o.desc_id].title}}<br><span style="color:yellow">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)"><span style="color:yellow">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
                             <illustration-description object="read.compareCopyObjects[o.desc_id]"></illustration-description>
                         </div>
 
 
-                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'editorsnotes' || read.apparatusArray[$index] == 'editorsnotes') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions'" style="width:10px">
+                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'editorsnotes' || read.apparatusArray[$index] == 'editorsnotes') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'" style="width:10px">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <editor-notes object="o"></editor-notes>
                         </div>
-                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'editorsnotes' || read.apparatusArray[$index] == 'editorsnotes') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" style="width:10px">
+                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'editorsnotes' || read.apparatusArray[$index] == 'editorsnotes') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" style="width:10px">
                             <h4 ng-if="o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)">{{read.compareCopyObjects[o.desc_id].title}}<br><span style="color:yellow">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)"><span style="color:yellow">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if="truesize == true">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>
                             <editor-notes object="read.compareCopyObjects[o.desc_id]"></editor-notes>
                         </div>
+
+
+                        <div auto-height adjust="150 " breakpoint="768 " class="reading-copy-inner" ng-show="(read.apparatus == 'samematrix' || read.apparatusArray[$index] == 'samematrix') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.bds.copy.virtual == false" style="width:100%">
+                            
+                            <div ng-if="read.objectsSameMatrix != null && read.done1 == true" ng-mouseover="read.HoveredObject = sm" style="height:100%" ng-repeat="sm in read.objectsSameMatrix">
+                            <img style="margin-bottom:10%" src="/images/{{ sm.dbi }}.{{dpi}}.jpg">
+                            </div>
+
+                            <div ng-if="read.objectsSameMatrix == '' && read.done1 == true">
+                                [NOT APPLICABLE]
+                            </div>
+
+                        </div>
+
+                        <div auto-height adjust="150 " breakpoint="768 " class="reading-copy-inner" ng-show="(read.apparatus == 'motif' || read.apparatusArray[$index] == 'motif') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'" style="width:100%">
+                            
+                            <div ng-if="read.objectsWithSameMotif != null && read.done2 == true" ng-mouseover="read.HoveredObject = owsm" style="height:100%" ng-repeat="owsm in read.objectsWithSameMotif">
+                            <img style="margin-bottom:10%" src="/images/{{ owsm.dbi }}.{{dpi}}.jpg">
+                            </div>
+
+                            <div ng-if="read.objectsWithSameMotif == '' && read.done2 == true">
+                                [NOT APPLICABLE]
+                            </div>
+
+                        </div>
+
+                         <div auto-height adjust="150 " breakpoint="768 " class="reading-copy-inner" ng-show="(read.apparatus == 'productionsequence' || read.apparatusArray[$index] == 'productionsequence') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'textreference' && read.apparatusArray[$index] != 'motif'" style="width:100%">
+                            
+                            <div ng-if="read.objectsProductionSequence != null && read.done3 == true" ng-mouseover="read.HoveredObject = ps" style="height:100%" ng-repeat="ps in read.objectsProductionSequence">
+                            <img style="margin-bottom:10%" src="/images/{{ ps.dbi }}.{{dpi}}.jpg">
+                            </div>
+
+                            <div ng-if="read.objectsProductionSequence == '' && read.done3 == true">
+                                [NOT APPLICABLE]
+                            </div>
+
+                        </div>
+
+                         <div class="reading-copy-inner" ng-show="(read.apparatus == 'textreference' || read.apparatusArray[$index] == 'textreference') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'motif'" style="width:100%">
+                            
+                            <div ng-if="read.objectsTextReference.objects != '' && read.done4 == true" ng-mouseover="read.HoveredObject = tr" style="height:100%" ng-repeat="tr in read.objectsTextReference.objects">
+                            <img style="margin-bottom:10%" src="/images/{{ tr.dbi }}.{{dpi}}.jpg">
+                            </div>
+                            <div ng-if="read.objectsTextReference.copies != '' && read.done4 == true" ng-mouseover="read.HoveredObject = tr" style="height:100%" ng-repeat="tr in read.objectsTextReference.copies">
+                            <img style="margin-bottom:10%" src="/images/{{ tr.image }}.100.jpg">
+                            </div>
+                            <div ng-if="read.objectsTextReference.works != '' && read.done4 == true" ng-mouseover="read.HoveredObject = tr" style="height:100%" ng-repeat="tr in read.objectsTextReference.works">
+                            <img style="margin-bottom:10%" src="/images/{{ tr.image }}.jpg">
+                            </div>
+
+                            <div ng-if="read.objectsTextReference.objects == '' && read.objectsTextReference.copies == '' && read.objectsTextReference.works == '' && read.done4 == true">
+                                [NOT APPLICABLE]
+                            </div>
+
+                        </div>
+
+
 
                         <!--<div class="reading-copy-inner" ng-show="(read.apparatusArray[$index] == 'editorsnotes' || read.apparatusArray[$index] == 'illustrationdescriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null" style="width:10px">
                             <h4>Copy {{read.compareCopyId}} contains no copy for this object.</h4>
@@ -127,18 +206,18 @@
 
                     </div>
                     <img id="{{read.getStrippedDescId(read.compareCopyObjects[o.desc_id].desc_id)}}" magnify-image style="padding-left:10px" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ read.compareCopyObjects[o.desc_id].dbi }}.{{dpi}}.jpg" ng-click="read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)">
-                    <img style="padding-left:10px" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null" ng-src="">
+                    <img style="padding-left:10px" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null || read.apparatusArray[$index] == 'samematrix' || read.apparatusArray[$index] == 'motif' || read.apparatusArray[$index] == 'productionsequence' || read.apparatusArray[$index] == 'textreference'" ng-src="">
                     <!--
                     <div style="color:white; font-size:9px; text-align:center" ng-if="read.apparatus == 'imagesonly' && truesize == false">{{o.full_object_id}}</div>
                     <div style="color:white; font-size:9px; text-align:center" ng-if="read.apparatus == 'imagesonly' && truesize == true">{{o.full_object_id}}</br>{{ o.physical_description.objsize['#text'] }}</div>
                     -->
-                    <div style="color:white; font-size:7px;" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null"><span style="float:left">{{o.full_object_id}}</span><span ng-if="truesize == true" style="float:left">, {{o.physical_description.objsize['#text'] }}</span><span ng-if="read.compareCopyObjects[o.desc_id] != null && truesize == true" style="color:yellow;float:right;">{{read.compareCopyObjects[o.desc_id].full_object_id}}, {{ read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span><span ng-if="read.compareCopyObjects[o.desc_id] != null && truesize == false" style="color:yellow;float:right;">{{read.compareCopyObjects[o.desc_id].full_object_id}}</span></div>
+                    <div style="color:white; font-size:7px;" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null || read.apparatusArray[$index] == 'samematrix' || read.apparatusArray[$index] == 'motif' || read.apparatusArray[$index] == 'productionsequence' || read.apparatusArray[$index] == 'textreference'"><span style="float:left">{{o.full_object_id}}</span><span ng-if="truesize == true" style="float:left">, {{o.physical_description.objsize['#text'] }}</span><span ng-if="read.compareCopyObjects[o.desc_id] != null && truesize == true" style="color:yellow;float:right;">{{read.compareCopyObjects[o.desc_id].full_object_id}}, {{ read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span><span ng-if="read.compareCopyObjects[o.desc_id] != null && truesize == false" style="color:yellow;float:right;">{{read.compareCopyObjects[o.desc_id].full_object_id}}</span></div>
 
                     <div style="color:white; font-size:7px;" ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null"><span style="float:left">{{o.full_object_id}}</span><span ng-if="truesize == true" style="float:left">, {{o.physical_description.objsize['#text'] }}</span></div>
                     
                 </div>
             </div>
-            <span style="color:white;font-size:21px;position:absolute;top:50%;padding-left:30px">END&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <!--<span style="color:white;font-size:21px;position:absolute;top:50%;padding-left:30px">END&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
         </div>
     </div>
 </div>
