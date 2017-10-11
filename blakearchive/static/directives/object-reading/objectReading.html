@@ -16,6 +16,25 @@
         </div>
     </div>
 </div>
+
+<div id="OverlayCopyInfo2" class="overlay" ng-show="read.showOverlayRelatedCopyInfoFlag == true" style="top:52px">
+    <a style="text-decoration: none" href="" class="closebtnleft" style="right:inherit" ng-click="read.showOverlayRelatedCopyInfoFlag = false">&times;</a>
+    <header class="page-header">
+        <p class="subhead">COPY INFORMATION</p>
+        <h1 style="color:rgba(233,188,71,1)">{{ read.HoveredObject.copy_title }} (Composed {{ read.HoveredObject.copy_composition_date_string }})</h1>
+    </header>
+    <div id="archive-tabs" role="tabpanel">
+        <div class="container-fluid overlaycopyinfo">
+            <div class="container">
+                <div class="tab-content">
+                    <div role="tabpanel" class="fadeinout tab-pane active in">
+                        <copy-information copy="read.RelatedCopy"></copy-information>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--<div style="text-align:center">
     <div style="color:white; font-size:13 px; padding-top:1px" ng-if="read.apparatus == 'comparewith'"><span>Compared with </span><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}}</a> (Printed {{read.compareCopyPrintDateString}})</span>
     </div>
@@ -98,7 +117,7 @@
                     </div>
                     <div ng-if="read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null" style="float:right;color:white"><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</a></div>
 
-                    <div style="float:right;color:white;font-size:9px;margin-right:2%" ng-if="read.apparatusArray[$index] == 'motif' || read.apparatusArray[$index] == 'samematrix' || read.apparatusArray[$index] == 'productionsequence' || read.apparatusArray[$index] == 'textreference'">{{read.HoveredObject.copy_title}} {{read.HoveredObject.full_object_id}}</div>
+                    <div style="float:right;color:white;font-size:9px;margin-right:2%" ng-if="read.apparatusArray[$index] == 'motif' || read.apparatusArray[$index] == 'samematrix' || read.apparatusArray[$index] == 'productionsequence' || read.apparatusArray[$index] == 'textreference'"><a scroll-to-top href="" ng-click="read.showOverlayRelatedCopyInfo(read.HoveredObject.copy_bad_id)" style="color:yellow;">{{read.HoveredObject.copy_title}} {{read.HoveredObject.full_object_id}}</a></div>
 
 
                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
@@ -146,7 +165,7 @@
                         <div auto-height adjust="150 " breakpoint="768 " class="reading-copy-inner" ng-show="(read.apparatus == 'samematrix' || read.apparatusArray[$index] == 'samematrix') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.bds.copy.virtual == false" style="width:100%">
                             
                             <div ng-if="read.objectsSameMatrix != null && read.done1 == true" ng-mouseover="read.HoveredObject = sm" style="height:100%" ng-repeat="sm in read.objectsSameMatrix">
-                            <img style="margin-bottom:10%" src="/images/{{ sm.dbi }}.{{dpi}}.jpg">
+                            <img style="margin-bottom:10%" src="/images/{{ sm.dbi }}.{{dpi}}.jpg" ng-click="read.changeCopy(sm.copy_bad_id,sm.desc_id)">
                             </div>
 
                             <div ng-if="read.objectsSameMatrix == '' && read.done1 == true">
@@ -158,7 +177,7 @@
                         <div auto-height adjust="150 " breakpoint="768 " class="reading-copy-inner" ng-show="(read.apparatus == 'motif' || read.apparatusArray[$index] == 'motif') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'" style="width:100%">
                             
                             <div ng-if="read.objectsWithSameMotif != null && read.done2 == true" ng-mouseover="read.HoveredObject = owsm" style="height:100%" ng-repeat="owsm in read.objectsWithSameMotif">
-                            <img style="margin-bottom:10%" src="/images/{{ owsm.dbi }}.{{dpi}}.jpg">
+                            <img style="margin-bottom:10%" src="/images/{{ owsm.dbi }}.{{dpi}}.jpg" ng-click="read.changeCopy(owsm.copy_bad_id,sm.desc_id)">
                             </div>
 
                             <div ng-if="read.objectsWithSameMotif == '' && read.done2 == true">
@@ -170,7 +189,7 @@
                          <div auto-height adjust="150 " breakpoint="768 " class="reading-copy-inner" ng-show="(read.apparatus == 'productionsequence' || read.apparatusArray[$index] == 'productionsequence') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'textreference' && read.apparatusArray[$index] != 'motif'" style="width:100%">
                             
                             <div ng-if="read.objectsProductionSequence != null && read.done3 == true" ng-mouseover="read.HoveredObject = ps" style="height:100%" ng-repeat="ps in read.objectsProductionSequence">
-                            <img style="margin-bottom:10%" src="/images/{{ ps.dbi }}.{{dpi}}.jpg">
+                            <img style="margin-bottom:10%" src="/images/{{ ps.dbi }}.{{dpi}}.jpg" ng-click="read.changeCopy(ps.copy_bad_id,sm.desc_id)">
                             </div>
 
                             <div ng-if="read.objectsProductionSequence == '' && read.done3 == true">
@@ -182,13 +201,13 @@
                          <div class="reading-copy-inner" ng-show="(read.apparatus == 'textreference' || read.apparatusArray[$index] == 'textreference') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'motif'" style="width:100%">
                             
                             <div ng-if="read.objectsTextReference.objects != '' && read.done4 == true" ng-mouseover="read.HoveredObject = tr" style="height:100%" ng-repeat="tr in read.objectsTextReference.objects">
-                            <img style="margin-bottom:10%" src="/images/{{ tr.dbi }}.{{dpi}}.jpg">
+                            <img style="margin-bottom:10%" src="/images/{{ tr.dbi }}.{{dpi}}.jpg" ng-click="read.changeCopy(tr.copy_bad_id,sm.desc_id)">
                             </div>
                             <div ng-if="read.objectsTextReference.copies != '' && read.done4 == true" ng-mouseover="read.HoveredObject = tr" style="height:100%" ng-repeat="tr in read.objectsTextReference.copies">
-                            <img style="margin-bottom:10%" src="/images/{{ tr.image }}.100.jpg">
+                            <img style="margin-bottom:10%" src="/images/{{ tr.image }}.100.jpg" ng-click="read.changeCopy(tr.copy_bad_id,sm.desc_id)">
                             </div>
                             <div ng-if="read.objectsTextReference.works != '' && read.done4 == true" ng-mouseover="read.HoveredObject = tr" style="height:100%" ng-repeat="tr in read.objectsTextReference.works">
-                            <img style="margin-bottom:10%" src="/images/{{ tr.image }}.jpg">
+                            <img style="margin-bottom:10%" src="/images/{{ tr.image }}.jpg" ng-click="read.changeCopy(tr.copy_bad_id,sm.desc_id)">
                             </div>
 
                             <div ng-if="read.objectsTextReference.objects == '' && read.objectsTextReference.copies == '' && read.objectsTextReference.works == '' && read.done4 == true">
