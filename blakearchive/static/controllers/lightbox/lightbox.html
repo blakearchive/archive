@@ -1,0 +1,48 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid site-header-container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="http://www.blakearchive.org" target="_blank">
+					<span style="margin-left:15px" class="name">The William Blake Archive</span>
+					<span class="sig" ></span></a>
+
+			</div>
+
+			<div class="collapse navbar-collapse" style="text-align: center">
+					<!-- Center Title -->
+					<div class="object-view-menu hidden-xs hidden-sm" style="padding-right:15px">
+							<span class="worktitle" style="padding: 19px;">
+									<span>
+											<a style="color:white;">Lightbox</a>
+
+									</span>
+							</span>
+
+					</div>
+					<!--light box ui "buttons" -->
+					<ul class="nav nav-pills navbar-right" style="position:absolute;right:1px;top:6px;padding-right:15px;">
+						<li><a href="#" id="lb-crop-btn" class="btn btn-lbox"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a></li>
+						<li><a href="#" id="lb-trash-btn" class="btn btn-lbox"><span class="glyphicon glyphicon-trash" aria-hidden="true"/></a></li>
+						<li><a href="#" id="lb-save-btn" class="btn btn-lbox"><span class="glyphicon glyphicon-save" aria-hidden="true"></a></li>
+						<li><a href="#" id="lb-load-btn" class="btn btn-lbox"><span class="glyphicon glyphicon-open" aria-hidden="true"></a></li>
+						<li></li>
+					</ul>
+			</div>
+	</div>
+</nav>
+<div class='fabric-container' style="top:40;">
+	<canvas id="lightbox" fabric='fabric'></canvas>
+</div>
+<div id="loader" style="display:none">
+	<input name="Load" id="loadfile" type="file"/>
+</div>
+<div id="caption" style="position:fixed;bottom:0px;width:100%;background-color:black;color:white;">
+	{{focusedImage.alt}}
+</div>
+<a style="display:none" id="saver"/>
