@@ -1,5 +1,5 @@
 angular.module("blake").controller("CopyController", function ($scope,$routeParams,$rootScope,$window,$modal,$cookies,BlakeDataService,imageManipulation,CompareObjectsFactory) {
-    let vm = this;
+    var vm = this;
 
     $rootScope.worksNavState = false;
     $rootScope.showWorkTitle = 'copy';
@@ -64,4 +64,5 @@ angular.module("blake").controller("CopyController", function ($scope,$routePara
     $scope.$on('change::selectedObject',function(){
         imageManipulation.reset();
     });
+
 });

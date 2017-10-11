@@ -1,0 +1,39 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid site-header-container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="http://www.blakearchive.org" target="_blank">
+						<span style="margin-left:15px" class="name">The William Blake Archive</span><span class="sig"></span></a>
+
+			</div>
+
+			<div class="collapse navbar-collapse" style="text-align: center">
+					<!-- Center Title -->
+					<div class="object-view-menu hidden-xs hidden-sm" style="padding-right:15px">
+							<span class="worktitle" style="padding: 19px;">
+									<span>
+											<a style="color:white;">Lightbox: Crop</a>
+									</span>
+							</span>
+					</div>
+					<!--light box ui "buttons" -->
+					<ul class="nav nav-pills navbar-right" style="position:absolute;right:1px;top:6px;padding-right:15px;">
+						<li><a href="#"  id="lb-crop-btn" class="btn btn-lbox ">
+              <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+            </a></li>
+
+					</ul>
+					<alert ng-repeat="alert in alerts" class="nav alert alert-{{alert.type}}" type="alert.type">{{alert.msg}}</alert>
+			</div>
+	</div>
+</nav>
+
+<div id="cropper" class="cropper-container" style="height:800px;">
+  <img id="image" src="{{imageToCrop}}"></img>
+</div>

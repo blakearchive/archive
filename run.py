@@ -14,6 +14,16 @@ models.db.init_app(app)
 def get_image(image=None):
     return send_file(config.local_image_path+image)
 
+@app.route('/lightbox')
+def get_lightbox(path=None):
+    return send_file("static/html/lightbox.html")
+@app.route('/cropper/<path>')
+def get_cropper(path=None):
+    return send_file("static/html/lightbox.html")
+@app.route('/icon/<icon>')
+def get_icon(icon=None):
+    return send_file("static/img/global/"+icon)
+
 @app.route('/bad/<bad>')
 def get_bad_file(bad=None):
     return send_file(config.local_data_path+"works/"+bad)

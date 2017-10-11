@@ -1,7 +1,9 @@
-angular.module("blake").controller("ObjectEditButtonsController", function ($rootScope, $window, $cookies, $modal, BlakeDataService, imageManipulation) {
+angular.module("blake").controller("ObjectEditButtonsController", function ($rootScope, $window, $cookies, $modal, worktitleService, BlakeDataService, lightbox_service,imageManipulation) {
     let vm = this;
     vm.bds = BlakeDataService;
+    vm.wts = worktitleService;
     vm.rs = $rootScope;
+    //var cartItems = CartStorageService.cartItems;
 
     vm.trueSizeOpen = function(object){
         if(!angular.isDefined($cookies.getObject('clientPpi'))){
@@ -36,6 +38,25 @@ angular.module("blake").controller("ObjectEditButtonsController", function ($roo
         $rootScope.supplemental = !$rootScope.supplemental;
     };
 
+    // add object to the cart... possible error if not an image!
+    // the cart is an array in local storage.  each item in the array will...
+    // todo: be a map s.t. {imgUrl:url,title:title, caption:caption}
+    vm.addToLightBox = function(){
+      //console.log("===> adding: "+JSON.stringify(vm.bds.object));
+      var item = {};
+      item.url = "/images/"+vm.bds.object.dbi+".300.jpg";
+      item.title = vm.wts.getFullTitle();
+      item.caption = vm.wts.getCaption();
+      //CartStorageService.insert(item);
+      lightbox_service.addToCart(item);
+
+      // updates vm.rs so that cart counter is updated
+      lightbox_service.listCartItems().then(function(data){
+        vm.rs.cartItems = data;
+        //console.log("===== "+JSON.stringify($rootScope.cartItems));
+      });
+
+    }
 });
 
 angular.module("blake").directive("objectEditButtons", function () {

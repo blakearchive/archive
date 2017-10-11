@@ -1,4 +1,5 @@
-<nav class="navbar navbar-default navbar-fixed-top" ng-class="{'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}">
+<nav class="navbar navbar-default navbar-fixed-top"
+  ng-class="{'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}">
   <div class="site-header-container">
     <div class="container-fluid site-header">
       <a class="navbar-brand" ng-href="{{showmePage ? '':'/'}}"><span class="name">The William Blake Archive</span><span class="sig"></span></a>
@@ -15,7 +16,23 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <!--<div title="Lightbox" class="lightbox hidden-xs" ng-class="{'hidden':showmePage}"><a class="lb-amount" href="#">3</a></div>-->
+
+
+      <div class="lightbox hidden-xs" ng-class="{'hidden':showmePage}" style="width:40px;">
+        <a title="Open Lightbox" class="lb-amount" target="_lightbox" href="/lightbox">
+          <span ng-bind="bm.rs.cartItems.length" class="ng-binding">0</span></a>
+          <a title="Reset Lightbox" id="clear-cart-link" style="float:right;color: black;font-size: 12px;margin-top: -65%;font-weight:bold;">X</a>
+      </div>
+      <!--
+      <div title="Lightbox" class="lightbox hidden-xs" ng-class="{'hidden':showmePage}" style="width:40px;">
+        <a class="lb-amount" target="_lightbox" href="/lightbox">
+          <span ng-bind="bm.rs.cartItems.length">0</span></a>
+          <a id="clear-cart-link" class="lb-amount glyphicon glyphicon-remove"
+            style="background-color: #a94442;float:right;display:inline;margin-top:-5%"/>
+      </div>
+      -->
+
+
       <div id="custom-tweet-button" class="custom-tweet-button"><a twitter-share href="" onclick="window.open('https://twitter.com/share?text=@BlakeArchive','name','width=600,height=400')"></a></div>
 
       <!-- Use any element to open/show the overlay navigation menu -->
