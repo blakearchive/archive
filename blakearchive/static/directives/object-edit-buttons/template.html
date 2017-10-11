@@ -2,7 +2,7 @@
 <div id="object-tools" class="hidden-xs">
     <div id="object-tools-inner">
         <div class="btn-group edit-object" role="group">
-            <!--<button type="button" class="btn btn-default add-lightbox hidden-sm"><span class="edit-icon"></span> Add To Lightbox</button>-->
+            <button type="button" class="btn btn-default add-lightbox hidden-sm" ng-click="oeb.addToLightBox()"><span class="edit-icon"></span> Add To Lightbox</button>
             <button type="button" class="btn btn-default rotate" ng-click="oeb.rotate(oeb.bds.object)"><span class="edit-icon"></span> Rotate</button>
             <button type="button" class="btn btn-default zoom hidden-sm" ng-class="{hover: oeb.rs.zoom}" ng-click="oeb.zoom()" tooltip="Mouse over the image"  tooltip-trigger="click" tooltip-placement="top"><span class="edit-icon"></span> Magnify</button>
             <button type="button" class="btn btn-default true-size hidden-xs" ng-click="oeb.trueSizeOpen(oeb.bds.object)"><span class="edit-icon"></span> True Size</button>
