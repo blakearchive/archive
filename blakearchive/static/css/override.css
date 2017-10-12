@@ -159,7 +159,7 @@
 
 #custom-tweet-button a {
     display: block;
-    padding: 2px 13px 19px 20px;
+    padding: 2px 13px 19px 46px;
     background: url("../img/global/twitter-128.png") center no-repeat;
     background-size:20px 20px;
   }
@@ -684,7 +684,7 @@ body {
         /*put back after lightbox*/
         /*right: 105px;*/
         /*right: 64px;*/
-        right:105px;
+        right:133px;
         top: -43px;
         padding: 0;
         /*width:30px;
