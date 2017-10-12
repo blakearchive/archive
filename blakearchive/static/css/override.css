@@ -351,6 +351,8 @@ td.c2 {
   border-bottom-color: #d5d5d5;
 }
 
+.black-tooltip-arrow + .tooltip.bottom > .tooltip-arrow {border-bottom-color: black;}
+
 .tooltip.right .tooltip-arrow {
   top: 50%;
   left: 0;
