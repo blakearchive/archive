@@ -27964,7 +27964,7 @@ angular.module("blake").controller("ObjectEditButtonsController", ["$rootScope",
         var item = {};
         item.url = "/images/" + vm.bds.object.dbi + ".300.jpg";
         item.title = vm.wts.getFullTitle();
-        item.caption = vm.wts.getCaption();
+        item.caption = vm.wts.getCaptionFromGallery();
         //CartStorageService.insert(item);
         lightbox_service.addToCart(item);
 
@@ -28029,7 +28029,7 @@ angular.module("blake").controller("ObjectReadingController", ["$rootScope", "wo
         var item = {};
         item.url = "/images/" + obj.dbi + ".300.jpg";
         item.title = vm.wts.getFullTitle();
-        item.caption = vm.wts.getCaption(obj);
+        item.caption = vm.wts.getCaptionFromReading(obj);
         //CartStorageService.insert(item);
         lightbox_service.addToCart(item);
 
@@ -33400,7 +33400,7 @@ angular.module("blake").factory("worktitleService", ["BlakeDataService", "$rootS
     }
   };
 
-  svc.getCaption = function (obj) {
+  svc.getCaptionFromGallery = function () {
     var caption = "";
 
     /*
@@ -33408,9 +33408,9 @@ angular.module("blake").factory("worktitleService", ["BlakeDataService", "$rootS
     <span ng-if="svc.bds.work.virtual && svc.bds.copy.bad_id == 'letters'"><span>{{ svc.bds.object.title }}, </span><span class="object-no">Object {{ svc.bds.object.object_number }}, </span></span>
     */
     if (svc.bds.work.virtual) {
-      caption += obj.title + ", Object " + svc.bds.object.object_number;
+      caption += svc.bds.object.title + ", Object " + svc.bds.object.object_number;
       if (svc.bds.copy.bad_id != 'letters') {
-        caption += ", " + obj.source.objdescid.compdate['#text'] + ", " + obj.source.repository.institution['#text'];
+        caption += ", " + svc.bds.object.source.objdescid.compdate['#text'] + ", " + svc.bds.object.source.repository.institution['#text'];
       }
     } else {
       /*<span class="object-no" ng-if="!svc.bds.work.virtual && !svc.bds.object.title">{{ svc.bds.object.full_object_id }}, </span>
@@ -33418,19 +33418,57 @@ angular.module("blake").factory("worktitleService", ["BlakeDataService", "$rootS
       <span class="object-no" ng-if="!svc.bds.work.virtual && svc.bds.object.title && svc.bds.work.medium == 'exhibit'">{{svc.bds.object.title}}</span>
       <span ng-if="svc.bds.work.medium != 'exhibit'">{{ svc.bds.object.physical_description.objsize['#text'] }} </span>
       */
-      if (!obj.title) {
-        caption += obj.full_object_id;
+      if (!svc.bds.object.title) {
+        caption += svc.bds.object.full_object_id;
       } else {
         if (svc.bds.work.medium != 'exhibit') {
-          caption += obj.title + ", " + obj.full_object_id + ", ";
+          caption += svc.bds.object.title + ", " + svc.bds.object.full_object_id + ", ";
         } else {
-          caption += obj.title;
+          caption += svc.bds.object.title;
         }
       }
       if (svc.bds.work.medium != 'exhibit') {
-        caption += obj.physical_description.objsize['#text'];
+        caption += svc.bds.object.physical_description.objsize['#text'];
       }
     }
+
+    svc.getCaptionFromReading = function (obj) {
+      var caption = "";
+
+      /*
+      <span ng-if="svc.bds.work.virtual && svc.bds.copy.bad_id != 'letters'"><span>{{ svc.bds.object.title }}, </span><span class="object-no">Object {{ svc.bds.object.object_number }}, {{svc.bds.object.source.objdescid.compdate['#text']}}, {{svc.bds.object.source.repository.institution['#text']}}, </span></span>
+      <span ng-if="svc.bds.work.virtual && svc.bds.copy.bad_id == 'letters'"><span>{{ svc.bds.object.title }}, </span><span class="object-no">Object {{ svc.bds.object.object_number }}, </span></span>
+      */
+      if (svc.bds.work.virtual) {
+        caption += obj.title + ", Object " + svc.bds.object.object_number;
+        if (svc.bds.copy.bad_id != 'letters') {
+          caption += ", " + obj.source.objdescid.compdate['#text'] + ", " + obj.source.repository.institution['#text'];
+        }
+      } else {
+        /*<span class="object-no" ng-if="!svc.bds.work.virtual && !svc.bds.object.title">{{ svc.bds.object.full_object_id }}, </span>
+        <span class="object-no" ng-if="!svc.bds.work.virtual && svc.bds.object.title && svc.bds.work.medium != 'exhibit'">{{svc.bds.object.title}}, {{ svc.bds.object.full_object_id }}, </span>
+        <span class="object-no" ng-if="!svc.bds.work.virtual && svc.bds.object.title && svc.bds.work.medium == 'exhibit'">{{svc.bds.object.title}}</span>
+        <span ng-if="svc.bds.work.medium != 'exhibit'">{{ svc.bds.object.physical_description.objsize['#text'] }} </span>
+        */
+        if (!obj.title) {
+          caption += obj.full_object_id;
+        } else {
+          if (svc.bds.work.medium != 'exhibit') {
+            caption += obj.title + ", " + obj.full_object_id + ", ";
+          } else {
+            caption += obj.title;
+          }
+        }
+        if (svc.bds.work.medium != 'exhibit') {
+          caption += obj.physical_description.objsize['#text'];
+        }
+      }
+
+      /*<a ng-if="svc.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="svc.ovs.userestrictOpen(svc.bds.copy,svc.bds.object)">&#169;</a>
+      -- not adding cr to caption... ok?*/
+
+      return caption;
+    };
 
     /*<a ng-if="svc.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="svc.ovs.userestrictOpen(svc.bds.copy,svc.bds.object)">&#169;</a>
     -- not adding cr to caption... ok?*/

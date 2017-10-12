@@ -46,7 +46,7 @@ angular.module("blake").controller("ObjectEditButtonsController", function ($roo
       var item = {};
       item.url = "/images/"+vm.bds.object.dbi+".300.jpg";
       item.title = vm.wts.getFullTitle();
-      item.caption = vm.wts.getCaption();
+      item.caption = vm.wts.getCaptionFromGallery();
       //CartStorageService.insert(item);
       lightbox_service.addToCart(item);
 
