@@ -1,16 +1,13 @@
 <form id="gr-selection" class="navbar-form">
     <div class="btn-group">
-        <button title="Gallery Mode" class="btn btn-gr-selection" ng-class="{'active':persistentmode == 'gallery'}" ng-click="viewSubMenu.changeView('object','image')">
+        <button tooltip="Gallery Mode" tooltip-placement="bottom" title="Gallery Mode" class="btn btn-gr-selection black-tooltip-arrow" ng-class="{'active':persistentmode == 'gallery'}" ng-click="viewSubMenu.changeView('object','image')">
             <span class="gr-abbreviation">G</span>
-            <span class="gr-title">Gallery Mode</span>
         </button>
-        <button title="Reading Mode" class="btn btn-gr-selection" ng-class="{'active':persistentmode == 'reading'}" ng-click="viewSubMenu.changeView('read','both')">
+        <button tooltip="Reading Mode" tooltip-placement="bottom" title="Reading Mode" class="btn btn-gr-selection black-tooltip-arrow" ng-class="{'active':persistentmode == 'reading'}" ng-click="viewSubMenu.changeView('read','both')">
             <span class="gr-abbreviation">R</span>
-            <span class="gr-title">Reading Mode</span>
         </button>
     </div>
-        <button style="background-color:rgb(61, 61, 60); color:#e9bc47" title="Help" class="btn btn-gr-selection" ng-click="viewSubMenu.helpOpen()">
+        <button tooltip="Help for this page" tooltip-placement="bottom" style="background-color:rgb(61, 61, 60); color:#e9bc47" title="Help" class="btn btn-gr-selection black-tooltip-arrow" ng-click="viewSubMenu.helpOpen()">
             <span class="gr-abbreviation">?</span>
-            <span class="gr-title">Help</span>
         </button>
 </form>
