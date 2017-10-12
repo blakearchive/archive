@@ -23,6 +23,8 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     $rootScope.descIdFromReadingCompare = null;
     vm.objectsWithSameMotif = '';
     vm.objectsSameMatrix = '';
+    vm.objectsProductionSequence = '';
+    vm.objectsTextReference = '';
     vm.HoveredObject;
     vm.RelatedCopy;
     vm.done1 = false;
