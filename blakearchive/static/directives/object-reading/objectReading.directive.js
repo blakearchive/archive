@@ -37,7 +37,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
       var item = {};
       item.url = "/images/"+obj.dbi+".300.jpg";
       item.title = vm.wts.getFullTitle();
-      item.caption = vm.wts.getCaption(obj);
+      item.caption = vm.wts.getCaptionFromReading(obj);
       //CartStorageService.insert(item);
       lightbox_service.addToCart(item);
 

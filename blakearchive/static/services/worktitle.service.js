@@ -53,7 +53,41 @@ angular.module("blake")
   }
 
 
-  svc.getCaption = function(obj){
+  svc.getCaptionFromGallery = function(){
+    var caption = "";
+
+    /*
+    <span ng-if="svc.bds.work.virtual && svc.bds.copy.bad_id != 'letters'"><span>{{ svc.bds.object.title }}, </span><span class="object-no">Object {{ svc.bds.object.object_number }}, {{svc.bds.object.source.objdescid.compdate['#text']}}, {{svc.bds.object.source.repository.institution['#text']}}, </span></span>
+    <span ng-if="svc.bds.work.virtual && svc.bds.copy.bad_id == 'letters'"><span>{{ svc.bds.object.title }}, </span><span class="object-no">Object {{ svc.bds.object.object_number }}, </span></span>
+    */
+    if (svc.bds.work.virtual){
+      caption += svc.bds.object.title +", Object "+svc.bds.object.object_number;
+      if (svc.bds.copy.bad_id != 'letters'){
+        caption += ", "+svc.bds.object.source.objdescid.compdate['#text']+", "+svc.bds.object.source.repository.institution['#text'];
+      }
+    }else{
+      /*<span class="object-no" ng-if="!svc.bds.work.virtual && !svc.bds.object.title">{{ svc.bds.object.full_object_id }}, </span>
+      <span class="object-no" ng-if="!svc.bds.work.virtual && svc.bds.object.title && svc.bds.work.medium != 'exhibit'">{{svc.bds.object.title}}, {{ svc.bds.object.full_object_id }}, </span>
+      <span class="object-no" ng-if="!svc.bds.work.virtual && svc.bds.object.title && svc.bds.work.medium == 'exhibit'">{{svc.bds.object.title}}</span>
+      <span ng-if="svc.bds.work.medium != 'exhibit'">{{ svc.bds.object.physical_description.objsize['#text'] }} </span>
+      */
+      if (!svc.bds.object.title){
+        caption += svc.bds.object.full_object_id;
+      }else{
+        if(svc.bds.work.medium != 'exhibit'){
+          caption += svc.bds.object.title +", "+svc.bds.object.full_object_id +", ";
+        }else{
+          caption += svc.bds.object.title;
+        }
+
+      }
+      if (svc.bds.work.medium != 'exhibit'){
+        caption += svc.bds.object.physical_description.objsize['#text'];
+      }
+
+    }
+
+    svc.getCaptionFromReading = function(obj){
     var caption = "";
 
     /*
@@ -86,6 +120,12 @@ angular.module("blake")
       }
 
     }
+
+    /*<a ng-if="svc.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="svc.ovs.userestrictOpen(svc.bds.copy,svc.bds.object)">&#169;</a>
+    -- not adding cr to caption... ok?*/
+
+    return caption;
+  };
 
     /*<a ng-if="svc.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="svc.ovs.userestrictOpen(svc.bds.copy,svc.bds.object)">&#169;</a>
     -- not adding cr to caption... ok?*/
