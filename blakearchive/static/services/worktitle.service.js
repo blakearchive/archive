@@ -86,6 +86,11 @@ angular.module("blake")
       }
 
     }
+    /*<a ng-if="svc.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="svc.ovs.userestrictOpen(svc.bds.copy,svc.bds.object)">&#169;</a>
+    -- not adding cr to caption... ok?*/
+
+    return caption;
+  };
 
     svc.getCaptionFromReading = function(obj){
     var caption = "";
@@ -120,12 +125,6 @@ angular.module("blake")
       }
 
     }
-
-    /*<a ng-if="svc.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="svc.ovs.userestrictOpen(svc.bds.copy,svc.bds.object)">&#169;</a>
-    -- not adding cr to caption... ok?*/
-
-    return caption;
-  };
 
     /*<a ng-if="svc.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="svc.ovs.userestrictOpen(svc.bds.copy,svc.bds.object)">&#169;</a>
     -- not adding cr to caption... ok?*/

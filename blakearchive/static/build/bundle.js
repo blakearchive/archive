@@ -33433,44 +33433,43 @@ angular.module("blake").factory("worktitleService", ["BlakeDataService", "$rootS
         caption += svc.bds.object.physical_description.objsize['#text'];
       }
     }
+    /*<a ng-if="svc.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="svc.ovs.userestrictOpen(svc.bds.copy,svc.bds.object)">&#169;</a>
+    -- not adding cr to caption... ok?*/
 
-    svc.getCaptionFromReading = function (obj) {
-      var caption = "";
+    return caption;
+  };
 
-      /*
-      <span ng-if="svc.bds.work.virtual && svc.bds.copy.bad_id != 'letters'"><span>{{ svc.bds.object.title }}, </span><span class="object-no">Object {{ svc.bds.object.object_number }}, {{svc.bds.object.source.objdescid.compdate['#text']}}, {{svc.bds.object.source.repository.institution['#text']}}, </span></span>
-      <span ng-if="svc.bds.work.virtual && svc.bds.copy.bad_id == 'letters'"><span>{{ svc.bds.object.title }}, </span><span class="object-no">Object {{ svc.bds.object.object_number }}, </span></span>
+  svc.getCaptionFromReading = function (obj) {
+    var caption = "";
+
+    /*
+    <span ng-if="svc.bds.work.virtual && svc.bds.copy.bad_id != 'letters'"><span>{{ svc.bds.object.title }}, </span><span class="object-no">Object {{ svc.bds.object.object_number }}, {{svc.bds.object.source.objdescid.compdate['#text']}}, {{svc.bds.object.source.repository.institution['#text']}}, </span></span>
+    <span ng-if="svc.bds.work.virtual && svc.bds.copy.bad_id == 'letters'"><span>{{ svc.bds.object.title }}, </span><span class="object-no">Object {{ svc.bds.object.object_number }}, </span></span>
+    */
+    if (svc.bds.work.virtual) {
+      caption += obj.title + ", Object " + svc.bds.object.object_number;
+      if (svc.bds.copy.bad_id != 'letters') {
+        caption += ", " + obj.source.objdescid.compdate['#text'] + ", " + obj.source.repository.institution['#text'];
+      }
+    } else {
+      /*<span class="object-no" ng-if="!svc.bds.work.virtual && !svc.bds.object.title">{{ svc.bds.object.full_object_id }}, </span>
+      <span class="object-no" ng-if="!svc.bds.work.virtual && svc.bds.object.title && svc.bds.work.medium != 'exhibit'">{{svc.bds.object.title}}, {{ svc.bds.object.full_object_id }}, </span>
+      <span class="object-no" ng-if="!svc.bds.work.virtual && svc.bds.object.title && svc.bds.work.medium == 'exhibit'">{{svc.bds.object.title}}</span>
+      <span ng-if="svc.bds.work.medium != 'exhibit'">{{ svc.bds.object.physical_description.objsize['#text'] }} </span>
       */
-      if (svc.bds.work.virtual) {
-        caption += obj.title + ", Object " + svc.bds.object.object_number;
-        if (svc.bds.copy.bad_id != 'letters') {
-          caption += ", " + obj.source.objdescid.compdate['#text'] + ", " + obj.source.repository.institution['#text'];
-        }
+      if (!obj.title) {
+        caption += obj.full_object_id;
       } else {
-        /*<span class="object-no" ng-if="!svc.bds.work.virtual && !svc.bds.object.title">{{ svc.bds.object.full_object_id }}, </span>
-        <span class="object-no" ng-if="!svc.bds.work.virtual && svc.bds.object.title && svc.bds.work.medium != 'exhibit'">{{svc.bds.object.title}}, {{ svc.bds.object.full_object_id }}, </span>
-        <span class="object-no" ng-if="!svc.bds.work.virtual && svc.bds.object.title && svc.bds.work.medium == 'exhibit'">{{svc.bds.object.title}}</span>
-        <span ng-if="svc.bds.work.medium != 'exhibit'">{{ svc.bds.object.physical_description.objsize['#text'] }} </span>
-        */
-        if (!obj.title) {
-          caption += obj.full_object_id;
-        } else {
-          if (svc.bds.work.medium != 'exhibit') {
-            caption += obj.title + ", " + obj.full_object_id + ", ";
-          } else {
-            caption += obj.title;
-          }
-        }
         if (svc.bds.work.medium != 'exhibit') {
-          caption += obj.physical_description.objsize['#text'];
+          caption += obj.title + ", " + obj.full_object_id + ", ";
+        } else {
+          caption += obj.title;
         }
       }
-
-      /*<a ng-if="svc.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="svc.ovs.userestrictOpen(svc.bds.copy,svc.bds.object)">&#169;</a>
-      -- not adding cr to caption... ok?*/
-
-      return caption;
-    };
+      if (svc.bds.work.medium != 'exhibit') {
+        caption += obj.physical_description.objsize['#text'];
+      }
+    }
 
     /*<a ng-if="svc.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="svc.ovs.userestrictOpen(svc.bds.copy,svc.bds.object)">&#169;</a>
     -- not adding cr to caption... ok?*/
