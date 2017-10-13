@@ -33407,13 +33407,13 @@ angular.module("blake").factory("worktitleService", ["BlakeDataService", "$rootS
         caption += svc.bds.object.full_object_id;
       } else {
         if (svc.bds.work.medium != 'exhibit') {
-          caption += svc.bds.object.title + ", " + svc.bds.object.full_object_id + ", ";
+          caption += svc.bds.object.title + ", " + svc.bds.object.full_object_id;
         } else {
           caption += svc.bds.object.title;
         }
       }
       if (svc.bds.work.medium != 'exhibit') {
-        caption += ", " + svc.bds.object.physical_description.objsize['#text'];
+        caption += svc.bds.object.physical_description.objsize['#text'];
       }
     }
     /*<a ng-if="svc.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="svc.ovs.userestrictOpen(svc.bds.copy,svc.bds.object)">&#169;</a>
@@ -33444,7 +33444,7 @@ angular.module("blake").factory("worktitleService", ["BlakeDataService", "$rootS
         caption += obj.full_object_id;
       } else {
         if (svc.bds.work.medium != 'exhibit') {
-          caption += obj.title + ", " + obj.full_object_id + ", ";
+          caption += obj.title + ", " + obj.full_object_id;
         } else {
           caption += obj.title;
         }

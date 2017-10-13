@@ -75,14 +75,14 @@ angular.module("blake")
         caption += svc.bds.object.full_object_id;
       }else{
         if(svc.bds.work.medium != 'exhibit'){
-          caption += svc.bds.object.title +", "+svc.bds.object.full_object_id +", ";
+          caption += svc.bds.object.title +", "+svc.bds.object.full_object_id;
         }else{
           caption += svc.bds.object.title;
         }
 
       }
       if (svc.bds.work.medium != 'exhibit'){
-        caption += ", " + svc.bds.object.physical_description.objsize['#text'];
+        caption += svc.bds.object.physical_description.objsize['#text'];
       }
 
     }
@@ -114,7 +114,7 @@ angular.module("blake")
         caption += obj.full_object_id;
       }else{
         if(svc.bds.work.medium != 'exhibit'){
-          caption += obj.title +", "+obj.full_object_id +", ";
+          caption += obj.title +", "+obj.full_object_id;
         }else{
           caption += obj.title;
         }
