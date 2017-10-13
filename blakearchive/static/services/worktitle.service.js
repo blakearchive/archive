@@ -82,7 +82,7 @@ angular.module("blake")
 
       }
       if (svc.bds.work.medium != 'exhibit'){
-        caption += svc.bds.object.physical_description.objsize['#text'];
+        caption += ", " + svc.bds.object.physical_description.objsize['#text'];
       }
 
     }
@@ -121,7 +121,7 @@ angular.module("blake")
 
       }
       if (svc.bds.work.medium != 'exhibit'){
-        caption += obj.physical_description.objsize['#text'];
+        caption += ", " + obj.physical_description.objsize['#text'];
       }
 
     }
