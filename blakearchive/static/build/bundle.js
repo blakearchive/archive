@@ -33413,7 +33413,7 @@ angular.module("blake").factory("worktitleService", ["BlakeDataService", "$rootS
         }
       }
       if (svc.bds.work.medium != 'exhibit') {
-        caption += svc.bds.object.physical_description.objsize['#text'];
+        caption += ", " + svc.bds.object.physical_description.objsize['#text'];
       }
     }
     /*<a ng-if="svc.bds.work.medium != 'exhibit'" style="color:#168bc1" ng-click="svc.ovs.userestrictOpen(svc.bds.copy,svc.bds.object)">&#169;</a>
@@ -33450,7 +33450,7 @@ angular.module("blake").factory("worktitleService", ["BlakeDataService", "$rootS
         }
       }
       if (svc.bds.work.medium != 'exhibit') {
-        caption += obj.physical_description.objsize['#text'];
+        caption += ", " + obj.physical_description.objsize['#text'];
       }
     }
 
