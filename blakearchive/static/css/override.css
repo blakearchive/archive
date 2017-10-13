@@ -154,12 +154,12 @@
   height: 41px;
   padding-top: 15px;
   float: right;
-  margin-right: 10px;
+  margin-right: 21px;
 }
 
 #custom-tweet-button a {
     display: block;
-    padding: 2px 13px 19px 46px;
+    padding: 2px 0px 20px 21px;
     background: url("../img/global/twitter-128.png") center no-repeat;
     background-size:20px 20px;
   }
