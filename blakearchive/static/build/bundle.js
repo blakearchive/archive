@@ -2107,8 +2107,8 @@ var util = __webpack_require__(5);
 util.inherits = __webpack_require__(2);
 /*</replacement>*/
 
-var Readable = __webpack_require__(13);
-var Writable = __webpack_require__(15);
+var Readable = __webpack_require__(12);
+var Writable = __webpack_require__(14);
 
 util.inherits(Duplex, Readable);
 
@@ -2704,228 +2704,6 @@ module.exports = Array.isArray || function (arr) {
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-var Buffer = __webpack_require__(1).Buffer;
-
-var isBufferEncoding = Buffer.isEncoding || function (encoding) {
-  switch (encoding && encoding.toLowerCase()) {
-    case 'hex':case 'utf8':case 'utf-8':case 'ascii':case 'binary':case 'base64':case 'ucs2':case 'ucs-2':case 'utf16le':case 'utf-16le':case 'raw':
-      return true;
-    default:
-      return false;
-  }
-};
-
-function assertEncoding(encoding) {
-  if (encoding && !isBufferEncoding(encoding)) {
-    throw new Error('Unknown encoding: ' + encoding);
-  }
-}
-
-// StringDecoder provides an interface for efficiently splitting a series of
-// buffers into a series of JS strings without breaking apart multi-byte
-// characters. CESU-8 is handled as part of the UTF-8 encoding.
-//
-// @TODO Handling all encodings inside a single object makes it very difficult
-// to reason about this code, so it should be split up in the future.
-// @TODO There should be a utf8-strict encoding that rejects invalid UTF-8 code
-// points as used by CESU-8.
-var StringDecoder = exports.StringDecoder = function (encoding) {
-  this.encoding = (encoding || 'utf8').toLowerCase().replace(/[-_]/, '');
-  assertEncoding(encoding);
-  switch (this.encoding) {
-    case 'utf8':
-      // CESU-8 represents each of Surrogate Pair by 3-bytes
-      this.surrogateSize = 3;
-      break;
-    case 'ucs2':
-    case 'utf16le':
-      // UTF-16 represents each of Surrogate Pair by 2-bytes
-      this.surrogateSize = 2;
-      this.detectIncompleteChar = utf16DetectIncompleteChar;
-      break;
-    case 'base64':
-      // Base-64 stores 3 bytes in 4 chars, and pads the remainder.
-      this.surrogateSize = 3;
-      this.detectIncompleteChar = base64DetectIncompleteChar;
-      break;
-    default:
-      this.write = passThroughWrite;
-      return;
-  }
-
-  // Enough space to store all bytes of a single character. UTF-8 needs 4
-  // bytes, but CESU-8 may require up to 6 (3 bytes per surrogate).
-  this.charBuffer = new Buffer(6);
-  // Number of bytes received for the current incomplete multi-byte character.
-  this.charReceived = 0;
-  // Number of bytes expected for the current incomplete multi-byte character.
-  this.charLength = 0;
-};
-
-// write decodes the given buffer and returns it as JS string that is
-// guaranteed to not contain any partial multi-byte characters. Any partial
-// character found at the end of the buffer is buffered up, and will be
-// returned when calling write again with the remaining bytes.
-//
-// Note: Converting a Buffer containing an orphan surrogate to a String
-// currently works, but converting a String to a Buffer (via `new Buffer`, or
-// Buffer#write) will replace incomplete surrogates with the unicode
-// replacement character. See https://codereview.chromium.org/121173009/ .
-StringDecoder.prototype.write = function (buffer) {
-  var charStr = '';
-  // if our last write ended with an incomplete multibyte character
-  while (this.charLength) {
-    // determine how many remaining bytes this buffer has to offer for this char
-    var available = buffer.length >= this.charLength - this.charReceived ? this.charLength - this.charReceived : buffer.length;
-
-    // add the new bytes to the char buffer
-    buffer.copy(this.charBuffer, this.charReceived, 0, available);
-    this.charReceived += available;
-
-    if (this.charReceived < this.charLength) {
-      // still not enough chars in this buffer? wait for more ...
-      return '';
-    }
-
-    // remove bytes belonging to the current character from the buffer
-    buffer = buffer.slice(available, buffer.length);
-
-    // get the character that was split
-    charStr = this.charBuffer.slice(0, this.charLength).toString(this.encoding);
-
-    // CESU-8: lead surrogate (D800-DBFF) is also the incomplete character
-    var charCode = charStr.charCodeAt(charStr.length - 1);
-    if (charCode >= 0xD800 && charCode <= 0xDBFF) {
-      this.charLength += this.surrogateSize;
-      charStr = '';
-      continue;
-    }
-    this.charReceived = this.charLength = 0;
-
-    // if there are no more bytes in this buffer, just emit our char
-    if (buffer.length === 0) {
-      return charStr;
-    }
-    break;
-  }
-
-  // determine and set charLength / charReceived
-  this.detectIncompleteChar(buffer);
-
-  var end = buffer.length;
-  if (this.charLength) {
-    // buffer the incomplete character bytes we got
-    buffer.copy(this.charBuffer, 0, buffer.length - this.charReceived, end);
-    end -= this.charReceived;
-  }
-
-  charStr += buffer.toString(this.encoding, 0, end);
-
-  var end = charStr.length - 1;
-  var charCode = charStr.charCodeAt(end);
-  // CESU-8: lead surrogate (D800-DBFF) is also the incomplete character
-  if (charCode >= 0xD800 && charCode <= 0xDBFF) {
-    var size = this.surrogateSize;
-    this.charLength += size;
-    this.charReceived += size;
-    this.charBuffer.copy(this.charBuffer, size, 0, size);
-    buffer.copy(this.charBuffer, 0, 0, size);
-    return charStr.substring(0, end);
-  }
-
-  // or just emit the charStr
-  return charStr;
-};
-
-// detectIncompleteChar determines if there is an incomplete UTF-8 character at
-// the end of the given buffer. If so, it sets this.charLength to the byte
-// length that character, and sets this.charReceived to the number of bytes
-// that are available for this character.
-StringDecoder.prototype.detectIncompleteChar = function (buffer) {
-  // determine how many bytes we have to check at the end of this buffer
-  var i = buffer.length >= 3 ? 3 : buffer.length;
-
-  // Figure out if one of the last i bytes of our buffer announces an
-  // incomplete char.
-  for (; i > 0; i--) {
-    var c = buffer[buffer.length - i];
-
-    // See http://en.wikipedia.org/wiki/UTF-8#Description
-
-    // 110XXXXX
-    if (i == 1 && c >> 5 == 0x06) {
-      this.charLength = 2;
-      break;
-    }
-
-    // 1110XXXX
-    if (i <= 2 && c >> 4 == 0x0E) {
-      this.charLength = 3;
-      break;
-    }
-
-    // 11110XXX
-    if (i <= 3 && c >> 3 == 0x1E) {
-      this.charLength = 4;
-      break;
-    }
-  }
-  this.charReceived = i;
-};
-
-StringDecoder.prototype.end = function (buffer) {
-  var res = '';
-  if (buffer && buffer.length) res = this.write(buffer);
-
-  if (this.charReceived) {
-    var cr = this.charReceived;
-    var buf = this.charBuffer;
-    var enc = this.encoding;
-    res += buf.slice(0, cr).toString(enc);
-  }
-
-  return res;
-};
-
-function passThroughWrite(buffer) {
-  return buffer.toString(this.encoding);
-}
-
-function utf16DetectIncompleteChar(buffer) {
-  this.charReceived = buffer.length % 2;
-  this.charLength = this.charReceived ? 2 : 0;
-}
-
-function base64DetectIncompleteChar(buffer) {
-  this.charReceived = buffer.length % 3;
-  this.charLength = this.charReceived ? 3 : 0;
-}
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
 //
@@ -2976,7 +2754,7 @@ var EElistenerCount = function (emitter, type) {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(17);
+var Stream = __webpack_require__(16);
 /*</replacement>*/
 
 // TODO(bmeurer): Change this back to const once hole checks are
@@ -3008,7 +2786,7 @@ if (debugUtil && debugUtil.debuglog) {
 /*</replacement>*/
 
 var BufferList = __webpack_require__(159);
-var destroyImpl = __webpack_require__(16);
+var destroyImpl = __webpack_require__(15);
 var StringDecoder;
 
 util.inherits(Readable, Stream);
@@ -3091,7 +2869,7 @@ function ReadableState(options, stream) {
   this.decoder = null;
   this.encoding = null;
   if (options.encoding) {
-    if (!StringDecoder) StringDecoder = __webpack_require__(12).StringDecoder;
+    if (!StringDecoder) StringDecoder = __webpack_require__(22).StringDecoder;
     this.decoder = new StringDecoder(options.encoding);
     this.encoding = options.encoding;
   }
@@ -3247,7 +3025,7 @@ Readable.prototype.isPaused = function () {
 
 // backwards compatibility.
 Readable.prototype.setEncoding = function (enc) {
-  if (!StringDecoder) StringDecoder = __webpack_require__(12).StringDecoder;
+  if (!StringDecoder) StringDecoder = __webpack_require__(22).StringDecoder;
   this._readableState.decoder = new StringDecoder(enc);
   this._readableState.encoding = enc;
   return this;
@@ -3937,7 +3715,7 @@ function indexOf(xs, x) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(3)))
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4157,7 +3935,7 @@ function done(stream, er, data) {
 }
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4238,7 +4016,7 @@ var internalUtil = {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(17);
+var Stream = __webpack_require__(16);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -4252,7 +4030,7 @@ function _isUint8Array(obj) {
 }
 /*</replacement>*/
 
-var destroyImpl = __webpack_require__(16);
+var destroyImpl = __webpack_require__(15);
 
 util.inherits(Writable, Stream);
 
@@ -4825,10 +4603,10 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(21).setImmediate, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(20).setImmediate, __webpack_require__(0)))
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4906,31 +4684,31 @@ module.exports = {
 };
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(10).EventEmitter;
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(13);
+exports = module.exports = __webpack_require__(12);
 exports.Stream = exports;
 exports.Readable = exports;
-exports.Writable = __webpack_require__(15);
+exports.Writable = __webpack_require__(14);
 exports.Duplex = __webpack_require__(4);
-exports.Transform = __webpack_require__(14);
+exports.Transform = __webpack_require__(13);
 exports.PassThrough = __webpack_require__(158);
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var ClientRequest = __webpack_require__(161);
 var extend = __webpack_require__(167);
 var statusCodes = __webpack_require__(151);
-var url = __webpack_require__(22);
+var url = __webpack_require__(21);
 
 var http = exports;
 
@@ -4977,7 +4755,7 @@ http.METHODS = ['CHECKOUT', 'CONNECT', 'COPY', 'DELETE', 'GET', 'HEAD', 'LOCK', 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableStream);
@@ -5051,7 +4829,7 @@ xhr = null; // Help gc
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -5107,7 +4885,7 @@ exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5820,6 +5598,228 @@ Url.prototype.parseHost = function () {
 };
 
 /***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var Buffer = __webpack_require__(1).Buffer;
+
+var isBufferEncoding = Buffer.isEncoding || function (encoding) {
+  switch (encoding && encoding.toLowerCase()) {
+    case 'hex':case 'utf8':case 'utf-8':case 'ascii':case 'binary':case 'base64':case 'ucs2':case 'ucs-2':case 'utf16le':case 'utf-16le':case 'raw':
+      return true;
+    default:
+      return false;
+  }
+};
+
+function assertEncoding(encoding) {
+  if (encoding && !isBufferEncoding(encoding)) {
+    throw new Error('Unknown encoding: ' + encoding);
+  }
+}
+
+// StringDecoder provides an interface for efficiently splitting a series of
+// buffers into a series of JS strings without breaking apart multi-byte
+// characters. CESU-8 is handled as part of the UTF-8 encoding.
+//
+// @TODO Handling all encodings inside a single object makes it very difficult
+// to reason about this code, so it should be split up in the future.
+// @TODO There should be a utf8-strict encoding that rejects invalid UTF-8 code
+// points as used by CESU-8.
+var StringDecoder = exports.StringDecoder = function (encoding) {
+  this.encoding = (encoding || 'utf8').toLowerCase().replace(/[-_]/, '');
+  assertEncoding(encoding);
+  switch (this.encoding) {
+    case 'utf8':
+      // CESU-8 represents each of Surrogate Pair by 3-bytes
+      this.surrogateSize = 3;
+      break;
+    case 'ucs2':
+    case 'utf16le':
+      // UTF-16 represents each of Surrogate Pair by 2-bytes
+      this.surrogateSize = 2;
+      this.detectIncompleteChar = utf16DetectIncompleteChar;
+      break;
+    case 'base64':
+      // Base-64 stores 3 bytes in 4 chars, and pads the remainder.
+      this.surrogateSize = 3;
+      this.detectIncompleteChar = base64DetectIncompleteChar;
+      break;
+    default:
+      this.write = passThroughWrite;
+      return;
+  }
+
+  // Enough space to store all bytes of a single character. UTF-8 needs 4
+  // bytes, but CESU-8 may require up to 6 (3 bytes per surrogate).
+  this.charBuffer = new Buffer(6);
+  // Number of bytes received for the current incomplete multi-byte character.
+  this.charReceived = 0;
+  // Number of bytes expected for the current incomplete multi-byte character.
+  this.charLength = 0;
+};
+
+// write decodes the given buffer and returns it as JS string that is
+// guaranteed to not contain any partial multi-byte characters. Any partial
+// character found at the end of the buffer is buffered up, and will be
+// returned when calling write again with the remaining bytes.
+//
+// Note: Converting a Buffer containing an orphan surrogate to a String
+// currently works, but converting a String to a Buffer (via `new Buffer`, or
+// Buffer#write) will replace incomplete surrogates with the unicode
+// replacement character. See https://codereview.chromium.org/121173009/ .
+StringDecoder.prototype.write = function (buffer) {
+  var charStr = '';
+  // if our last write ended with an incomplete multibyte character
+  while (this.charLength) {
+    // determine how many remaining bytes this buffer has to offer for this char
+    var available = buffer.length >= this.charLength - this.charReceived ? this.charLength - this.charReceived : buffer.length;
+
+    // add the new bytes to the char buffer
+    buffer.copy(this.charBuffer, this.charReceived, 0, available);
+    this.charReceived += available;
+
+    if (this.charReceived < this.charLength) {
+      // still not enough chars in this buffer? wait for more ...
+      return '';
+    }
+
+    // remove bytes belonging to the current character from the buffer
+    buffer = buffer.slice(available, buffer.length);
+
+    // get the character that was split
+    charStr = this.charBuffer.slice(0, this.charLength).toString(this.encoding);
+
+    // CESU-8: lead surrogate (D800-DBFF) is also the incomplete character
+    var charCode = charStr.charCodeAt(charStr.length - 1);
+    if (charCode >= 0xD800 && charCode <= 0xDBFF) {
+      this.charLength += this.surrogateSize;
+      charStr = '';
+      continue;
+    }
+    this.charReceived = this.charLength = 0;
+
+    // if there are no more bytes in this buffer, just emit our char
+    if (buffer.length === 0) {
+      return charStr;
+    }
+    break;
+  }
+
+  // determine and set charLength / charReceived
+  this.detectIncompleteChar(buffer);
+
+  var end = buffer.length;
+  if (this.charLength) {
+    // buffer the incomplete character bytes we got
+    buffer.copy(this.charBuffer, 0, buffer.length - this.charReceived, end);
+    end -= this.charReceived;
+  }
+
+  charStr += buffer.toString(this.encoding, 0, end);
+
+  var end = charStr.length - 1;
+  var charCode = charStr.charCodeAt(end);
+  // CESU-8: lead surrogate (D800-DBFF) is also the incomplete character
+  if (charCode >= 0xD800 && charCode <= 0xDBFF) {
+    var size = this.surrogateSize;
+    this.charLength += size;
+    this.charReceived += size;
+    this.charBuffer.copy(this.charBuffer, size, 0, size);
+    buffer.copy(this.charBuffer, 0, 0, size);
+    return charStr.substring(0, end);
+  }
+
+  // or just emit the charStr
+  return charStr;
+};
+
+// detectIncompleteChar determines if there is an incomplete UTF-8 character at
+// the end of the given buffer. If so, it sets this.charLength to the byte
+// length that character, and sets this.charReceived to the number of bytes
+// that are available for this character.
+StringDecoder.prototype.detectIncompleteChar = function (buffer) {
+  // determine how many bytes we have to check at the end of this buffer
+  var i = buffer.length >= 3 ? 3 : buffer.length;
+
+  // Figure out if one of the last i bytes of our buffer announces an
+  // incomplete char.
+  for (; i > 0; i--) {
+    var c = buffer[buffer.length - i];
+
+    // See http://en.wikipedia.org/wiki/UTF-8#Description
+
+    // 110XXXXX
+    if (i == 1 && c >> 5 == 0x06) {
+      this.charLength = 2;
+      break;
+    }
+
+    // 1110XXXX
+    if (i <= 2 && c >> 4 == 0x0E) {
+      this.charLength = 3;
+      break;
+    }
+
+    // 11110XXX
+    if (i <= 3 && c >> 3 == 0x1E) {
+      this.charLength = 4;
+      break;
+    }
+  }
+  this.charReceived = i;
+};
+
+StringDecoder.prototype.end = function (buffer) {
+  var res = '';
+  if (buffer && buffer.length) res = this.write(buffer);
+
+  if (this.charReceived) {
+    var cr = this.charReceived;
+    var buf = this.charBuffer;
+    var enc = this.encoding;
+    res += buf.slice(0, cr).toString(enc);
+  }
+
+  return res;
+};
+
+function passThroughWrite(buffer) {
+  return buffer.toString(this.encoding);
+}
+
+function utf16DetectIncompleteChar(buffer) {
+  this.charReceived = buffer.length % 2;
+  this.charLength = this.charReceived ? 2 : 0;
+}
+
+function base64DetectIncompleteChar(buffer) {
+  this.charReceived = buffer.length % 3;
+  this.charLength = this.charReceived ? 3 : 0;
+}
+
+/***/ }),
 /* 23 */
 /***/ (function(module, exports) {
 
@@ -5828,10 +5828,27 @@ Url.prototype.parseHost = function () {
 	Author Tobias Koppers @sokra
 */
 module.exports = function(src) {
-	if (typeof execScript !== "undefined")
-		execScript(src);
-	else
-		eval.call(null, src);
+	function log(error) {
+		(typeof console !== "undefined")
+		&& (console.error || console.log)("[Script Loader]", error);
+	}
+
+	// Check for IE =< 8
+	function isIE() {
+		return typeof attachEvent !== "undefined" && typeof addEventListener === "undefined";
+	}
+
+	try {
+		if (typeof execScript !== "undefined" && isIE()) {
+			execScript(src);
+		} else if (typeof eval !== "undefined") {
+			eval.call(null, src);
+		} else {
+			log("EvalError: No eval function available");
+		}
+	} catch (error) {
+		log(error);
+	}
 }
 
 
@@ -13916,7 +13933,7 @@ module.exports = 'ngTouch';
     return Dexie;
 });
 //# sourceMappingURL=dexie.js.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(21).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(20).setImmediate))
 
 /***/ }),
 /* 43 */
@@ -21357,7 +21374,7 @@ lineIndex=map.line;fabric.IText.prototype.shiftLineStyles.call(this,lineIndex,of
    */fabric.IText.prototype._getNewSelectionStartFromOffset=function(mouseOffset,prevWidth,width,index,jlen){index=override.call(this,mouseOffset,prevWidth,width,index,jlen);// the index passed into the function is padded by the amount of lines from _textLines (to account for \n)
 // we need to remove this padding, and pad it by actual lines, and / or spaces that are meant to be there
 var tmp=0,removed=0;// account for removed characters
-for(var i=0;i<this._textLines.length;i++){tmp+=this._textLines[i].length;if(tmp+removed>=index){break;}if(this.text[tmp+removed]==='\n'||this.text[tmp+removed]===' '){removed++;}}return index-i+removed;};})();(function(){if(typeof document!=='undefined'&&typeof window!=='undefined'){return;}var DOMParser=__webpack_require__(215).DOMParser,URL=__webpack_require__(22),HTTP=__webpack_require__(19),HTTPS=__webpack_require__(152),Canvas=__webpack_require__(9),Image=__webpack_require__(9).Image;/** @private */function request(url,encoding,callback){var oURL=URL.parse(url);// detect if http or https is used
+for(var i=0;i<this._textLines.length;i++){tmp+=this._textLines[i].length;if(tmp+removed>=index){break;}if(this.text[tmp+removed]==='\n'||this.text[tmp+removed]===' '){removed++;}}return index-i+removed;};})();(function(){if(typeof document!=='undefined'&&typeof window!=='undefined'){return;}var DOMParser=__webpack_require__(215).DOMParser,URL=__webpack_require__(21),HTTP=__webpack_require__(18),HTTPS=__webpack_require__(152),Canvas=__webpack_require__(9),Image=__webpack_require__(9).Image;/** @private */function request(url,encoding,callback){var oURL=URL.parse(url);// detect if http or https is used
 if(!oURL.port){oURL.port=oURL.protocol.indexOf('https:')===0?443:80;}// assign request handler based on protocol
 var reqHandler=oURL.protocol.indexOf('https:')===0?HTTPS:HTTP,req=reqHandler.request({hostname:oURL.hostname,port:oURL.port,path:oURL.path,method:'GET'},function(response){var body='';if(encoding){response.setEncoding(encoding);}response.on('end',function(){callback(body);});response.on('data',function(chunk){if(response.statusCode===200){body+=chunk;}});});req.on('error',function(err){if(err.errno===process.ECONNREFUSED){fabric.log('ECONNREFUSED: connection refused to '+oURL.hostname+':'+oURL.port);}else{fabric.log(err.message);}callback(null);});req.end();}/** @private */function requestFs(path,callback){var fs=__webpack_require__(213);fs.readFile(path,function(err,data){if(err){fabric.log(err);throw err;}else{callback(data);}});}fabric.util.loadImage=function(url,callback,context){function createImageAndCallBack(data){if(data){img.src=new Buffer(data,'binary');// preserving original url, which seems to be lost in node-canvas
 img._src=url;callback&&callback.call(context,img);}else{img=null;callback&&callback.call(context,null,true);}}var img=new Image();if(url&&(url instanceof Buffer||url.indexOf('data')===0)){img.src=img._src=url;callback&&callback.call(context,img);}else if(url&&url.indexOf('http')!==0){requestFs(url,createImageAndCallBack);}else if(url){request(url,'binary',createImageAndCallBack);}else{callback&&callback.call(context,url);}};fabric.loadSVGFromURL=function(url,callback,reviver){url=url.replace(/^\n\s*/,'').replace(/\?.*$/,'').trim();if(url.indexOf('http')!==0){requestFs(url,function(body){fabric.loadSVGFromString(body.toString(),callback,reviver);});}else{request(url,'',function(body){fabric.loadSVGFromString(body,callback,reviver);});}};fabric.loadSVGFromString=function(string,callback,reviver){var doc=new DOMParser().parseFromString(string);fabric.parseSVGDocument(doc.documentElement,function(results,options){callback&&callback(results,options);},reviver);};fabric.util.getScript=function(url,callback){request(url,'',function(body){// eslint-disable-next-line no-eval
@@ -59065,7 +59082,7 @@ module.exports = {
 /* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var http = __webpack_require__(19);
+var http = __webpack_require__(18);
 
 var https = module.exports;
 
@@ -59928,7 +59945,7 @@ exports.encode = exports.stringify = __webpack_require__(156);
 
 module.exports = PassThrough;
 
-var Transform = __webpack_require__(14);
+var Transform = __webpack_require__(13);
 
 /*<replacement>*/
 var util = __webpack_require__(5);
@@ -60223,10 +60240,10 @@ module.exports = function () {
 /* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(20);
+/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(19);
 var inherits = __webpack_require__(2);
 var response = __webpack_require__(162);
-var stream = __webpack_require__(18);
+var stream = __webpack_require__(17);
 var toArrayBuffer = __webpack_require__(163);
 
 var IncomingMessage = response.IncomingMessage;
@@ -60500,9 +60517,9 @@ var unsafeHeaders = ['accept-charset', 'accept-encoding', 'access-control-reques
 /* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(20);
+/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(19);
 var inherits = __webpack_require__(2);
-var stream = __webpack_require__(18);
+var stream = __webpack_require__(17);
 
 var rStates = exports.readyStates = {
 	UNSENT: 0,
@@ -60968,7 +60985,7 @@ module.exports = "<!--Edit buttons-->\n<div id=\"object-tools\" class=\"hidden-x
 /* 186 */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"OverlayCopyInfo\" class=\"overlay\" ng-show=\"$root.showOverlayCompareCopyInfo == true\" style=\"top:52px\">\n    <a style=\"text-decoration: none\" href=\"\" class=\"closebtnleft\" style=\"right:inherit\" ng-click=\"$root.showOverlayCompareCopyInfo = false\">&times;</a>\n    <header class=\"page-header\">\n        <p class=\"subhead\">COPY INFORMATION</p>\n        <h1 style=\"color:rgba(233,188,71,1)\">{{ read.compareCopy.title }} (Composed {{ read.compareCopy.composition_date_string }})</h1>\n    </header>\n    <div id=\"archive-tabs\" role=\"tabpanel\">\n        <div class=\"container-fluid overlaycopyinfo\">\n            <div class=\"container\">\n                <div class=\"tab-content\">\n                    <div role=\"tabpanel\" class=\"fadeinout tab-pane active in\">\n                        <copy-information copy=\"read.compareCopy\"></copy-information>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<div id=\"OverlayCopyInfo2\" class=\"overlay\" ng-show=\"read.showOverlayRelatedCopyInfoFlag == true\" style=\"top:52px\">\n    <a style=\"text-decoration: none\" href=\"\" class=\"closebtnleft\" style=\"right:inherit\" ng-click=\"read.showOverlayRelatedCopyInfoFlag = false\">&times;</a>\n    <header class=\"page-header\">\n        <p class=\"subhead\">COPY INFORMATION</p>\n        <h1 style=\"color:rgba(233,188,71,1)\">{{ read.HoveredObject.copy_title }} (Composed {{ read.HoveredObject.copy_composition_date_string }})</h1>\n    </header>\n    <div id=\"archive-tabs\" role=\"tabpanel\">\n        <div class=\"container-fluid overlaycopyinfo\">\n            <div class=\"container\">\n                <div class=\"tab-content\">\n                    <div role=\"tabpanel\" class=\"fadeinout tab-pane active in\">\n                        <copy-information copy=\"read.RelatedCopy\"></copy-information>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n<!--<div style=\"text-align:center\">\n    <div style=\"color:white; font-size:13 px; padding-top:1px\" ng-if=\"read.apparatus == 'comparewith'\"><span>Compared with </span><a scroll-to-top href=\"\" ng-click=\"$root.showOverlayCompareCopyInfo = true\" style=\"color:yellow;\">Copy {{read.compareCopyId}}</a> (Printed {{read.compareCopyPrintDateString}})</span>\n    </div>\n</div>-->\n<!--<p class=\"object-title\">{{ read.getOvpTitle() }}</p>-->\n<!-- compare -->\n<div ng-style=\"read.apparatus=='comparewith' ? { 'margin-top':'0px' } : { 'margin-top':'0px' }\" id=\"compare\" class=\"scrollbar\" ng-if=\"read.bds.copy.bad_id != 'illum'\" left-on-broadcast=\"viewSubMenu::readingMode\">\n    <div class=\"featured-object\">\n        <div class=\"compare-inner\" style=\"padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px;\" ng-style=\"truesize ? { 'height':'83vh' } : { 'height':'inherit' }\">\n            <!-- for letters -->\n            <div class=\"item\" ng-repeat=\"o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index\" ng-if=\"read.bds.copy.bad_id == 'letters'\">\n                <div ng-if=\"read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes' || read.apparatus == 'imagesonly' || read.apparatus == 'comparewith'\" class=\"btn-group edit-object\" role=\"group\" style=\"margin-bottom:0px;margin-left:28px\">\n                        <button type=\"button\" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px\" ng-class=\"{'hover':read.apparatusArray[$index] == 'transcriptions'}\" class=\"btn btn-default\" ng-click=\"read.showIndividualTranscriptions($index)\">\n                            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px;\"></span>\n                            <span class=\"gr-title\">Show diplomatic transcriptions</span>\n                        </button>\n                        <button type=\"button\" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -121px\" ng-class=\"{'hover':read.apparatusArray[$index] == 'illustrationdescriptions'}\" class=\"btn btn-default\" ng-click=\"read.showIndividualIllustrationDescriptions($index)\">\n                            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:14px\"></span>\n                            <span class=\"gr-title\">Show illustration descriptions</span>\n                        </button>\n                        <button type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -245px\" ng-class=\"{'hover':read.apparatusArray[$index] == 'editorsnotes'}\" class=\"btn btn-gr-selection\" ng-click=\"read.showIndividualEditorsNotes($index)\">\n                            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\"></span>\n                            <span class=\"gr-title\">Show editors' notes</span>\n                        </button>\n                    </div>\n                <div class=\"reading-wrapper\" auto-height adjust=\"150\" breakpoint=\"768\" id=\"{{ read.cssSafeId(o.desc_id) }}\">\n                    <img magnify-image ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeObject(o)\">\n                    <div class=\"reading-copy\">\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'transcriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatus != 'comparewith'\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span>{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span>{{ o.full_object_id }}</span></h4>\n                            <text-transcription object=\"o\"></text-transcription>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'illustrationdescriptions' || read.apparatusArray[$index] == 'illustrationdescriptions') && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatus != 'comparewith'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span>{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span>{{ o.full_object_id }}</span></h4>\n                            <illustration-description object=\"o\"></illustration-description>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'editorsnotes' || read.apparatusArray[$index] == 'editorsnotes') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatus != 'comparewith'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span>{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span>{{ o.full_object_id }}</span></h4>\n                            <editor-notes object=\"o\"></editor-notes>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <!-- for everything else -->\n            <div class=\"item\" ng-repeat=\"o in read.bds.copyObjects | filter:{supplemental:null} track by $index\" ng-if=\"read.bds.copy.bad_id != 'letters'\">\n                <div ng-if=\"read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes' || read.apparatus == 'imagesonly' || read.apparatus == 'comparewith'\" class=\"btn-group edit-object\" role=\"group\" style=\"margin-bottom:0px;margin-left:28px\">\n                        <button tooltip=\"Diplomatic Transcription\" tooltip-placement=\"bottom\" type=\"button\" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px\" ng-class=\"{'hover':read.apparatusArray[$index] == 'transcriptions'}\" class=\"btn btn-default\" ng-click=\"read.showIndividualTranscriptions($index)\">\n                            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px;\"></span>\n                            <span class=\"gr-title\">Show diplomatic transcriptions</span>\n                        </button>\n                        <button tooltip=\"Illustration Description\" tooltip-placement=\"bottom\" type=\"button\" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -121px\" ng-class=\"{'hover':read.apparatusArray[$index] == 'illustrationdescriptions'}\" class=\"btn btn-default\" ng-click=\"read.showIndividualIllustrationDescriptions($index)\">\n                            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:14px\"></span>\n                            <span class=\"gr-title\">Show illustration descriptions</span>\n                        </button>\n                        <button tooltip=\"Editors' Notes\" tooltip-placement=\"bottom\" type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -245px\" ng-class=\"{'hover':read.apparatusArray[$index] == 'editorsnotes'}\" class=\"btn btn-gr-selection\" ng-click=\"read.showIndividualEditorsNotes($index)\">\n                            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\"></span>\n                            <span class=\"gr-title\">Show editors' notes</span>\n                        </button>\n                        <button tooltip=\"Add to Lightbox\" tooltip-placement=\"bottom\" type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/edit-icons.png');background-repeat: no-repeat;background-position:2px 3px;background-size:20px\" ng-class=\"{ 'hover':read.apparatusArray[$index] == 'lightbox'} \" class=\"btn btn-gr-selection \" ng-click=\"read.addToLightBox(o) \">\n                            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \"></span>\n                            <span class=\"gr-title \">Add to lightbox</span>\n                        </button>\n\n                        <button ng-if=\"read.apparatus != 'comparewith'\" tooltip=\"Objects from the Same Matrix\" tooltip-placement=\"bottom\" type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':read.apparatusArray[$index] == 'samematrix'} \" class=\"btn btn-gr-selection \" ng-click=\"read.showObjectsSameMatrix($index,o) \">\n                            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">M</span>\n                            <span class=\"gr-title \">Show objects from the same matrix</span>\n                        </button>\n                        <button ng-if=\"read.apparatus != 'comparewith'\" tooltip=\"Objects from the Same Production Sequence\" tooltip-placement=\"bottom\" type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':read.apparatusArray[$index] == 'productionsequence'} \" class=\"btn btn-gr-selection \" ng-click=\"read.showObjectsProductionSequence($index,o) \">\n                            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">PS</span>\n                            <span class=\"gr-title \">Show objects from the same production sequence</span>\n                        </button>\n                        <button ng-if=\"read.apparatus != 'comparewith'\" tooltip=\"Objects with a Similar Design\" tooltip-placement=\"bottom\" type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':read.apparatusArray[$index] == 'motif'} \" class=\"btn btn-gr-selection \" ng-click=\"read.showObjectsWithSimilarDesign($index,o) \">\n                            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">D</span>\n                            <span class=\"gr-title \">Show objects with a similar design</span>\n                        </button>\n                        <button ng-if=\"read.apparatus != 'comparewith'\" tooltip=\"Related Texts or Images\" tooltip-placement=\"bottom\" type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':read.apparatusArray[$index] == 'textreference'} \" class=\"btn btn-gr-selection \" ng-click=\"read.showObjectsTextReference($index,o) \">\n                            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">T</span>\n                            <span class=\"gr-title \">Show objects with textual references</span>\n                        </button>\n\n                    </div>\n                    <div ng-if=\"read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null\" style=\"float:right;color:white\"><a scroll-to-top href=\"\" ng-click=\"$root.showOverlayCompareCopyInfo = true\" style=\"color:yellow;\">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</a></div>\n\n                    <div style=\"float:right;color:white;font-size:9px;margin-right:2%\" ng-if=\"read.apparatusArray[$index] == 'motif' || read.apparatusArray[$index] == 'samematrix' || read.apparatusArray[$index] == 'productionsequence' || read.apparatusArray[$index] == 'textreference'\"><a scroll-to-top href=\"\" ng-click=\"read.showOverlayRelatedCopyInfo(read.HoveredObject.copy_bad_id)\" style=\"color:yellow;\">{{read.HoveredObject.copy_title}} {{read.HoveredObject.full_object_id}}</a></div>\n\n\n                <div class=\"reading-wrapper\" auto-height adjust=\"150\" breakpoint=\"768\" id=\"{{ read.cssSafeId(o.desc_id) }}\">\n                    <!--use the following for anchoring images\n                <div in-view=\"read.setActiveId($index)\" class=\"reading-wrapper\" auto-height adjust=\"150\" breakpoint=\"768\" id=\"{{ read.cssSafeId(o.desc_id) }}\">\n                -->\n                    <img id=\"{{read.getStrippedDescId(o.desc_id)}}\" magnify-image ng-mouseover=\"read.hover = true;\" ng-mouseleave=\"read.hover = false;\" ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeObject(o)\">\n                    \n                    <div class=\"reading-copy\">\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'transcriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span>{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span>{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <text-transcription object=\"o\"></text-transcription>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'transcriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\">{{read.compareCopyObjects[o.desc_id].title}}<br><span style=\"color:yellow\">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if=\"truesize == true\">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\"><span style=\"color:yellow\">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if=\"truesize == true\">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>\n                            <text-transcription object=\"read.compareCopyObjects[o.desc_id]\"></text-transcription>\n                        </div>\n                        \n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'illustrationdescriptions' || read.apparatusArray[$index] == 'illustrationdescriptions') && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span>{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span>{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <illustration-description object=\"o\"></illustration-description>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'illustrationdescriptions' || read.apparatusArray[$index] == 'illustrationdescriptions') && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\">{{read.compareCopyObjects[o.desc_id].title}}<br><span style=\"color:yellow\">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if=\"truesize == true\">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\"><span style=\"color:yellow\">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if=\"truesize == true\">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>\n                            <illustration-description object=\"read.compareCopyObjects[o.desc_id]\"></illustration-description>\n                        </div>\n\n\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'editorsnotes' || read.apparatusArray[$index] == 'editorsnotes') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span>{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span>{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <editor-notes object=\"o\"></editor-notes>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'editorsnotes' || read.apparatusArray[$index] == 'editorsnotes') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\">{{read.compareCopyObjects[o.desc_id].title}}<br><span style=\"color:yellow\">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if=\"truesize == true\">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\"><span style=\"color:yellow\">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if=\"truesize == true\">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>\n                            <editor-notes object=\"read.compareCopyObjects[o.desc_id]\"></editor-notes>\n                        </div>\n\n\n                        <div auto-height adjust=\"150 \" breakpoint=\"768 \" class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'samematrix' || read.apparatusArray[$index] == 'samematrix') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.bds.copy.virtual == false\" style=\"width:100%\">\n                            \n                            <div ng-if=\"read.objectsSameMatrix != null && read.done1 == true\" ng-mouseover=\"read.HoveredObject = sm\" style=\"height:100%\" ng-repeat=\"sm in read.objectsSameMatrix\">\n                            <img style=\"margin-bottom:10%\" ng-src=\"/images/{{ sm.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeCopy(sm.copy_bad_id,sm.desc_id)\">\n                            </div>\n\n                            <div ng-if=\"read.objectsSameMatrix == '' && read.done1 == true\">\n                                [NOT APPLICABLE]\n                            </div>\n\n                        </div>\n\n                        <div auto-height adjust=\"150 \" breakpoint=\"768 \" class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'motif' || read.apparatusArray[$index] == 'motif') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'\" style=\"width:100%\">\n                            \n                            <div ng-if=\"read.objectsWithSameMotif != null && read.done2 == true\" ng-mouseover=\"read.HoveredObject = owsm\" style=\"height:100%\" ng-repeat=\"owsm in read.objectsWithSameMotif\">\n                            <img style=\"margin-bottom:10%\" ng-src=\"/images/{{ owsm.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeCopy(owsm.copy_bad_id,sm.desc_id)\">\n                            </div>\n\n                            <div ng-if=\"read.objectsWithSameMotif == '' && read.done2 == true\">\n                                [NOT APPLICABLE]\n                            </div>\n\n                        </div>\n\n                         <div auto-height adjust=\"150 \" breakpoint=\"768 \" class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'productionsequence' || read.apparatusArray[$index] == 'productionsequence') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'textreference' && read.apparatusArray[$index] != 'motif'\" style=\"width:100%\">\n                            \n                            <div ng-if=\"read.objectsProductionSequence != null && read.done3 == true\" ng-mouseover=\"read.HoveredObject = ps\" style=\"height:100%\" ng-repeat=\"ps in read.objectsProductionSequence\">\n                            <img style=\"margin-bottom:10%\" ng-src=\"/images/{{ ps.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeCopy(ps.copy_bad_id,sm.desc_id)\">\n                            </div>\n\n                            <div ng-if=\"read.objectsProductionSequence == '' && read.done3 == true\">\n                                [NOT APPLICABLE]\n                            </div>\n\n                        </div>\n\n                         <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'textreference' || read.apparatusArray[$index] == 'textreference') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'motif'\" style=\"width:100%\">\n                            \n                            <div ng-if=\"read.objectsTextReference.objects != '' && read.done4 == true\" ng-mouseover=\"read.HoveredObject = tr\" style=\"height:100%\" ng-repeat=\"tr in read.objectsTextReference.objects\">\n                            <img style=\"margin-bottom:10%\" ng-src=\"/images/{{ tr.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeCopy(tr.copy_bad_id,sm.desc_id)\">\n                            </div>\n                            <div ng-if=\"read.objectsTextReference.copies != '' && read.done4 == true\" ng-mouseover=\"read.HoveredObject = tr\" style=\"height:100%\" ng-repeat=\"tr in read.objectsTextReference.copies\">\n                            <img style=\"margin-bottom:10%\" ng-src=\"/images/{{ tr.image }}.100.jpg\" ng-click=\"read.changeCopy(tr.copy_bad_id,sm.desc_id)\">\n                            </div>\n                            <div ng-if=\"read.objectsTextReference.works != '' && read.done4 == true\" ng-mouseover=\"read.HoveredObject = tr\" style=\"height:100%\" ng-repeat=\"tr in read.objectsTextReference.works\">\n                            <img style=\"margin-bottom:10%\" ng-src=\"/images/{{ tr.image }}.jpg\" ng-click=\"read.changeCopy(tr.copy_bad_id,sm.desc_id)\">\n                            </div>\n\n                            <div ng-if=\"read.objectsTextReference.objects == '' && read.objectsTextReference.copies == '' && read.objectsTextReference.works == '' && read.done4 == true\">\n                                [NOT APPLICABLE]\n                            </div>\n\n                        </div>\n\n\n\n                        <!--<div class=\"reading-copy-inner\" ng-show=\"(read.apparatusArray[$index] == 'editorsnotes' || read.apparatusArray[$index] == 'illustrationdescriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null\" style=\"width:10px\">\n                            <h4>Copy {{read.compareCopyId}} contains no copy for this object.</h4>\n                        </div>-->\n\n\n                    </div>\n                    <img id=\"{{read.getStrippedDescId(read.compareCopyObjects[o.desc_id].desc_id)}}\" magnify-image style=\"padding-left:10px\" ng-if=\"read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null\" ng-mouseover=\"read.hover = true;\" ng-mouseleave=\"read.hover = false;\" ng-src=\"/images/{{ read.compareCopyObjects[o.desc_id].dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\">\n                    <img style=\"padding-left:10px\" ng-if=\"read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null || read.apparatusArray[$index] == 'samematrix' || read.apparatusArray[$index] == 'motif' || read.apparatusArray[$index] == 'productionsequence' || read.apparatusArray[$index] == 'textreference'\" ng-src=\"\">\n                    <!--\n                    <div style=\"color:white; font-size:9px; text-align:center\" ng-if=\"read.apparatus == 'imagesonly' && truesize == false\">{{o.full_object_id}}</div>\n                    <div style=\"color:white; font-size:9px; text-align:center\" ng-if=\"read.apparatus == 'imagesonly' && truesize == true\">{{o.full_object_id}}</br>{{ o.physical_description.objsize['#text'] }}</div>\n                    -->\n                    <div style=\"color:white; font-size:7px;\" ng-if=\"read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null || read.apparatusArray[$index] == 'samematrix' || read.apparatusArray[$index] == 'motif' || read.apparatusArray[$index] == 'productionsequence' || read.apparatusArray[$index] == 'textreference'\"><span style=\"float:left\">{{o.full_object_id}}</span><span ng-if=\"truesize == true\" style=\"float:left\">, {{o.physical_description.objsize['#text'] }}</span><span ng-if=\"read.compareCopyObjects[o.desc_id] != null && truesize == true\" style=\"color:yellow;float:right;\">{{read.compareCopyObjects[o.desc_id].full_object_id}}, {{ read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span><span ng-if=\"read.compareCopyObjects[o.desc_id] != null && truesize == false\" style=\"color:yellow;float:right;\">{{read.compareCopyObjects[o.desc_id].full_object_id}}</span></div>\n\n                    <div style=\"color:white; font-size:7px;\" ng-if=\"read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null\"><span style=\"float:left\">{{o.full_object_id}}</span><span ng-if=\"truesize == true\" style=\"float:left\">, {{o.physical_description.objsize['#text'] }}</span></div>\n                    \n                </div>\n            </div>\n            <!--<span style=\"color:white;font-size:21px;position:absolute;top:50%;padding-left:30px\">END&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->\n        </div>\n    </div>\n</div>\n<!--for exhibits-->\n<div auto-height adjust=\"70\" breakpoint=\"768\" style=\"overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white\" id=\"compare\" ng-if=\"read.bds.copy.bad_id == 'illum'\" \">\n    \n           \n                \n                    <ng-include src=\" '/static/html/illuminatedprinting.exhibit.html' \"></ng-include>\n                   \n   \n</div>\n<div style=\"float:right; width:67% \" id=\"compare \" class=\"scrollbar \" ng-if=\"read.bds.copy.bad_id=='illum' \" left-on-broadcast=\"viewSubMenu::readingMode \">\n    <div class=\"featured-object \">\n        <div class=\"compare-inner \">\n            <div class=\"item \" ng-repeat=\"o in read.bds.copyObjects | filter:{supplemental:null} \" ng-if=\"read.bds.copy.bad_id !='letters' \">\n                <div class=\"reading-wrapper \" auto-height adjust=\"150 \" breakpoint=\"768 \" id=\"{{ read.cssSafeId(o.desc_id) }} \">\n                    <img magnify-image ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg \" ng-click=\"read.changeObject(o) \">\n                    <div class=\"reading-copy \">\n                        <div class=\"reading-copy-inner \">\n                            <h4 ng-if=\"o.title \" ng-click=\"read.changeObject(o) \">{{o.title}}<br><span>{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title \" ng-click=\"read.changeObject(o) \"><span>{{ o.full_object_id }}</span></h4>\n                            <text-transcription object=\"o \"></text-transcription>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n<div id=\"object-tools \" class=\"hidden-xs \">\n    <div id=\"object-tools-inner \" style=\"text-align:center \">\n        <div class=\"btn-group edit-object \" role=\"group \">\n        <button type=\"button \" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px \" ng-class=\"{ 'hover':activeapparatus=='transcriptions' } \" class=\"btn btn-default \" ng-click=\"read.showTranscriptions() \">\n            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px; \">&nbsp;&nbsp;&nbsp;&nbsp;Diplomatic Transcriptions</span>\n            <span class=\"gr-title \">Show diplomatic transcriptions</span>\n        </button>\n        <button type=\"button \" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -121px \" ng-class=\"{ 'hover':activeapparatus=='illustrationdescriptions' } \" class=\"btn btn-default \" ng-click=\"read.showIllustrationDescriptions() \">\n            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:14px \">&nbsp;&nbsp;&nbsp;&nbsp;Illustration Descriptions</span>\n            <span class=\"gr-title \">Show illustration descriptions</span>\n        </button>\n        <button type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -245px \" ng-class=\"{ 'hover':activeapparatus=='editorsnotes' } \" class=\"btn btn-gr-selection \" ng-click=\"read.showEditorsNotes() \">\n            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">&nbsp;&nbsp;&nbsp;&nbsp;Editors' Notes</span>\n            <span class=\"gr-title \">Show editors' notes</span>\n        </button>\n        <button type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':activeapparatus=='imagesonly' } \" class=\"btn btn-gr-selection \" ng-click=\"read.showImagesOnly() \">\n            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">Images Only</span>\n            <span class=\"gr-title \">Show images only</span>\n        </button>\n        <button type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':zoom==true, 'inactive':zoom==false} \" class=\"btn btn-default \" ng-click=\"read.zoom() \" tooltip=\"Mouse over an image \" tooltip-placement=\"top \" tooltip-trigger=\"click \">\n            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">Magnify</span>\n        </button>\n        <button type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':truesize==true, 'inactive':truesize==false} \" class=\"btn btn-gr-selection \" ng-click=\"read.showTrueSize() \">\n            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">True Size</span>\n            <span class=\"gr-title \">True Size</span>\n        </button>\n       \n        \n        <span ng-if=\"read.bds.workCopies.length> 1 && read.bds.copy.virtual == false\" dropdown class=\"dropdown\">\n    <button ng-if=\"read.apparatus != 'comparewith'\" dropdown-toggle type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6;margin-bottom:1px;margin-right:1px;border-radius:0px;border-left:0px\" ng-class=\"{'hover':activeapparatus == 'comparewith'}\">\n        <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">Compare with Copy...</span>\n        <span class=\"gr-title\">Show compare with</span>\n    </button>\n    <button ng-if=\"read.apparatus == 'comparewith'\" dropdown-toggle type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6;margin-bottom:1px;margin-right:1px;border-radius:0px;border-left:0px\" ng-class=\"{'hover':activeapparatus == 'comparewith'}\">\n        <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">Compare with <span style=\"color:yellow;background:#1d1d1d\">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</span></span>\n        <span class=\"gr-title\">Show compare with</span>\n    </button>\n    <ul class=\"dropdown-menu\" style=\"border-radius:0px;top:inherit;bottom:100%;margin:2px 0 2px\" role=\"menu\">\n        <li ng-repeat=\"copy in read.bds.workCopies track by $index\" ng-if=\"copy.archive_copy_id != read.bds.copy.archive_copy_id\">\n            <a ng-click=\"read.showCompareWithFaster(copy.bad_id)\">{{copy.archive_copy_id}} (Printed {{copy.print_date_string}})</a>\n        </li>\n    </ul>\n    </span>\n</div>\n</div>\n</div>\n<!--/.compare-->";
+module.exports = "<div id=\"OverlayCopyInfo\" class=\"overlay\" ng-show=\"$root.showOverlayCompareCopyInfo == true\" style=\"top:52px\">\n    <a style=\"text-decoration: none\" href=\"\" class=\"closebtnleft\" style=\"right:inherit\" ng-click=\"$root.showOverlayCompareCopyInfo = false\">&times;</a>\n    <header class=\"page-header\">\n        <p class=\"subhead\">COPY INFORMATION</p>\n        <h1 style=\"color:rgba(233,188,71,1)\">{{ read.compareCopy.title }} (Composed {{ read.compareCopy.composition_date_string }})</h1>\n    </header>\n    <div id=\"archive-tabs\" role=\"tabpanel\">\n        <div class=\"container-fluid overlaycopyinfo\">\n            <div class=\"container\">\n                <div class=\"tab-content\">\n                    <div role=\"tabpanel\" class=\"fadeinout tab-pane active in\">\n                        <copy-information copy=\"read.compareCopy\"></copy-information>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<div id=\"OverlayCopyInfo2\" class=\"overlay\" ng-show=\"read.showOverlayRelatedCopyInfoFlag == true\" style=\"top:52px\">\n    <a style=\"text-decoration: none\" href=\"\" class=\"closebtnleft\" style=\"right:inherit\" ng-click=\"read.showOverlayRelatedCopyInfoFlag = false\">&times;</a>\n    <header class=\"page-header\">\n        <p class=\"subhead\">COPY INFORMATION</p>\n        <h1 style=\"color:rgba(233,188,71,1)\">{{ read.HoveredObject.copy_title }} (Composed {{ read.HoveredObject.copy_composition_date_string }})</h1>\n    </header>\n    <div id=\"archive-tabs\" role=\"tabpanel\">\n        <div class=\"container-fluid overlaycopyinfo\">\n            <div class=\"container\">\n                <div class=\"tab-content\">\n                    <div role=\"tabpanel\" class=\"fadeinout tab-pane active in\">\n                        <copy-information copy=\"read.RelatedCopy\"></copy-information>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n<!--<div style=\"text-align:center\">\n    <div style=\"color:white; font-size:13 px; padding-top:1px\" ng-if=\"read.apparatus == 'comparewith'\"><span>Compared with </span><a scroll-to-top href=\"\" ng-click=\"$root.showOverlayCompareCopyInfo = true\" style=\"color:yellow;\">Copy {{read.compareCopyId}}</a> (Printed {{read.compareCopyPrintDateString}})</span>\n    </div>\n</div>-->\n<!--<p class=\"object-title\">{{ read.getOvpTitle() }}</p>-->\n<!-- compare -->\n<div ng-style=\"read.apparatus=='comparewith' ? { 'margin-top':'0px' } : { 'margin-top':'0px' }\" id=\"compare\" class=\"scrollbar\" ng-if=\"read.bds.copy.bad_id != 'illum'\" left-on-broadcast=\"viewSubMenu::readingMode\">\n    <div class=\"featured-object\">\n        <div class=\"compare-inner\" style=\"padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px;\" ng-style=\"truesize ? { 'height':'83vh' } : { 'height':'inherit' }\">\n            <!-- for letters -->\n            <div class=\"item\" ng-repeat=\"o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index\" ng-if=\"read.bds.copy.bad_id == 'letters'\">\n                <div ng-if=\"read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes' || read.apparatus == 'imagesonly' || read.apparatus == 'comparewith'\" class=\"btn-group edit-object\" role=\"group\" style=\"margin-bottom:0px;margin-left:28px\">\n                        <button type=\"button\" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px\" ng-class=\"{'hover':read.apparatusArray[$index] == 'transcriptions'}\" class=\"btn btn-default\" ng-click=\"read.showIndividualTranscriptions($index)\">\n                            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px;\"></span>\n                            <span class=\"gr-title\">Show diplomatic transcriptions</span>\n                        </button>\n                        <button type=\"button\" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -121px\" ng-class=\"{'hover':read.apparatusArray[$index] == 'illustrationdescriptions'}\" class=\"btn btn-default\" ng-click=\"read.showIndividualIllustrationDescriptions($index)\">\n                            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:14px\"></span>\n                            <span class=\"gr-title\">Show illustration descriptions</span>\n                        </button>\n                        <button type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -245px\" ng-class=\"{'hover':read.apparatusArray[$index] == 'editorsnotes'}\" class=\"btn btn-gr-selection\" ng-click=\"read.showIndividualEditorsNotes($index)\">\n                            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\"></span>\n                            <span class=\"gr-title\">Show editors' notes</span>\n                        </button>\n                    </div>\n                <div class=\"reading-wrapper\" auto-height adjust=\"150\" breakpoint=\"768\" id=\"{{ read.cssSafeId(o.desc_id) }}\">\n                    <img magnify-image ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeObject(o)\">\n                    <div class=\"reading-copy\">\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'transcriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatus != 'comparewith'\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span>{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span>{{ o.full_object_id }}</span></h4>\n                            <text-transcription object=\"o\"></text-transcription>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'illustrationdescriptions' || read.apparatusArray[$index] == 'illustrationdescriptions') && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatus != 'comparewith'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span>{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span>{{ o.full_object_id }}</span></h4>\n                            <illustration-description object=\"o\"></illustration-description>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'editorsnotes' || read.apparatusArray[$index] == 'editorsnotes') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatus != 'comparewith'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span>{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span>{{ o.full_object_id }}</span></h4>\n                            <editor-notes object=\"o\"></editor-notes>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <!-- for everything else -->\n            <div class=\"item\" ng-repeat=\"o in read.bds.copyObjects | filter:{supplemental:null} track by $index\" ng-if=\"read.bds.copy.bad_id != 'letters'\">\n                <div ng-if=\"read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes' || read.apparatus == 'imagesonly' || read.apparatus == 'comparewith'\" class=\"btn-group edit-object\" role=\"group\" style=\"margin-bottom:0px;margin-left:28px\">\n                        <button tooltip=\"Diplomatic Transcription\" tooltip-placement=\"bottom\" type=\"button\" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px\" ng-class=\"{'hover':read.apparatusArray[$index] == 'transcriptions'}\" class=\"btn btn-default\" ng-click=\"read.showIndividualTranscriptions($index)\">\n                            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px;\"></span>\n                            <span class=\"gr-title\">Show diplomatic transcriptions</span>\n                        </button>\n                        <button tooltip=\"Illustration Description\" tooltip-placement=\"bottom\" type=\"button\" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -121px\" ng-class=\"{'hover':read.apparatusArray[$index] == 'illustrationdescriptions'}\" class=\"btn btn-default\" ng-click=\"read.showIndividualIllustrationDescriptions($index)\">\n                            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:14px\"></span>\n                            <span class=\"gr-title\">Show illustration descriptions</span>\n                        </button>\n                        <button tooltip=\"Editors' Notes\" tooltip-placement=\"bottom\" type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -245px\" ng-class=\"{'hover':read.apparatusArray[$index] == 'editorsnotes'}\" class=\"btn btn-gr-selection\" ng-click=\"read.showIndividualEditorsNotes($index)\">\n                            <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\"></span>\n                            <span class=\"gr-title\">Show editors' notes</span>\n                        </button>\n                        <button tooltip=\"Add to Lightbox\" tooltip-placement=\"bottom\" type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/edit-icons.png');background-repeat: no-repeat;background-position:2px 3px;background-size:20px\" ng-class=\"{ 'hover':read.apparatusArray[$index] == 'lightbox'} \" class=\"btn btn-gr-selection \" ng-click=\"read.addToLightBox(o) \">\n                            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \"></span>\n                            <span class=\"gr-title \">Add to lightbox</span>\n                        </button>\n\n                        <button ng-if=\"read.apparatus != 'comparewith'\" tooltip=\"Objects from the Same Matrix\" tooltip-placement=\"bottom\" type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':read.apparatusArray[$index] == 'samematrix'} \" class=\"btn btn-gr-selection \" ng-click=\"read.showObjectsSameMatrix($index,o) \">\n                            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">M</span>\n                            <span class=\"gr-title \">Show objects from the same matrix</span>\n                        </button>\n                        <button ng-if=\"read.apparatus != 'comparewith'\" tooltip=\"Objects from the Same Production Sequence\" tooltip-placement=\"bottom\" type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':read.apparatusArray[$index] == 'productionsequence'} \" class=\"btn btn-gr-selection \" ng-click=\"read.showObjectsProductionSequence($index,o) \">\n                            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">PS</span>\n                            <span class=\"gr-title \">Show objects from the same production sequence</span>\n                        </button>\n                        <button ng-if=\"read.apparatus != 'comparewith'\" tooltip=\"Objects with a Similar Design\" tooltip-placement=\"bottom\" type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':read.apparatusArray[$index] == 'motif'} \" class=\"btn btn-gr-selection \" ng-click=\"read.showObjectsWithSimilarDesign($index,o) \">\n                            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">D</span>\n                            <span class=\"gr-title \">Show objects with a similar design</span>\n                        </button>\n                        <button ng-if=\"read.apparatus != 'comparewith'\" tooltip=\"Related Texts or Images\" tooltip-placement=\"bottom\" type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':read.apparatusArray[$index] == 'textreference'} \" class=\"btn btn-gr-selection \" ng-click=\"read.showObjectsTextReference($index,o) \">\n                            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">T</span>\n                            <span class=\"gr-title \">Show objects with textual references</span>\n                        </button>\n\n                    </div>\n                    <div ng-if=\"read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null\" style=\"float:right;color:white\"><a scroll-to-top href=\"\" ng-click=\"$root.showOverlayCompareCopyInfo = true\" style=\"color:yellow;\">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</a></div>\n\n                    <div style=\"float:right;color:white;font-size:9px;margin-right:2%\" ng-if=\"read.apparatusArray[$index] == 'motif' || read.apparatusArray[$index] == 'samematrix' || read.apparatusArray[$index] == 'productionsequence' || read.apparatusArray[$index] == 'textreference'\"><a scroll-to-top href=\"\" ng-click=\"read.showOverlayRelatedCopyInfo(read.HoveredObject.copy_bad_id)\" style=\"color:yellow;\">{{read.HoveredObject.copy_title}} {{read.HoveredObject.full_object_id}}</a></div>\n\n\n                <div class=\"reading-wrapper\" auto-height adjust=\"150\" breakpoint=\"768\" id=\"{{ read.cssSafeId(o.desc_id) }}\">\n                    <!--use the following for anchoring images\n                <div in-view=\"read.setActiveId($index)\" class=\"reading-wrapper\" auto-height adjust=\"150\" breakpoint=\"768\" id=\"{{ read.cssSafeId(o.desc_id) }}\">\n                -->\n                    <img id=\"{{read.getStrippedDescId(o.desc_id)}}\" magnify-image ng-mouseover=\"read.hover = true;\" ng-mouseleave=\"read.hover = false;\" ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeObject(o)\">\n                    \n                    <div class=\"reading-copy\">\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'transcriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span>{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span>{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <text-transcription object=\"o\"></text-transcription>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'transcriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\">{{read.compareCopyObjects[o.desc_id].title}}<br><span style=\"color:yellow\">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if=\"truesize == true\">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\"><span style=\"color:yellow\">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if=\"truesize == true\">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>\n                            <text-transcription object=\"read.compareCopyObjects[o.desc_id]\"></text-transcription>\n                        </div>\n                        \n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'illustrationdescriptions' || read.apparatusArray[$index] == 'illustrationdescriptions') && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span>{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span>{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <illustration-description object=\"o\"></illustration-description>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'illustrationdescriptions' || read.apparatusArray[$index] == 'illustrationdescriptions') && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\">{{read.compareCopyObjects[o.desc_id].title}}<br><span style=\"color:yellow\">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if=\"truesize == true\">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\"><span style=\"color:yellow\">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if=\"truesize == true\">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>\n                            <illustration-description object=\"read.compareCopyObjects[o.desc_id]\"></illustration-description>\n                        </div>\n\n\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'editorsnotes' || read.apparatusArray[$index] == 'editorsnotes') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeObject(o)\">{{o.title}}<br><span>{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeObject(o)\"><span>{{ o.full_object_id }}</span><span ng-if=\"truesize == true\">, {{o.physical_description.objsize['#text'] }}</span></h4>\n                            <editor-notes object=\"o\"></editor-notes>\n                        </div>\n                        <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'editorsnotes' || read.apparatusArray[$index] == 'editorsnotes') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null\" style=\"width:10px\">\n                            <h4 ng-if=\"o.title\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\">{{read.compareCopyObjects[o.desc_id].title}}<br><span style=\"color:yellow\">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if=\"truesize == true\">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>\n                            <h4 ng-if=\"!o.title\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\"><span style=\"color:yellow\">{{ read.compareCopyObjects[o.desc_id].full_object_id }}</span><span ng-if=\"truesize == true\">, {{read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span></h4>\n                            <editor-notes object=\"read.compareCopyObjects[o.desc_id]\"></editor-notes>\n                        </div>\n\n\n                        <div auto-height adjust=\"150 \" breakpoint=\"768 \" class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'samematrix' || read.apparatusArray[$index] == 'samematrix') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference' && read.bds.copy.virtual == false\" style=\"width:100%\">\n                            \n                            <div ng-if=\"read.objectsSameMatrix != null && read.done1 == true\" ng-mouseover=\"read.HoveredObject = sm\" style=\"height:100%\" ng-repeat=\"sm in read.objectsSameMatrix\">\n                            <img magnify-image style=\"margin-bottom:10%\" ng-src=\"/images/{{ sm.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeCopy(sm.copy_bad_id,sm.desc_id)\">\n                            </div>\n\n                            <div ng-if=\"read.objectsSameMatrix == '' && read.done1 == true\">\n                                [NOT APPLICABLE]\n                            </div>\n\n                        </div>\n\n                        <div auto-height adjust=\"150 \" breakpoint=\"768 \" class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'motif' || read.apparatusArray[$index] == 'motif') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'\" style=\"width:100%\">\n                            \n                            <div ng-if=\"read.objectsWithSameMotif != null && read.done2 == true\" ng-mouseover=\"read.HoveredObject = owsm\" style=\"height:100%\" ng-repeat=\"owsm in read.objectsWithSameMotif\">\n                            <img magnify-image style=\"margin-bottom:10%\" ng-src=\"/images/{{ owsm.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeCopy(owsm.copy_bad_id,sm.desc_id)\">\n                            </div>\n\n                            <div ng-if=\"read.objectsWithSameMotif == '' && read.done2 == true\">\n                                [NOT APPLICABLE]\n                            </div>\n\n                        </div>\n\n                         <div auto-height adjust=\"150 \" breakpoint=\"768 \" class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'productionsequence' || read.apparatusArray[$index] == 'productionsequence') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'textreference' && read.apparatusArray[$index] != 'motif'\" style=\"width:100%\">\n                            \n                            <div ng-if=\"read.objectsProductionSequence != null && read.done3 == true\" ng-mouseover=\"read.HoveredObject = ps\" style=\"height:100%\" ng-repeat=\"ps in read.objectsProductionSequence\">\n                            <img magnify-image style=\"margin-bottom:10%\" ng-src=\"/images/{{ ps.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeCopy(ps.copy_bad_id,sm.desc_id)\">\n                            </div>\n\n                            <div ng-if=\"read.objectsProductionSequence == '' && read.done3 == true\">\n                                [NOT APPLICABLE]\n                            </div>\n\n                        </div>\n\n                         <div class=\"reading-copy-inner\" ng-show=\"(read.apparatus == 'textreference' || read.apparatusArray[$index] == 'textreference') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'transcriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'motif'\" style=\"width:100%\">\n                            \n                            <div ng-if=\"read.objectsTextReference.objects != '' && read.done4 == true\" ng-mouseover=\"read.HoveredObject = tr\" style=\"height:100%\" ng-repeat=\"tr in read.objectsTextReference.objects\">\n                            <img magnify-image style=\"margin-bottom:10%\" ng-src=\"/images/{{ tr.dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeCopy(tr.copy_bad_id,sm.desc_id)\">\n                            </div>\n                            <div ng-if=\"read.objectsTextReference.copies != '' && read.done4 == true\" ng-mouseover=\"read.HoveredObject = tr\" style=\"height:100%\" ng-repeat=\"tr in read.objectsTextReference.copies\">\n                            <img magnify-image style=\"margin-bottom:10%\" ng-src=\"/images/{{ tr.image }}.100.jpg\" ng-click=\"read.changeCopy(tr.copy_bad_id,sm.desc_id)\">\n                            </div>\n                            <div ng-if=\"read.objectsTextReference.works != '' && read.done4 == true\" ng-mouseover=\"read.HoveredObject = tr\" style=\"height:100%\" ng-repeat=\"tr in read.objectsTextReference.works\">\n                            <img magnify-image style=\"margin-bottom:10%\" ng-src=\"/images/{{ tr.image }}.jpg\" ng-click=\"read.changeCopy(tr.copy_bad_id,sm.desc_id)\">\n                            </div>\n\n                            <div ng-if=\"read.objectsTextReference.objects == '' && read.objectsTextReference.copies == '' && read.objectsTextReference.works == '' && read.done4 == true\">\n                                [NOT APPLICABLE]\n                            </div>\n\n                        </div>\n\n\n\n                        <!--<div class=\"reading-copy-inner\" ng-show=\"(read.apparatusArray[$index] == 'editorsnotes' || read.apparatusArray[$index] == 'illustrationdescriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null\" style=\"width:10px\">\n                            <h4>Copy {{read.compareCopyId}} contains no copy for this object.</h4>\n                        </div>-->\n\n\n                    </div>\n                    <img id=\"{{read.getStrippedDescId(read.compareCopyObjects[o.desc_id].desc_id)}}\" magnify-image style=\"padding-left:10px\" ng-if=\"read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null\" ng-mouseover=\"read.hover = true;\" ng-mouseleave=\"read.hover = false;\" ng-src=\"/images/{{ read.compareCopyObjects[o.desc_id].dbi }}.{{dpi}}.jpg\" ng-click=\"read.changeCopy(read.compareCopyObjects[o.desc_id].copy_bad_id,read.compareCopyObjects[o.desc_id].desc_id)\">\n                    <img style=\"padding-left:10px\" ng-if=\"read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null || read.apparatusArray[$index] == 'samematrix' || read.apparatusArray[$index] == 'motif' || read.apparatusArray[$index] == 'productionsequence' || read.apparatusArray[$index] == 'textreference'\" ng-src=\"\">\n                    <!--\n                    <div style=\"color:white; font-size:9px; text-align:center\" ng-if=\"read.apparatus == 'imagesonly' && truesize == false\">{{o.full_object_id}}</div>\n                    <div style=\"color:white; font-size:9px; text-align:center\" ng-if=\"read.apparatus == 'imagesonly' && truesize == true\">{{o.full_object_id}}</br>{{ o.physical_description.objsize['#text'] }}</div>\n                    -->\n                    <div style=\"color:white; font-size:7px;\" ng-if=\"read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] != null || read.apparatusArray[$index] == 'samematrix' || read.apparatusArray[$index] == 'motif' || read.apparatusArray[$index] == 'productionsequence' || read.apparatusArray[$index] == 'textreference'\"><span style=\"float:left\">{{o.full_object_id}}</span><span ng-if=\"truesize == true\" style=\"float:left\">, {{o.physical_description.objsize['#text'] }}</span><span ng-if=\"read.compareCopyObjects[o.desc_id] != null && truesize == true\" style=\"color:yellow;float:right;\">{{read.compareCopyObjects[o.desc_id].full_object_id}}, {{ read.compareCopyObjects[o.desc_id].physical_description.objsize['#text'] }}</span><span ng-if=\"read.compareCopyObjects[o.desc_id] != null && truesize == false\" style=\"color:yellow;float:right;\">{{read.compareCopyObjects[o.desc_id].full_object_id}}</span></div>\n\n                    <div style=\"color:white; font-size:7px;\" ng-if=\"read.apparatus == 'comparewith' && read.compareCopyObjects[o.desc_id] == null\"><span style=\"float:left\">{{o.full_object_id}}</span><span ng-if=\"truesize == true\" style=\"float:left\">, {{o.physical_description.objsize['#text'] }}</span></div>\n                    \n                </div>\n            </div>\n            <!--<span style=\"color:white;font-size:21px;position:absolute;top:50%;padding-left:30px\">END&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->\n        </div>\n    </div>\n</div>\n<!--for exhibits-->\n<div auto-height adjust=\"70\" breakpoint=\"768\" style=\"overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white\" id=\"compare\" ng-if=\"read.bds.copy.bad_id == 'illum'\" \">\n    \n           \n                \n                    <ng-include src=\" '/static/html/illuminatedprinting.exhibit.html' \"></ng-include>\n                   \n   \n</div>\n<div style=\"float:right; width:67% \" id=\"compare \" class=\"scrollbar \" ng-if=\"read.bds.copy.bad_id=='illum' \" left-on-broadcast=\"viewSubMenu::readingMode \">\n    <div class=\"featured-object \">\n        <div class=\"compare-inner \">\n            <div class=\"item \" ng-repeat=\"o in read.bds.copyObjects | filter:{supplemental:null} \" ng-if=\"read.bds.copy.bad_id !='letters' \">\n                <div class=\"reading-wrapper \" auto-height adjust=\"150 \" breakpoint=\"768 \" id=\"{{ read.cssSafeId(o.desc_id) }} \">\n                    <img magnify-image ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg \" ng-click=\"read.changeObject(o) \">\n                    <div class=\"reading-copy \">\n                        <div class=\"reading-copy-inner \">\n                            <h4 ng-if=\"o.title \" ng-click=\"read.changeObject(o) \">{{o.title}}<br><span>{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title \" ng-click=\"read.changeObject(o) \"><span>{{ o.full_object_id }}</span></h4>\n                            <text-transcription object=\"o \"></text-transcription>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n<div id=\"object-tools \" class=\"hidden-xs \">\n    <div id=\"object-tools-inner \" style=\"text-align:center \">\n        <div class=\"btn-group edit-object \" role=\"group \">\n        <button type=\"button \" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px \" ng-class=\"{ 'hover':activeapparatus=='transcriptions' } \" class=\"btn btn-default \" ng-click=\"read.showTranscriptions() \">\n            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px; \">&nbsp;&nbsp;&nbsp;&nbsp;Diplomatic Transcriptions</span>\n            <span class=\"gr-title \">Show diplomatic transcriptions</span>\n        </button>\n        <button type=\"button \" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -121px \" ng-class=\"{ 'hover':activeapparatus=='illustrationdescriptions' } \" class=\"btn btn-default \" ng-click=\"read.showIllustrationDescriptions() \">\n            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:14px \">&nbsp;&nbsp;&nbsp;&nbsp;Illustration Descriptions</span>\n            <span class=\"gr-title \">Show illustration descriptions</span>\n        </button>\n        <button type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -245px \" ng-class=\"{ 'hover':activeapparatus=='editorsnotes' } \" class=\"btn btn-gr-selection \" ng-click=\"read.showEditorsNotes() \">\n            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">&nbsp;&nbsp;&nbsp;&nbsp;Editors' Notes</span>\n            <span class=\"gr-title \">Show editors' notes</span>\n        </button>\n        <button type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':activeapparatus=='imagesonly' } \" class=\"btn btn-gr-selection \" ng-click=\"read.showImagesOnly() \">\n            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">Images Only</span>\n            <span class=\"gr-title \">Show images only</span>\n        </button>\n        <button type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':zoom==true, 'inactive':zoom==false} \" class=\"btn btn-default \" ng-click=\"read.zoom() \" tooltip=\"Mouse over an image \" tooltip-placement=\"top \" tooltip-trigger=\"click \">\n            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">Magnify</span>\n        </button>\n        <button type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6 \" ng-class=\"{ 'hover':truesize==true, 'inactive':truesize==false} \" class=\"btn btn-gr-selection \" ng-click=\"read.showTrueSize() \">\n            <span class=\"gr-abbreviation \" style=\"height:21px;font-size:13px \">True Size</span>\n            <span class=\"gr-title \">True Size</span>\n        </button>\n       \n        \n        <span ng-if=\"read.bds.workCopies.length> 1 && read.bds.copy.virtual == false\" dropdown class=\"dropdown\">\n    <button ng-if=\"read.apparatus != 'comparewith'\" dropdown-toggle type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6;margin-bottom:1px;margin-right:1px;border-radius:0px;border-left:0px\" ng-class=\"{'hover':activeapparatus == 'comparewith'}\">\n        <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">Compare with Copy...</span>\n        <span class=\"gr-title\">Show compare with</span>\n    </button>\n    <button ng-if=\"read.apparatus == 'comparewith'\" dropdown-toggle type=\"button\" class=\"btn btn-default\" style=\"height:21px;line-height:0.6;margin-bottom:1px;margin-right:1px;border-radius:0px;border-left:0px\" ng-class=\"{'hover':activeapparatus == 'comparewith'}\">\n        <span class=\"gr-abbreviation\" style=\"height:21px;font-size:13px\">Compare with <span style=\"color:yellow;background:#1d1d1d\">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</span></span>\n        <span class=\"gr-title\">Show compare with</span>\n    </button>\n    <ul class=\"dropdown-menu\" style=\"border-radius:0px;top:inherit;bottom:100%;margin:2px 0 2px\" role=\"menu\">\n        <li ng-repeat=\"copy in read.bds.workCopies track by $index\" ng-if=\"copy.archive_copy_id != read.bds.copy.archive_copy_id\">\n            <a ng-click=\"read.showCompareWithFaster(copy.bad_id)\">{{copy.archive_copy_id}} (Printed {{copy.print_date_string}})</a>\n        </li>\n    </ul>\n    </span>\n</div>\n</div>\n</div>\n<!--/.compare-->";
 
 /***/ }),
 /* 187 */
