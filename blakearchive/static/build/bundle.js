@@ -29678,24 +29678,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_dexie___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_dexie__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_ng_dexie__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_ng_dexie___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_ng_dexie__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_markdown_it_sup__ = __webpack_require__(217);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_markdown_it_sup___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_markdown_it_sup__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__js_angular_ngStorage__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__js_angular_ngStorage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__js_angular_ngStorage__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__js_Sortable_Sortable_min__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__js_Sortable_Sortable_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__js_Sortable_Sortable_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__js_Sortable_ng_sortable_min__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__js_Sortable_ng_sortable_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__js_Sortable_ng_sortable_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__js_angular_ui_bootstrap_0_12_1_ui_bootstrap_min__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__js_angular_ui_bootstrap_0_12_1_ui_bootstrap_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__js_angular_ui_bootstrap_0_12_1_ui_bootstrap_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__js_angular_fullscreen_angular_fullscreen_min__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__js_angular_fullscreen_angular_fullscreen_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__js_angular_fullscreen_angular_fullscreen_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_script_loader_js_angular_markdown_it_markdown_it_min__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_script_loader_js_angular_markdown_it_markdown_it_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_script_loader_js_angular_markdown_it_markdown_it_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__js_angular_markdown_it_angular_markdown_it__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__js_angular_markdown_it_angular_markdown_it___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__js_angular_markdown_it_angular_markdown_it__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__js_angular_fabric_fabric__ = __webpack_require__(30);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__js_angular_ngStorage__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__js_angular_ngStorage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__js_angular_ngStorage__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__js_Sortable_Sortable_min__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__js_Sortable_Sortable_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__js_Sortable_Sortable_min__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__js_Sortable_ng_sortable_min__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__js_Sortable_ng_sortable_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__js_Sortable_ng_sortable_min__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__js_angular_ui_bootstrap_0_12_1_ui_bootstrap_min__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__js_angular_ui_bootstrap_0_12_1_ui_bootstrap_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__js_angular_ui_bootstrap_0_12_1_ui_bootstrap_min__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__js_angular_fullscreen_angular_fullscreen_min__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__js_angular_fullscreen_angular_fullscreen_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__js_angular_fullscreen_angular_fullscreen_min__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_script_loader_js_angular_markdown_it_markdown_it_min__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_script_loader_js_angular_markdown_it_markdown_it_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18_script_loader_js_angular_markdown_it_markdown_it_min__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__js_angular_markdown_it_angular_markdown_it__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__js_angular_markdown_it_angular_markdown_it___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__js_angular_markdown_it_angular_markdown_it__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__js_angular_fabric_fabric__ = __webpack_require__(30);
 
 
 
@@ -29726,7 +29723,7 @@ carousel.directive('carousel', function () {
     return {};
 });
 
-let blake = angular.module('blake', ['markdown-it-sup', 'ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'common.fabric', 'common.fabric.utilities', 'common.fabric.constants', 'ngAnimate', 'ngStorage', 'ngCookies', 'ngTouch', 'ngCropper', 'markdown', 'angular-loading-bar', 'ngdexie', 'ngdexie.ui']);
+let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'common.fabric', 'common.fabric.utilities', 'common.fabric.constants', 'ngAnimate', 'ngStorage', 'ngCookies', 'ngTouch', 'ngCropper', 'markdown', 'angular-loading-bar', 'ngdexie', 'ngdexie.ui']);
 //blake.constant('dexie',window.Dexie);
 blake.config(["ngDexieProvider", function (ngDexieProvider) {
     console.log("bootstrapping ngDexieProvider...");
@@ -61152,83 +61149,6 @@ module.exports = "/*!\n * jQuery JavaScript Library v3.2.1\n * https://jquery.co
 /***/ (function(module, exports) {
 
 /* (ignored) */
-
-/***/ }),
-/* 217 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-// Process ^superscript^
-
-
-
-// same as UNESCAPE_MD_RE plus a space
-
-var UNESCAPE_RE = /\\([ \\!"#$%&'()*+,.\/:;<=>?@[\]^_`{|}~-])/g;
-
-function superscript(state, silent) {
-  var found,
-      content,
-      token,
-      max = state.posMax,
-      start = state.pos;
-
-  if (state.src.charCodeAt(start) !== 0x5E /* ^ */) {
-      return false;
-    }
-  if (silent) {
-    return false;
-  } // don't run any pairs in validation mode
-  if (start + 2 >= max) {
-    return false;
-  }
-
-  state.pos = start + 1;
-
-  while (state.pos < max) {
-    if (state.src.charCodeAt(state.pos) === 0x5E /* ^ */) {
-        found = true;
-        break;
-      }
-
-    state.md.inline.skipToken(state);
-  }
-
-  if (!found || start + 1 === state.pos) {
-    state.pos = start;
-    return false;
-  }
-
-  content = state.src.slice(start + 1, state.pos);
-
-  // don't allow unescaped spaces/newlines inside
-  if (content.match(/(^|[^\\])(\\\\)*\s/)) {
-    state.pos = start;
-    return false;
-  }
-
-  // found!
-  state.posMax = state.pos;
-  state.pos = start + 1;
-
-  // Earlier we checked !silent, but this implementation does not need it
-  token = state.push('sup_open', 'sup', 1);
-  token.markup = '^';
-
-  token = state.push('text', '', 0);
-  token.content = content.replace(UNESCAPE_RE, '$1');
-
-  token = state.push('sup_close', 'sup', -1);
-  token.markup = '^';
-
-  state.pos = state.posMax + 1;
-  state.posMax = max;
-  return true;
-}
-
-module.exports = function sup_plugin(md) {
-  md.inline.ruler.after('emphasis', 'sup', superscript);
-};
 
 /***/ })
 /******/ ]);
