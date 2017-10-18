@@ -154,7 +154,7 @@
   height: 41px;
   padding-top: 15px;
   float: right;
-  margin-right: 21px;
+  margin-right: -47px;
 }
 
 #custom-tweet-button a {
@@ -434,7 +434,7 @@ td.c2 {
   height: 41px;
   padding-top: 11px;
   float: right;
-  margin-right: 8px;
+  margin-right: 36px;
 }
 
 @media (min-width: 992px) {
