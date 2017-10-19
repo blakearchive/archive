@@ -29566,7 +29566,9 @@ angular.module("blake").controller("WorkTitleController", ["$rootScope", "$route
         }
         //For rest
         if (vm.bds.copy.header && $rootScope.doneSettingCopy) {
-            title = vm.bds.copy.header.filedesc.titlestmt.title['@reg'];
+            //title = vm.bds.copy.header.filedesc.titlestmt.title['@reg'];
+            title = vm.bds.copy.header.filedesc.titlestmt.title.main['#text'];
+            //console.log(vm.bds.copy.header.filedesc.titlestmt.title.main['#text']);
         }
         if (title.match(/.*, The/)) {
             title = "The " + title.match(/(.*), The/)[1];
