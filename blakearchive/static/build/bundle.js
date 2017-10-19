@@ -26133,7 +26133,7 @@ angular.module("blake").controller("CropperController", ["$rootScope", "$routePa
 /* 52 */
 /***/ (function(module, exports) {
 
-angular.module("blake").controller("LightboxController", ["$scope", "$rootScope", "lightbox_service", "Fabric", "FabricCanvas", "FabricConstants", "worktitleService", function ($scope, $rootScope, lightbox_service, Fabric, FabricCanvas, FabricConstants, worktitleService) {
+angular.module("blake").controller("LightboxController", ["$scope", "$rootScope", "$modal", "lightbox_service", "Fabric", "FabricCanvas", "FabricConstants", "worktitleService", function ($scope, $rootScope, $modal, lightbox_service, Fabric, FabricCanvas, FabricConstants, worktitleService) {
   $scope.fabric = {};
   $scope.loaded = 0; // number of images loaded
   $scope.FabricConstants = FabricConstants;
@@ -26169,6 +26169,7 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
     $('#lb-save-btn').on('click', $scope.saveButtonClicked);
     $('#lb-load-btn').on('click', $scope.loadButtonClicked);
     $('#lb-clear-btn').on('click', $scope.clearButtonClicked);
+    $('#lb-help').on('click', $scope.helpButtonClicked);
     $('#loadfile').on('change', $scope.loadFileSelected);
 
     // deal with cropping and cart changes ... we assume that the clients
@@ -26386,6 +26387,15 @@ angular.module("blake").controller("LightboxController", ["$scope", "$rootScope"
     //FabricCanvas.getCanvas().renderAll();
     $('#erdmanBody').focus();
   };
+  $scope.helpButtonClicked = function () {
+
+    var helpModalInstance = $modal.open({
+      templateUrl: '/static/html/help-lightbox.html',
+      controller: 'ModalController'
+      //size: 'sm'
+    });
+  };
+
   $scope.saveButtonClicked = function () {
     // we want to stream the data out as a download (text/json)
     // here's some js shenanigans I found...
@@ -29566,8 +29576,8 @@ angular.module("blake").controller("WorkTitleController", ["$rootScope", "$route
         }
         //For rest
         if (vm.bds.copy.header && $rootScope.doneSettingCopy) {
-            //title = vm.bds.copy.header.filedesc.titlestmt.title['@reg'];
-            title = vm.bds.copy.header.filedesc.titlestmt.title.main['#text'];
+            title = vm.bds.copy.header.filedesc.titlestmt.title['@reg'];
+            //title = vm.bds.copy.header.filedesc.titlestmt.title.main['#text'];
             //console.log(vm.bds.copy.header.filedesc.titlestmt.title.main['#text']);
         }
         if (title.match(/.*, The/)) {
@@ -33384,7 +33394,8 @@ angular.module("blake").factory("worktitleService", ["BlakeDataService", "$rootS
     }
     //For rest
     if (svc.bds.copy.header && $rootScope.doneSettingCopy) {
-      title = svc.bds.copy.header.filedesc.titlestmt.title.main['#text'];
+      //title = svc.bds.copy.header.filedesc.titlestmt.title.main['#text'];
+      title = svc.bds.copy.header.filedesc.titlestmt.title['@reg'];
     }
     if (title.match(/.*, The/)) {
       title = "The " + title.match(/(.*), The/)[1];
