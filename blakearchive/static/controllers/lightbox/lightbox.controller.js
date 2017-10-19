@@ -2,6 +2,7 @@ angular.module("blake")
   .controller("LightboxController",
     function ($scope,
       $rootScope,
+      $modal,
       lightbox_service,
       Fabric,
       FabricCanvas,
@@ -43,6 +44,7 @@ angular.module("blake")
           $('#lb-save-btn').on('click',$scope.saveButtonClicked);
           $('#lb-load-btn').on('click',$scope.loadButtonClicked);
           $('#lb-clear-btn').on('click',$scope.clearButtonClicked);
+          $('#lb-help').on('click',$scope.helpButtonClicked);
           $('#loadfile').on('change',$scope.loadFileSelected);
 
           // deal with cropping and cart changes ... we assume that the clients
@@ -267,6 +269,15 @@ angular.module("blake")
           //FabricCanvas.getCanvas().renderAll();
           $('#erdmanBody').focus();
         }
+        $scope.helpButtonClicked = function(){
+
+          var helpModalInstance = $modal.open({
+            templateUrl: '/static/html/help-lightbox.html',
+            controller: 'ModalController',
+            //size: 'sm'
+          });
+        }
+        
         $scope.saveButtonClicked = function(){
           // we want to stream the data out as a download (text/json)
           // here's some js shenanigans I found...
