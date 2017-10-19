@@ -4,7 +4,7 @@ angular.module("blake").controller("HandprintBlockController", function () {
     switch (vm.workId) {
         case 'biblicalwc':
         case 'biblicaltemperas':
-        case 'but543':
+        //case 'but543':
         case 'letters':
         case 'pid':
         case 'gravepd':
