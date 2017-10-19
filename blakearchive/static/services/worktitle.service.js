@@ -28,7 +28,7 @@ angular.module("blake")
     }
     //For rest
     if(svc.bds.copy.header && $rootScope.doneSettingCopy){
-        title = svc.bds.copy.header.filedesc.titlestmt.title['@reg'];
+        title = svc.bds.copy.header.filedesc.titlestmt.title.main['#text'];
 
     }
     if(title.match(/.*, The/)) {
