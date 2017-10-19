@@ -67,10 +67,10 @@ angular.module("blake").factory("BlakeWork", function (GenericService, BlakeCopy
                     work.title = 'Paintings Illustrating the Bible';
                     work.virtual = true;
                     break;
-                case 'but543':
-                    work.title = 'Illustrations to Milton\'s "On the Morning of Christ\'s Nativity"';
-                    work.virtual = false;
-                    break;
+                //case 'but543':
+                //    work.title = 'Illustrations to Milton\'s "On the Morning of Christ\'s Nativity"';
+                //    work.virtual = false;
+                //    break;
                 case 'pid':
                     work.title = 'Pen and Ink Drawings';
                     work.virtual = true;
