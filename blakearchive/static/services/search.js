@@ -1,4 +1,4 @@
-angular.module("blake").factory("SearchService", function ($rootScope, $location, $q, BlakeDataService, directoryPrefix) {
+angular.module("blake").factory("SearchService", function (worktitleService, lightbox_service, $rootScope, $location, $q, BlakeDataService, directoryPrefix) {
     let s = {};
 
     s.selectedWork = -1;
@@ -10,6 +10,11 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
     s.persistingQueryString = '';
 
     s.types = ['searchIlluminatedBooks','searchCommercialBookIllustrations','searchSeparatePrints','searchDrawingsPaintings','searchManuscripts','searchRelatedMaterials']
+
+    s.wts = worktitleService;
+    s.rs = $rootScope;
+    let svc = {};
+    svc.bds = BlakeDataService;
 
     s.resetResults = function () {
         s.objectResults = [];
@@ -529,6 +534,41 @@ angular.module("blake").factory("SearchService", function ($rootScope, $location
                     return resultTree[s.selectedWork][2][s.selectedCopy][0].image;
             }
         } catch (e) {}
+    };
+
+    s.addToLightBox = function(tree, resultTree){
+      //console.log("===> adding: "+JSON.stringify(vm.bds.object));
+      var item = {};
+      item.url = "/images/"+resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].dbi+".300.jpg";
+      //svc.bds.setSelectedObject(resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0]);
+            console.log(resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0]);
+
+      if(resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_print_date) {
+        if(resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].virutalwork_title) {
+            item.title = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].virtualwork_title + " (Printed " + resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_print_date + ")";
+        }
+        else {
+            item.title = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_title + " (Printed " + resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_print_date + ")";
+        }
+      }
+      else {
+        if(resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].virtualwork_title) {
+            item.title = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].virtualwork_title + " (Composed " + resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_composition_date + ")";
+        }
+        else {
+            item.title = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_title + " (Composed " + resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_composition_date + ")";
+        }
+      }
+      item.caption = s.wts.getCaptionFromReading(resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0]);
+      //CartStorageService.insert(item);
+      lightbox_service.addToCart(item);
+
+      // updates vm.rs so that cart counter is updated
+      lightbox_service.listCartItems().then(function(data){
+        s.rs.cartItems = data;
+        //console.log("===== "+JSON.stringify($rootScope.cartItems));
+      });
+
     };
 
     s.getWorkImage = function(tree, resultTree, workIndex){

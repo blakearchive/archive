@@ -32921,7 +32921,7 @@ angular.module("blake").factory("ObjectViewerService", ["BlakeDataService", "$mo
 /* 140 */
 /***/ (function(module, exports) {
 
-angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q", "BlakeDataService", "directoryPrefix", function ($rootScope, $location, $q, BlakeDataService, directoryPrefix) {
+angular.module("blake").factory("SearchService", ["worktitleService", "lightbox_service", "$rootScope", "$location", "$q", "BlakeDataService", "directoryPrefix", function (worktitleService, lightbox_service, $rootScope, $location, $q, BlakeDataService, directoryPrefix) {
     let s = {};
 
     s.selectedWork = -1;
@@ -32933,6 +32933,11 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
     s.persistingQueryString = '';
 
     s.types = ['searchIlluminatedBooks', 'searchCommercialBookIllustrations', 'searchSeparatePrints', 'searchDrawingsPaintings', 'searchManuscripts', 'searchRelatedMaterials'];
+
+    s.wts = worktitleService;
+    s.rs = $rootScope;
+    let svc = {};
+    svc.bds = BlakeDataService;
 
     s.resetResults = function () {
         s.objectResults = [];
@@ -33269,6 +33274,37 @@ angular.module("blake").factory("SearchService", ["$rootScope", "$location", "$q
                     return resultTree[s.selectedWork][2][s.selectedCopy][0].image;
             }
         } catch (e) {}
+    };
+
+    s.addToLightBox = function (tree, resultTree) {
+        //console.log("===> adding: "+JSON.stringify(vm.bds.object));
+        var item = {};
+        item.url = "/images/" + resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].dbi + ".300.jpg";
+        //svc.bds.setSelectedObject(resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0]);
+        console.log(resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0]);
+
+        if (resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_print_date) {
+            if (resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].virutalwork_title) {
+                item.title = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].virtualwork_title + " (Printed " + resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_print_date + ")";
+            } else {
+                item.title = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_title + " (Printed " + resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_print_date + ")";
+            }
+        } else {
+            if (resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].virtualwork_title) {
+                item.title = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].virtualwork_title + " (Composed " + resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_composition_date + ")";
+            } else {
+                item.title = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_title + " (Composed " + resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_composition_date + ")";
+            }
+        }
+        item.caption = s.wts.getCaptionFromReading(resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0]);
+        //CartStorageService.insert(item);
+        lightbox_service.addToCart(item);
+
+        // updates vm.rs so that cart counter is updated
+        lightbox_service.listCartItems().then(function (data) {
+            s.rs.cartItems = data;
+            //console.log("===== "+JSON.stringify($rootScope.cartItems));
+        });
     };
 
     s.getWorkImage = function (tree, resultTree, workIndex) {
@@ -61076,7 +61112,7 @@ module.exports = "<!-- objects in virtual work -->\n<div>\n    <div class=\"obje
 /* 199 */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- preview -->\n<div class=\"object-preview col-sm-12 text-center\" auto-width adjust=\"100\" breakpoint=\"992\" divide=\"3\">\n    <h5 ng-if=\"ps.s.type != 'copy-info'\" style=\"\">Selected Object</h5>\n    <h5 ng-if=\"ps.s.type == 'copy-info'\" style=\"\">Selected Copy</h5>\n    <br>\n    <div class=\"object-img-container text-center\" auto-height adjust=\"350\" breakpoint=\"992\">\n        <a ng-href=\"/copy/{{ps.s.getPreviewHref(ps.tree, ps.results)}}\">\n            <img ng-src=\"/images/{{ ps.s.getPreviewImage(ps.tree, ps.results) }}.100.jpg\">\n            <p></p>\n            <p class=\"object-subtitle\">\n                <span ng-if=\"ps.tree == 'object' && ps.s.getPreviewTitle(ps.tree, ps.results) != null\" class=\"object-no\">{{ps.getPreviewTitle(ps.tree, ps.results)}}<br></span>\n                <span ng-if=\"ps.results[ps.s.selectedWork][0].virtual && ps.results[ps.s.selectedWork][0].bad_id != 'letters'\" class=\"object-no\">{{ps.s.getPreviewLabel(ps.tree, ps.results).replace(\"Object 1\",\"\")}}</span>\n                <span ng-if=\"ps.results[ps.s.selectedWork][0].virtual && ps.results[ps.s.selectedWork][0].bad_id == 'letters'\" class=\"object-no\">{{ps.s.getPreviewLabel(ps.tree, ps.results)}}</span>\n                <span ng-if=\"!ps.results[ps.s.selectedWork][0].virtual\" class=\"object-no\">{{ps.s.getPreviewLabel(ps.tree, ps.results)}}</span></p>\n        </a>\n    </div>\n</div>\n";
+module.exports = "<!-- preview -->\n<div class=\"object-preview col-sm-12 text-center\" auto-width adjust=\"100\" breakpoint=\"992\" divide=\"3\">\n    <h5 ng-if=\"ps.s.type != 'copy-info'\" style=\"\">Selected Object</h5>\n    <h5 ng-if=\"ps.s.type == 'copy-info'\" style=\"\">Selected Copy</h5>\n    <br>\n    <div class=\"object-img-container text-center\" auto-height adjust=\"350\" breakpoint=\"992\">\n        <a ng-href=\"/copy/{{ps.s.getPreviewHref(ps.tree, ps.results)}}\">\n            <img ng-src=\"/images/{{ ps.s.getPreviewImage(ps.tree, ps.results) }}.100.jpg\">\n            <p></p>\n            <p class=\"object-subtitle\">\n                <span ng-if=\"ps.tree == 'object' && ps.s.getPreviewTitle(ps.tree, ps.results) != null\" class=\"object-no\">{{ps.getPreviewTitle(ps.tree, ps.results)}}<br></span>\n                <span ng-if=\"ps.results[ps.s.selectedWork][0].virtual && ps.results[ps.s.selectedWork][0].bad_id != 'letters'\" class=\"object-no\">{{ps.s.getPreviewLabel(ps.tree, ps.results).replace(\"Object 1\",\"\")}}</span>\n                <span ng-if=\"ps.results[ps.s.selectedWork][0].virtual && ps.results[ps.s.selectedWork][0].bad_id == 'letters'\" class=\"object-no\">{{ps.s.getPreviewLabel(ps.tree, ps.results)}}</span>\n                <span ng-if=\"!ps.results[ps.s.selectedWork][0].virtual\" class=\"object-no\">{{ps.s.getPreviewLabel(ps.tree, ps.results)}}</span></p>\n        </a>\n        <button ng-if=\"ps.s.type != 'copy-info'\" tooltip=\"Add to Lightbox\" tooltip-placement=\"bottom\" type=\"button \" class=\"btn btn-default \" style=\"height:21px;line-height:0.6;background-image: url('/static/img/global/edit-icons.png');background-repeat: no-repeat;background-position:2px 3px;background-size:20px;position:absolute;top:45px;margin-left:5px;background-color:black\" ng-class=\"\" class=\"btn btn-gr-selection \" ng-click=\"ps.s.addToLightBox(ps.tree, ps.results)\">\n                        </button>\n    </div>\n</div>\n";
 
 /***/ }),
 /* 200 */
