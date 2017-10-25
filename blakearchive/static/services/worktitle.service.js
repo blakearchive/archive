@@ -40,9 +40,9 @@ angular.module("blake")
 
   svc.getCompOrPrintDateString = function() {
       if(svc.bds.work.probable == "printing")
-          return "Printed " + svc.bds.copy.print_date_string;
+          return "(Printed " + svc.bds.copy.print_date_string + ")";
       else
-          return "Composed " + svc.bds.work.composition_date_string;
+          return "(Composed " + svc.bds.work.composition_date_string + ")";
   }
 
   svc.getCopyPhrase = function() {

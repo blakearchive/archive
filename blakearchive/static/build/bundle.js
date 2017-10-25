@@ -33464,7 +33464,7 @@ angular.module("blake").factory("worktitleService", ["BlakeDataService", "$rootS
   };
 
   svc.getCompOrPrintDateString = function () {
-    if (svc.bds.work.probable == "printing") return "Printed " + svc.bds.copy.print_date_string;else return "Composed " + svc.bds.work.composition_date_string;
+    if (svc.bds.work.probable == "printing") return "(Printed " + svc.bds.copy.print_date_string + ")";else return "(Composed " + svc.bds.work.composition_date_string + ")";
   };
 
   svc.getCopyPhrase = function () {
