@@ -559,7 +559,32 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
             item.title = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_title + " (Composed " + resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].copy_composition_date + ")";
         }
       }
-      item.caption = s.wts.getCaptionFromReading(resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0]);
+      item.caption = "";
+      var obj = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0];
+    /*
+    <span ng-if="svc.bds.work.virtual && svc.bds.copy.bad_id != 'letters'"><span>{{ svc.bds.object.title }}, </span><span class="object-no">Object {{ svc.bds.object.object_number }}, {{svc.bds.object.source.objdescid.compdate['#text']}}, {{svc.bds.object.source.repository.institution['#text']}}, </span></span>
+    <span ng-if="svc.bds.work.virtual && svc.bds.copy.bad_id == 'letters'"><span>{{ svc.bds.object.title }}, </span><span class="object-no">Object {{ svc.bds.object.object_number }}, </span></span>
+    */
+    if (resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].virtualwork_title){
+      item.caption += obj.title +", Object "+obj.object_number;
+      if (obj.copy_bad_id != 'letters'){
+        item.caption += ", "+obj.source.objdescid.compdate['#text']+", "+obj.source.repository.institution['#text'];
+      }
+    }else{
+      /*<span class="object-no" ng-if="!svc.bds.work.virtual && !svc.bds.object.title">{{ svc.bds.object.full_object_id }}, </span>
+      <span class="object-no" ng-if="!svc.bds.work.virtual && svc.bds.object.title && svc.bds.work.medium != 'exhibit'">{{svc.bds.object.title}}, {{ svc.bds.object.full_object_id }}, </span>
+      <span class="object-no" ng-if="!svc.bds.work.virtual && svc.bds.object.title && svc.bds.work.medium == 'exhibit'">{{svc.bds.object.title}}</span>
+      <span ng-if="svc.bds.work.medium != 'exhibit'">{{ svc.bds.object.physical_description.objsize['#text'] }} </span>
+      */
+      if (!obj.title){
+        item.caption += obj.full_object_id;
+      }else{
+          item.caption += obj.title +", "+obj.full_object_id;
+      }
+        item.caption += ", " + obj.physical_description.objsize['#text'];
+    }
+
+
       //CartStorageService.insert(item);
       lightbox_service.addToCart(item);
 
