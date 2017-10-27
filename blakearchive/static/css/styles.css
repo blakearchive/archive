@@ -7830,7 +7830,8 @@ a.new-window:hover {
   margin-bottom: 14px;
 }
 #archive #object-view .btn-group.edit-object .btn.btn-default {
-  color: #d5d5d5;
+  /*color: #d5d5d5;*/
+  color:#cccccc;
   font-size: 13px;
   background-color: #222;
   border-color: #393939;
