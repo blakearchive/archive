@@ -10,15 +10,17 @@ logging.basicConfig()
 logger = logging.getLogger('blake_relations')
 logger.setLevel(-1)
 
-id_cols = ['desc_id', 'dbi', 'bad_id', 'virtual_group']
+id_cols = ['desc_id', 'dbi', 'bad_id', 'virtual_group','reference_copy_ids','reference_work_ids']
 
 keys = ['same_matrix_ids',
 'same_production_sequence_ids',
 'similar_design_ids',
 'reference_object_ids',
-'reference_copy_ids',
-'reference_work_ids',
 'supplemental_ids']
+
+
+### TODO: currently, same_matrix_ids isn't working! something about the desc_ids list not being built correctly?
+### there is a pdb.set_trace() in the processing part of the code
 
 
 def load(file_name):
@@ -34,7 +36,8 @@ def load(file_name):
 def flatten_to_series(df):
     """converts dataframe into series"""
     lst = []
-    for index, row in df.iterrows(): lst.append((index,','.join(row.dropna().keys())  ))
+    for index, row in df.iterrows():
+        lst.append((index,','.join(row.dropna().keys())))
 
     indexes = pd.DataFrame(lst)[0]
     mappings = pd.DataFrame(lst)[1]
@@ -53,7 +56,7 @@ def mapped_relations_to_output_df(mapped_relations_df_dict, in_df):
         
     df = pd.DataFrame(out_dict)
 
-    return in_df[['dbi', 'bad_id', 'virtual_group']].merge(df[keys], left_index=True, right_index=True)  # add id columns back on
+    return in_df[[col for col in id_cols if col != 'desc_id']].merge(df[keys], left_index=True, right_index=True)  # add id columns back on
 
 
 def normalize_relations(df):
@@ -69,18 +72,22 @@ def normalize_relations(df):
         # TODO : to_lower everything, normalize names
 
         key_df = pd.DataFrame(index=df.index, columns=df.index)
-        pre_df = pd.DataFrame(index=df.index, columns=df.index)
-        post_df = pd.DataFrame(index=df.index, columns=df.index)
 
-        for desc_id, row in df[[k]].iterrows():
+        out_lst = {}
 
-            if desc_id in ["mhh.h.illbk.11", "bb435.1.comdes.02", "bb125.1.ms.01","bb125.1.ms.02"]:
+        skip_list = []#["mhh.h.illbk.11", "bb435.1.comdes.02", "bb125.1.ms.01", "bb125.1.ms.02", "lt12april1827.1.ltr.02"]
+
+        for desc_id, row in df[[k]].dropna().iterrows():
+            desc_ids = []
+
+            if desc_id in skip_list:
                 break
 
             if isinstance(desc_id, basestring):
                 try:
                     desc_ids = row.str.split(',')[k] # reference is necessary here
-                    error_message=''
+
+                    error_message = ''
 
                     if isinstance(desc_ids, list):
                         # any relationship not inserted into the index will be dropped forever,
@@ -90,34 +97,61 @@ def normalize_relations(df):
 
                         try:
                             key_df.loc[[desc_id], desc_ids] = True
-                            pre_df = key_df.copy()
-
                         except KeyError as e:
                             logger.exception(e)
                             error_message = "error trying to associate row {} with columns {} \n".format(desc_id, desc_ids)
 
+                    if error_message != '':
+                        raise Exception(error_message)
+
+                except TypeError as e:
+                    assert np.isnan(desc_ids) # TODO: is this right?
+
+        pre_df = key_df.copy()
+
+        for desc_id, row in df[[k]].dropna().iterrows():
+            desc_ids=[]
+
+            if desc_id in skip_list:
+                break
+
+            if isinstance(desc_id, basestring):
+                try:
+                    desc_ids = row.str.split(',')[k] # reference is necessary here
+                    error_message = ''
+
+                    if isinstance(desc_ids, list):
+                        # any relationship not inserted into the index will be dropped forever,
+                        # so we need to fail and force the user to fix the input file
+                        desc_ids = [s.lower() for s in desc_ids]
+
                         try:
                             key_df.loc[desc_ids, [desc_id]] = True  # make link in both directions, a->b and b->a
-                            post_df = key_df.copy()
                         except KeyError as e:
                             logger.exception(e)
-                            error_message += "error trying to associate rows {} with columns {}".format(desc_ids, desc_id)
+                            error_message += "error trying to associate rows {} with columns {}".format(desc_ids,
+                                                                                                        desc_id)
 
-                        if error_message != '':
-                            raise Exception(error_message)
+                    if error_message != '':
+                        raise Exception(error_message)
 
-                except ValueError as e:
+                except TypeError as e:
                     assert np.isnan(desc_ids) # TODO: is this right?
+
+        post_df = key_df.copy()
+
+        for index, row in post_df.where(~(pre_df.fillna(False) == post_df.fillna(False))).iterrows():
+            new_edges = row.dropna().index.values
+            for new_edge in new_edges:
+                out_lst.update({index: new_edge})
 
         result[k] = key_df.copy()
 
-        out_lst = {}
-        for index, row in post_df.where(~(pre_df.fillna(False)==post_df.fillna(False))).iterrows():
-            new_edges = row.dropna().index.values
-            for new_edge in new_edges:
-                out_lst.update({index:new_edge})
-
         diff_result[k] = out_lst
+
+        if k == "same_matrix_ids":
+            import pdb
+            #pdb.set_trace()
 
     return mapped_relations_to_output_df(result, df), diff_result
 
@@ -131,20 +165,19 @@ def main(args):
     df.drop_duplicates(subset='desc_id', keep='first', inplace=True)
 
     logger.info('blake_relations.csv size before after duplicates: {}'.format(len(df)))
-
+    df.desc_id = df.desc_id.str.lower()
     df.set_index('desc_id', inplace=True)
 
     normalize_df, diff_dict = normalize_relations(df)
 
-    normalize_df.to_csv(args.out_file)
+    normalize_df.to_csv(args.out_file, encoding = 'utf-8') # TODO : UTF-8
 
     if args.diff:
         for k, val in diff_dict.items():
 
             logger.info("New edges added for {}".format(k))
             logger.info("==================================")
-
-            for _k, _v, in val.items():
+            for _k, _v in val.items():
                 logger.info("{} -> {}".format(_k, _v))
 
 if __name__ == '__main__':
