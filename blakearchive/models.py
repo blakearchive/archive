@@ -68,6 +68,7 @@ class BlakeObject(db.Model):
     copy_title = db.Column(db.UnicodeText)
     virtualwork_title = db.Column(db.UnicodeText)
     archive_copy_id = db.Column(db.Text)
+    virtualwork_id = db.Column(db.Text)
     copy_institution = db.Column(db.Text)
     copy_composition_date = db.Column(db.Integer)
     copy_composition_date_value = db.Column(db.UnicodeText)
@@ -146,6 +147,7 @@ class BlakeObject(db.Model):
             "copy_id": self.copy_id,
             "copy_title": self.copy_title,
             "virtualwork_title": self.virtualwork_title,
+            "virtualwork_id": self.virtualwork_id,
             "archive_copy_id": self.archive_copy_id,
             "copy_institution": self.copy_institution,
             "copy_composition_date": self.copy_composition_date,
