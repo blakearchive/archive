@@ -215,7 +215,6 @@ class BlakeDocumentImporter(BlakeImporter):
             obj.object_group = old_copy.title
             old_copy.effective_copy_id = copy.bad_id
             obj.copy_bad_id = old_copy.bad_id
-            obj.virtualwork_id = old_copy.archive_copy_id
         work.copies.append(copy)
         self.copy_importer.members[entry.bad_id] = copy
 
