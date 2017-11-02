@@ -22,6 +22,16 @@ REFLEXIVE_COLS = ['same_matrix_ids',
                   'reference_object_ids',
                   'supplemental_ids']
 
+ALL_COLS = ['dbi',
+              'bad_id',
+              'virtual_group',
+              'same_matrix_ids',
+              'same_production_sequence_ids',
+              'similar_design_ids',
+              'reference_object_ids',
+              'reference_copy_ids',
+              'reference_work_ids',
+              'supplemental_ids']
 
 def load(file_name):
     """loads file, checks for required columns"""
@@ -58,7 +68,7 @@ def mapped_relations_to_output_df(mapped_relations_df_dict, in_df):
 
     return in_df[[col for col in IMMUTABLE_COLS if col != 'desc_id']].merge(df[REFLEXIVE_COLS],
                                                                             left_index=True,
-                                                                            right_index=True)  # add id columns back on
+                                                                            right_index=True)[ALL_COLS]  # add id columns back on
 
 
 def normalize_relations(df):
