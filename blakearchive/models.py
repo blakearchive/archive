@@ -148,7 +148,7 @@ class BlakeObject(db.Model):
             "copy_title": self.copy_title,
             "virtualwork_title": self.virtualwork_title,
             "archive_copy_id": self.archive_copy_id,
-            "virtualwork_id": self.virtualwork_id,
+            "vitualwork_id": self.virtualwork_id,
             "copy_institution": self.copy_institution,
             "copy_composition_date": self.copy_composition_date,
             "copy_composition_date_string": self.copy_composition_date_string,
