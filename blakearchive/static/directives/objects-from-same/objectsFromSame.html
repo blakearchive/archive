@@ -15,14 +15,14 @@
         <div class="select-for-compare-wrapper" ng-class="{'selected': fromSame.cof.isComparisonObject(obj,fromSame.type)}" tooltip="Click in corner to select or deselect for comparison"  tooltip-trigger="mouseenter" tooltip-placement="top-right">
             <span class="selected" ng-click="fromSame.selectOne(obj);"><span class="icon" ng-if="fromSame.cof.isComparisonObject(obj)"></span></span>
             <handprint-block ng-if="obj.virtualwork_title && !obj.copy_print_date_string"
-                    link="/copy/{{ obj.archive_copy_id }}?descId={{ obj.desc_id }}"
+                    link="/copy/{{ obj.virtualwork_id }}?descId={{ obj.desc_id }}"
                     image="{{ obj.dbi }}.100.jpg"
                     footer="<b>{{obj.virtualwork_title}}</b><br>{{obj.title}}, Composed {{obj.copy_composition_date_string}}<br>Object {{obj.object_number}}"
                     
                 >
             </handprint-block>
             <handprint-block ng-if="obj.virtualwork_title && obj.copy_print_date_string"
-                    link="/copy/{{ obj.archive_copy_id }}?descId={{ obj.desc_id }}"
+                    link="/copy/{{ obj.virtualwork_id }}?descId={{ obj.desc_id }}"
                     image="{{ obj.dbi }}.100.jpg"
                     footer="<b>{{obj.virtualwork_title}}</b><br>{{obj.title}}, Printed {{obj.copy_print_date_string}}<br>Object {{obj.object_number}}"
                     
