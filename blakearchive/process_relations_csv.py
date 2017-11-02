@@ -1,40 +1,40 @@
 import logging
 import argparse
 import pandas as pd
-import difflib
 import numpy as np
 from tqdm import tqdm
-import pdb 
+
 
 logging.basicConfig()
 logger = logging.getLogger('blake_relations')
 logger.setLevel(-1)
 
-id_cols = ['desc_id', 'dbi', 'bad_id', 'virtual_group','reference_copy_ids','reference_work_ids']
+IMMUTABLE_COLS = ['desc_id',
+                  'dbi',
+                  'bad_id',
+                  'virtual_group',
+                  'reference_copy_ids',
+                  'reference_work_ids']
 
-keys = ['same_matrix_ids',
-'same_production_sequence_ids',
-'similar_design_ids',
-'reference_object_ids',
-'supplemental_ids']
-
-
-### TODO: currently, same_matrix_ids isn't working! something about the desc_ids list not being built correctly?
-### there is a pdb.set_trace() in the processing part of the code
+REFLEXIVE_COLS = ['same_matrix_ids',
+                  'same_production_sequence_ids',
+                  'similar_design_ids',
+                  'reference_object_ids',
+                  'supplemental_ids']
 
 
 def load(file_name):
     """loads file, checks for required columns"""
     
     df = pd.read_csv(file_name)
-    for col in keys + id_cols:
+    for col in REFLEXIVE_COLS + IMMUTABLE_COLS:
         assert col in df, "{} not in {}".format(col, file_name)
         
     return df
 
 
 def flatten_to_series(df):
-    """converts dataframe into series"""
+    """converts DataFrame into series"""
     lst = []
     for index, row in df.iterrows():
         lst.append((index,','.join(row.dropna().keys())))
@@ -51,12 +51,14 @@ def mapped_relations_to_output_df(mapped_relations_df_dict, in_df):
 
     out_dict = {}
 
-    for key in tqdm(keys):
+    for key in tqdm(REFLEXIVE_COLS):
         out_dict.update({key: flatten_to_series(mapped_relations_df_dict[key])})
         
     df = pd.DataFrame(out_dict)
 
-    return in_df[[col for col in id_cols if col != 'desc_id']].merge(df[keys], left_index=True, right_index=True)  # add id columns back on
+    return in_df[[col for col in IMMUTABLE_COLS if col != 'desc_id']].merge(df[REFLEXIVE_COLS],
+                                                                            left_index=True,
+                                                                            right_index=True)  # add id columns back on
 
 
 def normalize_relations(df):
@@ -65,23 +67,18 @@ def normalize_relations(df):
     
     """
     
-    result = {k:None for k in keys}
-    diff_result = {k:None for k in keys}
+    result = {k: None for k in REFLEXIVE_COLS}
+    diff_result = {k: None for k in REFLEXIVE_COLS}
 
-    for k in tqdm(keys):
+    for k in tqdm(REFLEXIVE_COLS):
         # TODO : to_lower everything, normalize names
 
         key_df = pd.DataFrame(index=df.index, columns=df.index)
 
         out_lst = {}
 
-        skip_list = []#["mhh.h.illbk.11", "bb435.1.comdes.02", "bb125.1.ms.01", "bb125.1.ms.02", "lt12april1827.1.ltr.02"]
-
         for desc_id, row in df[[k]].dropna().iterrows():
             desc_ids = []
-
-            if desc_id in skip_list:
-                break
 
             if isinstance(desc_id, basestring):
                 try:
@@ -92,7 +89,6 @@ def normalize_relations(df):
                     if isinstance(desc_ids, list):
                         # any relationship not inserted into the index will be dropped forever,
                         # so we need to fail and force the user to fix the input file
-
                         desc_ids = [s.lower() for s in desc_ids]
 
                         try:
@@ -105,15 +101,12 @@ def normalize_relations(df):
                         raise Exception(error_message)
 
                 except TypeError as e:
-                    assert np.isnan(desc_ids) # TODO: is this right?
+                    assert np.isnan(desc_ids)
 
         pre_df = key_df.copy()
 
         for desc_id, row in df[[k]].dropna().iterrows():
-            desc_ids=[]
-
-            if desc_id in skip_list:
-                break
+            desc_ids = []
 
             if isinstance(desc_id, basestring):
                 try:
@@ -149,10 +142,6 @@ def normalize_relations(df):
 
         diff_result[k] = out_lst
 
-        if k == "same_matrix_ids":
-            import pdb
-            #pdb.set_trace()
-
     return mapped_relations_to_output_df(result, df), diff_result
 
 
@@ -170,7 +159,7 @@ def main(args):
 
     normalize_df, diff_dict = normalize_relations(df)
 
-    normalize_df.to_csv(args.out_file, encoding = 'utf-8') # TODO : UTF-8
+    normalize_df.to_csv(args.out_file, encoding='utf-8')
 
     if args.diff:
         for k, val in diff_dict.items():
