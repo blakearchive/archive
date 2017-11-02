@@ -6,3 +6,4 @@ node_modules
 fab_settings.py
 config.py
 log/*
+*.ipynb
