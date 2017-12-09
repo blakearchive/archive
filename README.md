@@ -66,11 +66,11 @@ cd ~/path/to/solr/instance # if you followed the apache install instructions, it
 bin/solr start
 cd server/solr
 mkdir blake_object
-ln -s <path-to-repo>/blakearchive/solr/blake-object/conf <path-to-solr-install>/server/solr/blake_object/conf
+ln -s <path-to-repo>(probably ~/Sites/blake)/archive/solr/blake-object/conf <path-to-solr-install>/server/solr/blake_object/conf
 mkdir blake_work
-ln -s <path-to-repo>/blakearchive/solr/blake-work/conf <path-to-solr-install>/server/solr/blake_work/conf
+ln -s <path-to-repo>(probably ~/Sites/blake)/archive/solr/blake-work/conf <path-to-solr-install>/server/solr/blake_work/conf
 mkdir blake_copy
-ln -s <path-to-repo>/blakearchive/solr/blake-copy/conf <path-to-solr-install>/server/solr/blake_copy/conf
+ln -s <path-to-repo>(probably ~/Sites/blake)/archive/solr/blake-copy/conf <path-to-solr-install>/server/solr/blake_copy/conf
 ```
 
 Go to http://localhost:8983/solr/admin
