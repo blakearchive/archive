@@ -2107,8 +2107,8 @@ var util = __webpack_require__(5);
 util.inherits = __webpack_require__(2);
 /*</replacement>*/
 
-var Readable = __webpack_require__(12);
-var Writable = __webpack_require__(14);
+var Readable = __webpack_require__(13);
+var Writable = __webpack_require__(15);
 
 util.inherits(Duplex, Readable);
 
@@ -2704,6 +2704,228 @@ module.exports = Array.isArray || function (arr) {
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var Buffer = __webpack_require__(1).Buffer;
+
+var isBufferEncoding = Buffer.isEncoding || function (encoding) {
+  switch (encoding && encoding.toLowerCase()) {
+    case 'hex':case 'utf8':case 'utf-8':case 'ascii':case 'binary':case 'base64':case 'ucs2':case 'ucs-2':case 'utf16le':case 'utf-16le':case 'raw':
+      return true;
+    default:
+      return false;
+  }
+};
+
+function assertEncoding(encoding) {
+  if (encoding && !isBufferEncoding(encoding)) {
+    throw new Error('Unknown encoding: ' + encoding);
+  }
+}
+
+// StringDecoder provides an interface for efficiently splitting a series of
+// buffers into a series of JS strings without breaking apart multi-byte
+// characters. CESU-8 is handled as part of the UTF-8 encoding.
+//
+// @TODO Handling all encodings inside a single object makes it very difficult
+// to reason about this code, so it should be split up in the future.
+// @TODO There should be a utf8-strict encoding that rejects invalid UTF-8 code
+// points as used by CESU-8.
+var StringDecoder = exports.StringDecoder = function (encoding) {
+  this.encoding = (encoding || 'utf8').toLowerCase().replace(/[-_]/, '');
+  assertEncoding(encoding);
+  switch (this.encoding) {
+    case 'utf8':
+      // CESU-8 represents each of Surrogate Pair by 3-bytes
+      this.surrogateSize = 3;
+      break;
+    case 'ucs2':
+    case 'utf16le':
+      // UTF-16 represents each of Surrogate Pair by 2-bytes
+      this.surrogateSize = 2;
+      this.detectIncompleteChar = utf16DetectIncompleteChar;
+      break;
+    case 'base64':
+      // Base-64 stores 3 bytes in 4 chars, and pads the remainder.
+      this.surrogateSize = 3;
+      this.detectIncompleteChar = base64DetectIncompleteChar;
+      break;
+    default:
+      this.write = passThroughWrite;
+      return;
+  }
+
+  // Enough space to store all bytes of a single character. UTF-8 needs 4
+  // bytes, but CESU-8 may require up to 6 (3 bytes per surrogate).
+  this.charBuffer = new Buffer(6);
+  // Number of bytes received for the current incomplete multi-byte character.
+  this.charReceived = 0;
+  // Number of bytes expected for the current incomplete multi-byte character.
+  this.charLength = 0;
+};
+
+// write decodes the given buffer and returns it as JS string that is
+// guaranteed to not contain any partial multi-byte characters. Any partial
+// character found at the end of the buffer is buffered up, and will be
+// returned when calling write again with the remaining bytes.
+//
+// Note: Converting a Buffer containing an orphan surrogate to a String
+// currently works, but converting a String to a Buffer (via `new Buffer`, or
+// Buffer#write) will replace incomplete surrogates with the unicode
+// replacement character. See https://codereview.chromium.org/121173009/ .
+StringDecoder.prototype.write = function (buffer) {
+  var charStr = '';
+  // if our last write ended with an incomplete multibyte character
+  while (this.charLength) {
+    // determine how many remaining bytes this buffer has to offer for this char
+    var available = buffer.length >= this.charLength - this.charReceived ? this.charLength - this.charReceived : buffer.length;
+
+    // add the new bytes to the char buffer
+    buffer.copy(this.charBuffer, this.charReceived, 0, available);
+    this.charReceived += available;
+
+    if (this.charReceived < this.charLength) {
+      // still not enough chars in this buffer? wait for more ...
+      return '';
+    }
+
+    // remove bytes belonging to the current character from the buffer
+    buffer = buffer.slice(available, buffer.length);
+
+    // get the character that was split
+    charStr = this.charBuffer.slice(0, this.charLength).toString(this.encoding);
+
+    // CESU-8: lead surrogate (D800-DBFF) is also the incomplete character
+    var charCode = charStr.charCodeAt(charStr.length - 1);
+    if (charCode >= 0xD800 && charCode <= 0xDBFF) {
+      this.charLength += this.surrogateSize;
+      charStr = '';
+      continue;
+    }
+    this.charReceived = this.charLength = 0;
+
+    // if there are no more bytes in this buffer, just emit our char
+    if (buffer.length === 0) {
+      return charStr;
+    }
+    break;
+  }
+
+  // determine and set charLength / charReceived
+  this.detectIncompleteChar(buffer);
+
+  var end = buffer.length;
+  if (this.charLength) {
+    // buffer the incomplete character bytes we got
+    buffer.copy(this.charBuffer, 0, buffer.length - this.charReceived, end);
+    end -= this.charReceived;
+  }
+
+  charStr += buffer.toString(this.encoding, 0, end);
+
+  var end = charStr.length - 1;
+  var charCode = charStr.charCodeAt(end);
+  // CESU-8: lead surrogate (D800-DBFF) is also the incomplete character
+  if (charCode >= 0xD800 && charCode <= 0xDBFF) {
+    var size = this.surrogateSize;
+    this.charLength += size;
+    this.charReceived += size;
+    this.charBuffer.copy(this.charBuffer, size, 0, size);
+    buffer.copy(this.charBuffer, 0, 0, size);
+    return charStr.substring(0, end);
+  }
+
+  // or just emit the charStr
+  return charStr;
+};
+
+// detectIncompleteChar determines if there is an incomplete UTF-8 character at
+// the end of the given buffer. If so, it sets this.charLength to the byte
+// length that character, and sets this.charReceived to the number of bytes
+// that are available for this character.
+StringDecoder.prototype.detectIncompleteChar = function (buffer) {
+  // determine how many bytes we have to check at the end of this buffer
+  var i = buffer.length >= 3 ? 3 : buffer.length;
+
+  // Figure out if one of the last i bytes of our buffer announces an
+  // incomplete char.
+  for (; i > 0; i--) {
+    var c = buffer[buffer.length - i];
+
+    // See http://en.wikipedia.org/wiki/UTF-8#Description
+
+    // 110XXXXX
+    if (i == 1 && c >> 5 == 0x06) {
+      this.charLength = 2;
+      break;
+    }
+
+    // 1110XXXX
+    if (i <= 2 && c >> 4 == 0x0E) {
+      this.charLength = 3;
+      break;
+    }
+
+    // 11110XXX
+    if (i <= 3 && c >> 3 == 0x1E) {
+      this.charLength = 4;
+      break;
+    }
+  }
+  this.charReceived = i;
+};
+
+StringDecoder.prototype.end = function (buffer) {
+  var res = '';
+  if (buffer && buffer.length) res = this.write(buffer);
+
+  if (this.charReceived) {
+    var cr = this.charReceived;
+    var buf = this.charBuffer;
+    var enc = this.encoding;
+    res += buf.slice(0, cr).toString(enc);
+  }
+
+  return res;
+};
+
+function passThroughWrite(buffer) {
+  return buffer.toString(this.encoding);
+}
+
+function utf16DetectIncompleteChar(buffer) {
+  this.charReceived = buffer.length % 2;
+  this.charLength = this.charReceived ? 2 : 0;
+}
+
+function base64DetectIncompleteChar(buffer) {
+  this.charReceived = buffer.length % 3;
+  this.charLength = this.charReceived ? 3 : 0;
+}
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
 //
@@ -2754,7 +2976,7 @@ var EElistenerCount = function (emitter, type) {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(16);
+var Stream = __webpack_require__(17);
 /*</replacement>*/
 
 // TODO(bmeurer): Change this back to const once hole checks are
@@ -2786,7 +3008,7 @@ if (debugUtil && debugUtil.debuglog) {
 /*</replacement>*/
 
 var BufferList = __webpack_require__(159);
-var destroyImpl = __webpack_require__(15);
+var destroyImpl = __webpack_require__(16);
 var StringDecoder;
 
 util.inherits(Readable, Stream);
@@ -2869,7 +3091,7 @@ function ReadableState(options, stream) {
   this.decoder = null;
   this.encoding = null;
   if (options.encoding) {
-    if (!StringDecoder) StringDecoder = __webpack_require__(22).StringDecoder;
+    if (!StringDecoder) StringDecoder = __webpack_require__(12).StringDecoder;
     this.decoder = new StringDecoder(options.encoding);
     this.encoding = options.encoding;
   }
@@ -3025,7 +3247,7 @@ Readable.prototype.isPaused = function () {
 
 // backwards compatibility.
 Readable.prototype.setEncoding = function (enc) {
-  if (!StringDecoder) StringDecoder = __webpack_require__(22).StringDecoder;
+  if (!StringDecoder) StringDecoder = __webpack_require__(12).StringDecoder;
   this._readableState.decoder = new StringDecoder(enc);
   this._readableState.encoding = enc;
   return this;
@@ -3715,7 +3937,7 @@ function indexOf(xs, x) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(3)))
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3935,7 +4157,7 @@ function done(stream, er, data) {
 }
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4016,7 +4238,7 @@ var internalUtil = {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(16);
+var Stream = __webpack_require__(17);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -4030,7 +4252,7 @@ function _isUint8Array(obj) {
 }
 /*</replacement>*/
 
-var destroyImpl = __webpack_require__(15);
+var destroyImpl = __webpack_require__(16);
 
 util.inherits(Writable, Stream);
 
@@ -4603,10 +4825,10 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(20).setImmediate, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(21).setImmediate, __webpack_require__(0)))
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4684,31 +4906,31 @@ module.exports = {
 };
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(10).EventEmitter;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(12);
+exports = module.exports = __webpack_require__(13);
 exports.Stream = exports;
 exports.Readable = exports;
-exports.Writable = __webpack_require__(14);
+exports.Writable = __webpack_require__(15);
 exports.Duplex = __webpack_require__(4);
-exports.Transform = __webpack_require__(13);
+exports.Transform = __webpack_require__(14);
 exports.PassThrough = __webpack_require__(158);
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var ClientRequest = __webpack_require__(161);
 var extend = __webpack_require__(167);
 var statusCodes = __webpack_require__(151);
-var url = __webpack_require__(21);
+var url = __webpack_require__(22);
 
 var http = exports;
 
@@ -4755,7 +4977,7 @@ http.METHODS = ['CHECKOUT', 'CONNECT', 'COPY', 'DELETE', 'GET', 'HEAD', 'LOCK', 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableStream);
@@ -4829,7 +5051,7 @@ xhr = null; // Help gc
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -4885,7 +5107,7 @@ exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5598,228 +5820,6 @@ Url.prototype.parseHost = function () {
 };
 
 /***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-var Buffer = __webpack_require__(1).Buffer;
-
-var isBufferEncoding = Buffer.isEncoding || function (encoding) {
-  switch (encoding && encoding.toLowerCase()) {
-    case 'hex':case 'utf8':case 'utf-8':case 'ascii':case 'binary':case 'base64':case 'ucs2':case 'ucs-2':case 'utf16le':case 'utf-16le':case 'raw':
-      return true;
-    default:
-      return false;
-  }
-};
-
-function assertEncoding(encoding) {
-  if (encoding && !isBufferEncoding(encoding)) {
-    throw new Error('Unknown encoding: ' + encoding);
-  }
-}
-
-// StringDecoder provides an interface for efficiently splitting a series of
-// buffers into a series of JS strings without breaking apart multi-byte
-// characters. CESU-8 is handled as part of the UTF-8 encoding.
-//
-// @TODO Handling all encodings inside a single object makes it very difficult
-// to reason about this code, so it should be split up in the future.
-// @TODO There should be a utf8-strict encoding that rejects invalid UTF-8 code
-// points as used by CESU-8.
-var StringDecoder = exports.StringDecoder = function (encoding) {
-  this.encoding = (encoding || 'utf8').toLowerCase().replace(/[-_]/, '');
-  assertEncoding(encoding);
-  switch (this.encoding) {
-    case 'utf8':
-      // CESU-8 represents each of Surrogate Pair by 3-bytes
-      this.surrogateSize = 3;
-      break;
-    case 'ucs2':
-    case 'utf16le':
-      // UTF-16 represents each of Surrogate Pair by 2-bytes
-      this.surrogateSize = 2;
-      this.detectIncompleteChar = utf16DetectIncompleteChar;
-      break;
-    case 'base64':
-      // Base-64 stores 3 bytes in 4 chars, and pads the remainder.
-      this.surrogateSize = 3;
-      this.detectIncompleteChar = base64DetectIncompleteChar;
-      break;
-    default:
-      this.write = passThroughWrite;
-      return;
-  }
-
-  // Enough space to store all bytes of a single character. UTF-8 needs 4
-  // bytes, but CESU-8 may require up to 6 (3 bytes per surrogate).
-  this.charBuffer = new Buffer(6);
-  // Number of bytes received for the current incomplete multi-byte character.
-  this.charReceived = 0;
-  // Number of bytes expected for the current incomplete multi-byte character.
-  this.charLength = 0;
-};
-
-// write decodes the given buffer and returns it as JS string that is
-// guaranteed to not contain any partial multi-byte characters. Any partial
-// character found at the end of the buffer is buffered up, and will be
-// returned when calling write again with the remaining bytes.
-//
-// Note: Converting a Buffer containing an orphan surrogate to a String
-// currently works, but converting a String to a Buffer (via `new Buffer`, or
-// Buffer#write) will replace incomplete surrogates with the unicode
-// replacement character. See https://codereview.chromium.org/121173009/ .
-StringDecoder.prototype.write = function (buffer) {
-  var charStr = '';
-  // if our last write ended with an incomplete multibyte character
-  while (this.charLength) {
-    // determine how many remaining bytes this buffer has to offer for this char
-    var available = buffer.length >= this.charLength - this.charReceived ? this.charLength - this.charReceived : buffer.length;
-
-    // add the new bytes to the char buffer
-    buffer.copy(this.charBuffer, this.charReceived, 0, available);
-    this.charReceived += available;
-
-    if (this.charReceived < this.charLength) {
-      // still not enough chars in this buffer? wait for more ...
-      return '';
-    }
-
-    // remove bytes belonging to the current character from the buffer
-    buffer = buffer.slice(available, buffer.length);
-
-    // get the character that was split
-    charStr = this.charBuffer.slice(0, this.charLength).toString(this.encoding);
-
-    // CESU-8: lead surrogate (D800-DBFF) is also the incomplete character
-    var charCode = charStr.charCodeAt(charStr.length - 1);
-    if (charCode >= 0xD800 && charCode <= 0xDBFF) {
-      this.charLength += this.surrogateSize;
-      charStr = '';
-      continue;
-    }
-    this.charReceived = this.charLength = 0;
-
-    // if there are no more bytes in this buffer, just emit our char
-    if (buffer.length === 0) {
-      return charStr;
-    }
-    break;
-  }
-
-  // determine and set charLength / charReceived
-  this.detectIncompleteChar(buffer);
-
-  var end = buffer.length;
-  if (this.charLength) {
-    // buffer the incomplete character bytes we got
-    buffer.copy(this.charBuffer, 0, buffer.length - this.charReceived, end);
-    end -= this.charReceived;
-  }
-
-  charStr += buffer.toString(this.encoding, 0, end);
-
-  var end = charStr.length - 1;
-  var charCode = charStr.charCodeAt(end);
-  // CESU-8: lead surrogate (D800-DBFF) is also the incomplete character
-  if (charCode >= 0xD800 && charCode <= 0xDBFF) {
-    var size = this.surrogateSize;
-    this.charLength += size;
-    this.charReceived += size;
-    this.charBuffer.copy(this.charBuffer, size, 0, size);
-    buffer.copy(this.charBuffer, 0, 0, size);
-    return charStr.substring(0, end);
-  }
-
-  // or just emit the charStr
-  return charStr;
-};
-
-// detectIncompleteChar determines if there is an incomplete UTF-8 character at
-// the end of the given buffer. If so, it sets this.charLength to the byte
-// length that character, and sets this.charReceived to the number of bytes
-// that are available for this character.
-StringDecoder.prototype.detectIncompleteChar = function (buffer) {
-  // determine how many bytes we have to check at the end of this buffer
-  var i = buffer.length >= 3 ? 3 : buffer.length;
-
-  // Figure out if one of the last i bytes of our buffer announces an
-  // incomplete char.
-  for (; i > 0; i--) {
-    var c = buffer[buffer.length - i];
-
-    // See http://en.wikipedia.org/wiki/UTF-8#Description
-
-    // 110XXXXX
-    if (i == 1 && c >> 5 == 0x06) {
-      this.charLength = 2;
-      break;
-    }
-
-    // 1110XXXX
-    if (i <= 2 && c >> 4 == 0x0E) {
-      this.charLength = 3;
-      break;
-    }
-
-    // 11110XXX
-    if (i <= 3 && c >> 3 == 0x1E) {
-      this.charLength = 4;
-      break;
-    }
-  }
-  this.charReceived = i;
-};
-
-StringDecoder.prototype.end = function (buffer) {
-  var res = '';
-  if (buffer && buffer.length) res = this.write(buffer);
-
-  if (this.charReceived) {
-    var cr = this.charReceived;
-    var buf = this.charBuffer;
-    var enc = this.encoding;
-    res += buf.slice(0, cr).toString(enc);
-  }
-
-  return res;
-};
-
-function passThroughWrite(buffer) {
-  return buffer.toString(this.encoding);
-}
-
-function utf16DetectIncompleteChar(buffer) {
-  this.charReceived = buffer.length % 2;
-  this.charLength = this.charReceived ? 2 : 0;
-}
-
-function base64DetectIncompleteChar(buffer) {
-  this.charReceived = buffer.length % 3;
-  this.charLength = this.charReceived ? 3 : 0;
-}
-
-/***/ }),
 /* 23 */
 /***/ (function(module, exports) {
 
@@ -5828,27 +5828,10 @@ function base64DetectIncompleteChar(buffer) {
 	Author Tobias Koppers @sokra
 */
 module.exports = function(src) {
-	function log(error) {
-		(typeof console !== "undefined")
-		&& (console.error || console.log)("[Script Loader]", error);
-	}
-
-	// Check for IE =< 8
-	function isIE() {
-		return typeof attachEvent !== "undefined" && typeof addEventListener === "undefined";
-	}
-
-	try {
-		if (typeof execScript !== "undefined" && isIE()) {
-			execScript(src);
-		} else if (typeof eval !== "undefined") {
-			eval.call(null, src);
-		} else {
-			log("EvalError: No eval function available");
-		}
-	} catch (error) {
-		log(error);
-	}
+	if (typeof execScript !== "undefined")
+		execScript(src);
+	else
+		eval.call(null, src);
 }
 
 
@@ -13933,7 +13916,7 @@ module.exports = 'ngTouch';
     return Dexie;
 });
 //# sourceMappingURL=dexie.js.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(20).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(21).setImmediate))
 
 /***/ }),
 /* 43 */
@@ -21374,7 +21357,7 @@ lineIndex=map.line;fabric.IText.prototype.shiftLineStyles.call(this,lineIndex,of
    */fabric.IText.prototype._getNewSelectionStartFromOffset=function(mouseOffset,prevWidth,width,index,jlen){index=override.call(this,mouseOffset,prevWidth,width,index,jlen);// the index passed into the function is padded by the amount of lines from _textLines (to account for \n)
 // we need to remove this padding, and pad it by actual lines, and / or spaces that are meant to be there
 var tmp=0,removed=0;// account for removed characters
-for(var i=0;i<this._textLines.length;i++){tmp+=this._textLines[i].length;if(tmp+removed>=index){break;}if(this.text[tmp+removed]==='\n'||this.text[tmp+removed]===' '){removed++;}}return index-i+removed;};})();(function(){if(typeof document!=='undefined'&&typeof window!=='undefined'){return;}var DOMParser=__webpack_require__(215).DOMParser,URL=__webpack_require__(21),HTTP=__webpack_require__(18),HTTPS=__webpack_require__(152),Canvas=__webpack_require__(9),Image=__webpack_require__(9).Image;/** @private */function request(url,encoding,callback){var oURL=URL.parse(url);// detect if http or https is used
+for(var i=0;i<this._textLines.length;i++){tmp+=this._textLines[i].length;if(tmp+removed>=index){break;}if(this.text[tmp+removed]==='\n'||this.text[tmp+removed]===' '){removed++;}}return index-i+removed;};})();(function(){if(typeof document!=='undefined'&&typeof window!=='undefined'){return;}var DOMParser=__webpack_require__(215).DOMParser,URL=__webpack_require__(22),HTTP=__webpack_require__(19),HTTPS=__webpack_require__(152),Canvas=__webpack_require__(9),Image=__webpack_require__(9).Image;/** @private */function request(url,encoding,callback){var oURL=URL.parse(url);// detect if http or https is used
 if(!oURL.port){oURL.port=oURL.protocol.indexOf('https:')===0?443:80;}// assign request handler based on protocol
 var reqHandler=oURL.protocol.indexOf('https:')===0?HTTPS:HTTP,req=reqHandler.request({hostname:oURL.hostname,port:oURL.port,path:oURL.path,method:'GET'},function(response){var body='';if(encoding){response.setEncoding(encoding);}response.on('end',function(){callback(body);});response.on('data',function(chunk){if(response.statusCode===200){body+=chunk;}});});req.on('error',function(err){if(err.errno===process.ECONNREFUSED){fabric.log('ECONNREFUSED: connection refused to '+oURL.hostname+':'+oURL.port);}else{fabric.log(err.message);}callback(null);});req.end();}/** @private */function requestFs(path,callback){var fs=__webpack_require__(213);fs.readFile(path,function(err,data){if(err){fabric.log(err);throw err;}else{callback(data);}});}fabric.util.loadImage=function(url,callback,context){function createImageAndCallBack(data){if(data){img.src=new Buffer(data,'binary');// preserving original url, which seems to be lost in node-canvas
 img._src=url;callback&&callback.call(context,img);}else{img=null;callback&&callback.call(context,null,true);}}var img=new Image();if(url&&(url instanceof Buffer||url.indexOf('data')===0)){img.src=img._src=url;callback&&callback.call(context,img);}else if(url&&url.indexOf('http')!==0){requestFs(url,createImageAndCallBack);}else if(url){request(url,'binary',createImageAndCallBack);}else{callback&&callback.call(context,url);}};fabric.loadSVGFromURL=function(url,callback,reviver){url=url.replace(/^\n\s*/,'').replace(/\?.*$/,'').trim();if(url.indexOf('http')!==0){requestFs(url,function(body){fabric.loadSVGFromString(body.toString(),callback,reviver);});}else{request(url,'',function(body){fabric.loadSVGFromString(body,callback,reviver);});}};fabric.loadSVGFromString=function(string,callback,reviver){var doc=new DOMParser().parseFromString(string);fabric.parseSVGDocument(doc.documentElement,function(results,options){callback&&callback(results,options);},reviver);};fabric.util.getScript=function(url,callback){request(url,'',function(body){// eslint-disable-next-line no-eval
@@ -59155,7 +59138,7 @@ module.exports = {
 /* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var http = __webpack_require__(18);
+var http = __webpack_require__(19);
 
 var https = module.exports;
 
@@ -60018,7 +60001,7 @@ exports.encode = exports.stringify = __webpack_require__(156);
 
 module.exports = PassThrough;
 
-var Transform = __webpack_require__(13);
+var Transform = __webpack_require__(14);
 
 /*<replacement>*/
 var util = __webpack_require__(5);
@@ -60313,10 +60296,10 @@ module.exports = function () {
 /* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(19);
+/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(20);
 var inherits = __webpack_require__(2);
 var response = __webpack_require__(162);
-var stream = __webpack_require__(17);
+var stream = __webpack_require__(18);
 var toArrayBuffer = __webpack_require__(163);
 
 var IncomingMessage = response.IncomingMessage;
@@ -60590,9 +60573,9 @@ var unsafeHeaders = ['accept-charset', 'accept-encoding', 'access-control-reques
 /* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(19);
+/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(20);
 var inherits = __webpack_require__(2);
-var stream = __webpack_require__(17);
+var stream = __webpack_require__(18);
 
 var rStates = exports.readyStates = {
 	UNSENT: 0,
@@ -61202,7 +61185,7 @@ module.exports = "<div class=\"row\">\n\n\t<!-- For Non virtual groups -->\n\t<d
 /* 210 */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"Overlay\" class=\"overlay\" ng-if=\"$root.showOverlay == true\">\n\n    <div>\n    <a style=\"text-decoration: none\" href=\"\" class=\"closebtnleft\" ng-click=\"$root.showOverlay = false\">&times;</a>\n    <header class=\"page-header\">\n      <p class=\"subhead\">{{ workTitle.bds.work.medium_pretty }}</p>\n      <h1 style=\"color:rgba(233,188,71,1)\">{{ workTitle.bds.work.title }} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>\n    </header>\n\n    <article class=\"categories\">\n\n      <div style=\"color:white\" class=\"container\">\n        <div class=\"section-group\" ng-bind-html=\"workTitle.bds.work.info\"></div>\n        <hr>\n        <p class=\"text-center\"><em>Dates are the probable dates of {{ workTitle.bds.work.probable }}.</em></p>\n\n            <work-copies></work-copies>\n\n\n      </div>\n  </article>\n  </div>\n    <div class=\"containerForRelatedInOverlay\">\n        <!--<div class=\"section-group\">\n            <h2>Related Works</h2>\n            <p>Related works currently available in the William Blake Archive appear as links below. Works not currently available appear as plain text.</p>\n        </div>-->\n        <all-known-copies work=\"workTitle.bds.work\" ng-if=\"workTitle.bds.work.medium=='illbk'\"></all-known-copies>\n        <all-known-related-items work=\"workTitle.bds.work\" ng-class=\"workTitle.bds.work.related_works.length > 0 ? '' : 'hidden'\"></all-known-related-items>\n    </div>\n\n</div>\n\n<div id=\"OverlayCopyInfo\" class=\"overlay\" ng-show=\"$root.showOverlayCopyInfo == true\">\n\n    <a style=\"text-decoration: none\" href=\"\" class=\"closebtnleft\" ng-click=\"$root.showOverlayCopyInfo = false\">&times;</a>\n    <header class=\"page-header\">\n      <p class=\"subhead\">COPY INFORMATION</p>\n      <h1 style=\"color:rgba(233,188,71,1)\">{{ workTitle.bds.work.title }} {{workTitle.getCopyPhrase()}} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>\n    </header>\n    <div id=\"archive-tabs\" role=\"tabpanel\">\n    <div class=\"container-fluid overlaycopyinfo\">\n      <div class=\"container\">\n        <div class=\"tab-content\">\n          <div role=\"tabpanel\" class=\"fadeinout tab-pane active in\">\n          <copy-information ng-if=\"workTitle.bds.copy.virtual == false\" copy=\"workTitle.bds.copy\" object=\"tabs.bds.object\"></copy-information>\n          </div>\n        </div>\n      </div>\n    </div>\n    </div>\n</div>\n\n\n<div class=\"object-view-menu hidden-xs hidden-sm\">\n  <span ng-if=\"showWorkTitle == 'static'\" class=\"worktitle\" style=\"padding: 19px;\">\n        <a scroll-to-top href=\"\" style=\"color:white;\">{{ workTitle.getStaticPageTitle() }}</a>\n    </span>\n  <span ng-if=\"showWorkTitle == 'work'\" class=\"worktitle\" style=\"padding: 19px;\">\n        <span scroll-to-top style=\"color:white;\">{{ workTitle.getTitle() }} (Composed {{workTitle.bds.work.composition_date_string}})</span>\n    </span>\n\n  <span ng-if=\"showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'\" class=\"worktitle\" style=\"padding: 19px;\">\n    <span ng-if=\"workTitle.bds.copy.bad_id == 'letters'\">\n      <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:white;\">Letters (Composed {{workTitle.bds.work.composition_date_string}})</a>: {{ workTitle.getTitle() }}\n    </span>\n    <span ng-if=\"workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.work.medium != 'exhibit'\">\n      <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:white;\">{{ workTitle.getTitle() }}</a> <a scroll-to-top href=\"\" ng-click=\"$root.showOverlayCopyInfo = true\" style=\"color:white;\">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}})\n    </span>\n    <span ng-if=\"workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.work.medium == 'exhibit'\">\n      <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:white;\">{{ workTitle.getTitle() }}</a>\n    </span>\n\n  </span>\n\n  <span ng-if=\"$root.view.mode == 'compare' && showWorkTitle != 'static' && showWorkTitle != 'work'\" class=\"worktitle\" style=\"padding: 19px; color:yellow\">\n    <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:yellow;\">{{ workTitle.getTitle() }}</a> <a scroll-to-top href=\"\" ng-click=\"$root.showOverlayCopyInfo = true\" style=\"color:yellow;\">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}}) <span style=\"color:yellow\">(Selected)</span>\n  </span>\n\n</div>";
+module.exports = "<div id=\"Overlay\" class=\"overlay\" ng-if=\"$root.showOverlay == true\">\n\n    <div>\n    <a style=\"text-decoration: none\" href=\"\" class=\"closebtnleft\" ng-click=\"$root.showOverlay = false\">&times;</a>\n    <header class=\"page-header\">\n      <p class=\"subhead\">{{ workTitle.bds.work.medium_pretty }}</p>\n      <h1 style=\"color:rgba(233,188,71,1)\">{{ workTitle.bds.work.title }} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>\n    </header>\n\n    <article class=\"categories\">\n\n      <div style=\"color:white\" class=\"container\">\n        <div class=\"section-group-workinfo\" ng-bind-html=\"workTitle.bds.work.info\"></div>\n        <hr>\n        <p class=\"text-center\"><em>Dates are the probable dates of {{ workTitle.bds.work.probable }}.</em></p>\n\n            <work-copies></work-copies>\n\n\n      </div>\n  </article>\n  </div>\n    <div class=\"containerForRelatedInOverlay\">\n        <!--<div class=\"section-group\">\n            <h2>Related Works</h2>\n            <p>Related works currently available in the William Blake Archive appear as links below. Works not currently available appear as plain text.</p>\n        </div>-->\n        <all-known-copies work=\"workTitle.bds.work\" ng-if=\"workTitle.bds.work.medium=='illbk'\"></all-known-copies>\n        <all-known-related-items work=\"workTitle.bds.work\" ng-class=\"workTitle.bds.work.related_works.length > 0 ? '' : 'hidden'\"></all-known-related-items>\n    </div>\n\n</div>\n\n<div id=\"OverlayCopyInfo\" class=\"overlay\" ng-show=\"$root.showOverlayCopyInfo == true\">\n\n    <a style=\"text-decoration: none\" href=\"\" class=\"closebtnleft\" ng-click=\"$root.showOverlayCopyInfo = false\">&times;</a>\n    <header class=\"page-header\">\n      <p class=\"subhead\">COPY INFORMATION</p>\n      <h1 style=\"color:rgba(233,188,71,1)\">{{ workTitle.bds.work.title }} {{workTitle.getCopyPhrase()}} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>\n    </header>\n    <div id=\"archive-tabs\" role=\"tabpanel\">\n    <div class=\"container-fluid overlaycopyinfo\">\n      <div class=\"container\">\n        <div class=\"tab-content\">\n          <div role=\"tabpanel\" class=\"fadeinout tab-pane active in\">\n          <copy-information ng-if=\"workTitle.bds.copy.virtual == false\" copy=\"workTitle.bds.copy\" object=\"tabs.bds.object\"></copy-information>\n          </div>\n        </div>\n      </div>\n    </div>\n    </div>\n</div>\n\n\n<div class=\"object-view-menu hidden-xs hidden-sm\">\n  <span ng-if=\"showWorkTitle == 'static'\" class=\"worktitle\" style=\"padding: 19px;\">\n        <a scroll-to-top href=\"\" style=\"color:white;\">{{ workTitle.getStaticPageTitle() }}</a>\n    </span>\n  <span ng-if=\"showWorkTitle == 'work'\" class=\"worktitle\" style=\"padding: 19px;\">\n        <span scroll-to-top style=\"color:white;\">{{ workTitle.getTitle() }} (Composed {{workTitle.bds.work.composition_date_string}})</span>\n    </span>\n\n  <span ng-if=\"showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'\" class=\"worktitle\" style=\"padding: 19px;\">\n    <span ng-if=\"workTitle.bds.copy.bad_id == 'letters'\">\n      <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:white;\">Letters (Composed {{workTitle.bds.work.composition_date_string}})</a>: {{ workTitle.getTitle() }}\n    </span>\n    <span ng-if=\"workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.work.medium != 'exhibit'\">\n      <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:white;\">{{ workTitle.getTitle() }}</a> <a scroll-to-top href=\"\" ng-click=\"$root.showOverlayCopyInfo = true\" style=\"color:white;\">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}})\n    </span>\n    <span ng-if=\"workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.work.medium == 'exhibit'\">\n      <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:white;\">{{ workTitle.getTitle() }}</a>\n    </span>\n\n  </span>\n\n  <span ng-if=\"$root.view.mode == 'compare' && showWorkTitle != 'static' && showWorkTitle != 'work'\" class=\"worktitle\" style=\"padding: 19px; color:yellow\">\n    <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:yellow;\">{{ workTitle.getTitle() }}</a> <a scroll-to-top href=\"\" ng-click=\"$root.showOverlayCopyInfo = true\" style=\"color:yellow;\">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}}) <span style=\"color:yellow\">(Selected)</span>\n  </span>\n\n</div>";
 
 /***/ }),
 /* 211 */
