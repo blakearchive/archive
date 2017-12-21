@@ -1,6 +1,8 @@
-.section-group-workinfo {
-  padding: 1em 14em 2em;
-  font-size: 17px;
+@media (min-width: 768px) {
+  .section-group-workinfo {
+    padding: 1em 14em 2em;
+    font-size: 17px;
+  }
 }
 .containerForRelatedInOverlay {
   margin-right: auto;
