@@ -56,7 +56,7 @@ On Unix:
 
 ### Clone Repo & Install modules/packages/etc
 ```bash
-sudo apt-get install libxml2-dev libxslt-dev gcc zlib1g-dev
+[Unix only] sudo apt-get install libxml2-dev libxslt-dev gcc zlib1g-dev
 easy_install pip #install pip
 pip install virtualenv #install virtualenv
 cd /place/where/you/want/blake/to/live # you do not need to make a dir, that is the next step
