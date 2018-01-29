@@ -84,36 +84,36 @@
             <!-- for everything else -->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null} track by $index" ng-if="read.bds.copy.bad_id != 'letters'">
                 <div ng-if="read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes' || read.apparatus == 'imagesonly' || read.apparatus == 'comparewith'" class="btn-group edit-object" role="group" style="margin-bottom:0px;margin-left:28px">
-                        <button tooltip="Diplomatic Transcription" tooltip-placement="bottom" type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px" ng-class="{'hover':read.apparatusArray[$index] == 'transcriptions'}" class="btn btn-default" ng-click="read.showIndividualTranscriptions($index)">
+                        <button tooltip="Diplomatic Transcription" tooltip-placement="bottom" type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px" ng-class="{'hover':read.apparatusArray[$index] == 'transcriptions'}" class="btn btn-default black-tooltip-arrow" ng-click="read.showIndividualTranscriptions($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:13px;"></span>
                             <span class="gr-title">Show diplomatic transcriptions</span>
                         </button>
-                        <button tooltip="Illustration Description" tooltip-placement="bottom" type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -121px" ng-class="{'hover':read.apparatusArray[$index] == 'illustrationdescriptions'}" class="btn btn-default" ng-click="read.showIndividualIllustrationDescriptions($index)">
+                        <button tooltip="Illustration Description" tooltip-placement="bottom" type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -121px" ng-class="{'hover':read.apparatusArray[$index] == 'illustrationdescriptions'}" class="btn btn-default black-tooltip-arrow" ng-click="read.showIndividualIllustrationDescriptions($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:14px"></span>
                             <span class="gr-title">Show illustration descriptions</span>
                         </button>
-                        <button tooltip="Editors' Notes" tooltip-placement="bottom" type="button" class="btn btn-default" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -245px" ng-class="{'hover':read.apparatusArray[$index] == 'editorsnotes'}" class="btn btn-gr-selection" ng-click="read.showIndividualEditorsNotes($index)">
+                        <button tooltip="Editors' Notes" tooltip-placement="bottom" type="button" class="btn btn-default black-tooltip-arrow" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -245px" ng-class="{'hover':read.apparatusArray[$index] == 'editorsnotes'}" class="btn btn-gr-selection" ng-click="read.showIndividualEditorsNotes($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:13px"></span>
                             <span class="gr-title">Show editors' notes</span>
                         </button>
-                        <button tooltip="Add to Lightbox" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6;background-image: url('/static/img/global/edit-icons.png');background-repeat: no-repeat;background-position:2px 3px;background-size:20px" ng-class="{ 'hover':read.apparatusArray[$index] == 'lightbox'} " class="btn btn-gr-selection " ng-click="read.addToLightBox(o) ">
+                        <button tooltip="Add to Lightbox" tooltip-placement="bottom" type="button " class="btn btn-default black-tooltip-arrow" style="height:21px;line-height:0.6;background-image: url('/static/img/global/edit-icons.png');background-repeat: no-repeat;background-position:2px 3px;background-size:20px" ng-class="{ 'hover':read.apparatusArray[$index] == 'lightbox'} " class="btn btn-gr-selection " ng-click="read.addToLightBox(o) ">
                             <span class="gr-abbreviation " style="height:21px;font-size:13px "></span>
                             <span class="gr-title ">Add to lightbox</span>
                         </button>
 
-                        <button ng-if="read.apparatus != 'comparewith'" tooltip="Objects from the Same Matrix" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'samematrix'} " class="btn btn-gr-selection " ng-click="read.showObjectsSameMatrix($index,o) ">
+                        <button ng-if="read.apparatus != 'comparewith'" tooltip="Objects from the Same Matrix" tooltip-placement="bottom" type="button " class="btn btn-default black-tooltip-arrow" style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'samematrix'} " class="btn btn-gr-selection " ng-click="read.showObjectsSameMatrix($index,o) ">
                             <span class="gr-abbreviation " style="height:21px;font-size:13px ">M</span>
                             <span class="gr-title ">Show objects from the same matrix</span>
                         </button>
-                        <button ng-if="read.apparatus != 'comparewith'" tooltip="Objects from the Same Production Sequence" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'productionsequence'} " class="btn btn-gr-selection " ng-click="read.showObjectsProductionSequence($index,o) ">
+                        <button ng-if="read.apparatus != 'comparewith'" tooltip="Objects from the Same Production Sequence" tooltip-placement="bottom" type="button " class="btn btn-default black-tooltip-arrow" style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'productionsequence'} " class="btn btn-gr-selection " ng-click="read.showObjectsProductionSequence($index,o) ">
                             <span class="gr-abbreviation " style="height:21px;font-size:13px ">PS</span>
                             <span class="gr-title ">Show objects from the same production sequence</span>
                         </button>
-                        <button ng-if="read.apparatus != 'comparewith'" tooltip="Objects with a Similar Design" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'motif'} " class="btn btn-gr-selection " ng-click="read.showObjectsWithSimilarDesign($index,o) ">
+                        <button ng-if="read.apparatus != 'comparewith'" tooltip="Objects with a Similar Design" tooltip-placement="bottom" type="button " class="btn btn-default black-tooltip-arrow" style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'motif'} " class="btn btn-gr-selection " ng-click="read.showObjectsWithSimilarDesign($index,o) ">
                             <span class="gr-abbreviation " style="height:21px;font-size:13px ">D</span>
                             <span class="gr-title ">Show objects with a similar design</span>
                         </button>
-                        <button ng-if="read.apparatus != 'comparewith'" tooltip="Related Texts or Images" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'textreference'} " class="btn btn-gr-selection " ng-click="read.showObjectsTextReference($index,o) ">
+                        <button ng-if="read.apparatus != 'comparewith'" tooltip="Related Texts or Images" tooltip-placement="bottom" type="button " class="btn btn-default black-tooltip-arrow" style="height:21px;line-height:0.6 " ng-class="{ 'hover':read.apparatusArray[$index] == 'textreference'} " class="btn btn-gr-selection " ng-click="read.showObjectsTextReference($index,o) ">
                             <span class="gr-abbreviation " style="height:21px;font-size:13px ">T</span>
                             <span class="gr-title ">Show objects with textual references</span>
                         </button>
