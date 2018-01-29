@@ -1,0 +1,185 @@
+<!DOCTYPE html><html dir="ltr" lang="en" class=' win pc standard psc_dir-ltr psc_form-xlarge'>
+<!--
+Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
+Others/0 ToolsRel:8.55.07 Portal Target URL: https%3A%2F%2Fcsrpt.cc.unc.edu%2Fpsc%2Fcsreportsns%2FEMPLOYEE%2FUNC_CSNS%2Fc%2FCOMMUNITY_ACCESS.CLASS_SEARCH.GBL%3FQRB%3D840-->
+<head>
+<script type="text/javascript">
+document.domain = "cc.unc.edu";
+var bPSHTMLtemplate = true;var nLastAccessTime = (new Date()).getTime();
+var disablePNSubscriptions = 1;
+var ptAppliedTemplateId = "NC_SIGNOUT_TEMPLATE";
+</script>
+
+<link rel="stylesheet" href="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PSSTYLEREQ_2.css" type="text/css">
+<link rel="stylesheet" href="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PSSTYLEDEF_TANGERINE_1.css" type="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PSSTYLEREQ_2.css" type="text/css">
+<link rel="stylesheet" href="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PSSTYLEDEF_TANGERINE_1.css" type="text/css">
+<script type="text/javascript" language='JavaScript'>
+document.domain = "cc.unc.edu";
+</script>
+
+<script type="text/javascript" language='JavaScript'>
+var totalTimeoutMilliseconds = 2073600000; var warningTimeoutMilliseconds = 2073600000; var timeOutURL = 'https://csrpt.cc.unc.edu/psp/csreportsns/EMPLOYEE/UNC_CS_RPT/?cmd=expire';var timeoutWarningPageURL = 'https://csrpt.cc.unc.edu/psc/csreportsns/EMPLOYEE/UNC_CS_RPT/s/WEBLIB_TIMEOUT.PT_TIMEOUTWARNING.FieldFormula.IScript_TIMEOUTWARNING';var sRCRequestURL = 'https://csrpt.cc.unc.edu/psc/csreportsns/EMPLOYEE/UNC_CS_RPT/s/WEBLIB_PTRC.ISCRIPT1.FieldFormula.IScript_RC_REQUEST';
+</script>
+
+<script type="text/javascript" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_COMMON_MIN_8.js">
+</script>
+
+<script type="text/javascript" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_AJAX_NET_MIN_1.js">
+</script>
+
+<script type="text/javascript" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_ISCROSSDOMAINNS6_MIN_1.js">
+</script>
+
+<script type="text/javascript" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_SAVEWARNINGSCRIPT_MIN_1.js">
+</script>
+
+<script type="text/javascript" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_IFRAME_HDR_JS_MIN_1.js">
+</script>
+
+<script type="text/javascript" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_RC_SERVICE_JS_MIN_1.js">
+</script>
+
+<script type="text/javascript" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_RC_JS_MIN_1.js">
+</script>
+
+<script type="text/javascript" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_RC_MENU_JS_MIN_1.js">
+</script>
+
+<meta http-equiv='content-type' content='text/html; charset='>
+<script type="text/javascript">
+</script>
+
+<script language="JavaScript" type="text/javascript">
+if (("" != "") && (document.getElementById(""))) {
+ PTRTE_CheckImages("https://csrpt.cc.unc.edu/psc/csreportsns/EMPLOYEE/UNC_CS_RPT/s/WEBLIB_NC.TEMPLATE_FUNC.FieldFormula.IScript_NC_UniHeader_Frame", "", "");} else if (typeof ptEvent != "undefined") {
+ ptEvent.load(function() {PTRTE_CheckImages("https://csrpt.cc.unc.edu/psc/csreportsns/EMPLOYEE/UNC_CS_RPT/s/WEBLIB_NC.TEMPLATE_FUNC.FieldFormula.IScript_NC_UniHeader_Frame", "", "");});}
+</script>
+
+<script type="text/javascript" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_COMMON_MIN_8.js">
+</script>
+
+<script type="text/javascript" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_AJAX_NET_MIN_1.js">
+</script>
+
+<script type="text/javascript" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_IFRAME_HDR_JS_MIN_1.js">
+</script>
+
+<title>Public Class Search</title>
+</head>
+<body class="PSPAGE" id="ptifrmtemplate">
+<div><!--Begin pagelet: UniversalNavigation URL: https%3A%2F%2Fcsrpt.cc.unc.edu%2Fpsc%2Fcsreportsns%2FEMPLOYEE%2FUNC_CS_RPT%2Fs%2FWEBLIB_NC.TEMPLATE_FUNC.FieldFormula.IScript_NC_UniHeader_Frame%3Fc%3Dn8pSwCkiVwO0dBfPblf1gDyrUgapIJ9US9YUi%252fraNpxZ91TwBVtYLA%253d%253d-->
+<div class="ptprtlcontainer">
+<header id="pthdr2container" role="banner" aria-label="">
+<div id="pthdr2logoswan">&nbsp;</div>
+
+<div id="pthdr2greeting"><span class="greeting">UNC_CLASS_SEARCH on RPT</span></div>
+
+<dl id="pthdr2links">
+<dt><a id="pthdr2logout" href="https://csrpt.cc.unc.edu/psp/csreportsns/EMPLOYEE/UNC_CS_RPT/?cmd=logout">Sign out</a></dt>
+</dl>
+</header>
+
+<!-- script type="text/javascript">if (typeof(buildDropDownI) !== "undefined"){buildDropDownI('','');} script --></div>
+
+<!--End pagelet: UniversalNavigation --></div>
+
+<div id="ptifrmcontent">
+<div id="ptifrmtarget"><iframe id="ptifrmtgtframe" name="TargetContent" title="Main Content" frameborder="0" scrolling="auto" onload="ptrc.onLoadTC()" src="https://csrpt.cc.unc.edu/psc/csreportsns/EMPLOYEE/UNC_CSNS/c/COMMUNITY_ACCESS.CLASS_SEARCH.GBL?QRB=840&amp;PortalActualURL=https%3a%2f%2fcsrpt.cc.unc.edu%2fpsc%2fcsreportsns%2fEMPLOYEE%2fUNC_CSNS%2fc%2fCOMMUNITY_ACCESS.CLASS_SEARCH.GBL%3fQRB%3d840&amp;PortalContentURL=https%3a%2f%2fcsrpt.cc.unc.edu%2fpsc%2fcsreportsns%2fEMPLOYEE%2fUNC_CSNS%2fc%2fCOMMUNITY_ACCESS.CLASS_SEARCH.GBL%3fQRB%3d840&amp;PortalContentProvider=UNC_CSNS&amp;PortalCRefLabel=Public%20Class%20Search&amp;PortalRegistryName=EMPLOYEE&amp;PortalServletURI=https%3a%2f%2fcsrpt.cc.unc.edu%2fpsp%2fcsreportsns%2f&amp;PortalURI=https%3a%2f%2fcsrpt.cc.unc.edu%2fpsc%2fcsreportsns%2f&amp;PortalHostNode=UNC_CS_RPT&amp;NoCrumbs=yes"></iframe></div>
+
+<div id="ptifrmrc" class="ptifrmrcstd">
+<div id="ptrcTCSpacer">&nbsp;</div>
+
+<div id="ptifrmresizeupmask">&nbsp;</div>
+
+<div id="ptifrmsep">
+<div id="ptifrmrchandle" class="ptifrmhandle">&nbsp;</div>
+</div>
+
+<div id="ptifrmresizedownmask">&nbsp;</div>
+
+<table id="ptrctitlebar" class="ptrctitlebar" cols="6">
+<tr>
+<td width="16"><a id="ptrccollapse_expand" class="ptrcexpand" title="Collapse Related Content" tabindex="0" onclick="ptrc.rcBodyToggle();" onkeypress="if (event.keyCode != 13) return; ptrc.rcBodyToggle();">&nbsp;</a></td>
+<td align="left" width="180">
+<h2 class="ptrctitlebar">Related Content</h2>
+</td>
+<td align="right" valign="bottom">
+<div id="rcMenuOnRC">&nbsp;</div>
+</td>
+<td align="right" colspan="1" width="17">&nbsp;</td>
+<td align="right" colspan="1" width="70"><a onclick="ptrc.onRefresh();" onmouseover="ptrc.onHoverRefresh();" onmouseout="ptrc.onMouseoutRefresh();" onkeydown="if (event.keyCode != 13) return; ptrc.onRefresh();" tabindex="0"><img class="ptrcimg ptrcpgltrefresh" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_REFRESH_NEW_1.png" id="ptrcrefresh" alt="Refresh"> <img class="ptrcimg ptrcpgltrefresh" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_REFRESH_ONHOVER_1.png" id="ptrcrefreshonhover" alt="Refresh" style="display:none"></a> <a aria-haspopup="true" tabindex="0" id="ptrcdropdownicon_RelatedContent" onclick=" ptrc.mopen(event);" onkeydown="ptrc.mkeyevents(event);" onmouseout="ptrc.mclosetime();" title="Pagelet Settings"><img id="ptsrc_dropdownicon_RelatedContent" class="ptrcPgltcontrolsdropdown" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PTAL_PGLT_DROPDOWN_1.gif" alt="Pagelet Settings" aria-hidden="true"></a> <!-- pagelet controls dropdown--> 
+
+<div id="ptrcDropDowndiv_RelatedContent" class="ptrcPgltControls">
+<ul id="ptrcControls_RelatedContent" class="ptrcPgltControls ptrcPgltcontrolshadowabove">
+<li>
+<div id="ptrcDropdown_RelatedContent" onmouseover="javascript:ptrc.mcancelclosetime()" onmouseout="javascript:ptrc.mclosetime()" style="z-index:200" aria-labelledby="ptrcdropdownicon_RelatedContent" role="menu"><a role="menuitem" onclick="ptrc.onNewWindow();" onkeydown="ptrc.marrowkeys(event,'newwin');" class="ptrcimg" tabindex="0" id="ptrcnewwin">New Window</a> <a role="menuitem" onclick="ptrc.onHideRC('true');" onkeydown="ptrc.marrowkeys(event,'hide');" class="ptrcimg" tabindex="0" id="ptrcclose">Close</a></div>
+</li>
+</ul>
+</div>
+
+<!-- pagelet controls finished--></td>
+<td align="right" colspan="1" width="20">&nbsp;</td>
+</tr>
+</table>
+
+<div id="ptrctitleline">&nbsp;</div>
+
+<iframe name="RelatedContent" id="RelatedContent" title="Related Content" frameborder="0" scrolling="no" onload="ptrc.onLoadRC()" onmouseover="setupTimeout2()" src=""></iframe></div>
+
+<div class="vRCPgltAreaContainer vRCPgltArea_hidden" id="vRCPgltAreaContainer">
+<div class="vRCPgltArea vRCPgltArea_docked" id="vRCPgltArea" style="right: 13px;">
+<table height="10" cellspacing="0" cellpadding="0" border="0" width="10" class="ltr">
+<tr>
+<td height="100%" align="center" width="100%" valign="bottom" class="vRCNoPadding">
+<table cellspacing="0" cellpadding="0" border="0" class="vRCNoPadding">
+<tr>
+<td>
+<table cellspacing="0" cellpadding="0" border="0" class="vRCPgltAreaBody" id="vRCPgltAreaBody">
+<tr>
+<td valign="top" class="vRCPgltAreaResizeBar" id="vRCPgltAreaHideContainer"><a onclick="if ((typeof RCPage != 'undefined') &amp;&amp; (RCPage)) RCPage.onHidePageletArea();" href="javascript:void(0)" tabindex="0" class="PSHYPERLINK" name="ptalPgltAreaHide" id="vRCPgltAreaHide" title="Collapse Related Content"><img hspace="0" height="24" border="0" width="21" vspace="0" class="vRCActionIcon vRCCollapseicon vRCPgltAreaHideIcon" alt="Collapse Related Content" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_RC_COLLAPSE_NEW_1.gif"></a></td>
+<td valign="middle" class="vRCPgltAreaResizeBar vRCPgltAreaResize" id="vRCPgltAreaResizeBar">
+<div class="vRCPgltAreaResizeMiddlediv">&nbsp;</div>
+</td>
+<td align="center" valign="top" class="vRCPgltAreaBorderTopMiddle">
+<table cellspacing="0" cellpadding="0" border="0" width="100%" class="vRCPgltAreaHeader" id="vRCPgltAreaHeader">
+<tr>
+<td valign="bottom" class="vRCPgltAreaGroupsBar">
+<div class="vRCPageletGroupsDiv" id="vRCPageletGroupsDiv">
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td nowrap="nowrap">
+<div id="SrcMenuOnRC" class="vRCHidden">&nbsp;</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+<div class="vRCPgltAreaFrameDiv" id="vRCPgltAreaFrameDiv"><iframe name="SRelatedContent" id="SRelatedContent" title="Related Content" frameborder="0" scrolling="no" onmouseover="setupTimeout2()" onload="ptrc.onLoadRC()" src=""></iframe></div>
+</td>
+</tr>
+</table>
+</td>
+<td valign="top" class="vRCPgltAreaBodyAnchor vRCPgltAreaBorderTopLeft vRCHidden" id="vRCPgltAreaBodyAnchor"><a onclick="if ((typeof RCPage != 'undefined') &amp;&amp; (RCPage)) RCPage.onShowPageletArea();" href="javascript:void(0)" tabindex="0" class="PSHYPERLINK" title="Expand Related Content" name="ptalPgltAreaShow" id="vRCPgltAreaShow" style="display: none;"><img hspace="0" height="22" border="0" width="14" vspace="0" class="vRCActionIcon vRCExpandicon vRCPgltAreaShowIcon" alt="Expand Related Content" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_RC_EXPAND_NEW_1.gif"></a></td>
+<td valign="middle" class="vRCPgltAreaBodyAnchor vRCPgltAreaBorderTopLeft vRCPgltAreaBar" id="vRCPgltAreaBodyShow">
+<div class="vRCPgltAreaResizeMiddlediv">&nbsp;</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<script type="text/javascript" src="https://csrpt.cc.unc.edu/cs/csreportsns/cache/newd/PT_HNAV_TEMPLATE_JS_MIN_1.js">
+</script>
+</div>
+</body>
+</html>
+
