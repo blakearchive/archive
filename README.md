@@ -11,7 +11,6 @@ On Mac:
     * Or, in terminal, run ```'/Applications/Postgres.app/Contents/Versions/9.5/bin'/psql -p5432```
         * -p = port number
 3. Setup your blake database
-    * sudo -u postgres psql template1
     * In the postgres terminal, run ```CREATE DATABASE blake_archive;```
 
 On Unix:
@@ -22,8 +21,9 @@ On Unix:
     * ALTER USER postgres with encrypted password 'blake_archive';
 3. Restart postgresql service 
     * sudo systemctl restart postgresql.service
-4. Setup your blake database
+4. Start psql
     * sudo -u postgres psql template1
+4. Setup your blake database
     * In the postgres terminal, run ```CREATE DATABASE blake_archive;```
 
 
