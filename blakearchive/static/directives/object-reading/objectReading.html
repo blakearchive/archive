@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <!-- for everything else -->
+            <!-- for everything else --> <!--testing commit name-->
             <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null} track by $index" ng-if="read.bds.copy.bad_id != 'letters'">
                 <div ng-if="read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes' || read.apparatus == 'imagesonly' || read.apparatus == 'comparewith'" class="btn-group edit-object" role="group" style="margin-bottom:0px;margin-left:28px">
                         <button tooltip="Diplomatic Transcription" tooltip-placement="bottom" type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px" ng-class="{'hover':read.apparatusArray[$index] == 'transcriptions'}" class="btn btn-default black-tooltip-arrow" ng-click="read.showIndividualTranscriptions($index)">
