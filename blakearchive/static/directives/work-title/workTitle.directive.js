@@ -52,7 +52,7 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
         if(vm.bds.work.virtual){
             return '';
         } else if(vm.bds.copy.archive_set_id != null) {
-            return  ', '+vm.bds.copy.archive_set_id;
+            return  vm.bds.copy.archive_set_id;
         } else {
             return vm.bds.copy.archive_copy_id == null ? '' : 'Copy '+vm.bds.copy.archive_copy_id;
         }
