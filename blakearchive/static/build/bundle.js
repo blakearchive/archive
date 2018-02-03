@@ -33210,7 +33210,7 @@ angular.module("blake").factory("SearchService", ["worktitleService", "lightbox_
                 let string = `<strong>${results[workIndex][0].title} (Composed ${results[workIndex][0].composition_date_string})</strong><br>`,
                     endstring = '';
 
-                if (label == 'Copy Information') {
+                if (label == 'Copy/Set Information') {
                     if (results[workIndex][2].length > 1 && !results[workIndex][0].virtual) {
                         string += '(' + results[workIndex][2].length + ' Copies' + ')';
                     }
