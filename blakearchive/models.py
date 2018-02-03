@@ -68,6 +68,7 @@ class BlakeObject(db.Model):
     copy_title = db.Column(db.UnicodeText)
     virtualwork_title = db.Column(db.UnicodeText)
     archive_copy_id = db.Column(db.Text)
+    archive_set_id = db.Column(db.Text)
     virtualwork_id = db.Column(db.Text)
     copy_institution = db.Column(db.Text)
     copy_composition_date = db.Column(db.Integer)
@@ -149,6 +150,7 @@ class BlakeObject(db.Model):
             "virtualwork_title": self.virtualwork_title,
             "virtualwork_id": self.virtualwork_id,
             "archive_copy_id": self.archive_copy_id,
+            "archive_set_id": self.archive_set_id,
             "copy_institution": self.copy_institution,
             "copy_composition_date": self.copy_composition_date,
             "copy_composition_date_string": self.copy_composition_date_string,
@@ -181,6 +183,7 @@ class BlakeCopy(db.Model):
     work_id = db.Column(db.Integer, db.ForeignKey("work.work_id"))
     bad_id = db.Column(db.UnicodeText, index=True)
     archive_copy_id = db.Column(db.Text)
+    archive_set_id = db.Column(db.Text)
     header = db.Column(JSON)
     source = db.Column(JSON)
     header_html = db.Column(db.Text)
@@ -205,6 +208,7 @@ class BlakeCopy(db.Model):
         return {
             "copy_id": self.copy_id,
             "archive_copy_id": self.archive_copy_id,
+            "archive_set_id": self.archive_set_id,
             "work_id": self.work_id,
             "bad_id": self.bad_id,
             "source": self.source,
