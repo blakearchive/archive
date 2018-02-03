@@ -499,10 +499,10 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                     endstring = ')';
                 }
                 if(results[workIndex][2].length > 1 && !results[workIndex][0].virtual){
-                    string += ' across '+results[workIndex][2].length+ ' Copies';
+                    string += ' across '+results[workIndex][2].length+ ' Copies/Sets';
                 }
                 if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
-                    string += ' across '+results[workIndex][2].length+ ' Copy';
+                    string += ' across '+results[workIndex][2].length+ ' Copy/Set';
                 }
 
                 string += endstring;
