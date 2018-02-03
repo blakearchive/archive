@@ -271,6 +271,7 @@ class BlakeCopyImporter(BlakeImporter):
         copy.print_date_value = self.get_printdate_value(root)
         copy.print_date = self.extract_date(copy.print_date_string)
         copy.archive_copy_id = root.get("copy")
+        copy.archive_set_id = root.get("set")
         copy.header = self.get_header(root)
         copy.source = self.get_source(root)
         copy.header_html = self.get_header_html(root)
@@ -292,6 +293,7 @@ class BlakeCopyImporter(BlakeImporter):
             obj.copy_id = copy.copy_id
             obj.copy_title = copy.title
             obj.archive_copy_id = copy.archive_copy_id
+            obj.archive_set_id = copy.archive_set_id
             obj.copy_institution = copy.institution
             obj.copy_composition_date = copy.composition_date
             obj.copy_composition_date_string = copy.composition_date_string
