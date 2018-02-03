@@ -18,6 +18,8 @@ angular.module('blake').controller("CopyTabsController", function ($rootScope,Bl
                     } else {
                         return 'Object';
                     }
+                } else if(vm.bds.copy.archive_set_id != null) {
+                    return 'Set';
                 } else {
                     return 'Copy';
                 }
