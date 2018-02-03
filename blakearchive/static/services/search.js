@@ -482,10 +482,10 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
 
                 if(label == 'Copy/Set Information') {
                     if(results[workIndex][2].length > 1 && !results[workIndex][0].virtual){
-                        string += '(' + results[workIndex][2].length+ ' Copies' + ')';
+                        string += '(' + results[workIndex][2].length+ ' Copies/Sets' + ')';
                     }
                     if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
-                        string += '(' + results[workIndex][2].length+ ' Copy' + ')';
+                        string += '(' + results[workIndex][2].length+ ' Copy/Set' + ')';
                     }
                     return string;
                 }
