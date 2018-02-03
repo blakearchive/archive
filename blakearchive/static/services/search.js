@@ -617,7 +617,11 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                 case 'object':
                     return resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].full_object_id;
                 case 'copy':
-                    return 'Copy ' + resultTree[s.selectedWork][2][s.selectedCopy][0].archive_copy_id;
+                    if(resultTree[s.selectedWork][2][s.selectedCopy][0].archive_set_id != null) {
+                        return resultTree[s.selectedWork][2][s.selectedCopy][0].archive_set_id;
+                    } else {
+                        return 'Copy ' + resultTree[s.selectedWork][2][s.selectedCopy][0].archive_copy_id;
+                    }
             }
         } catch (e) {}
     };
