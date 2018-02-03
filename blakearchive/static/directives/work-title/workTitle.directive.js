@@ -48,7 +48,7 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
     }
 
     vm.getCopyPhrase = function() {
-        console.log(vm.bds.copy);
+        //console.log(vm.bds.copy);
         if(vm.bds.work.virtual){
             return '';
         } else if(vm.bds.copy.archive_set_id != null) {

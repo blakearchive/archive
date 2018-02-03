@@ -27084,6 +27084,8 @@ angular.module('blake').controller("CopyTabsController", ["$rootScope", "BlakeDa
                 } else {
                     return 'Object';
                 }
+            } else if (vm.bds.copy.archive_set_id != null) {
+                return 'Set';
             } else {
                 return 'Copy';
             }
@@ -29576,7 +29578,7 @@ angular.module("blake").controller("WorkTitleController", ["$rootScope", "$route
     };
 
     vm.getCopyPhrase = function () {
-        console.log(vm.bds.copy);
+        //console.log(vm.bds.copy);
         if (vm.bds.work.virtual) {
             return '';
         } else if (vm.bds.copy.archive_set_id != null) {
