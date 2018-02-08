@@ -38,7 +38,7 @@ def main():
                     "copy_id": blake_object.copy_bad_id,
                     "characteristics": blake_object.characteristics,
                     "components": json.dumps(blake_object.components),
-                    "illustration_description": json.dumps(blake_object.illustration_description + blake_object.components),
+                    "illustration_description": json.dumps(blake_object.illustration_description),
                     "text": json.dumps(blake_object.text),
                     "copy_title": blake_object.copy.title,
                     "copy_institution": blake_object.copy.institution,
