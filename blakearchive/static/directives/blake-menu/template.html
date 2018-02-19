@@ -10,7 +10,7 @@
       <span ng-if="bm.rs.showmePage && bm.rs.showmeType == 'note'" class="gr-display">EDITORS' NOTES</span>
       <span ng-if="bm.rs.showmePage && bm.rs.showmeType == 'enlargement'" class="gr-display">ENLARGEMENT</span>
       <span ng-if="bm.rs.showmePage && bm.rs.showmeType == 'truesize'" class="gr-display">TRUE SIZE</span>
-      <button ng-click="bm.rs.worksNavState = !bm.rs.worksNavState" type="button" class="collapse-archive" ng-class="{'hidden':bm.rs.showmePage, 'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}">
+      <button tooltip="Open/Close Table of Contents" tooltip-placement="bottom" ng-click="bm.rs.worksNavState = !bm.rs.worksNavState" type="button" class="collapse-archive" ng-class="{'hidden':bm.rs.showmePage, 'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
