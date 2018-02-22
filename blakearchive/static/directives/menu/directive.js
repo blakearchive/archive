@@ -7,16 +7,20 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
 
         $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
     });
-    if(angular.isUndefined($sessionStorage.menus)){
+    if(angular.isUndefined($sessionStorage.menus) && angular.isUndefined($sessionStorage.allWorksAlpha) && angular.isUndefined($sessionStorage.allWorksCompDateValue)){
         BlakeDataService.getWorks().then(function (data) {
             vm.organizeMenus(data);
-            vm.alphabetizeAll(data);
         });
         BlakeDataService.getWorks().then(function (data2) {
-            vm.orderByCompDateAll(data2);
+            vm.alphabetizeAll(data2);
+        });
+        BlakeDataService.getWorks().then(function (data3) {
+            vm.orderByCompDateAll(data3);
         });
     } else {
         vm.lists = $sessionStorage.menus;
+        vm.allWorksAlpha = $sessionStorage.allWorksAlpha;
+        vm.allWorksCompDateValue = $sessionStorage.allWorksCompDateValue;
         //console.log(vm.lists);
     }
 
@@ -90,7 +94,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         
         vm.allWorksAlpha = data;
         console.log(vm.allWorksAlpha);
-
+        $sessionStorage.allWorksAlpha = vm.allWorksAlpha;
         
     }
 
@@ -105,6 +109,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         vm.allWorksCompDateValue = data;
 
         console.log(vm.allWorksCompDateValue);
+        $sessionStorage.allWorksCompDateValue = vm.allWorksCompDateValue;
     }
 
     vm.organizeMenus = function(data) {
