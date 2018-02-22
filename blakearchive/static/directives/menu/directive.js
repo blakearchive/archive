@@ -10,6 +10,10 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
     if(angular.isUndefined($sessionStorage.menus)){
         BlakeDataService.getWorks().then(function (data) {
             vm.organizeMenus(data);
+            vm.alphabetizeAll(data);
+        });
+        BlakeDataService.getWorks().then(function (data2) {
+            vm.orderByCompDateAll(data2);
         });
     } else {
         vm.lists = $sessionStorage.menus;
@@ -74,6 +78,34 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                 return false;
         }
     };
+
+    vm.alphabetizeAll = function(data) {
+
+        if (!data) { return; }
+        data.sort(function(a, b) { 
+            if(a.menuTitle < b.menuTitle) return -1;
+            if(a.menuTitle > b.menuTitle) return 1;
+            return 0;
+        });
+        
+        vm.allWorksAlpha = data;
+        console.log(vm.allWorksAlpha);
+
+        
+    }
+
+    vm.orderByCompDateAll = function(data) {
+        if (!data) { return; }
+        data.sort(function(a, b) { 
+            if(a.composition_date_value < b.composition_date_value) return -1;
+            if(a.composition_date_value > b.composition_date_value) return 1;
+            return 0;
+        });
+
+        vm.allWorksCompDateValue = data;
+
+        console.log(vm.allWorksCompDateValue);
+    }
 
     vm.organizeMenus = function(data) {
         if (!data) { return; }

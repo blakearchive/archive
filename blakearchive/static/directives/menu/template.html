@@ -70,4 +70,19 @@
       <li ng-if="menu.lists.manuscripts_typo[0].typographic[0] == null" class="empty-subcat">—</li>
     </ul>
   </li>
+  <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">All
+    <span>Works</span></a>
+    <ul class="dropdown-menu" role="menu">
+      <div style="height:550px; overflow-y:scroll">
+        <li role="presentation" class="dropdown-header">Alphabetical Order</li>
+      <li style="padding-left:20px" ng-repeat="workAlpha in menu.allWorksAlpha">
+        <a ng-if="workAlpha != false && workAlpha.medium != 'exhibit'" style="color:#ccc" href="/work/{{ workAlpha.bad_id }}">{{ workAlpha.menuTitle }} (Composed {{ workAlpha.composition_date_string }})</a></li>
+      </div>
+      <div style="height:550px; overflow-y:scroll">
+        <li role="presentation" class="dropdown-header">Ordered by Composition Date</li>
+      <li style="padding-left:20px" ng-repeat="workCompDateValue in menu.allWorksCompDateValue">
+        <a ng-if="workCompDateValue != false && workCompDateValue.medium != 'exhibit'" style="color:#ccc" href="/work/{{ workCompDateValue.bad_id }}">{{ workCompDateValue.menuTitle }} (Composed {{ workCompDateValue.composition_date_string }})</a></li>
+      </div>
+    </ul>
+  </li>
 </ul>
