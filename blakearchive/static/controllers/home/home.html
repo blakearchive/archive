@@ -1,18 +1,23 @@
 <div id="home" class="container-fluid main" style="max-height:80vh;">
+
     <div class="row">
+    
         <div class="col-sm-2 col-xs-6 scroll-window" ng-repeat="(colKey, colVal) in home.columns">
             <div id="scroll-wrapper" style="margin-top: {{colVal.topOffset}}" class="scrolling">
                 <span class="object-container" ng-repeat="work in home.featured_works | filter: { column: colKey } track by $index">
-                      <!--<a href="/copy/{{ work.bad_id }}?descId={{work.desc_id}}">-->
+                      <a href="/copy/{{ work.bad_id }}?descId={{work.desc_id}}">
                           <img class="lazy-load" src="/static/img/featured/{{ work.dbi }}.100.jpg">
-                      <!--</a>-->
-                      <!--<a href="/copy/{{ work.bad_id }}?descId={{work.desc_id}}">-->
+                      </a>
+                      <a href="/copy/{{ work.bad_id }}?descId={{work.desc_id}}">
                           <span class="object-description">                           
                                 <span class="category">{{ work.title }}</span><div class="clearfix"></div><span class="object-no text-capitalize"><span class="copy-object">{{ work.byline }}</span></span>                           
                           </span>
-                      <!--</a>-->
+                      </a>
                 </span>
             </div>
         </div>
     </div>
+     <div style="position: absolute; z-index:99999; bottom: 15%; background:rgba(26, 138, 189, 0.85); left:0px; font-size:16px; color:rgba(255, 255, 255, 0.9); padding-left:3px; padding-right:3px">
+    Random Sample of Objects from the Archive
+  </div>
 </div>
