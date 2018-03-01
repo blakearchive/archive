@@ -8,6 +8,16 @@
 				footer="Copy {{copy.archive_copy_id}}, {{copy.source.objinfo.printdate['#text']}}, {{copy.institution}}">
 		</handprint-block>
 	</div>
+
+	<!-- mpi -->
+	<div ng-repeat="copy in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && copy.source.objinfo.printdate['#text'] && copy.archive_copy_id == 'mpi'">
+		<handprint-block
+				link="/copy/{{copy.bad_id}}"
+				image="{{ copy.image }}.100.jpg"
+				footer="Miscellaneous Plates and Impressions, {{copy.source.objinfo.printdate['#text']}}">
+		</handprint-block>
+	</div>
+
 	<div ng-repeat="copy in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && copy.source.objinfo.printdate['#text'] && !copy.archive_copy_id">
 		<handprint-block
 				link="/copy/{{copy.bad_id}}"
