@@ -10,7 +10,7 @@
             <div class="section-group-workinfo" ng-bind-html="workCtrl.bds.work.info"></div>
             <hr>
             <p class="text-center"><em>Dates are the probable dates of {{ workCtrl.bds.work.probable }}.</em>
-                <em ng-if="workCtrl.bds.work.work_id = 'vda'">The abbreviation 'mpi' stands for Miscellaneous Plates and Impressions.</em></p>
+                <span ng-if="workCtrl.bds.work.work_id = 'vda'"><em>{{workCtrl.bds.work.work_id}} {{workCtrol.bds.work.bad_id}} The abbreviation 'mpi' stands for Miscellaneous Plates and Impressions.</em></span></p>
             <work-copies></work-copies>
         </div>
     </article>
