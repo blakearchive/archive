@@ -54,7 +54,7 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
         } else if(vm.bds.copy.archive_set_id != null) {
             return  vm.bds.copy.archive_set_id;
         } else if(vm.bds.copy.archive_copy_id == 'mpi') {
-            return 'Misc. Plates and Impressions';
+            return 'Misc. Plates and Impressions.';
         } else {
             return vm.bds.copy.archive_copy_id == null ? '' : 'Copy '+vm.bds.copy.archive_copy_id;
         }
