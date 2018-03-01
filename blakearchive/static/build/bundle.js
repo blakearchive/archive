@@ -5837,15 +5837,35 @@ module.exports = function(src) {
 
 /***/ }),
 /* 24 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-function webpackEmptyContext(req) {
-	throw new Error("Cannot find module '" + req + "'.");
-}
-webpackEmptyContext.keys = function() { return []; };
-webpackEmptyContext.resolve = webpackEmptyContext;
-module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 24;
+var map = {
+	"./copy/copy.controller.js": 48,
+	"./exhibit/exhibit.controller.js": 49,
+	"./home/home.controller.js": 50,
+	"./lightbox/cropper.controller.js": 51,
+	"./lightbox/lightbox.controller.js": 52,
+	"./modal/modal.controller.js": 53,
+	"./search/search.controller.js": 54,
+	"./showme/showme.controller.js": 55,
+	"./staticpage/staticpage.controller.js": 56,
+	"./work/work.controller.js": 57
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 24;
 
 /***/ }),
 /* 25 */
@@ -25799,16 +25819,864 @@ __webpack_require__(23)(__webpack_require__(211))
 __webpack_require__(23)(__webpack_require__(212))
 
 /***/ }),
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */,
+/* 48 */
+/***/ (function(module, exports) {
+
+angular.module("blake").controller("CopyController", ["$scope", "$routeParams", "$rootScope", "$window", "$modal", "$cookies", "BlakeDataService", "imageManipulation", "CompareObjectsFactory", function ($scope, $routeParams, $rootScope, $window, $modal, $cookies, BlakeDataService, imageManipulation, CompareObjectsFactory) {
+    var vm = this;
+
+    $rootScope.worksNavState = false;
+    $rootScope.showWorkTitle = 'copy';
+    $rootScope.showOverlay = false;
+    $rootScope.zoom = false;
+    $rootScope.supplemental = false;
+    $rootScope.help = 'copy';
+    $rootScope.dpivalue = '100';
+    vm.bds = BlakeDataService;
+    vm.cof = CompareObjectsFactory;
+    $rootScope.doneSettingCopy = false;
+
+    if (!angular.isDefined($rootScope.persistentmode)) {
+        $rootScope.persistentmode = 'gallery';
+    }
+
+    BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.descId).then(function () {
+        vm.cof.resetComparisonObjects();
+        $rootScope.view.mode = 'object';
+        $rootScope.view.scope = 'image';
+        $rootScope.doneSettingCopy = true;
+    });
+
+    /*
+     * Toolbar manipulation
+     */
+    vm.showTools = true;
+
+    vm.toggleTray = function () {
+        $rootScope.worksNavState = false;
+        vm.trayOpen = !vm.trayOpen;
+    };
+
+    vm.toggleTools = function () {
+        vm.showTools = !vm.showTools;
+        $scope.$broadcast('copyCtrl::toggleTools', vm.showTools);
+    };
+
+    /*
+     * OVP Toolbar
+     */
+    vm.getObjectToTransform = function () {
+
+        let object = {};
+
+        if ($rootScope.view.mode == 'object') {
+            object = vm.bds.object;
+        }
+        if ($rootScope.view.mode == 'compare') {
+            object = vm.cof.main;
+        }
+
+        return object;
+    };
+
+    $scope.$on('clientPpi::savedPpi', function () {
+        if ($rootScope.persistentmode != 'reading') {
+            $window.open('/new-window/truesize/' + vm.bds.copy.bad_id + '?descId=' + vm.bds.object.desc_id, '_blank', 'width=800, height=600');
+        }
+    });
+
+    $scope.$on('change::selectedObject', function () {
+        imageManipulation.reset();
+    });
+}]);
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports) {
+
+angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams", "$rootScope", "$window", "$modal", "$cookies", "BlakeDataService", "imageManipulation", "CompareObjectsFactory", function ($scope, $routeParams, $rootScope, $window, $modal, $cookies, BlakeDataService, imageManipulation, CompareObjectsFactory) {
+    var vm = this;
+
+    $rootScope.worksNavState = false;
+    $rootScope.showWorkTitle = 'copy';
+    $rootScope.showOverlay = false;
+    $rootScope.zoom = false;
+    $rootScope.supplemental = false;
+    vm.bds = BlakeDataService;
+    vm.cof = CompareObjectsFactory;
+    $rootScope.persistentmode = 'reading';
+
+    if (!angular.isDefined($rootScope.persistentmode)) {
+        $rootScope.persistentmode = 'reading';
+    }
+
+    BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.descId).then(function () {
+        vm.cof.resetComparisonObjects();
+        $rootScope.view.mode = 'object';
+        $rootScope.view.scope = 'image';
+    });
+
+    /*
+     * Toolbar manipulation
+     */
+    vm.showTools = true;
+
+    vm.toggleTray = function () {
+        $rootScope.worksNavState = false;
+        vm.trayOpen = !vm.trayOpen;
+    };
+
+    vm.toggleTools = function () {
+        vm.showTools = !vm.showTools;
+        $scope.$broadcast('exhibitCtrl::toggleTools', vm.showTools);
+    };
+
+    /*
+     * OVP Toolbar
+     */
+    vm.getObjectToTransform = function () {
+
+        var object = {};
+
+        if ($rootScope.view.mode == 'object') {
+            object = vm.bds.object;
+        }
+        if ($rootScope.view.mode == 'compare') {
+            object = vm.cof.main;
+        }
+
+        return object;
+    };
+
+    vm.trueSizeOpen = function (object) {
+        if (!angular.isDefined($cookies.getObject('clientPpi'))) {
+            var clientDpiModalInstance = $modal.open({
+                template: '<client-ppi object="{{object}}"></client-ppi>',
+                controller: 'ModalController',
+                size: 'lg'
+            });
+        } else {
+            $window.open('/new-window/truesize/' + vm.bds.copy.bad_id + '?descId=' + object.desc_id, '_blank', 'width=800, height=600');
+        }
+    };
+
+    $scope.$on('clientPpi::savedPpi', function () {
+        $window.open('/new-window/truesize/' + vm.bds.copy.bad_id + '?descId=' + vm.bds.object.desc_id, '_blank', 'width=800, height=600');
+    });
+
+    vm.rotate = function () {
+        imageManipulation.rotate();
+    };
+
+    vm.zoom = function () {
+        $rootScope.zoom = !$rootScope.zoom;
+    };
+
+    vm.toggleTranscription = function () {
+        if ($rootScope.view.scope == 'image') {
+            $rootScope.view.scope = 'both';
+        } else {
+            $rootScope.view.scope = 'image';
+        }
+    };
+
+    vm.toggleSupplemental = function () {
+        $rootScope.supplemental = !$rootScope.supplemental;
+    };
+}]);
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports) {
+
+angular.module('blake').controller('HomeController', ["$scope", "$rootScope", "BlakeDataService", function ($scope, $rootScope, BlakeDataService) {
+    var vm = this;
+
+    $rootScope.worksNavState = true;
+    $rootScope.showWorkTitle = false;
+    $rootScope.help = 'home';
+
+    if (!angular.isDefined($rootScope.persistentmode)) {
+        $rootScope.persistentmode = 'gallery';
+    }
+
+    vm.columns = {
+        1: { 'topOffset': '-90px' },
+        2: { 'topOffset': '-20px' },
+        3: { 'topOffset': '-90px' },
+        4: { 'topOffset': '-20px' },
+        5: { 'topOffset': '-90px' },
+        6: { 'topOffset': '-20px' }
+    };
+
+    $scope.$on('scroll::scroll', function (event, scroll) {
+        $scope.$apply(function () {
+            vm.columns[1].topOffset = -90 - scroll.offset * 0.2 + 'px';
+            vm.columns[2].topOffset = -20 - scroll.offset * 0.4 + 'px';
+            vm.columns[3].topOffset = -90 - scroll.offset * 0.14 + 'px';
+            vm.columns[4].topOffset = -20 - scroll.offset * 0.4 + 'px';
+            vm.columns[5].topOffset = -90 - scroll.offset * 0.5 + 'px';
+            vm.columns[6].topOffset = -20 - scroll.offset * 0.3 + 'px';
+        });
+    });
+
+    BlakeDataService.getFeaturedWorks().then(function (results) {
+        let i = 0,
+            sci = 1,
+            used = [];
+        results.forEach(value => {
+
+            //FIXME
+            if (value.title == "LaocoÃ¶n") {
+                value.title = "Laocoön";
+            }
+            if (used.indexOf(value.bad_id) == -1) {
+                used.push(value.bad_id);
+                value.column = sci;
+                if (++i == 3) {
+                    ++sci;
+                    i = 0;
+                }
+            }
+        });
+        vm.featured_works = results;
+    });
+}]);
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports) {
+
+angular.module("blake").controller("CropperController", ["$rootScope", "$routeParams", "BlakeDataService", "$scope", "$timeout", "lightbox_service", "Fabric", "FabricCanvas", "FabricConstants", function ($rootScope, $routeParams, BlakeDataService, $scope, $timeout, lightbox_service, Fabric, FabricCanvas, FabricConstants) {
+  // use the fabric canvas service to get the active object...
+  $scope.cropper;
+  $scope.imageToCrop; // url of image to crop
+  $scope.imageToCropCaption;
+
+  lightbox_service.getImageToCrop().then(function (imageToCrop) {
+    $scope.imageToCrop = imageToCrop.url;
+    $scope.imageToCropCaption = imageToCrop.fullCaption;
+    //console.log("=>imageToCrop url is fetched from db!")
+  });
+
+  // bootstrap cropperjs to the image element...
+  // which must be done after the image has loaded...
+  $scope.init = function () {
+    console.log("=>init started!");
+
+    $scope.cropper = new Cropper($scope.imageElement, {
+      viewMode: 0,
+      autoCropArea: .4,
+      ratio: 1.0,
+      checkOrientation: false,
+      dragMode: 'move', /* crop/move/none - double click to switch on the fly*/
+      //preview: 'preview', /* element or selector - element will show preview of cropped image*/
+      zoom: function (e) {
+        // zoom event...
+        //console.log("zoomed: "+e.detail.ratio);
+        // prevent zooming past 1.0 ratio... i.e.: image's natural size
+        if (e.detail.ratio > 1.0) {
+          $scope.cropper.zoomTo(1.0);
+          e.preventDefault();
+        }
+      }
+    });
+    console.log("=>init done!");
+  };
+
+  $('#lb-crop-btn').on('click', function () {
+    // lightbox should listen for this value to change...
+    //window.localStorage.setItem('lbox-cropped-image',$scope.cropper.getCroppedCanvas().toDataURL());
+    var croppedImage = {};
+    croppedImage.id = 1;
+    croppedImage.fullCaption = $scope.imageToCropCaption;
+    croppedImage.url = $scope.cropper.getCroppedCanvas().toDataURL();
+
+    // the lightbox needs to be notified of this....
+    lightbox_service.setCroppedImage(croppedImage, window);
+    // hackerish way to notify the lightbox controller...
+    window.localStorage.setItem('image-cropped-indicator', Date.now());
+  });
+
+  // new Cropper is not available even on doc ready?!!!
+  $(document).ready(function () {
+    //console.log("== document is ready!");
+    $scope.imageElement = document.getElementById('image');
+
+    // when the page is loaded... wait for the image element to load
+    // prior to bootstrapping the cropper!
+    $('#image').on("load", function () {
+      //console.log("jquery detected image was loaded!")
+      $scope.init();
+    });;
+  });
+}]);
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports) {
+
+angular.module("blake").controller("LightboxController", ["$scope", "$rootScope", "$modal", "lightbox_service", "Fabric", "FabricCanvas", "FabricConstants", "worktitleService", function ($scope, $rootScope, $modal, lightbox_service, Fabric, FabricCanvas, FabricConstants, worktitleService) {
+  $scope.fabric = {};
+  $scope.loaded = 0; // number of images loaded
+  $scope.FabricConstants = FabricConstants;
+  $scope.maxHeight = 0;
+  $scope.showCaption = true;
+  $scope.caption = null;
+  $scope.focusedImage = null;
+
+  //lightbox_service.sayHi();
+
+  // init(): bootstraps fabric to the canvas element
+  // called on canvas::created event... see below
+  $scope.init = function () {
+    $scope.fabric = new Fabric({
+      JSONExportProperties: FabricConstants.JSONExportProperties,
+      textDefaults: FabricConstants.textDefaults,
+      shapeDefaults: FabricConstants.shapeDefaults,
+      json: {}
+    });
+
+    // Initial canvas size is the window size.
+    $scope.fabric.setCanvasSize(window.innerWidth, window.innerHeight);
+
+    // register event handlers...
+    FabricCanvas.getCanvas().on('object:added', $scope.handleObjectAdded);
+    FabricCanvas.getCanvas().on('object:selected', $scope.handleObjectSelected);
+    FabricCanvas.getCanvas().on('mouse:up', $scope.handleCanvasClicked);
+    FabricCanvas.getCanvas().on('mouse:over', $scope.handleMouseOver);
+    FabricCanvas.getCanvas().on('mouse:out', $scope.handleMouseOut);
+    $('#lb-crop-btn').on('click', $scope.cropButtonClicked);
+    $('#lb-trash-btn').on('click', $scope.trashButtonClicked);
+    $('#lb-info-btn').on('click', $scope.infoButtonClicked);
+    $('#lb-save-btn').on('click', $scope.saveButtonClicked);
+    $('#lb-load-btn').on('click', $scope.loadButtonClicked);
+    $('#lb-clear-btn').on('click', $scope.clearButtonClicked);
+    $('#lb-help').on('click', $scope.helpButtonClicked);
+    $('#loadfile').on('change', $scope.loadFileSelected);
+
+    // deal with cropping and cart changes ... we assume that the clients
+    // browser supports localStorage (html5)
+    window.addEventListener('storage', function (e) {
+      //console.log("storage event!"+e.type+":"+e.key+":"+e.newValue+":"+e.storageArea);
+      if (e.key == 'cart-item-added') {
+        if (e.newValue != null) {
+          // index of table row in newValue
+          console.log('==== item was added to the cart!!! ==> ' + e.newValue);
+
+          // === proves the new id is in the list
+          lightbox_service.listCartItems().then(function (data) {
+            var idx = 0;
+            var cartLen = data.length;
+            // get the last item
+            var item = data[cartLen - 1];
+            if (item) {
+              //console.log(" === cart Item: "+JSON.stringify(item));
+              $scope.addImageOnTheFly({
+                imageIdx: 2,
+                imageURL: item.url,
+                imageCaption: item.title + ": " + item.caption
+              });
+            };
+          });
+
+          // === getting item by id does not work!!!! why?
+          // lightbox_service.getCartItem(e.newValue).then(function(item){
+          //   console.log(" === cart Item: "+JSON.stringify(item));
+          // });
+        }
+      } else if (e.key == 'image-cropped-indicator') {
+        if (e.newValue != e.oldValue) {
+          console.log("An Image was cropped!");
+          //$scope.addImage(e.newValue,400);
+          //console.log("rootScope? "+$rootScope.croppedImage);
+
+          lightbox_service.getCroppedImage().then(function (cropped) {
+            //console.log('==== cropped item ==> '+JSON.stringify(cropped));
+            $scope.addImageOnTheFly({
+              imageIdx: 2,
+              imageURL: cropped.url,
+              imageCaption: cropped.fullCaption
+            });
+          });
+
+          // TODO: discuss this: new method: add the cropped image to the cart??
+          // it should be noted that the new value is no longer a dataUrl, instead
+          // it is a cart item object with url, title, and caption....
+          //CartStorageService.insert(JSON.parse(e.newValue));
+        }
+      }
+    }, false);
+
+    // for dev... may need to test if a load is required...
+    // not required on re-entry (when lbox window is already opened)
+    //$scope.loadFromCart();
+    lightbox_service.listCartItems().then(function (data) {
+      var idx = 0;
+      var cartLen = data.length;
+      data.forEach(function (item) {
+        $scope.addImageMyWay({
+          imageIdx: idx++,
+          imageURL: item.url,
+          imageCaption: item.title + ": " + item.caption,
+          cartLen: cartLen
+        });
+      });
+    });
+  }; /// ===> End of $scope.init()
+
+  // ===================================================================
+  // Methods dealing with loading images into fabric from the cart
+  // ===================================================================
+
+  // ===============
+  $scope.determineLoadingWidth = function (itemsCount, containerWidth) {
+    var divisor = 4;
+    if (itemsCount <= 4) divisor = itemsCount;
+    if (divisor < 1) divisor = 1;
+    return containerWidth / (divisor + 1);
+  };
+
+  // ===============
+  // $scope.addImage = function(imgUrl, width){
+  //   $scope.fabric.addImageScaledToWidth(imgUrl,width);
+  // };
+
+  // add images (from the cart) and place them just so....
+  // ... rows of 5 images
+  $scope.addImageMyWay = function (options) {
+    var imageURL = options.imageURL;
+    var sensibleWidth = Math.floor($scope.determineLoadingWidth(options.cartLen, window.innerWidth));
+
+    fabric.Image.fromURL(imageURL, function (image) {
+      var scale = sensibleWidth / image.width;
+      var scaledHeight = image.height * scale;
+
+      if (scaledHeight > $scope.maxHeight) {
+        // the next row is governed as a multiple of the scaled max height
+        $scope.maxHeight = scaledHeight;
+      }
+      var rowNum = Math.floor(options.imageIdx / 5);
+      var colNum = options.imageIdx % 5;
+
+      image.top = $scope.maxHeight * rowNum;
+      image.left = sensibleWidth * colNum;
+      image.scaleToWidth(sensibleWidth);
+      image.lockUniScaling = true;
+
+      image.alt = options.imageCaption;
+      //console.log("image alt: "+JSON.stringify(image.alt));
+
+      FabricCanvas.getCanvas().add(image.set({ alt: options.imageCaption }));
+    });
+  };
+  $scope.addImageOnTheFly = function (options) {
+    var imageURL = options.imageURL;
+    var sensibleWidth = options.width || 200;
+
+    fabric.Image.fromURL(imageURL, function (image) {
+      sensibleWidth = window.innerWidth / 3.5;
+      var scale = sensibleWidth / image.width;
+      var scaledHeight = image.height * scale;
+
+      if (scaledHeight > $scope.maxHeight) {
+        // the next row is governed as a multiple of the scaled max height
+        $scope.maxHeight = scaledHeight;
+      }
+
+      image.scaleToWidth(sensibleWidth);
+      image.lockUniScaling = true;
+      image.center();
+
+      image.alt = options.imageCaption;
+      //console.log("image alt: "+JSON.stringify(image.alt));
+
+      FabricCanvas.getCanvas().add(image.set({ alt: options.imageCaption }));
+    });
+  };
+
+  // ===================================================================
+  // Event Handlers.
+  // ===================================================================
+  $scope.handleObjectAdded = function (evt) {};
+  $scope.handleObjectSelected = function (evt) {
+    // when an image is selected, we need to enable control buttons in the nav!
+    var img = FabricCanvas.getCanvas().getActiveObject();
+    //console.log("selected alt: "+JSON.stringify(img.alt));
+    if (img != null) {
+      //console.log("this was selected: "+evt.target);
+      $scope.enableCropControls();
+      // also bring the image to the front
+      //console.log("bring the selected to the front!!!");
+      img.bringToFront();
+    }
+  };
+  $scope.handleCanvasClicked = function (evt) {
+    // when an image is selected, we need to enable control buttons in the nav!
+    if (FabricCanvas.getCanvas().getActiveObject() == null) {
+      //console.log("canvas clicked, active object deselected!");
+      $scope.disableCropControls();
+    }
+  };
+  $scope.handleMouseOver = function (evt) {
+    var t = evt.target;
+    if (t instanceof fabric.Image) {
+      //console.log("Moused over image: "+t.alt);
+      $scope.focusedImage = t;
+      document.getElementById('caption').innerHTML = t.alt;
+      document.getElementById('caption').style.display = 'block';
+    }
+  };
+  $scope.handleMouseOut = function (evt) {
+    if (evt.target instanceof fabric.Image) {
+      //console.log("Moused out image: "+evt.target.alt);
+      $scope.focusedImage = null;
+      document.getElementById('caption').style.display = 'none';
+    }
+  };
+  // disable/enable cropping controls is a matter of bootstrap css classing...
+  $scope.disableCropControls = function () {
+    $('#lb-crop-btn').addClass("disabled");
+    $('#lb-trash-btn').addClass("disabled");
+  };
+  $scope.enableCropControls = function () {
+    $('#lb-crop-btn').removeClass("disabled");
+    $('#lb-trash-btn').removeClass("disabled");
+  };
+  $scope.cropButtonClicked = function () {
+    // assumes activeObject is not null, could not click cropButton if that were the case!
+    var ao = FabricCanvas.getCanvas().getActiveObject();
+
+    //window.localStorage.setItem("cropper-image-to-crop", ao.getSrc());
+    //window.localStorage.setItem("cropper-image-to-crop-info", ao.alt);
+    lightbox_service.setImageToCrop({
+      "url": ao.getSrc(),
+      "fullCaption": ao.alt
+    });
+    //console.log("So, you want to crop this: "+imgName);
+
+    // parameter no longer required... setting it to 1
+    window.open("/cropper/crop", '_blank', "toolbar=no,scrollbars=yes,resizable=yes,width=1200,height=800");
+  };
+  $scope.trashButtonClicked = function () {
+    //console.log("So, you want to remove this: "+FabricCanvas.getCanvas().getActiveObject());
+    FabricCanvas.getCanvas().getActiveObject().remove();
+    // TODO: consider removing the image from the cart?
+    $scope.disableCropControls();
+  };
+  $scope.infoButtonClicked = function () {
+    //console.log("So, you want to toggle captions....");
+    $scope.showCaption = !$scope.showCaption;
+    //FabricCanvas.getCanvas().renderAll();
+    $('#erdmanBody').focus();
+  };
+  $scope.helpButtonClicked = function () {
+
+    var helpModalInstance = $modal.open({
+      templateUrl: '/static/html/help-lightbox.html',
+      controller: 'ModalController'
+      //size: 'sm'
+    });
+  };
+
+  $scope.saveButtonClicked = function () {
+    // we want to stream the data out as a download (text/json)
+    // here's some js shenanigans I found...
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(FabricCanvas.getCanvas().toDatalessJSON(['alt'])));
+    var dlAnchorElem = document.getElementById('saver');
+    dlAnchorElem.setAttribute("href", dataStr);
+    dlAnchorElem.setAttribute("download", "lightbox.json");
+    dlAnchorElem.click();
+  };
+  $scope.loadButtonClicked = function () {
+    // there is a hidden <input type=file on the page... we click it to
+    // pull up a file dialog
+    $('#loadfile').click();
+    // once a file is selected, it triggers 'loadFileSelected()' below...
+  };
+  $scope.loadFileSelected = function (evt) {
+    var file = document.getElementById('loadfile').files[0];
+    console.log("load file: " + file.name);
+    var reader = new FileReader();
+    reader.addEventListener("load", function () {
+      console.log("file was read by the reader: " + reader.result);
+      var canvas = FabricCanvas.getCanvas();
+      FabricCanvas.getCanvas().loadFromJSON(reader.result, canvas.renderAll.bind(canvas), function (o, object) {
+        object.lockUniScaling = true;
+      });
+    }, false);
+
+    if (file) {
+      reader.readAsText(file);
+    }
+  };
+
+  // ===============> End of Event Handlers
+
+
+  // ================================================================
+  // Editing Canvas Size
+  // ================================================================
+  $scope.selectCanvas = function () {
+    $scope.canvasCopy = {
+      width: $scope.fabric.canvasOriginalWidth,
+      height: $scope.fabric.canvasOriginalHeight
+    };
+  };
+
+  $scope.setCanvasSize = function () {
+    $scope.fabric.setCanvasSize($scope.canvasCopy.width, $scope.canvasCopy.height);
+    $scope.fabric.setDirty(true);
+    Modal.close();
+    delete $scope.canvasCopy;
+  };
+
+  $scope.updateCanvas = function () {
+    var json = $scope.fabric.getJSON();
+
+    $www.put('/api/canvas/' + $scope.canvasId, {
+      json: json
+    }).success(function () {
+      $scope.fabric.setDirty(false);
+    });
+  };
+
+  $scope.$on('canvas:created', $scope.init);
+}]);
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports) {
+
+angular.module('blake').controller('ModalController', ["$scope", "$modalInstance", function ($scope, $modalInstance) {
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+}]);
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports) {
+
+angular.module('blake').controller('SearchController', ["$rootScope", "$routeParams", "SearchService", function ($rootScope, $routeParams, SearchService) {
+    let vm = this;
+
+    vm.s = SearchService;
+    vm.rp = $routeParams;
+
+    $rootScope.worksNavState = false;
+    $rootScope.showWorkTitle = false;
+
+    vm.s.isSafari = navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0;
+    //console.log(isSafari);
+
+    $rootScope.$on("$routeChangeSuccess", function () {
+        if (vm.rp.search) {
+            vm.s.searchConfig.searchString = vm.rp.search;
+
+            vm.s.removeStopWords();
+
+            vm.rp.search = vm.s.searchConfig.searchString;
+
+            vm.s.search();
+        }
+    });
+}]);
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports) {
+
+angular.module('blake').controller('ShowMeController', ["$rootScope", "$routeParams", "$modal", "$cookies", "BlakeDataService", "$scope", function ($rootScope, $routeParams, $modal, $cookies, BlakeDataService, $scope) {
+    var vm = this;
+    vm.bds = BlakeDataService;
+
+    $rootScope.showmePage = true;
+    $scope.dpi = $rootScope.dpivalue;
+
+    vm.what = $routeParams.what;
+    $rootScope.showmeType = $routeParams.what;
+
+    BlakeDataService.setSelectedCopy($routeParams.copyId, $routeParams.descId);
+
+    $scope.$watch(function () {
+        return $rootScope.dpivalue;
+    }, function () {
+
+        if ($rootScope.dpivalue == '300') {
+            $scope.dpi = "300";
+        } else {
+            $scope.dpi = "100";
+        }
+    }, true);
+
+    vm.getOvpTitle = function () {
+        if (angular.isDefined(vm.bds.copy)) {
+            if (vm.bds.work.virtual == true) {
+                if (vm.bds.copy.bad_id == 'letters') {
+                    return vm.bds.object.object_group;
+                } else {
+                    return vm.bds.work.title;
+                }
+            } else {
+                var copyPhrase = vm.bds.copy.archive_copy_id == null ? '' : ' Copy ' + vm.bds.copy.archive_copy_id;
+
+                if (vm.bds.copy.header) {
+                    title = vm.bds.copy.header.filedesc.titlestmt.title['@reg'];
+                    if (title.match(/.*, The/)) {
+                        title = "The " + title.match(/(.*), The/)[1];
+                    }
+                    copyPhrase = title + copyPhrase;
+                }
+
+                return copyPhrase;
+            }
+        }
+    };
+
+    vm.getPreviousObject = function () {
+
+        var list = [];
+
+        if (vm.bds.work.bad_id == 'letters') {
+            vm.bds.copyObjects.forEach(function (obj) {
+                if (obj.object_group == vm.bds.object.object_group) {
+                    list.push(obj);
+                }
+            });
+        } else {
+            list = vm.bds.copyObjects;
+        }
+
+        var obj_desc_id = vm.bds.object.supplemental ? vm.bds.object.supplemental : vm.bds.object.desc_id;
+
+        if (list) {
+            for (var i = list.length; i--;) {
+                if (list[i].desc_id == obj_desc_id) {
+                    if (list[i - 1]) {
+                        return list[i - 1];
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+    };
+
+    vm.getNextObject = function () {
+
+        var list = [];
+
+        if (vm.bds.work.bad_id == 'letters') {
+            vm.bds.copyObjects.forEach(function (obj) {
+                if (obj.object_group == vm.bds.object.object_group) {
+                    list.push(obj);
+                }
+            });
+        } else {
+            list = vm.bds.copyObjects;
+        }
+
+        var obj_desc_id = vm.bds.object.supplemental ? vm.bds.object.supplemental : vm.bds.object.desc_id;
+
+        if (list) {
+            for (var i = list.length; i--;) {
+                if (list[i].desc_id == obj_desc_id) {
+                    if (list[i + 1]) {
+                        return list[i + 1];
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+    };
+
+    vm.changeObject = function (object) {
+        vm.bds.changeObject(object);
+    };
+
+    vm.trueSize = function () {
+        if (angular.isDefined($cookies.getObject('clientPpi')) && angular.isDefined(vm.bds.copy)) {
+            var size = vm.bds.object.physical_description.objsize['#text'].split(' '),
+                clientPpi = $cookies.getObject('clientPpi'),
+                x = size[2],
+                y = size[0],
+                unit = size[3],
+                width = x / 2.54 * clientPpi.ppi,
+                height = y / 2.54 * clientPpi.ppi;
+            //console.log('x='+x+'  y='+y+'  unit='+unit+'  ppi='+clientPpi.ppi);
+            if (unit == 'mm.') {
+                width = width * 10;
+                height = height * 10;
+            }
+
+            return { 'height': height + 'px', 'width': width + 'px' };
+        }
+    };
+
+    vm.clientPpiOpen = function () {
+        var clientDpiModalInstance = $modal.open({
+            template: '<client-ppi></client-ppi>',
+            controller: 'ModalController',
+            size: 'lg'
+        });
+    };
+}]);
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports) {
+
+angular.module('blake').controller('StaticpageController', ["$scope", "$rootScope", "$routeParams", "$http", "$location", function ($scope, $rootScope, $routeParams, $http, $location) {
+    var vm = this;
+
+    $rootScope.worksNavState = false;
+    $rootScope.showWorkTitle = 'static';
+    $rootScope.help = 'static';
+
+    vm.page = $routeParams.initialPage;
+    vm.subSelection = 'empty';
+
+    $http.get('/static/controllers/staticpage/meta.json').then(function (response) {
+        let data = response.data;
+        vm.meta = data;
+        vm.title = data[vm.page].title;
+        $rootScope.staticPageTitle = vm.title;
+        if ($location.search().p) {
+            vm.subSelection = $location.search().p;
+            //console.log($location.search().p);
+        } else {
+            vm.subSelection = data[vm.page].initial;
+        }
+        vm.navigation = data[vm.page].subSections;
+    });
+
+    vm.changeContent = function (page) {
+        vm.subSelection = page;
+        $location.search('p', page);
+    };
+}]);
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports) {
+
+angular.module('blake').controller("WorkController", ["$rootScope", "$routeParams", "BlakeDataService", function ($rootScope, $routeParams, BlakeDataService) {
+    var vm = this;
+
+    vm.bds = BlakeDataService;
+
+    $rootScope.showOverlay = false;
+    $rootScope.help = 'work';
+
+    vm.bds.setSelectedWork($routeParams.workId);
+
+    $rootScope.worksNavState = false;
+    $rootScope.showWorkTitle = 'work';
+}]);
+
+/***/ }),
 /* 58 */
 /***/ (function(module, exports) {
 
