@@ -2,11 +2,13 @@
     <div id="object-container" class="row">
         <div id="object-view" ng-class="{'show-tools': exhibitCtrl.showTools, 'hide-tools': !exhibitCtrl.showTools,'view-objects': persistentmode == 'gallery','reading-view': persistentmode == 'reading','compare-objects': view.mode == 'compare'}">
 
-            <object-viewer ng-if="persistentmode == 'gallery' && view.mode != 'compare'"></object-viewer>
+        <!--  <object-viewer ng-if="persistentmode == 'gallery' && view.mode != 'compare'"></object-viewer>
 
             <object-compare ng-if="view.mode == 'compare'"></object-compare>
+        -->
 
-            <object-reading ng-if="persistentmode == 'reading'"></object-reading>
+            <exhibit-view ng-if="persistentmode == 'reading'"></exhibit-view>
+        
 
             <!--Edit buttons-->
             <div id="object-tools" ng-if="persistentmode != 'reading'" class="hidden-xs">

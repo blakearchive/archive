@@ -69,7 +69,7 @@ blake.config(function ($routeProvider, $locationProvider) {
         controllerAs: 'copyCtrl',
         reloadOnSearch: false
     });
-    $routeProvider.when(directoryPrefix + '/exhibit/:copyId', {
+    $routeProvider.when(directoryPrefix + '/exhibit/:exhibitID', {
         templateUrl: directoryPrefix + '/static/controllers/exhibit/exhibit.html',
         controller: "ExhibitController",
         controllerAs: 'exhibitCtrl',

@@ -275,3 +275,48 @@ class BlakeFeaturedWork(db.Model):
             "desc_id": self.desc_id,
             "bad_id": self.bad_id
         }
+
+
+
+
+class BlakeExhibit(db.Model): # todo: change to correct columns
+name, image, etc
+    __tablename__ = "featured_work"
+    featured_work_id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.UnicodeText)
+    byline = db.Column(db.UnicodeText)
+    desc_id = db.Column(db.UnicodeText)
+    dbi = db.Column(db.UnicodeText)
+    bad_id = db.Column(db.Text)
+
+    @property
+    def to_dict(self):
+        return {
+            "title": self.title,
+            "byline": self.byline,
+            "dbi": self.dbi,
+            "desc_id": self.desc_id,
+            "bad_id": self.bad_id
+        }
+
+
+
+class BlakeExhibitImage(db.Model): # todo: change to correct columns
+name, image, etc
+    __tablename__ = "featured_work"
+    featured_work_id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.UnicodeText)
+    byline = db.Column(db.UnicodeText)
+    desc_id = db.Column(db.UnicodeText)
+    dbi = db.Column(db.UnicodeText)
+    bad_id = db.Column(db.Text)
+
+    @property
+    def to_dict(self):
+        return {
+            "title": self.title,
+            "byline": self.byline,
+            "dbi": self.dbi,
+            "desc_id": self.desc_id,
+            "bad_id": self.bad_id
+        }

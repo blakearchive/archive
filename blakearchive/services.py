@@ -8,6 +8,7 @@ if hasattr(config, "solr") and config.solr == "local":
     blake_object_solr = pysolr.Solr('http://localhost:8983/solr/blake_object')
     blake_copy_solr = pysolr.Solr('http://localhost:8983/solr/blake_copy')
     blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake_work')
+    #blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake_work') # jewell todo blake_exhibit_solr
 else:
     blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu/solr/blake-object')
     blake_copy_solr = pysolr.Solr('http://ctools-dev.its.unc.edu/solr/blake-copy')
@@ -179,6 +180,39 @@ class BlakeDataService(object):
         else:
             results = query.all()
         return results
+
+
+    #jewell TODO : get exhibits, get objects for exhibits
+    @classmethod
+    def get_exhibits(cls, exhibit_ids=None):
+        query = cls.get_sorted_object_query()
+        if desc_ids:
+            results = query.filter(models.BlakeObject.desc_id.in_(desc_ids)).all()
+        else:
+            results = query.all()
+        return results
+
+
+    #jewell TODO : get exhibits, get objects for exhibits
+    @classmethod
+    def get_exhibit(cls, exhibit_id=None):
+        query = cls.get_sorted_object_query()
+        if desc_ids:
+            results = query.filter(models.BlakeObject.desc_id.in_(desc_ids)).all()
+        else:
+            results = query.all()
+        return results
+
+    #jewell TODO : get exhibits, get objects for exhibits
+    @classmethod
+    def get_objects_for_exhibit(cls, exhibit_id=None):
+        query = cls.get_sorted_object_query()
+        if desc_ids:
+            results = query.filter(models.BlakeObject.desc_id.in_(desc_ids)).all()
+        else:
+            results = query.all()
+        return results
+
 
     @classmethod
     def get_object(cls, desc_id):

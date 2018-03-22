@@ -44,6 +44,37 @@ class BlakeImporter(object):
     def split_ids(id_string):
         return re.split(r",\s*", id_string.lower())
 
+# TODO: make this work
+# class BlakeExhibitImporter(BlakeImporter):
+#     def __init__(self, data_folder):
+#         self.data_folder = data_folder
+#         self.object_importer = BlakeObjectImporter()
+#         self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
+#         self.works = {}
+#         self.work_info = {}
+#         self.virtual_works = defaultdict(lambda: set())
+#         self.relationships_df = pandas.read_csv(self.data_folder + "/csv/blake-relations.csv", encoding="utf-8")
+#         self.works_df = pandas.read_csv(self.data_folder + "/csv/works.csv", encoding="utf-8")
+#         self.relationships_df.fillna("", inplace=True)
+#         self.works_df.fillna("", inplace=True)
+
+# TODO: BlakeExhibitImageImporter
+
+
+# class BlakeObjectImporter(BlakeImporter):
+#     xslt_xml = etree.parse(open("static/xslt/transcription.xsl"))
+#     transform = etree.XSLT(xslt_xml)
+
+#     def __init__(self):
+#         self.members = {}
+
+#     def get(self, desc_ids):
+#         if isinstance(desc_ids, basestring):
+#             return self.members.get(desc_ids)
+#         else:
+#             return [self.members[desc_id] for desc_id in desc_ids if desc_id in self.members]
+
+
 
 class BlakeDocumentImporter(BlakeImporter):
     def __init__(self, data_folder):
@@ -367,6 +398,8 @@ class BlakeCopyImporter(BlakeImporter):
             return [self.members[bad_id] for bad_id in bad_ids if bad_id in self.members]
 
 
+
+
 class BlakeObjectImporter(BlakeImporter):
     xslt_xml = etree.parse(open("static/xslt/transcription.xsl"))
     transform = etree.XSLT(xslt_xml)
@@ -537,11 +570,13 @@ def main():
     parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
     importer = BlakeDocumentImporter(args.data_folder)
+
     if args.profile:
         import cProfile
         cProfile.runctx("importer.import_data()", globals(), locals(), filename="import_stats.out")
     else:
         importer.import_data()
+
 
 
 if __name__ == "__main__":
