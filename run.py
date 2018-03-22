@@ -28,6 +28,14 @@ def get_icon(icon=None):
 def get_bad_file(bad=None):
     return send_file(config.local_data_path+"works/"+bad)
 
+
+#TODO: fix
+@app.route('/exhibit/<bad>')
+def get_exhibit_file(bad=None):
+    # send html & list of images
+    return send_file(config.local_data_path+"exhibits/"+bad) # illum
+
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):

@@ -265,6 +265,7 @@ class BlakeFeaturedWork(db.Model):
     desc_id = db.Column(db.UnicodeText)
     dbi = db.Column(db.UnicodeText)
     bad_id = db.Column(db.Text)
+<<<<<<< HEAD
 
     @property
     def to_dict(self):
@@ -310,6 +311,8 @@ name, image, etc
     desc_id = db.Column(db.UnicodeText)
     dbi = db.Column(db.UnicodeText)
     bad_id = db.Column(db.Text)
+=======
+>>>>>>> 4bc4ad1919a126cb79cedebc3cd04c90bc4c0754
 
     @property
     def to_dict(self):

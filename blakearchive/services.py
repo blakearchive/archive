@@ -8,7 +8,10 @@ if hasattr(config, "solr") and config.solr == "local":
     blake_object_solr = pysolr.Solr('http://localhost:8983/solr/blake_object')
     blake_copy_solr = pysolr.Solr('http://localhost:8983/solr/blake_copy')
     blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake_work')
+<<<<<<< HEAD
     #blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake_work') # jewell todo blake_exhibit_solr
+=======
+>>>>>>> 4bc4ad1919a126cb79cedebc3cd04c90bc4c0754
 else:
     blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu/solr/blake-object')
     blake_copy_solr = pysolr.Solr('http://ctools-dev.its.unc.edu/solr/blake-copy')
@@ -88,6 +91,7 @@ class BlakeDataService(object):
         search_parameters = {"facet": "on", "facet.pivot": "work_id,copy_id,desc_id"}
         facets = blake_object_solr.search(query, **search_parameters).facets['facet_pivot'].values()[0]
         return work_results(facets)
+<<<<<<< HEAD
 
     @classmethod
     def solr_copy_query(cls, query):
@@ -202,9 +206,12 @@ class BlakeDataService(object):
         else:
             results = query.all()
         return results
+=======
+>>>>>>> 4bc4ad1919a126cb79cedebc3cd04c90bc4c0754
 
     #jewell TODO : get exhibits, get objects for exhibits
     @classmethod
+<<<<<<< HEAD
     def get_objects_for_exhibit(cls, exhibit_id=None):
         query = cls.get_sorted_object_query()
         if desc_ids:
@@ -264,6 +271,149 @@ class BlakeDataService(object):
         }
 
     @classmethod
+=======
+    def solr_copy_query(cls, query):
+        def copy_results(copies):
+            return [[c["value"], c["count"]] for c in copies]
+
+        def work_results(works):
+            return [[w["value"], w["count"], copy_results(w["pivot"])] for w in works]
+
+        search_parameters = {"facet": "on", "facet.pivot": "work_id,bad_id"}
+        facets = blake_copy_solr.search(query, **search_parameters).facets['facet_pivot'].values()[0]
+        # print work_results(facets)
+        return work_results(facets)
+
+    @classmethod
+    def query_objects(cls, cfg):
+        results = {"title": [], "tag": [], "text": [], "description": [], "notes": []}
+        if cfg.get("searchTitle") or cfg.get("searchAllFields"):
+            search_string = cls.generate_search_element("title", cfg)
+            results["title"] = cls.solr_object_query(search_string)
+        if cfg.get("searchImageKeywords") or cfg.get("searchAllFields"):
+            search_string = cls.generate_search_element("characteristics", cfg)
+            results["tag"] = cls.solr_object_query(search_string)
+        if cfg.get("searchText") or cfg.get("searchAllFields"):
+            search_string = cls.generate_search_element("text", cfg)
+            results["text"] = cls.solr_object_query(search_string)
+        if cfg.get("searchImageDescriptions") or cfg.get("searchAllFields"):
+            search_string = cls.generate_search_element("illustration_description", cfg)
+            results["description"] = cls.solr_object_query(search_string)
+        if cfg.get("searchNotes") or cfg.get("searchAllFields"):
+            search_string = cls.generate_search_element("notes", cfg)
+            results["notes"] = cls.solr_object_query(search_string)
+
+        def add_object_query_works(results_):
+            works = dict((w.bad_id, w) for w in cls.get_works([r[0] for r in results_]))
+            return [[works[w].to_dict, c, r] for (w, c, r) in results_]
+
+        return dict((k, add_object_query_works(v)) for (k, v) in results.items())
+
+    @classmethod
+    def query_copies(cls, cfg):
+        results = {"copy-title": [], "copy-info": []}
+        if cfg.get("searchCopies") or cfg.get("searchAllFields"):
+            search_string = cls.generate_search_element("source", cfg)
+            results["copy-info"] = cls.solr_copy_query(search_string)
+
+        def add_copy_query_works(results_):
+            works = dict((w.bad_id, w) for w in cls.get_works([r[0] for r in results_]))
+            return [[works[w].to_dict, c, r] for (w, c, r) in results_]
+
+        return dict((k, add_copy_query_works(v)) for (k, v) in results.items())
+
+    @classmethod
+    def query_works(cls, cfg):
+        results = {
+            "title": {"count": 0, "results": []},
+            "info": {"count": 0, "results": []}
+        }
+        if cfg.get("searchWorks") or cfg.get("searchAllFields"):
+            search_string = cls.generate_search_element("info", cfg)
+            solr_results = blake_work_solr.search(search_string)
+            results["info"]["results"] = list(solr_results)
+            results["info"]["count"] = solr_results.hits
+        return results
+
+    @staticmethod
+    def get_virtual_sorted_query():
+        #query = models.BlakeObject.query \
+        #    .order_by(models.BlakeObject.butnumber) \
+        #    .filter(models.BlakeObject.supplemental == None)
+        query = models.BlakeObject.query \
+            .order_by(models.BlakeObject.object_number) \
+            .filter(models.BlakeObject.supplemental == None)
+        return query
+
+    @staticmethod
+    def get_sorted_object_query():
+        query = models.BlakeObject.query \
+            .order_by(models.BlakeObject.copy_print_date_value,
+                      models.BlakeObject.copy_composition_date_value,
+                      models.BlakeObject.object_number)\
+            .filter(models.BlakeObject.supplemental == None)
+        return query
+
+    @classmethod
+    def get_objects(cls, desc_ids=None):
+        query = cls.get_sorted_object_query()
+        if desc_ids:
+            results = query.filter(models.BlakeObject.desc_id.in_(desc_ids)).all()
+        else:
+            results = query.all()
+        return results
+
+    @classmethod
+    def get_object(cls, desc_id):
+        return models.BlakeObject.query.filter(models.BlakeObject.desc_id == desc_id).first()
+
+    @classmethod
+    def get_objects_with_same_motif(cls, desc_id):
+        obj = cls.get_sorted_object_query().filter(models.BlakeObject.desc_id == desc_id).first()
+        if hasattr(obj, 'objects_with_same_motif'):
+            return obj.objects_with_same_motif
+        else:
+            return []
+
+    @classmethod
+    def get_objects_from_same_production_sequence(cls, desc_id):
+        obj = cls.get_sorted_object_query().filter(models.BlakeObject.desc_id == desc_id).first()
+        if hasattr(obj, 'objects_from_same_production_sequence'):
+            return obj.objects_from_same_production_sequence
+        else:
+            return []
+
+    @classmethod
+    def get_objects_from_same_matrix(cls, desc_id):
+        obj = cls.get_sorted_object_query().filter(models.BlakeObject.desc_id == desc_id).first()
+        if hasattr(obj, 'objects_from_same_matrix'):
+            return obj.objects_from_same_matrix
+        else:
+            return []
+
+    @classmethod
+    def get_same_matrix_object_from_other_copy(cls, desc_id, bad_id):
+        obj = cls.get_sorted_object_query().filter(models.BlakeObject.desc_id == desc_id).first()
+        if hasattr(obj, 'objects_from_same_matrix'):
+            for myObject in obj.objects_from_same_matrix:
+                if(myObject.copy_bad_id == bad_id):
+                    return myObject
+                else:
+                    continue
+        else:
+            return None
+
+    @classmethod
+    def get_textually_referenced_materials(cls, desc_id):
+        obj = models.BlakeObject.query.filter(models.BlakeObject.desc_id == desc_id).first()
+        return {
+            "objects": obj.textually_referenced_objects,
+            "copies": obj.textually_referenced_copies,
+            "works": obj.textually_referenced_works
+        }
+
+    @classmethod
+>>>>>>> 4bc4ad1919a126cb79cedebc3cd04c90bc4c0754
     def get_copies(cls, bad_ids=None):
         if bad_ids:
             results = models.BlakeCopy.query.filter(models.BlakeCopy.bad_id.in_(bad_ids))

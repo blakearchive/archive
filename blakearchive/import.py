@@ -22,6 +22,7 @@ logging.basicConfig()
 logger = logging.getLogger('import')
 # dtype = defaultdict(lambda: unicode)
 # dtype["virtual"] = int
+<<<<<<< HEAD
 
 
 class BlakeImporter(object):
@@ -75,6 +76,30 @@ class BlakeImporter(object):
 #             return [self.members[desc_id] for desc_id in desc_ids if desc_id in self.members]
 
 
+=======
+
+
+class BlakeImporter(object):
+    xslt_xml = etree.parse(open("static/xslt/source.xsl"))
+    transform = etree.XSLT(xslt_xml)
+
+    @staticmethod
+    def element_to_dict(obj):
+        element_xml = etree.tostring(obj, encoding='utf8', method='xml')
+        return xmltodict.parse(element_xml, force_cdata=True)
+
+    @staticmethod
+    def extract_date(date_string):
+        if date_string:
+            date_match = re.match("\D*(\d{4})", date_string)
+            if date_match:
+                return int(date_match.group(1))
+
+    @staticmethod
+    def split_ids(id_string):
+        return re.split(r",\s*", id_string.lower())
+
+>>>>>>> 4bc4ad1919a126cb79cedebc3cd04c90bc4c0754
 
 class BlakeDocumentImporter(BlakeImporter):
     def __init__(self, data_folder):
@@ -375,6 +400,7 @@ class BlakeCopyImporter(BlakeImporter):
         for title in document.xpath("header/filedesc/titlestmt/title"):
             title_text = title.xpath("string()")
             return re.match(r"(?:(.*):|(.*))", title_text, flags=re.DOTALL).group(1).rstrip().encode("utf-8")
+<<<<<<< HEAD
 
     @staticmethod
     def get_copy_institution(document):
@@ -445,6 +471,76 @@ class BlakeObjectImporter(BlakeImporter):
         #        if objnumber.attrib.get("code") == "A1":
         #           return titlecase.titlecase(objnumber.xpath("string()").rstrip().encode("utf-8"))
 
+=======
+
+    @staticmethod
+    def get_copy_institution(document):
+        for institution in document.xpath("//institution"):
+            return institution.xpath("string()").encode("utf-8")
+
+    @staticmethod
+    def get_document_tree(document):
+        if os.path.isfile(document):
+            root = etree.parse(document).getroot()
+        else:
+            root = etree.fromstring(document).getroot()
+        if not root.tag == "bad":
+            raise ValueError("Document is not a blake archive xml document")
+        return root
+
+    def get(self, bad_ids):
+        if isinstance(bad_ids, basestring):
+            return self.members.get(bad_ids)
+        else:
+            return [self.members[bad_id] for bad_id in bad_ids if bad_id in self.members]
+
+
+class BlakeObjectImporter(BlakeImporter):
+    xslt_xml = etree.parse(open("static/xslt/transcription.xsl"))
+    transform = etree.XSLT(xslt_xml)
+
+    def __init__(self):
+        self.members = {}
+
+    def get(self, desc_ids):
+        if isinstance(desc_ids, basestring):
+            return self.members.get(desc_ids)
+        else:
+            return [self.members[desc_id] for desc_id in desc_ids if desc_id in self.members]
+
+    def process(self, element):
+        obj = models.BlakeObject()
+        obj.desc_id = element.attrib.get("id").lower()
+        obj.butnumber = re.split('\.|t',obj.desc_id)[1]
+        obj.dbi = element.attrib.get("dbi").lower()
+        obj.components = self.get_components(element)
+        obj.characteristics = self.get_characteristics(element)
+        obj.illustration_description = self.get_illustration_description(element)
+        obj.notes = self.get_object_notes(element)
+        #obj.object_note_images = self.get_object_note_images(element)
+        obj.title = self.get_object_title(element)
+        obj.text = self.get_text(element)
+        obj.markup_text = self.get_markuptext(element)
+        obj.full_object_id = self.get_full_object_id(element)
+        obj.object_number = self.get_object_number(element)
+        obj.bentley_id = self.get_bentley_id(element)
+        obj.physical_description = self.get_physical_description(element)
+        obj.supplemental = self.supplemental_to(element)
+        self.members[obj.desc_id] = obj
+        #print 'notes for' + obj.title
+        #print obj.notes
+        return obj
+
+    @staticmethod
+    def get_object_title(obj):
+        for title in obj.xpath("objtitle/title"):
+            return title.xpath("string()").rstrip().encode("utf-8")
+        #else:
+        #    for objnumber in obj.xpath(".//objnumber"):
+        #        if objnumber.attrib.get("code") == "A1":
+        #           return titlecase.titlecase(objnumber.xpath("string()").rstrip().encode("utf-8"))
+
+>>>>>>> 4bc4ad1919a126cb79cedebc3cd04c90bc4c0754
     @classmethod
     def get_text(cls, obj):
         for phystext in obj.xpath("phystext"):
@@ -570,13 +666,19 @@ def main():
     parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
     importer = BlakeDocumentImporter(args.data_folder)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4bc4ad1919a126cb79cedebc3cd04c90bc4c0754
     if args.profile:
         import cProfile
         cProfile.runctx("importer.import_data()", globals(), locals(), filename="import_stats.out")
     else:
         importer.import_data()
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4bc4ad1919a126cb79cedebc3cd04c90bc4c0754
 
 
 if __name__ == "__main__":
