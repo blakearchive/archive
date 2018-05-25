@@ -99,8 +99,6 @@ class BlakeObject(db.Model):
     object_note_images = db.Column(JSON)
     object_group = db.Column(db.UnicodeText)
     supplemental = db.Column(db.UnicodeText)
-    text_match_desc_id = db.Column(db.UnicodeText, index=True)
-    text_match_string = db.Column(db.UnicodeText)
     objects_from_same_matrix = db.relationship(
         "BlakeObject",
         order_by="BlakeObject.ordering_date",
@@ -192,8 +190,6 @@ class BlakeObject(db.Model):
             "notes": self.notes,
             "object_note_images": self.object_note_images,
             "object_group": self.object_group,
-            "text_match_desc_id": self.text_match_desc_id,
-            "text_match_string": self.text_match_string
         }
 
 
