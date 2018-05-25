@@ -116,6 +116,14 @@ class BlakeObject(db.Model):
         secondaryjoin=object_id == production_sequence__object.c.related_object_id,
         remote_side=production_sequence__object.c.related_object_id,
         )
+    objects_with_text_matches = db.relationship(
+        "BlakeObject",
+        order_by="BlakeObject.ordering_date",
+        secondary=text_match__object,
+        primaryjoin=object_id == text_match__object.c.object_id,
+        secondaryjoin=object_id == text_match__object.c.related_object_id,
+        remote_side=text_match__object.c.related_object_id,
+        )
     objects_with_same_motif = db.relationship(
         "BlakeObject",
         order_by="BlakeObject.ordering_date",
