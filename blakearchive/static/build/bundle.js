@@ -31974,6 +31974,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
         object.sequence = {};
         object.motif = {};
         object.supplemental_objects = {};
+        object.textmatch = {};
 
         var desc_id_for_supp_query = object.supplemental ? object.supplemental : object.desc_id;
 
