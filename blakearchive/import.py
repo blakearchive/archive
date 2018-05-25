@@ -69,7 +69,7 @@ class BlakeDocumentImporter(BlakeImporter):
         self.import_bad_files(matching_bad_files)
         self.process_works()
         self.process_relationships()
-        self.process_text_matches()
+        #self.process_text_matches()
         self.populate_database()
 
     # region Info file handling
