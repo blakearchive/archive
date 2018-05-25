@@ -62,6 +62,11 @@ def get_objects_from_same_production_sequence(desc_id):
     results = blake_data_service.get_objects_from_same_production_sequence(desc_id)
     return jsonify({"results": [r.to_dict for r in results]})
 
+@api.route('/object/<desc_id>/objects_with_text_matches')
+def get_objects_with_text_matches(desc_id):
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    results = blake_data_service.get_with_text_matches(desc_id)
+    return jsonify({"results": [r.to_dict for r in results]})
 
 @api.route('/object/<desc_id>/objects_from_same_matrix')
 def get_objects_from_same_matrix(desc_id):
