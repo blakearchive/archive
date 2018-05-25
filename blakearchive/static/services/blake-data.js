@@ -198,6 +198,22 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
         }
     };
 
+    blakeData.getObjectsWithTextMatches = function (descId) {
+        var url = directoryPrefix + '/api/object/' + descId + '/objects_with_text_matches';
+
+        return $http.get(url)
+            .then(getObjectsWithTextMatchesComplete)
+            .catch(getObjectsWithTextMatchesFailed);
+
+        function getObjectsWithTextMatchesComplete(response){
+            return BlakeObject.create(response.data.results);
+        }
+
+        function getObjectsWithTextMatchesFailed(error){
+            $log.error('XHR Failed for getObjectsWithTextMatches.\n' + angular.toJson(error.data, true));
+        }
+    };
+
     blakeData.getSupplementalObjects = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/supplemental_objects';
 
@@ -514,13 +530,15 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
             blakeData.getObjectsFromSameProductionSequence(object.desc_id),
             blakeData.getObjectsWithSameMotif(object.desc_id),
             blakeData.getSupplementalObjects(desc_id_for_supp_query),
-            blakeData.getTextuallyReferencedMaterial(object.desc_id)
+            blakeData.getTextuallyReferencedMaterial(object.desc_id),
+            blakeData.getObjectsWithTextMatches(object.desc_id)
         ]).then(function (data) {
             object.matrix = BlakeObject.create(data[0]);
             object.sequence = BlakeObject.create(data[1]);
             object.motif = BlakeObject.create(data[2]);
             object.text_ref = data[4];
             object.supplemental_objects = BlakeObject.create(data[3]);
+            object.text_match = BlakeObject.create(data[5]);
         });
     };
 

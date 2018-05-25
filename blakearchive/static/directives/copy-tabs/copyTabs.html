@@ -26,9 +26,9 @@
             </li>
 
             <li role="presentation"
-                ng-if="tabs.bds.object.text_match_desc_id"
+                ng-if="tabs.bds.object.text_match.objects.length > 0"
                 ng-class="{active:tabs.selectedTab == '#text-match'}">
-                <a href="" ng-click="tabs.showTab('#text-match');" role="tab">Objects with Textual Matches</a>
+                <a href="" ng-click="tabs.showTab('#text-match');" role="tab">Objects with Text Matches</a>
             </li>
 
         </ul>
