@@ -69,7 +69,7 @@ class BlakeDocumentImporter(BlakeImporter):
         self.import_bad_files(matching_bad_files)
         self.process_works()
         self.process_relationships()
-        #self.process_text_matches()
+        self.process_text_matches()
         self.populate_database()
 
     # region Info file handling
@@ -136,7 +136,7 @@ class BlakeDocumentImporter(BlakeImporter):
 
     def process_text_matches(self):
         for entry in self.text_matches.itertuples():
-            Record = namedtuple('Object',['index','desc_id','text_match_desc_ids','text_match_string'])
+            Record = namedtuple('Object',['index','desc_id','text_match_desc_ids','text_match_strings'])
             entry = Record(*entry)
             self.process_text_match(entry)
 
@@ -145,7 +145,8 @@ class BlakeDocumentImporter(BlakeImporter):
         if not obj:
             return
         obj.objects_with_text_matches.extend(self.objects_for_id_string(entry.text_match_desc_ids))
-        
+        obj.text_match_strings = entry.text_match_strings.encode('utf-8')
+
 
     def objects_for_id_string(self, id_string):
         ids = self.split_ids(id_string)

@@ -10,6 +10,7 @@
         </div>
     </div>
 </div>
+{{fromSame.bds.object[fromSame.type].text_match_strings}}
 <div class="row">
     <div ng-repeat="obj in fromSame.bds.object[fromSame.type] track by $index" class="col-sm-6 col-md-3 text-center">
         <div class="select-for-compare-wrapper" ng-class="{'selected': fromSame.cof.isComparisonObject(obj,fromSame.type)}" tooltip="Click in corner to select or deselect for comparison"  tooltip-trigger="mouseenter" tooltip-placement="top-right">
