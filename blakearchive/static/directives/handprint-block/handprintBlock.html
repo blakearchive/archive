@@ -1,9 +1,9 @@
 <div class="handprint-block">
-	<p>{{handprint.textMatchStrings}}</p>
     <a ng-href="{{handprint.link}}" ng-click="$root.showOverlay = false; handprint.action()">
         <span class="handprint-header">{{handprint.header}}</span>
         <span class="object-img" style="background-image: url({{ handprint.imagePath }}{{ handprint.image }});">
             <span class="handprint-title" ng-if="!handprint.image">{{handprint.title}}</span>
+            <p>{{handprint.textMatchStrings}}</p>
         </span>
         <span class="description" ng-bind-html="handprint.footer"></span>
     </a>
