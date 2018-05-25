@@ -54,8 +54,10 @@ class BlakeDocumentImporter(BlakeImporter):
         self.work_info = {}
         self.virtual_works = defaultdict(lambda: set())
         self.relationships_df = pandas.read_csv(self.data_folder + "/csv/blake-relations.csv", encoding="utf-8")
+        self.text_matches = pandas.read_csv(self.data_folder + "/csv/text-matches.csv", encoding="utf-8")
         self.works_df = pandas.read_csv(self.data_folder + "/csv/works.csv", encoding="utf-8")
         self.relationships_df.fillna("", inplace=True)
+        self.text_matches.fillna("", inplace=True)
         self.works_df.fillna("", inplace=True)
 
     def import_data(self):
@@ -130,6 +132,20 @@ class BlakeDocumentImporter(BlakeImporter):
         referenced_work_ids = self.split_ids(entry.reference_work_ids)
         referenced_works = [self.works[id_] for id_ in referenced_work_ids if id_ in self.works]
         obj.textually_referenced_works.extend(referenced_works)
+
+    def process_text_matches(self):
+        for entry in self.text_matches.itertuples():
+            Record = namedtuple('Object',['index','desc_id','text_match_desc_id','text'])
+            entry = Record(*entry)
+            self.process_text_match(entry)
+
+    def process_text_match(self, entry):
+        obj = self.object_importer.get(entry.desc_id.lower())
+        if not obj:
+            return
+        obj.text_match_desc_id.extend(self.objects_for_id_string(entry.text_match_desc_id))
+        obj.text_match_string = entry.text_match_string.encode('utf-8')
+        
 
     def objects_for_id_string(self, id_string):
         ids = self.split_ids(id_string)
