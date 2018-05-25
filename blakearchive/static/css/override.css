@@ -1,3 +1,20 @@
+.hoverTextMatchStrings {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 28px;
+  color: #ffffff;
+  cursor: pointer;
+}
+.hoverTextMatchStrings p {
+  display: none;
+  color: #000000;
+}
+.hoverTextMatchStrings:hover p {
+  background-color: rgba(255, 255, 255, 0.7);
+  display: block;
+}
+
 nav.navbar ul.navbar-nav ul.dropdown-menu div li {
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
