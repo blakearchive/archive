@@ -8,7 +8,6 @@ angular.module('blake').controller("CopyTabsController", function ($rootScope,Bl
 
         vm.showTab = function (id) {
             vm.selectedTab = id;
-            console.log(vm.bds.object.text_match_strings);
         }
 
         vm.getCopyOrWork = function(){
