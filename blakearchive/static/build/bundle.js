@@ -31983,7 +31983,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
             object.motif = BlakeObject.create(data[2]);
             object.text_ref = data[4];
             object.supplemental_objects = BlakeObject.create(data[3]);
-            object.text_match = BlakeObject.create(data[5]);
+            object.textmatch = BlakeObject.create(data[5]);
         });
     };
 
