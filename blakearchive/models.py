@@ -54,6 +54,14 @@ textual_reference__work = db.Table(
     db.Column("related_work_id", db.Integer, db.ForeignKey("work.work_id"))
 )
 
+text_match__object = db.Table(
+    "text_match__object",
+    db.Model.metadata,
+    db.Column("text_match__object_id", db.Integer, primary_key=True),
+    db.Column("object_id", db.Integer, db.ForeignKey("object.object_id")),
+    db.Column("related_object_id", db.Integer, db.ForeignKey("object.object_id"))
+)
+
 
 class BlakeObject(db.Model):
     __tablename__ = "object"
