@@ -201,6 +201,14 @@ class BlakeDataService(object):
             return []
 
     @classmethod
+    def get_objects_with_same_matrix(cls, desc_id):
+        obj = cls.get_sorted_object_query().filter(models.BlakeObject.desc_id == desc_id).first()
+        if hasattr(obj, 'get_objects_with_same_matrix'):
+            return obj.get_objects_with_same_matrix
+        else:
+            return []
+
+    @classmethod
     def get_objects_from_same_matrix(cls, desc_id):
         obj = cls.get_sorted_object_query().filter(models.BlakeObject.desc_id == desc_id).first()
         if hasattr(obj, 'objects_from_same_matrix'):
