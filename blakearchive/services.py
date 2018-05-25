@@ -204,7 +204,7 @@ class BlakeDataService(object):
     def get_objects_with_text_matches(cls, desc_id):
         obj = cls.get_sorted_object_query().filter(models.BlakeObject.desc_id == desc_id).first()
         if hasattr(obj, 'objects_with_text_matches'):
-            return obj.get_objects_with_text_matches
+            return obj.objects_with_text_matches
         else:
             return []
 
