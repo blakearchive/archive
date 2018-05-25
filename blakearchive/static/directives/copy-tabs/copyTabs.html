@@ -24,6 +24,13 @@
             <li ng-if="tabs.bds.work.medium != 'exhibit'" role="presentation" ng-class="{active:tabs.selectedTab == '#ee-info'}">
                 <a href="" ng-click="tabs.showTab('#ee-info')" role="tab">Electronic Edition Information</a>
             </li>
+
+            <li role="presentation"
+                ng-if="tabs.bds.object.text_matches.length > 0"
+                ng-class="{active:tabs.selectedTab == '#text-match'}">
+                <a href="" ng-click="tabs.showTab('#text-match');" role="tab">Objects with Textual Matches</a>
+            </li>
+
         </ul>
     </div>
 </div>
