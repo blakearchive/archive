@@ -1,0 +1,13 @@
+<!-- TEXTUAL REFERENCES -->
+<div role="tabpanel" class="fadeinout tab-pane active in" id="text-match">
+    <!-- OBJECTS -->
+    <div class="row" ng-if="tm.bds.object.text_matches.length > 0">
+        <h3>Objects</h3>
+        <div ng-repeat="obj in tm.bds.object.text_matches tmack by $index" class="col-sm-6 col-md-3">
+            <handprint-block link="/copy/{{obj.copy_bad_id}}?descId={{ obj.desc_id }}"
+                             image="{{ obj.dbi }}.100.jpg"
+                             footer="test">
+            </handprint-block>
+        </div>
+    </div>
+</div>
