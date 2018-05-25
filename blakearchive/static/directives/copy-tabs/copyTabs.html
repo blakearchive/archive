@@ -25,10 +25,8 @@
                 <a href="" ng-click="tabs.showTab('#ee-info')" role="tab">Electronic Edition Information</a>
             </li>
 
-            <li role="presentation"
-                ng-if="tabs.bds.object.text_match.objects.length > 0"
-                ng-class="{active:tabs.selectedTab == '#text-match'}">
-                <a href="" ng-click="tabs.showTab('#text-match');" role="tab">Objects with Text Matches</a>
+            <li role="presentation" ng-if="tabs.bds.object.textmatch.length > 0" ng-class="{active:tabs.selectedTab == '#objects-with-text-matches'}">
+                <a href="" ng-click="tabs.showTab('#objects-with-text-matches');" role="tab">Objects with Text Matches</a>
             </li>
 
         </ul>
@@ -65,7 +63,13 @@
 
             <textual-reference-tab  ng-show="tabs.selectedTab == '#text-reference'" />
 
-            <text-match-tab  ng-show="tabs.selectedTab == '#text-match'" />
+            <!-- TEXT MATCHES -->
+            <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#objects-with-text-matches'" id="objects-with-text-matches">
+                <header class="page-header">
+                    <!--<p class="subhead">Objects with the Same Motif</p>-->
+                </header>
+                <objects-from-same type="textmatch"></objects-from-same>
+            </div>
 
             <!-- COPY INFO -->
             <div role="tabpanel" class="fadeinout tab-pane active in" ng-show="tabs.selectedTab == '#copy-info'" id="copy-info">
