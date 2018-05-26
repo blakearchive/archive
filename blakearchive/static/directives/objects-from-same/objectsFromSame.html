@@ -1,4 +1,4 @@
-<div ng-if="fromSame.type != textmatch" class="row">
+<div class="row">
     <!--<p class="text-center"><em>Dates are the probable dates of {{ fromSame.bds.work.probable }}.</em></p>
     <br>-->
     <div class="col-sm-12 action-items">
@@ -7,6 +7,7 @@
                 <li><a class="select-all-objects" ng-click="fromSame.selectAll()" ng-model="fromSame.selectedAll">{{ fromSame.compareText }}</a></li>
                 <li><a href="" ng-click="fromSame.activateCompare()" class="compare-selected-objects" scroll-to-top>Compare Selected Objects</a></li>
             </ul>
+            {{fromSame.type}}
         </div>
     </div>
 </div>
