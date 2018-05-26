@@ -28600,6 +28600,7 @@ angular.module('blake').directive('objectsFromSame', function () {
         let type = function () {
             return vm.cof.comparisonType;
         };
+        console.log(type);
         scope.$watch(type, function (newVal, oldVal) {
             if (oldVal && newVal != vm.type) {
                 vm.compareText = "Select All Objects";
