@@ -61083,7 +61083,7 @@ module.exports = "<!-- Electronic Edition Info-->\n<div role=\"tabpanel\" class=
 /* 180 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"handprint-block\">\n    <a ng-href=\"{{handprint.link}}\" ng-click=\"$root.showOverlay = false; handprint.action()\">\n        <span class=\"handprint-header\">{{handprint.header}}</span>\n        <span class=\"object-img\" style=\"background-image: url({{ handprint.imagePath }}{{ handprint.image }});\">\n            <span class=\"handprint-title\" ng-if=\"!handprint.image\">{{handprint.title}}</span>\n            <p>{{handprint.textMatchStrings}}</p>\n        </span>\n        <span class=\"description\" ng-bind-html=\"handprint.footer\"></span>\n    </a>\n</div>";
+module.exports = "<div class=\"handprint-block\">\n    <a ng-href=\"{{handprint.link}}\" ng-click=\"$root.showOverlay = false; handprint.action()\">\n        <span class=\"handprint-header\">{{handprint.header}}</span>\n        <span class=\"object-img\" style=\"background-image: url({{ handprint.imagePath }}{{ handprint.image }});\">\n            <span class=\"handprint-title\" ng-if=\"!handprint.image\">{{handprint.title}}</span>\n        </span>\n        <span class=\"description\" ng-bind-html=\"handprint.footer\"></span>\n        <p>{{handprint.textMatchStrings}}</p>\n    </a>\n</div>";
 
 /***/ }),
 /* 181 */
