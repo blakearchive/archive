@@ -1,5 +1,4 @@
-<span ng-if="fromSame.type != textmatch"
-<div class="row">
+<div ng-if="fromSame.type != 'textmatch'" class="row">
     <!--<p class="text-center"><em>Dates are the probable dates of {{ fromSame.bds.work.probable }}.</em></p>
     <br>-->
     <div class="col-sm-12 action-items">
@@ -12,7 +11,6 @@
         </div>
     </div>
 </div>
-</span>
 <div class="row">
     <div ng-repeat="obj in fromSame.bds.object[fromSame.type] track by $index" class="col-sm-6 col-md-3 text-center">
         <div class="select-for-compare-wrapper" ng-class="{'selected': fromSame.cof.isComparisonObject(obj,fromSame.type)}" tooltip="Click in corner to select or deselect for comparison"  tooltip-trigger="mouseenter" tooltip-placement="top-right">
