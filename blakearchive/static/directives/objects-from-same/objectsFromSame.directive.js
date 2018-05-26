@@ -40,6 +40,7 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
 angular.module('blake').directive('objectsFromSame', function () {
     let link = function(scope,ele,attr,vm){
         let type = function(){ return vm.cof.comparisonType };
+        console.log(type);
         scope.$watch(type,function(newVal,oldVal){
             if(oldVal && newVal != vm.type){
                 vm.compareText = "Select All Objects";
