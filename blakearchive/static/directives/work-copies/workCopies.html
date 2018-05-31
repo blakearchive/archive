@@ -5,7 +5,7 @@
 		<handprint-block
 				link="/copy/{{copy.bad_id}}"
 				image="{{ copy.image }}.100.jpg"
-				footer="Copy {{copy.archive_copy_id}}, {{copy.source.objinfo.printdate['#text']}}, {{copy.institution}}">
+				footer="Copy {{copy.archive_copy_id}}, {{copy.source.objinfo.printdate['#text']}}, {{copy.institution}}</br>{{copy.copyObjects.length}} object(s)">
 		</handprint-block>
 	</div>
 
@@ -13,7 +13,7 @@
 		<handprint-block
 				link="/copy/{{copy.bad_id}}"
 				image="{{ copy.image }}.100.jpg"
-				footer="Copy {{copy.archive_copy_id}}, {{copy.source.objinfo.printdate['#text']}}">
+				footer="Copy {{copy.archive_copy_id}}, {{copy.source.objinfo.printdate['#text']}}</br>{{copy.copyObjects.length}} object(s)">
 		</handprint-block>
 	</div>
 
@@ -21,21 +21,21 @@
 		<handprint-block
 				link="/copy/{{copy.bad_id}}"
 				image="{{ copy.image }}.100.jpg"
-				footer="{{copy.source.objinfo.printdate['#text']}}, {{copy.institution}}">
+				footer="{{copy.source.objinfo.printdate['#text']}}, {{copy.institution}}</br>{{copy.copyObjects.length}} object(s)">
 		</handprint-block>
 	</div>
 	<div ng-repeat="copy in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && !copy.source.objinfo.printdate['#text'] && copy.archive_copy_id">
 		<handprint-block
 				link="/copy/{{copy.bad_id}}"
 				image="{{ copy.image }}.100.jpg"
-				footer="Copy {{copy.archive_copy_id}}, {{copy.source.objdescid.compdate['#text']}}, {{copy.institution}}">
+				footer="Copy {{copy.archive_copy_id}}, {{copy.source.objdescid.compdate['#text']}}, {{copy.institution}}</br>{{copy.copyObjects.length}} object(s)">
 		</handprint-block>
 	</div>
 	<div ng-repeat="copy in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == false && !copy.source.objinfo.printdate['#text'] && !copy.archive_copy_id">
 		<handprint-block
 				link="/copy/{{copy.bad_id}}"
 				image="{{ copy.image }}.100.jpg"
-				footer="{{copy.source.objdescid.compdate['#text']}}, {{copy.institution}}">
+				footer="{{copy.source.objdescid.compdate['#text']}}, {{copy.institution}}</br>{{copy.copyObjects.length}} object(s)">
 		</handprint-block>
 	</div>
 
