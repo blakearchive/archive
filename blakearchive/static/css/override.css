@@ -1,10 +1,12 @@
 .handprint-block a:hover span.textmatchstrings {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: #1d1d1d;
+  color: #e6e6e6;
+  border: none;
   display: block;
   position: absolute;
-  top: 0px;
+  top: -25px;
   left: 170px;
-  width: 100%;
+  width: max-content;
   margin: 0px;
   padding: 10px;
   color: #335500;
