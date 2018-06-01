@@ -294,7 +294,7 @@ class BlakeCopyImporter(BlakeImporter):
         copy.header_html = self.get_header_html(root)
         #copy.bad_xml = bad_xml
         copy.objects = [self.object_importer.process(element) for element in root.xpath(".//desc")]
-        copy.number_of_objects = len(copy.objects)
+        copy.number_of_objects = self.get_number_of_objects(copy.objects)
         copy.effective_copy_id = copy.bad_id
         copy.title = self.get_copy_title(root)
         copy.institution = self.get_copy_institution(root)
@@ -320,6 +320,15 @@ class BlakeCopyImporter(BlakeImporter):
             obj.copy_print_date_value = copy.print_date_value
             obj.copy_print_date_string = copy.print_date_string
             obj.copy_bad_id = copy.bad_id
+
+    @staticmethod
+    def get_number_of_objects(objects):
+        i = 1
+        for obj in objects:
+            if not obj.supplemental:
+                obj.object_number = i
+                i += 1
+        return i
 
     @staticmethod
     def get_compdate_string(document):
