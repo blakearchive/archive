@@ -241,7 +241,7 @@ class BlakeCopy(db.Model):
             "print_date_string": self.print_date_string,
             "print_date": self.print_date,
             "effective_copy_id": self.effective_copy_id,
-            "number_of_objects": self.objects,
+            "number_of_objects": self.number_of_objects,
         }
 
 
