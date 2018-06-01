@@ -216,6 +216,7 @@ class BlakeCopy(db.Model):
     print_date_string = db.Column(db.UnicodeText)
     print_date_value = db.Column(db.UnicodeText)
     effective_copy_id = db.Column(db.UnicodeText, index=True)
+    number_of_objects = db.Column(db.Integer)
     #bad_xml = db.Column(db.Text)
 
     def __init__(self, *args, **kwargs):
@@ -240,6 +241,7 @@ class BlakeCopy(db.Model):
             "print_date_string": self.print_date_string,
             "print_date": self.print_date,
             "effective_copy_id": self.effective_copy_id,
+            "number_of_objects": self.objects,
         }
 
 
