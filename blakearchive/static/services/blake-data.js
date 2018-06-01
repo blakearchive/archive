@@ -310,27 +310,6 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
         }
 
     };
-/*
-    blakeData.getNumberOfObjectsForCopy = function (copyId) {
-        var url = directoryPrefix + '/api/copy/' + copyId + '/objects';
-
-        //$log.info('getting objects in copy');
-
-        return $http.get(url)
-            .then(getObjectsForCopyComplete)
-            .catch(getObjectsForCopyFailed);
-
-        function getObjectsForCopyComplete(response){
-            return BlakeObject.create(response.data.results);
-        }
-
-        function getObjectsForCopyFailed(error){
-            $log.error('XHR Failed for getObjectsForCopy.\n' + angular.toJson(error.data, true));
-            $log.error('Reuesting: ' + url);
-        }
-
-    };
-*/
 
     blakeData.getWork = function (workId) {
         var url = directoryPrefix + '/api/work/' + workId;
