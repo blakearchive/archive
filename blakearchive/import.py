@@ -323,7 +323,7 @@ class BlakeCopyImporter(BlakeImporter):
 
     @staticmethod
     def get_number_of_objects(objects):
-        i = 1
+        i = 0
         for obj in objects:
             if not obj.supplemental:
                 i += 1
