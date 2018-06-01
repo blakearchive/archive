@@ -326,7 +326,6 @@ class BlakeCopyImporter(BlakeImporter):
         i = 1
         for obj in objects:
             if not obj.supplemental:
-                obj.object_number = i
                 i += 1
         return i
 
