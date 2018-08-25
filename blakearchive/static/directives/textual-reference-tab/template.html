@@ -35,7 +35,7 @@
         <h3>Works</h3>
         <div ng-repeat="wk in tr.bds.object.text_ref.works track by $index" class="col-sm-6 col-md-3">
             <handprint-block link="/work/{{wk.bad_id}}"
-                             image="{{ wk.image }}"
+                             image="{{ wk.image }}.100.jpg"
                              footer="{{ wk.title }}">
             </handprint-block>
         </div>
