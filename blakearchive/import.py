@@ -52,55 +52,30 @@ class BlakeExhibitImporter(BlakeImporter):
   def import_data(self):
       exhibit_pattern = os.path.join(self.data_folder,"exhibits/*.xml")
       matching_exhibit_files = glob.glob(exhibit_pattern)
+      self.exhibits = {}
+      self.exhibit_images = {}
       self.import_exhibit_files(matching_exhibit_files)
       self.process_exhibits()
       #self.process_relationships()
       self.populate_database()
       print "K, done it!"
   def import_exhibit_files(self, matching_files):
+      # iterate over files that match exhibits/*.xml
+      # for each one, call process exhibit
       print "K, importing exhibit files"
-      pass
 
-  def process_exhibits(self):
+  def process_exhibit(self,exhibit):
+      # each exhibit was read from the file system. we want to:
+      # 1. create an Exhibit Model and update its attributes from exhibit arg(filesystem)
+      # 2. add the model to self.exhibits for processing by populate_database
+      # 3. each exhibit has a collection of exhibit-images. we need to iterate over them.
+      #    -- creating a model for each and adding them to self.exhibit_images
       print "K, processing exhibit files"
-      pass
 
   def populate_database(self):
+      # iterate over self.exhibits, add exhibit models to postgresql
+      # iterate over self.exhibit_images, add them to prostgresql
       print "K, populated the database"
-      pass
-
-# TODO: make this work
-# class BlakeExhibitImporter(BlakeImporter):
-#     def __init__(self, data_folder):
-#         self.data_folder = data_folder
-#         self.object_importer = BlakeObjectImporter()
-#         self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
-#         self.works = {}
-#         self.work_info = {}
-#         self.virtual_works = defaultdict(lambda: set())
-#         self.relationships_df = pandas.read_csv(self.data_folder + "/csv/blake-relations.csv", encoding="utf-8")
-#         self.works_df = pandas.read_csv(self.data_folder + "/csv/works.csv", encoding="utf-8")
-#         self.relationships_df.fillna("", inplace=True)
-#         self.works_df.fillna("", inplace=True)
-
-
-# TODO: BlakeExhibitImageImporter
-
-
-# class BlakeObjectImporter(BlakeImporter):
-#     xslt_xml = etree.parse(open("static/xslt/transcription.xsl"))
-#     transform = etree.XSLT(xslt_xml)
-
-#     def __init__(self):
-#         self.members = {}
-
-#     def get(self, desc_ids):
-#         if isinstance(desc_ids, basestring):
-#             return self.members.get(desc_ids)
-#         else:
-#             return [self.members[desc_id] for desc_id in desc_ids if desc_id in self.members]
-
-
 
 class BlakeDocumentImporter(BlakeImporter):
     def __init__(self, data_folder):
