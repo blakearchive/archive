@@ -55,14 +55,19 @@ class BlakeExhibitImporter(BlakeImporter):
       self.exhibits = {}
       self.exhibit_images = {}
       self.import_exhibit_files(matching_exhibit_files)
-      self.process_exhibits()
+      #self.process_exhibits()
       #self.process_relationships()
       self.populate_database()
       print "K, done it!"
   def import_exhibit_files(self, matching_files):
       # iterate over files that match exhibits/*.xml
       # for each one, call process exhibit
-      print "K, importing exhibit files"
+      for f in matching_files:
+          try:
+              self.process_exhibit(f)
+          except ValueError as err:
+              logger.error(err.message)
+      logger.info( "importing exhibit files")
 
   def process_exhibit(self,exhibit):
       # each exhibit was read from the file system. we want to:
@@ -70,6 +75,7 @@ class BlakeExhibitImporter(BlakeImporter):
       # 2. add the model to self.exhibits for processing by populate_database
       # 3. each exhibit has a collection of exhibit-images. we need to iterate over them.
       #    -- creating a model for each and adding them to self.exhibit_images
+      print "Yo, you want this?: "+exhibit
       print "K, processing exhibit files"
 
   def populate_database(self):
