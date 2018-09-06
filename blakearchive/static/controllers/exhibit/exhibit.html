@@ -1,20 +1,19 @@
 <div id="archive" class="container-fluid archive-top">
     <div id="object-container" class="row">
-        <div id="object-view" ng-class="{'show-tools': exhibitCtrl.showTools, 'hide-tools': !exhibitCtrl.showTools,'view-objects': persistentmode == 'gallery','reading-view': persistentmode == 'reading','compare-objects': view.mode == 'compare'}">
+        <div id="object-view" >
 
         <!--  <object-viewer ng-if="persistentmode == 'gallery' && view.mode != 'compare'"></object-viewer>
 
             <object-compare ng-if="view.mode == 'compare'"></object-compare>
         -->
 
-            <exhibit-view ng-if="persistentmode == 'reading'"></exhibit-view>
-        
+            <exhibit-view ></exhibit-view>
 
-            <!--Edit buttons-->
+
+            <!--Edit buttons
             <div id="object-tools" ng-if="persistentmode != 'reading'" class="hidden-xs">
                 <div id="object-tools-inner">
                     <div class="btn-group edit-object" role="group">
-                        <!--<button type="button" class="btn btn-default add-lightbox hidden-sm"><span class="edit-icon"></span> Add To Lightbox</button>-->
                         <button type="button" class="btn btn-default rotate" ng-click="exhibitCtrl.rotate(exhibitCtrl.bds.object)"><span class="edit-icon"></span> Rotate</button>
                         <button type="button" class="btn btn-default zoom hidden-sm" ng-class="{hover: zoom}" ng-click="exhibitCtrl.zoom()" tooltip="Mouse over the image"  tooltip-trigger="click" tooltip-placement="top"><span class="edit-icon"></span> Zoom</button>
                         <button type="button" class="btn btn-default new-window" show-me="enlargement" object="exhibitCtrl.bds.object" copy-bad="{{exhibitCtrl.bds.copy.bad_id}}"><span class="edit-icon"></span> Enlargement</button>
@@ -24,13 +23,10 @@
                     </div>
                     <div class="show-hide-tools" ng-click="exhibitCtrl.toggleTools()"><span>+</span></div>
                 </div>
-            </div>
+            </div>-->
 
         </div>
 
 
     </div>
-</div>
-<div id="archive-tabs" role="tabpanel" ng-if="persistentmode != 'reading'">
-    <copy-tabs></copy-tabs>
 </div>

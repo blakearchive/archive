@@ -11,7 +11,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
     vm.compareCopyObjects = {};
     vm.compareCopyId = '';
     vm.compareCopyPrintDateString = '';
-    vm.rs = $rootScope;
+    vm.rs = $rootScope;copyObjects
     vm.zoomMessage = 'Click, then mouse over the image';
     $rootScope.truesize = false;
     vm.showOverlayCompareCopyInfo = false;
@@ -53,7 +53,7 @@ angular.module("blake").controller("ObjectReadingController", function($rootScop
 
     vm.showOverlayRelatedCopyInfo = function (copyId) {
         BlakeDataService.getCopy(copyId).then(function(resultingCopy) {
-            vm.RelatedCopy = resultingCopy;     
+            vm.RelatedCopy = resultingCopy;
         });
         vm.showOverlayRelatedCopyInfoFlag = true;
         return vm.RelatedCopy;

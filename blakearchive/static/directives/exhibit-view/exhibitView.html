@@ -29,23 +29,24 @@
 
 <!--for exhibits-->
 <div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="compare" ng-if="read.bds.copy.bad_id == 'illum'" ">
-    
-           
-                
+
+
+
                     <ng-include src=" '/static/html/illuminatedprinting.exhibit.html' "></ng-include>
-                   
-   
+
+
 </div>
-<div style="float:right; width:67% " id="compare " class="scrollbar " ng-if="read.bds.copy.bad_id=='illum' " left-on-broadcast="viewSubMenu::readingMode ">
+<div style="float:right; width:67% " id="compare " class="scrollbar "  left-on-broadcast="viewSubMenu::readingMode ">
     <div class="featured-object ">
         <div class="compare-inner ">
-            <div class="item " ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null} " ng-if="read.bds.copy.bad_id !='letters' ">
+            <div class="item " ng-repeat="o in exhibit.bds.exhibitObjects ">
                 <div class="reading-wrapper " auto-height adjust="150 " breakpoint="768 " id="{{ read.cssSafeId(o.desc_id) }} ">
-                    <img magnify-image ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg " ng-click="read.changeObject(o) ">
+                    <img ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg ">
                     <div class="reading-copy ">
                         <div class="reading-copy-inner ">
-                            <h4 ng-if="o.title " ng-click="read.changeObject(o) ">{{o.title}}<br><span>{{ o.full_object_id }}</span></h4>
-                            <h4 ng-if="!o.title " ng-click="read.changeObject(o) "><span>{{ o.full_object_id }}</span></h4>
+                            <h4 ng-if="o.title " >{{o.title}}<br><span>{{ o.full_object_id }}</span></h4>
+                            <h4 ng-if="!o.title "><span>{{ o.full_object_id }}</span></h4>
+                            <!-- replace the following with 'exhibit-image-caption' (a new directive similar to the following directive)-->
                             <text-transcription object="o "></text-transcription>
                         </div>
                     </div>
@@ -54,50 +55,7 @@
         </div>
     </div>
 </div>
-<div id="object-tools " class="hidden-xs ">
-    <div id="object-tools-inner " style="text-align:center ">
-        <div class="btn-group edit-object " role="group ">
-        <button type="button " style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px " ng-class="{ 'hover':activeapparatus=='transcriptions' } " class="btn btn-default " ng-click="read.showTranscriptions() ">
-            <span class="gr-abbreviation " style="height:21px;font-size:13px; ">&nbsp;&nbsp;&nbsp;&nbsp;Diplomatic Transcriptions</span>
-            <span class="gr-title ">Show diplomatic transcriptions</span>
-        </button>
-        <button type="button " style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -121px " ng-class="{ 'hover':activeapparatus=='illustrationdescriptions' } " class="btn btn-default " ng-click="read.showIllustrationDescriptions() ">
-            <span class="gr-abbreviation " style="height:21px;font-size:14px ">&nbsp;&nbsp;&nbsp;&nbsp;Illustration Descriptions</span>
-            <span class="gr-title ">Show illustration descriptions</span>
-        </button>
-        <button type="button " class="btn btn-default " style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:3px -245px " ng-class="{ 'hover':activeapparatus=='editorsnotes' } " class="btn btn-gr-selection " ng-click="read.showEditorsNotes() ">
-            <span class="gr-abbreviation " style="height:21px;font-size:13px ">&nbsp;&nbsp;&nbsp;&nbsp;Editors' Notes</span>
-            <span class="gr-title ">Show editors' notes</span>
-        </button>
-        <button type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':activeapparatus=='imagesonly' } " class="btn btn-gr-selection " ng-click="read.showImagesOnly() ">
-            <span class="gr-abbreviation " style="height:21px;font-size:13px ">Images Only</span>
-            <span class="gr-title ">Show images only</span>
-        </button>
-        <button type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " class="btn btn-default " ng-click="read.zoom() " tooltip="Mouse over an image " tooltip-placement="top " tooltip-trigger="click ">
-            <span class="gr-abbreviation " style="height:21px;font-size:13px ">Magnify</span>
-        </button>
-        <button type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':truesize==true, 'inactive':truesize==false} " class="btn btn-gr-selection " ng-click="read.showTrueSize() ">
-            <span class="gr-abbreviation " style="height:21px;font-size:13px ">True Size</span>
-            <span class="gr-title ">True Size</span>
-        </button>
-       
-        
-        <span ng-if="read.bds.workCopies.length> 1 && read.bds.copy.virtual == false" dropdown class="dropdown">
-    <button ng-if="read.apparatus != 'comparewith'" dropdown-toggle type="button" class="btn btn-default" style="height:21px;line-height:0.6;margin-bottom:1px;margin-right:1px;border-radius:0px;border-left:0px" ng-class="{'hover':activeapparatus == 'comparewith'}">
-        <span class="gr-abbreviation" style="height:21px;font-size:13px">Compare with Copy...</span>
-        <span class="gr-title">Show compare with</span>
-    </button>
-    <button ng-if="read.apparatus == 'comparewith'" dropdown-toggle type="button" class="btn btn-default" style="height:21px;line-height:0.6;margin-bottom:1px;margin-right:1px;border-radius:0px;border-left:0px" ng-class="{'hover':activeapparatus == 'comparewith'}">
-        <span class="gr-abbreviation" style="height:21px;font-size:13px">Compare with <span style="color:yellow;background:#1d1d1d">Copy {{read.compareCopyId}} (Printed {{read.compareCopyPrintDateString}})</span></span>
-        <span class="gr-title">Show compare with</span>
-    </button>
-    <ul class="dropdown-menu" style="border-radius:0px;top:inherit;bottom:100%;margin:2px 0 2px" role="menu">
-        <li ng-repeat="copy in read.bds.workCopies track by $index" ng-if="copy.archive_copy_id != read.bds.copy.archive_copy_id">
-            <a ng-click="read.showCompareWithFaster(copy.bad_id)">{{copy.archive_copy_id}} (Printed {{copy.print_date_string}})</a>
-        </li>
-    </ul>
-    </span>
-</div>
+
 </div>
 </div>
 <!--/.compare-->
