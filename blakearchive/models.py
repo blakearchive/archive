@@ -278,11 +278,12 @@ class BlakeFeaturedWork(db.Model):
 
 class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image, etc
     __tablename__ = "exhibit_image"
-    exhibit_image_id = db.Column(db.Integer, primary_key=True)
-    exhibit_id = db.Column(db.Integer, db.ForeignKey("exhibit.exhibit_id"))
+    exhibit_image_pk = db.Column(db.Integer, primary_key=True)
+    exhibit_id = db.Column(db.Text, index=True)
+    exhibit_pk = db.Column(db.Integer, db.ForeignKey("exhibit.exhibit_pk"))
     caption = db.Column(db.UnicodeText)
     dbi = db.Column(db.UnicodeText)
-    bad_id = db.Column(db.Text)
+    #bad_id = db.Column(db.Text)
 
     @property
     def to_dict(self):
@@ -297,12 +298,13 @@ class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image
 # with links to images in a horizontal 'slideshow' on the right.
 class BlakeExhibit(db.Model): # todo: change to correct columns name, image, etc
     __tablename__ = "exhibit"
-    exhibit_id = db.Column(db.Integer, primary_key=True)
+    exhibit_pk = db.Column(db.Integer, primary_key=True)
+    exhibit_id = db.Column(db.Text, index=True)
     title = db.Column(db.UnicodeText)
     exhibit_type = db.Column(db.UnicodeText)
     article = db.Column(db.UnicodeText)
     exhibit_images = db.relationship(BlakeExhibitImage, backref="exhibit")
-    bad_id = db.Column(db.Text)
+    #bad_id = db.Column(db.Text)
 
     @property
     def to_dict(self):

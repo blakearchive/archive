@@ -44,6 +44,31 @@ class BlakeImporter(object):
     def split_ids(id_string):
         return re.split(r",\s*", id_string.lower())
 
+class BlakeExhibitImporter(BlakeImporter):
+  def __init__(self, data_folder):
+      self.data_folder = data_folder
+      self.exhibits = {}
+
+  def import_data(self):
+      exhibit_pattern = os.path.join(self.data_folder,"exhibits/*.xml")
+      matching_exhibit_files = glob.glob(exhibit_pattern)
+      self.import_exhibit_files(matching_exhibit_files)
+      self.process_exhibits()
+      #self.process_relationships()
+      self.populate_database()
+      print "K, done it!"
+  def import_exhibit_files(self, matching_files):
+      print "K, importing exhibit files"
+      pass
+
+  def process_exhibits(self):
+      print "K, processing exhibit files"
+      pass
+
+  def populate_database(self):
+      print "K, populated the database"
+      pass
+
 # TODO: make this work
 # class BlakeExhibitImporter(BlakeImporter):
 #     def __init__(self, data_folder):
@@ -57,6 +82,7 @@ class BlakeImporter(object):
 #         self.works_df = pandas.read_csv(self.data_folder + "/csv/works.csv", encoding="utf-8")
 #         self.relationships_df.fillna("", inplace=True)
 #         self.works_df.fillna("", inplace=True)
+
 
 # TODO: BlakeExhibitImageImporter
 
@@ -91,6 +117,7 @@ class BlakeDocumentImporter(BlakeImporter):
 
     def import_data(self):
         document_pattern = os.path.join(self.data_folder, "works/*.xml")
+        exhibit_pattern = os.path.join(self.data_folder,"exhibits/*.xml")
         info_pattern = os.path.join(self.data_folder, "info/*.xml")
         matching_bad_files = glob.glob(document_pattern)
         matching_info_files = glob.glob(info_pattern)
@@ -569,7 +596,8 @@ def main():
     parser.add_argument("data_folder")
     parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
-    importer = BlakeDocumentImporter(args.data_folder)
+    #importer = BlakeDocumentImporter(args.data_folder)
+    importer = BlakeExhibitImporter(args.data_folder)
 
     if args.profile:
         import cProfile
