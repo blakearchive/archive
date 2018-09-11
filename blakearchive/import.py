@@ -54,7 +54,7 @@ class BlakeDocumentImporter(BlakeImporter):
         self.work_info = {}
         self.virtual_works = defaultdict(lambda: set())
         self.relationships_df = pandas.read_csv(self.data_folder + "/csv/blake-relations.csv", encoding="utf-8")
-        self.text_matches = pandas.read_csv(self.data_folder + "/csv/blake_matches_demo.csv", encoding="utf-8")
+        self.text_matches = pandas.read_csv(self.data_folder + "/csv/text-matches.csv", encoding="utf-8")
         self.works_df = pandas.read_csv(self.data_folder + "/csv/works.csv", encoding="utf-8")
         self.relationships_df.fillna("", inplace=True)
         self.text_matches.fillna("", inplace=True)
@@ -69,7 +69,7 @@ class BlakeDocumentImporter(BlakeImporter):
         self.import_bad_files(matching_bad_files)
         self.process_works()
         self.process_relationships()
-        self.process_text_matches()
+        #self.process_text_matches()
         self.populate_database()
 
     # region Info file handling
