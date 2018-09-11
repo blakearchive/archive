@@ -14,7 +14,7 @@
 </div>
 
 <!--use ng-if="fromSame.type != 'textmatch'" in <div> if need be-->
-<div ng-if="fromSame.type != 'textmatch'" class="row">
+<div class="row">
     <div ng-repeat="obj in fromSame.bds.object[fromSame.type] track by $index" class="col-sm-6 col-md-3 text-center">
         <div class="select-for-compare-wrapper" ng-class="{'selected': fromSame.cof.isComparisonObject(obj,fromSame.type)}" tooltip="Click in corner to select or deselect for comparison"  tooltip-trigger="mouseenter" tooltip-placement="top-right">
             <span class="selected" ng-click="fromSame.selectOne(obj);"><span class="icon" ng-if="fromSame.cof.isComparisonObject(obj)"></span></span>
@@ -72,7 +72,7 @@
     </div>
 </div>
 
-
+<!--
 <div ng-if="fromSame.type == 'textmatch'" class="row">
     <div ng-repeat="obj in fromSame.bds.object[fromSame.type] track by $index" class="col-sm-6 col-md-3 text-center">
         
@@ -129,4 +129,4 @@
     
     </div>
 </div>
-
+-->
