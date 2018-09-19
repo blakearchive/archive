@@ -27286,6 +27286,7 @@ angular.module("blake").controller("HandprintBlockController", function () {
         case 'gravewd':
         case 'cpd':
         case 'allegropenseroso':
+        case 'pencil1':
         case 'miltons':
             vm.imagePath = '/static/img/virtualworks/';
             break;
@@ -31483,6 +31484,7 @@ angular.module("blake").factory("BlakeCopy", ["GenericService", function (Generi
             case 'gravewc':
             case 'gravewd':
             case 'cpd':
+            case 'pencil1':
             case 'allegropenseroso':
             case 'miltons':
                 copy.virtual = true;
@@ -32300,6 +32302,10 @@ angular.module("blake").factory("BlakeWork", ["GenericService", "BlakeCopy", fun
             //    break;
             case 'pid':
                 work.title = 'Pen and Ink Drawings';
+                work.virtual = true;
+                break;
+            case 'pencil1':
+                work.title = 'Pencil Sketches';
                 work.virtual = true;
                 break;
             case 'letters':

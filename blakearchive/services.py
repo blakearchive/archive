@@ -251,7 +251,7 @@ class BlakeDataService(object):
 
     @classmethod
     def get_objects_for_copy(cls, bad_id):
-        vgroups = ['biblicalwc', 'gravepd', 'biblicaltemperas', 'gravewc', 'cpd', 'gravewd', 'pid']
+        vgroups = ['biblicalwc', 'gravepd', 'biblicaltemperas', 'gravewc', 'cpd', 'gravewd', 'pid','pencil1']
         if any(bad_id in s for s in vgroups):
             query = cls.get_virtual_sorted_query()
         else:
