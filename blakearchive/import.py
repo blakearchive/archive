@@ -67,7 +67,7 @@ class BlakeExhibitImporter(BlakeImporter):
               self.process_exhibit(f)
           except ValueError as err:
               logger.error(err.message)
-      logger.info( "importing exhibit files")
+      #logger.info( "importing exhibit files")
 
   def process_exhibit(self,exhibit):
       # each exhibit was read from the file system. we want to:
@@ -75,8 +75,28 @@ class BlakeExhibitImporter(BlakeImporter):
       # 2. add the model to self.exhibits for processing by populate_database
       # 3. each exhibit has a collection of exhibit-images. we need to iterate over them.
       #    -- creating a model for each and adding them to self.exhibit_images
-      print "Yo, you want this?: "+exhibit
-      print "K, processing exhibit files"
+      print "processing: "+exhibit
+      root = etree.parse(exhibit).getroot()
+      document_name = os.path.split(exhibit)[1]
+      print "document name: "+document_name
+      print "doc content: "+etree.tostring(root)
+      # the exhibit root element has attributes that we need to parse into the exhibit object
+      #ex = models.BlakeExhibit()
+      #ex.id = root
+      print "exhibit id is: "+root.get("id")
+
+      # iterate images and add them to the list
+      for child in root:
+          self.process_exhibit_image(root,child)
+
+  def process_exhibit_image(self, exhibitXml, imageXml):
+      print "processing image: "+imageXml.get("id")
+      exhibitImage = models.BlakeExhibitImage()
+      exhibitImage.pk = 111 # ummm... figure this out! needed?
+      exhibitImage.id = imageXml.get("id")
+      exhibitImage.dbi = imageXml.get("dbi")
+      exhibitImage.exhibitId = exhibitXml.get("id")
+      exhibitImage.caption = etree.tostring(imageXml[0]) # there should only be one child element... the caption element
 
   def populate_database(self):
       # iterate over self.exhibits, add exhibit models to postgresql
@@ -577,6 +597,7 @@ def main():
     parser.add_argument("data_folder")
     parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
+    ### TODO: remember to uncomment the following!!!
     #importer = BlakeDocumentImporter(args.data_folder)
     importer = BlakeExhibitImporter(args.data_folder)
 
