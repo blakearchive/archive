@@ -136,16 +136,16 @@ class BlakeDocumentImporter(BlakeImporter):
 
     def process_text_matches(self):
         for entry in self.text_matches.itertuples():
-            Record = namedtuple('Object',['index','desc_id','text_match_desc_ids','text_match_strings'])
+            Record = namedtuple('Object',['index','primary_desc_id','match_desc_id','fragment'])
             entry = Record(*entry)
             self.process_text_match(entry)
 
     def process_text_match(self, entry):
-        obj = self.object_importer.get(entry.desc_id.lower())
+        obj = self.object_importer.get(entry.primary_desc_id.lower())
         if not obj:
             return
-        obj.objects_with_text_matches.extend(self.objects_for_id_string(entry.text_match_desc_ids))
-        obj.text_match_strings = entry.text_match_strings.encode('utf-8')
+        obj.objects_with_text_matches.extend(self.objects_for_id_string(entry.match_desc_id), entry.fragment.encode('utf'))
+        #obj.fragment = entry.fragment.encode('utf-8')
 
 
     def objects_for_id_string(self, id_string):
