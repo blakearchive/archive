@@ -101,7 +101,7 @@ class BlakeObject(db.Model):
     supplemental = db.Column(db.UnicodeText)
     fragment = db.Column(db.UnicodeText)
     objects_from_same_matrix = db.relationship(
-        "BlakeObject", db.Column(db.UnicodeText),
+        "BlakeObject",
         order_by="BlakeObject.ordering_date",
         secondary=matrix__object,
         primaryjoin=object_id == matrix__object.c.object_id,
