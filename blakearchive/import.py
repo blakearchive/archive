@@ -91,8 +91,20 @@ class BlakeDocumentImporter(BlakeImporter):
         self.import_bad_files(matching_bad_files)
         self.process_works()
         self.process_relationships()
-        #self.process_text_matches()
+        self.process_text_matches()
         self.populate_database()
+
+    def process_text_matches(self):
+        for entry in self.text_matches.itertuples():
+            Record = namedtuple('Object',['index','primary_desc_id','match_desc_id','fragment'])
+            entry = Record(*entry)
+            self.process_text_match(entry)
+
+    def process_text_match(self, entry):
+        obj = self.object_importer.get(entry.primary_desc_id.lower())
+        if not obj:
+            return
+        obj.objects_with_text_matches.extend(self.objects_for_id_string(entry.match_desc_id))
 
     # region Info file handling
     def import_info_files(self, info_files):
