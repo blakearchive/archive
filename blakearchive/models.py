@@ -62,6 +62,19 @@ text_match__object = db.Table(
     db.Column("related_object_id", db.Integer, db.ForeignKey("object.object_id"))
 )
 
+class FragmentPair(db.Model):
+    __tablename__ = "fragmentpair"
+    fragment = db.Column(db.UnicodeText)
+    desc_id1 = db.Column(db.UnicodeText, index=True)
+    desc_id2 = db.Column(db.UnicodeText, index=True)
+
+    @property
+    def to_dict(self):
+        return {
+            "fragment": self.fragment,
+            "desc_id1": self.desc_id1,
+            "desc_id2": self.desc_id2,
+        }
 
 class BlakeObject(db.Model):
     __tablename__ = "object"
