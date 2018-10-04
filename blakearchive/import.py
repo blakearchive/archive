@@ -144,7 +144,7 @@ class BlakeDocumentImporter(BlakeImporter):
         obj = self.object_importer.get(entry.primary_desc_id.lower())
         if not obj:
             return
-        obj.objects_with_text_matches.extend(self.objects_for_id_string(entry.match_desc_id), entry.fragment.encode('utf'))
+        obj.objects_with_text_matches.extend(self.objects_for_id_string(entry.match_desc_id))
         #obj.fragment = entry.fragment.encode('utf-8')
 
 
