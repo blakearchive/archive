@@ -46,6 +46,7 @@ class BlakeImporter(object):
 
 class BlakeFragmentPairImporter(BlakeImporter):
     def __init__(self, data_folder):
+        self.data_folder = data_folder
         self.text_matches = pandas.read_csv(self.data_folder + "/csv/blake_superfast_matches.csv", encoding="utf-8")
 
     def import_data(self):
