@@ -44,11 +44,29 @@ class BlakeImporter(object):
     def split_ids(id_string):
         return re.split(r",\s*", id_string.lower())
 
+class BlakeFragmentPairImporter(BlakeImporter):
+    def __init__(self):
+        self.text_matches = pandas.read_csv(self.data_folder + "/csv/blake_superfast_matches.csv", encoding="utf-8")
+
+    def import_data(self):
+        self.process_text_matches()
+
+    def process_text_matches(self):
+        for entry in self.text_matches.itertuples():
+            Record = namedtuple('Object',['index','primary_desc_id','match_desc_id','fragment'])
+            entry = Record(*entry)
+            self.process_text_match(entry)
+
+    def process_text_match(self, entry):
+        fragmentpair.fragment = entry.fragment
+        fragmentpair.desc_id1 = entry.primary_desc_id
+        fragmentpair.desc_id2 = entry.match_desc_id
 
 class BlakeDocumentImporter(BlakeImporter):
     def __init__(self, data_folder):
         self.data_folder = data_folder
         self.object_importer = BlakeObjectImporter()
+        self.fragmentpair_importer = BlakeFragmentPairImporter()
         self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
         self.works = {}
         self.work_info = {}
@@ -69,7 +87,7 @@ class BlakeDocumentImporter(BlakeImporter):
         self.import_bad_files(matching_bad_files)
         self.process_works()
         self.process_relationships()
-        self.process_text_matches()
+        #self.process_text_matches()
         self.populate_database()
 
     # region Info file handling
@@ -133,22 +151,6 @@ class BlakeDocumentImporter(BlakeImporter):
         referenced_work_ids = self.split_ids(entry.reference_work_ids)
         referenced_works = [self.works[id_] for id_ in referenced_work_ids if id_ in self.works]
         obj.textually_referenced_works.extend(referenced_works)
-
-    def process_text_matches(self):
-        for entry in self.text_matches.itertuples():
-            Record = namedtuple('Object',['index','primary_desc_id','match_desc_id','fragment'])
-            entry = Record(*entry)
-            self.process_text_match(entry)
-
-    def process_text_match(self, entry):
-        obj = self.object_importer.get(entry.primary_desc_id.lower())
-        if not obj:
-            return
-        obj.objects_with_text_matches.extend(self.objects_for_id_string(entry.match_desc_id))
-        fragmentpair = models.FragmentPair()
-        fragmentpair.fragment = entry.fragment
-        fragmentpair.desc_id1 = obj.desc_id
-        fragmentpair.desc_id2 = entry.match_desc_id
         #obj.fragment = entry.fragment.encode('utf-8')
 
 
@@ -264,6 +266,7 @@ class BlakeDocumentImporter(BlakeImporter):
         models.BlakeObject.metadata.create_all(bind=engine)
         session.add_all(self.works.values())
         session.add_all(self.object_importer.members.values())
+        session.add_all(self.fragmentpair_importer.members.values())
         session.commit()
 
 
@@ -569,11 +572,13 @@ def main():
     parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
     importer = BlakeDocumentImporter(args.data_folder)
+    fragmentpairimporter = BlakeFragmentPairImporter()
     if args.profile:
         import cProfile
         cProfile.runctx("importer.import_data()", globals(), locals(), filename="import_stats.out")
     else:
         importer.import_data()
+        fragmentpairimporter.import_data()
 
 
 if __name__ == "__main__":
