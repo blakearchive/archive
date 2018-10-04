@@ -66,7 +66,7 @@ class BlakeDocumentImporter(BlakeImporter):
     def __init__(self, data_folder):
         self.data_folder = data_folder
         self.object_importer = BlakeObjectImporter()
-        self.fragmentpair_importer = BlakeFragmentPairImporter()
+        self.fragmentpair_importer = BlakeFragmentPairImporter(self.data_folder)
         self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
         self.works = {}
         self.work_info = {}
