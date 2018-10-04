@@ -62,7 +62,7 @@ text_match__object = db.Table(
     db.Column("related_object_id", db.Integer, db.ForeignKey("object.object_id"))
 )
 
-class FragmentPair(db.Model):
+class BlakeFragmentPair(db.Model):
     __tablename__ = "fragmentpair"
     fragmentpair_id = db.Column(db.Integer, primary_key=True)
     fragment = db.Column(db.UnicodeText)
