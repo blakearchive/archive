@@ -64,6 +64,7 @@ text_match__object = db.Table(
 
 class FragmentPair(db.Model):
     __tablename__ = "fragmentpair"
+    fragmentpair_id = db.Column(db.Integer, primary_key=True)
     fragment = db.Column(db.UnicodeText)
     desc_id1 = db.Column(db.UnicodeText, index=True)
     desc_id2 = db.Column(db.UnicodeText, index=True)
