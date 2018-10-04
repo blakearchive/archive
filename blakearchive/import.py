@@ -45,7 +45,7 @@ class BlakeImporter(object):
         return re.split(r",\s*", id_string.lower())
 
 class BlakeFragmentPairImporter(BlakeImporter):
-    def __init__(self):
+    def __init__(self, data_folder):
         self.text_matches = pandas.read_csv(self.data_folder + "/csv/blake_superfast_matches.csv", encoding="utf-8")
 
     def import_data(self):
@@ -572,7 +572,7 @@ def main():
     parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
     importer = BlakeDocumentImporter(args.data_folder)
-    fragmentpairimporter = BlakeFragmentPairImporter()
+    fragmentpairimporter = BlakeFragmentPairImporter(args.data_folder)
     if args.profile:
         import cProfile
         cProfile.runctx("importer.import_data()", globals(), locals(), filename="import_stats.out")
