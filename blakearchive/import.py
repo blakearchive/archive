@@ -145,6 +145,10 @@ class BlakeDocumentImporter(BlakeImporter):
         if not obj:
             return
         obj.objects_with_text_matches.extend(self.objects_for_id_string(entry.match_desc_id))
+        fragmentpair = models.FragmentPair()
+        fragmentpair.fragment = entry.fragment
+        fragmentpair.desc_id1 = obj.desc_id
+        fragmentpair.desc_id2 = entry.match_desc_id
         #obj.fragment = entry.fragment.encode('utf-8')
 
 

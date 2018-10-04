@@ -209,6 +209,10 @@ class BlakeDataService(object):
             return []
 
     @classmethod
+    def get_fragment_pair(cls, desc_id1, desc_id2):
+        return models.FragmentPair.query.filter(models.FragmentPair.desc_id1 == desc_id1,models.FragmentPair.desc_id2 == desc_id2).first()
+
+    @classmethod
     def get_objects_from_same_matrix(cls, desc_id):
         obj = cls.get_sorted_object_query().filter(models.BlakeObject.desc_id == desc_id).first()
         if hasattr(obj, 'objects_from_same_matrix'):

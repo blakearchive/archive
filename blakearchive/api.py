@@ -68,6 +68,12 @@ def get_objects_with_text_matches(desc_id):
     results = blake_data_service.get_objects_with_text_matches(desc_id)
     return jsonify({"results": [r.to_dict for r in results]})
 
+@api.route('/object/<desc_id1>/<desc_id2>/fragment_pair')
+def get_fragment_pair(desc_id1,desc_id2):
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    results = blake_data_service.get_fragment_pair(desc_id1,desc_id2)
+    return jsonify({"results": [r.to_dict for r in results]})
+
 @api.route('/object/<desc_id>/objects_from_same_matrix')
 def get_objects_from_same_matrix(desc_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]

@@ -32,6 +32,13 @@ angular.module("blake").controller("ObjectCompareController", function ($rootSco
         vm.bds.changeCopy(object.copy_bad_id,object.desc_id);
     }
 
+    vm.getFragmentMatch = function(desc_id){
+        BlakeDataService.getFragmentPair(vm.bds.object.desc_id,desc_id).then(function(resultingFragmentPair) {
+            vm.fragment = resultingFragmentPair.fragment;     
+        });
+        return vm.fragment;
+    }
+
     vm.goToObject = function(object){
         vm.compareText = "Select All Objects";
         vm.selectedAll = false;
