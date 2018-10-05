@@ -87,7 +87,7 @@ class BlakeDocumentImporter(BlakeImporter):
         fragmentpair.fragment = entry.fragment
         fragmentpair.desc_id1 = entry.primary_desc_id
         fragmentpair.desc_id2 = entry.match_desc_id
-        self.fragmentpairs[primary_desc_id + '-' + match_desc_id] = fragmentpair
+        self.fragmentpairs[entry.primary_desc_id + '-' + entry.match_desc_id] = fragmentpair
         return fragmentpair
 
     # region Info file handling
