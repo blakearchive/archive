@@ -114,7 +114,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
             .catch(getFragmentPairFailed);
 
         function getFragmentPairComplete(response){
-            return FragmentPair.create(response.data);
+            return BlakeFragmentPair.create(response.data);
         }
 
         function getFragmentPairFailed(error){
