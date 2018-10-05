@@ -27876,91 +27876,9 @@ angular.module("blake").directive('navMenu', function () {
 
 /***/ }),
 /* 79 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-angular.module("blake").controller("ObjectCompareController", ["$rootScope", "BlakeDataService", "CompareObjectsFactory", "$scope", function ($rootScope, BlakeDataService, CompareObjectsFactory, $scope) {
-    var vm = this;
-    vm.bds = BlakeDataService;
-    vm.cof = CompareObjectsFactory;
-    $rootScope.onWorkPage = false;
-    $scope.dpi = $rootScope.dpivalue;
-
-    vm.getOvpTitle = function () {
-        if (angular.isDefined(vm.bds.copy)) {
-            if (vm.bds.work.virtual == true) {
-                if (vm.bds.copy.bad_id == 'letters') {
-                    return vm.bds.object.object_group;
-                } else {
-                    return vm.bds.work.title;
-                }
-            } else {
-                var copyPhrase = vm.bds.copy.archive_copy_id == null ? '' : ', Copy ' + vm.bds.copy.archive_copy_id;
-
-                if (vm.bds.copy.header) {
-                    copyPhrase = vm.bds.copy.header.filedesc.titlestmt.title['@reg'] + copyPhrase;
-                }
-
-                return copyPhrase;
-            }
-        }
-    };
-
-    vm.changeObject = function (object) {
-        //console.log(object);
-        $rootScope.descIDFromCompare = object.desc_id;
-        //console.log($rootScope.descIDFromCompare);
-        vm.bds.changeCopy(object.copy_bad_id, object.desc_id);
-    };
-
-    vm.getFragmentMatch = function (desc_id) {
-        BlakeDataService.getFragmentPair(vm.bds.object.desc_id, desc_id).then(function (resultingFragmentPair) {
-            vm.fragment = resultingFragmentPair.fragment;
-        });
-        console.log(vm.fragment);
-        return vm.fragment;
-    };
-
-    vm.goToObject = function (object) {
-        vm.compareText = "Select All Objects";
-        vm.selectedAll = false;
-        vm.cof.resetComparisonObjects();
-        $rootScope.view.mode = 'object';
-        $rootScope.view.scope = 'image';
-        vm.changeObject(object);
-    };
-
-    $scope.$watch(function () {
-        return $rootScope.dpivalue;
-    }, function () {
-
-        if ($rootScope.dpivalue == '300') {
-            $scope.dpi = "300";
-        } else {
-            $scope.dpi = "100";
-        }
-    }, true);
-}]);
-
-angular.module('blake').directive("objectCompare", function () {
-    let link = function (scope, ele, attr, vm) {
-        let object = function () {
-            return vm.bds.object;
-        };
-        scope.$watch(object, function () {
-            vm.cof.setMainObject(vm.bds.object);
-            vm.getFragmentMatch('jerusalem.e.illbk.85');
-        }, true);
-    };
-
-    return {
-        restrict: 'E',
-        template: __webpack_require__(218),
-        controller: "ObjectCompareController",
-        controllerAs: 'compare',
-        bindToController: true,
-        link: link
-    };
-});
+throw new Error("Module build failed: SyntaxError: Unexpected token, expected , (71:49)\n\n\u001b[0m \u001b[90m 69 | \u001b[39m        scope\u001b[33m.\u001b[39m$watch(object\u001b[33m,\u001b[39m\u001b[36mfunction\u001b[39m(){\n \u001b[90m 70 | \u001b[39m            vm\u001b[33m.\u001b[39mcof\u001b[33m.\u001b[39msetMainObject(vm\u001b[33m.\u001b[39mbds\u001b[33m.\u001b[39mobject)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 71 | \u001b[39m            vm\u001b[33m.\u001b[39mgetFragmentMatch(jerusalem\u001b[33m.\u001b[39me\u001b[33m.\u001b[39millbk\u001b[35m.85\u001b[39m)\n \u001b[90m    | \u001b[39m                                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 72 | \u001b[39m        }\u001b[33m,\u001b[39m\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 73 | \u001b[39m    }\u001b[33m;\u001b[39m\n \u001b[90m 74 | \u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 80 */
@@ -61335,12 +61253,6 @@ module.exports = "/*!\n * jQuery JavaScript Library v3.2.1\n * https://jquery.co
 /***/ (function(module, exports) {
 
 /* (ignored) */
-
-/***/ }),
-/* 218 */
-/***/ (function(module, exports) {
-
-module.exports = "\n<!-- compare -->\n<div id=\"compare\" class=\"scrollbar\">\n<!--<div id=\"compare\" class=\"scrollbar\" style=\"height: {{compare.viewerHeight}}px\">-->\n    <div class=\"featured-object\">\n        <div class=\"compare-inner\" ng-sortable=\"{ group: 'o', animation: 150 }\">\n            <div class=\"item\"\n                 ng-repeat=\"o in compare.cof.comparisonObjects\"\n                 ng-class=\"{active:compare.cof.isMain(o)}\"\n                 ng-click=\"compare.changeObject(o)\"\n                 ng-dblclick=\"compare.goToObject(o)\">\n                <!--<p class=\"object-title text-capitalize\"><a href=\"/copy/{{o.copy_bad_id}}?objectId={{o.object_id}}\">{{ o.copy_title }}</a></p>-->\n                <p ng-class=\"{active:compare.cof.isMain(o)}\" class=\"object-title\"><a href=\"/copy/{{o.copy_bad_id}}\">{{ o.copy_title }}</a></p>\n                <div class=\"compare-wrapper flex\" auto-height adjust=\"270\" breakpoint=\"768\">\n                    <div class=\"object-img-container\" ng-class=\"{hidden: view.scope == 'text'}\" ovp-image>\n                        <img ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" magnify-image>\n                    </div>\n                    <div class=\"reading-copy\" ng-class=\"{hidden: view.scope == 'image'}\">\n                        <div class=\"reading-copy-inner\">\n                            <text-transcription object=\"o\"></text-transcription>\n                            <!--<text-transcription object=\"o\" highlight=\"{{compare.getFragmentMatch(o.desc_id)}}\"></text-transcription>-->\n                        </div>\n                    </div>\n                </div>\n                <p class=\"object-subtitle text-capitalize\"><a href=\"/copy/{{o.copy_bad_id}}?descId={{o.desc_id}}\">{{ o.full_object_id }}, {{ o.copy_composition_date }}, {{ o.copy_institution }}</a></p>\n            </div>\n        </div>\n    </div>\n</div>\n<!--/.compare-->";
 
 /***/ })
 /******/ ]);
