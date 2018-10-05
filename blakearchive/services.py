@@ -210,7 +210,7 @@ class BlakeDataService(object):
 
     @classmethod
     def get_fragment_pair(cls, desc_id1, desc_id2):
-        return models.BlakeFragmentPair.query.filter(models.BlakeFragmentPair.desc_id1 == desc_id1,models.BlakeFragmentPair.desc_id2 == desc_id2).first()
+        return models.FragmentPair.query.filter(models.FragmentPair.desc_id1 == desc_id1,models.FragmentPair.desc_id2 == desc_id2).first()
 
     @classmethod
     def get_objects_from_same_matrix(cls, desc_id):
