@@ -81,7 +81,7 @@ class BlakeDocumentImporter(BlakeImporter):
         self.data_folder = data_folder
         self.object_importer = BlakeObjectImporter()
         self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
-        self.fragmentpair_importer = BlakeFragmentPairImporter()
+        #self.fragmentpair_importer = BlakeFragmentPairImporter()
         self.works = {}
         #self.fragmentpairs = {}
         self.work_info = {}
@@ -605,13 +605,11 @@ def main():
     parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
     importer = BlakeDocumentImporter(args.data_folder)
-    #fragmentpair_importer = BlakeFragmentPairImporter(args.data_folder)
     if args.profile:
         import cProfile
         cProfile.runctx("importer.import_data()", globals(), locals(), filename="import_stats.out")
     else:
         importer.import_data()
-        #fragmentpair_importer.import_data()
 
 
 if __name__ == "__main__":
