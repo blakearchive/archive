@@ -27948,7 +27948,7 @@ angular.module('blake').directive("objectCompare", function () {
         };
         scope.$watch(object, function () {
             vm.cof.setMainObject(vm.bds.object);
-            vm.getFragmentMatch(vm.bds.object.desc_id);
+            vm.getFragmentMatch('jerusalem.e.illbk.85');
         }, true);
     };
 
