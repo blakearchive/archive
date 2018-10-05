@@ -597,13 +597,13 @@ def main():
     parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
     importer = BlakeDocumentImporter(args.data_folder)
-    #fragmentpairimporter = BlakeFragmentPairImporter(args.data_folder)
+    fragmentpairimporter = BlakeFragmentPairImporter(args.data_folder)
     if args.profile:
         import cProfile
         cProfile.runctx("importer.import_data()", globals(), locals(), filename="import_stats.out")
     else:
         importer.import_data()
-        #fragmentpairimporter.import_data()
+        fragmentpairimporter.import_data()
 
 
 if __name__ == "__main__":
