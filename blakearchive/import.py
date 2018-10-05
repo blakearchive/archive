@@ -44,33 +44,33 @@ class BlakeImporter(object):
     def split_ids(id_string):
         return re.split(r",\s*", id_string.lower())
 
-class BlakeFragmentPairImporter(BlakeImporter):
-    def __init__(self, data_folder):
-        self.data_folder = data_folder
-        self.text_matches = pandas.read_csv(self.data_folder + "/csv/blake_superfast_matches.csv", encoding="utf-8")
-        self.members = {}
+#class BlakeFragmentPairImporter(BlakeImporter):
+#    def __init__(self, data_folder):
+#        self.data_folder = data_folder
+#        self.text_matches = pandas.read_csv(self.data_folder + "/csv/blake_superfast_matches.csv", encoding="utf-8")
+#        self.members = {}
 
-    def import_data(self):
-        self.process_text_matches()
+#    def import_data(self):
+#        self.process_text_matches()
 
-    def process_text_matches(self):
-        i = 0
-        for entry in self.text_matches.itertuples():
-            Record = namedtuple('Object',['index','primary_desc_id','match_desc_id','fragment'])
-            entry = Record(*entry)       
-            fragmentpair = models.BlakeFragmentPair()
-            fragmentpair.fragment = entry.fragment
-            fragmentpair.desc_id1 = entry.primary_desc_id
-            fragmentpair.desc_id2 = entry.match_desc_id
-            self.members[i] = fragmentpair
-            i += 1
+#    def process_text_matches(self):
+#        i = 0
+#        for entry in self.text_matches.itertuples():
+#            Record = namedtuple('Object',['index','primary_desc_id','match_desc_id','fragment'])
+#            entry = Record(*entry)       
+#            fragmentpair = models.BlakeFragmentPair()
+#            fragmentpair.fragment = entry.fragment
+#            fragmentpair.desc_id1 = entry.primary_desc_id
+#            fragmentpair.desc_id2 = entry.match_desc_id
+#            self.members[i] = fragmentpair
+#            i += 1
 
 
 class BlakeDocumentImporter(BlakeImporter):
     def __init__(self, data_folder):
         self.data_folder = data_folder
         self.object_importer = BlakeObjectImporter()
-        self.fragmentpair_importer = BlakeFragmentPairImporter(self.data_folder)
+        #self.fragmentpair_importer = BlakeFragmentPairImporter(self.data_folder)
         self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
         self.works = {}
         self.work_info = {}
@@ -282,7 +282,7 @@ class BlakeDocumentImporter(BlakeImporter):
         models.BlakeObject.metadata.create_all(bind=engine)
         session.add_all(self.works.values())
         session.add_all(self.object_importer.members.values())
-        session.add_all(self.fragmentpair_importer.members.values())
+        #session.add_all(self.fragmentpair_importer.members.values())
         session.commit()
 
 
