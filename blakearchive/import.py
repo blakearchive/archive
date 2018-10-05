@@ -49,7 +49,6 @@ class BlakeDocumentImporter(BlakeImporter):
         self.data_folder = data_folder
         self.object_importer = BlakeObjectImporter()
         self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
-        self.fragmentpair_importer = BlakeFragmentPairImporter()
         self.works = {}
         self.fragmentpairs = {}
         self.work_info = {}
