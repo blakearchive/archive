@@ -288,6 +288,7 @@ class BlakeDocumentImporter(BlakeImporter):
         print("populating database")
         engine = models.db.create_engine(config.db_connection_string)
         session = sessionmaker(bind=engine)()
+        models.BlakeFragmentPair.metadata.drop_all(bind=engine)
         models.BlakeObject.metadata.drop_all(bind=engine)
         models.BlakeObject.metadata.create_all(bind=engine)
         session.add_all(self.works.values())
@@ -597,13 +598,13 @@ def main():
     parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
     importer = BlakeDocumentImporter(args.data_folder)
-    fragmentpairimporter = BlakeFragmentPairImporter(args.data_folder)
+    #fragmentpairimporter = BlakeFragmentPairImporter(args.data_folder)
     if args.profile:
         import cProfile
         cProfile.runctx("importer.import_data()", globals(), locals(), filename="import_stats.out")
     else:
         importer.import_data()
-        fragmentpairimporter.import_data()
+        #fragmentpairimporter.import_data()
 
 
 if __name__ == "__main__":
