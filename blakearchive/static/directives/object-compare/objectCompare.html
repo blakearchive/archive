@@ -19,6 +19,7 @@
                         <div class="reading-copy-inner">
                             <text-transcription object="o"></text-transcription>
                             <text-transcription ng-if="compare.cof.isMain(o) == false" object="o" highlight="compare.getFragmentMatch(o.desc_id)"></text-transcription>
+                            {{compare.getFragmentMatch(o.desc_id)}}
                         </div>
                     </div>
                 </div>
