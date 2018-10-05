@@ -73,6 +73,7 @@ angular.module('blake').directive("objectCompare", function () {
             //vm.getFragmentMatch('jerusalem.e.illbk.85');
         },true);
     };
+    console.log(vm.cof);
 
     return {
         restrict: 'E',
