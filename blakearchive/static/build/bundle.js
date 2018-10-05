@@ -31620,7 +31620,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
         return $http.get(url).then(getFragmentPairComplete).catch(getFragmentPairFailed);
 
         function getFragmentPairComplete(response) {
-            return BlakeFragmentPair.create(response.data);
+            return FragmentPair.create(response.data);
         }
 
         function getFragmentPairFailed(error) {
