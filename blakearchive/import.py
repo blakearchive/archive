@@ -48,10 +48,11 @@ class BlakeImporter(object):
 #    def __init__(self, data_folder):
 #        self.data_folder = data_folder
 #        self.text_matches = pandas.read_csv(self.data_folder + "/csv/blake_superfast_matches.csv", encoding="utf-8")
-#        self.members = {}
+#        self.fragmentpairs = {}
 
 #    def import_data(self):
 #        self.process_text_matches()
+#        self.populate_database()
 
 #    def process_text_matches(self):
 #        i = 0
@@ -62,15 +63,23 @@ class BlakeImporter(object):
 #            fragmentpair.fragment = entry.fragment
 #            fragmentpair.desc_id1 = entry.primary_desc_id
 #            fragmentpair.desc_id2 = entry.match_desc_id
-#            self.members[i] = fragmentpair
+#            self.fragmentpairs[i] = fragmentpair
 #            i += 1
+
+#    def populate_database(self):
+#        print("populating database")
+#        engine = models.db.create_engine(config.db_connection_string)
+#        session = sessionmaker(bind=engine)()
+#        models.BlakeFragmentPair.metadata.drop_all(bind=engine)
+#        models.BlakeFragmentPair.metadata.create_all(bind=engine)
+#        session.add_all(fragmentpairs.values())
+#        session.commit()
 
 
 class BlakeDocumentImporter(BlakeImporter):
     def __init__(self, data_folder):
         self.data_folder = data_folder
         self.object_importer = BlakeObjectImporter()
-        #self.fragmentpair_importer = BlakeFragmentPairImporter(self.data_folder)
         self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
         self.works = {}
         self.work_info = {}
@@ -282,7 +291,6 @@ class BlakeDocumentImporter(BlakeImporter):
         models.BlakeObject.metadata.create_all(bind=engine)
         session.add_all(self.works.values())
         session.add_all(self.object_importer.members.values())
-        #session.add_all(self.fragmentpair_importer.members.values())
         session.commit()
 
 
@@ -588,13 +596,13 @@ def main():
     parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
     importer = BlakeDocumentImporter(args.data_folder)
-    #fragmentpairimporter = BlakeFragmentPairImporter(args.data_folder)
+    #fragmentpair_importer = BlakeFragmentPairImporter(args.data_folder)
     if args.profile:
         import cProfile
         cProfile.runctx("importer.import_data()", globals(), locals(), filename="import_stats.out")
     else:
         importer.import_data()
-        #fragmentpairimporter.import_data()
+        #fragmentpair_importer.import_data()
 
 
 if __name__ == "__main__":
