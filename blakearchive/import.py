@@ -52,7 +52,6 @@ class BlakeFragmentPairImporter(BlakeImporter):
 
     def import_data(self):
         self.process_text_matches()
-        self.populate_database()
 
     def process_text_matches(self):
         i = 0
@@ -65,15 +64,6 @@ class BlakeFragmentPairImporter(BlakeImporter):
             fragmentpair.desc_id2 = entry.match_desc_id
             self.members[i] = fragmentpair
             i += 1
-
-    def populate_database(self):
-        print("populating database")
-        engine = models.db.create_engine(config.db_connection_string)
-        session = sessionmaker(bind=engine)()
-        models.BlakeFragmentPair.metadata.drop_all(bind=engine)
-        models.BlakeFragmentPair.metadata.create_all(bind=engine)
-        session.add_all(self.fragmentpair_importer.members.values())
-        session.commit()
 
 
 class BlakeDocumentImporter(BlakeImporter):
@@ -292,6 +282,7 @@ class BlakeDocumentImporter(BlakeImporter):
         models.BlakeObject.metadata.create_all(bind=engine)
         session.add_all(self.works.values())
         session.add_all(self.object_importer.members.values())
+        session.add_all(self.fragmentpair_importer.members.values())
         session.commit()
 
 
