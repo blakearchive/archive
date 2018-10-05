@@ -81,7 +81,9 @@ class BlakeDocumentImporter(BlakeImporter):
         self.data_folder = data_folder
         self.object_importer = BlakeObjectImporter()
         self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
+        self.fragmentpair_importer = BlakeFragmentPairImporter()
         self.works = {}
+        #self.fragmentpairs = {}
         self.work_info = {}
         self.virtual_works = defaultdict(lambda: set())
         self.relationships_df = pandas.read_csv(self.data_folder + "/csv/blake-relations.csv", encoding="utf-8")
@@ -114,6 +116,12 @@ class BlakeDocumentImporter(BlakeImporter):
         if not obj:
             return
         obj.objects_with_text_matches.extend(self.objects_for_id_string(entry.match_desc_id))
+        fragmentpair = models.BlakeFragmentPair()
+        fragmentpair.fragment = entry.fragment
+        fragmentpair.desc_id1 = entry.primary_desc_id
+        fragmentpair.desc_id2 = entry.match_desc_id
+        self.fragmentpairs[primary_desc_id + '-' + match_desc_id] = fragmentpair
+        return fragmentpair
 
     # region Info file handling
     def import_info_files(self, info_files):
@@ -291,6 +299,7 @@ class BlakeDocumentImporter(BlakeImporter):
         models.BlakeObject.metadata.create_all(bind=engine)
         session.add_all(self.works.values())
         session.add_all(self.object_importer.members.values())
+        #session.add_all(self.fragmentpairs.values())
         session.commit()
 
 
