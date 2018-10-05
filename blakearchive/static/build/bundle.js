@@ -27884,7 +27884,6 @@ angular.module("blake").controller("ObjectCompareController", ["$rootScope", "Bl
     vm.cof = CompareObjectsFactory;
     $rootScope.onWorkPage = false;
     $scope.dpi = $rootScope.dpivalue;
-    vm.fragment = '';
 
     vm.getOvpTitle = function () {
         if (angular.isDefined(vm.bds.copy)) {
@@ -27949,7 +27948,6 @@ angular.module('blake').directive("objectCompare", function () {
         };
         scope.$watch(object, function () {
             vm.cof.setMainObject(vm.bds.object);
-            vm.getFragmentMatch('jerusalem.e.illbk.85');
         }, true);
     };
 
