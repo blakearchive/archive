@@ -86,7 +86,7 @@ class BlakeDocumentImporter(BlakeImporter):
             return
         obj.objects_with_text_matches.extend(self.objects_for_id_string(entry.match_desc_id))
         fragmentpair = models.BlakeFragmentPair()
-        fragmentpair.fragment = entry.fragment
+        fragmentpair.fragment = entry.fragment.encode("utf-8")
         fragmentpair.desc_id1 = entry.primary_desc_id
         fragmentpair.desc_id2 = entry.match_desc_id
         self.fragmentpairs[i] = fragmentpair
