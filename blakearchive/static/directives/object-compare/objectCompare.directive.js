@@ -4,6 +4,7 @@ angular.module("blake").controller("ObjectCompareController", function ($rootSco
     vm.cof = CompareObjectsFactory;
     $rootScope.onWorkPage = false;
     $scope.dpi = $rootScope.dpivalue;
+    vm.fragment = '';
 
     vm.getOvpTitle = function(){
         if(angular.isDefined(vm.bds.copy)){
