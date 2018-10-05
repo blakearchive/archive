@@ -73,12 +73,14 @@ class BlakeDocumentImporter(BlakeImporter):
         self.populate_database()
 
     def process_text_matches(self):
+        i = 0
         for entry in self.text_matches.itertuples():
             Record = namedtuple('Object',['index','primary_desc_id','match_desc_id','fragment'])
             entry = Record(*entry)
-            self.process_text_match(entry)
+            self.process_text_match(entry, i)
+            i += 1
 
-    def process_text_match(self, entry):
+    def process_text_match(self, entry, i):
         obj = self.object_importer.get(entry.primary_desc_id.lower())
         if not obj:
             return
@@ -87,7 +89,7 @@ class BlakeDocumentImporter(BlakeImporter):
         fragmentpair.fragment = entry.fragment
         fragmentpair.desc_id1 = entry.primary_desc_id
         fragmentpair.desc_id2 = entry.match_desc_id
-        self.fragmentpairs[entry.primary_desc_id + '-' + entry.match_desc_id] = fragmentpair
+        self.fragmentpairs[i] = fragmentpair
         return fragmentpair
 
     # region Info file handling
