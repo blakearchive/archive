@@ -266,7 +266,7 @@ class BlakeDocumentImporter(BlakeImporter):
         models.BlakeObject.metadata.create_all(bind=engine)
         session.add_all(self.works.values())
         session.add_all(self.object_importer.members.values())
-        #session.add_all(self.fragmentpairs.values())
+        session.add_all(self.fragmentpairs.values())
         session.commit()
 
 
