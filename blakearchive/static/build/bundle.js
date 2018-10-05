@@ -27949,7 +27949,7 @@ angular.module('blake').directive("objectCompare", function () {
         };
         scope.$watch(object, function () {
             vm.cof.setMainObject(vm.bds.object);
-            vm.getFragmentMatch('jerusalem.e.illbk.85');
+            //vm.getFragmentMatch('jerusalem.e.illbk.85');
         }, true);
     };
 
