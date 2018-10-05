@@ -44,46 +44,14 @@ class BlakeImporter(object):
     def split_ids(id_string):
         return re.split(r",\s*", id_string.lower())
 
-#class BlakeFragmentPairImporter(BlakeImporter):
-#    def __init__(self, data_folder):
-#        self.data_folder = data_folder
-#        self.text_matches = pandas.read_csv(self.data_folder + "/csv/blake_superfast_matches.csv", encoding="utf-8")
-#        self.fragmentpairs = {}
-
-#    def import_data(self):
-#        self.process_text_matches()
-#        self.populate_database()
-
-#    def process_text_matches(self):
-#        i = 0
-#        for entry in self.text_matches.itertuples():
-#            Record = namedtuple('Object',['index','primary_desc_id','match_desc_id','fragment'])
-#            entry = Record(*entry)       
-#            fragmentpair = models.BlakeFragmentPair()
-#            fragmentpair.fragment = entry.fragment
-#            fragmentpair.desc_id1 = entry.primary_desc_id
-#            fragmentpair.desc_id2 = entry.match_desc_id
-#            self.fragmentpairs[i] = fragmentpair
-#            i += 1
-
-#    def populate_database(self):
-#        print("populating database")
-#        engine = models.db.create_engine(config.db_connection_string)
-#        session = sessionmaker(bind=engine)()
-#        models.BlakeFragmentPair.metadata.drop_all(bind=engine)
-#        models.BlakeFragmentPair.metadata.create_all(bind=engine)
-#        session.add_all(fragmentpairs.values())
-#        session.commit()
-
-
 class BlakeDocumentImporter(BlakeImporter):
     def __init__(self, data_folder):
         self.data_folder = data_folder
         self.object_importer = BlakeObjectImporter()
         self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
-        #self.fragmentpair_importer = BlakeFragmentPairImporter()
+        self.fragmentpair_importer = BlakeFragmentPairImporter()
         self.works = {}
-        #self.fragmentpairs = {}
+        self.fragmentpairs = {}
         self.work_info = {}
         self.virtual_works = defaultdict(lambda: set())
         self.relationships_df = pandas.read_csv(self.data_folder + "/csv/blake-relations.csv", encoding="utf-8")
@@ -102,7 +70,7 @@ class BlakeDocumentImporter(BlakeImporter):
         self.import_bad_files(matching_bad_files)
         self.process_works()
         self.process_relationships()
-        #self.process_text_matches()
+        self.process_text_matches()
         self.populate_database()
 
     def process_text_matches(self):
