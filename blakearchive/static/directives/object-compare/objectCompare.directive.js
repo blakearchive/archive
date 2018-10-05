@@ -37,7 +37,8 @@ angular.module("blake").controller("ObjectCompareController", function ($rootSco
         BlakeDataService.getFragmentPair(vm.bds.object.desc_id,desc_id).then(function(resultingFragmentPair) {
             vm.fragment = resultingFragmentPair.fragment;     
         });
-        //console.log(vm.fragment);
+        console.log(vm.bds.object.desc_id);
+        console.log(vm.fragment);
         return vm.fragment;
     }
 
