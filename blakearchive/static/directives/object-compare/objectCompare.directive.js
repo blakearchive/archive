@@ -68,6 +68,7 @@ angular.module('blake').directive("objectCompare", function () {
         let object = function(){ return vm.bds.object };
         scope.$watch(object,function(){
             vm.cof.setMainObject(vm.bds.object);
+            vm.getFragmentMatch(vm.bds.object.desc_id);
         },true);
     };
 
