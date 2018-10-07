@@ -17,9 +17,9 @@
                     </div>
                     <div class="reading-copy" ng-class="{hidden: view.scope == 'image'}">
                         <div class="reading-copy-inner">
-                            <text-transcription object="o"></text-transcription>
-                            <!--<text-transcription ng-if="compare.cof.isMain(o) == true" object="o"></text-transcription>
-                            <text-transcription ng-if="compare.cof.isMain(o) == false && compare.cof.isComparisonObject(o, 'textmatch')" object="o" highlight="{{compare.getFragmentMatch(o.desc_id)}}"></text-transcription>-->
+                            <!--<text-transcription object="o"></text-transcription>-->
+                            <text-transcription ng-if="compare.cof.isMain(o) == true" object="o"></text-transcription>
+                            <text-transcription ng-if="compare.cof.isMain(o) == false && compare.cof.isComparisonObject(o, 'textmatch')" object="o" highlight="{{compare.getFragmentMatch(o.desc_id)}}"></text-transcription>
                         </div>
                     </div>
                 </div>
