@@ -4,6 +4,7 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
     vm.cof = CompareObjectsFactory;
     vm.compareText = "Select All Objects";
     vm.selectedAll = false;
+    vm.fragment = '';
 
     vm.selectAll = function () {
         vm.cof.checkCompareType(vm.type);
