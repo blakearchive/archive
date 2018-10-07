@@ -30,8 +30,7 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
             if(vm.type=='textmatch') {
                 
                 BlakeDataService.getFragmentPair(vm.bds.object.desc_id,obj.desc_id).then(function(resultingFragmentPair) {
-                    vm.fragment = resultingFragmentPair.fragment; 
-                    console.log(vm.fragment);    
+                    console.log(resultingFragmentPair);    
                 });
                 console.log(vm.bds.object.desc_id);
                 //console.log("blah");
