@@ -33,16 +33,6 @@ angular.module("blake").controller("ObjectCompareController", function ($rootSco
         vm.bds.changeCopy(object.copy_bad_id,object.desc_id);
     }
 
-    vm.getFragmentMatch = function(desc_id){
-        BlakeDataService.getFragmentPair(vm.bds.object.desc_id,desc_id).then(function(resultingFragmentPair) {
-            vm.fragment = resultingFragmentPair.fragment;     
-        });
-        console.log(vm.bds.object.desc_id);
-        //console.log("blah");
-        console.log(vm.fragment);
-        return vm.fragment;
-    }
-
     vm.goToObject = function(object){
         vm.compareText = "Select All Objects";
         vm.selectedAll = false;
@@ -71,7 +61,6 @@ angular.module('blake').directive("objectCompare", function () {
         let object = function(){ return vm.bds.object };
         scope.$watch(object,function(){
             vm.cof.setMainObject(vm.bds.object);
-            vm.getFragmentMatch('jerusalem.e.illbk.85');
         },true);
     };
 
