@@ -28,7 +28,7 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
             vm.cof.addComparisonObject(obj);
             
             if(vm.type=='textmatch') {
-                vm.getFragmentMatch = function(desc_id){
+                
                 BlakeDataService.getFragmentPair(vm.bds.object.desc_id,obj.desc_id).then(function(resultingFragmentPair) {
                     vm.fragment = resultingFragmentPair.fragment;     
                 });
