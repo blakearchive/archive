@@ -28560,7 +28560,7 @@ angular.module("blake").component("supplementalImageViewer", {
 /* 86 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: SyntaxError: Unexpected token, expected ; (50:1)\n\n\u001b[0m \u001b[90m 48 | \u001b[39m\n \u001b[90m 49 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 50 | \u001b[39m})\u001b[33m;\u001b[39m\n \u001b[90m    | \u001b[39m \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 51 | \u001b[39m\n \u001b[90m 52 | \u001b[39mangular\u001b[33m.\u001b[39mmodule(\u001b[32m'blake'\u001b[39m)\u001b[33m.\u001b[39mdirective(\u001b[32m'objectsFromSame'\u001b[39m\u001b[33m,\u001b[39m \u001b[36mfunction\u001b[39m () {\n \u001b[90m 53 | \u001b[39m    let link \u001b[33m=\u001b[39m \u001b[36mfunction\u001b[39m(scope\u001b[33m,\u001b[39mele\u001b[33m,\u001b[39mattr\u001b[33m,\u001b[39mvm){\u001b[0m\n");
+throw new Error("Module build failed: SyntaxError: Unexpected token, expected ; (51:1)\n\n\u001b[0m \u001b[90m 49 | \u001b[39m\n \u001b[90m 50 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 51 | \u001b[39m})\u001b[33m;\u001b[39m\n \u001b[90m    | \u001b[39m \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 52 | \u001b[39m\n \u001b[90m 53 | \u001b[39mangular\u001b[33m.\u001b[39mmodule(\u001b[32m'blake'\u001b[39m)\u001b[33m.\u001b[39mdirective(\u001b[32m'objectsFromSame'\u001b[39m\u001b[33m,\u001b[39m \u001b[36mfunction\u001b[39m () {\n \u001b[90m 54 | \u001b[39m    let link \u001b[33m=\u001b[39m \u001b[36mfunction\u001b[39m(scope\u001b[33m,\u001b[39mele\u001b[33m,\u001b[39mattr\u001b[33m,\u001b[39mvm){\u001b[0m\n");
 
 /***/ }),
 /* 87 */
