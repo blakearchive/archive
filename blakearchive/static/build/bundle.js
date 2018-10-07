@@ -28558,9 +28558,81 @@ angular.module("blake").component("supplementalImageViewer", {
 
 /***/ }),
 /* 86 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: Unexpected token, expected ; (51:1)\n\n\u001b[0m \u001b[90m 49 | \u001b[39m\n \u001b[90m 50 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 51 | \u001b[39m})\u001b[33m;\u001b[39m\n \u001b[90m    | \u001b[39m \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 52 | \u001b[39m\n \u001b[90m 53 | \u001b[39mangular\u001b[33m.\u001b[39mmodule(\u001b[32m'blake'\u001b[39m)\u001b[33m.\u001b[39mdirective(\u001b[32m'objectsFromSame'\u001b[39m\u001b[33m,\u001b[39m \u001b[36mfunction\u001b[39m () {\n \u001b[90m 54 | \u001b[39m    let link \u001b[33m=\u001b[39m \u001b[36mfunction\u001b[39m(scope\u001b[33m,\u001b[39mele\u001b[33m,\u001b[39mattr\u001b[33m,\u001b[39mvm){\u001b[0m\n");
+angular.module("blake").controller("ObjectsFromSameController", ["$rootScope", "BlakeDataService", "CompareObjectsFactory", function ($rootScope, BlakeDataService, CompareObjectsFactory) {
+    var vm = this;
+    vm.bds = BlakeDataService;
+    vm.cof = CompareObjectsFactory;
+    vm.compareText = "Select All Objects";
+    vm.selectedAll = false;
+    vm.fragment = '';
+
+    vm.selectAll = function () {
+        vm.cof.checkCompareType(vm.type);
+        if (!vm.selectedAll) {
+            vm.compareText = "Clear All Objects";
+            vm.selectedAll = true;
+            vm.cof.selectAll(vm.bds.object[vm.type]);
+        } else {
+            vm.compareText = "Select All Objects";
+            vm.selectedAll = false;
+            vm.cof.clearComparisonObjects();
+        }
+    };
+
+    // Add/remove single object for comparison
+    vm.selectOne = function (obj) {
+        vm.cof.checkCompareType(vm.type);
+        if (vm.cof.isComparisonObject(obj)) {
+            vm.cof.removeComparisonObject(obj);
+        } else {
+            vm.cof.addComparisonObject(obj);
+
+            if (vm.type == 'textmatch') {
+
+                BlakeDataService.getFragmentPair(vm.bds.object.desc_id, obj.desc_id).then(function (resultingFragmentPair) {
+                    vm.fragment = resultingFragmentPair.fragment;
+                });
+                console.log(vm.bds.object.desc_id);
+                //console.log("blah");
+                console.log(vm.fragment);
+            }
+        }
+    };
+
+    vm.activateCompare = function () {
+        $rootScope.worksNavState = false;
+        $rootScope.view.mode = 'compare';
+        $rootScope.view.scope = 'image';
+    };
+}]);
+
+angular.module('blake').directive('objectsFromSame', function () {
+    let link = function (scope, ele, attr, vm) {
+        let type = function () {
+            return vm.cof.comparisonType;
+        };
+        scope.$watch(type, function (newVal, oldVal) {
+            if (oldVal && newVal != vm.type) {
+                vm.compareText = "Select All Objects";
+                vm.selectedAll = false;
+            }
+        }, true);
+    };
+
+    return {
+        restrict: 'E',
+        template: __webpack_require__(192),
+        controller: "ObjectsFromSameController",
+        controllerAs: 'fromSame',
+        scope: {
+            type: '@type'
+        },
+        bindToController: true,
+        link: link
+    };
+});
 
 /***/ }),
 /* 87 */
@@ -61112,7 +61184,12 @@ module.exports = "<!-- regular object viewer -->\n<div class=\"item col-xs-12 co
 module.exports = "<!-- supplemental image viewer -->\n<div class=\"item col-xs-12 col-md-8 col-md-offset-2 active\" id=\"suppImages\" ng-class=\"{hidden: !siv.rs.supplemental || !siv.bds.object.supplemental_objects.length}\">\n    <div class=\"flexsupp\" auto-height adjust=\"270\" breakpoint=\"992\">\n        <!-- original image for supplemental view-->\n        <handprint-block ng-if=\"siv.bds.object.supplemental\" ng-repeat=\"obj in siv.bds.copyObjects | filter:{'desc_id': siv.bds.object.supplemental}:true\"\n                     action=\"siv.ovs.changeObject(obj); siv.ovs.toggleSupplemental();\"\n                     image=\"{{ obj.dbi }}.100.jpg\"\n                     footer=\"{{obj.full_object_id}}\">\n        </handprint-block>\n\n        <!-- original image for original view-->\n        <handprint-block ng-if=\"!siv.bds.object.supplemental\"\n                         action=\"siv.ovs.changeObject(siv.bds.object); siv.ovs.toggleSupplemental();\"\n                         image=\"{{ siv.bds.object.dbi }}.100.jpg\"\n                         footer=\"{{siv.bds.object.full_object_id}}\">\n        </handprint-block>\n\n        <!-- the supplemental views -->\n        <handprint-block ng-repeat=\"obj in siv.bds.object.supplemental_objects\"\n                         action=\"siv.ovs.changeObject(obj); siv.ovs.toggleSupplemental();\"\n                         image=\"{{ obj.dbi }}.100.jpg\"\n                         footer=\"{{ obj.full_object_id }}\">\n        </handprint-block>\n    </div>\n    <p ng-if=\"siv.bds.object.title\" class=\"object-subtitle\">{{siv.bds.object.title}}, {{ siv.bds.object.full_object_id }}, <span>{{ siv.bds.object.physical_description.objsize['#text'] }} </span>\n        <a style=\"color:#168bc1\" ng-click=\"siv.ovs.userestrictOpen(siv.bds.copy)\">&#169;</a>\n    </p>\n    <p ng-if=\"!siv.bds.object.title\" class=\"object-subtitle\">{{ siv.bds.object.full_object_id }}, <span>{{ siv.bds.object.physical_description.objsize['#text'] }} </span>\n        <a style=\"color:#168bc1\" ng-click=\"siv.ovs.userestrictOpen(siv.bds.copy)\">&#169;</a>\n    </p>\n</div>";
 
 /***/ }),
-/* 192 */,
+/* 192 */
+/***/ (function(module, exports) {
+
+module.exports = "<!--use ng-if=\"fromSame.type != 'textmatch'\" in <div> if need be-->\n<div class=\"row\">\n    <!--<p class=\"text-center\"><em>Dates are the probable dates of {{ fromSame.bds.work.probable }}.</em></p>\n    <br>-->\n    <div class=\"col-sm-12 action-items\">\n        <div class=\"action-items-wrapper matrix\">\n            <ul class=\"list-unstyled list-inline\">\n                <li><a class=\"select-all-objects\" ng-click=\"fromSame.selectAll()\" ng-model=\"fromSame.selectedAll\">{{ fromSame.compareText }}</a></li>\n                <li><a href=\"\" ng-click=\"fromSame.activateCompare()\" class=\"compare-selected-objects\" scroll-to-top>Compare Selected Objects</a></li>\n            </ul>\n            \n        </div>\n    </div>\n</div>\n\n<!--use ng-if=\"fromSame.type != 'textmatch'\" in <div> if need be-->\n<div class=\"row\">\n    <div ng-repeat=\"obj in fromSame.bds.object[fromSame.type] track by $index\" class=\"col-sm-6 col-md-3 text-center\">\n        <div class=\"select-for-compare-wrapper\" ng-class=\"{'selected': fromSame.cof.isComparisonObject(obj,fromSame.type)}\" tooltip=\"Click in corner to select or deselect for comparison\"  tooltip-trigger=\"mouseenter\" tooltip-placement=\"top-right\">\n            <span class=\"selected\" ng-click=\"fromSame.selectOne(obj);\"><span class=\"icon\" ng-if=\"fromSame.cof.isComparisonObject(obj)\"></span></span>\n            <handprint-block ng-if=\"obj.virtualwork_title && !obj.copy_print_date_string\"\n                    link=\"/copy/{{ obj.virtualwork_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.virtualwork_title}}</b><br>{{obj.title}}, Composed {{obj.copy_composition_date_string}}<br>Object {{obj.object_number}}\"\n                    \n                >\n            </handprint-block>\n            <handprint-block ng-if=\"obj.virtualwork_title && obj.copy_print_date_string\"\n                    link=\"/copy/{{ obj.virtualwork_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.virtualwork_title}}</b><br>{{obj.title}}, Printed {{obj.copy_print_date_string}}<br>Object {{obj.object_number}}\"\n                    \n                >\n            </handprint-block>\n            <handprint-block ng-if=\"obj.title && !obj.virtualwork_title && obj.copy_print_date_string\"\n                    link=\"/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.copy_title}}, Printed {{obj.copy_print_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}\"\n                    \n                >\n            </handprint-block>\n            <handprint-block ng-if=\"obj.title && !obj.virtualwork_title && !obj.copy_print_date_string && !obj.source.repository.institution['#text']\"\n                    link=\"/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.copy_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}\"\n                    \n                >\n            </handprint-block>\n            <handprint-block ng-if=\"obj.title && !obj.virtualwork_title && !obj.copy_print_date_string && obj.source.repository.institution['#text']\"\n                    link=\"/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.copy_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}\"\n                    \n                >\n            </handprint-block>\n            <handprint-block ng-if=\"!obj.title && obj.copy_print_date_string\"\n                    link=\"/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.copy_title}}, Printed {{obj.copy_print_date_string}}</b><br>{{obj.full_object_id}}\"\n                    textmatchstrings=\"{{obj.text_match_strings}}\"\n                    \n                >\n            </handprint-block>\n             <handprint-block ng-if=\"!obj.title && !obj.copy_print_date_string\"\n                    link=\"/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.copy_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.full_object_id}}\"\n                    \n                >\n            </handprint-block>\n        </div>\n    </div>\n</div>\n\n<!--\n<div ng-if=\"fromSame.type == 'textmatch'\" class=\"row\">\n    <div ng-repeat=\"obj in fromSame.bds.object[fromSame.type] track by $index\" class=\"col-sm-6 col-md-3 text-center\">\n        \n            <handprint-block ng-if=\"obj.virtualwork_title && !obj.copy_print_date_string\"\n                    link=\"/copy/{{ obj.virtualwork_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.virtualwork_title}}</b><br>{{obj.title}}, Composed {{obj.copy_composition_date_string}}<br>Object {{obj.object_number}}\"\n                    \n                >\n            </handprint-block>\n            <handprint-block ng-if=\"obj.virtualwork_title && obj.copy_print_date_string\"\n                    link=\"/copy/{{ obj.virtualwork_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.virtualwork_title}}</b><br>{{obj.title}}, Printed {{obj.copy_print_date_string}}<br>Object {{obj.object_number}}\"\n                    \n                >\n            </handprint-block>\n            <handprint-block ng-if=\"obj.title && !obj.virtualwork_title && obj.copy_print_date_string\"\n                    link=\"/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.copy_title}}, Printed {{obj.copy_print_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}\"\n                    \n                >\n            </handprint-block>\n            <handprint-block ng-if=\"obj.title && !obj.virtualwork_title && !obj.copy_print_date_string && !obj.source.repository.institution['#text']\"\n                    link=\"/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.copy_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}\"\n                    \n                >\n            </handprint-block>\n            <handprint-block ng-if=\"obj.title && !obj.virtualwork_title && !obj.copy_print_date_string && obj.source.repository.institution['#text']\"\n                    link=\"/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.copy_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.title}}<br>{{obj.full_object_id}}\"\n                    \n                >\n            </handprint-block>\n            <handprint-block ng-if=\"!obj.title && obj.copy_print_date_string\"\n                    link=\"/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.copy_title}}, Printed {{obj.copy_print_date_string}}</b><br>{{obj.full_object_id}}\"\n                    textmatchstrings=\"{{obj.text_match_strings}}\"\n                    \n                >\n            </handprint-block>\n             <handprint-block ng-if=\"!obj.title && !obj.copy_print_date_string\"\n                    link=\"/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}\"\n                    image=\"{{ obj.dbi }}.100.jpg\"\n                    footer=\"<b>{{obj.copy_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.full_object_id}}\"\n                    \n                >\n            </handprint-block>\n    \n    </div>\n</div>\n-->\n";
+
+/***/ }),
 /* 193 */
 /***/ (function(module, exports) {
 
