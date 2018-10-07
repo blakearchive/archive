@@ -25,6 +25,17 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
             vm.cof.removeComparisonObject(obj);
         } else {
             vm.cof.addComparisonObject(obj);
+            
+            if(vm.type=='textmatch') {
+                vm.getFragmentMatch = function(desc_id){
+                BlakeDataService.getFragmentPair(vm.bds.object.desc_id,obj.desc_id).then(function(resultingFragmentPair) {
+                    vm.fragment = resultingFragmentPair.fragment;     
+                });
+                console.log(vm.bds.object.desc_id);
+                //console.log("blah");
+                console.log(vm.fragment);
+            }
+        
         }
     };
 
@@ -34,6 +45,7 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
         $rootScope.view.mode = 'compare';
         $rootScope.view.scope = 'image';
     }
+
 
 });
 
