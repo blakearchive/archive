@@ -28591,9 +28591,7 @@ angular.module("blake").controller("ObjectsFromSameController", ["$rootScope", "
 
             if (vm.type == 'textmatch') {
 
-                BlakeDataService.getFragmentPair(vm.bds.object.desc_id, obj.desc_id).then(function (resultingFragmentPair) {
-                    console.log(resultingFragmentPair);
-                });
+                console.log(BlakeDataService.getFragmentPair(vm.bds.object.desc_id, obj.desc_id));
                 console.log(vm.bds.object.desc_id);
                 //console.log("blah");
             }
