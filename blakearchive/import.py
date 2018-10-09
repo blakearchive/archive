@@ -69,7 +69,7 @@ class BlakeDocumentImporter(BlakeImporter):
         self.import_bad_files(matching_bad_files)
         self.process_works()
         self.process_relationships()
-        self.process_text_matches()
+        #self.process_text_matches()
         self.populate_database()
 
     def process_text_matches(self):
@@ -268,7 +268,7 @@ class BlakeDocumentImporter(BlakeImporter):
         models.BlakeObject.metadata.create_all(bind=engine)
         session.add_all(self.works.values())
         session.add_all(self.object_importer.members.values())
-        session.add_all(self.fragmentpairs.values())
+        #session.add_all(self.fragmentpairs.values())
         session.commit()
 
 
