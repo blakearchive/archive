@@ -27,12 +27,14 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
         } else {
             vm.cof.addComparisonObject(obj);
             
-            if(vm.type=='textmatch') {
+            //if(vm.type=='textmatch') {
                 
-                console.log(BlakeDataService.getFragmentPair(vm.bds.object.desc_id,obj.desc_id));
-                console.log(vm.bds.object.desc_id);
+            //    BlakeDataService.getFragmentPair(vm.bds.object.desc_id,obj.desc_id).then(function(resultingFragmentPair) {
+            //        console.log(resultingFragmentPair);    
+            //    });
+            //    console.log(vm.bds.object.desc_id);
                 //console.log("blah");
-            }
+            //}
         
         }
     };
