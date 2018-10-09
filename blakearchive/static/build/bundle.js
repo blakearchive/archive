@@ -31613,20 +31613,6 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
         }
     };
 
-    blakeData.getFragmentPair = function (descId1, descId2) {
-        var url = directoryPrefix + '/api/object/' + descId1 + '/' + descId2 + '/fragment_pair';
-
-        return $http.get(url).then(getFragmentPairComplete).catch(getFragmentPairFailed);
-
-        function getFragmentPairComplete(response) {
-            return BlakeFragmentPair.create(response.data);
-        }
-
-        function getFragmentPairFailed(error) {
-            $log.error('XHR Failed for getFragmentPair.\n' + angular.toJson(error.data, true));
-        }
-    };
-
     blakeData.getObjects = function (descIds) {
         var url = directoryPrefix + '/api/object/';
 
@@ -31640,6 +31626,20 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
 
         function getObjectsFailed(error) {
             $log.error('XHR Failed for getObjects: multi.\n' + angular.toJson(error.data, true));
+        }
+    };
+
+    blakeData.getFragmentPair = function (descId1, descId2) {
+        var url = directoryPrefix + '/api/object/' + descId1 + '/' + descId2 + '/fragment_pair';
+
+        return $http.get(url).then(getFragmentPairComplete).catch(getFragmentPairFailed);
+
+        function getFragmentPairComplete(response) {
+            return BlakeFragmentPair.create(response.data);
+        }
+
+        function getFragmentPairFailed(error) {
+            $log.error('XHR Failed for getFragmentPair.\n' + angular.toJson(error.data, true));
         }
     };
 
