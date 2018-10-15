@@ -279,10 +279,12 @@ class BlakeFeaturedWork(db.Model):
 class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image, etc
     __tablename__ = "exhibit_image"
     exhibit_image_pk = db.Column(db.Integer, primary_key=True)
+    image_id = db.Column(db.Text, index=True)
     exhibit_id = db.Column(db.Text, index=True)
     exhibit_pk = db.Column(db.Integer, db.ForeignKey("exhibit.exhibit_pk"))
     caption = db.Column(db.UnicodeText)
     dbi = db.Column(db.UnicodeText)
+    title = db.Column(db.UnicodeText)
     #bad_id = db.Column(db.Text)
 
     @property
@@ -290,7 +292,9 @@ class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image
         return {
             "caption": self.caption,
             "dbi": self.dbi,
-            "bad_id": self.bad_id
+            "exhibit_id": self.exhibit_id,
+            "title": self.title,
+            "image_id": self.image_id
         }
 
 
@@ -301,16 +305,14 @@ class BlakeExhibit(db.Model): # todo: change to correct columns name, image, etc
     exhibit_pk = db.Column(db.Integer, primary_key=True)
     exhibit_id = db.Column(db.Text, index=True)
     title = db.Column(db.UnicodeText)
-    exhibit_type = db.Column(db.UnicodeText)
     article = db.Column(db.UnicodeText)
-    exhibit_images = db.relationship(BlakeExhibitImage, backref="exhibit")
+    exhibit_images = db.relationship('BlakeExhibitImage', backref="exhibit")
     #bad_id = db.Column(db.Text)
 
     @property
     def to_dict(self):
         return {
             "title": self.title,
-            "exhibit_type": self.exhibit_type,
             "article": self.article,
-            "bad_id": self.bad_id
+            "exhibit_id": self.exhibit_id
         }

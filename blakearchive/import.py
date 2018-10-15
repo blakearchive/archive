@@ -49,27 +49,30 @@ class BlakeExhibitImporter(BlakeImporter):
       self.data_folder = data_folder
       self.exhibits = {}
 
-  def import_data(self):
+  """def import_data(self):
       exhibit_pattern = os.path.join(self.data_folder,"exhibits/*.xml")
       matching_exhibit_files = glob.glob(exhibit_pattern)
       self.exhibits = {}
-      self.exhibit_images = {}
+      #self.exhibit_images = {}
       self.import_exhibit_files(matching_exhibit_files)
       #self.process_exhibits()
       #self.process_relationships()
-      self.populate_database()
-      print "K, done it!"
+      #self.populate_database()
+      #print "K, done it!"
+  """
+
   def import_exhibit_files(self, matching_files):
       # iterate over files that match exhibits/*.xml
       # for each one, call process exhibit
       for f in matching_files:
           try:
-              self.process_exhibit(f)
+              self.process_exhibit_file(f)
           except ValueError as err:
               logger.error(err.message)
       #logger.info( "importing exhibit files")
 
-  def process_exhibit(self,exhibit):
+  # 'exhibit' - exhibit filepath
+  def process_exhibit_file(self,exhibit):
       # each exhibit was read from the file system. we want to:
       # 1. create an Exhibit Model and update its attributes from exhibit arg(filesystem)
       # 2. add the model to self.exhibits for processing by populate_database
@@ -78,36 +81,51 @@ class BlakeExhibitImporter(BlakeImporter):
       print "processing: "+exhibit
       root = etree.parse(exhibit).getroot()
       document_name = os.path.split(exhibit)[1]
-      print "document name: "+document_name
-      print "doc content: "+etree.tostring(root)
+      #Sprint "document name: "+document_name
+      #print "doc content: "+etree.tostring(root)
       # the exhibit root element has attributes that we need to parse into the exhibit object
-      #ex = models.BlakeExhibit()
-      #ex.id = root
+      ex = models.BlakeExhibit()
+      ex.exhibit_id = root.get("id")
+      ex.title = root.get("title")
+      ex.article = root.get("article")
+      self.exhibits[ex.exhibit_id] = ex
+
       print "exhibit id is: "+root.get("id")
+
 
       # iterate images and add them to the list
       for child in root:
-          self.process_exhibit_image(root,child)
+          self.process_exhibit_image(ex,child)
 
-  def process_exhibit_image(self, exhibitXml, imageXml):
-      print "processing image: "+imageXml.get("id")
+  # exhibit - models.BlakeExhibit
+  # imageXml - etree elementTree
+  def process_exhibit_image(self, exhibit, imageXml):
+      #print "..with xml: "+etree.tostring(imageXml, pretty_print=True)
       exhibitImage = models.BlakeExhibitImage()
-      exhibitImage.pk = 111 # ummm... figure this out! needed?
       exhibitImage.id = imageXml.get("id")
       exhibitImage.dbi = imageXml.get("dbi")
-      exhibitImage.exhibitId = exhibitXml.get("id")
-      exhibitImage.caption = etree.tostring(imageXml[0]) # there should only be one child element... the caption element
+      exhibitImage.exhibitId = exhibit.exhibit_id
+      # TODO: do we need else-clauses? xml/html in captions are...
+      # ignored! is that OK? md is okay since it is just text.
+      # if there are title sub-element(s)... use the first one
+      if (len(imageXml.xpath('title'))):
+          exhibitImage.title = imageXml.xpath('title')[0].text
+          #print "...has title: "+exhibitImage.title
+      if (len(imageXml.xpath('caption'))):
+          exhibitImage.caption = imageXml.xpath('caption')[0].text
+          #print "...has caption: "+exhibitImage.caption
 
-  def populate_database(self):
-      # iterate over self.exhibits, add exhibit models to postgresql
-      # iterate over self.exhibit_images, add them to prostgresql
-      print "K, populated the database"
+      # add the exhibit image to the exhibit model object's list
+      exhibit.exhibit_images.append(exhibitImage)
+      #print "adding to exhibit: "+exhibitImage.id
+
 
 class BlakeDocumentImporter(BlakeImporter):
     def __init__(self, data_folder):
         self.data_folder = data_folder
         self.object_importer = BlakeObjectImporter()
         self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
+        self.exhibit_importer = BlakeExhibitImporter(self.data_folder)
         self.works = {}
         self.work_info = {}
         self.virtual_works = defaultdict(lambda: set())
@@ -118,15 +136,29 @@ class BlakeDocumentImporter(BlakeImporter):
 
     def import_data(self):
         document_pattern = os.path.join(self.data_folder, "works/*.xml")
-        exhibit_pattern = os.path.join(self.data_folder,"exhibits/*.xml")
+        exhibit_pattern = os.path.join(self.data_folder,"exhibits/**/*.xml")
         info_pattern = os.path.join(self.data_folder, "info/*.xml")
         matching_bad_files = glob.glob(document_pattern)
+        matching_exhibit_files = glob.glob(exhibit_pattern)
         matching_info_files = glob.glob(info_pattern)
         self.import_info_files(matching_info_files)
         self.import_bad_files(matching_bad_files)
+        self.import_exhibit_files(matching_exhibit_files)
         self.process_works()
         self.process_relationships()
+        self.process_exhibits() ### needed?
         self.populate_database()
+
+    def import_exhibit_files(self,exhibit_files):
+        # loop over the list of files and process each one
+        for exhib_file in exhibit_files:
+            try:
+                self.exhibit_importer.process_exhibit_file(exhib_file)
+            except ValueError as err:
+                logger.error(err.message)
+    def process_exhibits(self):
+        self.exhibit_importer
+        ### TODO: implement!
 
     # region Info file handling
     def import_info_files(self, info_files):
@@ -302,6 +334,7 @@ class BlakeDocumentImporter(BlakeImporter):
         models.BlakeObject.metadata.create_all(bind=engine)
         session.add_all(self.works.values())
         session.add_all(self.object_importer.members.values())
+        session.add_all(self.exhibit_importer.exhibits.values())
         session.commit()
 
 
@@ -597,9 +630,9 @@ def main():
     parser.add_argument("data_folder")
     parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
-    ### TODO: remember to uncomment the following!!!
-    #importer = BlakeDocumentImporter(args.data_folder)
-    importer = BlakeExhibitImporter(args.data_folder)
+
+    importer = BlakeDocumentImporter(args.data_folder)
+    #importer = BlakeExhibitImporter(args.data_folder)
 
     if args.profile:
         import cProfile
