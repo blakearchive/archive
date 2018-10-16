@@ -65,12 +65,9 @@ text_match__object = db.Table(
 class BlakeFragmentPair(db.Model):
     __tablename__ = "fragmentpair"
     fragmentpair_id = db.Column(db.Integer, primary_key=True)
-    fragment = db.Column(db.Text)
-    desc_id1 = db.Column(db.Text, index=True)
-    desc_id2 = db.Column(db.Text, index=True)
-
-    def __init__(self, *args, **kwargs):
-        super(BlakeFragmentPair, self).__init__(*args, **kwargs)
+    fragment = db.Column(db.UnicodeText)
+    desc_id1 = db.Column(db.UnicodeText, index=True)
+    desc_id2 = db.Column(db.UnicodeText, index=True)
 
     @property
     def to_dict(self):
