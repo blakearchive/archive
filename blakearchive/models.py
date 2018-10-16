@@ -69,9 +69,6 @@ class BlakeFragmentPair(db.Model):
     desc_id1 = db.Column(db.Text, index=True)
     desc_id2 = db.Column(db.Text, index=True)
 
-    def __init__(self, *args, **kwargs):
-        super(BlakeFragmentPair, self).__init__(*args, **kwargs)
-
     @property
     def to_dict(self):
         return {
