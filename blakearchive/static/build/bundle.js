@@ -28568,7 +28568,7 @@ angular.module("blake").controller("ObjectsFromSameController", ["$rootScope", "
     vm.selectedAll = false;
     vm.fragment = '';
 
-    BlakeDataService.getFragmentPair(vm.bds.object.desc_id, "jerusalem.e.illbk.85").then(function (resultingFragmentPair) {
+    BlakeDataService.getFragmentPair("milton.b.illbk.09", "jerusalem.e.illbk.85").then(function (resultingFragmentPair) {
         console.log(resultingFragmentPair);
     });
     console.log(vm.bds.object.desc_id);
