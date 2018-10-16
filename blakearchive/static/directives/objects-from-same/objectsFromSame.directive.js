@@ -6,14 +6,14 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
     vm.selectedAll = false;
     vm.fragment = '';
 
-    
+    if(vm.type=='textmatch') {
                 
                 BlakeDataService.getFragmentPair(vm.bds.object.desc_id,"jerusalem.e.illbk.85").then(function(resultingFragmentPair) {
                     console.log(resultingFragmentPair);    
                 });
                 console.log(vm.bds.object.desc_id);
                 //console.log("blah");
-            
+            }
 
     vm.selectAll = function () {
         vm.cof.checkCompareType(vm.type);
