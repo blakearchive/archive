@@ -8,7 +8,7 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
 
     
                 
-                BlakeDataService.getFragmentPair("milton.b.illbk.09","jerusalem.e.illbk.85").then(function(resultingFragmentPair) {
+                BlakeDataService.getFragmentPair(vm.bds.object.desc_id,"jerusalem.e.illbk.85").then(function(resultingFragmentPair) {
                     console.log(resultingFragmentPair);    
                 });
                 console.log(vm.bds.object.desc_id);
