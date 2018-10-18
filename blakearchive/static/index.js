@@ -29,7 +29,7 @@ carousel.directive('carousel', function () { return {} });
 let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider','ui.bootstrap', 'ng-sortable', 'FBAngular','common.fabric','common.fabric.utilities','common.fabric.constants','ngAnimate', 'ngStorage','ngCookies','ngTouch','ngCropper','markdown','angular-loading-bar','ngdexie', 'ngdexie.ui'])
 //blake.constant('dexie',window.Dexie);
 blake.config(function(ngDexieProvider){
-  console.log("bootstrapping ngDexieProvider...");
+  //console.log("bootstrapping ngDexieProvider...");
   ngDexieProvider.setOptions({name: 'lightbox_db', debug: false});
   ngDexieProvider.setConfiguration(function (db) {
       db.version(1).stores({
@@ -41,7 +41,7 @@ blake.config(function(ngDexieProvider){
           // Catch all uncatched DB-related errors and exceptions
           console.log("db error err=" + err);
       });
-      console.log("ngDexie is ready!");
+      //console.log("ngDexie is ready!");
   });
 });
 
@@ -69,8 +69,8 @@ blake.config(function ($routeProvider, $locationProvider) {
         controllerAs: 'copyCtrl',
         reloadOnSearch: false
     });
-    $routeProvider.when(directoryPrefix + '/exhibit/:exhibitID', {
-        templateUrl: directoryPrefix + '/static/controllers/exhibit/exhibit.html',
+    $routeProvider.when(directoryPrefix + '/exhibit/:exhibitId', {
+        templateUrl: directoryPrefix + '/static/controllers/exhibit/exhibit0.html',
         controller: "ExhibitController",
         controllerAs: 'exhibitCtrl',
         reloadOnSearch: false

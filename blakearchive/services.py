@@ -185,20 +185,21 @@ class BlakeDataService(object):
     #jewell TODO : get exhibits, get objects for exhibits
     @classmethod
     def get_exhibits(cls, exhibit_ids=None):
-        query = cls.get_sorted_object_query()
-        if desc_ids:
-            results = query.filter(models.BlakeObject.desc_id.in_(desc_ids)).all()
+        query = models.BlakeExhibit.query \
+            .order_by(models.BlakeExhibit.exhibit_id)
+        if exhibit_ids:
+            results = query.filter(models.BlakeObjectExhibit.exhibit_id.in_(exhibit_ids)).all()
         else:
             results = query.all()
         return results
 
-
     #jewell TODO : get exhibits, get objects for exhibits
     @classmethod
     def get_exhibit(cls, exhibit_id=None):
-        query = cls.get_sorted_object_query()
-        if desc_ids:
-            results = query.filter(models.BlakeObject.desc_id.in_(desc_ids)).all()
+        query = models.BlakeExhibit.query \
+            .order_by(models.BlakeExhibit.exhibit_id)
+        if exhibit_id:
+            results = query.filter(models.BlakeObjectExhibit.exhibit_id.in_(exhibit_id)).all()
         else:
             results = query.all()
         return results
@@ -206,9 +207,9 @@ class BlakeDataService(object):
     #jewell TODO : get exhibits, get objects for exhibits
     @classmethod
     def get_objects_for_exhibit(cls, exhibit_id=None):
-        query = cls.get_sorted_object_query()
+        query = models.BlakeExhibitImage.query
         if desc_ids:
-            results = query.filter(models.BlakeObject.desc_id.in_(desc_ids)).all()
+            results = query.filter(models.BlakeExhibitImage.exhibit_id.in_(exhibit_id)).all()
         else:
             results = query.all()
         return results

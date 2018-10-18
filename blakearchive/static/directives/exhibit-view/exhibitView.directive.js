@@ -1,4 +1,4 @@
-angular.module("blake").controller("ObjectReadingController", function($rootScope, worktitleService, lightbox_service, BlakeDataService, $scope, $modal, $cookies, $window) {
+angular.module("blake").controller("ExhibitViewController", function($rootScope, worktitleService, lightbox_service, BlakeDataService, $scope, $modal, $cookies, $window) {
     var vm = this;
     vm.bds = BlakeDataService;
     $rootScope.onWorkPage = false;

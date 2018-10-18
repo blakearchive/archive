@@ -14,7 +14,8 @@ angular.module('blake').controller('ExhibitController', function ($scope,$routeP
         $rootScope.persistentmode = 'reading';
     }
 
-    BlakeDataService.setSelectedExhibit($routeParams.exhibitId).then(function(){ <!--todo jewell  change the dataservice to reflect this -->
+    BlakeDataService.setSelectedExhibit($routeParams.exhibitId).then(function(){
+        /* TODO: jewell  change the dataservice to reflect this */
         vm.cof.resetComparisonObjects();
         $rootScope.view.mode = 'object';
         $rootScope.view.scope = 'image';

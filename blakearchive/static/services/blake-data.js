@@ -545,5 +545,11 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
         });
     };
 
+    // with the given exhibitId (coincides with the exhibits data subdirectory)...
+    // load the exhibit from the database and set up the model f
+    blakeData.setSelectedExhibit = function(exhibitId){
+      // TODO: make it work!
+    };
+
     return blakeData;
 });
