@@ -181,8 +181,7 @@ class BlakeDataService(object):
             results = query.all()
         return results
 
-
-    #jewell TODO : get exhibits, get objects for exhibits
+    ###start------ service methods for Exhibits ------
     @classmethod
     def get_exhibits(cls, exhibit_ids=None):
         query = models.BlakeExhibit.query \
@@ -193,27 +192,20 @@ class BlakeDataService(object):
             results = query.all()
         return results
 
-    #jewell TODO : get exhibits, get objects for exhibits
     @classmethod
-    def get_exhibit(cls, exhibit_id=None):
-        query = models.BlakeExhibit.query \
-            .order_by(models.BlakeExhibit.exhibit_id)
-        if exhibit_id:
-            results = query.filter(models.BlakeObjectExhibit.exhibit_id.in_(exhibit_id)).all()
-        else:
-            results = query.all()
-        return results
+    def get_exhibit(cls, exhibit_id):
+        result = models.BlakeExhibit.query.filter(models.BlakeExhibit.exhibit_id == exhibit_id).first()
+        return result
 
-    #jewell TODO : get exhibits, get objects for exhibits
     @classmethod
-    def get_objects_for_exhibit(cls, exhibit_id=None):
+    def get_images_for_exhibit(cls, exhibit_id=None):
         query = models.BlakeExhibitImage.query
-        if desc_ids:
-            results = query.filter(models.BlakeExhibitImage.exhibit_id.in_(exhibit_id)).all()
+        if exhibit_id:
+            results = query.filter(models.BlakeExhibitImage.exhibit_id == exhibit_id).all()
         else:
             results = query.all()
         return results
-
+    ###end------ service methods for Exhibits ------
 
     @classmethod
     def get_object(cls, desc_id):

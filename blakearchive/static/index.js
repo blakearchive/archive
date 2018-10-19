@@ -70,7 +70,7 @@ blake.config(function ($routeProvider, $locationProvider) {
         reloadOnSearch: false
     });
     $routeProvider.when(directoryPrefix + '/exhibit/:exhibitId', {
-        templateUrl: directoryPrefix + '/static/controllers/exhibit/exhibit0.html',
+        templateUrl: directoryPrefix + '/static/controllers/exhibit/exhibit.html',
         controller: "ExhibitController",
         controllerAs: 'exhibitCtrl',
         reloadOnSearch: false

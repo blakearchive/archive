@@ -10,7 +10,8 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
         workCopies: [],
         copy: {},
         copyObjects: [],
-        object: {}
+        object: {},
+        exhibit: {}
     };
 
     /**
@@ -549,6 +550,28 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     // load the exhibit from the database and set up the model f
     blakeData.setSelectedExhibit = function(exhibitId){
       // TODO: make it work!
+      return blakeData.getExhibit(exhibitId).then(function(exhib){
+        blakeData.exhibit = exhib;
+      });
+    };
+
+    blakeData.getExhibit = function(exhibitId){
+      // TODO: implement API and then fix update this!!!!
+      var url = directoryPrefix + '/api/exhibit/'+exhibitId;
+
+      //$log.info('getting objects: multi');
+
+      return $http.get(url, {params: {exhibit_id: exhibitId}})
+          .then(getObjectsComplete)
+          .catch(getObjectsFailed);
+
+      function getObjectsComplete(response){
+          return BlakeObject.create(response.data.results);
+      }
+
+      function getObjectsFailed(error){
+          $log.error('XHR Failed for getObjects: multi.\n' + angular.toJson(error.data, true));
+      }
     };
 
     return blakeData;
