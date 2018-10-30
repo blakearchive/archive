@@ -23,14 +23,20 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                     
                     if($rootScope.selectedTab == '#objects-with-text-matches') {
                         var words = ph.match(/\w+/g);
+
                         console.log("words:" + words);
-                        var newph = '';
+                        var newph = [];
+                        var i = 0;
                         angular.forEach(words, function (word) {
-                            newph += word + ".*";
+                            if(word == 'br') {
+                                i++;
+                            }
+                            newph[i] += word + ".*";
                         });
-                        newph = newph.substring(0, newph.length-2);
-                        console.log("newph:" + newph);
-                        ph = newph;
+                        angular.forEach(newph, function (singleph) {
+                            singleph = singleph.substring(0, singleph.length-2);
+                            text = text.replace(new RegExp('(\\b' + singleph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
+                        });
                     }
                     
                     text = text.replace(new RegExp('(\\b' + ph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
