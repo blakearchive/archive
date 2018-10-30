@@ -24,18 +24,32 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
         vm.cof.checkCompareType(vm.type);
         if(vm.cof.isComparisonObject(obj)) {
             vm.cof.removeComparisonObject(obj);
+
+            if(vm.type=='textmatch') {
+              BlakeDataService.getFragmentPair(vm.bds.object.desc_id,obj.desc_id).then(function(resultingFragmentPair) {
+                  console.log(resultingFragmentPair);
+                  for(i=0; i< vm.bds.fragment_pairs.length;i++){
+                    if (vm.bds.fragment_pairs[i] == resultingFragmentPair.fragment){
+                      console.log("removed it! --> "+vm.bds.fragment_pairs[i]);
+                      delete vm.bds.fragment_pairs[i];
+                    }
+                  }
+              });
+            }
         } else {
             vm.cof.addComparisonObject(obj);
-            
-            //if(vm.type=='textmatch') {
-                
-            //    BlakeDataService.getFragmentPair(vm.bds.object.desc_id,obj.desc_id).then(function(resultingFragmentPair) {
-            //        console.log(resultingFragmentPair);    
-            //    });
-            //    console.log(vm.bds.object.desc_id);
+
+            if(vm.type=='textmatch') {
+
+               BlakeDataService.getFragmentPair(vm.bds.object.desc_id,obj.desc_id).then(function(resultingFragmentPair) {
+                   console.log(resultingFragmentPair);
+
+                   vm.bds.fragment_pairs.push(resultingFragmentPair.fragment);
+               });
+               //console.log(vm.bds.object.desc_id);
                 //console.log("blah");
-            //}
-        
+            }
+
         }
     };
 
@@ -44,6 +58,7 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
         $rootScope.worksNavState = false;
         $rootScope.view.mode = 'compare';
         $rootScope.view.scope = 'image';
+        //console.log("selected tab is: "+$rootScope.selectedTab)
     }
 
 

@@ -1,4 +1,4 @@
-angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork, directoryPrefix) {
+angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork, BlakeFragmentPair,directoryPrefix) {
     /**
      * For the time being, all data accessor functions should be placed here.  This service should mirror the API
      * of the back-end BlakeDataService.
@@ -10,7 +10,8 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
         workCopies: [],
         copy: {},
         copyObjects: [],
-        object: {}
+        object: {},
+        fragment_pairs: []
     };
 
     /**
