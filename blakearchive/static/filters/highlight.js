@@ -25,7 +25,7 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                         var words = ph.match(/\w+/g);
 
                         console.log("words:" + words);
-                        var newph = [];
+                        var newph = {};
                         var i = 0;
                         angular.forEach(words, function (word) {
                             if(word == 'br') {
