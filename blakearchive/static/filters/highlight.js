@@ -33,6 +33,7 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                             }
                             newph[i] += word + ".*";
                         });
+                        console.log(newph);
                         angular.forEach(newph, function (singleph) {
                             singleph = singleph.substring(0, singleph.length-2);
                             text = text.replace(new RegExp('(\\b' + singleph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
