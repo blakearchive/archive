@@ -1,11 +1,11 @@
-angular.module("blake").filter('highlight', function($sce){
+angular.module("blake").filter('highlight', function($sce,$rootScope){
     var vm = this;
 
     vm.runReplace = function(phrase,text){
-        if (angular.isArray(phrase)){
+        /*if (angular.isArray(phrase)){
           console.log("The phrase is an array!!!");
         }
-        console.log("===highlight called runReplace!!!: "+phrase)
+        console.log("===highlight called runReplace!!!: "+phrase)*/
         let phraseArray;
         if (phrase !== ''){
             if (phrase.startsWith('"') && phrase.endsWith('"')) {
@@ -20,7 +20,7 @@ angular.module("blake").filter('highlight', function($sce){
                 }
                 phraseArray = phrase.match(/\w+|"(?:\\"|[^"])+"/g).map(s => s.replace(/['"]/g, ''));
                 angular.forEach(phraseArray, function (ph) {
-                    text = text.replace(new RegExp('(\\b' + ph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
+                    text = text.replace(new RegExp('(\\b' + ph + '[a-zA-Z{P}]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
                 });
                 return text;
 
