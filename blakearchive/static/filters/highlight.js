@@ -23,7 +23,7 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                     var words = ph.match(/\w+/g);
                     angular.forEach(words, function (word) {
                         ph += word + ".*";
-                    }
+                    });
                     text = text.replace(new RegExp('(\\b' + ph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
                 });
                 return text;
