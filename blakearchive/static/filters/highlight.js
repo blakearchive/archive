@@ -30,6 +30,7 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                         angular.forEach(words, function (word) {
                             if(word == 'br') {
                                 i++;
+                                continue;
                             }
                             newph[i] += word + ".*";
                         });
