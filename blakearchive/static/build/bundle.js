@@ -29714,22 +29714,14 @@ angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sc
         let phraseArray;
         if (phrase !== '') {
             if (phrase.startsWith('"') && phrase.endsWith('"')) {
-                if ($rootScope.selectedTab != '#objects-with-text-matches') {
-                    phrase = phrase.replace(/"/g, '');
-                    text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
-                    return text;
-                }
-                if ($rootScope.selectedTab == '#objects-with-text-matches') {
-                    phrase = phrase.replace(/"/g, '');
-                    phraseArray = phrase.match(/\w+|"(?:\\"|[^"])+"/g).map(s => s.replace(/['"]/g, ''));
-                    angular.forEach(phraseArray, function (ph) {
-                        text = text.replace(new RegExp('(\\b' + ph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
-                    });
-                    return text;
-                }
+                console.log("1");
+                phrase = phrase.replace(/"/g, '');
+                text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
+                return text;
             }
 
             if (phrase.indexOf(' ')) {
+                console.log("2");
                 if (phrase.indexOf('AND')) {
                     phrase = phrase.replace(/AND/g, '');
                 }
@@ -29739,6 +29731,7 @@ angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sc
                 });
                 return text;
             }
+            console.log("3");
 
             text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
         }
