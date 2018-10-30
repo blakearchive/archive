@@ -33,7 +33,7 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                                 return;
                             }
                             if(newph[i] == undefined) { newph[i] = ''; }
-                            newph[i] += word + ".*";
+                            newph[i] += word + ".\s";
                         });
                         //console.log(newph);
                     }
