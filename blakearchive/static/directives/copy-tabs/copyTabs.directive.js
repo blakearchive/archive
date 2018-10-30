@@ -8,6 +8,7 @@ angular.module('blake').controller("CopyTabsController", function ($rootScope,Bl
 
         vm.showTab = function (id) {
             vm.selectedTab = id;
+            $rootScope.selectedTab = id;
         }
 
         vm.getCopyOrWork = function(){
@@ -70,5 +71,3 @@ angular.module('blake').directive('copyTabs', function() {
         link: link
     }
 });
-
-

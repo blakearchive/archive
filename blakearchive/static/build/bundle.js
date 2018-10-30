@@ -5981,6 +5981,7 @@ var map = {
 	"./blake-copy.js": 128,
 	"./blake-data.js": 129,
 	"./blake-featured-work.js": 130,
+	"./blake-fragment-pair.js": 220,
 	"./blake-object.js": 131,
 	"./blake-work.js": 132,
 	"./cartStorage.js": 133,
@@ -27075,6 +27076,7 @@ angular.module('blake').controller("CopyTabsController", ["$rootScope", "BlakeDa
 
     vm.showTab = function (id) {
         vm.selectedTab = id;
+        $rootScope.selectedTab = id;
     };
 
     vm.getCopyOrWork = function () {
@@ -28586,17 +28588,31 @@ angular.module("blake").controller("ObjectsFromSameController", ["$rootScope", "
         vm.cof.checkCompareType(vm.type);
         if (vm.cof.isComparisonObject(obj)) {
             vm.cof.removeComparisonObject(obj);
+
+            if (vm.type == 'textmatch') {
+                BlakeDataService.getFragmentPair(vm.bds.object.desc_id, obj.desc_id).then(function (resultingFragmentPair) {
+                    console.log(resultingFragmentPair);
+                    for (i = 0; i < vm.bds.fragment_pairs.length; i++) {
+                        if (vm.bds.fragment_pairs[i] == resultingFragmentPair.fragment) {
+                            console.log("removed it! --> " + vm.bds.fragment_pairs[i]);
+                            delete vm.bds.fragment_pairs[i];
+                        }
+                    }
+                });
+            }
         } else {
             vm.cof.addComparisonObject(obj);
 
-            //if(vm.type=='textmatch') {
+            if (vm.type == 'textmatch') {
 
-            //    BlakeDataService.getFragmentPair(vm.bds.object.desc_id,obj.desc_id).then(function(resultingFragmentPair) {
-            //        console.log(resultingFragmentPair);    
-            //    });
-            //    console.log(vm.bds.object.desc_id);
-            //console.log("blah");
-            //}
+                BlakeDataService.getFragmentPair(vm.bds.object.desc_id, obj.desc_id).then(function (resultingFragmentPair) {
+                    console.log(resultingFragmentPair);
+
+                    vm.bds.fragment_pairs.push(resultingFragmentPair.fragment);
+                });
+                //console.log(vm.bds.object.desc_id);
+                //console.log("blah");
+            }
         }
     };
 
@@ -28604,6 +28620,7 @@ angular.module("blake").controller("ObjectsFromSameController", ["$rootScope", "
         $rootScope.worksNavState = false;
         $rootScope.view.mode = 'compare';
         $rootScope.view.scope = 'image';
+        //console.log("selected tab is: "+$rootScope.selectedTab)
     };
 }]);
 
@@ -29690,6 +29707,10 @@ angular.module("blake").filter('highlight', ["$sce", function ($sce) {
     var vm = this;
 
     vm.runReplace = function (phrase, text) {
+        if (angular.isArray(phrase)) {
+            console.log("The phrase is an array!!!");
+        }
+        console.log("===highlight called runReplace!!!: " + phrase);
         let phraseArray;
         if (phrase !== '') {
             if (phrase.startsWith('"') && phrase.endsWith('"')) {
@@ -31515,7 +31536,7 @@ angular.module("blake").factory("BlakeCopy", ["GenericService", function (Generi
 /* 129 */
 /***/ (function(module, exports) {
 
-angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$http", "$q", "$location", "BlakeObject", "BlakeCopy", "BlakeWork", "directoryPrefix", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork, directoryPrefix) {
+angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$http", "$q", "$location", "BlakeObject", "BlakeCopy", "BlakeWork", "BlakeFragmentPair", "directoryPrefix", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork, BlakeFragmentPair, directoryPrefix) {
     /**
      * For the time being, all data accessor functions should be placed here.  This service should mirror the API
      * of the back-end BlakeDataService.
@@ -31527,7 +31548,8 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
         workCopies: [],
         copy: {},
         copyObjects: [],
-        object: {}
+        object: {},
+        fragment_pairs: []
     };
 
     /**
@@ -61144,7 +61166,7 @@ module.exports = "<ul class=\"nav navbar-nav blake-menu\">\n  <li dropdown class
 /* 185 */
 /***/ (function(module, exports) {
 
-module.exports = "\n<!-- compare -->\n<div id=\"compare\" class=\"scrollbar\">\n<!--<div id=\"compare\" class=\"scrollbar\" style=\"height: {{compare.viewerHeight}}px\">-->\n    <div class=\"featured-object\">\n        <div class=\"compare-inner\" ng-sortable=\"{ group: 'o', animation: 150 }\">\n            <div class=\"item\"\n                 ng-repeat=\"o in compare.cof.comparisonObjects\"\n                 ng-class=\"{active:compare.cof.isMain(o)}\"\n                 ng-click=\"compare.changeObject(o)\"\n                 ng-dblclick=\"compare.goToObject(o)\">\n                <!--<p class=\"object-title text-capitalize\"><a href=\"/copy/{{o.copy_bad_id}}?objectId={{o.object_id}}\">{{ o.copy_title }}</a></p>-->\n                <p ng-class=\"{active:compare.cof.isMain(o)}\" class=\"object-title\"><a href=\"/copy/{{o.copy_bad_id}}\">{{ o.copy_title }}</a></p>\n                <div class=\"compare-wrapper flex\" auto-height adjust=\"270\" breakpoint=\"768\">\n                    <div class=\"object-img-container\" ng-class=\"{hidden: view.scope == 'text'}\" ovp-image>\n                        <img ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" magnify-image>\n                    </div>\n                    <div class=\"reading-copy\" ng-class=\"{hidden: view.scope == 'image'}\">\n                        <div class=\"reading-copy-inner\">\n                            <text-transcription object=\"o\"></text-transcription>\n                            <!--<text-transcription ng-if=\"compare.cof.isMain(o) == true\" object=\"o\"></text-transcription>\n                            <text-transcription ng-if=\"compare.cof.isMain(o) == false && compare.cof.isComparisonObject(o, 'textmatch')\" object=\"o\" highlight=\"{{compare.getFragmentMatch(o.desc_id)}}\"></text-transcription>-->\n                        </div>\n                    </div>\n                </div>\n                <p class=\"object-subtitle text-capitalize\"><a href=\"/copy/{{o.copy_bad_id}}?descId={{o.desc_id}}\">{{ o.full_object_id }}, {{ o.copy_composition_date }}, {{ o.copy_institution }}</a></p>\n            </div>\n        </div>\n    </div>\n</div>\n<!--/.compare-->";
+module.exports = "\n<!-- compare -->\n<div id=\"compare\" class=\"scrollbar\">\n<!--<div id=\"compare\" class=\"scrollbar\" style=\"height: {{compare.viewerHeight}}px\">-->\n    <div class=\"featured-object\">\n        <div class=\"compare-inner\" ng-sortable=\"{ group: 'o', animation: 150 }\">\n            <div class=\"item\"\n                 ng-repeat=\"o in compare.cof.comparisonObjects\"\n                 ng-class=\"{active:compare.cof.isMain(o)}\"\n                 ng-click=\"compare.changeObject(o)\"\n                 ng-dblclick=\"compare.goToObject(o)\">\n                <!--<p class=\"object-title text-capitalize\"><a href=\"/copy/{{o.copy_bad_id}}?objectId={{o.object_id}}\">{{ o.copy_title }}</a></p>-->\n                <p ng-class=\"{active:compare.cof.isMain(o)}\" class=\"object-title\"><a href=\"/copy/{{o.copy_bad_id}}\">{{ o.copy_title }}</a></p>\n                <div class=\"compare-wrapper flex\" auto-height adjust=\"270\" breakpoint=\"768\">\n                    <div class=\"object-img-container\" ng-class=\"{hidden: view.scope == 'text'}\" ovp-image>\n                        <img ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" magnify-image>\n                    </div>\n                    <div class=\"reading-copy\" ng-class=\"{hidden: view.scope == 'image'}\">\n                      ===={{compare.bds.fragment_pairs[0]}}----\n                        <div class=\"reading-copy-inner\">\n                            <text-transcription ng-if=\"rootScope.selectedTab != '#objects-with-text-matches'\" object=\"o\"></text-transcription>\n                            <text-transcription ng-if=\"rootScope.selectedTab == '#objects-with-text-matches'\"\n                              object=\"o\" highlight=\"immortal\">\n\n                            </text-transcription>\n                        </div>\n                    </div>\n                </div>\n                <p class=\"object-subtitle text-capitalize\"><a href=\"/copy/{{o.copy_bad_id}}?descId={{o.desc_id}}\">{{ o.full_object_id }}, {{ o.copy_composition_date }}, {{ o.copy_institution }}</a></p>\n            </div>\n        </div>\n    </div>\n</div>\n<!--/.compare-->\n";
 
 /***/ }),
 /* 186 */
@@ -61343,6 +61365,27 @@ module.exports = "/*!\n * jQuery JavaScript Library v3.2.1\n * https://jquery.co
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 219 */,
+/* 220 */
+/***/ (function(module, exports) {
+
+angular.module("blake").factory("BlakeFragmentPair", ["GenericService", function (GenericService) {
+  /**
+   * Constructor takes a config object and creates a BlakeCopy, with child objects transformed into the
+   * BlakeObjects.
+   *
+   * @param config
+   */
+  var constructor = function (config) {
+    var fragment_pair = angular.copy(config);
+
+    return fragment_pair;
+  };
+
+  return GenericService(constructor);
+}]);
 
 /***/ })
 /******/ ]);
