@@ -22,11 +22,12 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                 angular.forEach(phraseArray, function (ph) {
                     var words = ph.match(/\w+/g);
                     console.log("words:" + words);
+                    var newph = '';
                     angular.forEach(words, function (word) {
-                        ph += word + ".*";
+                        newph += word + ".*";
                     });
-                    console.log("ph:" + ph);
-                    text = text.replace(new RegExp('(\\b' + ph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
+                    console.log("newph:" + newph);
+                    text = text.replace(new RegExp('(\\b' + newph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
                 });
                 return text;
 
