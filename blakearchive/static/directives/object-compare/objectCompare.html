@@ -16,11 +16,10 @@
                         <img ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" magnify-image>
                     </div>
                     <div class="reading-copy" ng-class="{hidden: view.scope == 'image'}">
-                      ===={{compare.bds.fragment_pairs[0]}}----
                         <div class="reading-copy-inner">
                             <text-transcription ng-if="selectedTab != '#objects-with-text-matches'" object="o"></text-transcription>
                             <text-transcription ng-if="selectedTab == '#objects-with-text-matches'"
-                              object="o" highlight="immortal">
+                              object="o" highlight="{{compare.bds.fragment_pairs[0]}}">
 
                             </text-transcription>
                         </div>
