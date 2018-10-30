@@ -2,6 +2,10 @@ angular.module("blake").filter('highlight', function($sce){
     var vm = this;
 
     vm.runReplace = function(phrase,text){
+        if (angular.isArray(phrase)){
+          console.log("The phrase is an array!!!");
+        }
+        console.log("===highlight called runReplace!!!: "+phrase)
         let phraseArray;
         if (phrase !== ''){
             if (phrase.startsWith('"') && phrase.endsWith('"')) {
