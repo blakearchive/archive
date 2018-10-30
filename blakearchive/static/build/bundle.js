@@ -5981,7 +5981,7 @@ var map = {
 	"./blake-copy.js": 128,
 	"./blake-data.js": 129,
 	"./blake-featured-work.js": 130,
-	"./blake-fragment-pair.js": 220,
+	"./blake-fragment-pair.js": 219,
 	"./blake-object.js": 131,
 	"./blake-work.js": 132,
 	"./cartStorage.js": 133,
@@ -61367,8 +61367,7 @@ module.exports = "/*!\n * jQuery JavaScript Library v3.2.1\n * https://jquery.co
 /* (ignored) */
 
 /***/ }),
-/* 219 */,
-/* 220 */
+/* 219 */
 /***/ (function(module, exports) {
 
 angular.module("blake").factory("BlakeFragmentPair", ["GenericService", function (GenericService) {
