@@ -29729,7 +29729,7 @@ angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sc
                     if ($rootScope.selectedTab == '#objects-with-text-matches') {
                         var words = ph.match(/\w+/g);
 
-                        console.log("words:" + words);
+                        //console.log("words:" + words);
                         var newph = [];
                         var i = 0;
                         angular.forEach(words, function (word) {
@@ -29742,10 +29742,11 @@ angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sc
                             }
                             newph[i] += word + ".*";
                         });
-                        console.log(newph);
+                        //console.log(newph);
                         angular.forEach(newph, function (singleph) {
+                            console.log("singleph:" + singleph);
                             singleph = singleph.substring(0, singleph.length - 2);
-                            text = text.replace(new RegExp('(\\b' + singleph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
+                            text = text.replace(new RegExp('(\\b' + singleph + '\\b)', 'gi'), '<span class="highlighted">$1</span>');
                         });
                         return text;
                     }
