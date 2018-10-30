@@ -9,25 +9,22 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
         let phraseArray;
         if (phrase !== ''){
             if (phrase.startsWith('"') && phrase.endsWith('"')) {
-                console.log("1");
                 phrase = phrase.replace(/"/g, '');
                 text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
                 return text;
             }
 
             if (phrase.indexOf(' ')) {
-                                console.log("2");
                 if (phrase.indexOf('AND')) {
                     phrase = phrase.replace(/AND/g, '');
                 }
                 phraseArray = phrase.match(/\w+|"(?:\\"|[^"])+"/g).map(s => s.replace(/['"]/g, ''));
                 angular.forEach(phraseArray, function (ph) {
-                    text = text.replace(new RegExp('(\\b' + ph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
+                    text = text.replace(new RegExp('(\\b' + ph + '[a-zA-Z,!]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
                 });
                 return text;
 
             }
-                            console.log("3");
 
             text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
         }
