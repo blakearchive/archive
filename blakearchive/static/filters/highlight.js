@@ -20,7 +20,9 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                 }
                 phraseArray = phrase.match(/\w+|"(?:\\"|[^"])+"/g).map(s => s.replace(/['"]/g, ''));
                 angular.forEach(phraseArray, function (ph) {
-                    text = text.replace(new RegExp('(\\b' + ph + '[a-zA-Z,!]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
+                    console.log(ph);
+                    text = text.replace(new RegExp('(\\b' + ph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
+                    console.log(text);
                 });
                 return text;
 
