@@ -29725,15 +29725,20 @@ angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sc
                 }
                 phraseArray = phrase.match(/\w+|"(?:\\"|[^"])+"/g).map(s => s.replace(/['"]/g, ''));
                 angular.forEach(phraseArray, function (ph) {
-                    var words = ph.match(/\w+/g);
-                    console.log("words:" + words);
-                    var newph = '';
-                    angular.forEach(words, function (word) {
-                        newph += word + ".*";
-                    });
-                    newph = newph.substring(1, newph.length - 2);
-                    console.log("newph:" + newph);
-                    text = text.replace(new RegExp('(\\b' + newph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
+
+                    if ($rootScope.selectedTab == '#objects-with-text-matches') {
+                        var words = ph.match(/\w+/g);
+                        console.log("words:" + words);
+                        var newph = '';
+                        angular.forEach(words, function (word) {
+                            newph += word + ".*";
+                        });
+                        newph = newph.substring(0, newph.length - 2);
+                        console.log("newph:" + newph);
+                        ph = newph;
+                    }
+
+                    text = text.replace(new RegExp('(\\b' + ph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
                 });
                 return text;
             }
