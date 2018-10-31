@@ -28609,8 +28609,8 @@ angular.module("blake").controller("ObjectsFromSameController", ["$rootScope", "
                     if (resultingFragmentPair.fragment.indexOf("br")) {
                         vm.bds.fragment_pairs.push(resultingFragmentPair.fragment);
                     } else {
-                        BlakeDataService.getFragmentPair(obj.desc_id, vm.bds.object.desc_id).then(function (resultingFragmentPair) {
-                            vm.bds.fragment_pairs.push(resultingFragmentPair.fragment);
+                        BlakeDataService.getFragmentPair(obj.desc_id, vm.bds.object.desc_id).then(function (resultingFragmentPair2) {
+                            vm.bds.fragment_pairs.push(resultingFragmentPair2.fragment);
                         });
                     }
                 });
