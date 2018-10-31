@@ -28,7 +28,7 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                         angular.forEach(words, function (word) {
                             newph += word + "[\\s*,!]";
                         });
-                        newph = newph.substring(0, newph.length-2);
+                        newph = newph.substring(0, newph.length-8);
                         console.log("newph:" + newph);
                         ph = newph;
                     }
