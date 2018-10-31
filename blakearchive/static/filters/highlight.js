@@ -32,17 +32,17 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                                 return;
                             }
                             if(newph[i] == undefined) { newph[i] = ''; }
-                            newph[i] += word + "[.\\s*]";
+                            newph[i] += word + "[.,!\\s*]";
                         });
                     }
                     
-                    //angular.forEach(newph, function (singleph) {
-                            //singleph = singleph.substring(0, singleph.length-7);
-                            console.log("singleph:" + newph[1].substring(0,newph[1].length-6));
-                            console.log(text);
-                            text = text.replace(new RegExp('(\\b' + "newph[1].substring(0,newph[1].length-6)" + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
-                            console.log(text);
-                    //});
+                    angular.forEach(newph, function (singleph) {
+                            singleph = singleph.substring(0, singleph.length-8);
+                            //console.log("singleph:" + newph[1].substring(0,newph[1].length-6));
+                            //console.log(text);
+                            text = text.replace(new RegExp('(\\b' + "singleph" + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
+                            //console.log(text);
+                    });
 
                 });
                 return text;
