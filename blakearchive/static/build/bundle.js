@@ -29747,6 +29747,7 @@ angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sc
                         singleph = singleph.substring(0, singleph.length - 2);
                         //console.log("singleph:" + newph[1].substring(0,newph[1].length-6));
                         //console.log(text);
+                        console.log(singleph);
                         text = text.replace(new RegExp('(\\b' + "singleph" + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
                         //console.log(text);
                     });
