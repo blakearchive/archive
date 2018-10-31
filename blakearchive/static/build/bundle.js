@@ -29739,12 +29739,12 @@ angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sc
                             if (newph[i] == undefined) {
                                 newph[i] = '';
                             }
-                            newph[i] += word + "[.,!\\s*]";
+                            newph[i] += word + "[\\s,!][\\s]*";
                         });
                     }
 
                     angular.forEach(newph, function (singleph) {
-                        singleph = singleph.substring(0, singleph.length - 8);
+                        singleph = singleph.substring(0, singleph.length - 13);
                         //console.log("singleph:" + newph[1].substring(0,newph[1].length-6));
                         //console.log(text);
                         text = text.replace(new RegExp('(\\b' + "singleph" + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
