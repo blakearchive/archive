@@ -29739,7 +29739,7 @@ angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sc
                             if (newph[i] == undefined) {
                                 newph[i] = '';
                             }
-                            newph[i] += word + ".*";
+                            newph[i] += word + "[.\\s*]";
                         });
                     }
 
@@ -29747,7 +29747,7 @@ angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sc
                     //singleph = singleph.substring(0, singleph.length-2);
                     console.log("singleph:" + newph[1]);
                     console.log(text);
-                    text = text.replace(new RegExp('(\\b' + newph[1] + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
+                    text = text.replace(new RegExp('(\\b' + "newph[1]" + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
                     console.log(text);
                     //});
                 });
