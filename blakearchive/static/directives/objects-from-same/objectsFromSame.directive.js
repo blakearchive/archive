@@ -26,10 +26,21 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
             vm.cof.removeComparisonObject(obj);
 
             if(vm.type=='textmatch') {
+                var thisFragmentPair;
               BlakeDataService.getFragmentPair(vm.bds.object.desc_id,obj.desc_id).then(function(resultingFragmentPair) {
-                  console.log(resultingFragmentPair);
+
+                    if (resultingFragmentPair.fragment.indexOf("br") == false) {
+                        thisFragmentPair = resultingFragmentPair.fragment;
+                    }
+                    else {
+                        BlakeDataService.getFragmentPair(obj.desc_id,vm.bds.object.desc_id).then(function(resultingFragmentPair2) {
+                            thisFragmentPair = resultingFragmentPair2;
+                        });
+                    }
+
+
                   for(i=0; i< vm.bds.fragment_pairs.length;i++){
-                    if (vm.bds.fragment_pairs[i] == resultingFragmentPair.fragment){
+                    if (vm.bds.fragment_pairs[i] == thisFragmentPair.fragment){
                       console.log("removed it! --> "+vm.bds.fragment_pairs[i]);
                       delete vm.bds.fragment_pairs[i];
                     }
