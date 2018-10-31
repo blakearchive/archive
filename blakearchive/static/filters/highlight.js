@@ -38,18 +38,6 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                         angular.forEach(newph, function (singleph) {
                             singleph = singleph.substring(0, singleph.length-10);
                             console.log(singleph);
-                            var wordsToBePopped = words;
-                            while(text.match(new RegExp('(\\b' + singleph + '[a-zA-Z]*\\b)', 'gi')) == null) {
-                                wordsToBePopped.pop();
-                                singleph = '';
-                                angular.forEach(wordsToBePopped, function (word) {
-                                    singleph += word + "[\\s*,!\.;]*";
-                                });
-                                singleph = singleph.substring(0, singleph.length-10);
-                                console.log("hello:" + singleph);
-                            }
-                            
-
                             text = text.replace(new RegExp('(\\b' + singleph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
                         });
                     }
