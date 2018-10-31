@@ -39,7 +39,7 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                     angular.forEach(newph, function (singleph) {
                             singleph = singleph.substring(0, singleph.length-2);
                             console.log("singleph:" + singleph);
-                            text = text.replace(new RegExp('('^' + singleph + '$')', 'gi'), '<span class="highlighted">$1</span>');
+                            text = text.replace(new RegExp('('^' + singleph + "$")', 'gi'), '<span class="highlighted">$1</span>');
                     });
 
                 });

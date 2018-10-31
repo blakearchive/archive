@@ -29703,7 +29703,79 @@ angular.module('blake').directive("workTitle", function () {
 /* 117 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: SyntaxError: Unexpected token, expected , (42:79)\n\n\u001b[0m \u001b[90m 40 | \u001b[39m                            singleph \u001b[33m=\u001b[39m singleph\u001b[33m.\u001b[39msubstring(\u001b[35m0\u001b[39m\u001b[33m,\u001b[39m singleph\u001b[33m.\u001b[39mlength\u001b[33m-\u001b[39m\u001b[35m2\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 41 | \u001b[39m                            console\u001b[33m.\u001b[39mlog(\u001b[32m\"singleph:\"\u001b[39m \u001b[33m+\u001b[39m singleph)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 42 | \u001b[39m                            text \u001b[33m=\u001b[39m text\u001b[33m.\u001b[39mreplace(\u001b[36mnew\u001b[39m \u001b[33mRegExp\u001b[39m(\u001b[32m'('\u001b[39m\u001b[33m^\u001b[39m\u001b[32m' + singleph + '\u001b[39m$\u001b[32m')'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'gi'\u001b[39m)\u001b[33m,\u001b[39m \u001b[32m'<span class=\"highlighted\">$1</span>'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    | \u001b[39m                                                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 43 | \u001b[39m                    })\u001b[33m;\u001b[39m\n \u001b[90m 44 | \u001b[39m\n \u001b[90m 45 | \u001b[39m                })\u001b[33m;\u001b[39m\u001b[0m\n");
+angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sce, $rootScope) {
+    var vm = this;
+
+    vm.runReplace = function (phrase, text) {
+        /*if (angular.isArray(phrase)){
+          console.log("The phrase is an array!!!");
+        }
+        console.log("===highlight called runReplace!!!: "+phrase)*/
+        let phraseArray;
+        if (phrase !== '') {
+            if (phrase.startsWith('"') && phrase.endsWith('"')) {
+                phrase = phrase.replace(/"/g, '');
+                text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
+                return text;
+            }
+
+            if (phrase.indexOf(' ')) {
+                if (phrase.indexOf('AND')) {
+                    phrase = phrase.replace(/AND/g, '');
+                }
+                phraseArray = phrase.match(/\w+|"(?:\\"|[^"])+"/g).map(s => s.replace(/['"]/g, ''));
+                angular.forEach(phraseArray, function (ph) {
+
+                    if ($rootScope.selectedTab == '#objects-with-text-matches') {
+                        var words = ph.match(/\w+/g);
+                        console.log("words:" + words);
+                        var newph = [];
+                        var i = 0;
+                        angular.forEach(words, function (word) {
+                            if (word == 'br') {
+                                i++;
+                                return;
+                            }
+                            if (newph[i] == undefined) {
+                                newph[i] = '';
+                            }
+                            newph[i] += word + ".*";
+                        });
+                    }
+
+                    angular.forEach(newph, function (singleph) {
+                        singleph = singleph.substring(0, singleph.length - 2);
+                        console.log("singleph:" + singleph);
+                        text = text.replace(new RegExp('(' ^ ' + singleph + "$")', 'gi'), '<span class="highlighted">$1</span>');
+                    });
+                });
+                return text;
+            }
+
+            text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
+        }
+
+        return text;
+    };
+
+    return function (text, phrase, alt) {
+        if (!angular.isDefined(text) || !angular.isDefined(phrase)) {
+            return $sce.trustAsHtml(text);
+        }
+
+        if (angular.isDefined(alt) && alt.length > 0) {
+            angular.forEach(alt, function (spelling) {
+                var newPhrase = phrase.toLowerCase();
+                if (newPhrase.indexOf(spelling.reg) > -1) {
+                    newPhrase = newPhrase.replace(spelling.reg, spelling.orig);
+                    text = vm.runReplace(newPhrase, text);
+                }
+            });
+        }
+
+        return $sce.trustAsHtml(vm.runReplace(phrase, text));
+    };
+}]);
 
 /***/ }),
 /* 118 */
