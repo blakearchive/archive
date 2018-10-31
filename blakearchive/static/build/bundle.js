@@ -28606,12 +28606,14 @@ angular.module("blake").controller("ObjectsFromSameController", ["$rootScope", "
             if (vm.type == 'textmatch') {
 
                 BlakeDataService.getFragmentPair(vm.bds.object.desc_id, obj.desc_id).then(function (resultingFragmentPair) {
-                    console.log(resultingFragmentPair);
-
-                    vm.bds.fragment_pairs.push(resultingFragmentPair.fragment);
+                    if (resultingFragmentPair.fragment.contains("br")) {
+                        vm.bds.fragment_pairs.push(resultingFragmentPair.fragment);
+                    } else {
+                        BlakeDataService.getFragmentPair(obj.desc_id, vm.bds.object.desc_id).then(function (resultingFragmentPair) {
+                            vm.bds.fragment_pairs.push(resultingFragmentPair.fragment);
+                        });
+                    }
                 });
-                //console.log(vm.bds.object.desc_id);
-                //console.log("blah");
             }
         }
     };
