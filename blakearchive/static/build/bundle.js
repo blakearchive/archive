@@ -29745,12 +29745,11 @@ angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sc
                         angular.forEach(newph, function (singleph) {
                             singleph = singleph.substring(0, singleph.length - 10);
                             console.log(singleph);
-
+                            var wordsToBePopped = words;
                             while (text.match(new RegExp('(\\b' + singleph + '[a-zA-Z]*\\b)', 'gi')) == null) {
-                                var words = singleph.match(/([^[\*]\+)(?:\$|\[)/g);
-                                words.pop();
+                                wordsToBePopped.pop();
                                 singleph = '';
-                                angular.forEach(words, function (word) {
+                                angular.forEach(wordsToBePopped, function (word) {
                                     singleph += word + "[\\s*,!\.;]*";
                                 });
                                 singleph = singleph.substring(0, singleph.length - 10);
