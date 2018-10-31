@@ -29745,7 +29745,17 @@ angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sc
                         angular.forEach(newph, function (singleph) {
                             singleph = singleph.substring(0, singleph.length - 10);
                             console.log(singleph);
-                            console.log(text.match(new RegExp('(\\b' + singleph + '[a-zA-Z]*\\b)', 'gi')));
+
+                            while (text.match(new RegExp('(\\b' + singleph + '[a-zA-Z]*\\b)', 'gi')) == null) {
+                                var words = singleph.match(/\w+/g);
+                                words.pop();
+                                singleph = '';
+                                angular.forEach(words, function (word) {
+                                    singleph += word + "[\\s*,!\.;]*";
+                                });
+                                singleph = singleph.substring(0, singleph.length - 10);
+                                console.log("hello:" + singleph);
+                            }
 
                             text = text.replace(new RegExp('(\\b' + singleph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
                         });
