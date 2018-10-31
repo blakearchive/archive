@@ -29731,9 +29731,9 @@ angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sc
                         console.log("words:" + words);
                         var newph = '';
                         angular.forEach(words, function (word) {
-                            newph += word + "[\\s*,!]";
+                            newph += word + "[\\s*,!\.;]*";
                         });
-                        newph = newph.substring(0, newph.length - 8);
+                        newph = newph.substring(0, newph.length - 12);
                         console.log("newph:" + newph);
                         ph = newph;
                     }
