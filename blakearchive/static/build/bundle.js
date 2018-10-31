@@ -29747,7 +29747,7 @@ angular.module("blake").filter('highlight', ["$sce", "$rootScope", function ($sc
                             console.log(singleph);
 
                             while (text.match(new RegExp('(\\b' + singleph + '[a-zA-Z]*\\b)', 'gi')) == null) {
-                                var words = singleph.match(/\w+/g);
+                                var words = singleph.match(/([^[\*]\+)(?:\$|\[)/g);
                                 words.pop();
                                 singleph = '';
                                 angular.forEach(words, function (word) {
