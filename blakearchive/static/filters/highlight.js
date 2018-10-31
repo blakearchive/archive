@@ -26,13 +26,13 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                         console.log("words:" + words);
                         var newph = '';
                         angular.forEach(words, function (word) {
-                            newph += word + ".*";
+                            newph += word + "[\\s*,!]";
                         });
                         newph = newph.substring(0, newph.length-2);
                         console.log("newph:" + newph);
                         ph = newph;
                     }
-                    
+                    console.log(text);
                     text = text.replace(new RegExp('(\\b' + ph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
                 });
                 return text;
