@@ -32108,6 +32108,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
     };
 
     blakeData.changeCopy = function (copyId, descId) {
+        blakeData.fragment_pairs = [];
         return blakeData.setSelectedCopy(copyId, descId).then(function () {
             $location.path('/copy/' + copyId, false);
             $location.search('descId', descId);
