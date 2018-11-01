@@ -72,7 +72,12 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
     vm.activateCompare = function(){
         $rootScope.worksNavState = false;
         $rootScope.view.mode = 'compare';
-        $rootScope.view.scope = 'image';
+        if(vm.type=='textmatch') {
+            $rootScope.view.scope = 'both'
+        }
+        else {
+            $rootScope.view.scope = 'image';
+        }
         //console.log("selected tab is: "+$rootScope.selectedTab)
     }
 
