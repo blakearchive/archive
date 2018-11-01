@@ -28629,7 +28629,7 @@ angular.module("blake").controller("ObjectsFromSameController", ["$rootScope", "
             if (vm.type == 'textmatch') {
 
                 BlakeDataService.getFragmentPair(vm.bds.object.desc_id, obj.desc_id).then(function (resultingFragmentPair) {
-                    if (resultingFragmentPair.fragment.indexOf("br") == true) {
+                    if (resultingFragmentPair.fragment.indexOf("br") == false) {
                         vm.bds.fragment_pairs.push(resultingFragmentPair.fragment);
                     } else {
                         BlakeDataService.getFragmentPair(obj.desc_id, vm.bds.object.desc_id).then(function (resultingFragmentPair2) {
