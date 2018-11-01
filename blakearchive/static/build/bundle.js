@@ -27908,14 +27908,23 @@ angular.module("blake").controller("ObjectCompareController", ["$rootScope", "Bl
         }
     };
 
+    vm.click = function (object) {
+        if ($rootScope.selectedTab == '#objects-with-text-matches') {
+            goToObject(object);
+        } else {
+            changeObject(object);
+        }
+    };
+
+    vm.doubleClick = function (object) {
+        goToObject(object);
+    };
+
     vm.changeObject = function (object) {
         //console.log(object);
         $rootScope.descIDFromCompare = object.desc_id;
         //console.log($rootScope.descIDFromCompare);
         vm.bds.changeCopy(object.copy_bad_id, object.desc_id);
-        if ($rootScope.selectedTab == "#objects-with-text-matches") {
-            vm.cof.setMainObject(object);
-        }
     };
 
     vm.goToObject = function (object) {
@@ -61228,7 +61237,7 @@ module.exports = "<ul class=\"nav navbar-nav blake-menu\">\n  <li dropdown class
 /* 186 */
 /***/ (function(module, exports) {
 
-module.exports = "\n<!-- compare -->\n<div id=\"compare\" class=\"scrollbar\">\n<!--<div id=\"compare\" class=\"scrollbar\" style=\"height: {{compare.viewerHeight}}px\">-->\n    <div class=\"featured-object\">\n        <div class=\"compare-inner\" ng-sortable=\"{ group: 'o', animation: 150 }\">\n            <div class=\"item\"\n                 ng-repeat=\"o in compare.cof.comparisonObjects\"\n                 ng-class=\"{active:compare.cof.isMain(o)}\"\n                 ng-click=\"compare.changeObject(o)\"\n                 ng-dblclick=\"compare.goToObject(o)\">\n                <!--<p class=\"object-title text-capitalize\"><a href=\"/copy/{{o.copy_bad_id}}?objectId={{o.object_id}}\">{{ o.copy_title }}</a></p>-->\n                <p ng-class=\"{active:compare.cof.isMain(o)}\" class=\"object-title\"><a href=\"/copy/{{o.copy_bad_id}}\">{{ o.copy_title }}</a></p>\n                <div class=\"compare-wrapper flex\" auto-height adjust=\"270\" breakpoint=\"768\">\n                    <div class=\"object-img-container\" ng-class=\"{hidden: view.scope == 'text'}\" ovp-image>\n                        <img ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" magnify-image>\n                    </div>\n                    <div class=\"reading-copy\" ng-class=\"{hidden: view.scope == 'image'}\">\n                        <div class=\"reading-copy-inner\">\n                            <text-transcription ng-if=\"selectedTab != '#objects-with-text-matches'\" object=\"o\"></text-transcription>\n                            <text-transcription ng-if=\"selectedTab == '#objects-with-text-matches'\"\n                              object=\"o\" highlight=\"{{compare.bds.fragment_pairs}}\">\n\n                            </text-transcription>\n                        </div>\n                    </div>\n                </div>\n                <p class=\"object-subtitle text-capitalize\"><a href=\"/copy/{{o.copy_bad_id}}?descId={{o.desc_id}}\">{{ o.full_object_id }}, {{ o.copy_composition_date }}, {{ o.copy_institution }}</a></p>\n            </div>\n        </div>\n    </div>\n</div>\n<!--/.compare-->\n";
+module.exports = "\n<!-- compare -->\n<div id=\"compare\" class=\"scrollbar\">\n<!--<div id=\"compare\" class=\"scrollbar\" style=\"height: {{compare.viewerHeight}}px\">-->\n    <div class=\"featured-object\">\n        <div class=\"compare-inner\" ng-sortable=\"{ group: 'o', animation: 150 }\">\n            <div class=\"item\"\n                 ng-repeat=\"o in compare.cof.comparisonObjects\"\n                 ng-class=\"{active:compare.cof.isMain(o)}\"\n                 ng-click=\"compare.click(o)\"\n                 ng-dblclick=\"compare.doubleClick(o)\">\n                <!--<p class=\"object-title text-capitalize\"><a href=\"/copy/{{o.copy_bad_id}}?objectId={{o.object_id}}\">{{ o.copy_title }}</a></p>-->\n                <p ng-class=\"{active:compare.cof.isMain(o)}\" class=\"object-title\"><a href=\"/copy/{{o.copy_bad_id}}\">{{ o.copy_title }}</a></p>\n                <div class=\"compare-wrapper flex\" auto-height adjust=\"270\" breakpoint=\"768\">\n                    <div class=\"object-img-container\" ng-class=\"{hidden: view.scope == 'text'}\" ovp-image>\n                        <img ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg\" magnify-image>\n                    </div>\n                    <div class=\"reading-copy\" ng-class=\"{hidden: view.scope == 'image'}\">\n                        <div class=\"reading-copy-inner\">\n                            <text-transcription ng-if=\"selectedTab != '#objects-with-text-matches'\" object=\"o\"></text-transcription>\n                            <text-transcription ng-if=\"selectedTab == '#objects-with-text-matches'\"\n                              object=\"o\" highlight=\"{{compare.bds.fragment_pairs}}\">\n\n                            </text-transcription>\n                        </div>\n                    </div>\n                </div>\n                <p class=\"object-subtitle text-capitalize\"><a href=\"/copy/{{o.copy_bad_id}}?descId={{o.desc_id}}\">{{ o.full_object_id }}, {{ o.copy_composition_date }}, {{ o.copy_institution }}</a></p>\n            </div>\n        </div>\n    </div>\n</div>\n<!--/.compare-->\n";
 
 /***/ }),
 /* 187 */

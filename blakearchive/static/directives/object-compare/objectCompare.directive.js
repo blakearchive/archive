@@ -26,14 +26,24 @@ angular.module("blake").controller("ObjectCompareController", function ($rootSco
         }
     }
 
+    vm.click = function(object) {
+        if($rootScope.selectedTab == '#objects-with-text-matches') {
+            goToObject(object);
+        }
+        else {
+            changeObject(object);
+        }
+    }
+
+    vm.doubleClick = function(object) {
+        goToObject(object);
+    }
+
     vm.changeObject = function(object){
         //console.log(object);
         $rootScope.descIDFromCompare = object.desc_id;
         //console.log($rootScope.descIDFromCompare);
         vm.bds.changeCopy(object.copy_bad_id,object.desc_id);
-        if($rootScope.selectedTab == "#objects-with-text-matches") {
-            vm.cof.setMainObject(object);
-        }
     }
 
     vm.goToObject = function(object){
