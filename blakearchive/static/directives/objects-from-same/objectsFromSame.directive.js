@@ -54,7 +54,7 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
             if(vm.type=='textmatch') {
 
                BlakeDataService.getFragmentPair(vm.bds.object.desc_id,obj.desc_id).then(function(resultingFragmentPair) {
-                    if (resultingFragmentPair.fragment.indexOf("br") == false) {
+                    if (resultingFragmentPair.fragment.indexOf("br") == true) {
                         vm.bds.fragment_pairs.push(resultingFragmentPair.fragment);
                     }
                     else {
