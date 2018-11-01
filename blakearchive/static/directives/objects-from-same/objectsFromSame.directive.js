@@ -56,11 +56,13 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
                BlakeDataService.getFragmentPair(vm.bds.object.desc_id,obj.desc_id).then(function(resultingFragmentPair) {
                     if (resultingFragmentPair.fragment.indexOf("br") == true) {
                         vm.bds.fragment_pairs.push(resultingFragmentPair.fragment);
+                        console.log("true");
                     }
                     else {
                         BlakeDataService.getFragmentPair(obj.desc_id,vm.bds.object.desc_id).then(function(resultingFragmentPair2) {
                             vm.bds.fragment_pairs.push(resultingFragmentPair2.fragment);
                         });
+                        console.log("false");
                     }
                });
             }
