@@ -61,8 +61,9 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
                     else {
                         BlakeDataService.getFragmentPair(obj.desc_id,vm.bds.object.desc_id).then(function(resultingFragmentPair2) {
                             vm.bds.fragment_pairs.push(resultingFragmentPair2.fragment);
+                            console.log(resultingFragmentPair2);
+                            console.log(fragment_pairs);
                         });
-                        console.log(resultingFragmentPair2);
                     }
                });
             }
