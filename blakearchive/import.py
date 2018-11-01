@@ -57,7 +57,7 @@ class BlakeDocumentImporter(BlakeImporter):
         self.text_matches = pandas.read_csv(self.data_folder + "/csv/blake_superfast_matches.csv", encoding="utf-8")
         self.works_df = pandas.read_csv(self.data_folder + "/csv/works.csv", encoding="utf-8")
         self.relationships_df.fillna("", inplace=True)
-        #self.text_matches.fillna("", inplace=True)
+        self.text_matches.fillna("", inplace=True)
         self.works_df.fillna("", inplace=True)
 
     def import_data(self):
@@ -69,7 +69,7 @@ class BlakeDocumentImporter(BlakeImporter):
         self.import_bad_files(matching_bad_files)
         self.process_works()
         self.process_relationships()
-        self.process_text_matches()
+        #self.process_text_matches()
         self.populate_database()
 
     def process_text_matches(self):
