@@ -28636,7 +28636,7 @@ angular.module("blake").controller("ObjectsFromSameController", ["$rootScope", "
                         BlakeDataService.getFragmentPair(obj.desc_id, vm.bds.object.desc_id).then(function (resultingFragmentPair2) {
                             vm.bds.fragment_pairs.push(resultingFragmentPair2.fragment);
                         });
-                        console.log("false");
+                        console.log(resultingFragmentPair2);
                     }
                 });
             }
