@@ -27910,14 +27910,14 @@ angular.module("blake").controller("ObjectCompareController", ["$rootScope", "Bl
 
     vm.click = function (object) {
         if ($rootScope.selectedTab == '#objects-with-text-matches') {
-            goToObject(object);
+            vm.goToObject(object);
         } else {
-            changeObject(object);
+            vm.changeObject(object);
         }
     };
 
     vm.doubleClick = function (object) {
-        goToObject(object);
+        vm.goToObject(object);
     };
 
     vm.changeObject = function (object) {
