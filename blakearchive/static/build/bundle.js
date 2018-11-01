@@ -28604,7 +28604,7 @@ angular.module("blake").controller("ObjectsFromSameController", ["$rootScope", "
             if (vm.type == 'textmatch') {
                 BlakeDataService.getFragmentPair(vm.bds.object.desc_id, obj.desc_id).then(function (resultingFragmentPair) {
                     console.log(resultingFragmentPair);
-                    if (resultingFragmentPair.fragment.indexOf("br") == false) {
+                    if (resultingFragmentPair.fragment.indexOf("br")) {
                         for (i = 0; i < vm.bds.fragment_pairs.length; i++) {
                             if (vm.bds.fragment_pairs[i] == resultingFragmentPair.fragment) {
                                 console.log("removed it! --> " + vm.bds.fragment_pairs[i]);
@@ -28629,10 +28629,7 @@ angular.module("blake").controller("ObjectsFromSameController", ["$rootScope", "
             if (vm.type == 'textmatch') {
 
                 BlakeDataService.getFragmentPair(vm.bds.object.desc_id, obj.desc_id).then(function (resultingFragmentPair) {
-                    console.log(vm.bds.object.desc_id);
-                    console.log(obj.desc_id);
-                    console.log(resultingFragmentPair);
-                    if (resultingFragmentPair.fragment.indexOf("br") == true) {
+                    if (resultingFragmentPair.fragment.indexOf("br")) {
                         vm.bds.fragment_pairs.push(resultingFragmentPair.fragment);
                         console.log("true");
                     } else {
