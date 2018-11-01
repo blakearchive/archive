@@ -31,6 +31,9 @@ angular.module("blake").controller("ObjectCompareController", function ($rootSco
         $rootScope.descIDFromCompare = object.desc_id;
         //console.log($rootScope.descIDFromCompare);
         vm.bds.changeCopy(object.copy_bad_id,object.desc_id);
+        if($rootScope.selectedTab == '#objects-with-text-matches') {
+            vm.cof.setMainObject(object);
+        }
     }
 
     vm.goToObject = function(object){
