@@ -1561,6 +1561,11 @@ a.compare-selected-objects {
     color: #000;
 }
 
+.highlightedMatch{
+    background-color: #F7FF00;
+    color: #000;
+}
+
 #search .object-img-container{
     margin-bottom: 20px;
 }
