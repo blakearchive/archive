@@ -173,6 +173,12 @@ def get_exhibit_images(exhibit_id):
         return abort(404)
     return jsonify({"results": [r.to_dict for r in results]})
 
+@api.route("/exhibit-html/<exhibit_id>")
+def get_exhibit_html(exhibit_id):
+    filename = config.local_data_path+"/exhibits/"+exhibit_id+"/"+exhibit_id+".exhibit.html"
+    exhib_html_file = open(filename,'r')
+    return exhib_html_file.read()
+
 @api.route("/exhibits/")
 def get_exhibits():
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]

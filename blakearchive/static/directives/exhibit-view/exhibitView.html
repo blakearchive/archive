@@ -1,41 +1,10 @@
-<div id="OverlayCopyInfo" class="overlay" ng-show="$root.showOverlayCompareCopyInfo == true" style="top:52px"> <!-- controls overview on top of bad-->
-    <a style="text-decoration: none" href="" class="closebtnleft" style="right:inherit" ng-click="$root.showOverlayCompareCopyInfo = false">&times;</a>
-    <header class="page-header">
-        <p class="subhead">COPY INFORMATION</p>
-        <h1 style="color:rgba(233,188,71,1)">{{ read.compareCopy.title }} (Composed {{ read.compareCopy.composition_date_string }})</h1>
-    </header>
-    <div id="archive-tabs" role="tabpanel">
-        <div class="container-fluid overlaycopyinfo">
-            <div class="container">
-                <div class="tab-content">
-                    <div role="tabpanel" class="fadeinout tab-pane active in">
-                        <copy-information copy="read.compareCopy"></copy-information>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="compare" >
+  <ng-include src="exhibit.htmlPath"></ng-include>
+  1- ==exhibit.htmlPath==
+  2- =={exhibit.htmlPath}==
+  3- =={{vm.htmlPath}}==
 </div>
-
-
-
-<!--<div style="text-align:center">
-    <div style="color:white; font-size:13 px; padding-top:1px" ng-if="read.apparatus == 'comparewith'"><span>Compared with </span><a scroll-to-top href="" ng-click="$root.showOverlayCompareCopyInfo = true" style="color:yellow;">Copy {{read.compareCopyId}}</a> (Printed {{read.compareCopyPrintDateString}})</span>
-    </div>
-</div>-->
-<!--<p class="object-title">{{ read.getOvpTitle() }}</p>-->
-<!-- compare -->
-
-
-<!--for exhibits-->
-<div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="compare" ng-if="read.bds.copy.bad_id == 'illum'" ">
-
-
-XXXXXX
-                    <ng-include src=" '/static/html/illuminatedprinting.exhibit.html' "></ng-include>
-
-
-</div>
+<!--
 <div style="float:right; width:67% " id="compare " class="scrollbar "  left-on-broadcast="viewSubMenu::readingMode ">
     <div class="featured-object ">
         <div class="compare-inner ">
@@ -46,7 +15,6 @@ XXXXXX
                         <div class="reading-copy-inner ">
                             <h4 ng-if="o.title " >{{o.title}}<br><span>{{ o.full_object_id }}</span></h4>
                             <h4 ng-if="!o.title "><span>{{ o.full_object_id }}</span></h4>
-                            <!-- replace the following with 'exhibit-image-caption' (a new directive similar to the following directive)-->
                             <text-transcription object="o "></text-transcription>
                         </div>
                     </div>
@@ -58,4 +26,5 @@ XXXXXX
 
 </div>
 </div>
+-->
 <!--/.compare-->

@@ -111,13 +111,24 @@ class BlakeExhibitImporter(BlakeImporter):
       if (len(imageXml.xpath('title'))):
           exhibitImage.title = imageXml.xpath('title')[0].text
           #print "...has title: "+exhibitImage.title
-      if (len(imageXml.xpath('caption'))):
-          exhibitImage.caption = imageXml.xpath('caption')[0].text
+#      if (len(imageXml.xpath('caption'))):
+#          exhibitImage.caption = imageXml.xpath('caption')[0].text
           #print "...has caption: "+exhibitImage.caption
 
       # add the exhibit image to the exhibit model object's list
       exhibit.exhibit_images.append(exhibitImage)
       #print "adding to exhibit: "+exhibitImage.id
+      #root = etree.fromstring(imageXml)  #.getroot()
+      count = 0
+      for child in imageXml:
+          if (child.tag == 'caption'):
+              count = count + 1
+              caption = models.BlakeExhibitCaption()
+              caption.caption = child.text
+              caption.exhibit_caption_id = exhibitImage.id+"_caption_"+str(count)
+              caption.imageId = exhibitImage.id
+              exhibitImage.captions.append(caption)
+
 
 
 class BlakeDocumentImporter(BlakeImporter):

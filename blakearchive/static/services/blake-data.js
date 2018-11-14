@@ -1,4 +1,4 @@
-angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork, directoryPrefix) {
+angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork,BlakeExhibit, directoryPrefix) {
     /**
      * For the time being, all data accessor functions should be placed here.  This service should mirror the API
      * of the back-end BlakeDataService.
@@ -561,16 +561,18 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
 
       //$log.info('getting objects: multi');
 
-      return $http.get(url, {params: {exhibit_id: exhibitId}})
+      return $http.get(url)
           .then(getObjectsComplete)
           .catch(getObjectsFailed);
 
       function getObjectsComplete(response){
-          return BlakeObject.create(response.data.results);
+        console.log("==="+JSON.stringify(response.data));
+        return BlakeExhibit.create(response.data);
+
       }
 
       function getObjectsFailed(error){
-          $log.error('XHR Failed for getObjects: multi.\n' + angular.toJson(error.data, true));
+          $log.error('XHR Failed for getObjects: multi...\n' + angular.toJson(error.data, true));
       }
     };
 

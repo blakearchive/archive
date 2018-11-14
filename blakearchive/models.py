@@ -276,27 +276,40 @@ class BlakeFeaturedWork(db.Model):
             "bad_id": self.bad_id
         }
 
+class BlakeExhibitCaption(db.Model):
+    __tablename__ = "exhibit_caption"
+    exhibit_caption_id = db.Column(db.Text,primary_key=True)
+    caption = db.Column(db.Text, index=True)
+    image_id = db.Column(db.Text, index=True)
+    image_pk = db.Column(db.Integer,db.ForeignKey("exhibit_image.exhibit_image_pk"))
+    @property
+    def to_dict(self):
+        return {
+            "caption": self.caption,
+            "image_id": self.image_id
+        }
+
 class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image, etc
     __tablename__ = "exhibit_image"
     exhibit_image_pk = db.Column(db.Integer, primary_key=True)
     image_id = db.Column(db.Text, index=True)
     exhibit_id = db.Column(db.Text, index=True)
     exhibit_pk = db.Column(db.Integer, db.ForeignKey("exhibit.exhibit_pk"))
-    caption = db.Column(db.UnicodeText)
+    #caption = db.Column(db.UnicodeText)
     dbi = db.Column(db.UnicodeText)
     title = db.Column(db.UnicodeText)
     #bad_id = db.Column(db.Text)
+    captions = db.relationship(BlakeExhibitCaption, backref="exhibit_image")
 
     @property
     def to_dict(self):
         return {
-            "caption": self.caption,
+            #"caption": self.caption,
             "dbi": self.dbi,
             "exhibit_id": self.exhibit_id,
             "title": self.title,
             "image_id": self.image_id
         }
-
 
 # Represents an Exhibit. A presentation that has text passages on the left side
 # with links to images in a horizontal 'slideshow' on the right.
