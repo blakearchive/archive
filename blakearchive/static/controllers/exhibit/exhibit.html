@@ -1,8 +1,38 @@
 <div id="archive" class="container-fluid archive-top">
     <div id="object-container" class="row">
         <div id="object-view" >
-            <exhibit-view></exhibit-view>
+          <div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="compare" >
+            <div ng-bind-html="exhibitCtrl.exhibit_article_content">
+            </div>
 
+          </div>
+          <!--- --->
+          <div style="float:right; width:67%; overflow-x:scroll;" class="scrollbar " >
+              <div class="featured-object ">
+                  <div class="compare-inner ">
+                      <div class="item " ng-repeat="i in exhibitCtrl.images track by $index" >
+                          <div class="reading-wrapper " style="float:right" auto-height adjust="150 " breakpoint="768 " id="{{ read.cssSafeId(i.image_id) }} ">
+
+                              <div class="reading-copy ">
+                                  <div class="reading-copy-inner ">
+                                      <h4 ng-if="i.title " >{{i.title}}</h4>
+                                      <h4 ng-if="!i.title "></h4>
+                                      <!-- captions here -->
+                                      <div ng-repeat="c in exhibitCtrl.captions[$index]">
+                                        {{c}}
+                                      </div>
+                                  </div>
+                                  <img magnify-image ng-src="/static/img/temp/{{ i.dbi }}.100.jpg " >
+                              </div>
+
+
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!--- --->
         </div>
     </div>
 </div>

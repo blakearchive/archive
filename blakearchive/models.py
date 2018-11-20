@@ -2,7 +2,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql import case
 from sqlalchemy.dialects.postgresql import JSON
-
+import json
 
 db = SQLAlchemy()
 
@@ -299,7 +299,7 @@ class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image
     dbi = db.Column(db.UnicodeText)
     title = db.Column(db.UnicodeText)
     #bad_id = db.Column(db.Text)
-    captions = db.relationship(BlakeExhibitCaption, backref="exhibit_image")
+    captions = db.relationship(BlakeExhibitCaption, backref="exhibit_image",lazy='joined')
 
     @property
     def to_dict(self):
@@ -319,11 +319,18 @@ class BlakeExhibit(db.Model): # todo: change to correct columns name, image, etc
     exhibit_id = db.Column(db.Text, index=True)
     title = db.Column(db.UnicodeText)
     article = db.Column(db.UnicodeText)
-    exhibit_images = db.relationship('BlakeExhibitImage', backref="exhibit")
+    exhibit_images = db.relationship('BlakeExhibitImage', backref="exhibit",lazy='joined')
     #bad_id = db.Column(db.Text)
 
     @property
     def to_dict(self):
+#        image_json = "["
+#        for x in self.exhibit_images:
+#            #print x.__dict__
+#            image_json += str(x.__dict__)
+#        image_json += "]"
+#        print image_json
+
         return {
             "title": self.title,
             "article": self.article,

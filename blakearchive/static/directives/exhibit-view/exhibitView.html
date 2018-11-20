@@ -1,8 +1,7 @@
 <div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="compare" >
-  <ng-include src="exhibit.htmlPath"></ng-include>
-  1- ==exhibit.htmlPath==
-  2- =={exhibit.htmlPath}==
-  3- =={{vm.htmlPath}}==
+  <div ng-bind-html="exhibit.exhibit_article_content">
+  </div>
+  
 </div>
 <!--
 <div style="float:right; width:67% " id="compare " class="scrollbar "  left-on-broadcast="viewSubMenu::readingMode ">

@@ -1,6 +1,7 @@
 import re
 import pysolr
 from sqlalchemy.sql import func
+from sqlalchemy.orm import joinedload
 import models
 import config
 
@@ -182,29 +183,33 @@ class BlakeDataService(object):
         return results
 
     ###start------ service methods for Exhibits ------
-    @classmethod
-    def get_exhibits(cls, exhibit_ids=None):
-        query = models.BlakeExhibit.query \
-            .order_by(models.BlakeExhibit.exhibit_id)
-        if exhibit_ids:
-            results = query.filter(models.BlakeObjectExhibit.exhibit_id.in_(exhibit_ids)).all()
-        else:
-            results = query.all()
-        return results
+#    @classmethod
+#    def get_exhibits(cls, exhibit_ids=None):
+#        query = models.BlakeExhibit.query \
+#            .order_by(models.BlakeExhibit.exhibit_id)
+#        if exhibit_ids:
+#            results = query.filter(models.BlakeObjectExhibit.exhibit_id.in_(exhibit_ids)).all()
+#        else:
+#            results = query.all()
+#        return results
 
     @classmethod
     def get_exhibit(cls, exhibit_id):
-        result = models.BlakeExhibit.query.filter(models.BlakeExhibit.exhibit_id == exhibit_id).first()
+        result = models.BlakeExhibit.query \
+            .options(joinedload(models.BlakeExhibit.exhibit_images)) \
+            .filter(models.BlakeExhibit.exhibit_id == exhibit_id).first()
         return result
 
     @classmethod
     def get_images_for_exhibit(cls, exhibit_id=None):
-        query = models.BlakeExhibitImage.query
-        if exhibit_id:
-            results = query.filter(models.BlakeExhibitImage.exhibit_id == exhibit_id).all()
-        else:
-            results = query.all()
+        results = models.BlakeExhibitImage.query.filter(models.BlakeExhibitImage.exhibit_id == exhibit_id).all()
         return results
+
+    @classmethod
+    def get_captions_for_image(cls, image_id=None):
+        results = models.BlakeExhibitCaption.query.filter(models.BlakeExhibitCaption.image_id == image_id).all()
+        return results
+
     ###end------ service methods for Exhibits ------
 
     @classmethod

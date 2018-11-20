@@ -102,9 +102,9 @@ class BlakeExhibitImporter(BlakeImporter):
   def process_exhibit_image(self, exhibit, imageXml):
       #print "..with xml: "+etree.tostring(imageXml, pretty_print=True)
       exhibitImage = models.BlakeExhibitImage()
-      exhibitImage.id = imageXml.get("id")
+      exhibitImage.image_id = imageXml.get("id")
       exhibitImage.dbi = imageXml.get("dbi")
-      exhibitImage.exhibitId = exhibit.exhibit_id
+      exhibitImage.exhibit_id = exhibit.exhibit_id
       # TODO: do we need else-clauses? xml/html in captions are...
       # ignored! is that OK? md is okay since it is just text.
       # if there are title sub-element(s)... use the first one
@@ -125,8 +125,8 @@ class BlakeExhibitImporter(BlakeImporter):
               count = count + 1
               caption = models.BlakeExhibitCaption()
               caption.caption = child.text
-              caption.exhibit_caption_id = exhibitImage.id+"_caption_"+str(count)
-              caption.imageId = exhibitImage.id
+              caption.exhibit_caption_id = exhibitImage.image_id+"_caption_"+str(count)
+              caption.image_id = exhibitImage.image_id
               exhibitImage.captions.append(caption)
 
 

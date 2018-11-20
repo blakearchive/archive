@@ -1,4 +1,4 @@
-angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork,BlakeExhibit, directoryPrefix) {
+angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork,BlakeExhibit, BlakeExhibitImage,BlakeExhibitCaption,directoryPrefix) {
     /**
      * For the time being, all data accessor functions should be placed here.  This service should mirror the API
      * of the back-end BlakeDataService.
@@ -566,13 +566,53 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
           .catch(getObjectsFailed);
 
       function getObjectsComplete(response){
-        console.log("==="+JSON.stringify(response.data));
+        //console.log("==="+JSON.stringify(response.data));
         return BlakeExhibit.create(response.data);
 
       }
 
       function getObjectsFailed(error){
           $log.error('XHR Failed for getObjects: multi...\n' + angular.toJson(error.data, true));
+      }
+    };
+    blakeData.getImagesForExhibit = function(exhibitId){
+      // TODO: implement API and then fix update this!!!!
+      var url = directoryPrefix + '/api/exhibit-images/'+exhibitId;
+
+      //$log.info('getting objects: multi');
+
+      return $http.get(url)
+          .then(getObjectsComplete)
+          .catch(getObjectsFailed);
+
+      function getObjectsComplete(response){
+        //console.log("===>>>>>"+JSON.stringify(response.data));
+        return BlakeExhibitImage.create(response.data.results);
+
+      }
+
+      function getObjectsFailed(error){
+          $log.error('XHR Failed for getImagesForExhibit: multi...\n'+ exhibitId + angular.toJson(error.data, true));
+      }
+    };
+    blakeData.getCaptionsForImage = function(imageId){
+      // TODO: implement API and then fix update this!!!!
+      var url = directoryPrefix + '/api/exhibit-captions/'+imageId;
+
+      //$log.info('getting objects: multi');
+
+      return $http.get(url)
+          .then(getObjectsComplete)
+          .catch(getObjectsFailed);
+
+      function getObjectsComplete(response){
+        //console.log("==="+JSON.stringify(response.data));
+        return BlakeExhibitCaption.create(response.data);
+
+      }
+
+      function getObjectsFailed(error){
+          $log.error('XHR Failed for getCaptionsForImage: multi...\n' + angular.toJson(error.data, true));
       }
     };
 
