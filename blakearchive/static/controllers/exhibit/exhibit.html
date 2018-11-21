@@ -1,38 +1,38 @@
 <div id="archive" class="container-fluid archive-top">
-    <div id="object-container" class="row">
-        <div id="object-view" >
-          <div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="compare" >
-            <div ng-bind-html="exhibitCtrl.exhibit_article_content">
-            </div>
-
-          </div>
-          <!--- --->
-          <div style="float:right; width:67%; overflow-x:scroll;" class="scrollbar " >
-              <div class="featured-object ">
-                  <div class="compare-inner ">
-                      <div class="item " ng-repeat="i in exhibitCtrl.images track by $index" >
-                          <div class="reading-wrapper " style="float:right" auto-height adjust="150 " breakpoint="768 " id="{{ read.cssSafeId(i.image_id) }} ">
-
-                              <div class="reading-copy ">
-                                  <div class="reading-copy-inner ">
-                                      <h4 ng-if="i.title " >{{i.title}}</h4>
-                                      <h4 ng-if="!i.title "></h4>
-                                      <!-- captions here -->
-                                      <div ng-repeat="c in exhibitCtrl.captions[$index]">
-                                        {{c}}
-                                      </div>
-                                  </div>
-                                  <img magnify-image ng-src="/static/img/temp/{{ i.dbi }}.100.jpg " >
-                              </div>
-
-
-
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <!--- --->
+  <div id="object-container" class="row" >
+    
+    <div id="object-view" class="reading-view">
+      <div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="compare" >
+        <div ng-bind-html="exhibitCtrl.exhibit_article_content">
         </div>
+      </div>
+      <div auto-height adjust="70" breakpoint="768" id="compare" class="scrollbar"  left-on-broadcast="viewSubMenu::readingMode" style="width:67%;">
+        <div class="featured-object">
+          <div class="compare-inner" style="padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px;" ng-style="truesize ? { 'height':'83vh' } : { 'height':'inherit' }">
+            
+            <div class="item" ng-repeat="i in exhibitCtrl.images track by $index">
+              
+              <div class="reading-wrapper" auto-height adjust="100" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
+                
+                <img magnify-image ng-src="/static/img/temp/{{ i.dbi }}.100.jpg" >
+                <div class="reading-copy ">
+                  <div class="reading-copy-inner ">
+                    <h1 ng-if="i.title" style="margin-top:0px; color:rgba(233,188,71,1)">{{i.title}}</h1>
+                    <h1 ng-if="!i.title" style="margin-top:0px; color:rgba(233,188,71,1)"></h1>
+                    
+                    <h4 ng-repeat="c in exhibitCtrl.captions[$index] track by $index">
+                    {{c}}
+                    </h4>
+                  </div>
+                  
+                </div>
+                
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
