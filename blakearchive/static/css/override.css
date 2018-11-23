@@ -1,3 +1,15 @@
+input[type=checkbox] {
+  -webkit-appearance: none;
+    width: 1em;
+    height: 1em;
+}
+input[type=checkbox]:after {
+content: '▹';
+}
+input.open[type=checkbox]:after {
+content: '▿';
+}
+
 @media (min-width: 768px) {
   .section-group-workinfo {
     padding: 1em 14em 2em;
