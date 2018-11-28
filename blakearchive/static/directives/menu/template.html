@@ -70,4 +70,9 @@
       <li ng-if="menu.lists.manuscripts_typo[0].typographic[0] == null" class="empty-subcat">—</li>
     </ul>
   </li>
+  <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">Archive <span>Exhibits</span></a>
+    <ul class="dropdown-menu" role="menu">
+      <li ng-repeat="menu_list in menu.lists.exhibits"><a href="/exhibit/{{ menu_list.exhibit_id }}">{{ menu_list.menuTitle }}</a></li>
+    </ul>
+  </li>
 </ul>

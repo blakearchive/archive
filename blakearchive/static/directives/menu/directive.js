@@ -7,6 +7,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
 
         $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
     });
+    //must add exhibits to getWorks or write new api for getting exhibits and populating the menu with them
     if(angular.isUndefined($sessionStorage.menus)){
         BlakeDataService.getWorks().then(function (data) {
             vm.organizeMenus(data);
@@ -18,9 +19,9 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
 
     var category = function(item) {
         switch(item) {
-            /*case "exhibit":
+            case "exhibit":
                 return "exhibits";
-                break;*/
+                break;
             case "illbk":
                 return "illuminated_books";
                 break;
@@ -109,7 +110,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                 letters: [],
                 typographic: []
             }]
-            //exhibits: []
+            exhibits: []
         };
 
         // Add to menu categories

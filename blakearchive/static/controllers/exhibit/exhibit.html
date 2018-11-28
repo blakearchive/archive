@@ -14,7 +14,7 @@
               
               <div class="reading-wrapper" auto-height adjust="100" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
                 
-                <img magnify-image ng-src="/static/img/temp/{{ i.dbi }}.100.jpg" >
+                <img magnify-image ng-src="/static/img/temp/{{ i.dbi }}.100.jpg" id="{{ $index }}">
                 <div style="width:min-content" class="reading-copy ">
                   <div style="width:10%" class="reading-copy-inner ">
                     <h1 ng-if="i.title" style="margin-top:0px; color:rgba(233,188,71,1)">{{i.title}}</h1>

@@ -27655,157 +27655,9 @@ angular.module("blake").directive('magnifyImage', ["$interval", "$window", "$roo
 
 /***/ }),
 /* 79 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-angular.module("blake").controller("navMenu", ["$scope", "BlakeDataService", "$sessionStorage", function ($scope, BlakeDataService, $sessionStorage) {
-    var vm = this;
-
-    $('nav.navbar ul.navbar-nav > li.dropdown').click(function () {
-        var viewport_width = $(window).width();
-        var element_position = $(this).offset().left;
-
-        $(this).find('ul.dropdown-menu').css({ 'width': viewport_width + 'px', 'left': '-' + element_position + 'px' });
-    });
-    if (angular.isUndefined($sessionStorage.menus)) {
-        BlakeDataService.getWorks().then(function (data) {
-            vm.organizeMenus(data);
-        });
-    } else {
-        vm.lists = $sessionStorage.menus;
-        //console.log(vm.lists);
-    }
-
-    var category = function (item) {
-        switch (item) {
-            /*case "exhibit":
-                return "exhibits";
-                break;*/
-            case "illbk":
-                return "illuminated_books";
-                break;
-            case "comb":
-                return "book_illustration:designed_engraved";
-                break;
-            case "comdes":
-                return "book_illustration:designed";
-                break;
-            case "comeng":
-                return "book_illustration:engraved";
-                break;
-            case "spb":
-                return "prints:designed_engraved";
-                break;
-            case "spdes":
-                return "prints:designed";
-                break;
-            case "speng":
-                return "prints:engraved";
-                break;
-            case "cprint":
-                return "prints:drawings";
-                break;
-            case "mono":
-                return "drawings_paintings:monochrome";
-                break;
-            case "paint":
-                return "drawings_paintings:paintings";
-                break;
-            case "pen":
-            case "penink":
-                return "drawings_paintings:pen";
-                break;
-            case "penc":
-                return "drawings_paintings:pencil";
-                break;
-            case "wc":
-                return "drawings_paintings:wc";
-                break;
-            case "ms":
-                return "manuscripts_typo:manuscripts";
-                break;
-            case "ltr":
-                return "manuscripts_typo:letters";
-                break;
-            case "te":
-                return "manuscripts_typo:typographic";
-                break;
-            default:
-                return false;
-        }
-    };
-
-    vm.organizeMenus = function (data) {
-        if (!data) {
-            return;
-        }
-        // Sort before nesting
-        data.sort(function (a, b) {
-            if (a.composition_date_value < b.composition_date_value) return -1;
-            if (a.composition_date_value > b.composition_date_value) return 1;
-            return 0;
-        });
-
-        var menus = {
-            illuminated_books: [],
-            book_illustration: [{
-                designed_engraved: [],
-                designed: [],
-                engraved: []
-            }],
-            prints: [{
-                designed_engraved: [],
-                designed: [],
-                engraved: [],
-                drawings: []
-            }],
-            drawings_paintings: [{
-                pencil: [],
-                pen: [],
-                monochrome: [],
-                wc: [],
-                paintings: []
-            }],
-            manuscripts_typo: [{
-                manuscripts: [],
-                letters: [],
-                typographic: []
-            }]
-            //exhibits: []
-        };
-
-        // Add to menu categories
-        data.forEach(function (d) {
-            var cat = category(d.medium),
-                pieces;
-
-            if (cat) {
-                pieces = cat.split(/:/);
-
-                if (menus[pieces[0]] !== undefined || menus[pieces[0]][0][pieces[1]] !== undefined) {
-                    if (pieces.length === 1) {
-                        menus[pieces[0]].push(d);
-                    } else {
-                        menus[pieces[0]][0][pieces[1]].push(d);
-                    }
-                }
-            }
-        });
-
-        vm.lists = menus;
-        //console.log(vm.lists);
-        $sessionStorage.menus = menus;
-    };
-}]);
-
-angular.module("blake").directive('navMenu', function () {
-    return {
-        restrict: 'EA',
-        template: __webpack_require__(188),
-        controller: "navMenu",
-        controllerAs: 'menu',
-        bindToController: true
-    };
-});
+throw new Error("Module build failed: SyntaxError: Unexpected token, expected , (113:12)\n\n\u001b[0m \u001b[90m 111 | \u001b[39m                typographic\u001b[33m:\u001b[39m []\n \u001b[90m 112 | \u001b[39m            }]\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 113 | \u001b[39m            exhibits\u001b[33m:\u001b[39m []\n \u001b[90m     | \u001b[39m            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 114 | \u001b[39m        }\u001b[33m;\u001b[39m\n \u001b[90m 115 | \u001b[39m\n \u001b[90m 116 | \u001b[39m        \u001b[90m// Add to menu categories\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 80 */
@@ -61127,12 +60979,7 @@ module.exports = "<a ng-click=\"imagetags.imageTagsOpen()\"><button tooltip=\"Se
 module.exports = "<div id=\"object-detail-tray\" ng-style=\"{'min-height': tray.trayHeight}\">\n    <div tooltip-placement=\"right\" tooltip=\"Diplomatic Transcription, Illustration Description, Editors' Notes\" class=\"tray-toggle\" ng-click=\"tray.toggle()\">Open/Close Tray</div>\n    <div id=\"object-detail-tray-inner\" to-top-on-broadcast=\"change::selectedObject\" target=\".panel-body\">\n\n        <accordion close-others=\"true\" id=\"object-detail-tray-accordion\">\n            <accordion-group id=\"textual-transcription\" is-open=\"tray.open.text\">\n                <div ng-style=\"{'max-height': tray.trayBodyHeight}\">\n                    <accordion-heading>\n                        Diplomatic Transcription\n                        <a show-me=\"text\" object=\"tray.bds.object\" copy-bad=\"{{tray.bds.copy.bad_id}}\" class=\"new-window\" title=\"New Window\">New Window</a>\n                    </accordion-heading>\n                    <text-transcription object=\"tray.bds.object\"></text-transcription>\n                </div>\n            </accordion-group>\n\n            <accordion-group id=\"illustration-description\" is-open=\"tray.open.desc\">\n              <div ng-style=\"{'max-height': tray.trayBodyHeight}\">\n                  <accordion-heading>\n                      Illustration Description\n                      <a show-me=\"desc\" object=\"tray.bds.object\" copy-bad=\"{{tray.bds.copy.bad_id}}\" class=\"new-window\" title=\"New Window\">New Window</a>\n                  </accordion-heading>\n\n                  <illustration-description object=\"tray.bds.object\"></illustration-description>\n              </div>\n            </accordion-group>\n\n            <accordion-group id=\"editors-notes\" is-open=\"tray.open.notes\">\n              <div ng-style=\"{'max-height': tray.trayBodyHeight}\">\n                  <accordion-heading>\n                      Editors’ Notes\n                      <a show-me=\"note\" object=\"tray.bds.object\" copy-bad=\"{{tray.bds.copy.bad_id}}\" class=\"new-window\" title=\"New Window\">New Window</a>\n                  </accordion-heading>\n\n                  <editor-notes object=\"tray.bds.object\"></editor-notes>\n              </div>\n            </accordion-group>\n\n        </accordion>\n\n      </div>\n</div>";
 
 /***/ }),
-/* 188 */
-/***/ (function(module, exports) {
-
-module.exports = "<ul class=\"nav navbar-nav blake-menu\">\n  <li dropdown class=\"dropdown\"><a dropdown-toggle role=\"button\" aria-expanded=\"false\">Illuminated <span>Books</span></a>\n    <ul class=\"dropdown-menu\" role=\"menu\">\n      <li ng-repeat=\"menu_list in menu.lists.illuminated_books\"><a href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }}\n        (Composed {{ menu_list.composition_date_string }})</a></li>\n    </ul>\n  </li>\n  <li dropdown class=\"dropdown\"><a dropdown-toggle role=\"button\" aria-expanded=\"false\">Commercial Book <span>Illustrations</span></a>\n    <ul class=\"dropdown-menu\" role=\"menu\">\n      <li role=\"presentation\" class=\"dropdown-header\">Designed and Engraved by Blake</li>\n      <li ng-repeat=\"menu_list in menu.lists.book_illustration[0].designed_engraved\"><a\n          href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a></li>\n      <li role=\"presentation\" class=\"dropdown-header\">Designed by Blake and Engraved by Other Engravers</li>\n      <li ng-repeat=\"menu_list in menu.lists.book_illustration[0].designed\"><a href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }}\n        (Composed {{ menu_list.composition_date_string }})</a></li>\n      <li role=\"presentation\" class=\"dropdown-header\">Engraved by Blake After Designs by Other Artists</li>\n      <li ng-repeat=\"menu_list in menu.lists.book_illustration[0].engraved\"><a href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }}\n        (Composed {{ menu_list.composition_date_string }})</a></li>\n      <li>&nbsp;</li>\n      <li>&nbsp;</li>\n    </ul>\n  </li>\n  <li dropdown class=\"dropdown\"><a dropdown-toggle role=\"button\" aria-expanded=\"false\">Separate Prints and <span>Prints in Series</span></a>\n    <ul class=\"dropdown-menu\" role=\"menu\">\n      <li role=\"presentation\" class=\"dropdown-header\">Designed and Engraved by Blake</li>\n      <li ng-repeat=\"menu_list in menu.lists.prints[0].designed_engraved\"><a href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }}\n        (Composed {{ menu_list.composition_date_string }})</a></li>\n      <li role=\"presentation\" class=\"dropdown-header\">Designed by Blake and Engraved by Other Engravers</li>\n      <!--<li class=\"empty-subcat\" ng-repeat=\"menu_list in menu.lists.prints[1].designed\">—</li>-->\n      <li class=\"empty-subcat\">—</li>\n      <li role=\"presentation\" class=\"dropdown-header\">Engraved by Blake After Designs by Other Artists</li>\n      <li ng-repeat=\"menu_list in menu.lists.prints[0].engraved\"><a href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }}\n        (Composed {{ menu_list.composition_date_string }})</a></li>\n      <li role=\"presentation\" class=\"dropdown-header\">Color Printed Drawings</li>\n      <li ng-repeat=\"menu_list in menu.lists.prints[0].drawings\"><a href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }}\n        (Composed {{ menu_list.composition_date_string }})</a></li>\n    </ul>\n  </li>\n  <li dropdown class=\"dropdown\"><a dropdown-toggle role=\"button\" aria-expanded=\"false\">Drawings and <span>Paintings</span></a>\n    <ul class=\"dropdown-menu\" role=\"menu\">\n      <li role=\"presentation\" class=\"dropdown-header\">Pencil Sketches</li>\n      <li ng-repeat=\"menu_list in menu.lists.drawings_paintings[0].pencil\"><a href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }}\n        (Composed {{ menu_list.composition_date_string }})</a></li>\n      <li role=\"presentation\" class=\"dropdown-header\">Pen and Ink Drawings</li>\n      <li ng-repeat=\"menu_list in menu.lists.drawings_paintings[0].pen\"><a href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }}\n        (Composed {{ menu_list.composition_date_string }})</a></li>\n      <li role=\"presentation\" class=\"dropdown-header\">Monochrome Wash Drawings</li>\n      <li ng-repeat=\"menu_list in menu.lists.drawings_paintings[0].monochrome\"><a\n          href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a></li>\n      <li role=\"presentation\" class=\"dropdown-header\">Water Color Drawings</li>\n      <li ng-repeat=\"menu_list in menu.lists.drawings_paintings[0].wc\"><a href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }}\n        (Composed {{ menu_list.composition_date_string }})</a></li>\n      <li role=\"presentation\" class=\"dropdown-header\">Paintings</li>\n      <li ng-repeat=\"menu_list in menu.lists.drawings_paintings[0].paintings\"><a\n          href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a></li>\n    </ul>\n  </li>\n  <li dropdown class=\"dropdown\"><a dropdown-toggle role=\"button\" aria-expanded=\"false\">Manuscripts\n    and <span>Typographic Works</span></a>\n    <ul class=\"dropdown-menu\" role=\"menu\">\n      <li role=\"presentation\" class=\"dropdown-header\">Manuscripts</li>\n      <li ng-repeat=\"menu_list in menu.lists.manuscripts_typo[0].manuscripts\"><a\n          href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a></li>\n      <li role=\"presentation\" class=\"dropdown-header\">Letters</li>\n      <li ng-repeat=\"menu_list in menu.lists.manuscripts_typo[0].letters\"><a href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }}\n        (Composed {{ menu_list.composition_date_string }})</a></li>\n      <li role=\"presentation\" class=\"dropdown-header\">Typographic Editions</li>\n      <li ng-if=\"menu.lists.manuscripts_typo[0].typographic[0] != null\" ng-repeat=\"menu_list in menu.lists.manuscripts_typo[0].typographic\"><a href=\"/work/{{ menu_list.bad_id }}\">{{ menu_list.menuTitle }}\n        (Composed {{ menu_list.composition_date_string }})</a></li>\n      <li ng-if=\"menu.lists.manuscripts_typo[0].typographic[0] == null\" class=\"empty-subcat\">—</li>\n    </ul>\n  </li>\n</ul>";
-
-/***/ }),
+/* 188 */,
 /* 189 */
 /***/ (function(module, exports) {
 
