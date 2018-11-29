@@ -49,18 +49,6 @@ class BlakeExhibitImporter(BlakeImporter):
       self.data_folder = data_folder
       self.exhibits = {}
 
-  """def import_data(self):
-      exhibit_pattern = os.path.join(self.data_folder,"exhibits/*.xml")
-      matching_exhibit_files = glob.glob(exhibit_pattern)
-      self.exhibits = {}
-      #self.exhibit_images = {}
-      self.import_exhibit_files(matching_exhibit_files)
-      #self.process_exhibits()
-      #self.process_relationships()
-      #self.populate_database()
-      #print "K, done it!"
-  """
-
   def import_exhibit_files(self, matching_files):
       # iterate over files that match exhibits/*.xml
       # for each one, call process exhibit
@@ -124,12 +112,23 @@ class BlakeExhibitImporter(BlakeImporter):
           if (child.tag == 'caption'):
               count = count + 1
               caption = models.BlakeExhibitCaption()
-              caption.caption = child.text
+              #xsl madness!: caption.caption = self.get_markuptext(child)
+              #drops htmlmarkup tagscaption.caption =child.xpath("string()")
+              #drops everything after markup: caption.caption =child.text
+              #outer element retained: caption.caption = etree.tostring(child)
+              #error: caption.caption = etree.tostring(child.xpath("./node()"))
+              caption.caption = self.sanitize_caption(etree.tostring(child))
+
               caption.exhibit_caption_id = exhibitImage.image_id+"_caption_"+str(count)
               caption.image_id = exhibitImage.image_id
+              caption.title = child.get('title')
               exhibitImage.captions.append(caption)
-
-
+  #def sanitize_caption(self,caption):
+      #find in
+  def sanitize_caption(self,caption):
+      result = re.sub("<caption.*?>","",caption)
+      result2 = re.sub("</caption>","",result)
+      return result2
 
 class BlakeDocumentImporter(BlakeImporter):
     def __init__(self, data_folder):

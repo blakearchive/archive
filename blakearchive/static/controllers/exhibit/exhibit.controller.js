@@ -1,9 +1,10 @@
-angular.module('blake').controller('ExhibitController', function ($scope,$routeParams,$rootScope,$window,$modal,$cookies,BlakeDataService,imageManipulation,CompareObjectsFactory,$http) {
+angular.module('blake').controller('ExhibitController', function ($scope,$routeParams,$sce,$rootScope,$window,$modal,$cookies,BlakeDataService,imageManipulation,CompareObjectsFactory,$http) {
     var vm = this;
     var exhibitId = $routeParams.exhibitId;
     vm.images = [];
     vm.captions = [];
-
+    $rootScope.showWorkTitle = 'work';
+    
     vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
 
     BlakeDataService.getImagesForExhibit(exhibitId).then(function(result){
@@ -27,7 +28,7 @@ angular.module('blake').controller('ExhibitController', function ($scope,$routeP
     vm.bds.setSelectedExhibit(exhibitId);
     //console.log("===>>>>"+JSON.stringify(vm.bds));
     $http.get("/api/exhibit-html/"+exhibitId).then(function(response){
-      vm.exhibit_article_content = response.data;
+      vm.exhibit_article_content = $sce.trustAsHtml(response.data);
     });
 
 

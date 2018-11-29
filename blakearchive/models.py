@@ -282,11 +282,13 @@ class BlakeExhibitCaption(db.Model):
     caption = db.Column(db.Text, index=True)
     image_id = db.Column(db.Text, index=True)
     image_pk = db.Column(db.Integer,db.ForeignKey("exhibit_image.exhibit_image_pk"))
+    title = db.Column(db.UnicodeText)
     @property
     def to_dict(self):
         return {
             "caption": self.caption,
-            "image_id": self.image_id
+            "image_id": self.image_id,
+            "title": self.title
         }
 
 class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image, etc

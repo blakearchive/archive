@@ -79,7 +79,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
     vm.organizeMenus = function(data) {
         if (!data) { return; }
         // Sort before nesting
-        data.sort(function(a, b) { 
+        data.sort(function(a, b) {
             if(a.composition_date_value < b.composition_date_value) return -1;
             if(a.composition_date_value > b.composition_date_value) return 1;
             return 0;
@@ -109,7 +109,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                 manuscripts: [],
                 letters: [],
                 typographic: []
-            }]
+            }],
             exhibits: []
         };
 
