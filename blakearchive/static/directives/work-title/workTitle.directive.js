@@ -12,6 +12,10 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
             return vm.bds.work.title;
         }
 
+        if($rootScope.showWorkTitle == 'exhibit'){
+            return vm.bds.work.title;
+        }
+
         /*COPY PAGES*/
         //For letters
         if(vm.bds.work.bad_id == 'letters'){
