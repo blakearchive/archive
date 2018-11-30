@@ -25903,7 +25903,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
   var exhibitId = $routeParams.exhibitId;
   vm.images = [];
   vm.captions = [];
-  $rootScope.showWorkTitle = 'work';
+  $rootScope.showWorkTitle = 'exhibit';
 
   vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
 
