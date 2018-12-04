@@ -26,7 +26,7 @@
                       <span ng-repeat="ct in c">
                         <input ng-model=show type=checkbox  ng-class='{open:show}'>
                         My title is: {{ct.title}}
-                        <p ng-show=show ng-bind-html="ct.caption|markdown"></p><br/>
+                        <p ng-show=show ng-bind-html="ct.caption"></p><br/>
                       </span>
 
                     </h4>
