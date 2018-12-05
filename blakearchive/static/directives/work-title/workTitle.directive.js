@@ -13,7 +13,7 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
         }
 
         if($rootScope.showWorkTitle == 'exhibit'){
-            return vm.bds.work.title;
+            return vm.bds.exhibit.title;
         }
 
         /*COPY PAGES*/

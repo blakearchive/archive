@@ -29527,7 +29527,7 @@ angular.module("blake").controller("WorkTitleController", ["$rootScope", "$route
         }
 
         if ($rootScope.showWorkTitle == 'exhibit') {
-            return vm.bds.work.title;
+            return vm.bds.exhibit.title;
         }
 
         /*COPY PAGES*/
