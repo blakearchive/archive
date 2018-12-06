@@ -12,7 +12,7 @@
         <div class="featured-object">
           <div class="compare-inner" style="padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px;height:78vh;" >
 
-            <div class="item" ng-repeat="i in exhibitCtrl.images track by $index">
+            <div class="item" ng-repeat="i in exhibitCtrl.images track by $index" id="item-{{$index}}">
 
               <div class="reading-wrapper" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}"
                 style="height:78vh;">
@@ -41,38 +41,9 @@
             <div style="position:fixed;display:relative;width:65%;">
               <!-- loop over exhibit images and make thumbnail/links -->
               <slide-box class="exhibit-thumb-slide" style="" >
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.2.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.2.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.2.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.2.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.2.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.2.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.2.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.1.100.jpg"/></a>
-                <a href="#"><img src="static/img/temp2/1.2.100.jpg"/></a>
+                <span ng-repeat="i in exhibitCtrl.images track by $index">
+                <a href="#{{$index}}"><img src="/static/img/temp2/{{ i.dbi }}.100.jpg"/></a>
+                </span>
               </slide-box>
             <!-- -->
             </div>
