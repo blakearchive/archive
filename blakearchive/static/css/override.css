@@ -1,3 +1,12 @@
+.exhibit-thumb-slide{
+
+}
+.exhibit-thumb-slide a,img{
+  position: inline;
+  bottom: 1px;
+  height: 12vh;
+}
+
 input[type=checkbox] {
   -webkit-appearance: none;
     width: 1em;
@@ -307,12 +316,12 @@ a.footnote {
    -moz-transition: all 2s ease;
    -o-transition: all 2s ease;
    transition: all 2s ease;
-} 
+}
 
 a.footnote span {
    text-align: justify;
         z-index: 10;
-        display: none; 
+        display: none;
         padding: 5px;
         line-height: 16px;
         opacity: 0.9;
@@ -321,17 +330,17 @@ a.footnote span {
        left:-300%;
     top: 1.25em;
         transform: translate(-50%, 0);
-        position: relative; 
+        position: relative;
         width: 250px;
 }
 
 a.footnote:hover span {
-   display: inline; 
+   display: inline;
         color: #111;
         position: absolute;
         border: 1px solid #eaeaea;
         background-color: #fffcfc;
-   
+
 }
 
 
@@ -465,7 +474,7 @@ td.c2 {
 }
 
 .worktitle {
-    background-color: #1D1D1D; 
+    background-color: #1D1D1D;
     color: white;
 }
 .related-flex {
@@ -1693,5 +1702,3 @@ handprint-block.supp-original .handprint-block{
         margin-top: 0;
     }
 }
-
-
