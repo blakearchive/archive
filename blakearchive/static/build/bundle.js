@@ -25903,7 +25903,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
   var exhibitId = $routeParams.exhibitId;
   vm.images = [];
   vm.captions = [];
-  $rootScope.showWorkTitle = 'work';
+  $rootScope.showWorkTitle = 'exhibit';
 
   vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
 
@@ -29527,7 +29527,7 @@ angular.module("blake").controller("WorkTitleController", ["$rootScope", "$route
         }
 
         if ($rootScope.showWorkTitle == 'exhibit') {
-            return vm.bds.work.title;
+            return vm.bds.exhibit.title;
         }
 
         /*COPY PAGES*/
