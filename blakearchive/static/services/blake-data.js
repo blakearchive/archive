@@ -553,7 +553,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
       return blakeData.getExhibit(exhibitId).then(function(exhib){
         blakeData.exhibit = exhib;
         //console.log("===="+exhib);
-        $rootScope.selectedExhibit = exhib;
+        //$rootScope.selectedExhibit = exhib;
       });
     };
 

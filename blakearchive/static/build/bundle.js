@@ -29531,12 +29531,8 @@ angular.module("blake").controller("WorkTitleController", ["$rootScope", "$route
         }
 
         if ($rootScope.showWorkTitle == 'exhibit' && $rootScope.doneSettingExhibit) {
-            //return vm.bds.exhibit.title;
-            //console.log("===="+JSON.stringify($rootScope.selectedExhibit));
-
-            return $rootScope.selectedExhibit.exhibit.title;
-            // static text works!
-            //return "What's up?"
+            return vm.bds.exhibit.exhibit.title;
+            //return $rootScope.selectedExhibit.exhibit.title;
         }
 
         /*COPY PAGES*/
@@ -31933,7 +31929,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
         return blakeData.getExhibit(exhibitId).then(function (exhib) {
             blakeData.exhibit = exhib;
             //console.log("===="+exhib);
-            $rootScope.selectedExhibit = exhib;
+            //$rootScope.selectedExhibit = exhib;
         });
     };
 
