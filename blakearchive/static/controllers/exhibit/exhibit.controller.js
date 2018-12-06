@@ -1,4 +1,6 @@
-angular.module('blake').controller('ExhibitController', function ($scope,$routeParams,$sce,$rootScope,$window,$modal,$cookies,BlakeDataService,imageManipulation,CompareObjectsFactory,$http) {
+angular.module('blake').controller('ExhibitController', function (
+  $scope,$routeParams,$sce,$rootScope,$window,$modal,$cookies, 
+  BlakeDataService,imageManipulation,CompareObjectsFactory,$http) {
     var vm = this;
     var exhibitId = $routeParams.exhibitId;
     vm.images = [];
