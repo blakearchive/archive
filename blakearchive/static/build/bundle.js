@@ -25905,7 +25905,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
   vm.captions = [];
   $rootScope.showWorkTitle = 'exhibit';
 
-  vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
+  //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
 
   BlakeDataService.getImagesForExhibit(exhibitId).then(function (result) {
     vm.images = result;
@@ -25925,7 +25925,11 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
   vm.bds = BlakeDataService;
   console.log("Exhibit ID: " + exhibitId);
 
-  vm.bds.setSelectedExhibit(exhibitId);
+  $rootScope.doneSettingExhibit = false;
+  vm.bds.setSelectedExhibit(exhibitId).then(function () {
+    //console.log(">>>>>hey, tae, you were wrong!!!!");
+    $rootScope.doneSettingExhibit = true;
+  });
   //console.log("===>>>>"+JSON.stringify(vm.bds));
   $http.get("/api/exhibit-html/" + exhibitId).then(function (response) {
     vm.exhibit_article_content = $sce.trustAsHtml(response.data);
@@ -29526,8 +29530,13 @@ angular.module("blake").controller("WorkTitleController", ["$rootScope", "$route
             return vm.bds.work.title;
         }
 
-        if ($rootScope.showWorkTitle == 'exhibit') {
-            return vm.bds.exhibit.title;
+        if ($rootScope.showWorkTitle == 'exhibit' && $rootScope.doneSettingExhibit) {
+            //return vm.bds.exhibit.title;
+            //console.log("===="+JSON.stringify($rootScope.selectedExhibit));
+
+            return $rootScope.selectedExhibit.exhibit.title;
+            // static text works!
+            //return "What's up?"
         }
 
         /*COPY PAGES*/
@@ -31923,6 +31932,8 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
         // TODO: make it work!
         return blakeData.getExhibit(exhibitId).then(function (exhib) {
             blakeData.exhibit = exhib;
+            //console.log("===="+exhib);
+            $rootScope.selectedExhibit = exhib;
         });
     };
 

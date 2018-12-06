@@ -12,8 +12,13 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
             return vm.bds.work.title;
         }
 
-        if($rootScope.showWorkTitle == 'exhibit'){
-            return vm.bds.exhibit.title;
+        if($rootScope.showWorkTitle == 'exhibit' && $rootScope.doneSettingExhibit){
+            //return vm.bds.exhibit.title;
+            //console.log("===="+JSON.stringify($rootScope.selectedExhibit));
+
+            return $rootScope.selectedExhibit.exhibit.title;
+            // static text works!
+            //return "What's up?"
         }
 
         /*COPY PAGES*/
