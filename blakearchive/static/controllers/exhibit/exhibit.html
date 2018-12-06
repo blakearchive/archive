@@ -6,7 +6,7 @@
         <div ng-bind-html="exhibitCtrl.exhibit_article_content">
         </div>
       </div>
-      <div auto-height adjust="70" breakpoint="768" style="border-left-width: 13px;border-left-style: solid;border-left-color: #1d1d1d; overflow-y:hidden;"
+      <div style="border-left-width: 13px;border-left-style: solid;border-left-color: #1d1d1d; overflow-y:hidden;"
         id="compare" class="scrollbar"  left-on-broadcast="viewSubMenu::readingMode" style="width:67%;">
 
         <div class="featured-object">
@@ -15,7 +15,7 @@
             <div class="item" ng-repeat="i in exhibitCtrl.images track by $index">
 
               <div class="reading-wrapper" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}"
-                style="height:76vh;">
+                style="height:78vh;">
 
                 <img magnify-image ng-src="/static/img/temp2/{{ i.dbi }}.100.jpg" id="{{ $index }}">
                 <div style="width:min-content" class="reading-copy ">
