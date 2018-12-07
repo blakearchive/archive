@@ -79,8 +79,9 @@ nav.navbar ul.navbar-nav ul.dropdown-menu > div > li.active > a {
 
 .object-container img {
   width: 100%;
+}
 
-.exhibit-thumb-slide .glyphicon{
+.exhibit-thumb-slide .glyphicon {
     color: red;
     min-height: 220px;
     line-height: 70px;
