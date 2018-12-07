@@ -2,6 +2,7 @@
 
     <div class="row">
     
+
         <div class="col-sm-2 col-xs-6 scroll-window" ng-repeat="(colKey, colVal) in home.columns">
             <div id="scroll-wrapper" style="margin-top: {{colVal.topOffset}}" class="scrolling">
                 <span class="object-container" ng-repeat="work in home.featured_works | filter: { column: colKey } track by $index">
@@ -21,3 +22,4 @@
 <div style="margin-top: -22px; width: 324px; position: relative; display:table-caption; z-index:99999; background:rgba(26, 138, 189, 0.85); font-size:16px; color:rgba(255, 255, 255, 0.9); padding-left:3px; padding-right:3px">
     Random Sample of Objects from the Archive
   </div>
+

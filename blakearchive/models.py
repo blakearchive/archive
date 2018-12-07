@@ -2,7 +2,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql import case
 from sqlalchemy.dialects.postgresql import JSON
-
+import json
 
 db = SQLAlchemy()
 
@@ -77,6 +77,7 @@ class BlakeFragmentPair(db.Model):
             "desc_id2": self.desc_id2,
         }
 
+
 class BlakeObject(db.Model):
     __tablename__ = "object"
     object_id = db.Column(db.Integer, primary_key=True)
@@ -114,6 +115,7 @@ class BlakeObject(db.Model):
     object_group = db.Column(db.UnicodeText)
     supplemental = db.Column(db.UnicodeText)
     fragment = db.Column(db.UnicodeText)
+
     objects_from_same_matrix = db.relationship(
         "BlakeObject",
         order_by="BlakeObject.ordering_date",
@@ -137,6 +139,7 @@ class BlakeObject(db.Model):
         secondaryjoin=object_id == text_match__object.c.related_object_id,
         remote_side=text_match__object.c.related_object_id,
         )
+
     objects_with_same_motif = db.relationship(
         "BlakeObject",
         order_by="BlakeObject.ordering_date",
@@ -206,6 +209,7 @@ class BlakeObject(db.Model):
             "object_note_images": self.object_note_images,
             "object_group": self.object_group,
             "fragment": self.fragment,
+            "object_group": self.object_group
         }
 
 
@@ -231,6 +235,7 @@ class BlakeCopy(db.Model):
     print_date_value = db.Column(db.UnicodeText)
     effective_copy_id = db.Column(db.UnicodeText, index=True)
     number_of_objects = db.Column(db.Integer)
+
     #bad_xml = db.Column(db.Text)
 
     def __init__(self, *args, **kwargs):
@@ -312,4 +317,67 @@ class BlakeFeaturedWork(db.Model):
             "dbi": self.dbi,
             "desc_id": self.desc_id,
             "bad_id": self.bad_id
+        }
+
+class BlakeExhibitCaption(db.Model):
+    __tablename__ = "exhibit_caption"
+    exhibit_caption_id = db.Column(db.Text,primary_key=True)
+    caption = db.Column(db.Text, index=True)
+    image_id = db.Column(db.Text, index=True)
+    image_pk = db.Column(db.Integer,db.ForeignKey("exhibit_image.exhibit_image_pk"))
+    title = db.Column(db.UnicodeText)
+    @property
+    def to_dict(self):
+        return {
+            "caption": self.caption,
+            "image_id": self.image_id,
+            "title": self.title
+        }
+
+class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image, etc
+    __tablename__ = "exhibit_image"
+    exhibit_image_pk = db.Column(db.Integer, primary_key=True)
+    image_id = db.Column(db.Text, index=True)
+    exhibit_id = db.Column(db.Text, index=True)
+    exhibit_pk = db.Column(db.Integer, db.ForeignKey("exhibit.exhibit_pk"))
+    #caption = db.Column(db.UnicodeText)
+    dbi = db.Column(db.UnicodeText)
+    title = db.Column(db.UnicodeText)
+    #bad_id = db.Column(db.Text)
+    captions = db.relationship(BlakeExhibitCaption, backref="exhibit_image",lazy='joined')
+
+    @property
+    def to_dict(self):
+        return {
+            #"caption": self.caption,
+            "dbi": self.dbi,
+            "exhibit_id": self.exhibit_id,
+            "title": self.title,
+            "image_id": self.image_id
+        }
+
+# Represents an Exhibit. A presentation that has text passages on the left side
+# with links to images in a horizontal 'slideshow' on the right.
+class BlakeExhibit(db.Model): # todo: change to correct columns name, image, etc
+    __tablename__ = "exhibit"
+    exhibit_pk = db.Column(db.Integer, primary_key=True)
+    exhibit_id = db.Column(db.Text, index=True)
+    title = db.Column(db.UnicodeText)
+    article = db.Column(db.UnicodeText)
+    exhibit_images = db.relationship('BlakeExhibitImage', backref="exhibit",lazy='joined')
+    #bad_id = db.Column(db.Text)
+
+    @property
+    def to_dict(self):
+#        image_json = "["
+#        for x in self.exhibit_images:
+#            #print x.__dict__
+#            image_json += str(x.__dict__)
+#        image_json += "]"
+#        print image_json
+
+        return {
+            "title": self.title,
+            "article": self.article,
+            "exhibit_id": self.exhibit_id
         }

@@ -1,34 +1,68 @@
 <div id="archive" class="container-fluid archive-top">
-    <div id="object-container" class="row">
-        <div id="object-view" ng-class="{'show-tools': exhibitCtrl.showTools, 'hide-tools': !exhibitCtrl.showTools,'view-objects': persistentmode == 'gallery','reading-view': persistentmode == 'reading','compare-objects': view.mode == 'compare'}">
+  <div id="object-container" class="row" >
 
-            <object-viewer ng-if="persistentmode == 'gallery' && view.mode != 'compare'"></object-viewer>
+    <div id="object-view" class="reading-view">
+      <div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="exhibit_article_content" >
+        <div ng-bind-html="exhibitCtrl.exhibit_article_content">
+        </div>
+      </div>
+      <div auto-height adjust="152" breakpoint="768" style="border-left-width: 13px;border-left-style: solid;border-left-color: #1d1d1d; "
+        id="compare" class="scrollbar"  left-on-broadcast="viewSubMenu::readingMode" style="width:67%;">
 
-            <object-compare ng-if="view.mode == 'compare'"></object-compare>
+        <div class="featured-object">
+          <div class="compare-inner" style="padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px;" >
 
-            <object-reading ng-if="persistentmode == 'reading'"></object-reading>
+            <div class="item" ng-repeat="i in exhibitCtrl.images track by $index" id="item-{{$index}}">
 
-            <!--Edit buttons-->
-            <div id="object-tools" ng-if="persistentmode != 'reading'" class="hidden-xs">
-                <div id="object-tools-inner">
-                    <div class="btn-group edit-object" role="group">
-                        <!--<button type="button" class="btn btn-default add-lightbox hidden-sm"><span class="edit-icon"></span> Add To Lightbox</button>-->
-                        <button type="button" class="btn btn-default rotate" ng-click="exhibitCtrl.rotate(exhibitCtrl.bds.object)"><span class="edit-icon"></span> Rotate</button>
-                        <button type="button" class="btn btn-default zoom hidden-sm" ng-class="{hover: zoom}" ng-click="exhibitCtrl.zoom()" tooltip="Mouse over the image"  tooltip-trigger="click" tooltip-placement="top"><span class="edit-icon"></span> Zoom</button>
-                        <button type="button" class="btn btn-default new-window" show-me="enlargement" object="exhibitCtrl.bds.object" copy-bad="{{exhibitCtrl.bds.copy.bad_id}}"><span class="edit-icon"></span> Enlargement</button>
-                        <button type="button" class="btn btn-default show-transcription hidden-sm" ng-click="exhibitCtrl.toggleTranscription()"><span class="edit-icon"></span> Caption</button>
-                        <button type="button" class="btn btn-default show-supplemental" ng-class="{hover: supplemental}" ng-if="exhibitCtrl.bds.object.supplemental_objects.length"  ng-click="exhibitCtrl.toggleSupplemental()"><span class="edit-icon"></span> Supplemental Views</button>
-                        <button type="button" class="btn btn-default cite"><span class="edit-icon"></span> Generate Citation</button>
-                    </div>
-                    <div class="show-hide-tools" ng-click="exhibitCtrl.toggleTools()"><span>+</span></div>
+              <div style="height:78vh" class="reading-wrapper" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
+
+                <img style="height:71vh" magnify-image ng-src="/static/img/temp2/{{ i.dbi }}.100.jpg" id="{{ $index }}">
+                <div style="height:71vh; width:min-content" class="reading-copy ">
+                  <div style="width:10%" class="reading-copy-inner ">
+                    <h1 ng-if="i.title" style="margin-top:0px; color:rgba(233,188,71,1)">{{i.title}}</h1>
+                    <h1 ng-if="!i.title" style="margin-top:0px; color:rgba(233,188,71,1)">Title</h1>
+
+                    <h4 ng-repeat="c in exhibitCtrl.captions[$index] track by $index">
+
+                      <span ng-if="c.length > 1" ng-repeat="ct in c">
+                        <input ng-model=show type=checkbox  ng-class='{open:show}'>
+                        My title is: {{ct.title}}
+                        <p ng-show=show ng-bind-html="ct.caption"></p><br/>
+                      </span>
+
+                      <span ng-if="c.length == 1" ng-repeat="ct in c">
+                        <p ng-bind-html="ct.caption"></p><br/>
+                      </span>
+
+                    </h4>
+
+                    
+
+
+                  </div>
+
                 </div>
+
+              </div>
             </div>
+            
+          </div>
+
 
         </div>
 
 
+
+      </div>
+      <div style="height:60px;position:relative;display:relative;width:65%;margin-right:12px;float:right">
+              <!-- loop over exhibit images and make thumbnail/links -->
+              <slide-box class="exhibit-thumb-slide" style="" >
+                <span ng-repeat="i in exhibitCtrl.images track by $index">
+                <a href="" ng-click="exhibitCtrl.scrollTo($index);"><img src="/static/img/temp2/{{ i.dbi }}.100.jpg"/></a>
+                </span>
+              </slide-box>
+            <!-- -->
+            </div>
     </div>
-</div>
-<div id="archive-tabs" role="tabpanel" ng-if="persistentmode != 'reading'">
-    <copy-tabs></copy-tabs>
+  </div>
 </div>

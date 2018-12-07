@@ -74,6 +74,7 @@ def get_fragment_pair(desc_id1,desc_id2):
     result = blake_data_service.get_fragment_pair(desc_id1,desc_id2)
     return jsonify(result.to_dict)
 
+
 @api.route('/object/<desc_id>/objects_from_same_matrix')
 def get_objects_from_same_matrix(desc_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
@@ -163,4 +164,43 @@ def get_works():
 def get_featured_works():
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     results = blake_data_service.get_featured_works()
+    return jsonify({"results": [r.to_dict for r in results]})
+
+@api.route("/exhibit/<exhibit_id>")
+def get_exhibit_by_id(exhibit_id):
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    result = blake_data_service.get_exhibit(exhibit_id)
+
+    if not result:
+        return abort(404)
+    images =  blake_data_service.get_images_for_exhibit(exhibit_id)
+
+    return jsonify({"exhibit":result.to_dict,"images":[r.to_dict for r in images]})
+
+@api.route("/exhibit-images/<exhibit_id>")
+def get_exhibit_images(exhibit_id):
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    results = blake_data_service.get_images_for_exhibit(exhibit_id)
+    if not results:
+        return abort(404)
+    return jsonify({"results": [r.to_dict for r in results]})
+
+@api.route("/exhibit-captions/<image_id>")
+def get_exhibit_image_captions(image_id):
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    results = blake_data_service.get_captions_for_image(image_id)
+    if not results:
+        return abort(404)
+    return jsonify({"results": [r.to_dict for r in results]})
+
+@api.route("/exhibit-html/<exhibit_id>")
+def get_exhibit_html(exhibit_id):
+    filename = config.local_data_path+"/exhibits/"+exhibit_id+"/"+exhibit_id+".exhibit.html"
+    exhib_html_file = open(filename,'r')
+    return exhib_html_file.read()
+
+@api.route("/exhibits/")
+def get_exhibits():
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    results = blake_data_service.get_exhibits()
     return jsonify({"results": [r.to_dict for r in results]})

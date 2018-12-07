@@ -1,6 +1,7 @@
 import re
 import pysolr
 from sqlalchemy.sql import func
+from sqlalchemy.orm import joinedload
 import models
 import config
 
@@ -180,6 +181,37 @@ class BlakeDataService(object):
             results = query.all()
         return results
 
+
+    ###start------ service methods for Exhibits ------
+#    @classmethod
+#    def get_exhibits(cls, exhibit_ids=None):
+#        query = models.BlakeExhibit.query \
+#            .order_by(models.BlakeExhibit.exhibit_id)
+#        if exhibit_ids:
+#            results = query.filter(models.BlakeObjectExhibit.exhibit_id.in_(exhibit_ids)).all()
+#        else:
+#            results = query.all()
+#        return results
+
+    @classmethod
+    def get_exhibit(cls, exhibit_id):
+        result = models.BlakeExhibit.query \
+            .options(joinedload(models.BlakeExhibit.exhibit_images)) \
+            .filter(models.BlakeExhibit.exhibit_id == exhibit_id).first()
+        return result
+
+    @classmethod
+    def get_images_for_exhibit(cls, exhibit_id=None):
+        results = models.BlakeExhibitImage.query.filter(models.BlakeExhibitImage.exhibit_id == exhibit_id).all()
+        return results
+
+    @classmethod
+    def get_captions_for_image(cls, image_id=None):
+        results = models.BlakeExhibitCaption.query.filter(models.BlakeExhibitCaption.image_id == image_id).all()
+        return results
+
+    ###end------ service methods for Exhibits ------
+
     @classmethod
     def get_object(cls, desc_id):
         return models.BlakeObject.query.filter(models.BlakeObject.desc_id == desc_id).first()
@@ -213,6 +245,7 @@ class BlakeDataService(object):
         return models.BlakeFragmentPair.query.filter(models.BlakeFragmentPair.desc_id1 == desc_id1,models.BlakeFragmentPair.desc_id2 == desc_id2).first()
 
     @classmethod
+
     def get_objects_from_same_matrix(cls, desc_id):
         obj = cls.get_sorted_object_query().filter(models.BlakeObject.desc_id == desc_id).first()
         if hasattr(obj, 'objects_from_same_matrix'):
@@ -256,6 +289,7 @@ class BlakeDataService(object):
     @classmethod
     def get_objects_for_copy(cls, bad_id):
         vgroups = ['biblicalwc', 'gravepd', 'biblicaltemperas', 'gravewc', 'cpd', 'gravewd', 'pid','pencil1']
+
         if any(bad_id in s for s in vgroups):
             query = cls.get_virtual_sorted_query()
         else:
@@ -290,3 +324,4 @@ class BlakeDataService(object):
     @classmethod
     def get_supplemental_objects(cls, desc_id):
         return models.BlakeObject.query.filter(models.BlakeObject.supplemental == desc_id).all()
+

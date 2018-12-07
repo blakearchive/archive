@@ -1,4 +1,5 @@
-angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork, BlakeFragmentPair,directoryPrefix) {
+
+angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork,BlakeExhibit, BlakeExhibitImage,BlakeExhibitCaption,directoryPrefix) {
     /**
      * For the time being, all data accessor functions should be placed here.  This service should mirror the API
      * of the back-end BlakeDataService.
@@ -11,7 +12,9 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
         copy: {},
         copyObjects: [],
         object: {},
-        fragment_pairs: []
+        fragment_pairs: [],
+
+        exhibit: {}
     };
 
     /**
@@ -141,6 +144,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
         }
     };
 
+
     blakeData.getObjectsWithSameMotif = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/objects_with_same_motif';
 
@@ -230,6 +234,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
             $log.error('XHR Failed for getObjectsWithTextMatches.\n' + angular.toJson(error.data, true));
         }
     };
+
 
     blakeData.getSupplementalObjects = function (descId) {
         var url = directoryPrefix + '/api/object/' + descId + '/supplemental_objects';
@@ -541,6 +546,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
         object.supplemental_objects = {};
         object.textmatch = {};
 
+
         var desc_id_for_supp_query = object.supplemental ? object.supplemental : object.desc_id;
 
         return $q.all([
@@ -550,6 +556,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
             blakeData.getSupplementalObjects(desc_id_for_supp_query),
             blakeData.getTextuallyReferencedMaterial(object.desc_id),
             blakeData.getObjectsWithTextMatches(object.desc_id)
+
         ]).then(function (data) {
             object.matrix = BlakeObject.create(data[0]);
             object.sequence = BlakeObject.create(data[1]);
@@ -557,6 +564,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
             object.text_ref = data[4];
             object.supplemental_objects = BlakeObject.create(data[3]);
             object.textmatch = BlakeObject.create(data[5]);
+
         });
     };
 
@@ -576,10 +584,84 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
 
     blakeData.changeCopy = function(copyId,descId){
         blakeData.fragment_pairs = [];
+
         return blakeData.setSelectedCopy(copyId,descId).then(function(){
             $location.path('/copy/'+copyId,false);
             $location.search('descId',descId);
         });
+    };
+
+
+    // with the given exhibitId (coincides with the exhibits data subdirectory)...
+    // load the exhibit from the database and set up the model f
+    blakeData.setSelectedExhibit = function(exhibitId){
+      // TODO: make it work!
+      return blakeData.getExhibit(exhibitId).then(function(exhib){
+        blakeData.exhibit = exhib;
+        //console.log("===="+exhib);
+        //$rootScope.selectedExhibit = exhib;
+      });
+    };
+
+    blakeData.getExhibit = function(exhibitId){
+      // TODO: implement API and then fix update this!!!!
+      var url = directoryPrefix + '/api/exhibit/'+exhibitId;
+
+      //$log.info('getting objects: multi');
+
+      return $http.get(url)
+          .then(getObjectsComplete)
+          .catch(getObjectsFailed);
+
+      function getObjectsComplete(response){
+        //console.log("==="+JSON.stringify(response.data));
+        return BlakeExhibit.create(response.data);
+
+      }
+
+      function getObjectsFailed(error){
+          $log.error('XHR Failed for getObjects: multi...\n' + angular.toJson(error.data, true));
+      }
+    };
+    blakeData.getImagesForExhibit = function(exhibitId){
+      // TODO: implement API and then fix update this!!!!
+      var url = directoryPrefix + '/api/exhibit-images/'+exhibitId;
+
+      //$log.info('getting objects: multi');
+
+      return $http.get(url)
+          .then(getObjectsComplete)
+          .catch(getObjectsFailed);
+
+      function getObjectsComplete(response){
+        //console.log("===>>>>>"+JSON.stringify(response.data));
+        return BlakeExhibitImage.create(response.data.results);
+
+      }
+
+      function getObjectsFailed(error){
+          $log.error('XHR Failed for getImagesForExhibit: multi...\n'+ exhibitId + angular.toJson(error.data, true));
+      }
+    };
+    blakeData.getCaptionsForImage = function(imageId){
+      // TODO: implement API and then fix update this!!!!
+      var url = directoryPrefix + '/api/exhibit-captions/'+imageId;
+
+      //$log.info('getting objects: multi');
+
+      return $http.get(url)
+          .then(getObjectsComplete)
+          .catch(getObjectsFailed);
+
+      function getObjectsComplete(response){
+        //console.log("==="+JSON.stringify(response.data));
+        return BlakeExhibitCaption.create(response.data);
+
+      }
+
+      function getObjectsFailed(error){
+          $log.error('XHR Failed for getCaptionsForImage: multi...\n' + angular.toJson(error.data, true));
+      }
     };
 
     return blakeData;

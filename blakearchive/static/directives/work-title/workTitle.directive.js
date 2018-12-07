@@ -12,6 +12,12 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
             return vm.bds.work.title;
         }
 
+
+        if($rootScope.showWorkTitle == 'exhibit' && $rootScope.doneSettingExhibit){
+            return vm.bds.exhibit.exhibit.title;
+            //return $rootScope.selectedExhibit.exhibit.title;
+        }
+
         /*COPY PAGES*/
         //For letters
         if(vm.bds.work.bad_id == 'letters'){
@@ -53,6 +59,7 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
             return '';
         } else if(vm.bds.copy.archive_set_id != null) {
             return  vm.bds.copy.archive_set_id;
+
         } else {
             return vm.bds.copy.archive_copy_id == null ? '' : 'Copy '+vm.bds.copy.archive_copy_id;
         }
