@@ -30,6 +30,7 @@ angular.module("blake").factory("BlakeCopy", function (GenericService) {
             case 'gravewd':
             case 'cpd':
             case 'pencil1':
+
             case 'allegropenseroso':
             case 'miltons':
                 copy.virtual = true;

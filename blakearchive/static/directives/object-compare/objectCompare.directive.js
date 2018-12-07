@@ -6,6 +6,7 @@ angular.module("blake").controller("ObjectCompareController", function ($rootSco
     $scope.dpi = $rootScope.dpivalue;
     vm.fragment = '';
 
+
     vm.getOvpTitle = function(){
         if(angular.isDefined(vm.bds.copy)){
             if(vm.bds.work.virtual == true){
@@ -38,6 +39,7 @@ angular.module("blake").controller("ObjectCompareController", function ($rootSco
     vm.doubleClick = function(object) {
         vm.goToObject(object);
     }
+
 
     vm.changeObject = function(object){
         //console.log(object);
@@ -86,3 +88,4 @@ angular.module('blake').directive("objectCompare", function () {
         link: link
     };
 });
+

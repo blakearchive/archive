@@ -6,6 +6,7 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
           console.log("The phrase is an array!!!");
         }
         console.log("===highlight called runReplace!!!: "+phrase)*/
+
         let phraseArray;
         if (phrase !== ''){
             if (phrase.startsWith('"') && phrase.endsWith('"')) {
@@ -46,6 +47,7 @@ angular.module("blake").filter('highlight', function($sce,$rootScope){
                         text = text.replace(new RegExp('(\\b' + ph + '[a-zA-Z]*\\b)', 'gi'), '<span class="highlighted">$1</span>');
                     }
                     
+
                 });
                 return text;
 

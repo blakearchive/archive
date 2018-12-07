@@ -44,6 +44,92 @@ class BlakeImporter(object):
     def split_ids(id_string):
         return re.split(r",\s*", id_string.lower())
 
+class BlakeExhibitImporter(BlakeImporter):
+  def __init__(self, data_folder):
+      self.data_folder = data_folder
+      self.exhibits = {}
+
+  def import_exhibit_files(self, matching_files):
+      # iterate over files that match exhibits/*.xml
+      # for each one, call process exhibit
+      for f in matching_files:
+          try:
+              self.process_exhibit_file(f)
+          except ValueError as err:
+              logger.error(err.message)
+      #logger.info( "importing exhibit files")
+
+  # 'exhibit' - exhibit filepath
+  def process_exhibit_file(self,exhibit):
+      # each exhibit was read from the file system. we want to:
+      # 1. create an Exhibit Model and update its attributes from exhibit arg(filesystem)
+      # 2. add the model to self.exhibits for processing by populate_database
+      # 3. each exhibit has a collection of exhibit-images. we need to iterate over them.
+      #    -- creating a model for each and adding them to self.exhibit_images
+      print "processing: "+exhibit
+      root = etree.parse(exhibit).getroot()
+      document_name = os.path.split(exhibit)[1]
+      #Sprint "document name: "+document_name
+      #print "doc content: "+etree.tostring(root)
+      # the exhibit root element has attributes that we need to parse into the exhibit object
+      ex = models.BlakeExhibit()
+      ex.exhibit_id = root.get("id")
+      ex.title = root.get("title")
+      ex.article = root.get("article")
+      self.exhibits[ex.exhibit_id] = ex
+
+      print "exhibit id is: "+root.get("id")
+
+
+      # iterate images and add them to the list
+      for child in root:
+          self.process_exhibit_image(ex,child)
+
+  # exhibit - models.BlakeExhibit
+  # imageXml - etree elementTree
+  def process_exhibit_image(self, exhibit, imageXml):
+      #print "..with xml: "+etree.tostring(imageXml, pretty_print=True)
+      exhibitImage = models.BlakeExhibitImage()
+      exhibitImage.image_id = imageXml.get("id")
+      exhibitImage.dbi = imageXml.get("dbi")
+      exhibitImage.exhibit_id = exhibit.exhibit_id
+      # TODO: do we need else-clauses? xml/html in captions are...
+      # ignored! is that OK? md is okay since it is just text.
+      # if there are title sub-element(s)... use the first one
+      if (len(imageXml.xpath('title'))):
+          exhibitImage.title = imageXml.xpath('title')[0].text
+          #print "...has title: "+exhibitImage.title
+#      if (len(imageXml.xpath('caption'))):
+#          exhibitImage.caption = imageXml.xpath('caption')[0].text
+          #print "...has caption: "+exhibitImage.caption
+
+      # add the exhibit image to the exhibit model object's list
+      exhibit.exhibit_images.append(exhibitImage)
+      #print "adding to exhibit: "+exhibitImage.id
+      #root = etree.fromstring(imageXml)  #.getroot()
+      count = 0
+      for child in imageXml:
+          if (child.tag == 'caption'):
+              count = count + 1
+              caption = models.BlakeExhibitCaption()
+              #xsl madness!: caption.caption = self.get_markuptext(child)
+              #drops htmlmarkup tagscaption.caption =child.xpath("string()")
+              #drops everything after markup: caption.caption =child.text
+              #outer element retained: caption.caption = etree.tostring(child)
+              #error: caption.caption = etree.tostring(child.xpath("./node()"))
+              caption.caption = self.sanitize_caption(etree.tostring(child))
+
+              caption.exhibit_caption_id = exhibitImage.image_id+"_caption_"+str(count)
+              caption.image_id = exhibitImage.image_id
+              caption.title = child.get('title')
+              exhibitImage.captions.append(caption)
+  #def sanitize_caption(self,caption):
+      #find in
+  def sanitize_caption(self,caption):
+      result = re.sub("<caption.*?>","",caption)
+      result2 = re.sub("</caption>","",result)
+      return result2
+
 class BlakeDocumentImporter(BlakeImporter):
     def __init__(self, data_folder):
         self.data_folder = data_folder
@@ -62,13 +148,16 @@ class BlakeDocumentImporter(BlakeImporter):
 
     def import_data(self):
         document_pattern = os.path.join(self.data_folder, "works/*.xml")
+        exhibit_pattern = os.path.join(self.data_folder,"exhibits/**/*.xml")
         info_pattern = os.path.join(self.data_folder, "info/*.xml")
         matching_bad_files = glob.glob(document_pattern)
         matching_info_files = glob.glob(info_pattern)
         self.import_info_files(matching_info_files)
         self.import_bad_files(matching_bad_files)
+        self.import_exhibit_files(matching_exhibit_files)
         self.process_works()
         self.process_relationships()
+        self.process_exhibits()
         #self.process_text_matches()
         self.populate_database()
 
@@ -92,6 +181,16 @@ class BlakeDocumentImporter(BlakeImporter):
         self.fragmentpairs[i] = fragmentpair
         return fragmentpair
 
+    def import_exhibit_files(self,exhibit_files):
+        # loop over the list of files and process each one
+        for exhib_file in exhibit_files:
+            try:
+                self.exhibit_importer.process_exhibit_file(exhib_file)
+            except ValueError as err:
+                logger.error(err.message)
+    def process_exhibits(self):
+        self.exhibit_importer
+ 
     # region Info file handling
     def import_info_files(self, info_files):
         for matching_info_file in info_files:
@@ -154,7 +253,6 @@ class BlakeDocumentImporter(BlakeImporter):
         referenced_works = [self.works[id_] for id_ in referenced_work_ids if id_ in self.works]
         obj.textually_referenced_works.extend(referenced_works)
         #obj.fragment = entry.fragment.encode('utf-8')
-
 
     def objects_for_id_string(self, id_string):
         ids = self.split_ids(id_string)
@@ -269,6 +367,7 @@ class BlakeDocumentImporter(BlakeImporter):
         session.add_all(self.works.values())
         session.add_all(self.object_importer.members.values())
         #session.add_all(self.fragmentpairs.values())
+        session.add_all(self.exhibit_importer.exhibits.values())
         session.commit()
 
 
@@ -344,6 +443,11 @@ class BlakeCopyImporter(BlakeImporter):
             return str(cd.xpath("text()")).strip("'[]'").rstrip().encode("utf-8")
 
     @staticmethod
+    def get_compdate_string(document):
+        for cd in document.xpath("//compdate"):
+            return str(cd.xpath("text()")).strip("'[]'").rstrip().encode("utf-8")
+
+    @staticmethod
     def get_printdate_string(document):
         for pd in document.xpath("//printdate"):
             return str(pd.xpath("text()")).strip("'[]'").rstrip().encode("utf-8")
@@ -402,7 +506,6 @@ class BlakeCopyImporter(BlakeImporter):
             return self.members.get(bad_ids)
         else:
             return [self.members[bad_id] for bad_id in bad_ids if bad_id in self.members]
-
 
 class BlakeObjectImporter(BlakeImporter):
     xslt_xml = etree.parse(open("static/xslt/transcription.xsl"))
@@ -574,11 +677,14 @@ def main():
     parser.add_argument("-p", "--profile", action="store_true", default=False)
     args = parser.parse_args()
     importer = BlakeDocumentImporter(args.data_folder)
+    #importer = BlakeExhibitImporter(args.data_folder)
+
     if args.profile:
         import cProfile
         cProfile.runctx("importer.import_data()", globals(), locals(), filename="import_stats.out")
     else:
         importer.import_data()
+
 
 
 if __name__ == "__main__":

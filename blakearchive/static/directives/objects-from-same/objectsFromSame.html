@@ -1,4 +1,6 @@
+
 <!--use ng-if="fromSame.type != 'textmatch'" in <div> if need be-->
+
 <div class="row">
     <!--<p class="text-center"><em>Dates are the probable dates of {{ fromSame.bds.work.probable }}.</em></p>
     <br>-->
@@ -8,12 +10,14 @@
                 <li><a class="select-all-objects" ng-click="fromSame.selectAll()" ng-model="fromSame.selectedAll">{{ fromSame.compareText }}</a></li>
                 <li><a href="" ng-click="fromSame.activateCompare()" class="compare-selected-objects" scroll-to-top>Compare Selected Objects</a></li>
             </ul>
+
             
         </div>
     </div>
 </div>
 
 <!--use ng-if="fromSame.type != 'textmatch'" in <div> if need be-->
+
 <div class="row">
     <div ng-repeat="obj in fromSame.bds.object[fromSame.type] track by $index" class="col-sm-6 col-md-3 text-center">
         <div class="select-for-compare-wrapper" ng-class="{'selected': fromSame.cof.isComparisonObject(obj,fromSame.type)}" tooltip="Click in corner to select or deselect for comparison"  tooltip-trigger="mouseenter" tooltip-placement="top-right">
@@ -58,6 +62,7 @@
                     image="{{ obj.dbi }}.100.jpg"
                     footer="<b>{{obj.copy_title}}, Printed {{obj.copy_print_date_string}}</b><br>{{obj.full_object_id}}"
                     textmatchstrings="{{obj.text_match_strings}}"
+
                     
                 >
             </handprint-block>
@@ -130,3 +135,4 @@
     </div>
 </div>
 -->
+

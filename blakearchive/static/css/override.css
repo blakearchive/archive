@@ -79,6 +79,57 @@ nav.navbar ul.navbar-nav ul.dropdown-menu > div > li.active > a {
 
 .object-container img {
   width: 100%;
+
+.exhibit-thumb-slide .glyphicon{
+    color: red;
+    min-height: 220px;
+    line-height: 70px;
+    font-size: 22px;
+    width: 1em;
+    display: block;
+    margin: -0.5em auto 0px;
+    -webkit-transition: all 200ms;
+    -moz-transition: all 200ms;
+    -ms-transition: all 200ms;
+    -o-transition: all 200ms;
+    transition: all 200ms;
+}
+
+.exhibit-thumb-slide {
+
+}
+
+
+.exhibit-thumb-slide a,img{
+  position: inline;
+  bottom: 1px;
+  height: 11vh;
+}
+
+.exhibit-thumb-slide .scroller-right{
+    display:none;
+}
+
+.exhibit-thumb-slide .scroller-left {
+    display:none;
+}
+
+.exhibit-thumb-slide .slide-box-viewport{
+        position: relative;
+        overflow-x: scroll;
+        height: 290px;
+}
+
+input[type=checkbox] {
+  -webkit-appearance: none;
+    width: 1em;
+    height: 1em;
+}
+input[type=checkbox]:after {
+content: '▹';
+}
+input.open[type=checkbox]:after {
+content: '▿';
 }
 
 @media (min-width: 768px) {
@@ -347,8 +398,10 @@ div .containerForRelatedInOverlay h3 {
 
 @media (min-width: 768px) {
   nav.navbar ul.navbar-nav > li {
+
     /*width: 20%;*/
     width: 16.6666%;
+
   }
 }
 
@@ -379,7 +432,7 @@ a.footnote {
    -moz-transition: all 2s ease;
    -o-transition: all 2s ease;
    transition: all 2s ease;
-} 
+
 
 a.footnote span {
    text-align: justify;
@@ -399,11 +452,12 @@ a.footnote span {
 
 a.footnote:hover span {
    display: inline; 
+
         color: #111;
         position: absolute;
         border: 1px solid #eaeaea;
         background-color: #fffcfc;
-   
+
 }
 
 
@@ -538,6 +592,7 @@ td.c2 {
 
 .worktitle {
     background-color: #1D1D1D; 
+
     color: white;
 }
 .related-flex {
@@ -1566,6 +1621,7 @@ a.compare-selected-objects {
     color: #000;
 }
 
+
 #search .object-img-container{
     margin-bottom: 20px;
 }
@@ -1770,5 +1826,3 @@ handprint-block.supp-original .handprint-block{
         margin-top: 0;
     }
 }
-
-

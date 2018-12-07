@@ -11,6 +11,7 @@
       <span ng-if="bm.rs.showmePage && bm.rs.showmeType == 'enlargement'" class="gr-display">ENLARGEMENT</span>
       <span ng-if="bm.rs.showmePage && bm.rs.showmeType == 'truesize'" class="gr-display">TRUE SIZE</span>
       <button tooltip="Open/Close Table of Contents" tooltip-placement="bottom" ng-click="bm.rs.worksNavState = !bm.rs.worksNavState" type="button" class="collapse-archive" ng-class="{'hidden':bm.rs.showmePage, 'menu-open':bm.rs.worksNavState, 'menu-closed': !bm.rs.worksNavState}">
+
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -47,5 +48,6 @@
       <nav-menu></nav-menu>
     </div>
   </nav>
-  <dpi ng-if="bm.rs.help != 'home' && bm.rs.help != 'work' && bm.rs.help != 'static' && bm.rs.help != 'search' && bm.rs.showmeType != 'text' && bm.rs.showmeType != 'desc' && bm.rs.showmeType != 'note' && bm.rs.showmeType != 'enlargement'"></dpi>
+
+  <dpi ng-if="bm.rs.help != 'exhibit' && bm.rs.help != 'home' && bm.rs.help != 'work' && bm.rs.help != 'static' && bm.rs.help != 'search' && bm.rs.showmeType != 'text' && bm.rs.showmeType != 'desc' && bm.rs.showmeType != 'note' && bm.rs.showmeType != 'enlargement'"></dpi>
 </nav>

@@ -9,6 +9,7 @@ angular.module('blake').controller("CopyTabsController", function ($rootScope,Bl
         vm.showTab = function (id) {
             vm.selectedTab = id;
             $rootScope.selectedTab = id;
+
         }
 
         vm.getCopyOrWork = function(){
@@ -21,6 +22,7 @@ angular.module('blake').controller("CopyTabsController", function ($rootScope,Bl
                     }
                 } else if(vm.bds.copy.archive_set_id != null) {
                     return 'Set';
+
                 } else {
                     return 'Copy';
                 }
@@ -39,6 +41,7 @@ angular.module('blake').controller("CopyTabsController", function ($rootScope,Bl
                     }
                 } else if(vm.bds.copy.archive_set_id != null) {
                     return 'Set';
+
                 } else {
                     return 'Copy';
                 }
@@ -71,3 +74,4 @@ angular.module('blake').directive('copyTabs', function() {
         link: link
     }
 });
+

@@ -42,6 +42,10 @@ angular.module("blake").controller("ViewSubMenuController", function ($rootScope
             case 'search':
                 myTemplateURL = '/static/html/help-search.html';
                 break;
+
+            case 'exhibit':
+                myTemplateURL = '/static/html/help-exhibit.html';
+                break;
         }
 
         var helpModalInstance = $modal.open({

@@ -83,6 +83,9 @@
       <li ng-repeat="workCompDateValue in menu.allWorksCompDateValue">
         <a ng-if="workCompDateValue != false && workCompDateValue.medium != 'exhibit'" style="color:#ccc" href="/work/{{ workCompDateValue.bad_id }}">{{ workCompDateValue.menuTitle }} (Composed {{ workCompDateValue.composition_date_string }})</a></li>
       </div>
+  <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">Archive <span>Exhibits</span></a>
+    <ul class="dropdown-menu" role="menu">
+      <li ng-repeat="menu_list in menu.lists.exhibits"><a href="/exhibit/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}</a></li>
     </ul>
   </li>
 </ul>

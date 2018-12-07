@@ -13,6 +13,7 @@ angular.module("blake").controller("HandprintBlockController", function () {
         case 'cpd':
         case 'allegropenseroso':
         case 'pencil1':
+
         case 'miltons':
             vm.imagePath = '/static/img/virtualworks/';
             break;
@@ -37,6 +38,7 @@ angular.module('blake').directive('handprintBlock', function () {
             action: '&action',
             workId: '@workId',
             textmatchstrings: '@textmatchstrings'
+
         },
         controllerAs: 'handprint',
         bindToController: true

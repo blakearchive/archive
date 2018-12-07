@@ -79,6 +79,7 @@ angular.module("blake").factory("BlakeWork", function (GenericService, BlakeCopy
                     work.title = 'Pencil Sketches';
                     work.virtual = true;
                     break;
+
                 case 'letters':
                 case 'gravepd':
                 case 'gravewc':

@@ -70,6 +70,7 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
                });
             }
 
+
         }
     };
 
@@ -85,6 +86,7 @@ angular.module("blake").controller("ObjectsFromSameController", function($rootSc
         }
         //console.log("selected tab is: "+$rootScope.selectedTab)
     }
+
 
 
 });

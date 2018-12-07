@@ -480,12 +480,14 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                 let string = `<strong>${results[workIndex][0].title} (Composed ${results[workIndex][0].composition_date_string})</strong><br>`,
                     endstring = '';
 
+
                 if(label == 'Copy/Set Information') {
                     if(results[workIndex][2].length > 1 && !results[workIndex][0].virtual){
                         string += '(' + results[workIndex][2].length+ ' Copies/Sets' + ')';
                     }
                     if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
                         string += '(' + results[workIndex][2].length+ ' Copy/Set' + ')';
+
                     }
                     return string;
                 }
@@ -503,6 +505,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                 }
                 if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
                     string += ' across '+results[workIndex][2].length+ ' Copy/Set';
+
                 }
 
                 string += endstring;
@@ -622,6 +625,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                     } else {
                         return 'Copy ' + resultTree[s.selectedWork][2][s.selectedCopy][0].archive_copy_id;
                     }
+
             }
         } catch (e) {}
     };
