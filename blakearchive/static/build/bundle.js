@@ -5886,7 +5886,6 @@ var map = {
 	"./dpi/dpi.directive.js": 69,
 	"./editor-notes/editorNotes.directive.js": 70,
 	"./electronic-edition-info-tab/directive.js": 71,
-	"./exhibit-view/exhibitView.directive.js": 72,
 	"./handprint-block/handprintBlock.directive.js": 73,
 	"./illustration-description/illustrationDescription.directive.js": 74,
 	"./image-tags/imageTags.directive.js": 75,
@@ -27231,40 +27230,7 @@ angular.module("blake").component("electronicEditionInfoTab", {
 });
 
 /***/ }),
-/* 72 */
-/***/ (function(module, exports, __webpack_require__) {
-
-angular.module("blake").controller("ExhibitViewController", ["$rootScope", "BlakeDataService", "$scope", "$modal", "$cookies", "$window", "$http", function ($rootScope, BlakeDataService, $scope, $modal, $cookies, $window, $http) {
-    var vm = this;
-    vm.bds = BlakeDataService;
-
-    //vm.exhibitId = 'illum';
-
-    console.log("bds exhibitId: ==" + vm.exhibitId + "==");
-    var htmlPath = "/api/exhibit-html/" + vm.exhibitId; //+vm.bds.exhibit.exhibit_id;
-
-    // given an exhibit, get it's html content put it in a var
-    $http.get(htmlPath).then(function (response) {
-        vm.exhibit_article_content = response.data;
-    });
-
-    console.log("htmlPath: ==" + htmlPath + "==");
-}]);
-
-angular.module('blake').directive("exhibitView", function () {
-    return {
-        restrict: 'E',
-        template: __webpack_require__(185),
-        controller: "ExhibitViewController",
-        controllerAs: 'exhibit',
-        scope: {
-            exhibitId: '@exhibitId'
-        },
-        bindToController: true
-    };
-});
-
-/***/ }),
+/* 72 */,
 /* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -61310,12 +61276,7 @@ module.exports = "<p><strong>Object</strong></p>\n\n<ul ng-if=\"noteCtrl.objectN
 module.exports = "<!-- Electronic Edition Info-->\n<div role=\"tabpanel\" class=\"fadeinout tab-pane active in\" id=\"ee-info\">\n    <header class=\"page-header\">\n        <!--<p class=\"subhead\">Electronic Edition Information</p>-->\n    </header>\n    <div class=\"row\">\n        <div class=\"col-xs-12\">\n            <div ng-bind-html=\"info.bds.copy.header_html\"></div>\n        </div>\n    </div>\n\n    <!-- regular copies -->\n    <div class=\"row\" ng-if=\"!info.bds.work.virtual\">\n        <div class=\"col-xs-12 text-center\">\n            <p><a href=\"/bad/{{ info.bds.copy.bad_id }}.xml\" target=\"_blank\">View XML</a> <small>(may not work in all browsers)</small></h4>\n        </div>\n    </div>\n\n    <!-- virtual works -->\n    <div class=\"row\" ng-if=\"info.bds.work.virtual && info.bds.work.bad_id != 'letters'\">\n        <div class=\"col-xs-12\">\n            <h4>Included Objects</h4>\n            <div class=\"well\" ng-repeat=\"obj in info.bds.copyObjects | filter:{supplemental:null} track by $index\">\n                <h4>{{ obj.full_object_id }}</h4>\n                <p><strong>Title:</strong> {{ obj.title }}</p>\n                <p><a href=\"/bad/{{ obj.copy_bad_id }}.xml\" target=\"_blank\">View XML</a> <small>(may not work in all browsers)</small></p>\n            </div>\n        </div>\n    </div>\n\n    <!-- letters -->\n    <div class=\"row\" ng-if=\"info.bds.work.virtual && info.bds.work.bad_id == 'letters'\">\n        <div class=\"col-xs-12\">\n            <h4>Included Objects</h4>\n            <div class=\"well\" ng-repeat=\"obj in info.bds.workCopies track by $index\">\n                <h4>{{ obj.object_group}}</h4>\n                <p><a href=\"/bad/{{ obj.copy_bad_id }}.xml\" target=\"_blank\">View XML</a> <small>(may not work in all browsers)</small></p>\n            </div>\n        </div>\n    </div>\n</div>";
 
 /***/ }),
-/* 185 */
-/***/ (function(module, exports) {
-
-module.exports = "<div auto-height adjust=\"70\" breakpoint=\"768\" style=\"overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white\" id=\"compare\" >\n  <div ng-bind-html=\"exhibit.exhibit_article_content\">\n  </div>\n  \n</div>\n<!--\n<div style=\"float:right; width:67% \" id=\"compare \" class=\"scrollbar \"  left-on-broadcast=\"viewSubMenu::readingMode \">\n    <div class=\"featured-object \">\n        <div class=\"compare-inner \">\n            <div class=\"item \" ng-repeat=\"o in exhibit.bds.exhibitObjects \">\n                <div class=\"reading-wrapper \" auto-height adjust=\"150 \" breakpoint=\"768 \" id=\"{{ read.cssSafeId(o.desc_id) }} \">\n                    <img ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg \">\n                    <div class=\"reading-copy \">\n                        <div class=\"reading-copy-inner \">\n                            <h4 ng-if=\"o.title \" >{{o.title}}<br><span>{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title \"><span>{{ o.full_object_id }}</span></h4>\n                            <text-transcription object=\"o \"></text-transcription>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n</div>\n</div>\n-->\n<!--/.compare-->\n";
-
-/***/ }),
+/* 185 */,
 /* 186 */
 /***/ (function(module, exports) {
 

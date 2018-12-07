@@ -152,6 +152,7 @@ class BlakeDocumentImporter(BlakeImporter):
         info_pattern = os.path.join(self.data_folder, "info/*.xml")
         matching_bad_files = glob.glob(document_pattern)
         matching_info_files = glob.glob(info_pattern)
+        matching_exhibit_files = glob.glob(exhibit_pattern)
         self.import_info_files(matching_info_files)
         self.import_bad_files(matching_bad_files)
         self.import_exhibit_files(matching_exhibit_files)
