@@ -2,51 +2,50 @@
   <div id="object-container" class="row" >
 
     <div id="object-view" class="reading-view">
-      <div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="compare" >
+      <div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="exhibit_article_content" >
         <div ng-bind-html="exhibitCtrl.exhibit_article_content">
         </div>
       </div>
-      <div style="border-left-width: 13px;border-left-style: solid;border-left-color: #1d1d1d; overflow-y:hidden;"
+      <div auto-height adjust="152" breakpoint="768" style="border-left-width: 13px;border-left-style: solid;border-left-color: #1d1d1d; "
         id="compare" class="scrollbar"  left-on-broadcast="viewSubMenu::readingMode" style="width:67%;">
 
         <div class="featured-object">
-          <div class="compare-inner" style="padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px;height:78vh;" >
+          <div class="compare-inner" style="padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px;" >
 
             <div class="item" ng-repeat="i in exhibitCtrl.images track by $index" id="item-{{$index}}">
 
-              <div class="reading-wrapper" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}"
-                style="height:78vh;">
+              <div style="height:78vh" class="reading-wrapper" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
 
-                <img magnify-image ng-src="/static/img/temp2/{{ i.dbi }}.100.jpg" id="{{ $index }}">
-                <div style="width:min-content" class="reading-copy ">
+                <img style="height:71vh" magnify-image ng-src="/static/img/temp2/{{ i.dbi }}.100.jpg" id="{{ $index }}">
+                <div style="height:71vh; width:min-content" class="reading-copy ">
                   <div style="width:10%" class="reading-copy-inner ">
                     <h1 ng-if="i.title" style="margin-top:0px; color:rgba(233,188,71,1)">{{i.title}}</h1>
                     <h1 ng-if="!i.title" style="margin-top:0px; color:rgba(233,188,71,1)">Title</h1>
 
                     <h4 ng-repeat="c in exhibitCtrl.captions[$index] track by $index">
 
-                      <span ng-repeat="ct in c">
+                      <span ng-if="c.length > 1" ng-repeat="ct in c">
                         <input ng-model=show type=checkbox  ng-class='{open:show}'>
                         My title is: {{ct.title}}
                         <p ng-show=show ng-bind-html="ct.caption"></p><br/>
                       </span>
 
+                      <span ng-if="c.length == 1" ng-repeat="ct in c">
+                        <p ng-bind-html="ct.caption"></p><br/>
+                      </span>
+
                     </h4>
+
+                    
+
+
                   </div>
 
                 </div>
 
               </div>
             </div>
-            <div style="position:fixed;display:relative;width:65%;">
-              <!-- loop over exhibit images and make thumbnail/links -->
-              <slide-box class="exhibit-thumb-slide" style="" >
-                <span ng-repeat="i in exhibitCtrl.images track by $index">
-                <a href="#{{$index}}"><img src="/static/img/temp2/{{ i.dbi }}.100.jpg"/></a>
-                </span>
-              </slide-box>
-            <!-- -->
-            </div>
+            
           </div>
 
 
@@ -54,6 +53,15 @@
 
 
       </div>
+      <div style="height:60px;position:relative;display:relative;width:65%;margin-right:12px;float:right">
+              <!-- loop over exhibit images and make thumbnail/links -->
+              <slide-box class="exhibit-thumb-slide" style="" >
+                <span ng-repeat="i in exhibitCtrl.images track by $index">
+                <a href="" ng-click="exhibitCtrl.scrollTo($index);"><img src="/static/img/temp2/{{ i.dbi }}.100.jpg"/></a>
+                </span>
+              </slide-box>
+            <!-- -->
+            </div>
     </div>
   </div>
 </div>

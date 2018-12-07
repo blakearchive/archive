@@ -1,10 +1,41 @@
-.exhibit-thumb-slide{
+.exhibit-thumb-slide .glyphicon{
+    color: red;
+    min-height: 220px;
+    line-height: 70px;
+    font-size: 22px;
+    width: 1em;
+    display: block;
+    margin: -0.5em auto 0px;
+    -webkit-transition: all 200ms;
+    -moz-transition: all 200ms;
+    -ms-transition: all 200ms;
+    -o-transition: all 200ms;
+    transition: all 200ms;
+}
+
+.exhibit-thumb-slide {
 
 }
+
+
 .exhibit-thumb-slide a,img{
   position: inline;
   bottom: 1px;
   height: 11vh;
+}
+
+.exhibit-thumb-slide .scroller-right{
+    display:none;
+}
+
+.exhibit-thumb-slide .scroller-left {
+    display:none;
+}
+
+.exhibit-thumb-slide .slide-box-viewport{
+        position: relative;
+        overflow-x: scroll;
+        height: 290px;
 }
 
 input[type=checkbox] {
