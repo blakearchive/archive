@@ -432,7 +432,7 @@ a.footnote {
    -moz-transition: all 2s ease;
    -o-transition: all 2s ease;
    transition: all 2s ease;
-
+}
 
 a.footnote span {
    text-align: justify;
