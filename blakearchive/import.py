@@ -121,7 +121,7 @@ class BlakeExhibitImporter(BlakeImporter):
 
               caption.exhibit_caption_id = exhibitImage.image_id+"_caption_"+str(count)
               caption.image_id = exhibitImage.image_id
-              caption.title = child.get('title').encode("utf-8")
+              caption.title = child.get('title')
               exhibitImage.captions.append(caption)
   #def sanitize_caption(self,caption):
       #find in
