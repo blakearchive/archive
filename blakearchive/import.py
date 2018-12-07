@@ -74,7 +74,7 @@ class BlakeExhibitImporter(BlakeImporter):
       # the exhibit root element has attributes that we need to parse into the exhibit object
       ex = models.BlakeExhibit()
       ex.exhibit_id = root.get("id")
-      ex.title = root.get("title")
+      ex.title = root.get("title").encode("utf-8")
       ex.article = root.get("article")
       self.exhibits[ex.exhibit_id] = ex
 
@@ -97,7 +97,7 @@ class BlakeExhibitImporter(BlakeImporter):
       # ignored! is that OK? md is okay since it is just text.
       # if there are title sub-element(s)... use the first one
       if (len(imageXml.xpath('title'))):
-          exhibitImage.title = imageXml.xpath('title')[0].text
+          exhibitImage.title = imageXml.xpath('title')[0].text.encode("utf-8")
           #print "...has title: "+exhibitImage.title
 #      if (len(imageXml.xpath('caption'))):
 #          exhibitImage.caption = imageXml.xpath('caption')[0].text
@@ -117,11 +117,11 @@ class BlakeExhibitImporter(BlakeImporter):
               #drops everything after markup: caption.caption =child.text
               #outer element retained: caption.caption = etree.tostring(child)
               #error: caption.caption = etree.tostring(child.xpath("./node()"))
-              caption.caption = self.sanitize_caption(etree.tostring(child))
+              caption.caption = self.sanitize_caption(etree.tostring(child)).encode("utf-8")
 
               caption.exhibit_caption_id = exhibitImage.image_id+"_caption_"+str(count)
               caption.image_id = exhibitImage.image_id
-              caption.title = child.get('title')
+              caption.title = child.get('title').encode("utf-8")
               exhibitImage.captions.append(caption)
   #def sanitize_caption(self,caption):
       #find in
