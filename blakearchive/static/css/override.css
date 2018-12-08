@@ -121,7 +121,7 @@ nav.navbar ul.navbar-nav ul.dropdown-menu > div > li.active > a {
         height: 100%;
 }
 
-.exhibit-thumb-slide .slide-box-viewport::-webkit-scrollbar {
+/*.exhibit-thumb-slide .slide-box-viewport::-webkit-scrollbar {
     -webkit-appearance: none;
 }
 .exhibit-thumb-slide .slide-box-viewport::-webkit-scrollbar:horizontal {
@@ -135,7 +135,7 @@ nav.navbar ul.navbar-nav ul.dropdown-menu > div > li.active > a {
 .exhibit-thumb-slide .slide-box-viewport::-webkit-scrollbar-track { 
     background-color: #fff; 
     border-radius: 8px; 
-} 
+} */ 
 
 input[type=checkbox] {
   -webkit-appearance: none;
