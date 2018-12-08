@@ -118,8 +118,24 @@ nav.navbar ul.navbar-nav ul.dropdown-menu > div > li.active > a {
 .exhibit-thumb-slide .slide-box-viewport{
         position: relative;
         overflow-x: scroll;
-        height: 290px;
+        height: 100%;
 }
+
+.exhibit-thumb-slide .slide-box-viewport::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+.exhibit-thumb-slide .slide-box-viewport::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+.exhibit-thumb-slide .slide-box-viewport::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white;
+    background-color: rgba(0, 0, 0, .5);
+}
+.exhibit-thumb-slide .slide-box-viewport::-webkit-scrollbar-track { 
+    background-color: #fff; 
+    border-radius: 8px; 
+} 
 
 input[type=checkbox] {
   -webkit-appearance: none;
