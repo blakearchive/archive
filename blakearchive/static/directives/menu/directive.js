@@ -7,15 +7,23 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
 
         $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
     });
-    //must add exhibits to getWorks or write new api for getting exhibits and populating the menu with them
-    if(angular.isUndefined($sessionStorage.menus)){
+    if(angular.isUndefined($sessionStorage.menus) && angular.isUndefined($sessionStorage.allWorksAlpha) && angular.isUndefined($sessionStorage.allWorksCompDateValue)){
         BlakeDataService.getWorks().then(function (data) {
             vm.organizeMenus(data);
         });
+        BlakeDataService.getWorks().then(function (data2) {
+            vm.alphabetizeAll(data2);
+        });
+        BlakeDataService.getWorks().then(function (data3) {
+            vm.orderByCompDateAll(data3);
+        });
     } else {
         vm.lists = $sessionStorage.menus;
+        vm.allWorksAlpha = $sessionStorage.allWorksAlpha;
+        vm.allWorksCompDateValue = $sessionStorage.allWorksCompDateValue;
         //console.log(vm.lists);
     }
+
 
     var category = function(item) {
         switch(item) {
@@ -75,6 +83,35 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                 return false;
         }
     };
+
+    vm.alphabetizeAll = function(data) {
+
+        if (!data) { return; }
+        data.sort(function(a, b) { 
+            if(a.menuTitle < b.menuTitle) return -1;
+            if(a.menuTitle > b.menuTitle) return 1;
+            return 0;
+        });
+        
+        vm.allWorksAlpha = data;
+        console.log(vm.allWorksAlpha);
+        $sessionStorage.allWorksAlpha = vm.allWorksAlpha;
+        
+    }
+
+    vm.orderByCompDateAll = function(data) {
+        if (!data) { return; }
+        data.sort(function(a, b) { 
+            if(a.composition_date_value < b.composition_date_value) return -1;
+            if(a.composition_date_value > b.composition_date_value) return 1;
+            return 0;
+        });
+
+        vm.allWorksCompDateValue = data;
+
+        console.log(vm.allWorksCompDateValue);
+        $sessionStorage.allWorksCompDateValue = vm.allWorksCompDateValue;
+    }
 
     vm.organizeMenus = function(data) {
         if (!data) { return; }
