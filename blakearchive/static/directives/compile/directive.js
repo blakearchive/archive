@@ -1,4 +1,4 @@
-angular.module("blake").directive('compile', function ($compile) {
+angular.module("blake").directive('compile', ['$compile', function ($compile) {
     return function(scope, element, attrs) {
       scope.$watch(
         function(scope) {
@@ -18,4 +18,4 @@ angular.module("blake").directive('compile', function ($compile) {
         }
     );
   };
-});
+}]);
