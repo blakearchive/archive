@@ -19,6 +19,7 @@ import './js/angular-fullscreen/angular-fullscreen.min';
 import 'script-loader!./js/angular-markdown-it/markdown-it.min';
 import './js/angular-markdown-it/angular-markdown-it';
 import './js/angular-fabric/fabric';
+import './js/angular-bind-html-compile/angular-bind-html-compile'
 
 let directoryPrefix = '';
 let carousel = angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition']);
@@ -26,7 +27,7 @@ let carousel = angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition
 carousel.controller('CarouselController', function ($scope, $timeout, $transition, $q) {});
 carousel.directive('carousel', function () { return {} });
 
-let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider','ui.bootstrap', 'ng-sortable', 'FBAngular','common.fabric','common.fabric.utilities','common.fabric.constants','ngAnimate', 'ngStorage','ngCookies','ngTouch','ngCropper','markdown','angular-loading-bar','ngdexie', 'ngdexie.ui'])
+let blake = angular.module('blake', ['angular-bind-html-compile','ngRoute', 'ngSanitize', 'ui-rangeSlider','ui.bootstrap', 'ng-sortable', 'FBAngular','common.fabric','common.fabric.utilities','common.fabric.constants','ngAnimate', 'ngStorage','ngCookies','ngTouch','ngCropper','markdown','angular-loading-bar','ngdexie', 'ngdexie.ui'])
 //blake.constant('dexie',window.Dexie);
 blake.config(function(ngDexieProvider){
 
