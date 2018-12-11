@@ -5879,6 +5879,7 @@ var map = {
 	"./auto-width/directive.js": 62,
 	"./blake-menu/directive.js": 63,
 	"./client-ppi/clientPpi.directive.js": 64,
+	"./compile/directive.js": 225,
 	"./copy-info-dl/copyInfoDl.directive.js": 65,
 	"./copy-information/copyInformation.directive.js": 66,
 	"./copy-tabs/copyTabs.directive.js": 67,
@@ -61587,6 +61588,29 @@ module.exports = "/*!\n * jQuery JavaScript Library v3.2.1\n * https://jquery.co
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports) {
+
+angular.module("blake").directive('compile', ['$compile', function ($compile) {
+  return function (scope, element, attrs) {
+    scope.$watch(function (scope) {
+      // watch the 'compile' expression for changes
+      return scope.$eval(attrs.compile);
+    }, function (value) {
+      // when the 'compile' expression changes
+      // assign it into the current DOM
+      element.html(value);
+
+      // compile the new DOM and link it to the current
+      // scope.
+      // NOTE: we only compile .childNodes so that
+      // we don't get into infinite loop compiling ourselves
+      $compile(element.contents())(scope);
+    });
+  };
+}]);
 
 /***/ })
 /******/ ]);
