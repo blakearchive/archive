@@ -29899,7 +29899,7 @@ carousel.directive('carousel', function () {
     return {};
 });
 
-let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'common.fabric', 'common.fabric.utilities', 'common.fabric.constants', 'ngAnimate', 'ngStorage', 'ngCookies', 'ngTouch', 'ngCropper', 'markdown', 'angular-loading-bar', 'ngdexie', 'ngdexie.ui', 'angular-bind-html-compile']);
+let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'common.fabric', 'common.fabric.utilities', 'common.fabric.constants', 'ngAnimate', 'ngStorage', 'ngCookies', 'ngTouch', 'ngCropper', 'markdown', 'angular-loading-bar', 'ngdexie', 'ngdexie.ui']);
 //blake.constant('dexie',window.Dexie);
 blake.config(["ngDexieProvider", function (ngDexieProvider) {
 
