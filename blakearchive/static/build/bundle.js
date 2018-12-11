@@ -61593,7 +61593,7 @@ module.exports = "/*!\n * jQuery JavaScript Library v3.2.1\n * https://jquery.co
 /* 225 */
 /***/ (function(module, exports) {
 
-angular.module("blake").directive('compile', ['$compile', function ($compile) {
+angular.module("blake").directive('compile', ["$compile", function ($compile) {
   return function (scope, element, attrs) {
     scope.$watch(function (scope) {
       // watch the 'compile' expression for changes
