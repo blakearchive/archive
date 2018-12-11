@@ -5879,7 +5879,6 @@ var map = {
 	"./auto-width/directive.js": 62,
 	"./blake-menu/directive.js": 63,
 	"./client-ppi/clientPpi.directive.js": 64,
-	"./compile/directive.js": 225,
 	"./copy-info-dl/copyInfoDl.directive.js": 65,
 	"./copy-information/copyInformation.directive.js": 66,
 	"./copy-tabs/copyTabs.directive.js": 67,
@@ -29869,6 +29868,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__js_angular_markdown_it_angular_markdown_it__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__js_angular_markdown_it_angular_markdown_it___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__js_angular_markdown_it_angular_markdown_it__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__js_angular_fabric_fabric__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__js_angular_bind_html_compile_angular_bind_html_compile__ = __webpack_require__(225);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__js_angular_bind_html_compile_angular_bind_html_compile___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__js_angular_bind_html_compile_angular_bind_html_compile__);
+
 
 
 
@@ -29899,7 +29901,7 @@ carousel.directive('carousel', function () {
     return {};
 });
 
-let blake = angular.module('blake', ['ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'common.fabric', 'common.fabric.utilities', 'common.fabric.constants', 'ngAnimate', 'ngStorage', 'ngCookies', 'ngTouch', 'ngCropper', 'markdown', 'angular-loading-bar', 'ngdexie', 'ngdexie.ui']);
+let blake = angular.module('blake', ['angular-bind-html-compile', 'ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'common.fabric', 'common.fabric.utilities', 'common.fabric.constants', 'ngAnimate', 'ngStorage', 'ngCookies', 'ngTouch', 'ngCropper', 'markdown', 'angular-loading-bar', 'ngdexie', 'ngdexie.ui']);
 //blake.constant('dexie',window.Dexie);
 blake.config(["ngDexieProvider", function (ngDexieProvider) {
 
@@ -61593,7 +61595,37 @@ module.exports = "/*!\n * jQuery JavaScript Library v3.2.1\n * https://jquery.co
 /* 225 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/michaelfox/Sites/blake/archive/blakearchive/static/directives/compile/directive.js'");
+(function (angular) {
+    'use strict';
+
+    var bindHtmlCompile = angular.module('angular-bind-html-compile', []);
+
+    bindHtmlCompile.directive('bindHtmlCompile', ['$compile', function ($compile) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                scope.$watch(function () {
+                    return scope.$eval(attrs.bindHtmlCompile);
+                }, function (value) {
+                    // In case value is a TrustedValueHolderType, sometimes it
+                    // needs to be explicitly called into a string in order to
+                    // get the HTML string.
+                    element.html(value && value.toString());
+                    // If scope is provided use it, otherwise use parent scope
+                    var compileScope = scope;
+                    if (attrs.bindHtmlScope) {
+                        compileScope = scope.$eval(attrs.bindHtmlScope);
+                    }
+                    $compile(element.contents())(compileScope);
+                });
+            }
+        };
+    }]);
+
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = bindHtmlCompile.name;
+    }
+})(window.angular);
 
 /***/ })
 /******/ ]);
