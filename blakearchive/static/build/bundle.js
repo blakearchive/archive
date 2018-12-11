@@ -5879,6 +5879,7 @@ var map = {
 	"./auto-width/directive.js": 62,
 	"./blake-menu/directive.js": 63,
 	"./client-ppi/clientPpi.directive.js": 64,
+	"./compile/directive.js": 225,
 	"./copy-info-dl/copyInfoDl.directive.js": 65,
 	"./copy-information/copyInformation.directive.js": 66,
 	"./copy-tabs/copyTabs.directive.js": 67,
@@ -61587,6 +61588,12 @@ module.exports = "/*!\n * jQuery JavaScript Library v3.2.1\n * https://jquery.co
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/michaelfox/Sites/blake/archive/blakearchive/static/directives/compile/directive.js'");
 
 /***/ })
 /******/ ]);
