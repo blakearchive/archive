@@ -6,15 +6,15 @@
         <div bind-html-compile="exhibitCtrl.exhibit_article_content">
         </div>
       </div>
-      <div style="border-left-width: 13px;border-left-style: solid;border-left-color: #1d1d1d; "
+      <div style="height:75vh; border-left-width: 13px;border-left-style: solid;border-left-color: #1d1d1d; "
         id="compare" class="scrollbar"  left-on-broadcast="viewSubMenu::readingMode" style="width:67%;">
 
-        <div class="featured-object">
-          <div class="compare-inner" style="padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px;" >
+        <div class="featured-object" style="height:100%;">
+          <div class="compare-inner" style="height:100%; padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px;" >
 
-            <div class="item" ng-repeat="i in exhibitCtrl.images track by $index" id="item-{{$index}}">
+            <div style="height:100%;" class="item" ng-repeat="i in exhibitCtrl.images track by $index" id="item-{{$index}}">
 
-              <div class="reading-wrapper" auto-height adjust="250" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
+              <div class="reading-wrapper" style="height:100%;" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
 
                 <img magnify-image ng-src="/static/img/temp2/{{ i.dbi }}.100.jpg" id="{{ $index+1 }}">
                 <div width:min-content" class="reading-copy " style="width:500px">
@@ -54,7 +54,7 @@
 
 
       </div>
-      <div style="height:147px;display:relative;width:65%;margin-right:23px;float:right">
+      <div style="height:15vh;display:relative;width:65%;margin-right:13px;float:right">
               <!-- loop over exhibit images and make thumbnail/links -->
               <slide-box class="exhibit-thumb-slide" style="" >
                 <span ng-repeat="i in exhibitCtrl.images track by $index">
