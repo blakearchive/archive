@@ -1,3 +1,16 @@
+.reading-view .nav .open > a,
+.reading-view.nav .open > a:hover,
+.reading-view .nav .open > a:focus {
+  background-color: black;
+  border-color: #168bc1;
+}
+
+.reading-view .nav > li > a:hover,
+.reading-view .nav > li > a:focus {
+  text-decoration: none;
+  background-color: black;
+}
+
 .handprint-block a:hover span.textmatchstrings {
   background-color: #1d1d1d;
   color: #e6e6e6;
