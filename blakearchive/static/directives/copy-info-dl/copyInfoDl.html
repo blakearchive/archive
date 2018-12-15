@@ -6,12 +6,8 @@
         <dt><li style="margin-left:90%"></li></dt>
         <dd ng-if="!dl.infoObject.note[0]" ng-bind-html="dl.infoObject.note['#text'].trim() | markdown | highlight:dl.highlight"></dd>
     </div>
-    <div ng-if="dl.infoObject.note[0]" class="indent-dl">
+    <div ng-if="dl.infoObject.note[0]" ng-repeat="note in dl.infoObject.note track by $index" class="indent-dl">
         <dt></dt>
-        <dd ng-if="dl.infoObject.note[0]" ng-bind-html="dl.infoObject.note[0]['#text'].trim() | markdown | highlight:dl.highlight"></dd>
-    </div>
-    <div ng-if="dl.infoObject.note[1]" class="indent-dl">
-        <dt><li style="margin-left:90%"></li></dt>
-        <dd ng-if="dl.infoObject.note[1]" ng-bind-html="dl.infoObject.note[1]['#text'].trim() | markdown | highlight:dl.highlight"></dd>
+        <dd ng-bind-html="note['#text'].trim() | markdown | highlight:dl.highlight"></dd>
     </div>
 </div>
