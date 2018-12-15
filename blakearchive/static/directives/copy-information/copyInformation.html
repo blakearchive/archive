@@ -86,7 +86,8 @@
             <copy-info-dl dt="Dealer" highlight="{{ info.highlight }}" info-object="info.getSource().provenance.dealer"></copy-info-dl>
             <copy-info-dl dt="Price" highlight="{{ info.highlight }}" info-object="info.getSource().provenance.price"></copy-info-dl>
             <dt><li style="margin-left:90%"></li></dt>
-            <dd><span ng-bind-html="info.getSource().provenance.note['#text'].trim() | markdown | highlight:info.highlight"></span></dd>
+            <dd ng-if="info.getSource().provenance.note"><span ng-bind-html="info.getSource().provenance.note['#text'].trim() | markdown | highlight:info.highlight"></span></dd>
+            <dd ng-if="info.getSource().provenance.note[0]" ng-repeat="note in info.getSource().provenance.note"><span ng-bind-html="note['#text'].trim() | markdown | highlight:info.highlight"></span></dd>
         </dl>
 
         <h3>Present Location</h3>
