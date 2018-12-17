@@ -3,6 +3,7 @@ angular.module('blake').controller('ExhibitController', function (
   BlakeDataService,imageManipulation,CompareObjectsFactory,$http) {
     var vm = this;
     var exhibitId = $routeParams.exhibitId;
+    vm.exId = exhibitId;
     vm.images = [];
     vm.captions = [];
     $rootScope.showWorkTitle = 'exhibit';

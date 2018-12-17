@@ -25939,6 +25939,7 @@ angular.module("blake").controller("CopyController", ["$scope", "$routeParams", 
 angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams", "$sce", "$rootScope", "$window", "$modal", "$cookies", "BlakeDataService", "imageManipulation", "CompareObjectsFactory", "$http", function ($scope, $routeParams, $sce, $rootScope, $window, $modal, $cookies, BlakeDataService, imageManipulation, CompareObjectsFactory, $http) {
   var vm = this;
   var exhibitId = $routeParams.exhibitId;
+  vm.exId = exhibitId;
   vm.images = [];
   vm.captions = [];
   $rootScope.showWorkTitle = 'exhibit';
