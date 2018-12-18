@@ -24,7 +24,7 @@
                     <span ng-repeat="c in exhibitCtrl.captions[$index] track by $index">
 
                       <span ng-if="c.length > 1" ng-repeat="ct in c">
-                        <h2>
+                        <h2 style="margin-top:0px; color:rgba(233,188,71,1)">
                           <input ng-model=show type=checkbox  ng-class='{open:show}'>
                           {{ct.title}}
                         </h2>
