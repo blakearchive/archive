@@ -96,8 +96,8 @@ class BlakeExhibitImporter(BlakeImporter):
       # TODO: do we need else-clauses? xml/html in captions are...
       # ignored! is that OK? md is okay since it is just text.
       # if there are title sub-element(s)... use the first one
-      if (len(imageXml.xpath('title'))):
-          exhibitImage.title = imageXml.xpath('title').text.encode("utf-8")
+      if (len(imageXml.xpath('title')[0])):
+          exhibitImage.title = imageXml.xpath('title')[0].text.encode("utf-8")
           #print "...has title: "+exhibitImage.title
 #      if (len(imageXml.xpath('caption'))):
 #          exhibitImage.caption = imageXml.xpath('caption')[0].text
