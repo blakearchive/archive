@@ -202,10 +202,9 @@ class BlakeDataService(object):
 
     @classmethod
     def get_images_for_exhibit(cls, exhibit_id=None):
-        results = models.BlakeExhibitImage.query \
+        return models.BlakeExhibitImage.query \
             .filter(models.BlakeExhibitImage.exhibit_id == exhibit_id) \
             .order_by(models.BlakeExhibitImage.image_id).all()
-            return results
 
     @classmethod
     def get_captions_for_image(cls, image_id=None):
