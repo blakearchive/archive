@@ -339,7 +339,7 @@ class BlakeExhibitCaption(db.Model):
 class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image, etc
     __tablename__ = "exhibit_image"
     exhibit_image_pk = db.Column(db.Integer, primary_key=True)
-    image_id = db.Column(db.Text, index=True)
+    image_id = db.Column(db.Integer, index=True)
     exhibit_id = db.Column(db.Text, index=True)
     exhibit_pk = db.Column(db.Integer, db.ForeignKey("exhibit.exhibit_pk"))
     #caption = db.Column(db.UnicodeText)
