@@ -361,7 +361,7 @@ class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image
 class BlakeExhibit(db.Model): # todo: change to correct columns name, image, etc
     __tablename__ = "exhibit"
     exhibit_pk = db.Column(db.Integer, primary_key=True)
-    exhibit_id = db.Column(db.Text, index=True)
+    exhibit_id = db.Column(db.Integer, index=True)
     title = db.Column(db.UnicodeText)
     article = db.Column(db.UnicodeText)
     exhibit_images = db.relationship('BlakeExhibitImage', backref="exhibit",lazy='joined')
