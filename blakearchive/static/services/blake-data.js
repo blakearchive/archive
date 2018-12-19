@@ -643,9 +643,9 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
           $log.error('XHR Failed for getImagesForExhibit: multi...\n'+ exhibitId + angular.toJson(error.data, true));
       }
     };
-    blakeData.getCaptionsForImage = function(imageId){
+    blakeData.getCaptionsForImage = function(exhibitId, imageId){
       // TODO: implement API and then fix update this!!!!
-      var url = directoryPrefix + '/api/exhibit-captions/'+imageId;
+      var url = directoryPrefix + '/api/exhibit-captions/'+exhibitId+'/'+imageId;
 
       //$log.info('getting objects: multi');
 

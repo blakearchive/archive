@@ -25952,7 +25952,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
     vm.images = result;
     //console.log("--------"+vm.images);
     for (var i = 0; i < vm.images.length; i++) {
-      BlakeDataService.getCaptionsForImage(vm.images[i].image_id).then(function (r2) {
+      BlakeDataService.getCaptionsForImage(exhibitId, vm.images[i].image_id).then(function (r2) {
         //console.log("--------"+r2);
         vm.captions.push(r2);
       });
@@ -32216,9 +32216,9 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
             $log.error('XHR Failed for getImagesForExhibit: multi...\n' + exhibitId + angular.toJson(error.data, true));
         }
     };
-    blakeData.getCaptionsForImage = function (imageId) {
+    blakeData.getCaptionsForImage = function (exhibitId, imageId) {
         // TODO: implement API and then fix update this!!!!
-        var url = directoryPrefix + '/api/exhibit-captions/' + imageId;
+        var url = directoryPrefix + '/api/exhibit-captions/' + exhibitId + '/' + imageId;
 
         //$log.info('getting objects: multi');
 

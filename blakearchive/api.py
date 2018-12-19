@@ -185,10 +185,10 @@ def get_exhibit_images(exhibit_id):
         return abort(404)
     return jsonify({"results": [r.to_dict for r in results]})
 
-@api.route("/exhibit-captions/<image_id>")
+@api.route("/exhibit-captions/<exhibit_id>/<image_id>")
 def get_exhibit_image_captions(image_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
-    results = blake_data_service.get_captions_for_image(image_id)
+    results = blake_data_service.get_captions_for_image(exhibit_id, image_id)
     if not results:
         return abort(404)
     return jsonify({"results": [r.to_dict for r in results]})
