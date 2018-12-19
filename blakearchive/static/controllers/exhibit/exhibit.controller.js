@@ -16,7 +16,7 @@ angular.module('blake').controller('ExhibitController', function (
       vm.images = result;
       //console.log("--------"+vm.images);
       for (var i=0; i< vm.images.length;i++){
-        BlakeDataService.getCaptionsForImage(vm.images[i].image_id).then(function(r2){
+        BlakeDataService.getCaptionsForImage(exhibitId, vm.images[i].image_id).then(function(r2){
           //console.log("--------"+r2);
           vm.captions.push(r2);
         });
