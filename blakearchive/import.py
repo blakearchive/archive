@@ -120,7 +120,7 @@ class BlakeExhibitImporter(BlakeImporter):
               #error: caption.caption = etree.tostring(child.xpath("./node()"))
               caption.caption = self.sanitize_caption(etree.tostring(child)).encode("utf-8")
 
-              caption.exhibit_caption_id = exhibitImage.image_id+"_caption_"+str(count)
+              caption.exhibit_caption_id = exhibitImage.exhibit_id+"_"+exhibitImage.image_id+"_caption_"+str(count)
               caption.image_id = exhibitImage.image_id
               caption.title = child.get('title')
               exhibitImage.captions.append(caption)
