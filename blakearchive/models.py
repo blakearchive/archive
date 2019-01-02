@@ -355,8 +355,7 @@ class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image
             "dbi": self.dbi,
             "exhibit_id": self.exhibit_id,
             "title": self.title,
-            "image_id": self.image_id,
-            "captions": self.captions
+            "image_id": self.image_id
         }
 
 # Represents an Exhibit. A presentation that has text passages on the left side
@@ -382,6 +381,5 @@ class BlakeExhibit(db.Model): # todo: change to correct columns name, image, etc
         return {
             "title": self.title,
             "article": self.article,
-            "exhibit_id": self.exhibit_id,
-            "exhibit_images": self.exhibit_images
+            "exhibit_id": self.exhibit_id
         }
