@@ -25952,6 +25952,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
     vm.images = result;
     //console.log("--------"+vm.images);
     for (var i = 0; i < vm.images.length; i++) {
+      console.log(vm.images[i].image_id);
       BlakeDataService.getCaptionsForImage(exhibitId, vm.images[i].image_id).then(function (r2) {
         //console.log("--------"+r2);
         console.log(r2);
