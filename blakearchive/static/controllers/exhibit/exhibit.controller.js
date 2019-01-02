@@ -15,16 +15,16 @@ angular.module('blake').controller('ExhibitController', function (
     BlakeDataService.getImagesForExhibit(exhibitId).then(function(result){
       vm.images = result;
       //console.log("--------"+vm.images);
+      vm.setCaptions(vm.images);
+    });
+
+    vm.setCaptions = function(images) {
       for (var i=0; i< vm.images.length;i++){
-        console.log(vm.images[i].image_id);
-        BlakeDataService.getCaptionsForImage(exhibitId, vm.images[i].image_id).then(function(r2){
-          //console.log("--------"+r2);
-          console.log(r2);
+        BlakeDataService.getCaptionsForImage(exhibitId, images[i].image_id).then(function(r2){
           vm.captions.push(r2);
         });
       }
-      //console.log(vm.captions);
-    });
+    }
 
     vm.scrollTo = function(id) {
         $rootScope.doneSettingCopy = true;
