@@ -9,21 +9,24 @@ angular.module('blake').controller('ExhibitController', function (
     $rootScope.showWorkTitle = 'exhibit';
     $rootScope.help = 'exhibit';
     $rootScope.worksNavState = false;
+    var currentIndex = 0;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
 
     BlakeDataService.getImagesForExhibit(exhibitId).then(function(result){
       vm.images = result;
       //console.log("--------"+vm.images);
-      vm.setCaptions(vm.images);
+      vm.setNextCaption();
     });
 
-    vm.setCaptions = function(images) {
-      for (var i=0; i< vm.images.length;i++){
-        BlakeDataService.getCaptionsForImage(exhibitId, images[i].image_id).then(function(r2){
-          vm.captions.push(r2);
-        });
+    vm.setNextCaption = function() {
+      if (currentIndex >= vm.images.length) {
+        return;
       }
+      BlakeDataService.getCaptionsForImage(exhibitId, vm.images[currentIndex++].image_id).then(function(r2){
+          vm.captions.push(r2);
+          vm.setNextCaption();
+      });
     }
 
     vm.scrollTo = function(id) {
