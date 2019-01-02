@@ -25949,6 +25949,11 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
 
   //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
 
+  vm.zoom = function () {
+    $rootScope.zoom = !$rootScope.zoom;
+    ////console.log($rootScope.zoom);
+  };
+
   BlakeDataService.getImagesForExhibit(exhibitId).then(function (result) {
     vm.images = result;
     //console.log("--------"+vm.images);
