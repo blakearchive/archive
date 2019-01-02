@@ -25954,7 +25954,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
     for (var i = 0; i < vm.images.length; i++) {
       BlakeDataService.getCaptionsForImage(exhibitId, vm.images[i].image_id).then(function (r2) {
         //console.log("--------"+r2);
-        vm.captions.push(r2);
+        vm.images[i].captions.push(r2);
       });
     }
   });
