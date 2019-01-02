@@ -25957,7 +25957,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
         vm.captions.push(r2);
       });
     }
-    console.log(captions);
+    console.log(vm.captions);
   });
 
   vm.scrollTo = function (id) {
