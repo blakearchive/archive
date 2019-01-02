@@ -346,7 +346,7 @@ class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image
     dbi = db.Column(db.UnicodeText)
     title = db.Column(db.UnicodeText)
     #bad_id = db.Column(db.Text)
-    captions = db.relationship(BlakeExhibitCaption, backref="exhibit_image",lazy='joined')
+    captions = db.relationship('BlakeExhibitCaption', backref="exhibit_image",lazy='joined')
 
     @property
     def to_dict(self):
