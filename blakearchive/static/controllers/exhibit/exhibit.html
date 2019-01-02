@@ -3,8 +3,8 @@
 
     <div id="object-view" class="reading-view">
       <div auto-height adjust="60" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="exhibit_article_content" >
-         <button type="button " class="btn btn-default " style="height:21px;line-height:0.6 " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " class="btn btn-default " ng-click="read.zoom() " tooltip="Mouse over an image " tooltip-placement="top " tooltip-trigger="click ">
-            <span class="gr-abbreviation " style="height:21px;font-size:13px;z-index: 1000;position: absolute;left: 6%;top: 3%; "><span class="edit-icon"></span></span>
+         <button type="button " class="btn btn-default " style="height:21px;line-height:0.6;z-index: 1000;position: absolute;left: 6%;top: 3%; " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " class="btn btn-default " ng-click="read.zoom() " tooltip="Mouse over an image " tooltip-placement="top " tooltip-trigger="click ">
+            <span class="edit-icon"></span>
         </button>
         <div bind-html-compile="exhibitCtrl.exhibit_article_content">
           
