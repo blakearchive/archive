@@ -25977,6 +25977,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
   vm.bds.setSelectedExhibit(exhibitId).then(function () {
     //console.log(">>>>>hey, tae, you were wrong!!!!");
     $rootScope.doneSettingExhibit = true;
+    console.log(vm.bds.exhibit);
   });
   //console.log("===>>>>"+JSON.stringify(vm.bds));
   $http.get("/api/exhibit-html/" + exhibitId).then(function (response) {
