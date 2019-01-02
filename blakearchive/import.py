@@ -105,7 +105,6 @@ class BlakeExhibitImporter(BlakeImporter):
           #print "...has caption: "+exhibitImage.caption
 
       # add the exhibit image to the exhibit model object's list
-      exhibit.exhibit_images.append(exhibitImage)
       #print "adding to exhibit: "+exhibitImage.id
       #root = etree.fromstring(imageXml)  #.getroot()
       count = 0
@@ -125,6 +124,8 @@ class BlakeExhibitImporter(BlakeImporter):
               caption.title = child.get('title')
               caption.exhibit_id = exhibit.exhibit_id
               exhibitImage.captions.append(caption)
+
+      exhibit.exhibit_images.append(exhibitImage)
   #def sanitize_caption(self,caption):
       #find in
   def sanitize_caption(self,caption):
