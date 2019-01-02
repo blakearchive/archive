@@ -212,6 +212,8 @@ class BlakeDataService(object):
         results = models.BlakeExhibitCaption.query \
             .filter(models.BlakeExhibitCaption.exhibit_id == exhibit_id, models.BlakeExhibitCaption.image_id == image_id) \
             .order_by(models.BlakeExhibitCaption.exhibit_caption_id).all()
+        if not results:
+            return []
         return results
 
     ###end------ service methods for Exhibits ------
