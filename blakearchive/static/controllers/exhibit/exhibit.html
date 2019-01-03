@@ -10,10 +10,11 @@
       </div>
       <div style="height:75vh; border-left-width: 13px;border-left-style: solid;border-left-color: #1d1d1d; "
         id="compare" class="scrollbar"  left-on-broadcast="viewSubMenu::readingMode" style="width:67%;">
-        <button type="button " class="btn btn-default " style="height:21px;line-height:0.6;z-index: 1000;position: sticky;left:88%; " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " class="btn btn-default " ng-click="exhibitCtrl.zoom() " tooltip="Mouse over an image " tooltip-placement="bottom " tooltip-trigger="click ">
+        
+        <div class="featured-object" style="height:100%;">
+          <button type="button " class="btn btn-default " style="height:21px;line-height:0.6;z-index: 1000;position: sticky;left:88%; " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " class="btn btn-default " ng-click="exhibitCtrl.zoom() " tooltip="Mouse over an image " tooltip-placement="bottom " tooltip-trigger="click ">
             MAGNIFY</span>
         </button>
-        <div class="featured-object" style="height:100%;">
           <div class="compare-inner" style="height:100%; padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px;" >
 
             <div style="height:100%;" class="item" ng-repeat="i in exhibitCtrl.images track by $index" id="item-{{$index}}">
