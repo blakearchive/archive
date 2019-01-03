@@ -29,17 +29,18 @@
 
                     <span ng-repeat="c in exhibitCtrl.captions[$index]">
 
-                      <span ng-if="c.length > 1" ng-repeat="ct in c">
+                      <span ng-if="c.length >= 1" ng-repeat="ct in c">
                         <h2 style="margin-top:0px; color:rgba(233,188,71,1)">
-                          <input ng-model=show type=checkbox  ng-class='{open:show}'>
+                          <input ng-if="ct.title" ng-model=show type=checkbox  ng-class='{open:show}'>
                           {{ct.title}}
                         </h2>
                         <p ng-show=show ng-bind-html="ct.caption"></p><br/>
                       </span>
-
+                      <!--
                       <span ng-if="c.length == 1" ng-repeat="ct in c">
                         <p ng-bind-html="ct.caption"></p><br/>
                       </span>
+                    -->
 
                     </span>
 
