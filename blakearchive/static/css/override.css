@@ -538,6 +538,8 @@ td.c2 {
 
 .black-tooltip-arrow + .tooltip.bottom > .tooltip-arrow {border-bottom-color: black;}
 
+.white-tooltip-arrow + .tooltip.left > .tooltip-arrow {border-bottom-color: white;}
+
 .tooltip.right .tooltip-arrow {
   top: 50%;
   left: 0;
