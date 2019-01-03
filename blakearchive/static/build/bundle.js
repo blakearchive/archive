@@ -25989,7 +25989,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
     //console.log(">>>>>hey, tae, you were wrong!!!!");
     $rootScope.doneSettingExhibit = true;
     console.log(vm.bds.exhibit);
-    exhibitCtrl.scrollTo(1);
+    vm.scrollTo(1);
   });
   //console.log("===>>>>"+JSON.stringify(vm.bds));
   $http.get("/api/exhibit-html/" + exhibitId).then(function (response) {
