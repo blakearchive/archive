@@ -1,3 +1,14 @@
+.btn-default:off,
+.btn-default:focus,
+.btn-default.focus,
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+  color: #333333;
+  background-color: #ffffff;
+  border-color: #cccccc;
+}
+
 .reading-view .nav .open > a,
 .reading-view.nav .open > a:hover,
 .reading-view .nav .open > a:focus {
