@@ -1,7 +1,3 @@
-li:hover > ul {
-    display: block;
-}
-
 .btn-default:hover,
 .btn-default:focus,
 .btn-default.focus,
