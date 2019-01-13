@@ -97,8 +97,8 @@ class BlakeExhibitImporter(BlakeImporter):
       # ignored! is that OK? md is okay since it is just text.
       # if there are title sub-element(s)... use the first one
       if (len(imageXml.xpath('title'))):
-        if imageXml.xpath('title')[0].text is not None:
-          exhibitImage.title = etree.tostring(imageXml.xpath('title')[0]).encode("utf-8")
+        if imageXml.xpath('title')[0] is not None:
+          exhibitImage.title = self.sanitize_title(etree.tostring(imageXml.xpath('title')[0])).encode("utf-8")
           #print "...has title: "+exhibitImage.title
 #      if (len(imageXml.xpath('caption'))):
 #          exhibitImage.caption = imageXml.xpath('caption')[0].text
@@ -131,6 +131,11 @@ class BlakeExhibitImporter(BlakeImporter):
   def sanitize_caption(self,caption):
       result = re.sub("<caption.*?>","",caption)
       result2 = re.sub("</caption>","",result)
+      return result2
+
+  def sanitize_title(self,title):
+      result = re.sub("<title.*?>","",title)
+      result2 = re.sub("</title>","",result)
       return result2
 
 class BlakeDocumentImporter(BlakeImporter):
