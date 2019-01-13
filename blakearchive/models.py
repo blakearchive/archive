@@ -344,7 +344,7 @@ class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image
     exhibit_pk = db.Column(db.Integer, db.ForeignKey("exhibit.exhibit_pk"))
     #caption = db.Column(db.UnicodeText)
     dbi = db.Column(db.UnicodeText)
-    title = db.Column(db.UnicodeText)
+    title = db.Column(db.Text)
     #bad_id = db.Column(db.Text)
     captions = db.relationship(BlakeExhibitCaption, backref="exhibit_image")
 
