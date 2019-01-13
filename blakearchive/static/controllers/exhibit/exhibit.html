@@ -22,7 +22,7 @@
 
               <div class="reading-wrapper" style="height:100%;" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
 
-                <img magnify-image ng-src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg" id="{{ $index+1 }}">
+                <img ng-if="i.dbi != ''" magnify-image ng-src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg" id="{{ $index+1 }}">
                 <div class="reading-copy " style="width:min-content">
                   <div style="width:10%" class="reading-copy-inner ">
                     <h2 ng-if="i.title" style="margin-top:0px; color:rgba(233,188,71,1)">{{i.title}}</h2>
