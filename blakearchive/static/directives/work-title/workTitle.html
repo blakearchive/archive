@@ -56,11 +56,6 @@
     </div>
 </div>
 
-<div id="OverlayExhibitContents" class="overlay" ng-show="$root.showOverlayExhibitContents == true">
-  <a href="javascript:document.getElementById('NPT').scrollIntoView(false);document.getElementById('exhibit_article_content').scrollTop += parseInt(document.getElementById('exhibit_article_content').style.height) - 100">test</a>
-  <a href="" ng-click="exhibitCtrl.scrollTo(3);">ill. 3</a>
-</div>
-
 
 <div class="object-view-menu hidden-xs hidden-sm">
   <span ng-if="showWorkTitle == 'static'" class="worktitle" style="padding: 19px;">
@@ -72,7 +67,7 @@
 
 
     <span ng-if="showWorkTitle == 'exhibit'" class="worktitle" style="padding: 19px;">
-        <a scroll-to-top href="" ng-click="$root.showOverlayExhibitContents = true" style="color:white;">{{ workTitle.getTitle() }} </a>
+        <span scroll-to-top style="color:white;">{{ workTitle.getTitle() }} </span>
     </span>
 
   <span ng-if=" showWorkTitle != 'exhibit' && showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
