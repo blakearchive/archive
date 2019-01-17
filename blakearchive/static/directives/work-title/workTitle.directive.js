@@ -4,6 +4,7 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
     var title = "";
     vm.showOverlay = false;
     vm.showOverlayCopyInfo = false;
+    vm.showOverlayExhibitContents  = false;
 
     vm.getTitle = function(){
 
