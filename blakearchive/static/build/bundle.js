@@ -25965,7 +25965,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
       return;
     }
     BlakeDataService.getCaptionsForImage(exhibitId, vm.images[currentIndex++].image_id).then(function (r2) {
-      if (vm.images[currentIndex++].image_id == '37') {
+      if (vm.images[currentIndex].image_id == '37') {
         console.log(r2);
       }
       vm.captions.push(r2);
