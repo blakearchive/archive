@@ -29,7 +29,9 @@ angular.module('blake').controller('ExhibitController', function (
         return;
       }
       BlakeDataService.getCaptionsForImage(exhibitId, vm.images[currentIndex++].image_id).then(function(r2){
-          r2 = $sce.trustAsHtml(r2);
+          if(image_id == '37') {
+            console.log(r2);
+          }
           vm.captions.push(r2);
           vm.setNextCaption();
       });
