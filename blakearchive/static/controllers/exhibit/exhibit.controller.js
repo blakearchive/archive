@@ -29,8 +29,8 @@ angular.module('blake').controller('ExhibitController', function (
         return;
       }
       BlakeDataService.getCaptionsForImage(exhibitId, vm.images[currentIndex++].image_id).then(function(r2){
-          r2asHTML = $sce.trustAsHtml(r2);
-          vm.captions.push(r2asHTML);
+          r2.caption = $sce.trustAsHtml(r2);
+          vm.captions.push(r2);
           vm.setNextCaption();
       });
     }
