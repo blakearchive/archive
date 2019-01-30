@@ -127,8 +127,8 @@ nav.navbar ul.navbar-nav ul.dropdown-menu > div > li.active > a {
 
 .exhibit-thumb-slide a img{
   position: inline;
-  bottom: 1px;
-  height: 15vh;
+  height: 99%;
+  padding-top: 1%;
 }
 
 .exhibit-thumb-slide .scroller-right{
