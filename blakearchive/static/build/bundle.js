@@ -25965,7 +25965,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
       return;
     }
     BlakeDataService.getCaptionsForImage(exhibitId, vm.images[currentIndex++].image_id).then(function (r2) {
-      r2.caption = $sce.trustAsHtml(r2);
+      r2.caption = $sce.trustAsHtml(r2.caption);
       vm.captions.push(r2);
       vm.setNextCaption();
     });
