@@ -34,11 +34,11 @@
                           <input ng-model=show type=checkbox  ng-class='{open:show}'>
                           {{ct.title}}
                         </h2>
-                        <p ng-show=show ng-bind-html="ct.caption"></p><br/>
+                        <p ng-show=show ng-bind-html="trustAsHtml(ct.caption)"></p><br/>
                       </span>
 
                       <span ng-if="c.length == 1" ng-repeat="ct in c">
-                        <p ng-bind-html="ct.caption"></p><br/>
+                        <p ng-bind-html="trustAsHtml(ct.caption)"></p><br/>
                       </span>
 
                     </span>
