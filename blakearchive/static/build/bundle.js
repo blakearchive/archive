@@ -25970,6 +25970,10 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
     });
   };
 
+  $scope.trustAsHtml = function (string) {
+    return $sce.trustAsHtml(string);
+  };
+
   vm.scrollTo = function (id) {
     $rootScope.doneSettingCopy = true;
     var target = '#' + id;
