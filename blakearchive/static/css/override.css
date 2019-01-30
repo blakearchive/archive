@@ -145,6 +145,17 @@ nav.navbar ul.navbar-nav ul.dropdown-menu > div > li.active > a {
         height: 100%;
 }
 
+.exhibit-thumb-slide .slide-box-viewport .slide-box-wrapper{
+        white-space: nowrap;
+        position:absolute;
+        -webkit-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) left;
+        -moz-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) left;
+        -ms-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) left;
+        -o-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) left;
+        transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) left;
+        height: 100%;
+}
+
 /*.exhibit-thumb-slide .slide-box-viewport::-webkit-scrollbar {
     -webkit-appearance: none;
 }
