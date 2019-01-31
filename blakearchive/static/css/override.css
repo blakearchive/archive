@@ -14,8 +14,8 @@ nav.navbar ul.navbar-nav ul.dropdown-menu > li > a.exhibit {
   
 }
 
-nav.navbar ul.navbar-nav ul.dropdown-menu > div > li > a.exhibit:hover,
-nav.navbar ul.navbar-nav ul.dropdown-menu > div > li > a.exhibit:focus {
+nav.navbar ul.navbar-nav ul.dropdown-menu > li > a.exhibit:hover,
+nav.navbar ul.navbar-nav ul.dropdown-menu > li > a.exhibit:focus {
   color: #333 !important; 
 }
 
