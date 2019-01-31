@@ -32,8 +32,8 @@
 
                       <span ng-if="c.length > 1" ng-repeat="ct in c">
                         <h2 style="margin-top:0px; color:rgba(233,188,71,1)">
-                          <input ng-model=show type=checkbox  ng-class='{open:show}'>
-                          {{ct.title}}
+                          <label><input ng-model=show type=checkbox  ng-class='{open:show}'>
+                          {{ct.title}}</label>
                         </h2>
                         <p ng-show=show ng-bind-html="trustAsHtml(ct.caption)"></p><br/>
                       </span>
