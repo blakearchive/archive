@@ -1,3 +1,19 @@
+nav.navbar ul.navbar-nav ul.dropdown-menu > li > a.exhibit {
+  color: yellow;
+  font-size: 13px;
+  white-space: normal;
+  border-radius: 2px;
+  margin-bottom: 1px;
+  /*taking padding out because Drawings and Paintings 
+  is a big menu and goes outside the window if the window 
+  is too small*/
+  /*padding: 7px 20px;*/
+}
+
+.exhibit {
+  
+}
+
 .btn-default:hover,
 .btn-default:focus,
 .btn-default.focus,
