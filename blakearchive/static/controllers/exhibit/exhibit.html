@@ -26,12 +26,12 @@
                 <img ng-if="i.dbi != ''" magnify-image ng-src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg" id="{{ $index+1 }}">
                 <div class="reading-copy " style="width:min-content;width:-moz-min-content">
                   <div style="width:10%" class="reading-copy-inner ">
-                    <h2 ng-if="i.title" style="margin-top:-10px; color:rgba(233,188,71,1)"><span ng-bind-html="trustAsHtml(i.title)"></span></h2>
+                    <h2 ng-if="i.title" style="margin-top:-10px; line-height:0px; color:rgba(233,188,71,1)"><span ng-bind-html="trustAsHtml(i.title)"></span></h2>
 
                     <span ng-repeat="c in exhibitCtrl.captions[$index]">
 
                       <span ng-if="c.length > 1" ng-repeat="ct in c">
-                        <h2 style="margin-top:0px; line-height:0px; color:rgba(233,188,71,1)">
+                        <h2 style="margin-top:0px; color:rgba(233,188,71,1)">
                           <label style="cursor:pointer"><input style="cursor:pointer" ng-model=show type=checkbox  ng-class='{open:show}'>
                           {{ct.title}}</label>
                         </h2>
