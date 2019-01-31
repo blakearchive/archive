@@ -199,10 +199,10 @@ input[type=checkbox] {
     height: 1em;
 }
 input[type=checkbox]:after {
-content: '▹';
+content: '▸';
 }
 input.open[type=checkbox]:after {
-content: '▿';
+content: '▾';
 }
 
 @media (min-width: 768px) {
