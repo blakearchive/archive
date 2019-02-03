@@ -19,11 +19,11 @@
 
             <div style="position:sticky; left:75%; bottom:1%" class="btn-group edit-object " role="group ">
         <button type="button " style="height:21px;line-height:0.6;" class="btn btn-default " ng-click="exhibitCtrl.toggleArticle() ">
-            <span class="gr-abbreviation " style="height:21px;font-size:13px; ">&nbsp;&nbsp;&nbsp;&nbsp;Galleries Only</span>
+            <span class="gr-abbreviation " style="height:21px;font-size:13px; ">Galleries Only</span>
             <span class="gr-title "></span>
         </button>
         <button type="button " style="height:21px;line-height:0.6;" class="btn btn-default " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " ng-click="exhibitCtrl.zoom() " tooltip="Mouse over an image " tooltip-placement="top " tooltip-trigger="click ">
-            <span class="gr-abbreviation " style="height:21px;font-size:13px; ">&nbsp;&nbsp;&nbsp;&nbsp;Magnify</span>
+            <span class="gr-abbreviation " style="height:21px;font-size:13px; ">Magnify</span>
             <span class="gr-title "></span>
         </button>
       </div>
@@ -71,7 +71,7 @@
 
 
       </div>
-      <div style="height:20%;display:relative;width:66%;margin-left:13px;float:left">
+      <div id="thumbs" ng-style="'width' : ($root.showArticle == 'true') ? '66%' : '98%'" style="height:20%;display:relative;margin-left:13px;float:left">
               <!-- loop over exhibit images and make thumbnail/links -->
               <slide-box class="exhibit-thumb-slide" style="" >
                 <span ng-repeat="i in exhibitCtrl.images track by $index">
