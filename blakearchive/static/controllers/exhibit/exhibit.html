@@ -17,7 +17,7 @@
           <div class="compare-inner" style="height:100%; padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px; width:max-content;width:-moz-max-content" >
             
 
-            <div style="position:sticky; left:75%; bottom:1%" class="btn-group edit-object " role="group ">
+            <div style="position:sticky; left:75%; bottom:1%" class="btn-group edit-object " ng-class="{ 'hover':$root.showArticle==false, 'inactive':$root.showArticle==true} " role="group ">
         <button type="button " style="height:21px;line-height:0.6;" class="btn btn-default " ng-click="exhibitCtrl.toggleArticle() ">
             <span class="gr-abbreviation " style="height:21px;font-size:13px; ">Galleries Only</span>
             <span class="gr-title "></span>
