@@ -25951,6 +25951,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
   $rootScope.borderleftwidth = '13px';
   $rootScope.thumbsliderwidth = '66%';
   $rootScope.thumbslidermarginleft = '13px';
+  $rootScope.buttonsleft = '75%';
 
   //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
 
@@ -25966,12 +25967,14 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
       $rootScope.borderleftwidth = '0px';
       $rootScope.thumbsliderwidth = '100%';
       $rootScope.thumbslidermarginleft = '0px';
+      $rootScope.buttonsleft = '83%';
     } else {
       $rootScope.showArticle = true;
       $rootScope.activeapparatus = 'none';
       $rootScope.borderleftwidth = '13px';
       $rootScope.thumbsliderwidth = '66%';
       $rootScope.thumbslidermarginleft = '13px';
+      $rootScope.buttonsleft = '75%';
     }
   };
 
