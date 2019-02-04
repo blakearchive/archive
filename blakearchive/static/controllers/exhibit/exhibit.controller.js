@@ -12,6 +12,7 @@ angular.module('blake').controller('ExhibitController', function (
     var currentIndex = 0;
     $rootScope.showArticle = true;
     $rootScope.activeapparatus = 'none';
+    $rootScope.borderleftwidth = '13px';
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
 
@@ -24,10 +25,12 @@ angular.module('blake').controller('ExhibitController', function (
         if($rootScope.showArticle == true) {
           $rootScope.showArticle = false;
           $rootScope.activeapparatus = 'galleriesonly';
+          $rootScope.borderleftwidth = '0px';
         }
         else {
           $rootScope.showArticle = true;
           $rootScope.activeapparatus = 'none';
+          $rootScope.borderleftwidth = '13px';
         }
 
     }
