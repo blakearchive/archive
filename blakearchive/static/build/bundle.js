@@ -25949,6 +25949,8 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
   $rootScope.showArticle = true;
   $rootScope.activeapparatus = 'none';
   $rootScope.borderleftwidth = '13px';
+  $rootScope.thumbsliderwidth = '66%';
+  $rootScope.thumbslidermarginleft = '13px';
 
   //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
 
@@ -25962,10 +25964,14 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
       $rootScope.showArticle = false;
       $rootScope.activeapparatus = 'galleriesonly';
       $rootScope.borderleftwidth = '0px';
+      $rootScope.thumbsliderwidth = '100%';
+      $rootScope.thumbslidermarginleft = '0px';
     } else {
       $rootScope.showArticle = true;
       $rootScope.activeapparatus = 'none';
       $rootScope.borderleftwidth = '13px';
+      $rootScope.thumbsliderwidth = '66%';
+      $rootScope.thumbslidermarginleft = '13px';
     }
   };
 
