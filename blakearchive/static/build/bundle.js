@@ -25967,7 +25967,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
       $rootScope.borderleftwidth = '0px';
       $rootScope.thumbsliderwidth = '100%';
       $rootScope.thumbslidermarginleft = '0px';
-      $rootScope.buttonsleft = '83%';
+      $rootScope.buttonsleft = '83.4%';
     } else {
       $rootScope.showArticle = true;
       $rootScope.activeapparatus = 'none';
