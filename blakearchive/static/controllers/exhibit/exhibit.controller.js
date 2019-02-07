@@ -37,7 +37,7 @@ angular.module('blake').controller('ExhibitController', function (
           $rootScope.showArticle = true;
           $rootScope.activeapparatus = 'none';
           $rootScope.borderleftwidth = '13px';
-          $rootScope.thumbsliderwidth = '66%';
+          $rootScope.thumbsliderwidth = '66.3%';
           $rootScope.thumbslidermarginleft = '13px';
           $rootScope.buttonsleft = '75%';
         }
