@@ -25949,7 +25949,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
   $rootScope.showArticle = true;
   $rootScope.activeapparatus = 'none';
   $rootScope.borderleftwidth = '13px';
-  $rootScope.thumbsliderwidth = '66.3%';
+  $rootScope.thumbsliderwidth = '66%';
   $rootScope.thumbslidermarginleft = '13px';
   $rootScope.buttonsleft = '75%';
 
@@ -25972,7 +25972,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
       $rootScope.showArticle = true;
       $rootScope.activeapparatus = 'none';
       $rootScope.borderleftwidth = '13px';
-      $rootScope.thumbsliderwidth = '66.3%';
+      $rootScope.thumbsliderwidth = '66%';
       $rootScope.thumbslidermarginleft = '13px';
       $rootScope.buttonsleft = '75%';
     }
