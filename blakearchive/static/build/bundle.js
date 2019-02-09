@@ -25968,7 +25968,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
       $rootScope.borderleftwidth = '0px';
       $rootScope.thumbsliderwidth = '100%';
       $rootScope.thumbslidermarginleft = '0px';
-      $rootScope.buttonsleft = '82.8%';
+      $rootScope.buttonsleft = '82.75%';
       $rootScope.galleriesMarginLeft = '0%';
     } else {
       $rootScope.showArticle = true;
