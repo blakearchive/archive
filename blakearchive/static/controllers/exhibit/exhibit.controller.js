@@ -32,7 +32,7 @@ angular.module('blake').controller('ExhibitController', function (
           $rootScope.borderleftwidth = '0px';
           $rootScope.thumbsliderwidth = '100%';
           $rootScope.thumbslidermarginleft = '0px';
-          $rootScope.buttonsleft = '82.5%';
+          $rootScope.buttonsleft = '82.8%';
           $rootScope.galleriesMarginLeft = '0%'
         }
         else {
