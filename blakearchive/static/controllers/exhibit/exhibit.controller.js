@@ -15,7 +15,7 @@ angular.module('blake').controller('ExhibitController', function (
     $rootScope.borderleftwidth = '13px';
     $rootScope.thumbsliderwidth = '66%';
     $rootScope.thumbslidermarginleft = '13px';
-    $rootScope.buttonsleft = '75%';
+    $rootScope.buttonsleft = '74%';
     $rootScope.galleriesMarginLeft = '33%';
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
@@ -32,7 +32,7 @@ angular.module('blake').controller('ExhibitController', function (
           $rootScope.borderleftwidth = '0px';
           $rootScope.thumbsliderwidth = '100%';
           $rootScope.thumbslidermarginleft = '0px';
-          $rootScope.buttonsleft = '83.4%';
+          $rootScope.buttonsleft = '82.4%';
           $rootScope.galleriesMarginLeft = '0%'
         }
         else {
@@ -41,7 +41,7 @@ angular.module('blake').controller('ExhibitController', function (
           $rootScope.borderleftwidth = '13px';
           $rootScope.thumbsliderwidth = '66%';
           $rootScope.thumbslidermarginleft = '13px';
-          $rootScope.buttonsleft = '75%';
+          $rootScope.buttonsleft = '74%';
           $rootScope.galleriesMarginLeft = '33%';
         }
 
