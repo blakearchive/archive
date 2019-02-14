@@ -17,6 +17,7 @@ angular.module('blake').controller('ExhibitController', function (
     $rootScope.thumbslidermarginleft = '13px';
     $rootScope.buttonsleft = '74%';
     $rootScope.galleriesMarginLeft = '33%';
+    $rootScope.zoom = false;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
 
