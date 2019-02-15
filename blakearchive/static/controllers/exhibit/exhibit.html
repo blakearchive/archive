@@ -1,4 +1,4 @@
-<div id="archive" class="container-fluid archive-top">
+<div ng-if="exhibitCtrl.exId != 'illuminatingvala'" id="archive" class="container-fluid archive-top">
   <div id="object-container" class="row" >
 
     <div id="object-view" class="reading-view">
@@ -94,3 +94,102 @@
     </div>
   </div>
 </div>
+
+<!--for vala exhibit-->
+<div ng-if="exhibitCtrl.exId == 'illuminatingvala'" id="archive" class="container-fluid archive-top">
+  <div id="object-container" class="row" >
+
+    <div id="object-view" class="reading-view">
+      <div ng-if="$root.showArticle == true" auto-height adjust="60" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="exhibit_article_content" >
+         
+        <div bind-html-compile="exhibitCtrl.exhibit_article_content">
+          
+        </div>
+      </div>
+      <div auto-height adjust="60" breakpoint="768"  class="container-fluid" ng-style="{'margin-left':galleriesMarginLeft}">
+      <div style="height:80%; overflow-y:hidden; margin-bottom:0px; "
+        id="compare" class="scrollbar"  left-on-broadcast="viewSubMenu::readingMode" style="width:67%;">
+        
+        <div class="featured-object" style="height:100%;">
+          
+          <div class="compare-inner" style="height:100%; padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px; width:max-content;width:-moz-max-content" >
+            
+
+            <div ng-style="{'left': buttonsleft}" style="position:sticky; bottom:1%" class="btn-group edit-object " role="group ">
+        <button ng-class="{ 'hover':activeapparatus=='galleriesonly' } " type="button " style="height:21px;line-height:0.6;" class="btn btn-default " ng-click="exhibitCtrl.toggleArticle() ">
+            <span class="gr-abbreviation " style="height:21px;font-size:13px; ">Galleries Only</span>
+            <span class="gr-title "></span>
+        </button>
+        <button type="button " style="height:21px;line-height:0.6;" class="btn btn-default " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " ng-click="exhibitCtrl.zoom() " tooltip="Mouse over an image" tooltip-placement="top" tooltip-trigger="click ">
+            <span class="gr-abbreviation " style="height:21px;font-size:13px; ">Magnify</span>
+            <span class="gr-title "></span>
+        </button>
+      </div>
+
+            <div style="height:100%;" class="item" ng-repeat="i in exhibitCtrl.images track by $index" id="item-{{$index}}">
+
+              <div class="reading-wrapper" style="height:100%;" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
+
+                <img ng-if="i.dbi != ''" magnify-image ng-src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg" id="{{ $index+1 }}">
+                <div class="reading-copy " style="width:min-content;width:-moz-min-content">
+                  <div style="width:10%" class="reading-copy-inner ">
+                    <h2 ng-if="i.title" style="margin-top:-10px; line-height:0px; color:rgba(233,188,71,1)"><span ng-bind-html="trustAsHtml(i.title)"></span></h2>
+
+                    <span ng-repeat="c in exhibitCtrl.captions[$index]">
+
+                      <span ng-if="c.length > 1" ng-repeat="ct in c">
+                        <h2 style="margin-top:0px; color:rgba(233,188,71,1)">
+                          <label style="cursor:pointer"><input style="cursor:pointer" ng-model=show type=checkbox  ng-class='{open:show}'>
+                          {{ct.title}}</label>
+                        </h2>
+                        <p ng-show=show ng-bind-html="trustAsHtml(ct.caption)"></p><br/>
+                      </span>
+
+                      <span ng-if="c.length == 1" ng-repeat="ct in c">
+                        <p ng-bind-html="trustAsHtml(ct.caption)"></p><br/>
+                      </span>
+
+                    </span>
+
+                    
+
+
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+            
+          </div>
+
+
+        </div>
+
+
+
+      </div>
+      <div id="thumbs" style="height:20%;display:relative;">
+              <!-- loop over exhibit images and make thumbnail/links -->
+              <slide-box class="exhibit-thumb-slide" style="" >
+                <span ng-repeat="i in exhibitCtrl.images track by $index">
+                <a href="" ng-click="exhibitCtrl.scrollTo($index+1);"><img src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg"/></a>
+                </span>
+              </slide-box>
+            <!-- -->
+            </div>
+
+            <!--
+      <div ng-if="$root.showArticle == false" id="thumbs" style="height:20%;display:relative;width:100%;margin-left:0px;float:left">
+              <slide-box class="exhibit-thumb-slide" style="" >
+                <span ng-repeat="i in exhibitCtrl.images track by $index">
+                <a href="" ng-click="exhibitCtrl.scrollTo($index+1);"><img src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg"/></a>
+                </span>
+              </slide-box>
+            </div>
+          -->
+      </div>
+    </div>
+  </div>
+</div>
+
