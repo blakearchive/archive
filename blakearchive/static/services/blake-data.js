@@ -487,8 +487,6 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
         ]).then(function (data) {
             blakeData.copy = data[0];
             blakeData.copyObjects = data[1];
-            console.log(blakeData.copy);
-            console.log(blakeData.copyObjects);
 
             //console.log('selected Work');
             //console.log(blakeData.work);
