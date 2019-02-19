@@ -365,4 +365,19 @@ transforms transcriptions
             <xsl:apply-templates/>
         </del>
     </xsl:template>
+    <!-- additional template for handShift style -->
+    <xsl:template match="handShift">
+            <xsl:choose>
+                <xsl:when test="@medium='pencil'">
+                    <span class="tei-handShift-pencil"> <!--  style="color:#626262" -->
+                        <xsl:apply-templates/>
+                    </span>
+                </xsl:when>
+                <xsl:when test="@medium='black ink'">
+                    <span class="tei-handShift-blackink"> <!-- style="color:#626262" -->
+                        <xsl:apply-templates/>
+                    </span>
+                </xsl:when>
+            </xsl:choose>
+    </xsl:template>
 </xsl:stylesheet>
