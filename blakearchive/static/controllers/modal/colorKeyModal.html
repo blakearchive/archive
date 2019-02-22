@@ -2,11 +2,9 @@
     <button type="button" class="close" ng-click="close()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title">Transcription Color Key</h4>
 </div>
-<div style="background:#1d1d1d" class="modal-body">
-
+<div class="modal-body">
     <table class="table" id="colorKeyTable">
         <tbody>
-
             <tr><th colspan="2">Legible Deletions</th></tr>
             <tr>
                 <td><span class="tei-del-overstrike">white font with white strikethrough</span></td>
@@ -22,7 +20,7 @@
                 <td><span class="tei-rep">blue font</span></td>
                 <td>words or phrases added to the original text, including corrections or changes written over deletions</td>
             </tr>
-
+            
             <tr><th colspan="2">Substitutions</th></tr>
             <tr>
                 <td><span class="tei-preceding-delspan-substspan">deletion</span><span class="tei-addspan-substspan">addition</span></td>
@@ -46,19 +44,18 @@
                 <td><span class="tei-gap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 <td>illegible handwriting, inkblots, damage</td>
             </tr>
-
+            
             <tr><th colspan="2">Unclear Text</th></tr>
             <tr>
                 <td><span class="tei-unclear-hi">purple font</span></td>
                 <td>unclear or conjectural text</td>
             </tr>
-
+            
             <tr><th colspan="2">Instrument Shift</th>
             <tr>
-                <td><span class="tei-handShift-pencil">gray font</span></td>
+                <td><span class="tei-handShift">brown font</span></td>
                 <td>sequence of text written with an instrument different than the default of the work</td>
             </tr>
         </tbody>
     </table>
-
 </div>
