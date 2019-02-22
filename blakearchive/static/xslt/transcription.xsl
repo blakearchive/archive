@@ -2,7 +2,7 @@
 transforms transcriptions
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exist="http://exist.sourceforge.net/NS/exist" version="1.0">
-    <!--<xsl:include href="includes.xsl"/>-->
+    <xsl:include href="includes.xsl"/>
     <xsl:include href="wba_ms_test.xsl"/>
     <xsl:template match="/">
         <div>
@@ -195,7 +195,6 @@ transforms transcriptions
         </xsl:choose>
     </xsl:template>
     <xsl:template match="l">
-        <xsl:variable name="lg-indent"><xsl:value-of select="number(ancestor::lg[1]/@indent)"/></xsl:variable>
         <tr>
             <td class="tei-line-number"> <!-- "width: 5%; font-family:Times New Roman;font-size:8pt;color:gray;" -->
                 <xsl:choose>
@@ -214,15 +213,6 @@ transforms transcriptions
                 <xsl:attribute name="style">text-align:<xsl:value-of select="@justify"/></xsl:attribute>
                 <span>
                     <xsl:choose>
-                      <!-- LINE GROUP INDENTATION -->
-                        <xsl:when test="$lg-indent &gt; 0">
-                          <xsl:call-template name="spacemaker">
-                            <xsl:with-param name="spaces">
-                              <xsl:value-of select="round($lg-indent * 1.75)"/>
-                            </xsl:with-param>
-                          </xsl:call-template>
-                        </xsl:when>
-                      <!-- LINE GROUP INDENTATION ENDS -->
                         <xsl:when test="@justify ='left'">
                             <xsl:if test="@indent">
                                 <xsl:call-template name="spacemaker">
@@ -342,6 +332,11 @@ transforms transcriptions
                     <xsl:apply-templates/>
                 </span>
             </xsl:when>
+            <xsl:when test="@rend='handshift'"><!-- style="color:#CD853F" -->
+                <span class="tei-handShift">
+                    <xsl:apply-templates/>
+                </span>
+            </xsl:when>
             <xsl:otherwise>
                 <span class="tei-hi-normal">
                     <xsl:apply-templates/>
@@ -364,20 +359,5 @@ transforms transcriptions
         <del type="wash" class="tei-del-overstrike-substspan">
             <xsl:apply-templates/>
         </del>
-    </xsl:template>
-    <!-- additional template for handShift style -->
-    <xsl:template match="handShift">
-            <xsl:choose>
-                <xsl:when test="@medium='pencil'">
-                    <span class="tei-handShift-pencil"> <!--  style="color:#626262" -->
-                        <xsl:apply-templates/>
-                    </span>
-                </xsl:when>
-                <xsl:when test="@medium='black ink'">
-                    <span class="tei-handShift-blackink"> <!-- style="color:#626262" -->
-                        <xsl:apply-templates/>
-                    </span>
-                </xsl:when>
-            </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>
