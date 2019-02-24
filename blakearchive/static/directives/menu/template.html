@@ -61,8 +61,8 @@
       <li role="presentation" class="dropdown-header">Manuscripts</li>
       <li ng-repeat="menu_list in menu.lists.manuscripts_typo[0].manuscripts"><a
           href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a></li>
-      <li role="presentation" class="dropdown-header">Letters</li>
-      <li ng-repeat="menu_list in menu.lists.manuscripts_typo[0].letters"><a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
+      <li role="presentation" class="dropdown-header">Letters and Receipts</li>
+      <li ng-repeat="menu_list in menu.lists.manuscripts_typo[0].lettersandreceipts"><a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
         (Composed {{ menu_list.composition_date_string }})</a></li>
       <li role="presentation" class="dropdown-header">Typographic Editions</li>
       <li ng-if="menu.lists.manuscripts_typo[0].typographic[0] != null" ng-repeat="menu_list in menu.lists.manuscripts_typo[0].typographic"><a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
