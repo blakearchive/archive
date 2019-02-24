@@ -74,7 +74,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                 return "manuscripts_typo:manuscripts";
                 break;
             case "ltr":
-                return "manuscripts_typo:letters";
+                return "manuscripts_typo:lettersandreceipts";
                 break;
             case "te":
                 return "manuscripts_typo:typographic";
@@ -144,7 +144,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             }],
             manuscripts_typo: [{
                 manuscripts: [],
-                letters: [],
+                lettersandreceipts: [],
                 typographic: []
             }],
             exhibits: []
