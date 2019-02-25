@@ -481,12 +481,12 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                     endstring = '';
 
 
-                if(label == 'Copy/Set Information') {
+                if(label == 'Copy/Set/Receipt Information') {
                     if(results[workIndex][2].length > 1 && !results[workIndex][0].virtual){
                         string += '(' + results[workIndex][2].length+ ' Copies/Sets' + ')';
                     }
                     if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
-                        string += '(' + results[workIndex][2].length+ ' Copy/Set' + ')';
+                        string += '(' + results[workIndex][2].length+ ' Copy/Set/Receipt' + ')';
 
                     }
                     return string;
@@ -504,7 +504,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                     string += ' across '+results[workIndex][2].length+ ' Copies/Sets';
                 }
                 if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
-                    string += ' across '+results[workIndex][2].length+ ' Copy/Set';
+                    string += ' across '+results[workIndex][2].length+ ' Copy/Set/Receipt';
 
                 }
 
