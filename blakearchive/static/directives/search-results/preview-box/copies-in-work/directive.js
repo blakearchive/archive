@@ -1,6 +1,7 @@
 angular.module("blake").controller("CopiesInWorkPreviewController", function (SearchService) {
     let vm = this;
     vm.s = SearchService;
+    console.log(vm.s);
 });
 
 angular.module("blake").directive("copiesInWorkPreview", function () {
