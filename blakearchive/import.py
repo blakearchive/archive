@@ -405,6 +405,7 @@ class BlakeCopyImporter(BlakeImporter):
         bad_xml = etree.tostring(root)
         copy = models.BlakeCopy()
         copy.bad_id = root.get("id").lower()
+        copy.work_bad_id = copy.bad_id.split(".", 1)[0]
         copy.composition_date_string = self.get_compdate_string(root)
         copy.composition_date_value = self.get_compdate_value(root)
         copy.composition_date = self.extract_date(copy.composition_date_string)
