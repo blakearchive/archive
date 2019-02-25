@@ -29720,7 +29720,7 @@ angular.module('blake').directive("viewSubMenu", function () {
 angular.module("blake").controller("WorkCopiesController", ["BlakeDataService", function (BlakeDataService) {
     var vm = this;
     vm.bds = BlakeDataService;
-    console.log(vm.bds.workCopies);
+    console.log(vm.bds);
 }]);
 
 angular.module('blake').directive("workCopies", function () {
