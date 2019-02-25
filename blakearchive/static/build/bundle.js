@@ -28979,7 +28979,7 @@ angular.module("blake").component("searchBox", {
 angular.module("blake").controller("CopiesInWorkPreviewController", ["SearchService", function (SearchService) {
     let vm = this;
     vm.s = SearchService;
-    console.log(vm.s);
+    console.log(vm.results);
 }]);
 
 angular.module("blake").directive("copiesInWorkPreview", function () {
