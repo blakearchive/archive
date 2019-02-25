@@ -29792,8 +29792,10 @@ angular.module("blake").controller("WorkTitleController", ["$rootScope", "$route
             return '';
         } else if (vm.bds.copy.archive_set_id != null) {
             return vm.bds.copy.archive_set_id;
-        } else {
+        } else if (vm.bds.work.bad_id != 'bb134') {
             return vm.bds.copy.archive_copy_id == null ? '' : 'Copy ' + vm.bds.copy.archive_copy_id;
+        } else if (vm.bds.work.bad_id == 'bb134') {
+            return vm.bds.copy.archive_copy_id == null ? '' : 'Receipt ' + vm.bds.copy.archive_copy_id;
         }
     };
 
