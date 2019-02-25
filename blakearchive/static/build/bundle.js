@@ -27150,8 +27150,10 @@ angular.module('blake').controller("CopyTabsController", ["$rootScope", "BlakeDa
                 }
             } else if (vm.bds.copy.archive_set_id != null) {
                 return 'Set';
-            } else {
+            } else if (vm.bds.work.bad_id != 'bb134') {
                 return 'Copy';
+            } else if (vm.bds.work.bad_id == 'bb134') {
+                return 'Receipt';
             }
         }
     };
