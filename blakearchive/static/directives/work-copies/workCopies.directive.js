@@ -1,7 +1,6 @@
 angular.module("blake").controller("WorkCopiesController", function (BlakeDataService) {
     var vm = this;
     vm.bds = BlakeDataService;
-    console.log(vm.bds);
 });
 
 angular.module('blake').directive("workCopies", function () {
