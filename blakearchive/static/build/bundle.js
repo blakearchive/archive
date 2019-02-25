@@ -33780,8 +33780,10 @@ angular.module("blake").factory("SearchService", ["worktitleService", "lightbox_
                 case 'copy':
                     if (resultTree[s.selectedWork][2][s.selectedCopy][0].archive_set_id != null) {
                         return resultTree[s.selectedWork][2][s.selectedCopy][0].archive_set_id;
-                    } else {
+                    } else if (resultTree[s.selectedWork][0].bad_id != "bb134") {
                         return 'Copy ' + resultTree[s.selectedWork][2][s.selectedCopy][0].archive_copy_id;
+                    } else if (resultTree[s.selectedWork][0].bad_id == "bb134") {
+                        return 'Receipt ' + resultTree[s.selectedWork][2][s.selectedCopy][0].archive_copy_id;
                     }
 
             }
