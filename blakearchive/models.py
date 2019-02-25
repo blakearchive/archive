@@ -217,7 +217,6 @@ class BlakeCopy(db.Model):
     __tablename__ = "copy"
     copy_id = db.Column(db.Integer, primary_key=True)
     work_id = db.Column(db.Integer, db.ForeignKey("work.work_id"))
-    work_bad_id = db.Column(db.Text)
     bad_id = db.Column(db.UnicodeText, index=True)
     archive_copy_id = db.Column(db.Text)
     archive_set_id = db.Column(db.Text)
@@ -249,7 +248,6 @@ class BlakeCopy(db.Model):
             "archive_copy_id": self.archive_copy_id,
             "archive_set_id": self.archive_set_id,
             "work_id": self.work_id,
-            "work_bad_id": self.work_bad_id,
             "bad_id": self.bad_id,
             "source": self.source,
             "title": self.title,
