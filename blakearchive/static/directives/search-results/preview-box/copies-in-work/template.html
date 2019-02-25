@@ -1,7 +1,7 @@
 <!-- copies in work -->
 <div>
     <div class="copies-in-work col-sm-12 text-center" auto-width adjust="200" breakpoint="992" divide="3">
-        <h5>Matching Copies</h5>
+        <h5>Matching Copies/Sets/Receipts</h5>
         <br>
         <div class="flex-wrap">
             <div class="handprint-block-small"
@@ -10,7 +10,9 @@
             >
                 <a ng-click="cw.s.showHighlight(cw.tree, $index)">
                     <span class="object-img" style="background-image: url(/images/{{ copy[0].image }}.100.jpg);"></span>
-                    <span class="description">Copy {{copy[0].archive_copy_id}}</span>
+                    <span ng-if="cw.s.selectedWork.bad_id != 'bb134'" class="description">Copy {{copy[0].archive_copy_id}}</span>
+                    <span ng-if="cw.s.selectedWork.bad_id == 'bb134'" class="description">Receipt {{copy[0].archive_copy_id}}</span>
+
                 </a>
             </div>
         </div>
