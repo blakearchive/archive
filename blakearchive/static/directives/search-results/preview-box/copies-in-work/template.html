@@ -10,8 +10,8 @@
             >
                 <a ng-click="cw.s.showHighlight(cw.tree, $index)">
                     <span class="object-img" style="background-image: url(/images/{{ copy[0].image }}.100.jpg);"></span>
-                    <span ng-if="cw.s.copyResults.copy-info[0][0].bad_id != 'bb134'" class="description">Copy {{copy[0].archive_copy_id}}</span>
-                    <span ng-if="cw.s.copyResults.copy-info[0][0].bad_id == 'bb134'" class="description">Receipt {{copy[0].archive_copy_id}}</span>
+                    <span ng-if="cw.s.results[0][0].bad_id != 'bb134'" class="description">Copy {{copy[0].archive_copy_id}}</span>
+                    <span ng-if="cw.s.results[0][0].bad_id == 'bb134'" class="description">Receipt {{copy[0].archive_copy_id}}</span>
 
                 </a>
             </div>
