@@ -208,8 +208,7 @@ class BlakeObject(db.Model):
             "notes": self.notes,
             "object_note_images": self.object_note_images,
             "object_group": self.object_group,
-            "fragment": self.fragment,
-            "object_group": self.object_group
+            "fragment": self.fragment
         }
 
 
