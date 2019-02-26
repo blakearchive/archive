@@ -46,7 +46,7 @@
 
     <header ng-if="workTitle.bds.copy.archive_set_id == null && workTitle.bds.work.bad_id == 'bb134'" class="page-header">
       <p class="subhead">Receipt INFORMATION</p>
-      <h1 style="color:rgba(233,188,71,1)">Receipt {{workTitle.getCopyPhrase()}}--{{ workTitle.getTitle() }}</h1>
+      <h1 style="color:rgba(233,188,71,1)">Receipt {{workTitle.getCopyPhrase()}}--{{ workTitle.getTitle() }} (Composed {{workTitle.bds.work.composition_date_string}})</h1>
     </header>
 
     <div id="archive-tabs" role="tabpanel">
