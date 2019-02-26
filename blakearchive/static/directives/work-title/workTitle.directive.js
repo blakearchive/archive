@@ -64,7 +64,7 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
         } else if(vm.bds.work.bad_id != 'bb134') {
             return vm.bds.copy.archive_copy_id == null ? '' : 'Copy '+vm.bds.copy.archive_copy_id;
         } else if(vm.bds.work.bad_id == 'bb134') {
-            return vm.bds.copy.archive_copy_id == null ? '' : 'Receipt '+vm.bds.copy.archive_copy_id;
+            return vm.bds.copy.archive_copy_id == null ? '' : '#'+vm.bds.copy.archive_copy_id;
         }
     }
 
