@@ -80,7 +80,7 @@
     </span>
 
     <span ng-if="workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.work.medium != 'exhibit' && workTitle.bds.work.bad_id == 'bb134'">
-      <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Receipts (Composed {{workTitle.bds.work.composition_date_string}})</a>: <a scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true" style="color:white;">{{workTitle.getCopyPhrase()}}</a>--{{ workTitle.getTitle() }}</a>
+      <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Receipts</a>: <a scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true" style="color:white;">{{workTitle.getCopyPhrase()}}--{{ workTitle.getTitle() }}</a>
     </span>
 
     <span ng-if="workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.work.medium == 'exhibit'">
