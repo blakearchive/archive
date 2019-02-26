@@ -29521,6 +29521,7 @@ angular.module('blake').directive('textTranscription', function () {
 angular.module("blake").controller("TextualReferenceTabController", ["BlakeDataService", function (BlakeDataService) {
     let vm = this;
     vm.bds = BlakeDataService;
+    console.log(vm.bds);
 }]);
 
 angular.module("blake").component("textualReferenceTab", {
