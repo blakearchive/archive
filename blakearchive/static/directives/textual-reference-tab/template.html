@@ -5,7 +5,7 @@
         <h3>Objects</h3>
         <div ng-repeat="obj in tr.bds.object.text_ref.objects track by $index" class="col-sm-6 col-md-3">
             <handprint-block ng-if="obj.object_group !== null"
-                             link="/copy/letters?descId={{ obj.desc_id }}"
+                             link="/copy/{{obj.virtualwork_id}}?descId={{ obj.desc_id }}"
                              image="{{ obj.dbi }}.100.jpg"
                              footer="{{ obj.object_group }}">
             </handprint-block>
