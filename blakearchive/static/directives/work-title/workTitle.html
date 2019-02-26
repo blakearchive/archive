@@ -34,13 +34,19 @@
 <div id="OverlayCopyInfo" class="overlay" ng-show="$root.showOverlayCopyInfo == true">
 
     <a style="text-decoration: none" href="" class="closebtnleft" ng-click="$root.showOverlayCopyInfo = false">&times;</a>
-    <header ng-if="workTitle.bds.copy.archive_set_id == null" class="page-header">
+    <header ng-if="workTitle.bds.copy.archive_set_id == null && workTitle.bds.work.bad_id != 'bb134'" class="page-header">
       <p class="subhead">COPY INFORMATION</p>
       <h1 style="color:rgba(233,188,71,1)">{{ workTitle.bds.work.title }} {{workTitle.getCopyPhrase()}} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>
     </header>
     <header ng-if="workTitle.bds.copy.archive_set_id != null" class="page-header">
       <p class="subhead">SET INFORMATION</p>
       <h1 style="color:rgba(233,188,71,1)">{{ workTitle.bds.work.title }} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>
+    </header>
+
+
+    <header ng-if="workTitle.bds.copy.archive_set_id == null && workTitle.bds.work.bad_id == 'bb134'" class="page-header">
+      <p class="subhead">Receipt INFORMATION</p>
+      <h1 style="color:rgba(233,188,71,1)">Receipt {{workTitle.getCopyPhrase()}}--{{ workTitle.getTitle() }}</h1>
     </header>
 
     <div id="archive-tabs" role="tabpanel">
