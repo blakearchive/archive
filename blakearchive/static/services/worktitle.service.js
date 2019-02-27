@@ -48,11 +48,9 @@ angular.module("blake")
   svc.getCopyPhrase = function() {
       if(svc.bds.work.virtual){
           return '';
-       } else if(svc.bds.work.bad_id != 'bb134') {
-            return svc.bds.copy.archive_copy_id == null ? '' : 'Copy '+svc.bds.copy.archive_copy_id;
-        } else if(svc.bds.work.bad_id == 'bb134') {
-            return svc.bds.copy.archive_copy_id == null ? '' : '#'+svc.bds.copy.archive_copy_id;
-        }
+      } else {
+          return svc.bds.copy.archive_copy_id == null ? '' : 'Copy '+svc.bds.copy.archive_copy_id;
+      }
   }
 
 
