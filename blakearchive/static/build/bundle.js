@@ -29478,7 +29478,7 @@ angular.module("blake").controller("TextTranscriptionController", ["$routeParams
         });
     };
 
-    let teiClasses = ['tei-sic', 'tei-rep-overwrite', 'tei-rep', 'tei-del-overwrite', 'tei-del-erasure', 'tei-del-obscured', 'tei-del-overstrike', 'tei-del', 'tei-instr-pencil', 'tei-unclear-hi', 'tei-subst', 'tei-addspan-substspan', 'tei-add-substspan', 'tei-add', 'tei-gap-cancellation', 'tei-gap', 'tei-hspace', 'tei-preceding-delspan-substspan', 'tei-preceding-delspan', 'tei-preceding-addspan-substspan', 'tei-preceding-addspan'];
+    let teiClasses = ['tei-sic', 'tei-rep-overwrite', 'tei-rep', 'tei-del-overwrite', 'tei-del-erasure', 'tei-del-obscured', 'tei-del-overstrike', 'tei-del', 'tei-instr-pencil', 'tei-unclear-hi', 'tei-subst', 'tei-addspan-substspan', 'tei-add-substspan', 'tei-add', 'tei-gap-cancellation', 'tei-gap', 'tei-hspace', 'tei-preceding-delspan-substspan', 'tei-preceding-delspan', 'tei-preceding-addspan-substspan', 'tei-preceding-addspan', 'hi'];
 
     vm.hasColorKeyMarkup = function (teiMarkup) {
         let regex = new RegExp('(' + teiClasses.join('|') + ')', 'g');
