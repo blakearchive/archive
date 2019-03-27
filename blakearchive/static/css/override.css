@@ -210,15 +210,15 @@ nav.navbar ul.navbar-nav ul.dropdown-menu > div > li.active > a {
     border-radius: 8px; 
 } */ 
 
-input[type=checkbox] {
+input[type=captionarrow] {
   -webkit-appearance: none;
     width: 1em;
     height: 1em;
 }
-input[type=checkbox]:after {
+input[type=captionarrow]:after {
 content: '▸';
 }
-input.open[type=checkbox]:after {
+input.open[type=captionarrow]:after {
 content: '▾';
 }
 
