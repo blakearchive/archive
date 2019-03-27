@@ -210,15 +210,15 @@ nav.navbar ul.navbar-nav ul.dropdown-menu > div > li.active > a {
     border-radius: 8px; 
 } */ 
 
-.captionarrow input[type=checkbox] {
+.reading-wrapper input[type=checkbox] {
   -webkit-appearance: none;
     width: 1em;
     height: 1em;
 }
-.captionarrow input[type=checkbox]:after {
+.reading-wrapper input[type=checkbox]:after {
 content: '▸';
 }
-.captionarrow input.open[type=checkbox]:after {
+.reading-wrapper input.open[type=checkbox]:after {
 content: '▾';
 }
 
