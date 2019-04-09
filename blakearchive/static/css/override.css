@@ -5,7 +5,7 @@
 .box-shadow-menu:before {
   content: "";
   position: absolute;
-  left: 0;
+  left: 50%;
   top: 0.25em;
   width: 1em;
   height: 0.15em;
