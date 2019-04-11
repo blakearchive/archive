@@ -5928,6 +5928,7 @@ var map = {
 	"./textual-reference-tab/directive.js": 112,
 	"./to-top-button/directive.js": 113,
 	"./to-top-on-broadcast/directive.js": 114,
+	"./tooltip/directive.js": 228,
 	"./twitter-share/directive.js": 115,
 	"./view-sub-menu/viewSubMenu.directive.js": 116,
 	"./work-copies/workCopies.directive.js": 117,
@@ -61684,6 +61685,27 @@ module.exports = "/*!\n * jQuery JavaScript Library v3.2.1\n * https://jquery.co
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 226 */,
+/* 227 */,
+/* 228 */
+/***/ (function(module, exports) {
+
+angular.module("blake").directive('tooltip', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            element.hover(function () {
+                // on mouseenter
+                element.tooltip('show');
+            }, function () {
+                // on mouseleave
+                element.tooltip('hide');
+            });
+        }
+    };
+});
 
 /***/ })
 /******/ ]);
