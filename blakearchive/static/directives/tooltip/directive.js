@@ -1,4 +1,4 @@
-angular.module("blake").directive('tooltip', function(){
+angular.module("blake").directive('tooltip', function($window){
     return {
         restrict: 'A',
         link: function(scope, element, attrs){
