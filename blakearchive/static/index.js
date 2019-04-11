@@ -46,6 +46,18 @@ blake.config(function(ngDexieProvider){
   });
 });
 
+
+jQuery(document).ready(function() {
+    jQuery('[data-toggle="tooltip"]').each(function() {
+        var $elem = jQuery(this);
+        $elem.tooltip({
+            html:true,
+            container: $elem,
+            delay: {hide:400}
+        });
+    });
+});
+
 blake.value("directoryPrefix", directoryPrefix);
 
 blake.config(function ($routeProvider, $locationProvider) {
