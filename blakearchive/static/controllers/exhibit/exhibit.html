@@ -1,3 +1,18 @@
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  <script>
+jQuery(document).ready(function() {
+    jQuery('[data-toggle="tooltip"]').each(function() {
+        var $elem = jQuery(this);
+        $elem.tooltip({
+            html:true,
+            container: $elem,
+            delay: {hide:400}
+        });
+    });
+});
+  </script>
+
 <div ng-if="exhibitCtrl.exId != 'illuminatingvala'" id="archive" class="container-fluid archive-top">
   <div id="object-container" class="row" >
 
