@@ -525,7 +525,7 @@ a.footnote {
 }
 
 a.footnote span {
-   text-align: left;
+   text-align: justify;
         z-index: 10;
         display: none; 
         padding: 5px;
@@ -533,10 +533,9 @@ a.footnote span {
         opacity: 0.9;
         border-radius: 4px;
         box-shadow: 5px 5px 8px #D4D4D4;
-       /*left:-300%;*/
-       left:0;
+       left:-300%;
     top: 1.25em;
-        /*transform: translate(-50%, 0);*/
+        transform: translate(-50%, 0);
         position: relative; 
         width: 250px;
 }
