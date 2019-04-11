@@ -30009,9 +30009,9 @@ blake.config(["ngDexieProvider", function (ngDexieProvider) {
     });
 }]);
 
-jQuery(document).ready(function () {
-    jQuery('[data-toggle="tooltip"]').each(function () {
-        var $elem = jQuery(this);
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').each(function () {
+        var $elem = $(this);
         $elem.tooltip({
             html: true,
             container: $elem,
