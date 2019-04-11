@@ -29581,20 +29581,7 @@ angular.module("blake").directive('toTopOnBroadcast', function () {
 /* 115 */
 /***/ (function(module, exports) {
 
-angular.module("blake").directive('tooltip', ["$window", function ($window) {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            element.hover(function () {
-                // on mouseenter
-                element.tooltip('show');
-            }, function () {
-                // on mouseleave
-                element.tooltip('hide');
-            });
-        }
-    };
-}]);
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/ba001/Sites/blake/archive/blakearchive/static/directives/tooltip/directive.js'");
 
 /***/ }),
 /* 116 */
