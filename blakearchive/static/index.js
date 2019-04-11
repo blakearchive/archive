@@ -20,7 +20,6 @@ import 'script-loader!./js/angular-markdown-it/markdown-it.min';
 import './js/angular-markdown-it/angular-markdown-it';
 import './js/angular-fabric/fabric';
 import './js/angular-bind-html-compile/angular-bind-html-compile'
-import './js/jquery-1.12.3.min'
 
 let directoryPrefix = '';
 let carousel = angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition']);
@@ -45,17 +44,6 @@ blake.config(function(ngDexieProvider){
       });
 
   });
-});
-
-$(document).ready(function() {
-    $('[data-toggle="tooltip"]').each(function() {
-        var $elem = $(this);
-        $elem.tooltip({
-            html:true,
-            container: $elem,
-            delay: {hide:400}
-        });
-    });
 });
 
 blake.value("directoryPrefix", directoryPrefix);
