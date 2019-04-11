@@ -3,6 +3,7 @@ span.footnote:before {
   content: counter(footnotecounter);
   position: relative;
   top: -0.4em;
+  cursor:pointer;
 }
 
 span.footnote {
