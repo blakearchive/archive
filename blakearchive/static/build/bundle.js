@@ -5928,7 +5928,6 @@ var map = {
 	"./textual-reference-tab/directive.js": 112,
 	"./to-top-button/directive.js": 113,
 	"./to-top-on-broadcast/directive.js": 114,
-	"./tooltip/directive.js": 115,
 	"./twitter-share/directive.js": 116,
 	"./view-sub-menu/viewSubMenu.directive.js": 117,
 	"./work-copies/workCopies.directive.js": 118,
@@ -29578,12 +29577,7 @@ angular.module("blake").directive('toTopOnBroadcast', function () {
 });
 
 /***/ }),
-/* 115 */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/ba001/Sites/blake/archive/blakearchive/static/directives/tooltip/directive.js'");
-
-/***/ }),
+/* 115 */,
 /* 116 */
 /***/ (function(module, exports) {
 
