@@ -525,11 +525,16 @@ sup a:hover img {
 }
 
 a.footnote {
-   text-decoration:none;
+   text-decoration: none;
    /*background-color: #FEF6BB;*/
+   display: inline-block;
+   overflow: hidden;
+   position: relative;
+   padding-top: 12px;
    padding-left: 2px;
    padding-right: 2px;
    margin-right: 2px;
+   height: 16px;
    -webkit-transition: all 2s ease;
    -moz-transition: all 2s ease;
    -o-transition: all 2s ease;
@@ -537,32 +542,30 @@ a.footnote {
 }
 
 a.footnote span {
+   line-height: 16px;
    text-align: justify;
-        z-index: 10;
-        display: none; 
-        padding: 5px;
-        line-height: 16px;
-        opacity: 0.9;
-        border-radius: 4px;
-        box-shadow: 5px 5px 8px #D4D4D4;
-       left:-300%;
-    top: 1.25em;
-        transform: translate(-50%, 0);
-        position: relative; 
-        width: 250px;
+   border: 1px solid #eaeaea;
+   border-radius: 4px;
+   background-color: #fffcfc;
+   box-shadow: 5px 5px 8px #D4D4D4;
+   opacity: 0.9;
+   position: absolute;
+   top: -999px;
+   width: 250px;
+   z-index: 10;
+   padding: 5px;
+   transform: translate(-50%, 0);
+}
+
+a.footnote:hover {
+   overflow: visible;
 }
 
 a.footnote:hover span {
-   display: inline; 
-
-        color: #111;
-        position: absolute;
-        border: 1px solid #eaeaea;
-        background-color: #fffcfc;
-
+   color: #111;
+   position: absolute;
+   top: 1.25em;
 }
-
-
 
 td.c2 {
   padding: 0px;
