@@ -26033,7 +26033,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
       var articleContainer = document.getElementById('exhibit_article_content');
       var captionContainer = document.getElementById('reading-copy-item-35');
       var footnotesInArticle = document.querySelectorAll("div[id='exhibit_article_content'] a[class='footnote']");
-      var footnotesInCaptions = document.querySelectorAll("div.reading-copy a[class='footnote']");
+      var footnotesInCaptions = document.querySelectorAll("div[id='reading-copy-item-35'] a[class='footnote']");
 
       // Distance to offset the span from the edge of the container.
       var offsetPadding = 15;
