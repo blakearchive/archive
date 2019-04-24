@@ -2,7 +2,7 @@
   <div id="object-container" class="row" >
 
     <div id="object-view" class="reading-view">
-      <div ng-if="$root.showArticle == true" auto-height adjust="60" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="exhibit_article_content" >
+      <div ng-if="$root.showArticle == true" auto-height adjust="60" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; min-width:300px;background:white" id="exhibit_article_content" >
          
         <div bind-html-compile="exhibitCtrl.exhibit_article_content">
           
