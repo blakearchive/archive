@@ -26092,14 +26092,14 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
       }
 
       for (var i = 0; i < footnotesInCaptions.length; i++) {
-        footnotesInCaptions[i].addEventListener('mouseenter', function (event) {
-          if (this !== event.target) {
+        footnotesInCaptions[i].addEventListener('mouseenter', function (event2) {
+          if (this !== event2.target) {
             // Only process popup on `mouseenter` for the .footnote anchor not any of the child
             // elements which may trigger this handler.
             return;
           }
 
-          var span = event.target.children[0];
+          var span = event2.target.children[0];
 
           if (typeof span === 'undefined') {
             // Malformed .footnote anchor is missing a child span.
@@ -26125,14 +26125,14 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
 
         //  Remove adjusted margin when leaving element so that it will be centered if the
         //  article container is resize to be larger by the user.
-        footnotesInCaptions[i].addEventListener('mouseleave', function (event) {
-          if (this !== event.target) {
+        footnotesInCaptions[i].addEventListener('mouseleave', function (event2) {
+          if (this !== event2.target) {
             // Only process popup on `mouseenter` for the .footnote anchor not any of the child
             // elements which may trigger this handler.
             return;
           }
 
-          var span = event.target.children[0];
+          var span = event2.target.children[0];
 
           if (typeof span === 'undefined') {
             // Malformed .footnote anchor is missing a child span.
