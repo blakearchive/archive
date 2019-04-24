@@ -1,5 +1,5 @@
 angular.module('blake').controller('ExhibitController', function (
-  $scope,$routeParams,$sce,$rootScope,$window,$modal,$cookies, 
+  $scope,$routeParams,$sce,$rootScope,$window,$modal,$cookies,
   BlakeDataService,imageManipulation,CompareObjectsFactory,$http) {
     var vm = this;
     var exhibitId = $routeParams.exhibitId;
@@ -92,7 +92,41 @@ angular.module('blake').controller('ExhibitController', function (
     //console.log("===>>>>"+JSON.stringify(vm.bds));
     $http.get("/api/exhibit-html/"+exhibitId).then(function(response){
       vm.exhibit_article_content = $sce.trustAsHtml(response.data);
+
+      // Add handler to any newly added footnotes which will properly align the
+      // footnote's span if it falls outside of it's parent container.
+      setTimeout(function () {
+        var articleContainer = document.getElementById('exhibit_article_content')
+        var articleRect = articleContainer.getBoundingClientRect()
+        var footnotes = document.querySelectorAll('.footnote')
+
+        // Distance to offset the span from the edge of the container.
+        var offsetPadding = 15
+        var scrollbarWidth = 30
+
+        for (var i = 0; i < footnotes.length; i++) {
+          footnotes[i].addEventListener('mouseover', function (event) {
+            var span = 0
+            var footnoteSpanRect = 0
+            if (event.target.children[0] !== undefined) {
+              span = event.target.children[0]
+              footnoteSpanRect = span.getBoundingClientRect()
+            }
+
+            var footnoteSpanRight = footnoteSpanRect.x + footnoteSpanRect.width
+            var articleRight = articleRect.x + articleRect.width
+
+            var offset = 0
+
+            if (footnoteSpanRect.x < articleRect.x) {
+              offset = articleRect.x - footnoteSpanRect.x + offsetPadding
+              span.style['margin-left'] = offset + 'px'
+            } else if ((footnoteSpanRight + offsetPadding) > articleRight) {
+              offset = articleRight - footnoteSpanRight - (offsetPadding + scrollbarWidth)
+              span.style['margin-left'] = offset + 'px'
+            }
+          })
+        }
+      }, 10)
     });
-
-
 });
