@@ -26031,14 +26031,16 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
     // footnote's span if it falls outside of it's parent container.
     setTimeout(function () {
       var articleContainer = document.getElementById('exhibit_article_content');
-      var footnotes = document.querySelectorAll('.footnote');
+      var captionContainer = document.getElementByClassName('reading-copy');
+      var footnotesInArticle = document.querySelectorAll("div[id='exhibit_article_content'] a[class='footnote']");
+      var footnotesInCaptions = document.querySelectorAll("div.reading-copy a[class='footnote']");
 
       // Distance to offset the span from the edge of the container.
       var offsetPadding = 15;
       var scrollbarWidth = 30;
 
-      for (var i = 0; i < footnotes.length; i++) {
-        footnotes[i].addEventListener('mouseenter', function (event) {
+      for (var i = 0; i < footnotesInArticle.length; i++) {
+        footnotesInArticle[i].addEventListener('mouseenter', function (event) {
           if (this !== event.target) {
             // Only process popup on `mouseenter` for the .footnote anchor not any of the child
             // elements which may trigger this handler.
@@ -26071,7 +26073,59 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
 
         //  Remove adjusted margin when leaving element so that it will be centered if the
         //  article container is resize to be larger by the user.
-        footnotes[i].addEventListener('mouseleave', function (event) {
+        footnotesInArticle[i].addEventListener('mouseleave', function (event) {
+          if (this !== event.target) {
+            // Only process popup on `mouseenter` for the .footnote anchor not any of the child
+            // elements which may trigger this handler.
+            return;
+          }
+
+          var span = event.target.children[0];
+
+          if (typeof span === 'undefined') {
+            // Malformed .footnote anchor is missing a child span.
+            return;
+          }
+
+          span.removeAttribute('style');
+        });
+      }
+
+      for (var i = 0; i < footnotesInCaptions.length; i++) {
+        footnotesInCaptions[i].addEventListener('mouseenter', function (event) {
+          if (this !== event.target) {
+            // Only process popup on `mouseenter` for the .footnote anchor not any of the child
+            // elements which may trigger this handler.
+            return;
+          }
+
+          var span = event.target.children[0];
+
+          if (typeof span === 'undefined') {
+            // Malformed .footnote anchor is missing a child span.
+            return;
+          }
+
+          var articleRect = captionContainer.getBoundingClientRect();
+          var footnoteSpanRect = span.getBoundingClientRect();
+
+          var footnoteSpanRight = footnoteSpanRect.x + footnoteSpanRect.width;
+          var articleRight = articleRect.x + articleRect.width;
+
+          var offset = 0;
+
+          if (footnoteSpanRect.x < articleRect.x) {
+            offset = articleRect.x - footnoteSpanRect.x + offsetPadding;
+            span.style['margin-left'] = offset + 'px';
+          } else if (footnoteSpanRight + offsetPadding + scrollbarWidth > articleRight) {
+            offset = articleRight - footnoteSpanRight - (offsetPadding + scrollbarWidth);
+            span.style['margin-left'] = offset + 'px';
+          }
+        });
+
+        //  Remove adjusted margin when leaving element so that it will be centered if the
+        //  article container is resize to be larger by the user.
+        footnotesInCaptions[i].addEventListener('mouseleave', function (event) {
           if (this !== event.target) {
             // Only process popup on `mouseenter` for the .footnote anchor not any of the child
             // elements which may trigger this handler.
