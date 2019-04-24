@@ -99,7 +99,7 @@ angular.module('blake').controller('ExhibitController', function (
         var articleContainer = document.getElementById('exhibit_article_content')
         var captionContainer = document.getElementById('reading-copy-item-1')
         var footnotesInArticle = document.querySelectorAll("div[id='exhibit_article_content'] a[class='footnote']")
-        var footnotesInCaptions = document.querySelectorAll("div.reading-copy a[class='footnote']")
+        var footnotesInCaptions = document.querySelectorAll("div.reading-copy-inner a[class='footnote']")
         console.log(footnotesInCaptions);
 
         // Distance to offset the span from the edge of the container.
