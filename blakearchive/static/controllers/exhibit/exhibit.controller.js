@@ -1,6 +1,6 @@
 angular.module('blake').controller('ExhibitController', function (
   $scope,$routeParams,$sce,$rootScope,$window,$modal,$cookies,
-  BlakeDataService,imageManipulation,CompareObjectsFactory,$http,$document) {
+  BlakeDataService,imageManipulation,CompareObjectsFactory,$http) {
     var vm = this;
     var exhibitId = $routeParams.exhibitId;
     vm.exId = exhibitId;
@@ -95,11 +95,12 @@ angular.module('blake').controller('ExhibitController', function (
 
       // Add handler to any newly added footnotes which will properly align the
       // footnote's span if it falls outside of it's parent container.
-      setTimeout(function () {
+      $timeout(function(){
+              element.on('load', function(event3){
         var articleContainer = document.getElementById('exhibit_article_content')
         var captionContainer = document.getElementById('reading-copy-item-0')
         var footnotesInArticle = document.querySelectorAll("div[id='exhibit_article_content'] a[class='footnote']")
-        var footnotesInCaptions = $document[0].querySelectorAll("div.reading-copy-inner a[class='footnote']")
+        var footnotesInCaptions = document.querySelectorAll("div.reading-copy-inner a[class='footnote']")
         console.log(footnotesInArticle);
         console.log(footnotesInCaptions);
 
@@ -212,6 +213,6 @@ angular.module('blake').controller('ExhibitController', function (
           })
         }
 
-      }, 10)
-    });
+         });
+          });
 });
