@@ -95,8 +95,7 @@ angular.module('blake').controller('ExhibitController', function (
 
       // Add handler to any newly added footnotes which will properly align the
       // footnote's span if it falls outside of it's parent container.
-      $timeout(function(){
-              element.on('load', function(event3){
+      setTimeout(function () {
         var articleContainer = document.getElementById('exhibit_article_content')
         var captionContainer = document.getElementById('reading-copy-item-0')
         var footnotesInArticle = document.querySelectorAll("div[id='exhibit_article_content'] a[class='footnote']")
@@ -213,6 +212,6 @@ angular.module('blake').controller('ExhibitController', function (
           })
         }
 
-         });
-          });
+      }, 100)
+    });
 });
