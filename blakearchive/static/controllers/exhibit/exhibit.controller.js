@@ -93,7 +93,8 @@ angular.module('blake').controller('ExhibitController', function (
     $http.get("/api/exhibit-html/"+exhibitId).then(function(response){
       vm.exhibit_article_content = $sce.trustAsHtml(response.data);
 
-      //this timeout needs to be set to execute after the page loads entirely (it can take a while), not after 40 seconds as it is now
+      //this timeout needs to be set to execute after the page loads entirely (it can take a while),
+      //not after 40 seconds as the timeout is set to do now
       setTimeout(function () {
         var offsetPadding = 0
         var scrollbarWidth = 0
