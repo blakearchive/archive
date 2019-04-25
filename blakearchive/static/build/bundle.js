@@ -26144,7 +26144,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
           span.removeAttribute('style');
         });
       }
-    }, 30000);
+    }, 40000);
   });
 }]);
 

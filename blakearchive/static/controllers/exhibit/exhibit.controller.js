@@ -212,6 +212,6 @@ angular.module('blake').controller('ExhibitController', function (
           })
         }
 
-      }, 30000)
+      }, 40000)
     });
 });
