@@ -94,7 +94,7 @@ angular.module('blake').controller('ExhibitController', function (
       vm.exhibit_article_content = $sce.trustAsHtml(response.data);
 
       //this timeout needs to be set to execute after the page loads entirely (it can take a while), not after 40 seconds as it is now
-      setTimeout(function () {
+      angular.element(document).ready(function () {
         var offsetPadding = 0
         var scrollbarWidth = 0
         // the following line works, but only when it executes after 40 seconds. it takes 35-40 seconds 
@@ -116,8 +116,7 @@ angular.module('blake').controller('ExhibitController', function (
               return
             }
 
-            //something is off in the calculation here. for footnote 1 under 'Plowman' margin-left get
-            //set to -30527.9, so nothing shows up when you hover your mouse over footnote 1
+            //something is off in the calculation here. the x of the caption container is negative
             var captionContainer = document.getElementById('reading-copy-item-' + i.toString())
             var articleRect = captionContainer.getBoundingClientRect()
             var footnoteSpanRect = span.getBoundingClientRect()
@@ -157,7 +156,7 @@ angular.module('blake').controller('ExhibitController', function (
             span.removeAttribute('style')
           })
         }
-      }, 40000)
+      })
 
       // Add handler to any newly added footnotes which will properly align the
       // footnote's span if it falls outside of it's parent container.
