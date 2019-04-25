@@ -26028,8 +26028,8 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
     vm.exhibit_article_content = $sce.trustAsHtml(response.data);
 
     setTimeout(function () {
-      var offsetPadding = 15;
-      var scrollbarWidth = 30;
+      var offsetPadding = 0;
+      var scrollbarWidth = 0;
       var captionContainer = document.getElementById('reading-copy-item-0');
       var footnotesInCaptions = document.querySelectorAll("div.reading-copy-inner a[class='footnote']");
       console.log(footnotesInCaptions);
