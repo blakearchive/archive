@@ -26033,7 +26033,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
       var articleContainer = document.getElementById('exhibit_article_content');
       var captionContainer = document.getElementById('reading-copy-item-0');
       var footnotesInArticle = document.querySelectorAll("div[id='exhibit_article_content'] a[class='footnote']");
-      var footnotesInCaptions = document.querySelectorAll('img');
+      var footnotesInCaptions = document.querySelectorAll('div.read-copy-inner');
       console.log(footnotesInArticle);
       console.log(footnotesInCaptions);
 
