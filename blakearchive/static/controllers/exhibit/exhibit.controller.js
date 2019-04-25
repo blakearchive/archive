@@ -158,7 +158,7 @@ angular.module('blake').controller('ExhibitController', function (
         }
       };
 
-      $timeout($scope.init)
+      $timeout($scope.init);
 
       // Add handler to any newly added footnotes which will properly align the
       // footnote's span if it falls outside of it's parent container.
