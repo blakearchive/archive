@@ -44,11 +44,11 @@
                           <label style="cursor:pointer"><input style="cursor:pointer" ng-model=show type=checkbox  ng-class='{open:show}'>
                           {{ct.title}}</label>
                         </h2>
-                        <p ng-show=show ng-bind-html="trustAsHtml(ct.caption)"></p><br/>
+                        <p ng-show=show bind-html-compile="trustAsHtml(ct.caption)"></p><br/>
                       </span>
 
                       <span ng-if="c.length == 1" ng-repeat="ct in c">
-                        <p ng-bind-html="trustAsHtml(ct.caption)"></p><br/>
+                        <p bind-html-compile="trustAsHtml(ct.caption)"></p><br/>
                       </span>
 
                     </span>
