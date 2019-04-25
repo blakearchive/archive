@@ -94,7 +94,7 @@ angular.module('blake').controller('ExhibitController', function (
       vm.exhibit_article_content = $sce.trustAsHtml(response.data);
 
       //this timeout needs to be set to execute after the page loads entirely (it can take a while), not after 40 seconds as it is now
-      angular.element(document).ready(function () {
+      var $scope.init = function(){
         var offsetPadding = 0
         var scrollbarWidth = 0
         // the following line works, but only when it executes after 40 seconds. it takes 35-40 seconds 
@@ -156,7 +156,9 @@ angular.module('blake').controller('ExhibitController', function (
             span.removeAttribute('style')
           })
         }
-      })
+      }
+
+      $timeout($scope.init)
 
       // Add handler to any newly added footnotes which will properly align the
       // footnote's span if it falls outside of it's parent container.
