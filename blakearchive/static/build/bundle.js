@@ -26029,7 +26029,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
 
     // Add handler to any newly added footnotes which will properly align the
     // footnote's span if it falls outside of it's parent container.
-    setTimeout(function () {
+    $scope.$on('$viewContentLoaded', function () {
       var articleContainer = document.getElementById('exhibit_article_content');
       var captionContainer = document.getElementById('reading-copy-item-0');
       var footnotesInArticle = document.querySelectorAll("div[id='exhibit_article_content'] a[class='footnote']");
