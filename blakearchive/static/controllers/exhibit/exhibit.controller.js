@@ -121,6 +121,8 @@ angular.module('blake').controller('ExhibitController', function (
             //set to -30527.9, so nothing shows up when you hover your mouse over footnote 1
             var articleRect = captionContainer.getBoundingClientRect()
             var footnoteSpanRect = span.getBoundingClientRect()
+            console.log(articleRect);
+            console.log(footnoteSpanRect);
 
             var footnoteSpanRight = footnoteSpanRect.x + footnoteSpanRect.width
             var articleRight = articleRect.x + articleRect.width
