@@ -26031,7 +26031,6 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
     setTimeout(function () {
       var offsetPadding = 0;
       var scrollbarWidth = 0;
-      var captionContainer = document.getElementById('reading-copy-item-0');
       // the following line works, but only when it executes after 40 seconds. it takes 35-40 seconds 
       // for the page to load
       var footnotesInCaptions = document.querySelectorAll("div.reading-copy-inner a[class='footnote']");
@@ -26053,6 +26052,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
 
           //something is off in the calculation here. for footnote 1 under 'Plowman' margin-left get
           //set to -30527.9, so nothing shows up when you hover your mouse over footnote 1
+          var captionContainer = document.getElementById('reading-copy-item-' + i.toString());
           var articleRect = captionContainer.getBoundingClientRect();
           var footnoteSpanRect = span.getBoundingClientRect();
           console.log(articleRect);
