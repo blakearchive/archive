@@ -25936,7 +25936,7 @@ angular.module("blake").controller("CopyController", ["$scope", "$routeParams", 
 /* 50 */
 /***/ (function(module, exports) {
 
-angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams", "$sce", "$rootScope", "$window", "$modal", "$cookies", "BlakeDataService", "imageManipulation", "CompareObjectsFactory", "$http", function ($scope, $routeParams, $sce, $rootScope, $window, $modal, $cookies, BlakeDataService, imageManipulation, CompareObjectsFactory, $http) {
+angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams", "$sce", "$rootScope", "$window", "$modal", "$cookies", "BlakeDataService", "imageManipulation", "CompareObjectsFactory", "$http", "$document", function ($scope, $routeParams, $sce, $rootScope, $window, $modal, $cookies, BlakeDataService, imageManipulation, CompareObjectsFactory, $http, $document) {
   var vm = this;
   var exhibitId = $routeParams.exhibitId;
   vm.exId = exhibitId;
@@ -26033,7 +26033,7 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
       var articleContainer = document.getElementById('exhibit_article_content');
       var captionContainer = document.getElementById('reading-copy-item-0');
       var footnotesInArticle = document.querySelectorAll("div[id='exhibit_article_content'] a[class='footnote']");
-      var footnotesInCaptions = document.querySelectorAll("div.reading-copy-inner a[class='footnote']");
+      var footnotesInCaptions = $document[0].querySelectorAll("div.reading-copy-inner a[class='footnote']");
       console.log(footnotesInArticle);
       console.log(footnotesInCaptions);
 
