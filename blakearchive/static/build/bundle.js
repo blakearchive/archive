@@ -26026,73 +26026,64 @@ angular.module('blake').controller('ExhibitController', ["$scope", "$routeParams
   //console.log("===>>>>"+JSON.stringify(vm.bds));
   $http.get("/api/exhibit-html/" + exhibitId).then(function (response) {
     vm.exhibit_article_content = $sce.trustAsHtml(response.data);
-
-    //this timeout needs to be set to execute after the page loads entirely (it can take a while), not after 40 seconds as it is now
+    /*
+    //this timeout needs to be set to execute after the page loads entirely (it can take a while),
+    //not after 40 seconds as the timeout is set to do now
     setTimeout(function () {
-      var offsetPadding = 0;
-      var scrollbarWidth = 0;
+      var offsetPadding = 0
+      var scrollbarWidth = 0
       // the following line works, but only when it executes after 40 seconds. it takes 35-40 seconds 
       // for the page to load
-      var footnotesInCaptions = document.querySelectorAll("div.reading-copy-inner a[class='footnote']");
+      var footnotesInCaptions = document.querySelectorAll("div.reading-copy-inner a[class='footnote']")
       console.log(footnotesInCaptions);
       for (var i = 0; i < footnotesInCaptions.length; i++) {
         footnotesInCaptions[i].addEventListener('mouseenter', function (event) {
           if (this !== event.target) {
             // Only process popup on `mouseenter` for the .footnote anchor not any of the child
             // elements which may trigger this handler.
-            return;
+            return
           }
-
-          var span = event.target.children[0];
-
-          if (typeof span === 'undefined') {
+           var span = event.target.children[0]
+           if (typeof span === 'undefined') {
             // Malformed .footnote anchor is missing a child span.
-            return;
+            return
           }
-
-          //something is off in the calculation here. the x of the captionContainer is negative.
+           //something is off in the calculation here. the x of the captionContainer is negative.
           //i'm not correctly understanding getBoundingClientRect
-          var captionContainer = document.getElementById('reading-copy-item-' + i.toString());
-          var articleRect = captionContainer.getBoundingClientRect();
-          var footnoteSpanRect = span.getBoundingClientRect();
+          var captionContainer = document.getElementById('reading-copy-item-' + i.toString())
+          var articleRect = captionContainer.getBoundingClientRect()
+          var footnoteSpanRect = span.getBoundingClientRect()
           console.log(articleRect);
           console.log(footnoteSpanRect);
-
-          var footnoteSpanRight = footnoteSpanRect.x + footnoteSpanRect.width;
-          var articleRight = articleRect.x + articleRect.width;
-
-          var offset = 0;
-
-          if (footnoteSpanRect.x < articleRect.x) {
-            offset = articleRect.x - footnoteSpanRect.x + offsetPadding;
-            span.style['margin-left'] = offset + 'px';
-          } else if (footnoteSpanRight + offsetPadding + scrollbarWidth > articleRight) {
-            offset = articleRight - footnoteSpanRight - (offsetPadding + scrollbarWidth);
-            span.style['margin-left'] = offset + 'px';
+           var footnoteSpanRight = footnoteSpanRect.x + footnoteSpanRect.width
+          var articleRight = articleRect.x + articleRect.width
+           var offset = 0
+           if (footnoteSpanRect.x < articleRect.x) {
+            offset = articleRect.x - footnoteSpanRect.x + offsetPadding
+            span.style['margin-left'] = offset + 'px'
+          } else if ((footnoteSpanRight + offsetPadding + scrollbarWidth) > articleRight) {
+            offset = articleRight - footnoteSpanRight - (offsetPadding + scrollbarWidth)
+            span.style['margin-left'] = offset + 'px'
           }
-        });
-
-        //  Remove adjusted margin when leaving element so that it will be centered if the
+        })
+         //  Remove adjusted margin when leaving element so that it will be centered if the
         //  article container is resize to be larger by the user.
         footnotesInCaptions[i].addEventListener('mouseleave', function (event) {
           if (this !== event.target) {
             // Only process popup on `mouseenter` for the .footnote anchor not any of the child
             // elements which may trigger this handler.
-            return;
+            return
           }
-
-          var span = event.target.children[0];
-
-          if (typeof span === 'undefined') {
+           var span = event.target.children[0]
+           if (typeof span === 'undefined') {
             // Malformed .footnote anchor is missing a child span.
-            return;
+            return
           }
-
-          span.removeAttribute('style');
-        });
+           span.removeAttribute('style')
+        })
       }
-    }, 40000);
-
+    }, 40000)
+    */
     // Add handler to any newly added footnotes which will properly align the
     // footnote's span if it falls outside of it's parent container.
     setTimeout(function () {
