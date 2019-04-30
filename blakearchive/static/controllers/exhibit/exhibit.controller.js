@@ -48,6 +48,85 @@ angular.module('blake').controller('ExhibitController', function (
 
     }
 
+    /**
+     * Bind handlers to a set of footnotes to adjust their position when the user
+     * hovers on them. Ensure that the footnote does not overflow its container.
+     *
+     * Each footnote should have a span element. On `mouseenter`, if the span would
+     * overlap the left or right edge of its container, a positive or negative
+     * `margin-left` inline style will be applied to move the span so it doesn't
+     * overlap.
+     *
+     * On `mouseleave``the `margin-left` is removed. This ensures that if the user
+     * resizes the window causing the span to not overlap, it will return to its
+     * normal, unmodified, position.
+     *
+     * @param  {NodeList} footnotes
+     *   A collection of footnote anchors to bind handlers to.
+     * @param  {string} containerSelector
+     *   A selector to pass to `element.closest()` which will determine the parent
+     *   container of the footnote`to consider when calculating overflow.
+     */
+    var bindFootnoteHoverHandlers = function (footnotes, containerSelector) {
+      // Distance to offset the span from the edge of the container.
+      var offsetPadding = 15
+      var scrollbarWidth = 30
+
+      for (var i = 0; i < footnotes.length; i++) {
+        footnotes[i].addEventListener('mouseenter', function (event) {
+          if (this !== event.target) {
+            // Only process `mouseenter` for the footnote. Skip this
+            // if the event is firing on a child element (e.g. the span).
+            return
+          }
+
+          var span = event.target.children[0]
+
+          if (typeof span === 'undefined') {
+            // Malformed footnote is missing a child span.
+            return
+          }
+
+          var container = this.closest(containerSelector)
+
+          var containerRect = container.getBoundingClientRect()
+          var footnoteSpanRect = span.getBoundingClientRect()
+
+          var footnoteSpanRight = footnoteSpanRect.x + footnoteSpanRect.width
+          var containerRight = containerRect.x + containerRect.width
+
+          var offset = 0
+
+          if (footnoteSpanRect.x < containerRect.x) {
+            offset = containerRect.x - footnoteSpanRect.x + offsetPadding
+            span.style['margin-left'] = offset + 'px'
+          } else if ((footnoteSpanRight + offsetPadding + scrollbarWidth) > containerRight) {
+            offset = containerRight - footnoteSpanRight - (offsetPadding + scrollbarWidth)
+            span.style['margin-left'] = offset + 'px'
+          }
+        })
+
+        //  Remove adjusted margin when leaving element so that it will be unmodified if the
+        //  article container is resized to be larger by the user.
+        footnotes[i].addEventListener('mouseleave', function (event) {
+          if (this !== event.target) {
+            // Only process `mouseleave` for the footnote. Skip this
+            // if the event is firing on a child element (e.g. the span).
+            return
+          }
+
+          var span = event.target.children[0]
+
+          if (typeof span === 'undefined') {
+            // Malformed footnote is missing a child span.
+            return
+          }
+
+          span.removeAttribute('style')
+        })
+      }
+    }
+
     BlakeDataService.getImagesForExhibit(exhibitId).then(function(result){
       vm.images = result;
       //console.log("--------"+vm.images);
@@ -56,6 +135,14 @@ angular.module('blake').controller('ExhibitController', function (
 
     vm.setNextCaption = function() {
       if (currentIndex >= vm.images.length) {
+        // Add handler to any newly added footnotes which will properly align the
+        // footnote's span if it falls outside of it's parent container.
+        setTimeout(function () {
+          var footnotes = document.querySelectorAll('.reading-wrapper .footnote')
+
+          bindFootnoteHoverHandlers(footnotes, '.reading-copy-inner')
+        }, 10)
+
         return;
       }
       BlakeDataService.getCaptionsForImage(exhibitId, vm.images[currentIndex++].image_id).then(function(r2){
@@ -92,137 +179,12 @@ angular.module('blake').controller('ExhibitController', function (
     //console.log("===>>>>"+JSON.stringify(vm.bds));
     $http.get("/api/exhibit-html/"+exhibitId).then(function(response){
       vm.exhibit_article_content = $sce.trustAsHtml(response.data);
-      /*
-      //this timeout needs to be set to execute after the page loads entirely (it can take a while),
-      //not after 40 seconds as the timeout is set to do now
-      setTimeout(function () {
-        var offsetPadding = 0
-        var scrollbarWidth = 0
-        // the following line works, but only when it executes after 40 seconds. it takes 35-40 seconds 
-        // for the page to load
-        var footnotesInCaptions = document.querySelectorAll("div.reading-copy-inner a[class='footnote']")
-        console.log(footnotesInCaptions);
-        for (var i = 0; i < footnotesInCaptions.length; i++) {
-          footnotesInCaptions[i].addEventListener('mouseenter', function (event) {
-            if (this !== event.target) {
-              // Only process popup on `mouseenter` for the .footnote anchor not any of the child
-              // elements which may trigger this handler.
-              return
-            }
 
-            var span = event.target.children[0]
-
-            if (typeof span === 'undefined') {
-              // Malformed .footnote anchor is missing a child span.
-              return
-            }
-
-            //something is off in the calculation here. the x of the captionContainer is negative.
-            //i'm not correctly understanding getBoundingClientRect
-            var captionContainer = document.getElementById('reading-copy-item-' + i.toString())
-            var articleRect = captionContainer.getBoundingClientRect()
-            var footnoteSpanRect = span.getBoundingClientRect()
-            console.log(articleRect);
-            console.log(footnoteSpanRect);
-
-            var footnoteSpanRight = footnoteSpanRect.x + footnoteSpanRect.width
-            var articleRight = articleRect.x + articleRect.width
-
-            var offset = 0
-
-            if (footnoteSpanRect.x < articleRect.x) {
-              offset = articleRect.x - footnoteSpanRect.x + offsetPadding
-              span.style['margin-left'] = offset + 'px'
-            } else if ((footnoteSpanRight + offsetPadding + scrollbarWidth) > articleRight) {
-              offset = articleRight - footnoteSpanRight - (offsetPadding + scrollbarWidth)
-              span.style['margin-left'] = offset + 'px'
-            }
-          })
-
-          //  Remove adjusted margin when leaving element so that it will be centered if the
-          //  article container is resize to be larger by the user.
-          footnotesInCaptions[i].addEventListener('mouseleave', function (event) {
-            if (this !== event.target) {
-              // Only process popup on `mouseenter` for the .footnote anchor not any of the child
-              // elements which may trigger this handler.
-              return
-            }
-
-            var span = event.target.children[0]
-
-            if (typeof span === 'undefined') {
-              // Malformed .footnote anchor is missing a child span.
-              return
-            }
-
-            span.removeAttribute('style')
-          })
-        }
-      }, 40000)
-*/
       // Add handler to any newly added footnotes which will properly align the
       // footnote's span if it falls outside of it's parent container.
       setTimeout(function () {
-        var articleContainer = document.getElementById('exhibit_article_content')
-        var footnotesInArticle = document.querySelectorAll("div[id='exhibit_article_content'] a[class='footnote']")
-        console.log(footnotesInArticle);
-
-        // Distance to offset the span from the edge of the container.
-        var offsetPadding = 15
-        var scrollbarWidth = 30
-
-        for (var i = 0; i < footnotesInArticle.length; i++) {
-          footnotesInArticle[i].addEventListener('mouseenter', function (event) {
-            if (this !== event.target) {
-              // Only process popup on `mouseenter` for the .footnote anchor not any of the child
-              // elements which may trigger this handler.
-              return
-            }
-
-            var span = event.target.children[0]
-
-            if (typeof span === 'undefined') {
-              // Malformed .footnote anchor is missing a child span.
-              return
-            }
-
-            var articleRect = articleContainer.getBoundingClientRect()
-            var footnoteSpanRect = span.getBoundingClientRect()
-
-            var footnoteSpanRight = footnoteSpanRect.x + footnoteSpanRect.width
-            var articleRight = articleRect.x + articleRect.width
-
-            var offset = 0
-
-            if (footnoteSpanRect.x < articleRect.x) {
-              offset = articleRect.x - footnoteSpanRect.x + offsetPadding
-              span.style['margin-left'] = offset + 'px'
-            } else if ((footnoteSpanRight + offsetPadding + scrollbarWidth) > articleRight) {
-              offset = articleRight - footnoteSpanRight - (offsetPadding + scrollbarWidth)
-              span.style['margin-left'] = offset + 'px'
-            }
-          })
-
-          //  Remove adjusted margin when leaving element so that it will be centered if the
-          //  article container is resize to be larger by the user.
-          footnotesInArticle[i].addEventListener('mouseleave', function (event) {
-            if (this !== event.target) {
-              // Only process popup on `mouseenter` for the .footnote anchor not any of the child
-              // elements which may trigger this handler.
-              return
-            }
-
-            var span = event.target.children[0]
-
-            if (typeof span === 'undefined') {
-              // Malformed .footnote anchor is missing a child span.
-              return
-            }
-
-            span.removeAttribute('style')
-          })
-        }
-
+        var footnotes = document.querySelectorAll("div[id='exhibit_article_content'] a[class='footnote']")
+        bindFootnoteHoverHandlers(footnotes, '#exhibit_article_content')
       }, 10)
     });
 });
