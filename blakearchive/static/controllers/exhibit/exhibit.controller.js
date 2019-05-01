@@ -44,6 +44,12 @@ angular.module('blake').controller('ExhibitController', function (
           $rootScope.thumbslidermarginleft = '13px';
           $rootScope.buttonsleft = '74%';
           $rootScope.galleriesMarginLeft = '33%';
+
+          setTimeout(function () {
+        var footnotes = document.querySelectorAll("div[id='exhibit_article_content'] a[class='footnote']")
+        bindFootnoteHoverHandlers(footnotes, '#exhibit_article_content')
+      }, 10)
+          
         }
 
     }
