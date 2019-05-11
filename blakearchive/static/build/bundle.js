@@ -29857,6 +29857,7 @@ angular.module("blake").controller("WorkTitleController", ["$rootScope", "$route
 
         if ($rootScope.showWorkTitle == 'exhibit' && $rootScope.doneSettingExhibit) {
             return vm.bds.exhibit.exhibit.title;
+            console.log(vm.bds.exhibit);
             //return $rootScope.selectedExhibit.exhibit.title;
         }
 
