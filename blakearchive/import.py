@@ -76,6 +76,7 @@ class BlakeExhibitImporter(BlakeImporter):
       ex.exhibit_id = root.get("id")
       ex.title = root.get("title").encode("utf-8")
       ex.article = root.get("article")
+      ex.composition_date_string = root.get("composition_date_string").encode("utf-8")
       self.exhibits[ex.exhibit_id] = ex
 
       print "exhibit id is: "+root.get("id")
