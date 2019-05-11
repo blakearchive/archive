@@ -366,6 +366,7 @@ class BlakeExhibit(db.Model): # todo: change to correct columns name, image, etc
     title = db.Column(db.UnicodeText)
     article = db.Column(db.UnicodeText)
     exhibit_images = db.relationship(BlakeExhibitImage, backref="exhibit")
+    composition_date_string = db.Column(db.UnicodeText)
     #bad_id = db.Column(db.Text)
 
     @property
@@ -380,5 +381,6 @@ class BlakeExhibit(db.Model): # todo: change to correct columns name, image, etc
         return {
             "title": self.title,
             "article": self.article,
-            "exhibit_id": self.exhibit_id
+            "exhibit_id": self.exhibit_id,
+            "composition_date_string": self.composition_date_string
         }
