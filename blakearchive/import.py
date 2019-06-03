@@ -17,6 +17,7 @@ from tqdm import tqdm
 import logging
 from collections import namedtuple
 import socket
+import traceback
 
 logging.basicConfig()
 logger = logging.getLogger('import')
@@ -239,6 +240,8 @@ class BlakeDocumentImporter(BlakeImporter):
                 self.copy_importer.process(matching_file)
             except Exception as err:
                 logger.error("Error processing BAD [%s]: %s" % (matching_file, err.message))
+                just_the_string = traceback.format_exc()
+                logger.debug(just_the_string)
 
     # region Relationship processing
     def process_relationships(self):
