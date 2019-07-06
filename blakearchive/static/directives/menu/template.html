@@ -33,7 +33,7 @@
         (Composed {{ menu_list.composition_date_string }})</a></li>
       <li role="presentation" class="dropdown-header">Color Printed Drawings</li>
       <li ng-repeat="menu_list in menu.lists.prints[0].drawings"><a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
-        (Composed {{ menu_list.composition_date_string }})</a><label ng-if="menu_list.virtual == true" style="cursor:pointer"><input style="cursor:pointer" ng-model=show type=checkbox  ng-class='{open:show}'> </label></li>
+        (Composed {{ menu_list.composition_date_string }})</a></li>
     </ul>
   </li>
   <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">Drawings and <span>Paintings</span></a>
