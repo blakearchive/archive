@@ -34,8 +34,8 @@
       <li role="presentation" class="dropdown-header">Color Printed Drawings</li>
       <li ng-repeat="menu_list in menu.lists.prints[0].drawings"><a ng-if="menu_list.virtual == false" href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
         (Composed {{ menu_list.composition_date_string }})</a>
-          <a ng-if="menu_list.virtual == true" href="/work/{{ menu_list.bad_id }}"><label style="cursor:pointer"><input style="cursor:pointer" ng-model=show type=checkbox  ng-class='{open:show}'>{{ menu_list.menuTitle }}
-        (Composed {{ menu_list.composition_date_string }})</label></a></li>
+          <span ng-if="menu_list.virtual == true" <a ng-if="menu_list.virtual == true" href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
+        (Composed {{ menu_list.composition_date_string }})</a><label style="cursor:pointer"><input style="cursor:pointer" ng-model=show type=checkbox  ng-class='{open:show}'></label></span></li>
     </ul>
   </li>
   <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">Drawings and <span>Paintings</span></a>
