@@ -26,7 +26,7 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
             if(vm.bds.object.object_group){
                 title = vm.bds.object.object_group;
                 title = title.match(/(\sto.*)/);
-                return title[1].charAt(1).toUpperCase() + title[1].slice(1);
+                return title[1].charAt(0).toUpperCase() + title[1].slice(1);
             }
         }
         //For Virtual Groups
