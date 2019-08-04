@@ -25,7 +25,7 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
         if(vm.bds.work.bad_id == 'letters'){
             if(vm.bds.object.object_group){
                 title = vm.bds.object.object_group;
-                title = title.match(/\s(to.*)/);
+                title = title.match(/(to.*)/);
                 return title[1].charAt(0).toUpperCase() + title[1].slice(1);
             }
         }
