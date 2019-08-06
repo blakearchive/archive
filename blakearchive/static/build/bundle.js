@@ -29866,10 +29866,10 @@ angular.module("blake").controller("WorkTitleController", ["$rootScope", "$route
         if (vm.bds.work.bad_id == 'letters') {
             if (vm.bds.object.object_group) {
                 title = vm.bds.object.object_group;
-                if (title.match(/\s(to.*)/)) {
-                    title = title.match(/\s(to.*)/);
-                } else if (title.match(/\s(from.*)/)) {
+                if (title.match(/\s(from.*)/)) {
                     title = title.match(/\s(from.*)/);
+                } else if (title.match(/\s(to.*)/)) {
+                    title = title.match(/\s(to.*)/);
                 }
                 return title[1].charAt(0).toUpperCase() + title[1].slice(1);
             }
