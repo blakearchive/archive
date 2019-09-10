@@ -31,7 +31,7 @@ angular.module("blake").controller("TextTranscriptionController", function($rout
         'tei-preceding-delspan',
         'tei-preceding-addspan-substspan',
         'tei-preceding-addspan',
-        'hi'
+        '<hi'
     ];
 
     vm.hasColorKeyMarkup = function(teiMarkup){
