@@ -32712,7 +32712,7 @@ angular.module("blake").factory("BlakeWork", ["GenericService", "BlakeCopy", fun
                 break;
             case "spb":
                 work.medium_pretty = 'Prints';
-                if (work.bad_id == 'esviii' || 'esv' || 'esx' || 'esvii' || 'esxvi' || 'esxviii' || 'esi') {
+                if (work.bad_id == 'esviii' || work.bad_id == 'esv' || work.bad_id == 'esx' || work.bad_id == 'esvii' || work.bad_id == 'esxvi' || work.bad_id == 'esxviii' || work.bad_id == 'esi') {
                     work.probable = 'composition of each state';
                     break;
                 } else {
