@@ -21,7 +21,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         vm.lists = $sessionStorage.menus;
         vm.allWorksAlpha = $sessionStorage.allWorksAlpha;
         vm.allWorksCompDateValue = $sessionStorage.allWorksCompDateValue;
-        console.log(vm.lists);
+        //console.log(vm.lists);
     }
 
 
