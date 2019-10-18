@@ -27890,7 +27890,7 @@ angular.module("blake").controller("navMenu", ["$scope", "BlakeDataService", "$s
         vm.lists = $sessionStorage.menus;
         vm.allWorksAlpha = $sessionStorage.allWorksAlpha;
         vm.allWorksCompDateValue = $sessionStorage.allWorksCompDateValue;
-        //console.log(vm.lists);
+        console.log(vm.lists);
     }
 
     var category = function (item) {
