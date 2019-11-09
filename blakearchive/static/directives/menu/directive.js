@@ -7,22 +7,22 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
 
         $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
     });
-    if(angular.isUndefined($sessionStorage.menus) && angular.isUndefined($sessionStorage.allWorksAlpha) && angular.isUndefined($sessionStorage.allWorksCompDateValue)){
+    //if(angular.isUndefined($sessionStorage.menus) && angular.isUndefined($sessionStorage.allWorksAlpha) && angular.isUndefined($sessionStorage.allWorksCompDateValue)){
         BlakeDataService.getWorks().then(function (data) {
             vm.organizeMenus(data);
-        });
+        //});
         BlakeDataService.getWorks().then(function (data2) {
             vm.alphabetizeAll(data2);
-        });
+        //});
         BlakeDataService.getWorks().then(function (data3) {
             vm.orderByCompDateAll(data3);
-        });
-    } else {
+        //});
+    /*} else {
         vm.lists = $sessionStorage.menus;
         vm.allWorksAlpha = $sessionStorage.allWorksAlpha;
         vm.allWorksCompDateValue = $sessionStorage.allWorksCompDateValue;
         //console.log(vm.lists);
-    }
+    }*/
 
 
     var category = function(item) {
