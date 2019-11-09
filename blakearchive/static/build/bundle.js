@@ -27877,7 +27877,6 @@ angular.module("blake").controller("navMenu", ["$scope", "BlakeDataService", "$s
         $(this).find('ul.dropdown-menu').css({ 'width': viewport_width + 'px', 'left': '-' + element_position + 'px' });
     });
     if (angular.isUndefined($sessionStorage.menus) && angular.isUndefined($sessionStorage.allWorksAlpha) && angular.isUndefined($sessionStorage.allWorksCompDateValue)) {
-        $sessionStorage.empty();
         BlakeDataService.getWorks().then(function (data) {
             vm.organizeMenus(data);
         });
