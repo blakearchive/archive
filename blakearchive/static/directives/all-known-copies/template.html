@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="related-flex">
-                <div class="related-item" ng-repeat="copy in akc.work.related_works as filtered | filter:{type:'copy'}">
+                <div class="related-item" ng-repeat="copy in akc.work.related_works | filter:{type:'copy'} as filtered">
                     <span ng-if="copy.link">
                         <a ng-if="copy.link.indexOf('none') == -1" href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
                         <span ng-if="copy.link.indexOf('none') > -1" ng-bind-html="copy.displayTitle.trim() | markdown">
