@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="related-flex">
-                <div class="related-item" ng-repeat="copy in akc.work.related_works | filter:{type:'copy'}">
+                <div class="related-item" ng-repeat="copy in akc.work.related_works | filter:{type:'copy'} as filtered">
                     <span ng-if="copy.link">
                         <a ng-if="copy.link.indexOf('none') == -1" href="{{ copy.link }}" ng-bind-html="copy.displayTitle.trim() | markdown"></a>
                         <span ng-if="copy.link.indexOf('none') > -1" ng-bind-html="copy.displayTitle.trim() | markdown">
@@ -12,6 +12,7 @@
                     <span style="font-weight:bold;" ng-if="!copy.link && copy.displayTitle" ng-bind-html="copy.displayTitle.trim() | markdown"></span>
                     <span ng-repeat="info in akc.getInfo(copy.info) track by $index" ng-bind-html="info.trim() | markdown"></span>
                 </div>
+                <div ng-show="!filtered.length">There are no traced copies of the original work.</div>
             </div>
         </div>
     </div>
