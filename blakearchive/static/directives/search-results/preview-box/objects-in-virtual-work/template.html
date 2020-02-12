@@ -10,10 +10,10 @@
                      ng-class="{selected: ovw.s.selectedObject == $index && ovw.s.selectedCopy == $parent.$index}">
                     <a ng-click="ovw.s.showHighlight(ovw.tree, $index,$parent.$index)">
                         <span class="object-img" style="background-image: url(/images/{{ object[0].dbi }}.100.jpg);"></span>
-                        <span ng-if="ovw.results[ovw.s.selectedWork][0].bad_id == 'letters'" class="description">{{object[0].object_group}}</span>
-                        <span ng-if="object[0].title && ovw.results[ovw.s.selectedWork][0].bad_id != 'letters'" class="description">{{object[0].title}}</span>
-                        <span ng-if="ovw.results[ovw.s.selectedWork][0].bad_id != 'letters'" class="description text-capitalize">{{object[0].full_object_id.replace("Object 1","")}}</span>
-                        <span ng-if="ovw.results[ovw.s.selectedWork][0].bad_id == 'letters'" class="description text-capitalize">{{object[0].full_object_id}}</span>
+                        <span ng-if="ovw.results[ovw.s.selectedWork][0].bad_id == 'letters' || ovw.results[ovw.s.selectedWork][0].bad_id == 'shakespearewc'" class="description">{{object[0].object_group}}</span>
+                        <span ng-if="object[0].title && ovw.results[ovw.s.selectedWork][0].bad_id != 'letters' && object[0].title && ovw.results[ovw.s.selectedWork][0].bad_id != 'shakespearewc'" class="description">{{object[0].title}}</span>
+                        <span ng-if="ovw.results[ovw.s.selectedWork][0].bad_id != 'letters' && ovw.results[ovw.s.selectedWork][0].bad_id != 'shakespearewc'" class="description text-capitalize">{{object[0].full_object_id.replace("Object 1","")}}</span>
+                        <span ng-if="ovw.results[ovw.s.selectedWork][0].bad_id == 'letters' && ovw.results[ovw.s.selectedWork][0].bad_id == 'shakespearewc'" class="description text-capitalize">{{object[0].full_object_id}}</span>
                     </a>
                 </div>
             </div>

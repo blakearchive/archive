@@ -570,7 +570,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
     */
     if (resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].virtualwork_title){
       item.caption += obj.title +", Object "+obj.object_number;
-      if (obj.copy_bad_id != 'letters'){
+      if (obj.copy_bad_id != 'letters' && obj.copy_bad_id != 'shakespearewc'){
         item.caption += ", "+obj.source.objdescid.compdate['#text']+", "+obj.source.repository.institution['#text'];
       }
     }else{

@@ -45,7 +45,7 @@
     <div class="featured-object">
         <div class="compare-inner" style="padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px;" ng-style="truesize ? { 'height':'83vh' } : { 'height':'inherit' }">
             <!-- for letters -->
-            <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index" ng-if="read.bds.copy.bad_id == 'letters'">
+            <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{object_group: read.bds.object.object_group}:true track by $index" ng-if="read.bds.copy.bad_id == 'letters' || read.bds.copy.bad_id == 'shakespearewc'">
                 <div ng-if="read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes' || read.apparatus == 'imagesonly' || read.apparatus == 'comparewith'" class="btn-group edit-object" role="group" style="margin-bottom:0px;margin-left:28px">
                         <button type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px" ng-class="{'hover':read.apparatusArray[$index] == 'transcriptions'}" class="btn btn-default" ng-click="read.showIndividualTranscriptions($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:13px;"></span>
@@ -82,7 +82,7 @@
                 </div>
             </div>
             <!-- for everything else -->
-            <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null} track by $index" ng-if="read.bds.copy.bad_id != 'letters'">
+            <div class="item" ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null} track by $index" ng-if="read.bds.copy.bad_id != 'letters' && read.bds.copy.bad_id != 'shakespearewc'">
                 <div ng-if="read.apparatus == 'transcriptions' || read.apparatus == 'illustrationdescriptions' || read.apparatus == 'editorsnotes' || read.apparatus == 'imagesonly' || read.apparatus == 'comparewith'" class="btn-group edit-object" role="group" style="margin-bottom:0px;margin-left:28px">
                         <button tooltip="Diplomatic Transcription" tooltip-placement="bottom" type="button" style="height:21px;line-height:0.6;background-image: url('/static/img/global/detail-tray-icons.png');background-repeat: no-repeat;background-position:2px 1px" ng-class="{'hover':read.apparatusArray[$index] == 'transcriptions'}" class="btn btn-default black-tooltip-arrow" ng-click="read.showIndividualTranscriptions($index)">
                             <span class="gr-abbreviation" style="height:21px;font-size:13px;"></span>
@@ -245,7 +245,7 @@
     </div>
 </div>
 <!--for exhibits-->
-<div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="compare" ng-if="read.bds.copy.bad_id == 'illum'" ">
+<div auto-height adjust="70" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white" id="compare" ng-if="read.bds.copy.bad_id == 'illum'" >
     
            
                 
@@ -257,7 +257,7 @@
 <div style="float:right; width:67% " id="compare " class="scrollbar " ng-if="read.bds.copy.bad_id=='illum' " left-on-broadcast="viewSubMenu::readingMode ">
     <div class="featured-object ">
         <div class="compare-inner ">
-            <div class="item " ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null} " ng-if="read.bds.copy.bad_id !='letters' ">
+            <div class="item " ng-repeat="o in read.bds.copyObjects | filter:{supplemental:null} " ng-if="read.bds.copy.bad_id !='letters' && read.bds.copy.bad_id !='shakespearewc'">
                 <div class="reading-wrapper " auto-height adjust="150 " breakpoint="768 " id="{{ read.cssSafeId(o.desc_id) }} ">
                     <img magnify-image ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg " ng-click="read.changeObject(o) ">
                     <div class="reading-copy ">
