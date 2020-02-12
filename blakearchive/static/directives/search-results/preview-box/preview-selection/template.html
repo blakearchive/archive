@@ -11,7 +11,7 @@
             <p class="object-subtitle">
                 <span ng-if="ps.tree == 'object' && ps.s.getPreviewTitle(ps.tree, ps.results) != null" class="object-no">{{ps.getPreviewTitle(ps.tree, ps.results)}}<br></span>
                 <span ng-if="ps.results[ps.s.selectedWork][0].virtual && ps.results[ps.s.selectedWork][0].bad_id != 'letters' && ps.results[ps.s.selectedWork][0].bad_id != 'shakespearewc'" class="object-no">{{ps.s.getPreviewLabel(ps.tree, ps.results).replace("Object 1","")}}</span>
-                <span ng-if="ps.results[ps.s.selectedWork][0].virtual && (ps.results[ps.s.selectedWork][0].bad_id == 'letters' || ps.results[ps.s.selectedWork][0].bad_id == 'shakespearewc'" class="object-no">{{ps.s.getPreviewLabel(ps.tree, ps.results)}}</span>
+                <span ng-if="ps.results[ps.s.selectedWork][0].virtual && (ps.results[ps.s.selectedWork][0].bad_id == 'letters' || ps.results[ps.s.selectedWork][0].bad_id == 'shakespearewc')" class="object-no">{{ps.s.getPreviewLabel(ps.tree, ps.results)}}</span>
                 <span ng-if="!ps.results[ps.s.selectedWork][0].virtual" class="object-no">{{ps.s.getPreviewLabel(ps.tree, ps.results)}}</span></p>
         </a>
         <button ng-if="ps.s.type != 'copy-info'" tooltip="Add to Lightbox" tooltip-placement="bottom" type="button " class="btn btn-default " style="height:21px;line-height:0.6;background-image: url('/static/img/global/edit-icons.png');background-repeat: no-repeat;background-position:2px 3px;background-size:20px;position:absolute;top:45px;margin-left:5px;background-color:black" ng-class="" class="btn btn-gr-selection " ng-click="ps.s.addToLightBox(ps.tree, ps.results)">
