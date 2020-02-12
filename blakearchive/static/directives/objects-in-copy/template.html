@@ -3,7 +3,7 @@
     <header class="page-header">
         <!--<p class="subhead">Objects In {{ oic.getCopyOrGroup() }}</p>-->
     </header>
-    <p ng-if="oic.bds.work.virtual && oic.bds.copy.bad_id != 'letters'" class="text-center"><em>Dates are the probable dates of {{ oic.bds.work.probable }}.</em></p>
+    <p ng-if="oic.bds.work.virtual && oic.bds.copy.bad_id != 'letters' && oic.bds.copy.bad_id != 'shakespearewc'" class="text-center"><em>Dates are the probable dates of {{ oic.bds.work.probable }}.</em></p>
     <br>
     <div class="row">
         <!-- for letters and other multi object groups -->
@@ -16,7 +16,7 @@
         </div>
 
         <!-- for everything else -->
-        <div ng-repeat="obj in oic.bds.copyObjects | filter:{supplemental:null} track by $index" class="col-sm-6 col-md-3" ng-if="oic.bds.copy.bad_id != 'letters'">
+        <div ng-repeat="obj in oic.bds.copyObjects | filter:{supplemental:null} track by $index" class="col-sm-6 col-md-3" ng-if="oic.bds.copy.bad_id != 'letters' && oic.bds.copy.bad_id != 'shakespearewc'">
                 <span ng-if="oic.bds.work.probable == 'printing'">
                     <handprint-block scroll-to-top ng-if="!obj.title"
                                      action="oic.changeObject(obj)"
