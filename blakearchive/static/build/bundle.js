@@ -32176,7 +32176,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
 
                     blakeData.workCopies = data;
 
-                    if (blakeData.work.bad_id == 'letters') {
+                    if (blakeData.work.bad_id == 'letters' || blakeData.work.bad_id == 'shakespearewc') {
 
                         var objectGroup = {},
                             objectArray = [];
