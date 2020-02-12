@@ -53,8 +53,8 @@
 		</handprint-block>
 	</div>
 
-	<!-- For Virtual Groups, except letters -->
-	<div ng-repeat="obj in workCopies.bds.workCopies | filter:{supplemental:null}" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == true && workCopies.bds.work.bad_id != 'letters'">
+	<!-- For Virtual Groups, except letters and shakespearewc -->
+	<div ng-repeat="obj in workCopies.bds.workCopies | filter:{supplemental:null}" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == true && workCopies.bds.work.bad_id != 'letters' && workCopies.bds.work.bad_id != 'shakespearewc'">
 		<handprint-block
 				link="/copy/{{ workCopies.bds.work.bad_id }}?descId={{obj.desc_id}}"
 				action="workCopies.bds.changeObject(obj)"
