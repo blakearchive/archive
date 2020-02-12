@@ -39,7 +39,7 @@ angular.module("blake").factory("ObjectViewerService", function (BlakeDataServic
 
         let list = [];
 
-        if(ovs.bds.work.bad_id == 'letters'){
+        if(ovs.bds.work.bad_id == 'letters' || ovs.bds.work.bad_id == 'shakespearewc'){
             ovs.bds.copyObjects.forEach(function(obj){
                 if(obj.object_group == ovs.bds.object.object_group){
                     list.push(obj);
@@ -68,7 +68,7 @@ angular.module("blake").factory("ObjectViewerService", function (BlakeDataServic
 
         let list = [];
 
-        if(ovs.bds.work.bad_id == 'letters'){
+        if(ovs.bds.work.bad_id == 'letters' || ovs.bds.work.bad_id == 'shakespearewc'){
             ovs.bds.copyObjects.forEach(function(obj){
                 if(obj.object_group == ovs.bds.object.object_group){
                     list.push(obj);
