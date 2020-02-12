@@ -32251,7 +32251,7 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
             //console.log(blakeData.copyObjects);
 
             //Programatically order objects if "copy" is a virtual group, then replace number in full object id
-            if (blakeData.work.virtual == true && blakeData.work.bad_id != 'letters') {
+            if (blakeData.work.virtual == true && blakeData.work.bad_id != 'letters' && blakeData.work.bad_id != 'shakespearewc') {
                 blakeData.copyObjects = blakeData.numberVirtualWorkObjects(blakeData.copyObjects);
             }
 
