@@ -29877,6 +29877,13 @@ angular.module("blake").controller("WorkTitleController", ["$rootScope", "$route
                 return title[1].charAt(0).toUpperCase() + title[1].slice(1);
             }
         }
+
+        if (vm.bds.work.bad_id == 'shakespearewc') {
+            if (vm.bds.object.object_group) {
+                title = vm.bds.object.object_group;
+                return title;
+            }
+        }
         //For Virtual Groups
         if (vm.bds.work.virtual) {
             return vm.bds.work.title;
