@@ -27451,9 +27451,54 @@ angular.module('blake').directive("exhibitView", function () {
 
 /***/ }),
 /* 74 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: Unexpected token, expected : (10:8)\n\n\u001b[0m \u001b[90m  8 | \u001b[39m        \u001b[36mcase\u001b[39m \u001b[32m'letters'\u001b[39m\u001b[33m:\u001b[39m\n \u001b[90m  9 | \u001b[39m        \u001b[36mcase\u001b[39m \u001b[32m'shakespearewc'\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 10 | \u001b[39m        \u001b[36mcase\u001b[39m \u001b[32m'pid'\u001b[39m\u001b[33m:\u001b[39m\n \u001b[90m    | \u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 11 | \u001b[39m        \u001b[36mcase\u001b[39m \u001b[32m'gravepd'\u001b[39m\u001b[33m:\u001b[39m\n \u001b[90m 12 | \u001b[39m        \u001b[36mcase\u001b[39m \u001b[32m'gravewc'\u001b[39m\u001b[33m:\u001b[39m\n \u001b[90m 13 | \u001b[39m        \u001b[36mcase\u001b[39m \u001b[32m'gravewd'\u001b[39m\u001b[33m:\u001b[39m\u001b[0m\n");
+angular.module("blake").controller("HandprintBlockController", function () {
+    var vm = this;
+    //This can be removed once all images have the same path
+    switch (vm.workId) {
+        case 'biblicalwc':
+        case 'biblicaltemperas':
+        //case 'but543':
+        case 'letters':
+        case 'shakespearewc':
+        case 'pid':
+        case 'gravepd':
+        case 'gravewc':
+        case 'gravewd':
+        case 'cpd':
+        case 'allegropenseroso':
+        case 'pencil1':
+
+        case 'miltons':
+            vm.imagePath = '/static/img/virtualworks/';
+            break;
+        default:
+            vm.imagePath = '/images/';
+            break;
+    }
+});
+
+angular.module('blake').directive('handprintBlock', function () {
+    return {
+        restrict: 'E',
+        template: __webpack_require__(187),
+        controller: "HandprintBlockController",
+        scope: {
+            header: '@header',
+            footer: '@footer',
+            image: '@image',
+            link: '@link',
+            title: '@title',
+            action: '&action',
+            workId: '@workId',
+            textmatchstrings: '@textmatchstrings'
+
+        },
+        controllerAs: 'handprint',
+        bindToController: true
+    };
+});
 
 /***/ }),
 /* 75 */
@@ -31704,7 +31749,54 @@ angular.module('blake').factory('alertService', ["$rootScope", function ($rootSc
 /* 130 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: SyntaxError: Unexpected token, expected : (28:12)\n\n\u001b[0m \u001b[90m 26 | \u001b[39m            \u001b[36mcase\u001b[39m \u001b[32m'letters'\u001b[39m\u001b[33m:\u001b[39m\n \u001b[90m 27 | \u001b[39m            \u001b[36mcase\u001b[39m \u001b[32m'shakespearewc'\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 28 | \u001b[39m            \u001b[36mcase\u001b[39m \u001b[32m'gravepd'\u001b[39m\u001b[33m:\u001b[39m\n \u001b[90m    | \u001b[39m            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 29 | \u001b[39m            \u001b[36mcase\u001b[39m \u001b[32m'pid'\u001b[39m\u001b[33m:\u001b[39m\n \u001b[90m 30 | \u001b[39m            \u001b[36mcase\u001b[39m \u001b[32m'gravewc'\u001b[39m\u001b[33m:\u001b[39m\n \u001b[90m 31 | \u001b[39m            \u001b[36mcase\u001b[39m \u001b[32m'gravewd'\u001b[39m\u001b[33m:\u001b[39m\u001b[0m\n");
+angular.module("blake").factory("BlakeCopy", ["GenericService", function (GenericService) {
+    /**
+     * Constructor takes a config object and creates a BlakeCopy, with child objects transformed into the
+     * BlakeObjects.
+     *
+     * @param config
+     */
+    var constructor = function (config) {
+        var copy = angular.copy(config);
+        copy.header = angular.fromJson(config.header);
+        copy.source = angular.fromJson(config.source);
+
+        /*if (config.objects) {
+         for (i = 0; i < config.objects.length; i++) {
+         copy.objects.push(BlakeObject.create(config.objects[i]));
+         }
+         }*/
+        //FIXME:: Figure out why the Laocoon work's title isn't getting encoded in utf8
+        if (copy.title == "LaocoÃ¶n") {
+            copy.title = "Laocoön";
+        }
+        switch (copy.archive_copy_id) {
+            case 'biblicalwc':
+            case 'biblicaltemperas':
+            //case 'but543':
+            case 'letters':
+            case 'shakespearewc':
+            case 'gravepd':
+            case 'pid':
+            case 'gravewc':
+            case 'gravewd':
+            case 'cpd':
+            case 'pencil1':
+
+            case 'allegropenseroso':
+            case 'miltons':
+                copy.virtual = true;
+                break;
+            default:
+                copy.virtual = false;
+                break;
+        }
+
+        return copy;
+    };
+
+    return GenericService(constructor);
+}]);
 
 /***/ }),
 /* 131 */
@@ -32597,7 +32689,146 @@ angular.module("blake").factory("BlakeObject", ["GenericService", function (Gene
 /* 138 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: SyntaxError: Unexpected token, expected : (96:16)\n\n\u001b[0m \u001b[90m 94 | \u001b[39m                \u001b[36mcase\u001b[39m \u001b[32m'letters'\u001b[39m\u001b[33m:\u001b[39m\n \u001b[90m 95 | \u001b[39m                \u001b[36mcase\u001b[39m \u001b[32m'shakespearewc'\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 96 | \u001b[39m                \u001b[36mcase\u001b[39m \u001b[32m'gravepd'\u001b[39m\u001b[33m:\u001b[39m\n \u001b[90m    | \u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 97 | \u001b[39m                \u001b[36mcase\u001b[39m \u001b[32m'gravewc'\u001b[39m\u001b[33m:\u001b[39m\n \u001b[90m 98 | \u001b[39m                \u001b[36mcase\u001b[39m \u001b[32m'gravewd'\u001b[39m\u001b[33m:\u001b[39m\n \u001b[90m 99 | \u001b[39m                \u001b[36mcase\u001b[39m \u001b[32m'cpd'\u001b[39m\u001b[33m:\u001b[39m\u001b[0m\n");
+angular.module("blake").factory("BlakeWork", ["GenericService", "BlakeCopy", function (GenericService, BlakeCopy) {
+    /**
+     * Constructor takes a config object and creates a BlakeWork, with child objects transformed into the
+     * BlakeCopies.
+     *
+     * @param config
+     */
+    var constructor = function (config) {
+
+        var work = angular.copy(config);
+
+        // Get the medium and probable phrase
+        switch (work.medium) {
+            case "illbk":
+                work.medium_pretty = 'Illuminated Books';
+                work.probable = 'printing';
+                break;
+            case "comb":
+            case "comdes":
+            case "comeng":
+                work.medium_pretty = 'Commercial Book Illustrations';
+                work.probable = 'printing';
+                break;
+            case "spb":
+                work.medium_pretty = 'Prints';
+                if (work.bad_id == 'esviii' || work.bad_id == 'esv' || work.bad_id == 'esx' || work.bad_id == 'esvii' || work.bad_id == 'esxvi' || work.bad_id == 'esxviii' || work.bad_id == 'esi') {
+                    work.probable = 'composition of each state';
+                    break;
+                } else {
+                    work.probable = 'composition';
+                    break;
+                }
+            case "spdes":
+            case "speng":
+            case "cprint":
+                work.medium_pretty = 'Prints';
+                work.probable = 'composition';
+                break;
+            case "mono":
+            case "paint":
+            case "pen":
+            case "penink":
+            case "penc":
+            case "wc":
+                work.medium_pretty = 'Drawings and Paintings';
+                work.probable = 'composition';
+                break;
+            case "ms":
+            case "ltr":
+            case "te":
+                work.medium_pretty = 'Manuscripts and Typographic Works';
+                work.probable = 'composition';
+                break;
+            case "exhibit":
+                work.medium_pretty = "Archive Exhibits";
+                work.probable = 'composition';
+                break;
+            default:
+                return false;
+        }
+
+        //Create an alternative work title for virtual works
+        work.menuTitle = work.title;
+        //FIXME:: Figure out why the Laocoon work's title isn't getting encoded in utf8
+        if (work.title == "LaocoÃ¶n") {
+            work.title = "Laocoön";
+            work.menuTitle = "Laocoön";
+        }
+        switch (work.bad_id) {
+            case 'biblicalwc':
+                work.title = 'Water Color Drawings Illustrating the Bible';
+                work.virtual = true;
+                break;
+            case 'biblicaltemperas':
+                work.title = 'Paintings Illustrating the Bible';
+                work.virtual = true;
+                break;
+            //case 'but543':
+            //    work.title = 'Illustrations to Milton\'s "On the Morning of Christ\'s Nativity"';
+            //    work.virtual = false;
+            //    break;
+            case 'pid':
+                work.title = 'Pen and Ink Drawings';
+                work.virtual = true;
+                break;
+            case 'pencil1':
+                work.title = 'Pencil Sketches';
+                work.virtual = true;
+                break;
+
+            case 'letters':
+            case 'shakespearewc':
+            case 'gravepd':
+            case 'gravewc':
+            case 'gravewd':
+            case 'cpd':
+            case 'allegropenseroso':
+            case 'miltons':
+                work.virtual = true;
+                break;
+            default:
+                work.virtual = false;
+                break;
+        }
+
+        angular.forEach(work.related_works, function (v) {
+            v.displayTitle = v.title.text != '' ? v.title.text : false;
+            if (v.title.link) {
+                switch (v.title.type) {
+                    case 'work':
+                        v.type = 'work';
+                        v.link = "/work/" + v.title.link;
+                        break;
+                    case 'copy':
+                        v.type = 'copy';
+                        v.link = "/copy/" + v.title.link;
+                        break;
+                    case 'object':
+                        v.type = 'object';
+                        v.link = v.title.link;
+                        break;
+                    default:
+                        v.type = "none";
+                        v.link = false;
+                }
+            } else {
+                if (v.title.text.substring(0, 4).toLowerCase() == 'copy' || v.info.substring(0, 4).toLowerCase() == 'copy') {
+                    v.type = "copy";
+                } else {
+                    v.type = "none";
+                }
+                v.link = false;
+            }
+        });
+
+        return work;
+    };
+
+    return GenericService(constructor);
+}]);
 
 /***/ }),
 /* 139 */
@@ -61336,7 +61567,12 @@ module.exports = "<!-- Electronic Edition Info-->\n<div role=\"tabpanel\" class=
 module.exports = "<div auto-height adjust=\"70\" breakpoint=\"768\" style=\"overflow-y:scroll; overflow-x:none; float:left; width:33%; background:white\" id=\"compare\" >\n  <div ng-bind-html=\"exhibit.exhibit_article_content\">\n  </div>\n  \n</div>\n<!--\n<div style=\"float:right; width:67% \" id=\"compare \" class=\"scrollbar \"  left-on-broadcast=\"viewSubMenu::readingMode \">\n    <div class=\"featured-object \">\n        <div class=\"compare-inner \">\n            <div class=\"item \" ng-repeat=\"o in exhibit.bds.exhibitObjects \">\n                <div class=\"reading-wrapper \" auto-height adjust=\"150 \" breakpoint=\"768 \" id=\"{{ read.cssSafeId(o.desc_id) }} \">\n                    <img ng-src=\"/images/{{ o.dbi }}.{{dpi}}.jpg \">\n                    <div class=\"reading-copy \">\n                        <div class=\"reading-copy-inner \">\n                            <h4 ng-if=\"o.title \" >{{o.title}}<br><span>{{ o.full_object_id }}</span></h4>\n                            <h4 ng-if=\"!o.title \"><span>{{ o.full_object_id }}</span></h4>\n                            <text-transcription object=\"o \"></text-transcription>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n</div>\n</div>\n-->\n<!--/.compare-->\n";
 
 /***/ }),
-/* 187 */,
+/* 187 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"handprint-block\">\n    <a ng-href=\"{{handprint.link}}\" ng-click=\"$root.showOverlay = false; handprint.action()\">\n        <span class=\"handprint-header\">{{handprint.header}}</span>\n        <span class=\"object-img\" style=\"background-image: url({{ handprint.imagePath }}{{ handprint.image }});\">\n            <span class=\"handprint-title\" ng-if=\"!handprint.image\">{{handprint.title}}</span>\n        </span>\n        <span class=\"description\" ng-bind-html=\"handprint.footer\"></span>\n        <span ng-if=\"handprint.textmatchstrings\" class=\"textmatchstrings\" ng-bind-html=\"handprint.textmatchstrings\"></span>\n\n    </a>\n</div>";
+
+/***/ }),
 /* 188 */
 /***/ (function(module, exports) {
 

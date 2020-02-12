@@ -6,7 +6,7 @@ angular.module("blake").controller("HandprintBlockController", function () {
         case 'biblicaltemperas':
         //case 'but543':
         case 'letters':
-        case 'shakespearewc'
+        case 'shakespearewc':
         case 'pid':
         case 'gravepd':
         case 'gravewc':

@@ -24,7 +24,7 @@ angular.module("blake").factory("BlakeCopy", function (GenericService) {
             case 'biblicaltemperas':
             //case 'but543':
             case 'letters':
-            case 'shakespearewc'
+            case 'shakespearewc':
             case 'gravepd':
             case 'pid':
             case 'gravewc':
