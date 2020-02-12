@@ -27,7 +27,7 @@ angular.module('blake').controller('ShowMeController', function ($rootScope,$rou
     vm.getOvpTitle = function(){
         if(angular.isDefined(vm.bds.copy)){
             if(vm.bds.work.virtual == true){
-                if(vm.bds.copy.bad_id == 'letters'){
+                if(vm.bds.copy.bad_id == 'letters' || vm.bds.copy.bad_id == 'shakespearewc'){
                     return vm.bds.object.object_group;
                 } else {
                     return vm.bds.work.title;
@@ -52,7 +52,7 @@ angular.module('blake').controller('ShowMeController', function ($rootScope,$rou
 
         var list = [];
 
-        if(vm.bds.work.bad_id == 'letters'){
+        if(vm.bds.work.bad_id == 'letters' || vm.bds.work.bad_id == 'shakespearewc'){
             vm.bds.copyObjects.forEach(function(obj){
                 if(obj.object_group == vm.bds.object.object_group){
                     list.push(obj);
@@ -82,7 +82,7 @@ angular.module('blake').controller('ShowMeController', function ($rootScope,$rou
 
         var list = [];
 
-        if(vm.bds.work.bad_id == 'letters'){
+        if(vm.bds.work.bad_id == 'letters' || vm.bds.work.bad_id == 'shakespearewc'){
             vm.bds.copyObjects.forEach(function(obj){
                 if(obj.object_group == vm.bds.object.object_group){
                     list.push(obj);

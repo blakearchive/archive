@@ -17,7 +17,7 @@
     </div>
 
     <!-- virtual works -->
-    <div class="row" ng-if="info.bds.work.virtual && info.bds.work.bad_id != 'letters'">
+    <div class="row" ng-if="info.bds.work.virtual && info.bds.work.bad_id != 'letters' && info.bds.work.virtual && info.bds.work.bad_id != 'shakespearewc'">
         <div class="col-xs-12">
             <h4>Included Objects</h4>
             <div class="well" ng-repeat="obj in info.bds.copyObjects | filter:{supplemental:null} track by $index">
@@ -29,7 +29,7 @@
     </div>
 
     <!-- letters -->
-    <div class="row" ng-if="info.bds.work.virtual && info.bds.work.bad_id == 'letters'">
+    <div class="row" ng-if="info.bds.work.virtual && info.bds.work.bad_id == 'letters' || info.bds.work.virtual && info.bds.work.bad_id == 'shakespearewc'">
         <div class="col-xs-12">
             <h4>Included Objects</h4>
             <div class="well" ng-repeat="obj in info.bds.workCopies track by $index">

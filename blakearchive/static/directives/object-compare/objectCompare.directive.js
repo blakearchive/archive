@@ -10,7 +10,7 @@ angular.module("blake").controller("ObjectCompareController", function ($rootSco
     vm.getOvpTitle = function(){
         if(angular.isDefined(vm.bds.copy)){
             if(vm.bds.work.virtual == true){
-                if(vm.bds.copy.bad_id == 'letters'){
+                if(vm.bds.copy.bad_id == 'letters' || vm.bds.copy.bad_id == 'shakespearwc'){
                     return vm.bds.object.object_group;
                 } else {
                     return vm.bds.work.title;
