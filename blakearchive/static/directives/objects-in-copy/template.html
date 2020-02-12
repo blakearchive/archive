@@ -6,8 +6,8 @@
     <p ng-if="oic.bds.work.virtual && oic.bds.copy.bad_id != 'letters'" class="text-center"><em>Dates are the probable dates of {{ oic.bds.work.probable }}.</em></p>
     <br>
     <div class="row">
-        <!-- for letters (multi object groups) -->
-        <div ng-repeat="obj in oic.bds.copyObjects | filter:{object_group: oic.bds.object.object_group}:true track by $index" class="col-sm-6 col-md-3" ng-if="oic.bds.copy.bad_id == 'letters'">
+        <!-- for letters and other multi object groups -->
+        <div ng-repeat="obj in oic.bds.copyObjects | filter:{object_group: oic.bds.object.object_group}:true track by $index" class="col-sm-6 col-md-3" ng-if="oic.bds.copy.bad_id == 'letters' || oic.bds.copy.bad_id == 'shakespearewc'">
             <handprint-block scroll-to-top
                              action="oic.changeObject(obj)"
                              image="{{ obj.dbi }}.100.jpg"
