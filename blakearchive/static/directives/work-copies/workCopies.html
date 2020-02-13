@@ -78,7 +78,7 @@
 				link="/copy/{{ workCopies.bds.work.bad_id }}?descId={{obj.desc_id}}"
 				action="workCopies.bds.changeObject(obj)"
 				image="{{ obj.dbi }}.100.jpg"
-				footer="{{obj.object_group}} ({{obj.butnumber}}">
+				footer="{{obj.object_group}}<br>(Butlin {{obj.butnumber}}), {{obj.source.objdescid.compdate['#text']}}, {{obj.source.provenance.name['#text']}}">
 		</handprint-block>
 	</div>
 
