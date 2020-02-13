@@ -53,8 +53,8 @@
 		</handprint-block>
 	</div>
 
-	<!-- For Virtual Groups, except letters and shakespearewc -->
-	<div ng-repeat="obj in workCopies.bds.workCopies | filter:{supplemental:null}" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == true && workCopies.bds.work.bad_id != 'letters' && workCopies.bds.work.bad_id != 'shakespearewc'">
+	<!-- For Virtual Groups, except letters -->
+	<div ng-repeat="obj in workCopies.bds.workCopies | filter:{supplemental:null}" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.virtual == true && workCopies.bds.work.bad_id != 'letters'">
 		<handprint-block
 				link="/copy/{{ workCopies.bds.work.bad_id }}?descId={{obj.desc_id}}"
 				action="workCopies.bds.changeObject(obj)"
@@ -72,7 +72,7 @@
 				footer="{{obj.object_group}}">
 		</handprint-block>
 	</div>
-	<!-- For shakespearewc -->
+	<!-- For shakespearewc 
 	<div ng-repeat="obj in workCopies.bds.workCopies" class="col-sm-6 col-md-3" ng-if="workCopies.bds.work.bad_id == 'shakespearewc'">
 		<handprint-block
 				link="/copy/{{ workCopies.bds.work.bad_id }}?descId={{obj.desc_id}}"
@@ -81,5 +81,5 @@
 				footer="{{obj.object_group}}, {{obj.source.objdescid.compdate['#text']}}">
 		</handprint-block>
 	</div>
-
+-->
 </div>
