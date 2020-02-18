@@ -18,7 +18,7 @@ angular.module('blake').controller("CopyTabsController", function ($rootScope,Bl
                     if(vm.bds.work.bad_id == 'letters'){
                         return 'Letter';
                     } else if (vm.bds.work.bad_id == 'shakespearewc') {
-                        return 'Group'
+                        return 'Work'
                     } else {
                         return 'Object';
                     }
@@ -40,6 +40,8 @@ angular.module('blake').controller("CopyTabsController", function ($rootScope,Bl
                 if(vm.bds.work.virtual){
                     if(vm.bds.work.bad_id == 'letters'){
                         return 'Letter';
+                    } else if(vm.bds.work.bad_id == 'shakespearewc'){
+                        return 'Work';
                     } else {
                         return 'Group';
                     }
