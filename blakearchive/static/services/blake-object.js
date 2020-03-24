@@ -106,7 +106,11 @@ angular.module("blake").factory("BlakeObject", function (GenericService) {
             obj.illustration_description = angular.fromJson(config.illustration_description);
             obj.text = angular.fromJson(config.text);
             obj.notes = angular.fromJson(config.notes);
-            obj.alt_title = angular.fromJson(config.title[1])
+            obj.title = angular.fromJson(config.title);
+            obj.alt_title = '';
+            if(obj.title.length == 2) {
+                obj.alt_title = obj.title[1];
+            }
 
             function eachRecursive(objtext, altspelling) {
                 for (var k in objtext) {
