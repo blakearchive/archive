@@ -6,8 +6,8 @@ angular.module('blake').controller('HomeController', function($scope,$rootScope,
     $rootScope.showOverlay = false;
 
     $rootScope.worksNavState = true;
-    $rootScope.showWorkTitle = false;
-    $rootScope.help = 'home';
+    
+    $rootScope.showWorkTitle = 'home';
 
     vm.bds.setSelectedWork("shakespearewc");
 
