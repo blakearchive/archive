@@ -103,7 +103,7 @@
     <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:yellow;">{{ workTitle.getTitle() }}</a> <a scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true" style="color:yellow;">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}}) <span style="color:yellow">(Selected)</span>
   </span>
 
-  <span ng-if="help == 'home'" class="worktitle" style="padding: 19px;">
+  <span ng-if="showWorkTitle == 'home'" class="worktitle" style="padding: 19px;">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">New Publication: {{ workTitle.getTitle() }}</a>
   </span>
 
