@@ -1,9 +1,15 @@
 angular.module('blake').controller('HomeController', function($scope,$rootScope,BlakeDataService){
     var vm = this;
 
+    vm.bds = BlakeDataService;
+
+    $rootScope.showOverlay = false;
+
     $rootScope.worksNavState = true;
     $rootScope.showWorkTitle = false;
     $rootScope.help = 'home';
+
+    vm.bds.setSelectedWork("shakespearewc");
 
     if(!angular.isDefined($rootScope.persistentmode)){
         $rootScope.persistentmode = 'gallery';
