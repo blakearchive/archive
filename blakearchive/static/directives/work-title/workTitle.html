@@ -77,11 +77,9 @@
         <!--<span scroll-to-top style="color:white;">Exhibition</span>-->
     </span>
 
-    <h1 class="ml15">
     <span ng-if="showWorkTitle == 'home'" class="worktitle" style="padding: 19px;">
-      <a scroll-to-top href="" ng-click="$root.showOverlay = true" class="word" style="color:#e3b838;">LATEST PUBLICATION (3/31/20): {{ workTitle.getTitle() }}</a>
+      <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:#e3b838;"><h1 class="ml15"><span class="word">LATEST PUBLICATION (3/31/20): {{ workTitle.getTitle() }}</span></h1></a>
     </span>
-    </h1>
 
   <span ng-if="showWorkTitle != 'home' && showWorkTitle != 'exhibit' && showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
     <span ng-if="workTitle.bds.copy.bad_id == 'letters'">
