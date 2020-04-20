@@ -170,23 +170,5 @@
 <!--<script src="/static/js/minified/output.min.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/1.4.2/dexie.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/1.4.2/dexie.js.map"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-<script>
-  anime.timeline({loop: true})
-  .add({
-    targets: '.ml15 .word',
-    scale: [14,1],
-    opacity: [0,1],
-    easing: "easeOutCirc",
-    duration: 800,
-    delay: (el, i) => 800 * i
-  }).add({
-    targets: '.ml15',
-    opacity: 0,
-    duration: 1000,
-    easing: "easeOutExpo",
-    delay: 1000
-  });
-</script>
 
 </html>
