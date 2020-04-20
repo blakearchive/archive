@@ -26143,7 +26143,7 @@ angular.module('blake').controller('HomeController', ["$scope", "$rootScope", "B
 
     $rootScope.showWorkTitle = 'home';
 
-    vm.bds.setSelectedWork("s-los.e");
+    vm.bds.setSelectedWork("thel");
 
     if (!angular.isDefined($rootScope.persistentmode)) {
         $rootScope.persistentmode = 'gallery';
