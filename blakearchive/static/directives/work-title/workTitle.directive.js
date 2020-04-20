@@ -9,7 +9,7 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
     vm.getTitle = function(){
 
         /*HOME PAGE*/
-        if($rootScope.help == 'home') {
+        if($rootScope.showWorkTitle == 'home') {
             return vm.bds.work.title;
         }
 
