@@ -1,6 +1,6 @@
 .pulsate {
     -webkit-animation: pulsate 3s ease-out;
-    -webkit-animation-iteration-count: infinite; 
+    -webkit-animation-iteration-count: 3; 
     opacity: 0.5;
 }
 @-webkit-keyframes pulsate {
