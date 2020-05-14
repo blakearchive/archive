@@ -67,7 +67,7 @@
   <span ng-if="showWorkTitle == 'static'" class="worktitle" style="padding: 19px;">
         <a scroll-to-top href="" style="color:white;">{{ workTitle.getStaticPageTitle() }}</a>
     </span>
-  <span ng-if="showWorkTitle == 'work'" class="worktitle" style="padding: 19px;">
+    <span ng-if="showWorkTitle == 'work'" class="worktitle" style="padding: 19px;">
         <span scroll-to-top style="color:white;">{{ workTitle.getTitle() }} (Composed {{workTitle.bds.work.composition_date_string}})</span>
     </span>
 
@@ -77,7 +77,11 @@
         <!--<span scroll-to-top style="color:white;">Exhibition</span>-->
     </span>
 
-  <span ng-if=" showWorkTitle != 'exhibit' && showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
+    <span ng-if="showWorkTitle == 'home'" class="worktitle" style="padding: 19px;">
+      <a scroll-to-top href="" ng-click="$root.showOverlay = true" class="pulsate" style="color:#e3b838;">LATEST PUBLICATION (3/31/20): {{ workTitle.getTitle() }}</a>
+    </span>
+
+  <span ng-if="showWorkTitle != 'home' && showWorkTitle != 'exhibit' && showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
     <span ng-if="workTitle.bds.copy.bad_id == 'letters'">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Letters (Composed {{workTitle.bds.work.composition_date_string}})</a>: {{ workTitle.getTitle() }}
     </span>

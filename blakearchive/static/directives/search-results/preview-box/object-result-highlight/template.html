@@ -3,6 +3,12 @@
         <div ng-if="orh.type == 'title'" class="text-center">
             <h5 class="text-center">Title</h5>
             <span ng-bind-html="orh.results[orh.s.selectedWork][2][orh.s.selectedCopy][2][orh.s.selectedObject][0].title | highlight:orh.s.highlight"></span>
+
+            <!-- working on alt_title
+            <span ng-if="orh.results[orh.s.selectedWork][2][orh.s.selectedCopy][2][orh.s.selectedObject][0].alt_title == ''" ng-bind-html="orh.results[orh.s.selectedWork][2][orh.s.selectedCopy][2][orh.s.selectedObject][0].title | highlight:orh.s.highlight"></span>
+            <span ng-if="orh.results[orh.s.selectedWork][2][orh.s.selectedCopy][2][orh.s.selectedObject][0].alt_title != ''" ng-bind-html="orh.results[orh.s.selectedWork][2][orh.s.selectedCopy][2][orh.s.selectedObject][0].alt_title | highlight:orh.s.highlight"></span>
+            -->
+
         </div>
 
         <div ng-if="orh.type == 'text'">
