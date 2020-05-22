@@ -1,4 +1,4 @@
-<div ng-if="tt.hasMarkupText() && tt.object.copy_bad_id == 'bb49'" class="tei-wrapper" ng-bind-html="tt.object.markup_text | highlight:tt.highlight:tt.object.alt_spellings"></div>
+<div ng-if="tt.hasMarkupText() && tt.object.copy_bad_id == 'bb49'" class="tei-wrapper" ng-bind-html="tt.object.markup_text | highlight:tt.highlight:tt.object.alt_spellings" style="width:790px"></div>
 <div ng-if="tt.hasMarkupText() && tt.object.copy_bad_id != 'bb49'" class="tei-wrapper" ng-bind-html="tt.object.markup_text | highlight:tt.highlight:tt.object.alt_spellings"></div>
 <div ng-if="!tt.hasMarkupText()" class="tei-wrapper">[There is no transcription for this object.]</div>
 <p ng-if="tt.hasColorKeyMarkup(tt.object.markup_text)"><a href="#" ng-click="tt.colorKeyOpen('lg')">Color key for transcriptions</a></p>
