@@ -26143,6 +26143,8 @@ angular.module('blake').controller('HomeController', ["$scope", "$rootScope", "B
 
     $rootScope.showWorkTitle = 'home';
 
+    $rootScope.help = 'home';
+
     vm.bds.setSelectedWork("bb49");
 
     if (!angular.isDefined($rootScope.persistentmode)) {
