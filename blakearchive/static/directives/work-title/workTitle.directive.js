@@ -40,9 +40,11 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
             }
         }
 
-        if(vm.bds.work.bad_id == 'shakespearewc')
-            title = vm.bds.object.object_group;
-            return title;
+        if(vm.bds.work.bad_id == 'shakespearewc'){
+            if(vm.bds.object.object_group){
+                title = vm.bds.object.object_group;
+                return title;
+            }
         }
 
         if(vm.bds.work.bad_id == 'bb49'){
