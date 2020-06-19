@@ -29851,111 +29851,9 @@ angular.module('blake').directive("workCopies", function () {
 
 /***/ }),
 /* 118 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-angular.module("blake").controller("WorkTitleController", ["$rootScope", "$routeParams", "BlakeDataService", function ($rootScope, $routeParams, BlakeDataService) {
-    var vm = this;
-    vm.bds = BlakeDataService;
-    var title = "";
-    vm.showOverlay = false;
-    vm.showOverlayCopyInfo = false;
-    vm.showOverlayExhibitContents = false;
-
-    vm.getTitle = function () {
-
-        /*HOME PAGE*/
-        if ($rootScope.showWorkTitle == 'home') {
-            return vm.bds.work.title;
-        }
-
-        /*WORKS PAGES*/
-        if ($rootScope.showWorkTitle == 'work') {
-            return vm.bds.work.title;
-        }
-
-        if ($rootScope.showWorkTitle == 'exhibit' && $rootScope.doneSettingExhibit) {
-            return vm.bds.exhibit.exhibit.title;
-            console.log(vm.bds);
-            //return $rootScope.selectedExhibit.exhibit.title;
-        }
-
-        /*COPY PAGES*/
-        //For letters
-        if (vm.bds.work.bad_id == 'letters') {
-            if (vm.bds.object.object_group) {
-                title = vm.bds.object.object_group;
-                if (title.match(/\s(from.*)/)) {
-                    title = title.match(/\s(from.*)/);
-                } else if (title.match(/\s(to.*)/)) {
-                    title = title.match(/\s(to.*)/);
-                }
-                return title[1].charAt(0).toUpperCase() + title[1].slice(1);
-            }
-        }
-
-        if (vm.bds.work.bad_id == 'bb49') {
-            if (vm.bds.object.object_group) {
-                title = vm.bds.object.object_group;
-                return title;
-            }
-        }
-        //For Virtual Groups
-        if (vm.bds.work.virtual) {
-            return vm.bds.work.title;
-        }
-        //For rest
-        if (vm.bds.copy.header && $rootScope.doneSettingCopy) {
-            title = vm.bds.copy.header.filedesc.titlestmt.title['@reg'];
-            //title = vm.bds.copy.header.filedesc.titlestmt.title.main['#text'];
-            //console.log(vm.bds.copy.header.filedesc.titlestmt.title.main['#text']);
-        }
-        if (title.match(/.*, The/)) {
-            title = "The " + title.match(/(.*), The/)[1];
-        }
-        return title.trim();
-    };
-
-    vm.getCompOrPrintDateString = function () {
-        if (vm.bds.work.probable == "printing") return "Printed " + vm.bds.copy.print_date_string;else return "Composed " + vm.bds.work.composition_date_string;
-    };
-
-    vm.getCopyPhrase = function () {
-        //console.log(vm.bds.copy);
-        if (vm.bds.work.virtual) {
-            return '';
-        } else if (vm.bds.copy.archive_set_id != null) {
-            return vm.bds.copy.archive_set_id;
-        } else if (vm.bds.work.bad_id != 'bb134') {
-            return vm.bds.copy.archive_copy_id == null ? '' : 'Copy ' + vm.bds.copy.archive_copy_id;
-        } else if (vm.bds.work.bad_id == 'bb134') {
-            return vm.bds.copy.archive_copy_id == null ? '' : '#' + vm.bds.copy.archive_copy_id;
-        }
-    };
-
-    vm.getStaticPageTitle = function () {
-        return $rootScope.staticPageTitle;
-    };
-}]);
-
-angular.module('blake').directive("workTitle", function () {
-    let link = function (scope, ele, attr, vm) {
-        let selectedCopy = function () {
-            return vm.bds.copy;
-        };
-        scope.$watch(selectedCopy, function () {
-            vm.showOverlay = false;
-        });
-    };
-
-    return {
-        restrict: 'E',
-        template: __webpack_require__(219),
-        controller: "WorkTitleController",
-        link: link,
-        controllerAs: 'workTitle',
-        bindToController: true
-    };
-});
+throw new Error("Module build failed: SyntaxError: Unexpected token, expected , (73:4)\n\n\u001b[0m \u001b[90m 71 | \u001b[39m    }\n \u001b[90m 72 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 73 | \u001b[39m    vm\u001b[33m.\u001b[39mgetCompOrPrintDateString \u001b[33m=\u001b[39m \u001b[36mfunction\u001b[39m() {\n \u001b[90m    | \u001b[39m    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 74 | \u001b[39m        \u001b[36mif\u001b[39m(vm\u001b[33m.\u001b[39mbds\u001b[33m.\u001b[39mwork\u001b[33m.\u001b[39mprobable \u001b[33m==\u001b[39m \u001b[32m\"printing\"\u001b[39m)\n \u001b[90m 75 | \u001b[39m            \u001b[36mreturn\u001b[39m \u001b[32m\"Printed \"\u001b[39m \u001b[33m+\u001b[39m vm\u001b[33m.\u001b[39mbds\u001b[33m.\u001b[39mcopy\u001b[33m.\u001b[39mprint_date_string\u001b[33m;\u001b[39m\n \u001b[90m 76 | \u001b[39m        \u001b[36melse\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 119 */
@@ -61789,12 +61687,7 @@ module.exports = "<form id=\"gr-selection\" class=\"navbar-form\">\n    <div cla
 module.exports = "<div class=\"row\">\n\n\t<!-- For Non virtual groups -->\n\t<div ng-repeat=\"copy in workCopies.bds.workCopies\" class=\"col-sm-6 col-md-3\" ng-if=\"workCopies.bds.work.virtual == false && copy.source.objinfo.printdate['#text'] && copy.archive_copy_id && copy.archive_copy_id != 'mpi'\">\n\t\t<handprint-block\n\t\t\t\tlink=\"/copy/{{copy.bad_id}}\"\n\t\t\t\timage=\"{{ copy.image }}.100.jpg\"\n\t\t\t\tfooter=\"Copy {{copy.archive_copy_id}}, {{copy.source.objinfo.printdate['#text']}}, {{copy.institution}}<br>{{copy.number_of_objects}} object(s)\">\n\t\t</handprint-block>\n\t</div>\n\n\t<div ng-repeat=\"copy in workCopies.bds.workCopies\" class=\"col-sm-6 col-md-3\" ng-if=\"workCopies.bds.work.virtual == false && copy.source.objinfo.printdate['#text'] && copy.archive_copy_id == 'mpi'\">\n\t\t<handprint-block\n\t\t\t\tlink=\"/copy/{{copy.bad_id}}\"\n\t\t\t\timage=\"{{ copy.image }}.100.jpg\"\n\t\t\t\tfooter=\"Copy {{copy.archive_copy_id}}, {{copy.source.objinfo.printdate['#text']}}<br>{{copy.number_of_objects}} object(s)\">\n\t\t</handprint-block>\n\t</div>\n\n\n\t<div ng-repeat=\"copy in workCopies.bds.workCopies\" class=\"col-sm-6 col-md-3\" ng-if=\"workCopies.bds.work.virtual == false && copy.source.objinfo.printdate['#text'] && !copy.archive_copy_id\">\n\t\t<handprint-block\n\t\t\t\tlink=\"/copy/{{copy.bad_id}}\"\n\t\t\t\timage=\"{{ copy.image }}.100.jpg\"\n\t\t\t\tfooter=\"{{copy.source.objinfo.printdate['#text']}}, {{copy.institution}}<br>{{copy.number_of_objects}} object(s)\">\n\n\t\t</handprint-block>\n\t</div>\n\t<div ng-repeat=\"copy in workCopies.bds.workCopies\" class=\"col-sm-6 col-md-3\" ng-if=\"workCopies.bds.work.virtual == false && !copy.source.objinfo.printdate['#text'] && copy.archive_copy_id && workCopies.bds.work.bad_id != 'bb134'\">\n\t\t<handprint-block\n\t\t\t\tlink=\"/copy/{{copy.bad_id}}\"\n\t\t\t\timage=\"{{ copy.image }}.100.jpg\"\n\t\t\t\tfooter=\"Copy {{copy.archive_copy_id}}, {{copy.source.objdescid.compdate['#text']}}, {{copy.institution}}<br>{{copy.number_of_objects}} object(s)\">\n\n\t\t</handprint-block>\n\t</div>\n\n\t<div ng-repeat=\"copy in workCopies.bds.workCopies\" class=\"col-sm-6 col-md-3\" ng-if=\"workCopies.bds.work.virtual == false && !copy.source.objinfo.printdate['#text'] && copy.archive_copy_id && workCopies.bds.work.bad_id == 'bb134'\">\n\t\t<handprint-block\n\t\t\t\tlink=\"/copy/{{copy.bad_id}}\"\n\t\t\t\timage=\"{{ copy.image }}.100.jpg\"\n\t\t\t\tfooter=\"Receipt {{copy.archive_copy_id}}, {{copy.source.objdescid.compdate['#text']}}, {{copy.institution}}<br>{{copy.number_of_objects}} object(s)\">\n\n\t\t</handprint-block>\n\t</div>\n\n\t<div ng-repeat=\"copy in workCopies.bds.workCopies\" class=\"col-sm-6 col-md-3\" ng-if=\"workCopies.bds.work.virtual == false && !copy.source.objinfo.printdate['#text'] && !copy.archive_copy_id\">\n\t\t<handprint-block\n\t\t\t\tlink=\"/copy/{{copy.bad_id}}\"\n\t\t\t\timage=\"{{ copy.image }}.100.jpg\"\n\t\t\t\tfooter=\"{{copy.source.objdescid.compdate['#text']}}, {{copy.institution}}<br>{{copy.number_of_objects}} object(s)\">\n\n\t\t</handprint-block>\n\t</div>\n\n\t<!-- For Virtual Groups, except letters and shakespearewc -->\n\t<div ng-repeat=\"obj in workCopies.bds.workCopies | filter:{supplemental:null}\" class=\"col-sm-6 col-md-3\" ng-if=\"workCopies.bds.work.virtual == true && workCopies.bds.work.bad_id != 'letters' && workCopies.bds.work.bad_id != 'shakespearewc'\">\n\t\t<handprint-block\n\t\t\t\tlink=\"/copy/{{ workCopies.bds.work.bad_id }}?descId={{obj.desc_id}}\"\n\t\t\t\taction=\"workCopies.bds.changeObject(obj)\"\n\t\t\t\timage=\"{{ obj.dbi }}.100.jpg\"\n\t\t\t\tfooter=\"{{obj.title}}<br>{{obj.full_object_id}}, {{obj.source.objdescid.compdate['#text']}}, {{obj.source.provenance.name['#text']}}\">\n\t\t</handprint-block>\n\t</div>\n\n\t<!-- For Letters -->\n\t<div ng-repeat=\"obj in workCopies.bds.workCopies\" class=\"col-sm-6 col-md-3\" ng-if=\"workCopies.bds.work.bad_id == 'letters'\">\n\t\t<handprint-block\n\t\t\t\tlink=\"/copy/{{ workCopies.bds.work.bad_id }}?descId={{obj.desc_id}}\"\n\t\t\t\taction=\"workCopies.bds.changeObject(obj)\"\n\t\t\t\timage=\"{{ obj.dbi }}.100.jpg\"\n\t\t\t\tfooter=\"{{obj.object_group}}\">\n\t\t</handprint-block>\n\t</div>\n\t<!-- For shakespearewc -->\n\t<div ng-repeat=\"obj in workCopies.bds.workCopies\" class=\"col-sm-6 col-md-3\" ng-if=\"workCopies.bds.work.bad_id == 'shakespearewc'\">\n\t\t<handprint-block\n\t\t\t\tlink=\"/copy/{{ workCopies.bds.work.bad_id }}?descId={{obj.desc_id}}\"\n\t\t\t\taction=\"workCopies.bds.changeObject(obj)\"\n\t\t\t\timage=\"{{ obj.dbi }}.100.jpg\"\n\t\t\t\tfooter=\"{{obj.object_group}}<br>(Butlin {{obj.butnumber}}), {{obj.source.objdescid.compdate['#text']}}, {{obj.source.provenance.name['#text']}}\">\n\t\t</handprint-block>\n\t</div>\n\n</div>";
 
 /***/ }),
-/* 219 */
-/***/ (function(module, exports) {
-
-module.exports = "<div id=\"Overlay\" class=\"overlay\" ng-if=\"$root.showOverlay == true\">\n\n    <div>\n    <a style=\"text-decoration: none\" href=\"\" class=\"closebtnleft\" ng-click=\"$root.showOverlay = false\">&times;</a>\n    <header class=\"page-header\">\n      <p class=\"subhead\">{{ workTitle.bds.work.medium_pretty }}</p>\n      <h1 style=\"color:rgba(233,188,71,1)\">{{ workTitle.bds.work.title }} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>\n    </header>\n\n    <article class=\"categories\">\n\n      <div style=\"color:white\" class=\"container\">\n        <div class=\"section-group-workinfo\" ng-bind-html=\"workTitle.bds.work.info\"></div>\n        <hr>\n        <p class=\"text-center\"><em>Dates are the probable dates of {{ workTitle.bds.work.probable }}.</em></p>\n\n            <work-copies></work-copies>\n\n\n      </div>\n  </article>\n  </div>\n    <div class=\"containerForRelatedInOverlay\">\n        <!--<div class=\"section-group\">\n            <h2>Related Works</h2>\n            <p>Related works currently available in the William Blake Archive appear as links below. Works not currently available appear as plain text.</p>\n        </div>-->\n        <all-known-copies work=\"workTitle.bds.work\" ng-if=\"workTitle.bds.work.medium=='illbk'\"></all-known-copies>\n        <all-known-related-items work=\"workTitle.bds.work\" ng-class=\"workTitle.bds.work.related_works.length > 0 ? '' : 'hidden'\"></all-known-related-items>\n    </div>\n\n</div>\n\n<div id=\"OverlayCopyInfo\" class=\"overlay\" ng-show=\"$root.showOverlayCopyInfo == true\">\n\n    <a style=\"text-decoration: none\" href=\"\" class=\"closebtnleft\" ng-click=\"$root.showOverlayCopyInfo = false\">&times;</a>\n    <header ng-if=\"workTitle.bds.copy.archive_set_id == null && workTitle.bds.work.bad_id != 'bb134'\" class=\"page-header\">\n      <p class=\"subhead\">COPY INFORMATION</p>\n      <h1 style=\"color:rgba(233,188,71,1)\">{{ workTitle.bds.work.title }} {{workTitle.getCopyPhrase()}} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>\n    </header>\n    <header ng-if=\"workTitle.bds.copy.archive_set_id != null\" class=\"page-header\">\n      <p class=\"subhead\">SET INFORMATION</p>\n      <h1 style=\"color:rgba(233,188,71,1)\">{{ workTitle.bds.work.title }} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>\n    </header>\n\n\n    <header ng-if=\"workTitle.bds.copy.archive_set_id == null && workTitle.bds.work.bad_id == 'bb134'\" class=\"page-header\">\n      <p class=\"subhead\">Receipt INFORMATION</p>\n      <h1 style=\"color:rgba(233,188,71,1)\">Receipt {{workTitle.getCopyPhrase()}}--{{ workTitle.getTitle() }} (Composed {{workTitle.bds.copy.composition_date_string}})</h1>\n    </header>\n\n    <div id=\"archive-tabs\" role=\"tabpanel\">\n    <div class=\"container-fluid overlaycopyinfo\">\n      <div class=\"container\">\n        <div class=\"tab-content\">\n          <div role=\"tabpanel\" class=\"fadeinout tab-pane active in\">\n          <copy-information ng-if=\"workTitle.bds.copy.virtual == false\" copy=\"workTitle.bds.copy\" object=\"tabs.bds.object\"></copy-information>\n          </div>\n        </div>\n      </div>\n    </div>\n    </div>\n</div>\n\n\n<div class=\"object-view-menu hidden-xs hidden-sm\">\n  <span ng-if=\"showWorkTitle == 'static'\" class=\"worktitle\" style=\"padding: 19px;\">\n        <a scroll-to-top href=\"\" style=\"color:white;\">{{ workTitle.getStaticPageTitle() }}</a>\n    </span>\n    <span ng-if=\"showWorkTitle == 'work'\" class=\"worktitle\" style=\"padding: 19px;\">\n        <span scroll-to-top style=\"color:white;\">{{ workTitle.getTitle() }} (Composed {{workTitle.bds.work.composition_date_string}})</span>\n    </span>\n\n\n    <span ng-if=\"showWorkTitle == 'exhibit'\" class=\"worktitle\" style=\"padding: 19px;\">\n        <span scroll-to-top style=\"color:#eabd39;\">Archive Exhibition: {{ workTitle.getTitle() }} ({{workTitle.bds.exhibit.exhibit.composition_date_string}}) </span>\n        <!--<span scroll-to-top style=\"color:white;\">Exhibition</span>-->\n    </span>\n\n    <span ng-if=\"showWorkTitle == 'home'\" class=\"worktitle\" style=\"padding: 19px;\">\n      <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:#e3b838;\">LATEST PUBLICATION (5/29/20): {{ workTitle.getTitle() }}</a>\n    </span>\n\n  <span ng-if=\"showWorkTitle != 'home' && showWorkTitle != 'exhibit' && showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'\" class=\"worktitle\" style=\"padding: 19px;\">\n    <span ng-if=\"workTitle.bds.copy.bad_id == 'letters'\">\n      <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:white;\">Letters (Composed {{workTitle.bds.work.composition_date_string}})</a>: {{ workTitle.getTitle() }}\n    </span>\n    <span ng-if=\"workTitle.bds.copy.bad_id == 'shakespearewc'\">\n      <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:white;\">Illustrations to Shakespeare (Composed {{workTitle.bds.work.composition_date_string}})</a>: {{ workTitle.getTitle() }}\n    </span>\n    <span ng-if=\"workTitle.bds.copy.bad_id == 'bb49'\">\n      <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:white;\">French Revolution</a>: {{ workTitle.getTitle() }}\n    </span>\n    <span ng-if=\"workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.copy.bad_id != 'shakespearewc' && workTitle.bds.work.medium != 'exhibit' && workTitle.bds.work.bad_id != 'bb134'\">\n      <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:white;\">{{ workTitle.getTitle() }}</a> <a scroll-to-top href=\"\" ng-click=\"$root.showOverlayCopyInfo = true\" style=\"color:white;\">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}})\n    </span>\n\n    <span ng-if=\"workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.copy.bad_id != 'shakespearewc' && workTitle.bds.work.medium != 'exhibit' && workTitle.bds.work.bad_id == 'bb134'\">\n      <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:white;\">Receipts</a>: <a scroll-to-top href=\"\" ng-click=\"$root.showOverlayCopyInfo = true\" style=\"color:white;\">{{workTitle.getCopyPhrase()}}--{{ workTitle.getTitle() }}</a>\n    </span>\n\n    <span ng-if=\"workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.copy.bad_id != 'shakespearewc' && workTitle.bds.work.medium == 'exhibit'\">\n      <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:white;\">{{ workTitle.getTitle() }}</a>\n    </span>\n\n  </span>\n\n\n  <span ng-if=\"$root.view.mode == 'compare' && showWorkTitle != 'static' && showWorkTitle != 'exhibit' && showWorkTitle != 'work'\" class=\"worktitle\" style=\"padding: 19px; color:yellow\">\n    <a scroll-to-top href=\"\" ng-click=\"$root.showOverlay = true\" style=\"color:yellow;\">{{ workTitle.getTitle() }}</a> <a scroll-to-top href=\"\" ng-click=\"$root.showOverlayCopyInfo = true\" style=\"color:yellow;\">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}}) <span style=\"color:yellow\">(Selected)</span>\n  </span>\n\n</div>";
-
-/***/ }),
+/* 219 */,
 /* 220 */
 /***/ (function(module, exports) {
 
