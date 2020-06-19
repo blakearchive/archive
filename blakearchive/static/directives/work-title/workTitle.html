@@ -85,6 +85,9 @@
     <span ng-if="workTitle.bds.copy.bad_id == 'letters'">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Letters (Composed {{workTitle.bds.work.composition_date_string}})</a>: {{ workTitle.getTitle() }}
     </span>
+    <span ng-if="workTitle.bds.copy.bad_id == 'shakespearewc'">
+      <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Illustrations to Shakespeare (Composed {{workTitle.bds.work.composition_date_string}})</a>: {{ workTitle.getTitle() }}
+    </span>
     <span ng-if="workTitle.bds.copy.bad_id == 'bb49'">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">French Revolution</a>: {{ workTitle.getTitle() }}
     </span>
