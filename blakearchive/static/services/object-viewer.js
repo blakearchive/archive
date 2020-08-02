@@ -3,10 +3,8 @@ angular.module("blake").factory("ObjectViewerService", function (BlakeDataServic
     ovs.bds = BlakeDataService;
 
     ovs.userestrictOpen = function(copy,object){
+        console.log(copy.header);
         let header = copy.header ? copy.header.userestrict['#text'] : object.header.userestrict['#text'];
-        if(ovs.bds.work.virtual){
-            header = object.header.userestrict['#text'];
-        }
         let template = 
             `<div class="modal-header">
                 <button type="button" class="close" ng-click="close()" aria-label="Close">
