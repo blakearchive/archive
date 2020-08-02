@@ -4,7 +4,7 @@ angular.module("blake").factory("ObjectViewerService", function (BlakeDataServic
 
     ovs.userestrictOpen = function(copy,object){
         let header = null;
-        if(copy.header.userestrict['#text']) {
+        if(copy.header.userestrict) {
             header = copy.header.userestrict['#text'];
         }
         else{
