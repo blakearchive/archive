@@ -78,7 +78,7 @@
     </span>
 
     <span ng-if="showWorkTitle == 'home'" class="worktitle" style="padding: 19px;">
-      <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:#e3b838;">LATEST PUBLICATION (5/29/20): {{ workTitle.getTitle() }}</a>
+      <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:#e3b838;">LATEST PUBLICATION (8/31/20): {{ workTitle.getTitle() }} Copies C and F</a>
     </span>
 
   <span ng-if="showWorkTitle != 'home' && showWorkTitle != 'exhibit' && showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
@@ -88,9 +88,11 @@
     <span ng-if="workTitle.bds.copy.bad_id == 'shakespearewc'">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Illustrations to Shakespeare (Composed {{workTitle.bds.work.composition_date_string}})</a>: {{ workTitle.getTitle() }}
     </span>
+    <!--
     <span ng-if="workTitle.bds.copy.bad_id == 'bb49'">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">French Revolution</a>: {{ workTitle.getTitle() }}
     </span>
+  -->
     <span ng-if="workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.copy.bad_id != 'shakespearewc' && workTitle.bds.work.medium != 'exhibit' && workTitle.bds.work.bad_id != 'bb134'">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> <a scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true" style="color:white;">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}})
     </span>
