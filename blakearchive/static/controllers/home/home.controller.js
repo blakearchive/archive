@@ -11,7 +11,7 @@ angular.module('blake').controller('HomeController', function($scope,$rootScope,
 
     $rootScope.help = 'home';
 
-    vm.bds.setSelectedWork("bb49");
+    vm.bds.setSelectedWork("europe");
 
     if(!angular.isDefined($rootScope.persistentmode)){
         $rootScope.persistentmode = 'gallery';
