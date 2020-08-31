@@ -28735,7 +28735,7 @@ angular.module("blake").controller("RegularObjectViewerController", ["$rootScope
     vm.rs = $rootScope;
     vm.bds = BlakeDataService;
     vm.ovs = ObjectViewerService;
-    console.log("hello" + vm.bds.object);
+    console.log(vm.bds);
 }]);
 
 angular.module("blake").component("regularObjectViewer", {
