@@ -28172,7 +28172,7 @@ angular.module("blake").controller("ObjectEditButtonsController", ["$rootScope",
     vm.wts = worktitleService;
     vm.rs = $rootScope;
     //var cartItems = CartStorageService.cartItems;
-    console.log(vm.bds.object);
+
     vm.trueSizeOpen = function (object) {
         if (!angular.isDefined($cookies.getObject('clientPpi'))) {
             $modal.open({
@@ -28735,6 +28735,7 @@ angular.module("blake").controller("RegularObjectViewerController", ["$rootScope
     vm.rs = $rootScope;
     vm.bds = BlakeDataService;
     vm.ovs = ObjectViewerService;
+    console.log(vm.bds.object);
 }]);
 
 angular.module("blake").component("regularObjectViewer", {
