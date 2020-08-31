@@ -3,7 +3,7 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
     vm.rs = $rootScope;
     vm.bds = BlakeDataService;
     vm.ovs = ObjectViewerService;
-    console.log(vm.bds.object)
+    console.log("hello" + vm.bds.object);
 });
 
 angular.module("blake").component("regularObjectViewer", {
