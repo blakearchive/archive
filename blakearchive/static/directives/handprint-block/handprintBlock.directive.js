@@ -3,6 +3,7 @@ angular.module("blake").controller("HandprintBlockController", function () {
     //This can be removed once all images have the same path
     switch (vm.workId) {
         case 'biblicalwc':
+        case '1780swc':
         case 'biblicaltemperas':
         //case 'but543':
         case 'letters':
