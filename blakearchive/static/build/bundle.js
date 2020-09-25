@@ -27470,6 +27470,7 @@ angular.module("blake").controller("HandprintBlockController", function () {
     //This can be removed once all images have the same path
     switch (vm.workId) {
         case 'biblicalwc':
+        case '1780swc':
         case 'biblicaltemperas':
         //case 'but543':
         case 'letters':
@@ -31804,6 +31805,7 @@ angular.module("blake").factory("BlakeCopy", ["GenericService", function (Generi
         }
         switch (copy.archive_copy_id) {
             case 'biblicalwc':
+            case '1780swc':
             case 'biblicaltemperas':
             //case 'but543':
             case 'letters':
@@ -32814,6 +32816,10 @@ angular.module("blake").factory("BlakeWork", ["GenericService", "BlakeCopy", fun
                 break;
             case 'pencil1':
                 work.title = 'Pencil Sketches';
+                work.virtual = true;
+                break;
+            case '1780swc':
+                work.title = 'Water Color Drawings';
                 work.virtual = true;
                 break;
 
