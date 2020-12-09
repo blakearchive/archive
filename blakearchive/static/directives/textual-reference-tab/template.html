@@ -7,14 +7,14 @@
             <handprint-block ng-if="obj.object_group !== null"
                              link="/copy/{{obj.virtualwork_id}}?descId={{ obj.desc_id }}"
                              image="{{ obj.dbi }}.100.jpg"
-                             footer="{{ obj.object_group }}">
+                             footer="<b>{{obj.virtualwork_title}}</b><br>{{obj.title}}</b>, Composed {{obj.copy_composition_date_string}}<br>{{obj.full_object_id}}">
             </handprint-block>
 
             <!--copy permutations from objectsFromSame.html in the future-->
             <handprint-block ng-if="obj.object_group === null"
                              link="/copy/{{ obj.copy_bad_id }}?descId={{ obj.desc_id }}"
                              image="{{ obj.dbi }}.100.jpg"
-                             footer="<b>{{obj.copy_title}}, Composed {{obj.copy_composition_date_string}}</b><br>{{obj.full_object_id}}">
+                             footer="<b>{{obj.copy_title}}</b>, Composed {{obj.copy_composition_date_string}}<br>{{obj.full_object_id}}">
             </handprint-block>
         </div>
     </div>

@@ -9,7 +9,9 @@ angular.module('blake').controller('HomeController', function($scope,$rootScope,
     
     $rootScope.showWorkTitle = 'home';
 
-    vm.bds.setSelectedWork("bb49");
+    $rootScope.help = 'home';
+
+    vm.bds.setSelectedWork("1780swc");
 
     if(!angular.isDefined($rootScope.persistentmode)){
         $rootScope.persistentmode = 'gallery';

@@ -90,6 +90,10 @@ angular.module("blake").factory("BlakeWork", function (GenericService, BlakeCopy
                     work.title = 'Pencil Sketches';
                     work.virtual = true;
                     break;
+                case '1780swc':
+                    work.title = 'Water Color Drawings'
+                    work.virtual = true;
+                    break;
 
                 case 'letters':
                 case 'shakespearewc':

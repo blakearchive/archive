@@ -21,6 +21,7 @@ angular.module("blake").factory("BlakeCopy", function (GenericService) {
         }
         switch (copy.archive_copy_id) {
             case 'biblicalwc':
+            case '1780swc':
             case 'biblicaltemperas':
             //case 'but543':
             case 'letters':
