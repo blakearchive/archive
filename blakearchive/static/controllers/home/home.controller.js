@@ -11,7 +11,7 @@ angular.module('blake').controller('HomeController', function($scope,$rootScope,
 
     $rootScope.help = 'home';
 
-    vm.bds.setSelectedWork("1780swc");
+    vm.bds.setSelectedWork("bb128");
 
     if(!angular.isDefined($rootScope.persistentmode)){
         $rootScope.persistentmode = 'gallery';
