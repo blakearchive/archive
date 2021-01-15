@@ -29934,6 +29934,12 @@ angular.module("blake").controller("WorkTitleController", ["$rootScope", "$route
             //return $rootScope.selectedExhibit.exhibit.title;
         }
 
+        if ($rootScope.showWorkTitle == 'preview' && $rootScope.doneSettingExhibit) {
+            return vm.bds.preview.preview.title;
+            console.log(vm.bds);
+            //return $rootScope.selectedExhibit.exhibit.title;
+        }
+
         /*COPY PAGES*/
         //For letters
         if (vm.bds.work.bad_id == 'letters') {
