@@ -201,10 +201,10 @@ def get_preview_by_id(preview_id):
 @api.route("/preview-image/<preview_id>")
 def get_preview_image(preview_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
-    result = blake_data_service.get_image_for_preview(preview_id)
+    results = blake_data_service.get_image_for_preview(preview_id)
     if not result:
         return abort(404)
-    return jsonify(result.to_dict)
+    return jsonify({"results": [r.to_dict for r in results]})
 
 
 @api.route("/exhibit-captions/<exhibit_id>/<image_id>")
