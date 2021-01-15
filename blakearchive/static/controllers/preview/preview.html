@@ -1,9 +1,17 @@
 <div id="archive" class="container-fluid archive-top">
     <div id="object-container" class="row">
         <div id="object-view" class="reading-view">
-            <div style="height:100%;" class="item" ng-repeat="i in previewCtrl.images track by $index" id="item-{{$index}}">
-                <div class="reading-wrapper" style="height:100%;" breakpoint="768">
-                    <img ng-if="i.dbi != ''" magnify-image ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">
+            <div id="gallery" auto-height adjust="60" breakpoint="768" class="container-fluid" ng-style="{'margin-left':galleriesMarginLeft}">
+                <div style="height:80%; overflow-y:hidden; margin-bottom:0px; " id="compare" class="scrollbar" left-on-broadcast="viewSubMenu::readingMode" style="width:67%;">
+                    <div class="featured-object" style="height:100%;">
+                        <div class="compare-inner" style="height:100%; padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px; width:max-content;width:-moz-max-content">
+                            <div style="height:100%;" class="item" ng-repeat="i in previewCtrl.images track by $index" id="item-{{$index}}">
+                                <div class="reading-wrapper" style="height:100%;" breakpoint="768">
+                                    <img ng-if="i.dbi != ''" magnify-image ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
