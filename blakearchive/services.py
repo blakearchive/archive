@@ -228,7 +228,8 @@ class BlakeDataService(object):
     @classmethod
     def get_image_for_preview(cls, preview_id=None):
         return models.BlakePreviewImage.query \
-            .filter(models.BlakePreviewImage.preview_id == preview_id).first()
+            .filter(models.BlakePreviewImage.preview_id == preview_id) \
+            .order_by(models.BlakePreviewImage.image_id).all()
 
     @classmethod
     def get_object(cls, desc_id):
