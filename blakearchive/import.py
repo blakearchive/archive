@@ -79,7 +79,7 @@ class BlakePreviewImporter(BlakeImporter):
       p = models.BlakePreview()
       p.preview_id = root.get("id")
       p.title = root.get("title").encode("utf-8")
-      ex.composition_date_string = root.get("composition_date_string").encode("utf-8")
+      p.composition_date_string = root.get("composition_date_string").encode("utf-8")
       self.previews[p.preview_id] = p
 
       print "preview id is: "+root.get("id")
@@ -87,7 +87,7 @@ class BlakePreviewImporter(BlakeImporter):
 
       # iterate images and add them to the list
       for child in root:
-          self.process_preview_image(ex,child)
+          self.process_preview_image(p,child)
 
   # exhibit - models.BlakeExhibit
   # imageXml - etree elementTree
