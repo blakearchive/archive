@@ -699,7 +699,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     };
     blakeData.getImageForPreview = function(previewId){
       // TODO: implement API and then fix update this!!!!
-      var url = directoryPrefix + '/api/preview-image/'+previewId;
+      var url = directoryPrefix + '/api/preview-images/'+previewId;
 
       //$log.info('getting objects: multi');
 
