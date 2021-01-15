@@ -697,7 +697,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
           $log.error('XHR Failed for getObjects: multi...\n' + angular.toJson(error.data, true));
       }
     };
-    blakeData.getImageForPreview = function(previewId){
+    blakeData.getImagesForPreview = function(previewId){
       // TODO: implement API and then fix update this!!!!
       var url = directoryPrefix + '/api/preview-images/'+previewId;
 
@@ -714,7 +714,7 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
       }
 
       function getObjectsFailed(error){
-          $log.error('XHR Failed for getImageForPreview: multi...\n'+ previewId + angular.toJson(error.data, true));
+          $log.error('XHR Failed for getImagesForPreview: multi...\n'+ previewId + angular.toJson(error.data, true));
       }
     };
 

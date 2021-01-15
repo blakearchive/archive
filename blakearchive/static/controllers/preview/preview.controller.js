@@ -25,7 +25,7 @@ angular.module('blake').controller('PreviewController', function (
         ////console.log($rootScope.zoom);
     };
 
-    BlakeDataService.getImageForPreview(previewId).then(function(result){
+    BlakeDataService.getImagesForPreview(previewId).then(function(result){
       vm.images = result;
     });
 
