@@ -226,3 +226,9 @@ def get_exhibits():
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     results = blake_data_service.get_exhibits()
     return jsonify({"results": [r.to_dict for r in results]})
+
+@api.route("/previews/")
+def get_previews():
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    results = blake_data_service.get_previews()
+    return jsonify({"results": [r.to_dict for r in results]})
