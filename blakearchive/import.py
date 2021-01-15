@@ -97,7 +97,7 @@ class BlakePreviewImporter(BlakeImporter):
       previewImage.image_id = imageXml.get("id")
       previewImage.dbi = imageXml.get("dbi")
       previewImage.preview_id = preview.preview_id
-      preview.preview_image = previewImage
+      preview.preview_image.append(previewImage)
 
 
 
