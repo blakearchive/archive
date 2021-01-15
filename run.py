@@ -11,12 +11,16 @@ app.config["BLAKE_DATA_SERVICE"] = services.BlakeDataService
 models.db.init_app(app)
 
 @app.route('/images/<image>')
-def get_image(image=None):
+def get_image2(image=None):
     return send_file(config.local_image_path+image)
 
 @app.route('/images/exhibits/<exhibitId>/<image>')
-def get_exhibit_image(exhibitId=None,image=None):
+def get_exhibit_image2(exhibitId=None,image=None):
     return send_file(config.local_image_path+'exhibits/'+exhibitId+'/'+image)
+
+@app.route('/images/preview/<previewId>/<image>')
+def get_preview_image2(previewId=None,image=None):
+    return send_file(config.local_image_path+'preview/'+previewId+'/'+image)
 
 @app.route('/lightbox')
 def get_lightbox(path=None):
