@@ -31890,7 +31890,7 @@ angular.module("blake").factory("BlakeCopy", ["GenericService", function (Generi
 /***/ (function(module, exports) {
 
 
-angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$http", "$q", "$location", "BlakeObject", "BlakeCopy", "BlakeWork", "BlakeExhibit", "BlakeExhibitImage", "BlakeExhibitCaption", "directoryPrefix", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork, BlakeExhibit, BlakeExhibitImage, BlakeExhibitCaption, directoryPrefix) {
+angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$http", "$q", "$location", "BlakeObject", "BlakeCopy", "BlakeWork", "BlakeExhibit", "BlakeExhibitImage", "BlakeExhibitCaption", "BlakePreview", "BlakePreviewImage", "directoryPrefix", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork, BlakeExhibit, BlakeExhibitImage, BlakeExhibitCaption, BlakePreview, BlakePreviewImage, directoryPrefix) {
     /**
      * For the time being, all data accessor functions should be placed here.  This service should mirror the API
      * of the back-end BlakeDataService.
