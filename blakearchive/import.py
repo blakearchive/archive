@@ -71,7 +71,7 @@ class BlakePreviewImporter(BlakeImporter):
       # 3. each exhibit has a collection of exhibit-images. we need to iterate over them.
       #    -- creating a model for each and adding them to self.exhibit_images
       print "processing: "+preview
-      root = etree.parse(exhibit).getroot()
+      root = etree.parse(preview).getroot()
       document_name = os.path.split(preview)[1]
       #Sprint "document name: "+document_name
       #print "doc content: "+etree.tostring(root)
