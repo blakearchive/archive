@@ -196,7 +196,7 @@ def get_preview_by_id(preview_id):
         return abort(404)
     images =  blake_data_service.get_image_for_preview(preview_id)
 
-    return jsonify({"preview":result.to_dict,"images":[r.to_dict for r in image]})
+    return jsonify({"preview":result.to_dict,"images":[r.to_dict for r in images]})
 
 @api.route("/preview-image/<preview_id>")
 def get_preview_image(preview_id):
