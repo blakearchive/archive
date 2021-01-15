@@ -64,15 +64,15 @@ class BlakePreviewImporter(BlakeImporter):
       #logger.info( "importing exhibit files")
 
   # 'exhibit' - exhibit filepath
-  def process_preview_file(self,exhibit):
+  def process_preview_file(self,preview):
       # each exhibit was read from the file system. we want to:
       # 1. create an Exhibit Model and update its attributes from exhibit arg(filesystem)
       # 2. add the model to self.exhibits for processing by populate_database
       # 3. each exhibit has a collection of exhibit-images. we need to iterate over them.
       #    -- creating a model for each and adding them to self.exhibit_images
-      print "processing: "+exhibit
+      print "processing: "+preview
       root = etree.parse(exhibit).getroot()
-      document_name = os.path.split(exhibit)[1]
+      document_name = os.path.split(preview)[1]
       #Sprint "document name: "+document_name
       #print "doc content: "+etree.tostring(root)
       # the exhibit root element has attributes that we need to parse into the exhibit object
@@ -87,17 +87,17 @@ class BlakePreviewImporter(BlakeImporter):
 
       # iterate images and add them to the list
       for child in root:
-          self.process_preview_image(p,child)
+          self.process_preview_images(p,child)
 
   # exhibit - models.BlakeExhibit
   # imageXml - etree elementTree
-  def process_preview_image(self, preview, imageXml):
+  def process_preview_images(self, preview, imageXml):
       #print "..with xml: "+etree.tostring(imageXml, pretty_print=True)
       previewImage = models.BlakePreviewImage()
       previewImage.image_id = imageXml.get("id")
       previewImage.dbi = imageXml.get("dbi")
       previewImage.preview_id = preview.preview_id
-      preview.preview_image.append(previewImage)
+      preview.preview_images.append(previewImage)
 
 
 
