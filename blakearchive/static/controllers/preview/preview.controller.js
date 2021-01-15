@@ -30,14 +30,14 @@ angular.module('blake').controller('PreviewController', function (
     });
 
     vm.bds= BlakeDataService;
-/*    console.log("Exhibit ID: "+exhibitId);
+    //console.log("Exhibit ID: "+exhibitId);
 
 
-    $rootScope.doneSettingExhibit = false;
-    vm.bds.setSelectedExhibit(exhibitId).then(function(){
+    $rootScope.doneSettingPreview = false;
+    vm.bds.setSelectedPreview(previewId).then(function(){
       //console.log(">>>>>hey, tae, you were wrong!!!!");
-      $rootScope.doneSettingExhibit = true;
-      console.log(vm.bds.exhibit);
-      vm.scrollTo(1);
-    }); */
+      $rootScope.doneSettingPreview = true;
+      console.log(vm.bds.preview);
+      //vm.scrollTo(1);
+    }); 
 });
