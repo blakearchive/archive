@@ -30231,6 +30231,14 @@ blake.config(["$routeProvider", "$locationProvider", function ($routeProvider, $
         controllerAs: 'exhibitCtrl',
         reloadOnSearch: false
     });
+
+    $routeProvider.when(directoryPrefix + '/preview/:previewId', {
+        templateUrl: directoryPrefix + '/static/controllers/preview/preview.html',
+        controller: "PreviewController",
+        controllerAs: 'previewCtrl',
+        reloadOnSearch: false
+    });
+
     $routeProvider.when(directoryPrefix + '/new-window/:what/:copyId', {
         templateUrl: directoryPrefix + '/static/controllers/showme/showme.html',
         controller: "ShowMeController",
