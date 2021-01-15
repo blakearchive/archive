@@ -520,7 +520,8 @@ div .containerForRelatedInOverlay h3 {
   nav.navbar ul.navbar-nav > li {
 
     /*width: 16.66666666%;*/
-    width: 14.2857142857%;
+    /*width: 14.2857142857%;*/
+    width: 12.5%;
 
   }
 }

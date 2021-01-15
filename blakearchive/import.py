@@ -44,6 +44,79 @@ class BlakeImporter(object):
     def split_ids(id_string):
         return re.split(r",\s*", id_string.lower())
 
+
+
+
+
+class BlakePreviewImporter(BlakeImporter):
+  def __init__(self, data_folder):
+      self.data_folder = data_folder
+      self.previews = {}
+
+  def import_preview_files(self, matching_files):
+      # iterate over files that match exhibits/*.xml
+      # for each one, call process exhibit
+      for f in matching_files:
+          try:
+              self.process_preview_file(f)
+          except ValueError as err:
+              logger.error(err.message)
+      #logger.info( "importing exhibit files")
+
+  # 'exhibit' - exhibit filepath
+  def process_preview_file(self,exhibit):
+      # each exhibit was read from the file system. we want to:
+      # 1. create an Exhibit Model and update its attributes from exhibit arg(filesystem)
+      # 2. add the model to self.exhibits for processing by populate_database
+      # 3. each exhibit has a collection of exhibit-images. we need to iterate over them.
+      #    -- creating a model for each and adding them to self.exhibit_images
+      print "processing: "+exhibit
+      root = etree.parse(exhibit).getroot()
+      document_name = os.path.split(exhibit)[1]
+      #Sprint "document name: "+document_name
+      #print "doc content: "+etree.tostring(root)
+      # the exhibit root element has attributes that we need to parse into the exhibit object
+      p = models.BlakePreview()
+      p.preview_id = root.get("id")
+      p.title = root.get("title").encode("utf-8")
+      ex.composition_date_string = root.get("composition_date_string").encode("utf-8")
+      self.previews[p.preview_id] = p
+
+      print "preview id is: "+root.get("id")
+
+
+      # iterate images and add them to the list
+      for child in root:
+          self.process_preview_image(ex,child)
+
+  # exhibit - models.BlakeExhibit
+  # imageXml - etree elementTree
+  def process_preview_image(self, preview, imageXml):
+      #print "..with xml: "+etree.tostring(imageXml, pretty_print=True)
+      previewImage = models.BlakePreviewImage()
+      previewImage.image_id = imageXml.get("id")
+      previewImage.dbi = imageXml.get("dbi")
+      previewImage.preview_id = preview.preview_id
+      preview.preview_image = previewImage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class BlakeExhibitImporter(BlakeImporter):
   def __init__(self, data_folder):
       self.data_folder = data_folder
@@ -145,6 +218,7 @@ class BlakeDocumentImporter(BlakeImporter):
         self.object_importer = BlakeObjectImporter()
         self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
         self.exhibit_importer = BlakeExhibitImporter(self.data_folder)
+        self.preview_importer = BlakePreviewImporter(self.data_folder)
         self.works = {}
         self.fragmentpairs = {}
         self.work_info = {}
@@ -159,16 +233,20 @@ class BlakeDocumentImporter(BlakeImporter):
     def import_data(self):
         document_pattern = os.path.join(self.data_folder, "works/*.xml")
         exhibit_pattern = os.path.join(self.data_folder,"exhibits/**/*.xml")
+        preview_pattern = os.path.join(self.data_folder,"preview/*.xml")
         info_pattern = os.path.join(self.data_folder, "info/*.xml")
         matching_bad_files = glob.glob(document_pattern)
         matching_info_files = glob.glob(info_pattern)
         matching_exhibit_files = glob.glob(exhibit_pattern)
+        matching_preview_files = glob.glob(preview_pattern)
         self.import_info_files(matching_info_files)
         self.import_bad_files(matching_bad_files)
         self.import_exhibit_files(matching_exhibit_files)
+        self.import_preview_files(matching_preview_files)
         self.process_works()
         self.process_relationships()
         self.process_exhibits()
+        self.process_previews()
         #self.process_text_matches()
         self.populate_database()
 
@@ -201,6 +279,20 @@ class BlakeDocumentImporter(BlakeImporter):
                 logger.error(err.message)
     def process_exhibits(self):
         self.exhibit_importer
+
+
+
+    def import_preview_files(self,preview_files):
+        # loop over the list of files and process each one
+        for prev_file in preview_files:
+            try:
+                self.preview_importer.process_preview_file(prev_file)
+            except ValueError as err:
+                logger.error(err.message)
+    def process_previews(self):
+        self.preview_importer
+
+
  
     # region Info file handling
     def import_info_files(self, info_files):
@@ -381,10 +473,18 @@ class BlakeDocumentImporter(BlakeImporter):
         models.BlakeExhibitImage.metadata.create_all(bind=engine)
         models.BlakeExhibitCaption.metadata.drop_all(bind=engine)
         models.BlakeExhibitCaption.metadata.create_all(bind=engine)
+
+        models.BlakePreview.metadata.drop_all(bind=engine)
+        models.BlakePreview.metadata.create_all(bind=engine)
+        models.BlakePreviewImage.metadata.drop_all(bind=engine)
+        models.BlakePreviewImage.metadata.create_all(bind=engine)
+
+
         session.add_all(self.works.values())
         session.add_all(self.object_importer.members.values())
         #session.add_all(self.fragmentpairs.values())
         session.add_all(self.exhibit_importer.exhibits.values())
+        session.add_all(self.preview_importer.previews.values())
         session.commit()
 
 
