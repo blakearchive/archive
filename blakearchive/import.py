@@ -233,7 +233,7 @@ class BlakeDocumentImporter(BlakeImporter):
     def import_data(self):
         document_pattern = os.path.join(self.data_folder, "works/*.xml")
         exhibit_pattern = os.path.join(self.data_folder,"exhibits/**/*.xml")
-        preview_pattern = os.path.join(self.data_folder,"preview/*.xml")
+        preview_pattern = os.path.join(self.data_folder,"previews/**/*.xml")
         info_pattern = os.path.join(self.data_folder, "info/*.xml")
         matching_bad_files = glob.glob(document_pattern)
         matching_info_files = glob.glob(info_pattern)

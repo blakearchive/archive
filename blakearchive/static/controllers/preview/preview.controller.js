@@ -4,7 +4,7 @@ angular.module('blake').controller('PreviewController', function (
     var vm = this;
     var previewId = $routeParams.previewId;
     vm.pId = previewId;
-    vm.image = '';
+    vm.images = [];
     $rootScope.showWorkTitle = 'preview';
     $rootScope.help = 'preview';
     $rootScope.worksNavState = false;
@@ -26,7 +26,7 @@ angular.module('blake').controller('PreviewController', function (
     };
 
     BlakeDataService.getImageForPreview(previewId).then(function(result){
-      vm.image = result;
+      vm.images = result;
     });
 
     vm.bds= BlakeDataService;
