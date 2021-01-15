@@ -14,7 +14,8 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
         object: {},
         fragment_pairs: [],
 
-        exhibit: {}
+        exhibit: {},
+        preview: {}
     };
 
     /**
@@ -663,6 +664,57 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
 
       function getObjectsFailed(error){
           $log.error('XHR Failed for getCaptionsForImage: multi...\n' + angular.toJson(error.data, true));
+      }
+    };
+
+
+    blakeData.setSelectedPreview = function(previewId){
+      // TODO: make it work!
+      return blakeData.getPreview(previewId).then(function(prev){
+        blakeData.preview = prev;
+        //console.log("===="+exhib);
+        //$rootScope.selectedExhibit = exhib;
+      });
+    };
+
+    blakeData.getPreview = function(previewId){
+      // TODO: implement API and then fix update this!!!!
+      var url = directoryPrefix + '/api/preview/'+previewId;
+
+      //$log.info('getting objects: multi');
+
+      return $http.get(url)
+          .then(getObjectsComplete)
+          .catch(getObjectsFailed);
+
+      function getObjectsComplete(response){
+        //console.log("==="+JSON.stringify(response.data));
+        return BlakePreview.create(response.data);
+
+      }
+
+      function getObjectsFailed(error){
+          $log.error('XHR Failed for getObjects: multi...\n' + angular.toJson(error.data, true));
+      }
+    };
+    blakeData.getImageForPreview = function(previewId){
+      // TODO: implement API and then fix update this!!!!
+      var url = directoryPrefix + '/api/preview-image/'+previewId;
+
+      //$log.info('getting objects: multi');
+
+      return $http.get(url)
+          .then(getObjectsComplete)
+          .catch(getObjectsFailed);
+
+      function getObjectsComplete(response){
+        //console.log("===>>>>>"+JSON.stringify(response.data));
+        return BlakePreviewImage.create(response.data.results);
+
+      }
+
+      function getObjectsFailed(error){
+          $log.error('XHR Failed for getImageForPreview: multi...\n'+ previewId + angular.toJson(error.data, true));
       }
     };
 
