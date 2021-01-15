@@ -399,7 +399,7 @@ class BlakePreviewImage(db.Model): # todo: change to correct columns name, image
         return {
             #"caption": self.caption,
             "dbi": self.dbi,
-            "preview_id": self.exhibit_id,
+            "preview_id": self.preview_id,
             "image_id": self.image_id
         }
 
