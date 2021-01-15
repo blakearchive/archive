@@ -5988,6 +5988,8 @@ var map = {
 	"./blake-featured-work.js": 136,
 	"./blake-fragment-pair.js": 137,
 	"./blake-object.js": 138,
+	"./blake-preview-image.js": 228,
+	"./blake-preview.js": 227,
 	"./blake-work.js": 139,
 	"./cartStorage.js": 140,
 	"./compare-objects.js": 141,
@@ -31903,7 +31905,8 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
         object: {},
         fragment_pairs: [],
 
-        exhibit: {}
+        exhibit: {},
+        preview: {}
     };
 
     /**
@@ -32477,6 +32480,50 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
 
         function getObjectsFailed(error) {
             $log.error('XHR Failed for getCaptionsForImage: multi...\n' + angular.toJson(error.data, true));
+        }
+    };
+
+    blakeData.setSelectedPreview = function (previewId) {
+        // TODO: make it work!
+        return blakeData.getPreview(previewId).then(function (prev) {
+            blakeData.preview = prev;
+            //console.log("===="+exhib);
+            //$rootScope.selectedExhibit = exhib;
+        });
+    };
+
+    blakeData.getPreview = function (previewId) {
+        // TODO: implement API and then fix update this!!!!
+        var url = directoryPrefix + '/api/preview/' + previewId;
+
+        //$log.info('getting objects: multi');
+
+        return $http.get(url).then(getObjectsComplete).catch(getObjectsFailed);
+
+        function getObjectsComplete(response) {
+            //console.log("==="+JSON.stringify(response.data));
+            return BlakePreview.create(response.data);
+        }
+
+        function getObjectsFailed(error) {
+            $log.error('XHR Failed for getObjects: multi...\n' + angular.toJson(error.data, true));
+        }
+    };
+    blakeData.getImageForPreview = function (previewId) {
+        // TODO: implement API and then fix update this!!!!
+        var url = directoryPrefix + '/api/preview-image/' + previewId;
+
+        //$log.info('getting objects: multi');
+
+        return $http.get(url).then(getObjectsComplete).catch(getObjectsFailed);
+
+        function getObjectsComplete(response) {
+            //console.log("===>>>>>"+JSON.stringify(response.data));
+            return BlakePreviewImage.create(response.data.results);
+        }
+
+        function getObjectsFailed(error) {
+            $log.error('XHR Failed for getImageForPreview: multi...\n' + previewId + angular.toJson(error.data, true));
         }
     };
 
@@ -61904,6 +61951,46 @@ module.exports = "/*!\n * jQuery JavaScript Library v3.2.1\n * https://jquery.co
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 227 */
+/***/ (function(module, exports) {
+
+angular.module("blake").factory("BlakePreview", ["GenericService", function (GenericService) {
+  /**
+   * Constructor takes a config object and creates a BlakeCopy, with child objects transformed into the
+   * BlakeObjects.
+   *
+   * @param config
+   */
+  var constructor = function (config) {
+    var blake_preview = angular.copy(config);
+
+    return blake_preview;
+  };
+
+  return GenericService(constructor);
+}]);
+
+/***/ }),
+/* 228 */
+/***/ (function(module, exports) {
+
+angular.module("blake").factory("BlakePreviewImage", ["GenericService", function (GenericService) {
+  /**
+   * Constructor takes a config object and creates a BlakeCopy, with child objects transformed into the
+   * BlakeObjects.
+   *
+   * @param config
+   */
+  var constructor = function (config) {
+    var blake_preview_image = angular.copy(config);
+
+    return blake_preview_image;
+  };
+
+  return GenericService(constructor);
+}]);
 
 /***/ })
 /******/ ]);
