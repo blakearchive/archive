@@ -9,7 +9,7 @@
                    
 
 
-                            <div style="height:95%;" class="item" ng-repeat="i in previewCtrl.images track by $index" id="item-{{$index}}">
+                            <div style="height:95%;padding-left:0px" class="item" ng-repeat="i in previewCtrl.images track by $index" id="item-{{$index}}">
                                 <div class="reading-wrapper" style="height:100%;margin-left:0px" breakpoint="768">
                                     <img ng-if="i.dbi != ''" magnify-image ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">
 
@@ -20,7 +20,7 @@
 
                                 <div style="display:relative" class="btn-group edit-object " role="group ">
         
-        <button type="button " style="height:21px;line-height:0.6;text-align:center" class="btn btn-default " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " ng-click="previewCtrl.zoom() " tooltip="Mouse over an image" tooltip-placement="top" tooltip-trigger="click ">
+        <button type="button " style="height:21px;line-height:0.6;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);margin: 0;position: absolute;top: 97%;left: 50%;" class="btn btn-default " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " ng-click="previewCtrl.zoom() " tooltip="Mouse over an image" tooltip-placement="top" tooltip-trigger="click ">
             <span class="gr-abbreviation " style="height:21px;font-size:13px; ">Magnify</span>
             <span class="gr-title "></span>
         </button>
