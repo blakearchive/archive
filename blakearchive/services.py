@@ -221,7 +221,7 @@ class BlakeDataService(object):
     @classmethod
     def get_preview(cls, preview_id):
         result = models.BlakePreview.query \
-            .options(joinedload(models.BlakePreview.preview_image)) \
+            .options(joinedload(models.BlakePreview.preview_images)) \
             .filter(models.BlakePreview.preview_id == preview_id).first()
         return result
 
