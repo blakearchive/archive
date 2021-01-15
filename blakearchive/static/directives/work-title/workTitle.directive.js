@@ -25,7 +25,7 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
             //return $rootScope.selectedExhibit.exhibit.title;
         }
 
-        if($rootScope.showWorkTitle == 'preview' && $rootScope.doneSettingExhibit){
+        if($rootScope.showWorkTitle == 'preview' && $rootScope.doneSettingPreview){
             return vm.bds.preview.preview.title;
             console.log(vm.bds);
             //return $rootScope.selectedExhibit.exhibit.title;
