@@ -7,11 +7,11 @@ angular.module("blake").directive('ovpImage', function(imageManipulation){
             width = 0,
             parentHeight = 0;
 
-        console.log($scope.descId);
         image.on('load',function(){
             height = image[0].naturalHeight;
             width = image[0].naturalWidth;
             parentHeight = container.height();
+            console.log($scope.descId);
             if(width > height && $scope.descId != 'bb128.c.te.01' && $scope.descId != 'bb128.c.te.02'){
                 var newHeight = Math.round((height * parentHeight / width));
                 var margin = Math.round(((parentHeight - newHeight) / 2));
