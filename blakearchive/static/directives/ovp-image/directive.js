@@ -5,15 +5,13 @@ angular.module("blake").directive('ovpImage', function(imageManipulation){
             container = angular.element(element.parent()),
             height = 0,
             width = 0,
-            parentHeight = 0,
+            parentHeight = 0;
 
-        console.log(descId);
         image.on('load',function(){
             height = image[0].naturalHeight;
             width = image[0].naturalWidth;
             parentHeight = container.height();
-            /*if(width > height && $routeParams.descId != 'bb128.c.te.01' && $routeParams.descId != 'bb128.c.te.02'){*/
-              if(width > height)
+            if(width > height && $scope.descId != 'bb128.c.te.01' && $scope.descId != 'bb128.c.te.02'){
                 var newHeight = Math.round((height * parentHeight / width));
                 var margin = Math.round(((parentHeight - newHeight) / 2));
                 image.css({'height':'auto','width':parentHeight+'px','margin-top':margin+'px'});
