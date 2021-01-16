@@ -1,5 +1,5 @@
-angular.module("blake").directive('ovpImage', function(imageManipulation){
-    var link = function(scope,element,attr,$routeParams){
+angular.module("blake").directive('ovpImage', function(imageManipulation,$routeParams){
+    var link = function(scope,element,attr){
 
         var image = angular.element(element.children()),
             container = angular.element(element.parent()),
