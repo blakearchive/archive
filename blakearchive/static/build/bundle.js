@@ -28980,69 +28980,7 @@ angular.module("blake").component("objectsInCopyTab", {
 /* 91 */
 /***/ (function(module, exports) {
 
-angular.module("blake").directive('ovpImage', ["imageManipulation", function (imageManipulation) {
-    var link = function (scope, element, attr) {
-
-        var image = angular.element(element.children()),
-            container = angular.element(element.parent()),
-            height = 0,
-            width = 0,
-            parentHeight = 0,
-            descId = $scope.descId;
-
-        console.log(descId);
-        image.on('load', function () {
-            height = image[0].naturalHeight;
-            width = image[0].naturalWidth;
-            parentHeight = container.height();
-            if (width > height && descId != 'bb128.c.te.01' && descId != 'bb128.c.te.02') {
-                var newHeight = Math.round(height * parentHeight / width);
-                var margin = Math.round((parentHeight - newHeight) / 2);
-                image.css({ 'height': 'auto', 'width': parentHeight + 'px', 'margin-top': margin + 'px' });
-            } else {
-                image.css({ 'height': '100%', 'width': 'auto', 'margin-top': '0' });
-            }
-        });
-
-        scope.transformRotate = function () {
-            if (imageManipulation.transform.rotate == 0) {
-                element.removeClass('rotated');
-            } else {
-                element.addClass('rotated');
-            }
-        };
-
-        scope.setStyles = function () {
-            var tranformString = 'rotate(' + imageManipulation.transform.rotate + 'deg)';
-            imageManipulation.transform.style['-webkit-transform'] = tranformString;
-            imageManipulation.transform.style['-moz-tranform'] = tranformString;
-            imageManipulation.transform.style['-o-transform'] = tranformString;
-            imageManipulation.transform.style['-ms-transform'] = tranformString;
-            imageManipulation.transform.style['transform'] = tranformString;
-            element.css(imageManipulation.transform.style);
-        };
-
-        scope.$watch(function () {
-            return imageManipulation.transform;
-        }, function () {
-            scope.transformRotate();
-            scope.setStyles();
-        }, true);
-
-        scope.$on('resize::resize', function () {
-            scope.transformRotate();
-            scope.setStyles();
-        });
-    };
-
-    return {
-        restrict: 'A',
-        scope: {
-            descId: '@descId'
-        },
-        link: link
-    };
-}]);
+throw new Error("Module build failed: SyntaxError: Unexpected token, expected ; (10:15)\n\n\u001b[0m \u001b[90m  8 | \u001b[39m            parentHeight \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m  9 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 10 | \u001b[39m        console\u001b[33m.\u001b[39mlog(descId)\u001b[33m;\u001b[39m\n \u001b[90m    | \u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 11 | \u001b[39m        image\u001b[33m.\u001b[39mon(\u001b[32m'load'\u001b[39m\u001b[33m,\u001b[39m\u001b[36mfunction\u001b[39m(){\n \u001b[90m 12 | \u001b[39m            height \u001b[33m=\u001b[39m image[\u001b[35m0\u001b[39m]\u001b[33m.\u001b[39mnaturalHeight\u001b[33m;\u001b[39m\n \u001b[90m 13 | \u001b[39m            width \u001b[33m=\u001b[39m image[\u001b[35m0\u001b[39m]\u001b[33m.\u001b[39mnaturalWidth\u001b[33m;\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 92 */
