@@ -1,9 +1,9 @@
-.glassPreview{
+.glass-preview{
     display:none;
 }
 
 @media (min-width: 768px){
-    .glassPreview {
+    .glass-preview {
         width: 400px;
         height: 400px;
         position: absolute;
@@ -21,7 +21,7 @@
         z-index: 1000;
     }
 
-    .glassPreview.glass-on{
+    .glass-preview.glass-on{
         display: block;
     }
 }

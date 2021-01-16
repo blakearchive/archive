@@ -27798,7 +27798,7 @@ angular.module("blake").directive('magnifyImagePreview', ["$interval", "$window"
         // Add the magnifying glass
         if (ui.magnifier.length) {
             let div = document.createElement('div');
-            div.setAttribute('class', 'glassPreview');
+            div.setAttribute('class', 'glass-preview');
             ui.glass = angular.element(div);
 
             angular.element(document.body).append(div);
