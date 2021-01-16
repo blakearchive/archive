@@ -1,4 +1,4 @@
-angular.module("blake").directive('ovpImage', function(imageManipulation,$routeParams){
+angular.module("blake").directive('ovpImage', function(imageManipulation){
     var link = function(scope,element,attr){
 
         var image = angular.element(element.children()),
@@ -12,7 +12,8 @@ angular.module("blake").directive('ovpImage', function(imageManipulation,$routeP
             height = image[0].naturalHeight;
             width = image[0].naturalWidth;
             parentHeight = container.height();
-            if(width > height && $routeParams.descId != 'bb128.c.te.01' && $routeParams.descId != 'bb128.c.te.02'){
+            /*if(width > height && $routeParams.descId != 'bb128.c.te.01' && $routeParams.descId != 'bb128.c.te.02'){*/
+              if(width > height)
                 var newHeight = Math.round((height * parentHeight / width));
                 var margin = Math.round(((parentHeight - newHeight) / 2));
                 image.css({'height':'auto','width':parentHeight+'px','margin-top':margin+'px'});
