@@ -1,6 +1,6 @@
 angular.module('blake').controller('PreviewController', function (
   $scope,$routeParams,$sce,$rootScope,$window,$modal,$cookies,
-  BlakeDataService,imageManipulation,CompareObjectsFactory,$http) {
+  BlakeDataService,imageManipulation,CompareObjectsFactory,$http,OpenSeadragon) {
     var vm = this;
     var previewId = $routeParams.previewId;
     vm.pId = previewId;
