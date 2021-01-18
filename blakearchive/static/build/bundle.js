@@ -5905,6 +5905,7 @@ var map = {
 	"./object-viewer/supplemental-image-viewer/directive.js": 90,
 	"./objects-from-same/objectsFromSame.directive.js": 91,
 	"./objects-in-copy/directive.js": 92,
+	"./openseadragon/directive.js": 232,
 	"./ovp-image/directive.js": 93,
 	"./parallax/directive.js": 94,
 	"./resize/directive.js": 95,
@@ -26639,10 +26640,12 @@ angular.module('blake').controller('PreviewController', ["$scope", "$routeParams
     $rootScope.zoom = false;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
-    $scope.options = {
-        prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
-        tileSources: ["example-images/highsmith/highsmith.dzi"]
-    };
+    /*$scope.options = {
+            prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
+            tileSources: [
+                "example-images/highsmith/highsmith.dzi"
+            ]
+        };*/
 
     vm.zoom = function () {
         $rootScope.zoom = !$rootScope.zoom;
@@ -62273,6 +62276,12 @@ module.exports = "/*!\n * jQuery JavaScript Library v3.2.1\n * https://jquery.co
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 232 */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: SyntaxError: Unexpected token, expected , (8:1)\n\n\u001b[0m \u001b[90m 6 | \u001b[39m            ]\n \u001b[90m 7 | \u001b[39m        }\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 8 | \u001b[39m}\n \u001b[90m   | \u001b[39m \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n");
 
 /***/ })
 /******/ ]);
