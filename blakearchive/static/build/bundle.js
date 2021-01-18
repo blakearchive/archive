@@ -29195,7 +29195,12 @@ angular.module("blake").component("objectsInCopyTab", {
 /* 93 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/michaelfox/Sites/blake/archive/blakearchive/static/directives/openseadragon/directive.js'");
+angular.module("blake").directive('openseadragon', ["$scope", function ($scope) {
+    $scope.options = {
+        prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
+        tileSources: ["example-images/highsmith/highsmith.dzi"]
+    };
+}]);
 
 /***/ }),
 /* 94 */
