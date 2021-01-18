@@ -1,4 +1,4 @@
-angular.module('blake').controller('PreviewController', function (
+angular.module('blake').controller('PreviewController', ["$scope", function (
   $scope,$routeParams,$sce,$rootScope,$window,$modal,$cookies,
   BlakeDataService,imageManipulation,CompareObjectsFactory,$http) {
     var vm = this;
@@ -46,4 +46,4 @@ angular.module('blake').controller('PreviewController', function (
       console.log(vm.bds.preview);
       //vm.scrollTo(1);
     }); 
-});
+}]);
