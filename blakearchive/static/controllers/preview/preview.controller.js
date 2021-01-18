@@ -36,7 +36,7 @@ angular.module('blake').controller('PreviewController', function (
 
     BlakeDataService.getImagesForPreview(previewId).then(function(result){
       vm.images = result;
-      $scope.seadragon.titleSources.url = previewId + vm.images[0].dbi + "cc.jpg";
+      viewer.titleSources.url = previewId + vm.images[0].dbi + "cc.jpg";
     });
 
     vm.bds= BlakeDataService;
