@@ -5,4 +5,4 @@ angular.module("blake").directive('openseadragon', function($scope){
                 "example-images/highsmith/highsmith.dzi"
             ]
         };
-}
+});
