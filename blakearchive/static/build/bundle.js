@@ -26641,8 +26641,8 @@ angular.module('blake').controller('PreviewController', ["$scope", "$routeParams
 
   //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
   $scope.options = {
-    prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
-    tileSources: ["example-images/highsmith/highsmith.dzi"]
+    prefixUrl: "/images/previews/but649/",
+    tileSources: ["BUT649.1.1r.PT.300.cc.jpg"]
   };
 
   vm.zoom = function () {
