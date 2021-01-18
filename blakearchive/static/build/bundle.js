@@ -26620,7 +26620,7 @@ angular.module('blake').controller('ModalController', ["$scope", "$modalInstance
 /* 56 */
 /***/ (function(module, exports) {
 
-angular.module('blake').controller('PreviewController', ["$scope", "$routeParams", "$sce", "$rootScope", "$window", "$modal", "$cookies", "BlakeDataService", "imageManipulation", "CompareObjectsFactory", "$http", "OpenSeadragon", function ($scope, $routeParams, $sce, $rootScope, $window, $modal, $cookies, BlakeDataService, imageManipulation, CompareObjectsFactory, $http, OpenSeadragon) {
+angular.module('blake').controller('PreviewController', ["$scope", "$routeParams", "$sce", "$rootScope", "$window", "$modal", "$cookies", "BlakeDataService", "imageManipulation", "CompareObjectsFactory", "$http", function ($scope, $routeParams, $sce, $rootScope, $window, $modal, $cookies, BlakeDataService, imageManipulation, CompareObjectsFactory, $http) {
     var vm = this;
     var previewId = $routeParams.previewId;
     vm.pId = previewId;
@@ -30406,7 +30406,7 @@ carousel.directive('carousel', function () {
     return {};
 });
 
-let blake = angular.module('blake', ['angular-bind-html-compile', 'ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'common.fabric', 'common.fabric.utilities', 'common.fabric.constants', 'ngAnimate', 'ngStorage', 'ngCookies', 'ngTouch', 'ngCropper', 'markdown', 'angular-loading-bar', 'ngdexie', 'ngdexie.ui', 'ui.openseadragon']);
+let blake = angular.module('blake', ['angular-bind-html-compile', 'ngRoute', 'ngSanitize', 'ui-rangeSlider', 'ui.bootstrap', 'ng-sortable', 'FBAngular', 'common.fabric', 'common.fabric.utilities', 'common.fabric.constants', 'ngAnimate', 'ngStorage', 'ngCookies', 'ngTouch', 'ngCropper', 'markdown', 'angular-loading-bar', 'ngdexie', 'ngdexie.ui', 'ng-openseadragon']);
 //blake.constant('dexie',window.Dexie);
 blake.config(["ngDexieProvider", function (ngDexieProvider) {
 
