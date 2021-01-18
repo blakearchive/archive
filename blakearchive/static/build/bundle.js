@@ -26621,7 +26621,7 @@ angular.module('blake').controller('ModalController', ["$scope", "$modalInstance
 /* 56 */
 /***/ (function(module, exports) {
 
-angular.module('blake').controller('PreviewController', ["$scope", function ($scope, $routeParams, $sce, $rootScope, $window, $modal, $cookies, BlakeDataService, imageManipulation, CompareObjectsFactory, $http) {
+angular.module('blake').controller('PreviewController', ["$scope", "$routeParams", "$sce", "$rootScope", "$window", "$modal", "$cookies", "BlakeDataService", "imageManipulation", "CompareObjectsFactory", "$http", function ($scope, $routeParams, $sce, $rootScope, $window, $modal, $cookies, BlakeDataService, imageManipulation, CompareObjectsFactory, $http) {
   var vm = this;
   var previewId = $routeParams.previewId;
   vm.pId = previewId;
