@@ -1,6 +1,6 @@
 angular.module('blake').controller('PreviewController', function (
   $scope,$routeParams,$sce,$rootScope,$window,$modal,$cookies,
-  BlakeDataService,imageManipulation,CompareObjectsFactory,$http,OpenSeadragon) {
+  BlakeDataService,imageManipulation,CompareObjectsFactory,$http) {
     var vm = this;
     var previewId = $routeParams.previewId;
     vm.pId = previewId;
@@ -18,16 +18,13 @@ angular.module('blake').controller('PreviewController', function (
     //$rootScope.galleriesMarginLeft = '33%';
     $rootScope.zoom = false;
 
-    var viewer = OpenSeadragon({
-            element: this.viewer.nativeElement,
-            prefixUrl: "/images/previews/",
-            tileSources:   {
-                type: 'image',
-                url:  ''
-            }
-    });
-
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
+    $scope.options = {
+            prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
+            tileSources: [
+                "example-images/highsmith/highsmith.dzi"
+            ]
+        };
 
     vm.zoom = function() {
         $rootScope.zoom = !$rootScope.zoom;
@@ -36,7 +33,6 @@ angular.module('blake').controller('PreviewController', function (
 
     BlakeDataService.getImagesForPreview(previewId).then(function(result){
       vm.images = result;
-      viewer.titleSources.url = previewId + vm.images[0].dbi + "cc.jpg";
     });
 
     vm.bds= BlakeDataService;
