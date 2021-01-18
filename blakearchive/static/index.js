@@ -28,7 +28,7 @@ let carousel = angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition
 carousel.controller('CarouselController', function ($scope, $timeout, $transition, $q) {});
 carousel.directive('carousel', function () { return {} });
 
-let blake = angular.module('blake', ['angular-bind-html-compile','ngRoute', 'ngSanitize', 'ui-rangeSlider','ui.bootstrap', 'ng-sortable', 'FBAngular','common.fabric','common.fabric.utilities','common.fabric.constants','ngAnimate', 'ngStorage','ngCookies','ngTouch','ngCropper','markdown','angular-loading-bar','ngdexie', 'ngdexie.ui','ng-openseadragon'])
+let blake = angular.module('blake', ['angular-bind-html-compile','ngRoute', 'ngSanitize', 'ui-rangeSlider','ui.bootstrap', 'ng-sortable', 'FBAngular','common.fabric','common.fabric.utilities','common.fabric.constants','ngAnimate', 'ngStorage','ngCookies','ngTouch','ngCropper','markdown','angular-loading-bar','ngdexie', 'ngdexie.ui','ui.openseadragon'])
 //blake.constant('dexie',window.Dexie);
 blake.config(function(ngDexieProvider){
 
