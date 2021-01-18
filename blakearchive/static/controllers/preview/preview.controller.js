@@ -23,7 +23,7 @@ angular.module('blake').controller('PreviewController', function (
             prefixUrl: "/images/previews/",
             tileSources:   {
                 type: 'image',
-                url:  '{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg'
+                url:  ''
             }
     });
 
