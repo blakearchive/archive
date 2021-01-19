@@ -33,10 +33,11 @@ angular.module('blake').controller('PreviewController', function (
             id: "example",
             prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
             tileSources:   {
-                type: 'image',
-                url:  'images/previews/${vm.pId}/${vm.images[0].dbi}.cc.jpg'
+                type: 'image'
+                url: ''
             }
     };
+        vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.images[0].dbi + '.cc.jpg';
       console.log(vm.options.tileSources.url);
     });
 
