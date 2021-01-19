@@ -19,7 +19,7 @@ angular.module('blake').controller('PreviewController', function (
     $rootScope.zoom = false;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
-    $scope.options = {
+    vm.options = {
             id: "example",
             prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
             tileSources:   {
