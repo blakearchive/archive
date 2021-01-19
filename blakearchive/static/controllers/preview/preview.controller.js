@@ -41,6 +41,7 @@ angular.module('blake').controller('PreviewController', function (
           vm.images = result;
           //vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.images[0].dbi;
         });
+        console.log(vm.images);
         vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.images[0].dbi;
         vm.optionsSet = true;
     }
