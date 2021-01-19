@@ -18,6 +18,10 @@ def get_image(image=None):
 def get_exhibit_image(exhibitId=None,image=None):
     return send_file(config.local_image_path+'exhibits/'+exhibitId+'/'+image)
 
+@app.route('/images/previews/<image>')
+def get_seadragon_image(previewId=None,image=None):
+    return send_file(config.local_image_path+'previews/'+image)
+
 @app.route('/images/previews/<previewId>/<image>')
 def get_preview_image(previewId=None,image=None):
     return send_file(config.local_image_path+'previews/'+previewId+'/'+image)
