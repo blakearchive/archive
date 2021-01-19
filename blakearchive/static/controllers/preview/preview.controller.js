@@ -21,9 +21,7 @@ angular.module('blake').controller('PreviewController', function (
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
             prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
-            tileSources: [
-                "/example-images/duomo/duomo.dzi"
-            ]
+            tileSources: "/example-images/duomo/duomo.dzi"
     };
 
     vm.zoom = function() {
