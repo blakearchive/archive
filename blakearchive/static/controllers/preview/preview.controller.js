@@ -26,6 +26,7 @@ angular.module('blake').controller('PreviewController', function (
                     type: 'image',
                     url:  'images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
                 }
+
     };
 
     vm.zoom = function() {
@@ -35,7 +36,6 @@ angular.module('blake').controller('PreviewController', function (
 
     BlakeDataService.getImagesForPreview(previewId).then(function(result){
       vm.images = result;
-      //vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' vm.images[0].dbi;
     });
 
     vm.bds= BlakeDataService;
@@ -45,8 +45,9 @@ angular.module('blake').controller('PreviewController', function (
     $rootScope.doneSettingPreview = false;
     vm.bds.setSelectedPreview(previewId).then(function(){
       //console.log(">>>>>hey, tae, you were wrong!!!!");
+
       $rootScope.doneSettingPreview = true;
-      console.log(vm.bds.preview);
+      
       //vm.scrollTo(1);
     }); 
 });
