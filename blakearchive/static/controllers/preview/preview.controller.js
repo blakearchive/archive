@@ -24,7 +24,7 @@ angular.module('blake').controller('PreviewController', function (
             prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
             tileSources:   {
                 type: 'image',
-                url:  ''
+                url:  'images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
             }
     };
 
@@ -36,8 +36,8 @@ angular.module('blake').controller('PreviewController', function (
     BlakeDataService.getImagesForPreview(previewId).then(function(result){
       vm.images = result;
       //vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.images[0].dbi + '.cc.jpg';
-      $scope.options.tileSources.url = 'images/previews/' + vm.pId + '/' + 'BUT649.1.1r.PT.300.cc.jpg';
-      console.log(vm.options.tileSources.url);
+      //$scope.options.tileSources.url = 'images/previews/' + vm.pId + '/' + 'BUT649.1.1r.PT.300.cc.jpg';
+      //console.log(vm.options.tileSources.url);
     });
 
     vm.bds= BlakeDataService;
