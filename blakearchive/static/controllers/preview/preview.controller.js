@@ -44,8 +44,9 @@ angular.module('blake').controller('PreviewController', function (
     $rootScope.doneSettingPreview = false;
     vm.bds.setSelectedPreview(previewId).then(function(){
       //console.log(">>>>>hey, tae, you were wrong!!!!");
-      vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.preview.images[0].dbi;
+
       $rootScope.doneSettingPreview = true;
+      vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.bds.preview.images[0].dbi;
       //vm.scrollTo(1);
     }); 
 });
