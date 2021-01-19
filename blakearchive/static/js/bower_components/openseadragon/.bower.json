@@ -1,0 +1,47 @@
+{
+  "name": "openseadragon",
+  "version": "2.4.2",
+  "homepage": "http://openseadragon.github.io/",
+  "authors": [
+    "openseadragon"
+  ],
+  "description": "An open-source, web-based viewer for zoomable images, implemented in pure JavaScript.",
+  "main": [
+    "built-openseadragon/openseadragon/openseadragon.js"
+  ],
+  "keywords": [
+    "zoom",
+    "images",
+    "zoomed",
+    "magnify"
+  ],
+  "license": "New BSD license",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "css",
+    "doctemplates",
+    "/images",
+    "releases",
+    "www",
+    "Gruntfile.js",
+    "README.md",
+    "doc-conf.json",
+    "doc-home.md",
+    "package.json",
+    "site-build.sublime-project"
+  ],
+  "_release": "2.4.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.4.2",
+    "commit": "fa9c45027cf651ebe5c7e618f64abab86a535599"
+  },
+  "_source": "https://github.com/openseadragon/site-build.git",
+  "_target": "^2.4.2",
+  "_originalSource": "openseadragon",
+  "_direct": true
+}
