@@ -4,12 +4,12 @@
             <div id="gallery" auto-height adjust="60" breakpoint="768" class="container-fluid" ng-style="{'margin-left':galleriesMarginLeft}">
                 <div style="height:100%; overflow-y:hidden; margin-bottom:0px; " id="compare" class="scrollbar" left-on-broadcast="viewSubMenu::readingMode" style="width:67%;">
                     <div class="featured-object" style="height:100%;">
-                        <div class="compare-inner" style="height:100%; padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px; width:max-content;width:-moz-max-content; margin:auto; float:unset">
+                        <div class="compare-inner" style="width:100%;height:100%; padding-bottom:6px;padding-top:10px;padding-left:0px;font-size:13px; width:max-content;width:-moz-max-content; margin:auto; float:unset">
 
                    
 
 
-                            <div style="height:95%;padding-left:0px" class="item" ng-repeat="i in previewCtrl.images track by $index" id="item-{{$index}}">
+                            <div style="height:95%;padding-left:0px;width:100%" class="item" ng-repeat="i in previewCtrl.images track by $index" id="item-{{$index}}">
                                 <div class="reading-wrapper" style="height:100%;margin-left:0px" breakpoint="768" id="example">
                                     {{previewCtrl.options}}
                                     <!--This works, but <seadragon> doesn't-->
