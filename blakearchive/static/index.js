@@ -13,7 +13,7 @@ import 'dexie';
 import 'ng-dexie';
 import 'ng-openseadragon'
 import 'openseadragon'
-import './js/bower_components/openseadragon/built-openseadragon/openseadragon/openseadragon.min'
+import 'script-loader!./js/bower_components/openseadragon/built-openseadragon/openseadragon/openseadragon.min'
 import './js/angular.ngStorage';
 import './js/Sortable/Sortable.min';
 import './js/Sortable/ng-sortable.min';
