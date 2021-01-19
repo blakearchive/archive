@@ -12,7 +12,7 @@ import 'ng-cropperjs';
 import 'dexie';
 import 'ng-dexie';
 import 'ng-openseadragon'
-import './js/openseadragon/build/openseadragon/openseadragon.min.js'
+import './js/openseadragon/build/openseadragon/openseadragon.min'
 import './js/angular.ngStorage';
 import './js/Sortable/Sortable.min';
 import './js/Sortable/ng-sortable.min';
