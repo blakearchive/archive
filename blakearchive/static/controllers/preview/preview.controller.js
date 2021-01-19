@@ -19,10 +19,14 @@ angular.module('blake').controller('PreviewController', function (
     $rootScope.zoom = false;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
-    /*vm.options = {
-            prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
-            tileSources: "/example-images/duomo/duomo.dzi"
-    };*/
+    vm.options = {
+            id:            "example",
+                prefixUrl:     "http://openseadragon.github.io/openseadragon/images/",
+                tileSources:   {
+                    type: 'image',
+                    url:  'images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
+                }
+    };
 
     vm.zoom = function() {
         $rootScope.zoom = !$rootScope.zoom;
