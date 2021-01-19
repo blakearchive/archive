@@ -15,7 +15,7 @@ def get_imageX(image=None):
     return send_file(config.local_image_path+image)
 
 @app.route('/images/exhibits/<exhibitId>/<image>')
-def get_exhibit_image(exhibitId=None,image=None):
+def get_exhibit_imageX(exhibitId=None,image=None):
     return send_file(config.local_image_path+'exhibits/'+exhibitId+'/'+image)
 
 @app.route('/images/previews/<previewId>/<image>')
