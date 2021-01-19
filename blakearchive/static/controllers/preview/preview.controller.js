@@ -22,7 +22,7 @@ angular.module('blake').controller('PreviewController', function (
     $scope.options = {
             prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
             tileSources: [
-                "example-images/highsmith/highsmith.dzi"
+                "/example-images/duomo/duomo.dzi"
             ]
     };
 
