@@ -1,16 +1,4 @@
-"use strict";
-(function () {
-    angular.module("demo", ["ui.openseadragon"])
-    .controller("PreviewController", ["$scope", function ($scope) {
-        $scope.options = {
-            prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
-            tileSources: [
-                "http://openseadragon.github.io/example-images/highsmith/highsmith.dzi"
-            ]
-        };
-    }]);
-})();
-/*angular.module('blake').controller('PreviewController', function (
+angular.module('blake').controller('PreviewController', function (
   $scope,$routeParams,$sce,$rootScope,$window,$modal,$cookies,
   BlakeDataService,imageManipulation,CompareObjectsFactory,$http) {
     var vm = this;
@@ -59,4 +47,3 @@
       //vm.scrollTo(1);
     }); 
 });
-*/
