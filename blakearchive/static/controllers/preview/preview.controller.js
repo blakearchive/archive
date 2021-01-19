@@ -19,14 +19,6 @@ angular.module('blake').controller('PreviewController', function (
     $rootScope.zoom = false;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
-    vm.options = {
-            id: "example",
-            prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
-            tileSources:   {
-                type: 'image',
-                url:  ''
-            }
-    };
 
     vm.zoom = function() {
         $rootScope.zoom = !$rootScope.zoom;
@@ -36,7 +28,15 @@ angular.module('blake').controller('PreviewController', function (
     BlakeDataService.getImagesForPreview(previewId).then(function(result){
       vm.images = result;
       //vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.images[0].dbi + '.cc.jpg';
-      vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + 'BUT649.1.1r.PT.300.cc.jpg';
+      //vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + 'BUT649.1.1r.PT.300.cc.jpg';
+      vm.options = {
+            id: "example",
+            prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
+            tileSources:   {
+                type: 'image',
+                url:  'images/previews/${vm.pId}/${vm.images[0].dbi}.cc.jpg'
+            }
+    };
       console.log(vm.options.tileSources.url);
     });
 
