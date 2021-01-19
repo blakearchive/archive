@@ -20,12 +20,13 @@ angular.module('blake').controller('PreviewController', function (
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
-        id: "example",
-        prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
-        tileSources: {
-            type: 'image',
-            url: 'images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
-        }
+            id:            "example",
+                prefixUrl:     "http://openseadragon.github.io/openseadragon/images/",
+                tileSources:   {
+                    type: 'image',
+                    url:  ''
+                }
+
     };
 
     vm.zoom = function() {
@@ -35,9 +36,6 @@ angular.module('blake').controller('PreviewController', function (
 
     BlakeDataService.getImagesForPreview(previewId).then(function(result){
       vm.images = result;
-      //vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.images[0].dbi + '.cc.jpg';
-      //$scope.options.tileSources.url = 'images/previews/' + vm.pId + '/' + 'BUT649.1.1r.PT.300.cc.jpg';
-      //console.log(vm.options.tileSources.url);
     });
 
     vm.bds= BlakeDataService;
