@@ -11,7 +11,7 @@
 
                             <div style="height:95%;padding-left:0px" class="item" ng-repeat="i in previewCtrl.images track by $index" id="item-{{$index}}">
                                 <div class="reading-wrapper" style="height:100%;margin-left:0px" breakpoint="768" id="example">
-                                    {{previewCtrl.options}}
+                                    
                                     <!--This works, but <seadragon> doesn't-->
                                     <!--<img ng-if="i.dbi != ''" magnify-image-preview ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">-->
                                     <seadragon options="previewCtrl.options"/>
@@ -24,7 +24,7 @@
                     url:  'http://london.lib.unc.edu/images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
                 }
             });
-        </script>-->
+        </script>
 
                                     
                                     
