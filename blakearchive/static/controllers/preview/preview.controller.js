@@ -35,6 +35,8 @@ angular.module('blake').controller('PreviewController', function (
 
     BlakeDataService.getImagesForPreview(previewId).then(function(result){
       vm.images = result;
+      vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.images[0].dbi;
+      console.log(vm.options.tileSources.url);
     });
 
     vm.bds= BlakeDataService;
@@ -46,7 +48,7 @@ angular.module('blake').controller('PreviewController', function (
       //console.log(">>>>>hey, tae, you were wrong!!!!");
 
       $rootScope.doneSettingPreview = true;
-      vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.bds.preview.images[0].dbi;
+      
       //vm.scrollTo(1);
     }); 
 });
