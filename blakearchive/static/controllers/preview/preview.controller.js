@@ -21,10 +21,9 @@ angular.module('blake').controller('PreviewController', function (
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     $scope.options = {
             prefixUrl: "images/previews/",
-            tileSources: {
-                url: "http://london.lib.unc.edu/images/previews/but649/BUT649.1.1r.PT.300.cc.jpg",
-                type: 'image'
-            }
+            tileSources: [
+                "example-images/highsmith/highsmith.dzi"
+            ]
     };
 
     vm.zoom = function() {
