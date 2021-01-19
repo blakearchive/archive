@@ -22,7 +22,7 @@ angular.module('blake').controller('PreviewController', function (
     $scope.options = {
             prefixUrl: "images/previews/",
             tileSources: [
-                "but649/BUT649.1.1r.PT.300.cc.jpg"
+                "http://london.lib.unc.edu/images/previews/but649/BUT649.1.1r.PT.300.cc.jpg"
             ]
     };
 
