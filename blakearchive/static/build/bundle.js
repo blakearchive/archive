@@ -26641,7 +26641,7 @@ angular.module('blake').controller('PreviewController', ["$scope", "$routeParams
 
   //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
   $scope.options = {
-    prefixUrl: "/images/previews/but649/",
+    prefixUrl: "/images/preview/but649/",
     tileSources: ["BUT649.1.1r.PT.300.cc.jpg"]
   };
 
