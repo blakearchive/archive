@@ -36,7 +36,7 @@ angular.module('blake').controller('PreviewController', function (
     BlakeDataService.getImagesForPreview(previewId).then(function(result){
       vm.images = result;
       console.log(images);
-      vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.images;
+      vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.images[0].dbi;
 
     });
 
