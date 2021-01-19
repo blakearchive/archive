@@ -38,7 +38,8 @@
     "sortable": "^2.0.0",
     "style-loader": "^0.13.1",
     "webpack": "^2.7.0",
-    "webpack-closure-compiler": "^2.1.5"
+    "webpack-closure-compiler": "^2.1.5",
+    "openseadragon": "^2.4.2"
   },
   "scripts": {
     "build": "webpack",
