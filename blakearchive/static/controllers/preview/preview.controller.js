@@ -20,7 +20,7 @@ angular.module('blake').controller('PreviewController', function (
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     $scope.options = {
-            prefixUrl: "images/previews/",
+            prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
             tileSources: [
                 "example-images/highsmith/highsmith.dzi"
             ]
