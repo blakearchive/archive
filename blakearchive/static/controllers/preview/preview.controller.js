@@ -17,6 +17,7 @@ angular.module('blake').controller('PreviewController', function (
     $rootScope.buttonsleft = '74%';
     //$rootScope.galleriesMarginLeft = '33%';
     $rootScope.zoom = false;
+    var optionsSet = false;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
@@ -41,6 +42,7 @@ angular.module('blake').controller('PreviewController', function (
           //vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.images[0].dbi;
         });
         vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.images[0].dbi;
+        vm.optionsSet = true;
     }
 
     vm.bds= BlakeDataService;
