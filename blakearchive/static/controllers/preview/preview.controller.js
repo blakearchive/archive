@@ -20,9 +20,9 @@ angular.module('blake').controller('PreviewController', function (
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     $scope.options = {
-            prefixUrl: "/images/previews/",
+            prefixUrl: "/images/previews/but649/",
             tileSources: [
-                "but649/BUT649.1.1r.PT.300.cc.jpg"
+                "BUT649.1.1r.PT.300.cc.jpg"
             ]
     };
 
