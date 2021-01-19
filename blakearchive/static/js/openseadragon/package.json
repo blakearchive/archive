@@ -1,0 +1,76 @@
+{
+  "_from": "openseadragon@^2.4.2",
+  "_id": "openseadragon@2.4.2",
+  "_inBundle": false,
+  "_integrity": "sha512-398KbZwRtOYA6OmeWRY4Q0737NTacQ9Q6whmr9Lp1MNQO3p0eBz5LIASRne+4gwequcSM1vcHcjfy3dIndQziw==",
+  "_location": "/openseadragon",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "openseadragon@^2.4.2",
+    "name": "openseadragon",
+    "escapedName": "openseadragon",
+    "rawSpec": "^2.4.2",
+    "saveSpec": null,
+    "fetchSpec": "^2.4.2"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/",
+    "/ng-openseadragon"
+  ],
+  "_resolved": "https://registry.npmjs.org/openseadragon/-/openseadragon-2.4.2.tgz",
+  "_shasum": "f25d833d0ab9941599d65a3e2b44bec546c9f15c",
+  "_spec": "openseadragon@^2.4.2",
+  "_where": "/Users/michaelfox/Sites/blake/archive/node_modules",
+  "bugs": {
+    "url": "https://github.com/openseadragon/openseadragon/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Provides a smooth, zoomable user interface for HTML/Javascript.",
+  "devDependencies": {
+    "grunt": "^1.0.4",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-compress": "^1.6.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "^2.1.0",
+    "grunt-contrib-qunit": "^3.1.0",
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-eslint": "^22.0.0",
+    "grunt-git-describe": "^2.4.4",
+    "grunt-istanbul": "^0.8.0",
+    "grunt-text-replace": "^0.4.0",
+    "qunitjs": "2.4.1"
+  },
+  "files": [
+    "build/openseadragon/"
+  ],
+  "homepage": "http://openseadragon.github.io/",
+  "keywords": [
+    "image",
+    "zoom",
+    "pan",
+    "openseadragon",
+    "seadragon",
+    "deepzoom",
+    "dzi",
+    "iiif",
+    "osm",
+    "tms"
+  ],
+  "license": "BSD-3-Clause",
+  "main": "build/openseadragon/openseadragon.js",
+  "name": "openseadragon",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openseadragon/openseadragon.git"
+  },
+  "scripts": {
+    "prepare": "grunt build",
+    "test": "grunt test"
+  },
+  "version": "2.4.2"
+}
