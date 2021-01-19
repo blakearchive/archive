@@ -1,4 +1,16 @@
-angular.module('blake').controller('PreviewController', function (
+"use strict";
+(function () {
+    angular.module("demo", ["ui.openseadragon"])
+    .controller("PreviewController", ["$scope", function ($scope) {
+        $scope.options = {
+            prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
+            tileSources: [
+                "http://openseadragon.github.io/example-images/highsmith/highsmith.dzi"
+            ]
+        };
+    }]);
+})();
+/*angular.module('blake').controller('PreviewController', function (
   $scope,$routeParams,$sce,$rootScope,$window,$modal,$cookies,
   BlakeDataService,imageManipulation,CompareObjectsFactory,$http) {
     var vm = this;
@@ -47,3 +59,4 @@ angular.module('blake').controller('PreviewController', function (
       //vm.scrollTo(1);
     }); 
 });
+*/
