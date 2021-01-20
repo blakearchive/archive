@@ -5,6 +5,7 @@ angular.module('blake').controller('PreviewController', function (
     var previewId = $routeParams.previewId;
     vm.pId = previewId;
     vm.images = [];
+    vm.showOverlayCopyInfo = false;
     $rootScope.showWorkTitle = 'preview';
     $rootScope.help = 'preview';
     $rootScope.worksNavState = false;
