@@ -100,6 +100,12 @@ class BlakePreviewImporter(BlakeImporter):
       preview.preview_images.append(previewImage)
       print preview.preview_images
 
+  @staticmethod
+    def get_source_for_preview(document):
+        for source in document.xpath("source"):
+            source_xml = etree.tostring(source, encoding='utf8', method='xml')
+            return json.dumps(xmltodict.parse(source_xml, force_cdata=True)["source"])
+
 
 
 
@@ -589,12 +595,6 @@ class BlakeCopyImporter(BlakeImporter):
     @staticmethod
     def get_source(document):
         for source in document.xpath("objdesc/source"):
-            source_xml = etree.tostring(source, encoding='utf8', method='xml')
-            return json.dumps(xmltodict.parse(source_xml, force_cdata=True)["source"])
-
-    @staticmethod
-    def get_source_for_preview(document):
-        for source in document.xpath("source"):
             source_xml = etree.tostring(source, encoding='utf8', method='xml')
             return json.dumps(xmltodict.parse(source_xml, force_cdata=True)["source"])
 
