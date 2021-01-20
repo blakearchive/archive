@@ -86,9 +86,8 @@ class BlakePreviewImporter(BlakeImporter):
 
       p.source = root.xpath('source')
       # iterate images and add them to the list
-      for child in root:
-          if(child.get("id")):
-            self.process_preview_images(p,child)
+      for child in root.iter("image"):
+          self.process_preview_images(p,child)
 
   # exhibit - models.BlakeExhibit
   # imageXml - etree elementTree
