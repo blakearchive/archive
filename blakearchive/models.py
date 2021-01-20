@@ -412,6 +412,7 @@ class BlakePreview(db.Model): # todo: change to correct columns name, image, etc
     title = db.Column(db.UnicodeText)
     preview_images = db.relationship(BlakePreviewImage, backref="preview")
     composition_date_string = db.Column(db.UnicodeText)
+    source = db.Column(JSON)
     #bad_id = db.Column(db.Text)
 
     @property
@@ -426,6 +427,7 @@ class BlakePreview(db.Model): # todo: change to correct columns name, image, etc
         return {
             "title": self.title,
             "preview_id": self.preview_id,
-            "composition_date_string": self.composition_date_string
+            "composition_date_string": self.composition_date_string,
+            "source": self.source
         }
 
