@@ -84,7 +84,7 @@ class BlakePreviewImporter(BlakeImporter):
 
       print "preview id is: "+root.get("id")
 
-      p.source = root.xpath('source')
+      p.source = self.get_source_for_preview(root)
       # iterate images and add them to the list
       for child in root.iter("image"):
           self.process_preview_images(p,child)
