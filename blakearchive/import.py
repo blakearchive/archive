@@ -102,7 +102,7 @@ class BlakePreviewImporter(BlakeImporter):
 
   @staticmethod
   def get_source_for_preview(document):
-      for source in document.iter("source"):
+      for source in document.xpath("source"):
           source_xml = etree.tostring(source, encoding='utf8', method='xml')
       return json.dumps(xmltodict.parse(source_xml, force_cdata=True)["source"])
 
