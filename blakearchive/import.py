@@ -83,8 +83,8 @@ class BlakePreviewImporter(BlakeImporter):
       self.previews[p.preview_id] = p
 
       print "preview id is: "+root.get("id")
-      
-      p.source = self.get_source_for_preview(root)
+      source = root.xpath("source")
+      p.source = self.get_source_for_preview(source)
       # iterate images and add them to the list
       for child in root.iter("image"):
           self.process_preview_images(p,child)
@@ -101,9 +101,8 @@ class BlakePreviewImporter(BlakeImporter):
       print preview.preview_images
 
   @staticmethod
-  def get_source_for_preview(document):
-      for source in document.xpath("source"):
-          source_xml = etree.tostring(source, encoding='utf8', method='xml')
+  def get_source_for_preview(source):  
+      source_xml = etree.tostring(source, encoding='utf8', method='xml')
       return json.dumps(xmltodict.parse(source_xml, force_cdata=True)["source"])
 
 
