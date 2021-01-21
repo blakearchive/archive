@@ -7,7 +7,7 @@ angular.module("blake").factory("BlakePreview", function (GenericService) {
    */
   var constructor = function (config) {
       var blake_preview = angular.copy(config);
-      blake_preview.source = angular.fromJson(config.source);
+      blake_preview.preview.source = angular.fromJson(config.source);
       return blake_preview;
   };
 
