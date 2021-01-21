@@ -51,7 +51,7 @@ angular.module('blake').controller('PreviewController', function (
 
     $rootScope.doneSettingPreview = false;
     vm.bds.setSelectedPreview(previewId).then(function(){
-      //console.log(">>>>>hey, tae, you were wrong!!!!");
+      console.log(vm.bds.preview);
       $rootScope.doneSettingPreview = true;
       
       //vm.scrollTo(1);
