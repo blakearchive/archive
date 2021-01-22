@@ -47,8 +47,9 @@ angular.module('blake').controller('PreviewController', function (
 */
     vm.bds= BlakeDataService;
     vm.bds.setSelectedWork($routeParams.previewId).then(function() {
+        console.log(vm.bds)
         vm.bds.setSelectedCopy(vm.bds.workCopies[0].bad_id);
-        console.log(vm.bds.copyObjects[0]);
+        console.log(vm.bds);
         vm.options.tileSources.url = 'images/' + vm.bds.copyObjects[0].dbi + '.300.jpg';
         vm.optionsSet = true;
     });
