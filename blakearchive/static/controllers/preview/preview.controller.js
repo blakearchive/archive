@@ -51,7 +51,7 @@ angular.module('blake').controller('PreviewController', function (
         vm.bds.setSelectedCopy(vm.bds.workCopies[0].bad_id).then(function() {
             vm.bds.getObject($routeParams.descId).then(function(result) {
                 vm.object = result;
-                console.log(vm.object[0])
+                console.log(vm.object[dbi])
                 console.log(vm.object[0].dbi)
                 vm.options.tileSources.url = 'images/' + vm.object[0].dbi + '.300.jpg';
                 vm.optionsSet = true;
