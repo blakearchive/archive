@@ -46,12 +46,11 @@ angular.module('blake').controller('PreviewController', function (
     });
 */
     vm.bds= BlakeDataService;
-    vm.bds2= BlakeDataService;
-    vm.bds3= BlakeDataService;
+    
     vm.bds.setSelectedWork($routeParams.previewId).then(function() {
-        vm.bds2.setSelectedCopy(vm.bds.workCopies[0].bad_id);
-        vm.bds3.setSelectedObject($routeParams.descId);
-        console.log(vm.bds3);
+        vm.bds.setSelectedCopy(vm.bds.workCopies[0].bad_id);
+        vm.bds.setSelectedObject($routeParams.descId);
+        console.log(vm.bds.copyObjects[0]);
         vm.options.tileSources.url = 'images/' + vm.bds3.dbi + '.300.jpg';
         vm.optionsSet = true;
     });
