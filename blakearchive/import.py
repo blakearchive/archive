@@ -481,17 +481,17 @@ class BlakeDocumentImporter(BlakeImporter):
         models.BlakeExhibitCaption.metadata.drop_all(bind=engine)
         models.BlakeExhibitCaption.metadata.create_all(bind=engine)
 
-        models.BlakePreview.metadata.drop_all(bind=engine)
-        models.BlakePreview.metadata.create_all(bind=engine)
-        models.BlakePreviewImage.metadata.drop_all(bind=engine)
-        models.BlakePreviewImage.metadata.create_all(bind=engine)
+        #models.BlakePreview.metadata.drop_all(bind=engine)
+        #models.BlakePreview.metadata.create_all(bind=engine)
+        #models.BlakePreviewImage.metadata.drop_all(bind=engine)
+        #models.BlakePreviewImage.metadata.create_all(bind=engine)
 
 
         session.add_all(self.works.values())
         session.add_all(self.object_importer.members.values())
         #session.add_all(self.fragmentpairs.values())
         session.add_all(self.exhibit_importer.exhibits.values())
-        session.add_all(self.preview_importer.previews.values())
+        #session.add_all(self.preview_importer.previews.values())
         session.commit()
 
 
