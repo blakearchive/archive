@@ -49,8 +49,8 @@ angular.module('blake').controller('PreviewController', function (
     
     vm.bds.setSelectedWork($routeParams.previewId).then(function() {
         vm.bds.setSelectedCopy(vm.bds.workCopies[0].bad_id).then(function(result) {
-            vm.copy = result;
-            console.log(vm.copy.copyObjects[0]);
+            //vm.copy = result;
+            console.log(vm.bds.copyObjects[0]);
             
             /*vm.bds.getObject($routeParams.descId).then(function(result) {
                 vm.object = result;
@@ -58,7 +58,7 @@ angular.module('blake').controller('PreviewController', function (
                 vm.options.tileSources.url = 'images/' + vm.object.dbi + '.300.jpg';
                 vm.optionsSet = true;
             });*/
-            vm.options.tileSources.url = 'images/' + vm.copy.copyObjects[0].desc_id + '.300.jpg';
+            vm.options.tileSources.url = 'images/' + vm.bds.copyObjects[0].desc_id + '.300.jpg';
             vm.optionsSet = true;
 
 
