@@ -46,9 +46,10 @@ angular.module('blake').controller('PreviewController', function (
     });
 */
     vm.bds= BlakeDataService;
+    vm.bds2= BlakeDataService;
     vm.bds.setSelectedWork($routeParams.previewId).then(function() {
-        vm.bds.setSelectedCopy(vm.bds.workCopies[0].bad_id);
-        console.log(vm.bds.copyObjects[0]);
+        vm.bds2.setSelectedCopy(vm.bds.workCopies[0].bad_id);
+        console.log(vm.bds2.copyObjects[0]);
         vm.options.tileSources.url = 'images/' + "BUT649.1.1r.PT" + '.300.jpg';
         vm.optionsSet = true;
     });
