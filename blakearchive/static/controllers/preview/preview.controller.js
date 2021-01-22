@@ -31,7 +31,7 @@ angular.module('blake').controller('PreviewController', function (
                 }
 
     };
-
+/*
     vm.zoom = function() {
         $rootScope.zoom = !$rootScope.zoom;
         ////console.log($rootScope.zoom);
@@ -44,11 +44,15 @@ angular.module('blake').controller('PreviewController', function (
         vm.optionsSet = true;
           //vm.options.tileSources.url = 'images/previews/' + vm.pId + '/' + vm.images[0].dbi;
     });
-
+*/
     vm.bds= BlakeDataService;
     //console.log("Exhibit ID: "+exhibitId);
-
-
+    vm.bds.setSelectedWork($routeParams.workId).then(function(result)){
+        console.log(result);
+        vm.options.tileSources.url = 'images/' + result.object.dbi + '.300.jpg';
+        vm.optionsSet = true;
+    }
+/*
     $rootScope.doneSettingPreview = false;
     vm.bds.setSelectedPreview(previewId).then(function(){
       console.log(vm.bds.preview);
@@ -56,4 +60,5 @@ angular.module('blake').controller('PreviewController', function (
       
       //vm.scrollTo(1);
     }); 
+*/
 });
