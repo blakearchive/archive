@@ -50,8 +50,8 @@ angular.module('blake').controller('PreviewController', function (
     vm.bds.setSelectedWork($routeParams.previewId).then(function() {
         vm.bds.setSelectedCopy(vm.bds.workCopies[0].bad_id);
         vm.bds.setSelectedObject($routeParams.descId);
-        console.log(vm.bds.copyObjects[0]);
-        vm.options.tileSources.url = 'images/' + vm.bds3.dbi + '.300.jpg';
+        console.log(vm.bds.object);
+        vm.options.tileSources.url = 'images/' + vm.bds.dbi + '.300.jpg';
         vm.optionsSet = true;
     });
     //vm.descId = vm.bds.workCopies[0]
