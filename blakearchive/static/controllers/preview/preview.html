@@ -22,7 +22,7 @@
         <div id="object-view" class="reading-view">
             <div id="gallery" auto-height adjust="60" breakpoint="768" class="container-fluid" ng-style="{'margin-left':galleriesMarginLeft}">
                 <div style="height:100%; overflow-y:hidden; margin-bottom:0px; " id="compare" class="scrollbar" left-on-broadcast="viewSubMenu::readingMode" style="width:67%;">
-                    <div class="featured-object" style="height:100%;">
+                    <div class="featured-object" style="height:95%;">
                         <div class="compare-inner" style="width:100%;height:100%; padding-bottom:0px;padding-top:0px;padding-left:0px;font-size:13px;margin:auto; float:unset">
 
                    
@@ -30,7 +30,7 @@
 
                            <!-- <div style="height:95%;padding-left:0px;width:100%;margin-top:13px" class="item" ng-repeat="i in previewCtrl.images track by $index" id="item-{{$index}}"> -->
                              <div style="height:95%;padding-left:0px;width:100%;margin-top:13px" class="item">
-                                <div style="display:grid;align-content:center"><a scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true" style="color:#e3b838;float:right;margin:auto">Work Information</a></div>
+                                
                                 <div class="reading-wrapper" style="height:100%;margin-left:0px" breakpoint="768" id="example">
                                     
                                     <!--This works, but <seadragon> doesn't-->
@@ -50,7 +50,7 @@
                                     
                                     
                                 </div>
-
+                                <div style="display:grid;align-content:center"><a scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true" style="color:#e3b838;float:right;margin:auto">Work Information</a></div>
                                 <!--<div style="margin: 0;position: absolute;left: 50%;transform: translate(-50%, -50%);top: 97%;" class="btn-group edit-object " role="group " >
         
         <button type="button " style="height:21px;line-height:0.6;text-align:center" class="btn btn-default " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " ng-click="previewCtrl.zoom() ">
