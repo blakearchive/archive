@@ -46,10 +46,13 @@ angular.module('blake').controller('PreviewController', function (
     });
 */
     vm.bds= BlakeDataService;
+    vm.bds.setSelectedWork($routeParams.previewId);
+    console.log(vm.bds)
+    //vm.descId = vm.bds.workCopies[0]
     //console.log("Exhibit ID: "+exhibitId);
-    vm.bds.setSelectedWork($routeParams.previewId).then(function(){
+    vm.bds.setSelectedCopy($routeParams.previewId,$routeParams.de).then(function(){
         console.log(vm.bds);
-        vm.options.tileSources.url = 'images/' + vm.bds.object.dbi + '.300.jpg';
+        vm.options.tileSources.url = 'images/' + "BUT649.1.1r.PT.300" + '.300.jpg';
         vm.optionsSet = true;
     });
 /*
