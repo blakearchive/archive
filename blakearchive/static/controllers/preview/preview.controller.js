@@ -51,12 +51,17 @@ angular.module('blake').controller('PreviewController', function (
         vm.bds.setSelectedCopy(vm.bds.workCopies[0].bad_id).then(function(result) {
             vm.copy = result;
             console.log(vm.copy.copyObjects[0]);
-            vm.bds.getObject($routeParams.descId).then(function(result) {
+            
+            /*vm.bds.getObject($routeParams.descId).then(function(result) {
                 vm.object = result;
                 console.log(vm.object.dbi)
                 vm.options.tileSources.url = 'images/' + vm.object.dbi + '.300.jpg';
                 vm.optionsSet = true;
-            });
+            });*/
+            vm.options.tileSources.url = 'images/' + vm.copy.copyObjects[0].desc_id + '.300.jpg';
+            vm.optionsSet = true;
+
+
         });
     });
     //vm.descId = vm.bds.workCopies[0]
