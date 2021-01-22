@@ -47,7 +47,7 @@ angular.module('blake').controller('PreviewController', function (
 */
     vm.bds= BlakeDataService;
     //console.log("Exhibit ID: "+exhibitId);
-    vm.bds.setSelectedWork($routeParams.workId).then(function(result){
+    vm.bds.setSelectedWork($routeParams.previewId).then(function(result){
         console.log(result);
         vm.options.tileSources.url = 'images/' + result.object.dbi + '.300.jpg';
         vm.optionsSet = true;
