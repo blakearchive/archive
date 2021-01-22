@@ -49,7 +49,7 @@ angular.module('blake').controller('PreviewController', function (
     vm.bds.setSelectedWork($routeParams.previewId);
     //vm.descId = vm.bds.workCopies[0]
     //console.log("Exhibit ID: "+exhibitId);
-    vm.bds.setSelectedCopy($routeParams.previewId).then(function(){
+    vm.bds.setSelectedCopy($routeParams.workCopies[0].copy_id).then(function(){
         console.log(vm.bds);
         vm.options.tileSources.url = 'images/' + "BUT649.1.1r.PT.300" + '.300.jpg';
         vm.optionsSet = true;
