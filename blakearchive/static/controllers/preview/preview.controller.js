@@ -50,7 +50,7 @@ angular.module('blake').controller('PreviewController', function (
         console.log(vm.bds);
         vm.bds.setSelectedCopy(vm.bds.workCopies[0].bad_id);
         console.log(vm.bds);
-        vm.options.tileSources.url = 'images/' + "BUT649.1.1r.PT.300" + '.300.jpg';
+        vm.options.tileSources.url = 'images/' + vm.bds.dbi + '.300.jpg';
         vm.optionsSet = true;
     });
     //vm.descId = vm.bds.workCopies[0]
