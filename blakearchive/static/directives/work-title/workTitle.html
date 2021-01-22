@@ -76,17 +76,16 @@
         <span scroll-to-top style="color:#eabd39;">Archive Exhibition: {{ workTitle.getTitle() }} ({{workTitle.bds.exhibit.exhibit.composition_date_string}}) </span>
         <!--<span scroll-to-top style="color:white;">Exhibition</span>-->
     </span>
-
+<!--
     <span ng-if="showWorkTitle == 'preview'" class="worktitle" style="padding: 19px;">
         <span scroll-to-top style="color:#eabd39;">Work in Preview: {{ workTitle.getTitle() }} ({{workTitle.bds.preview.preview.composition_date_string}}) </span>
-        <!--<span scroll-to-top style="color:white;">Exhibition</span>-->
-    </span>
+    </span>-->
 
     <span ng-if="showWorkTitle == 'home'" class="worktitle" style="padding: 19px;">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:#e3b838;">LATEST PUBLICATION (1/12/21): {{ workTitle.getTitle() }}</a>
     </span>
 
-  <span ng-if="showWorkTitle != 'home' && showWorkTitle != 'exhibit' && showWorkTitle != 'preview' && showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
+  <span ng-if="showWorkTitle != 'home' && showWorkTitle != 'exhibit' && showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
     <span ng-if="workTitle.bds.copy.bad_id == 'letters'">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Letters (Composed {{workTitle.bds.work.composition_date_string}})</a>: {{ workTitle.getTitle() }}
     </span>
@@ -98,22 +97,22 @@
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">French Revolution</a>: {{ workTitle.getTitle() }}
     </span>
   -->
-    <span ng-if="workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.copy.bad_id != 'shakespearewc' && workTitle.bds.work.medium != 'exhibit' && workTitle.bds.work.medium != 'preview' && workTitle.bds.work.bad_id != 'bb134'">
+    <span ng-if="workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.copy.bad_id != 'shakespearewc' && workTitle.bds.work.medium != 'exhibit' && workTitle.bds.work.bad_id != 'bb134'">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a> <a scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true" style="color:white;">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}})
     </span>
 
-    <span ng-if="workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.copy.bad_id != 'shakespearewc' && workTitle.bds.work.medium != 'exhibit' && workTitle.bds.work.medium != 'preview' && workTitle.bds.work.bad_id == 'bb134'">
+    <span ng-if="workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.copy.bad_id != 'shakespearewc' && workTitle.bds.work.medium != 'exhibit' && workTitle.bds.work.bad_id == 'bb134'">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Receipts</a>: <a scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true" style="color:white;">{{workTitle.getCopyPhrase()}}--{{ workTitle.getTitle() }}</a>
     </span>
 
-    <span ng-if="workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.copy.bad_id != 'shakespearewc' && workTitle.bds.work.medium == 'exhibit' && workTitle.bds.work.medium == 'preview'">
+    <span ng-if="workTitle.bds.copy.bad_id != 'letters' && workTitle.bds.copy.bad_id != 'shakespearewc' && workTitle.bds.work.medium == 'exhibit'">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">{{ workTitle.getTitle() }}</a>
     </span>
 
   </span>
 
 
-  <span ng-if="$root.view.mode == 'compare' && showWorkTitle != 'static' && showWorkTitle != 'exhibit' && showWorkTitle != 'preview' && showWorkTitle != 'work'" class="worktitle" style="padding: 19px; color:yellow">
+  <span ng-if="$root.view.mode == 'compare' && showWorkTitle != 'static' && showWorkTitle != 'exhibit' && showWorkTitle != 'work'" class="worktitle" style="padding: 19px; color:yellow">
     <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:yellow;">{{ workTitle.getTitle() }}</a> <a scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true" style="color:yellow;">{{workTitle.getCopyPhrase()}}</a> ({{workTitle.getCompOrPrintDateString()}}) <span style="color:yellow">(Selected)</span>
   </span>
 
