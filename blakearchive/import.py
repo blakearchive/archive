@@ -225,7 +225,7 @@ class BlakeDocumentImporter(BlakeImporter):
         self.object_importer = BlakeObjectImporter()
         self.copy_importer = BlakeCopyImporter(self.data_folder, object_importer=self.object_importer)
         self.exhibit_importer = BlakeExhibitImporter(self.data_folder)
-        self.preview_importer = BlakePreviewImporter(self.data_folder)
+        #self.preview_importer = BlakePreviewImporter(self.data_folder)
         self.works = {}
         self.fragmentpairs = {}
         self.work_info = {}
@@ -240,20 +240,20 @@ class BlakeDocumentImporter(BlakeImporter):
     def import_data(self):
         document_pattern = os.path.join(self.data_folder, "works/*.xml")
         exhibit_pattern = os.path.join(self.data_folder,"exhibits/**/*.xml")
-        preview_pattern = os.path.join(self.data_folder,"previews/**/*.xml")
+        #preview_pattern = os.path.join(self.data_folder,"previews/**/*.xml")
         info_pattern = os.path.join(self.data_folder, "info/*.xml")
         matching_bad_files = glob.glob(document_pattern)
         matching_info_files = glob.glob(info_pattern)
         matching_exhibit_files = glob.glob(exhibit_pattern)
-        matching_preview_files = glob.glob(preview_pattern)
+        #matching_preview_files = glob.glob(preview_pattern)
         self.import_info_files(matching_info_files)
         self.import_bad_files(matching_bad_files)
         self.import_exhibit_files(matching_exhibit_files)
-        self.import_preview_files(matching_preview_files)
+        #self.import_preview_files(matching_preview_files)
         self.process_works()
         self.process_relationships()
         self.process_exhibits()
-        self.process_previews()
+        #self.process_previews()
         #self.process_text_matches()
         self.populate_database()
 
