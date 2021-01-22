@@ -48,14 +48,14 @@ angular.module('blake').controller('PreviewController', function (
     vm.bds= BlakeDataService;
     
     vm.bds.setSelectedWork($routeParams.previewId).then(function() {
-        vm.bds.setSelectedCopy(vm.bds.workCopies[0].bad_id).then(function) {
-            vm.bds.getObject($routeParams.descId).then(function(result)) {
+        vm.bds.setSelectedCopy(vm.bds.workCopies[0].bad_id).then(function() {
+            vm.bds.getObject($routeParams.descId).then(function(result) {
                 console.log(result);
                 vm.object = result;
                 vm.options.tileSources.url = 'images/' + vm.object.dbi + '.300.jpg';
                 vm.optionsSet = true;
-            }
-        }
+            });
+        });
     });
     //vm.descId = vm.bds.workCopies[0]
     //console.log("Exhibit ID: "+exhibitId);
