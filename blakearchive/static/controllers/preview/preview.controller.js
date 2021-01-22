@@ -6,7 +6,7 @@ angular.module('blake').controller('PreviewController', function (
     vm.pId = previewId;
     vm.images = [];
     vm.showOverlayCopyInfo = false;
-    $rootScope.showWorkTitle = 'preview';
+    $rootScope.showWorkTitle = 'work';
     $rootScope.help = 'preview';
     $rootScope.worksNavState = false;
     //var currentIndex = 0;
