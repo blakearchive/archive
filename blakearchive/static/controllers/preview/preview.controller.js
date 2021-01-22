@@ -48,7 +48,8 @@ angular.module('blake').controller('PreviewController', function (
     vm.bds= BlakeDataService;
     
     vm.bds.setSelectedWork($routeParams.previewId).then(function() {
-        vm.bds.setSelectedCopy(vm.bds.workCopies[0].bad_id).then(function() {
+        vm.bds.setSelectedCopy(vm.bds.workCopies[0].bad_id).then(function(result) {
+            vm.copy = result;
             console.log(vm.copy.copyObjects[0]);
             vm.bds.getObject($routeParams.descId).then(function(result) {
                 vm.object = result;
