@@ -3,6 +3,7 @@ angular.module("blake").controller("RegularObjectViewerController", function ($s
     vm.rs = $rootScope;
     vm.bds = BlakeDataService;
     vm.ovs = ObjectViewerService;
+    vm.optionsSet = false;
 
     vm.options = {
             id:            "example",
@@ -17,6 +18,7 @@ angular.module("blake").controller("RegularObjectViewerController", function ($s
 
     $scope.$on('$viewContentLoaded', function(){
         vm.options.url = 'images/' + vm.bds.object.dbi + '300.jpg';
+        vm.optionsSet = true;
     });
     //console.log(vm.ovs);
     //console.log(vm.rs);
