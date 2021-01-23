@@ -10,12 +10,14 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
                 tileSources:   {
                     type: 'image',
                     //url:  'images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
-                    url: 'images/' + vm.bds.object.dbi + '300.jpg'
+                    url: ''
                 }
 
     };
 
-    console.log(vm.bds.object);
+    $scope.$on('$viewContentLoaded', function(){
+        vm.options.url = 'images/' + vm.bds.object.dbi + '300.jpg';
+    });
     //console.log(vm.ovs);
     //console.log(vm.rs);
 });
