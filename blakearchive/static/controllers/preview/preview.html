@@ -51,7 +51,7 @@
                                     
                                 </div>
                                 <div style="display:grid;align-content:center;"><span style="float:right;margin:auto"><a style="color:#e3b838;" scroll-to-top href="" ng-click="$root.showOverlayCopyInfo = true">Work Information</a> <span style="color:#e3b838;">|</span> <span ng-mouseover="previewCtrl.showEditorsNotes = true" ng-mouseleave="previewCtrl.showEditorsNotes = false" style="color:#e3b838;">Editors' Notes</span></span></div>
-                                <editor-notes ng-show="previewCtrl.showEditorsNotes" object="previewCtrl.bds.copyObjects[0]"></editor-notes>
+                                <div ng-show="previewCtrl.showEditorsNotes"><editor-notes object="previewCtrl.bds.copyObjects[0]"></editor-notes></div>
                                 <!--<div style="margin: 0;position: absolute;left: 50%;transform: translate(-50%, -50%);top: 97%;" class="btn-group edit-object " role="group " >
         
         <button type="button " style="height:21px;line-height:0.6;text-align:center" class="btn btn-default " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " ng-click="previewCtrl.zoom() ">
