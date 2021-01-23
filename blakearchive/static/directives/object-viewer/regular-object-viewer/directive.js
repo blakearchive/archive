@@ -3,8 +3,9 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
     vm.rs = $rootScope;
     vm.bds = BlakeDataService;
     vm.ovs = ObjectViewerService;
+    
+    /*
     vm.optionsSet = false;
-
     vm.options = {
             id:            "example",
                 prefixUrl:     "http://openseadragon.github.io/openseadragon/images/",
@@ -21,8 +22,8 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
         vm.options.tileSources.url = 'images/' + result.dbi + '.300.jpg';
         vm.optionsSet = true;
     });
-    //console.log(vm.ovs);
-    //console.log(vm.rs);
+    */
+    
 });
 
 angular.module("blake").component("regularObjectViewer", {
