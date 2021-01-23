@@ -4,7 +4,7 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
     vm.bds = BlakeDataService;
     vm.ovs = ObjectViewerService;
     
-    
+    /*
     vm.optionsSet = false;
     vm.options = {
             degrees: 0,
@@ -23,10 +23,9 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
         vm.optionsSet = false;
         console.log(result);
         vm.options.tileSources.url = 'images/' + result.dbi + '.300.jpg';
-        this.ngOnInit();
         vm.optionsSet = true;
     });
-    
+    */
     
 });
 
