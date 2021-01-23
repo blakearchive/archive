@@ -4,16 +4,18 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
     vm.bds = BlakeDataService;
     vm.ovs = ObjectViewerService;
     
-    /*
+    
     vm.optionsSet = false;
     vm.options = {
-            id:            "example",
-                prefixUrl:     "http://openseadragon.github.io/openseadragon/images/",
-                tileSources:   {
-                    type: 'image',
-                    //url:  'images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
-                    url: ''
-                }
+            degrees: 90,
+            showRotationControl: true,
+            id: "example",
+            prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
+            tileSources: {
+                type: 'image',
+                //url:  'images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
+                url: ''
+            }
 
     };
 
@@ -22,7 +24,7 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
         vm.options.tileSources.url = 'images/' + result.dbi + '.300.jpg';
         vm.optionsSet = true;
     });
-    */
+    
     
 });
 
