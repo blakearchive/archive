@@ -3,6 +3,18 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
     vm.rs = $rootScope;
     vm.bds = BlakeDataService;
     vm.ovs = ObjectViewerService;
+
+    vm.options = {
+            id:            "example",
+                prefixUrl:     "http://openseadragon.github.io/openseadragon/images/",
+                tileSources:   {
+                    type: 'image',
+                    //url:  'images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
+                    url: 'images/' + vm.bds.object.dbi + '300.jpg'
+                }
+
+    };
+
     console.log(vm.bds);
 });
 
