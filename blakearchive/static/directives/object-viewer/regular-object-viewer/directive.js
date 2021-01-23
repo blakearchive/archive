@@ -1,4 +1,4 @@
-angular.module("blake").controller("RegularObjectViewerController", function ($rootScope, BlakeDataService, ObjectViewerService) {
+angular.module("blake").controller("RegularObjectViewerController", function ($scope,$rootScope, BlakeDataService, ObjectViewerService) {
     let vm = this;
     vm.rs = $rootScope;
     vm.bds = BlakeDataService;
