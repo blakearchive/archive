@@ -1,4 +1,4 @@
-angular.module("blake").controller("RegularObjectViewerController", function ($scope,$rootScope, BlakeDataService, ObjectViewerService) {
+angular.module("blake").controller("RegularObjectViewerController", function ($routeParams,$scope,$rootScope, BlakeDataService, ObjectViewerService) {
     let vm = this;
     vm.rs = $rootScope;
     vm.bds = BlakeDataService;
@@ -16,9 +16,9 @@ angular.module("blake").controller("RegularObjectViewerController", function ($s
 
     };
 
-    $scope.$on('$viewContentLoaded', function(){
-        console.log(vm.bds.object);
-        vm.options.url = 'images/' + vm.bds.object.dbi + '300.jpg';
+    vm.bds.getObject($routeParams.descId).then(function(result) {
+        console.log(result);
+        vm.options.url = 'images/' + result.dbi + '300.jpg';
         vm.optionsSet = true;
     });
     //console.log(vm.ovs);
