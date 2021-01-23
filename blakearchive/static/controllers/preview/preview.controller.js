@@ -19,6 +19,7 @@ angular.module('blake').controller('PreviewController', function (
     //$rootScope.galleriesMarginLeft = '33%';
     $rootScope.zoom = false;
     var optionsSet = false;
+    var showEditorsNotes = false;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
