@@ -20,6 +20,7 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
     };
 
     vm.bds.getObject($routeParams.descId).then(function(result) {
+        vm.optionsSet = false;
         console.log(result);
         vm.options.tileSources.url = 'images/' + result.dbi + '.300.jpg';
         vm.optionsSet = true;
