@@ -7,7 +7,7 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
     
     vm.optionsSet = false;
     vm.options = {
-            degrees: 90,
+            degrees: 0,
             showRotationControl: true,
             id: "example",
             prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
