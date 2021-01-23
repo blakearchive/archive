@@ -18,7 +18,7 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
 
     vm.bds.getObject($routeParams.descId).then(function(result) {
         console.log(result);
-        vm.options.url = 'images/' + result.dbi + '.300.jpg';
+        vm.options.tileSources.url = 'images/' + result.dbi + '.300.jpg';
         vm.optionsSet = true;
     });
     //console.log(vm.ovs);
