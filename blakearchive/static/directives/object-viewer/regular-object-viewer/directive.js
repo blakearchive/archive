@@ -16,6 +16,8 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
     };
 
     console.log(vm.bds);
+    console.log(vm.ovs);
+    console.log(vm.rs);
 });
 
 angular.module("blake").component("regularObjectViewer", {
