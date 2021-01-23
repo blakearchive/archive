@@ -17,6 +17,7 @@ angular.module("blake").controller("RegularObjectViewerController", function ($s
     };
 
     $scope.$on('$viewContentLoaded', function(){
+        console.log(vm.bds.object);
         vm.options.url = 'images/' + vm.bds.object.dbi + '300.jpg';
         vm.optionsSet = true;
     });
