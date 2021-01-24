@@ -51,7 +51,7 @@
       <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].wc"><a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
         (Composed {{ menu_list.composition_date_string }})</a></li>
       <li role="presentation" class="dropdown-header">Paintings</li>
-      <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].paintings"><a ng-if="menu_list.image != 'preview'" href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a><a ng-if="menu_list.image == 'preview'" href="/preview/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a>
+      <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].paintings"><a ng-if="menu_list.image != 'preview'" href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a><a ng-if="menu_list.image == 'preview'" href="/preview/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }}) [Preview]</a>
       </li>
     </ul>
   </li>
