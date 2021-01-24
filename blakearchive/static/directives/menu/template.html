@@ -72,7 +72,7 @@
   </li>
   <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">Works in <span>Preview</span></a>
     <ul class="dropdown-menu" role="menu">
-      <li ng-if="menu_list.image == 'preview'" ng-repeat="menu_list in menu.allWorksCompDateValue"><a href="/preview/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a></li>
+      <li ng-repeat="menu_list in menu.allWorksCompDateValue | filter: { image: 'preview' }"><a href="/preview/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a></li>
     </ul>
   </li>
   <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">All
