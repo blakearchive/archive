@@ -32,7 +32,9 @@ angular.module('blake').controller('PreviewController', function (
                 url: ''
             },
             //sequenceMode: true,
-            showNavigator: true
+            showNavigator: true,
+            navigatorHeight:   "120px",
+            navigatorWidth:    "145px",
 
     };
 /*
