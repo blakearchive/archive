@@ -23,13 +23,15 @@ angular.module('blake').controller('PreviewController', function (
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
-            id:            "example",
-                prefixUrl:     "http://openseadragon.github.io/openseadragon/images/",
-                tileSources:   {
-                    type: 'image',
-                    //url:  'images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
-                    url: ''
-                }
+            id: "example",
+            prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
+            tileSources:   [{
+                type: 'image',
+                //url:  'images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
+
+                url: ''
+            }],
+            sequenceMode: true,
 
     };
 /*
@@ -59,7 +61,7 @@ angular.module('blake').controller('PreviewController', function (
                 vm.options.tileSources.url = 'images/' + vm.object.dbi + '.300.jpg';
                 vm.optionsSet = true;
             });*/
-            vm.options.tileSources.url = 'images/' + vm.bds.copyObjects[0].dbi + '.300.jpg';
+            vm.options.tileSources[0].url = 'images/' + vm.bds.copyObjects[0].dbi + '.300.jpg';
             vm.optionsSet = true;
 
 
