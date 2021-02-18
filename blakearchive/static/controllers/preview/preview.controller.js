@@ -22,6 +22,7 @@ angular.module('blake').controller('PreviewController', function (
     var showEditorsNotes = false;
     var imageLoader = true;
     vm.wts = worktitleService;
+    vm.rs = $rootScope;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
