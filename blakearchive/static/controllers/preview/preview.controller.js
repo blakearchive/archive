@@ -1,6 +1,6 @@
 angular.module('blake').controller('PreviewController', function (
   $scope,$routeParams,$sce,$rootScope,$window,$modal,$cookies,
-  BlakeDataService,imageManipulation,CompareObjectsFactory,$http,lightbox_service) {
+  BlakeDataService,imageManipulation,CompareObjectsFactory,$http,lightbox_service,worktitleService) {
     var vm = this;
     var previewId = $routeParams.previewId;
     vm.pId = previewId;
@@ -77,7 +77,7 @@ angular.module('blake').controller('PreviewController', function (
       var item = {};
       item.url = "/images/"+vm.bds.copyObjects[0].dbi+".300.jpg";
       item.title = vm.bds.getFullTitle();
-      item.caption = vm.bds.getCaptionFromGallery();
+      item.caption = vm.wts.getCaptionFromReading();
       //CartStorageService.insert(item);
       lightbox_service.addToCart(item);
 
