@@ -35,8 +35,8 @@
                                     
                                     <!--This works, but <seadragon> doesn't-->
                                     <!--<img ng-if="i.dbi != ''" magnify-image-preview ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">-->
-                                    <div [hidden]="!imageLoader">Loading...</div>
-                                    <seadragon [hidden]="imageLoader" ng-if="previewCtrl.optionsSet" options="previewCtrl.options" (load)="this.imageLoader = false;"/>
+                                    <div [hidden]="!previewCtrl.imageLoader">Loading...</div>
+                                    <seadragon [hidden]="imageLoader" ng-if="previewCtrl.optionsSet" options="previewCtrl.options" (load)="previewCtrl.imageLoader = false;"/>
                                     <!--<div ng-show="previewCtrl.showEditorsNotes" style="height:500px;width:500px;z-index:999999"><editor-notes object="previewCtrl.bds.copyObjects[0]"></editor-notes></div>-->
                                     <!--<script type="text/javascript">
             OpenSeadragon({
