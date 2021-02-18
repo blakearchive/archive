@@ -14,6 +14,10 @@ models.db.init_app(app)
 def get_image(image=None):
     return send_file(config.local_image_path+image)
 
+@app.route('/images/<imageFiles>/<number>/<image>')
+def get_image_files(imageFiles=None,number=None,image=None):
+    return send_file(config.local_image_path+'/'+imageFiles+'/'+number+'/'+image)
+
 @app.route('/images/exhibits/<exhibitId>/<image>')
 def get_exhibit_image(exhibitId=None,image=None):
     return send_file(config.local_image_path+'exhibits/'+exhibitId+'/'+image)
