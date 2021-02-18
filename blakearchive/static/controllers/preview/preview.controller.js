@@ -1,6 +1,6 @@
 angular.module('blake').controller('PreviewController', function (
   $scope,$routeParams,$sce,$rootScope,$window,$modal,$cookies,
-  BlakeDataService,imageManipulation,CompareObjectsFactory,$http) {
+  BlakeDataService,imageManipulation,CompareObjectsFactory,$http,lightbox_service) {
     var vm = this;
     var previewId = $routeParams.previewId;
     vm.pId = previewId;
@@ -71,6 +71,23 @@ angular.module('blake').controller('PreviewController', function (
 
         });
     });
+
+    vm.addToLightBox = function(){
+      //console.log("===> adding: "+JSON.stringify(vm.bds.object));
+      var item = {};
+      item.url = "/images/"+vm.bds.copyObjects[0].dbi+".300.jpg";
+      item.title = vm.wts.getFullTitle();
+      item.caption = vm.wts.getCaptionFromReading(obj);
+      //CartStorageService.insert(item);
+      lightbox_service.addToCart(item);
+
+      // updates vm.rs so that cart counter is updated
+      lightbox_service.listCartItems().then(function(data){
+        vm.rs.cartItems = data;
+        //console.log("===== "+JSON.stringify($rootScope.cartItems));
+      });
+
+    }
     //vm.descId = vm.bds.workCopies[0]
     //console.log("Exhibit ID: "+exhibitId);
     /*vm.bds.setSelectedCopy(vm.bds.workCopies[0].copy_id).then(function(){
