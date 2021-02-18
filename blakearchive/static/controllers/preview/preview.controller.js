@@ -20,7 +20,7 @@ angular.module('blake').controller('PreviewController', function (
     $rootScope.zoom = false;
     var optionsSet = false;
     var showEditorsNotes = false;
-    imageLoader = true;
+    var imageLoader = true;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
