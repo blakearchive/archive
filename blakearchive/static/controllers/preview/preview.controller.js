@@ -21,6 +21,7 @@ angular.module('blake').controller('PreviewController', function (
     var optionsSet = false;
     var showEditorsNotes = false;
     var imageLoader = true;
+    vm.wts = worktitleService;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
@@ -76,7 +77,7 @@ angular.module('blake').controller('PreviewController', function (
       //console.log("===> adding: "+JSON.stringify(vm.bds.object));
       var item = {};
       item.url = "/images/"+vm.bds.copyObjects[0].dbi+".300.jpg";
-      item.title = vm.bds.getFullTitle();
+      item.title = vm.wts.getFullTitle();
       item.caption = vm.wts.getCaptionFromReading();
       //CartStorageService.insert(item);
       lightbox_service.addToCart(item);
