@@ -78,7 +78,7 @@ angular.module('blake').controller('PreviewController', function (
       var item = {};
       item.url = "/images/"+vm.bds.copyObjects[0].dbi+".300.jpg";
       item.title = vm.wts.getFullTitle();
-      item.caption = vm.wts.getCaptionFromReading();
+      item.caption = vm.wts.getCaptionFromGallery();
       //CartStorageService.insert(item);
       lightbox_service.addToCart(item);
 
