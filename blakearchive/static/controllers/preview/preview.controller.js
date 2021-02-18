@@ -67,7 +67,7 @@ angular.module('blake').controller('PreviewController', function (
                 vm.options.tileSources.url = 'images/' + vm.object.dbi + '.300.jpg';
                 vm.optionsSet = true;
             });*/
-            vm.options.tileSources.url = 'images/' + vm.bds.copyObjects[0].dbi + '.300.dzi';
+            vm.options.tileSources = 'images/' + vm.bds.copyObjects[0].dbi + '.300.dzi';
             vm.optionsSet = true;
 
 
