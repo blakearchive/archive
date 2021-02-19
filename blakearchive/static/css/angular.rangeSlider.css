@@ -127,7 +127,7 @@
   background-image: -webkit-linear-gradient(#e3b838, #e3b838);
   background-image: linear-gradient(#e3b838, #e3b838);
 }
-.contrast-slider .ngrs-range-slider .ngrs-join {
+.contrast-slider.ngrs-range-slider .ngrs-join {
   position: relative;
   z-index: 1;
   top: 31%;
