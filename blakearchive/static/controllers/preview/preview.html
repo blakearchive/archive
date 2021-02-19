@@ -35,6 +35,7 @@
                                     
                                     <!--This works, but <seadragon> doesn't-->
                                     <!--<img ng-if="i.dbi != ''" magnify-image-preview ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">-->
+                                    <div style="width:20%; position:absolute; z-index:99999" range-slider min="0" max="200" show-values="true" model-max="mycontrast" pin-handle="min" step="5" orientation="vertical"></div>
                                     <seadragon id="seadragon" ng-style="{'filter':'contrast('+mycontrast+'%)'}" ng-if="previewCtrl.optionsSet" options="previewCtrl.options"/>
                                     <!--<div ng-show="previewCtrl.showEditorsNotes" style="height:500px;width:500px;z-index:999999"><editor-notes object="previewCtrl.bds.copyObjects[0]"></editor-notes></div>-->
                                     <!--<script type="text/javascript">
@@ -58,7 +59,7 @@
                                     <span style="color:#e3b838;">| Adjust contrast:</span>
 
                                 </span></div>
-                                <div style="width:20%" range-slider min="0" max="200" show-values="true" model-max="mycontrast" pin-handle="min" step="5"></div>
+                                
                                 
                                 <!--<div style="margin: 0;position: absolute;left: 50%;transform: translate(-50%, -50%);top: 97%;" class="btn-group edit-object " role="group " >
         
