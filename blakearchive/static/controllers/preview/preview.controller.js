@@ -23,6 +23,8 @@ angular.module('blake').controller('PreviewController', function (
     var imageLoader = true;
     vm.wts = worktitleService;
     vm.rs = $rootScope;
+    $scope.minContrast = 0;
+    $scope.contrast = 100;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
@@ -73,6 +75,10 @@ angular.module('blake').controller('PreviewController', function (
 
         });
     });
+
+    vm.adjustContrast = function(){
+
+    }
 
     vm.addToLightBox = function(){
       //console.log("===> adding: "+JSON.stringify(vm.bds.object));
