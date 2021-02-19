@@ -23,7 +23,7 @@ angular.module('blake').controller('PreviewController', function (
     var imageLoader = true;
     vm.wts = worktitleService;
     vm.rs = $rootScope;
-    var mycontrast = 100;
+    vm.mycontrast = 100;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
