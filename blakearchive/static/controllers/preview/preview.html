@@ -37,7 +37,7 @@
                                     <!--<img ng-if="i.dbi != ''" magnify-image-preview ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">-->
                                     
                                     <seadragon style="height:95%" id="seadragon" ng-style="{'filter':'contrast('+mycontrast+'%)'}" ng-if="previewCtrl.optionsSet" options="previewCtrl.options"/>
-                                    <div style="width:20%; position:relative;float:right;margin:0; z-index:99999" range-slider min="0" max="200" show-values="true" model-max="mycontrast" pin-handle="min" step="5"></div>
+                                    <div style="width:20%; position:relative;margin:auto; margin-bottom:5px; z-index:99999" range-slider min="0" max="200" show-values="true" model-max="mycontrast" pin-handle="min" step="5"></div>
                                     <!--<div ng-show="previewCtrl.showEditorsNotes" style="height:500px;width:500px;z-index:999999"><editor-notes object="previewCtrl.bds.copyObjects[0]"></editor-notes></div>-->
                                     <!--<script type="text/javascript">
             OpenSeadragon({
