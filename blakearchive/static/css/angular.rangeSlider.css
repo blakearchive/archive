@@ -109,9 +109,9 @@
 }
 /* line 63, scss/_rangeSlider.scss */
 .ngrs-range-slider .ngrs-join {
-  position: absolute;
+  position: relative;
   z-index: 1;
-  top: 50%;
+  top: 31%;
   left: 0;
   right: 100%;
   height: 8px;
