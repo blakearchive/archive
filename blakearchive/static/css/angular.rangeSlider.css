@@ -188,6 +188,9 @@
 .ngrs-range-slider .ngrs-handle-max i {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFdJREFUeNpiYEAAHyDmYkADzEhsByBWA+K3QPwJmwJjIGYBYlUgZgLi59gUwIAkEEsD8VMmBtyAkQFqJDZwAYjPAPE/dAU/gHg/ED/GpgvkTW50QYAAAwADfwrM5sqplgAAAABJRU5ErkJggg==");
 }
+.contrast-slider.ngrs-range-slider .ngrs-handle-max i {
+  background-image: none;
+}
 /* line 137, scss/_rangeSlider.scss */
 .ngrs-range-slider .ngrs-value {
   position: absolute;
