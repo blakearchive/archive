@@ -24,7 +24,7 @@ angular.module('blake').controller('PreviewController', function (
     vm.wts = worktitleService;
     vm.rs = $rootScope;
     $rootScope.mycontrast = 100;
-    $rootScope.mycontrastForMenu = mycontrast + 5;
+    $rootScope.mycontrastForMenu = $rootScope.mycontrast + 5;
 
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
