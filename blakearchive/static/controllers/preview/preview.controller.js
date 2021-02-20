@@ -28,6 +28,7 @@ angular.module('blake').controller('PreviewController', function (
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
             id: "example",
+            toolbar: "toolbar",
             prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
             tileSources:   {
                 type: 'image',
