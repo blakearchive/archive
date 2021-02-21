@@ -29,8 +29,9 @@
                         
 
                            <!-- <div style="height:95%;padding-left:0px;width:100%;margin-top:13px" class="item" ng-repeat="i in previewCtrl.images track by $index" id="item-{{$index}}"> -->
+                            <span>
                             <div id="toolbar" style="z-index:9999999;margin-top:1%"></div>
-                             <div id="fullscreen" style="height:95%;padding-left:0px;width:100%;margin-top:13px" class="item">
+                             <div style="height:95%;padding-left:0px;width:100%;margin-top:13px" class="item">
                                 
                                 <div class="reading-wrapper" ng-style="{'filter':'contrast('+mycontrast+'%)'}" style="height:96%;margin-left:0px" breakpoint="768" id="example">
                                     
@@ -54,13 +55,13 @@
                                   
                                     
                                 </div>
-                                <div style="width:20%; position:relative;margin:auto; margin-bottom:0%; z-index:99999;background:none;border:#1d1d1d;" class="contrast-slider" range-slider min="0" max="200" show-values="false" model-max="mycontrast" pin-handle="min" step="5" attach-handle-values="true"></div>
+                                <div style="width:20%; position:relative;margin:auto; margin-bottom:0%; z-index:99999;background:none;border:#1d1d1d;" class="contrast-slider" range-slider min="0" max="200" show-values="false" model-max="mycontrast" pin-handle="min" step="5" attach-handle-values="true"></div></span>
 
                                     <div ng-style="{'filter':'contrast('+mycontrastForMenu+'%)'}" style="display:grid;align-content:center;"><span style="float:right;margin:auto"><a style="color:#e3b838;" scroll-to-top href="" ng-click="$root.showOverlayCopyInfoForPreview = true">Work Information</a> <span style="color:#e3b838;">|</span> <span ng-mouseover="previewCtrl.showEditorsNotes = true" ng-mouseleave="previewCtrl.showEditorsNotes = false" style="color:#e3b838;">Editors' Notes</span>
                                     <span style="color:#e3b838;">|</span>
                                     <a style="color:#e3b838;" scroll-to-top href="" ng-click="previewCtrl.addToLightBox()">Add to Lightbox</a>
                                     <span style="color:#e3b838;">|</span>
-                                    <a style="color:#e3b838;" scroll-to-top href="javascript:openFullscreen('You clicked!')">Full Screen</a>
+                                    <a style="color:#e3b838;" scroll-to-top href="javascript:openFullscreen()">Full Screen</a>
 
                                 </span></div>
                                 
