@@ -90,7 +90,6 @@ var elem = document.getElementById("fullscreen");
 /* When the openFullscreen() function is executed, open the video in fullscreen.
 Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
 function openFullscreen() {
-  var elem = document.getElementById("fullscreen"); 
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
   } else if (elem.webkitRequestFullscreen) { /* Safari */
@@ -99,16 +98,4 @@ function openFullscreen() {
     elem.msRequestFullscreen();
   }
 }
-
-document.addEventListener('fullscreenchange', exitHandler);
-document.addEventListener('webkitfullscreenchange', exitHandler);
-document.addEventListener('mozfullscreenchange', exitHandler);
-document.addEventListener('MSFullscreenChange', exitHandler);
-
-function exitHandler() {
-    if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
-        ///fire your event
-        document.getElementById("menubar").style.display = "none";
-    }
-}  
 </script>
