@@ -86,10 +86,11 @@
 <script>
 /* Get the element you want displayed in fullscreen mode (a video in this example): */
 var elem = document.getElementById("compare");
-
+let box = document.querySelector('compare');
 /* When the openFullscreen() function is executed, open the video in fullscreen.
 Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
 function openFullscreen() {
+    elem.style.height = "100vh"
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
   } else if (elem.webkitRequestFullscreen) { /* Safari */
@@ -98,4 +99,16 @@ function openFullscreen() {
     elem.msRequestFullscreen();
   }
 }
+
+document.addEventListener('fullscreenchange', exitHandler);
+document.addEventListener('webkitfullscreenchange', exitHandler);
+document.addEventListener('mozfullscreenchange', exitHandler);
+document.addEventListener('MSFullscreenChange', exitHandler);
+
+function exitHandler() {
+    if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+        ///fire your event
+        elem.style.height = box.offsetHeight;
+    }
+}  
 </script>
