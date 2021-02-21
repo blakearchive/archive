@@ -1,21 +1,4 @@
-<div id="OverlayCopyInfo" class="overlay" ng-show="$root.showOverlayCopyInfoForPreview == true">
-    <a style="text-decoration: none" href="" class="closebtnleft" ng-click="$root.showOverlayCopyInfoForPreview = false">&times;</a>
-    <header class="page-header">
-      <p class="subhead">WORK INFORMATION</p>
-      <h1 style="color:rgba(233,188,71,1)">{{ previewCtrl.bds.copy.title }} (Composed {{ previewCtrl.bds.copy.composition_date_string }})</h1>
-    </header>
-    <div id="archive-tabs" role="tabpanel">
-        <div class="container-fluid overlaycopyinfo">
-          <div class="container">
-            <div class="tab-content">
-              <div role="tabpanel" class="fadeinout tab-pane active in">
-              <copy-information copy="previewCtrl.bds.copy" object=""></copy-information>
-              </div>
-            </div>
-          </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="scrollbar">
     <div style="width:-webkit-fill-available;background:#222" id="compare" class="featured-object">
@@ -41,6 +24,25 @@
                                     <a style="color:#e3b838;" scroll-to-top href="" ng-click="previewCtrl.addToLightBox()">Add to Lightbox</a>
                                     <span style="color:#e3b838;">|</span>
                                     <a style="color:#e3b838;" scroll-to-top href="javascript:openFullscreen();">Full Screen</a>
+
+                                    <div id="OverlayCopyInfo" class="overlay" ng-show="$root.showOverlayCopyInfoForPreview == true">
+    <a style="text-decoration: none" href="" class="closebtnleft" ng-click="$root.showOverlayCopyInfoForPreview = false">&times;</a>
+    <header class="page-header">
+      <p class="subhead">WORK INFORMATION</p>
+      <h1 style="color:rgba(233,188,71,1)">{{ previewCtrl.bds.copy.title }} (Composed {{ previewCtrl.bds.copy.composition_date_string }})</h1>
+    </header>
+    <div id="archive-tabs" role="tabpanel">
+        <div class="container-fluid overlaycopyinfo">
+          <div class="container">
+            <div class="tab-content">
+              <div role="tabpanel" class="fadeinout tab-pane active in">
+              <copy-information copy="previewCtrl.bds.copy" object=""></copy-information>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
 
                                 </span></div>
                                     
@@ -100,13 +102,7 @@ function openFullscreen() {
     elem.msRequestFullscreen();
   }
 
-  if (overlay.requestFullscreen) {
-    overlay.requestFullscreen();
-  } else if (overlay.webkitRequestFullscreen) { /* Safari */
-    overlay.webkitRequestFullscreen();
-  } else if (overlay.msRequestFullscreen) { /* IE11 */
-    overlay.msRequestFullscreen();
-  }
+  
 }
 /*
 document.addEventListener('fullscreenchange', exitHandler);
