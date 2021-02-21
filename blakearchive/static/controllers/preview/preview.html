@@ -57,7 +57,7 @@
                                 </div>
                                 <div style="width:20%; position:relative;margin:auto; margin-bottom:0%; z-index:99999;background:none;border:#1d1d1d;" class="contrast-slider" range-slider min="0" max="200" show-values="false" model-max="mycontrast" pin-handle="min" step="5" attach-handle-values="true"></div></span>
 
-                                    <div id="menubar" ng-style="{'filter':'contrast('+mycontrastForMenu+'%)'}" style="display:grid;align-content:center;"><span style="float:right;margin:auto"><a style="color:#e3b838;" scroll-to-top href="" ng-click="$root.showOverlayCopyInfoForPreview = true">Work Information</a> <span style="color:#e3b838;">|</span> <span ng-mouseover="previewCtrl.showEditorsNotes = true" ng-mouseleave="previewCtrl.showEditorsNotes = false" style="color:#e3b838;">Editors' Notes</span>
+                                    <div ng-style="{'filter':'contrast('+mycontrastForMenu+'%)'}" style="display:grid;align-content:center;"><span style="float:right;margin:auto"><a style="color:#e3b838;" scroll-to-top href="" ng-click="$root.showOverlayCopyInfoForPreview = true">Work Information</a> <span style="color:#e3b838;">|</span> <span ng-mouseover="previewCtrl.showEditorsNotes = true" ng-mouseleave="previewCtrl.showEditorsNotes = false" style="color:#e3b838;">Editors' Notes</span>
                                     <span style="color:#e3b838;">|</span>
                                     <a style="color:#e3b838;" scroll-to-top href="" ng-click="previewCtrl.addToLightBox()">Add to Lightbox</a>
                                     <span style="color:#e3b838;">|</span>
@@ -98,7 +98,6 @@ var elem = document.getElementById("fullscreen");
 /* When the openFullscreen() function is executed, open the video in fullscreen.
 Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
 function openFullscreen() {
-  document.getElementById("menubar").style.display = "none";
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
   } else if (elem.webkitRequestFullscreen) { /* Safari */
@@ -107,14 +106,4 @@ function openFullscreen() {
     elem.msRequestFullscreen();
   }
 }
-
-function closeFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) { /* Safari */
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) { /* IE11 */
-    document.msExitFullscreen();
-  }
-} 
 </script>
