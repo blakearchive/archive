@@ -39,15 +39,6 @@
                                    
                                     <div style="width:20%; position:relative;margin:auto; margin-bottom:0%; z-index:999;background:none;border:#1d1d1d;" class="contrast-slider" range-slider min="0" max="200" show-values="false" model-max="mycontrast" pin-handle="min" step="5" attach-handle-values="true"></div> 
 
-                                    <div ng-style="{'filter':'contrast('+mycontrastForMenu+'%)'}" style="display:grid;align-content:center;"><span style="float:right;margin:auto"><a style="color:#e3b838;" scroll-to-top href="" ng-click="$root.showOverlayCopyInfoForPreview = true">Work Information</a> <span style="color:#e3b838;">|</span> <span ng-mouseover="previewCtrl.showEditorsNotes = true" ng-mouseleave="previewCtrl.showEditorsNotes = false" style="color:#e3b838;">Editors' Notes</span>
-                                    <span style="color:#e3b838;">|</span>
-                                    <a style="color:#e3b838;" scroll-to-top href="" ng-click="previewCtrl.addToLightBox()">Add to Lightbox</a>
-                                    <span style="color:#e3b838;">|</span>
-                                    <a style="color:#e3b838;" scroll-to-top href="javascript:toggleFullscreen();">Toggle Full Screen</a>
-
-                                    
-
-                                </span></div>
                                     
                                     <!--<div ng-show="previewCtrl.showEditorsNotes" style="height:500px;width:500px;z-index:999999"><editor-notes object="previewCtrl.bds.copyObjects[0]"></editor-notes></div>-->
                                     <!--<script type="text/javascript">
@@ -64,7 +55,16 @@
                                   
                                     
                                 </div>
-                                
+                                <div ng-style="{'filter':'contrast('+mycontrastForMenu+'%)'}" style="display:grid;align-content:center;"><span style="float:right;margin:auto"><a style="color:#e3b838;" scroll-to-top href="" ng-click="$root.showOverlayCopyInfoForPreview = true">Work Information</a> <span style="color:#e3b838;">|</span> <span ng-mouseover="previewCtrl.showEditorsNotes = true" ng-mouseleave="previewCtrl.showEditorsNotes = false" style="color:#e3b838;">Editors' Notes</span>
+                                    <span style="color:#e3b838;">|</span>
+                                    <a style="color:#e3b838;" scroll-to-top href="" ng-click="previewCtrl.addToLightBox()">Add to Lightbox</a>
+                                    <span style="color:#e3b838;">|</span>
+                                    <a style="color:#e3b838;" scroll-to-top href="javascript:toggleFullscreen();">Toggle Full Screen</a>
+
+                                    
+
+                                </span></div>
+                                    
                                 
                                 
                                 
