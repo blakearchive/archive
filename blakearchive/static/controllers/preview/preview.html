@@ -109,6 +109,7 @@ function openFullscreen() {
 }
 
 function closeFullscreen() {
+  document.getElementById("menubar").style.display = "block";
   if (document.exitFullscreen) {
     document.exitFullscreen();
   } else if (document.webkitExitFullscreen) { /* Safari */
