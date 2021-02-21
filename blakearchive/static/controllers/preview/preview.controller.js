@@ -83,6 +83,15 @@ angular.module('blake').controller('PreviewController', function (
 
     }
 
+    vm.toggleEditorsNotes = function(){
+        if(vm.showEditorsNotes == true) {
+            vm.showEditorsNotes = false;
+        }
+        else {
+            vm.showEditorsNotes = true;
+        }
+    }
+
     vm.addToLightBox = function(){
       //console.log("===> adding: "+JSON.stringify(vm.bds.object));
       var item = {};
