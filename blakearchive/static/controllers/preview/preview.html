@@ -24,7 +24,7 @@
                         
 
                            <!-- <div style="height:95%;padding-left:0px;width:100%;margin-top:13px" class="item" ng-repeat="i in previewCtrl.images track by $index" id="item-{{$index}}"> -->
-                            <div id="toolbar" style="z-index:9999999;margin-top:1%"></div>
+                            <div id="toolbar" style="z-index:999;margin-top:1%"></div>
                              
                                 
                                 <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" ng-style="{'filter':'contrast('+mycontrast+'%)'}" style="height:96%;margin-left:0px" breakpoint="768" id="example">
@@ -33,6 +33,8 @@
                                     <!--<img ng-if="i.dbi != ''" magnify-image-preview ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">-->
                                     
                                     <seadragon style="height:95%" id="seadragon" ng-if="previewCtrl.optionsSet" options="previewCtrl.options"/>
+
+                                    <div style="width:20%; position:relative;margin:auto; margin-bottom:0%; z-index:99999;background:none;border:#1d1d1d;" class="contrast-slider" range-slider min="0" max="200" show-values="false" model-max="mycontrast" pin-handle="min" step="5" attach-handle-values="true"></div>
 
                                     
                                     
@@ -71,14 +73,14 @@
                         </div>
                     </div>
                     
-<div style="width:20%; position:relative;margin:auto; margin-bottom:0%; z-index:99999;background:none;border:#1d1d1d;" class="contrast-slider" range-slider min="0" max="200" show-values="false" model-max="mycontrast" pin-handle="min" step="5" attach-handle-values="true"></div>
+
 
                                     <div ng-style="{'filter':'contrast('+mycontrastForMenu+'%)'}" style="display:grid;align-content:center;"><span style="float:right;margin:auto"><a style="color:#e3b838;" scroll-to-top href="" ng-click="$root.showOverlayCopyInfoForPreview = true">Work Information</a> <span style="color:#e3b838;">|</span> <span ng-mouseover="previewCtrl.showEditorsNotes = true" ng-mouseleave="previewCtrl.showEditorsNotes = false" style="color:#e3b838;">Editors' Notes</span>
                                     <span style="color:#e3b838;">|</span>
                                     <a style="color:#e3b838;" scroll-to-top href="" ng-click="previewCtrl.addToLightBox()">Add to Lightbox</a>
 
                                 </span></div>
-<!--
+
 <script>
 /* Get the element you want displayed in fullscreen mode (a video in this example): */
 var elem = document.getElementById("fullscreen");
@@ -86,7 +88,7 @@ var elem = document.getElementById("fullscreen");
 /* When the openFullscreen() function is executed, open the video in fullscreen.
 Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
 function openFullscreen() {
-  document.getElementById("menubar").style.display = "none";
+  document.getElementById("menubar").style.display = "block";
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
   } else if (elem.webkitRequestFullscreen) { /* Safari */
@@ -95,7 +97,7 @@ function openFullscreen() {
     elem.msRequestFullscreen();
   }
 }
-/*
+
 document.addEventListener('fullscreenchange', exitHandler);
 document.addEventListener('webkitfullscreenchange', exitHandler);
 document.addEventListener('mozfullscreenchange', exitHandler);
@@ -104,8 +106,7 @@ document.addEventListener('MSFullscreenChange', exitHandler);
 function exitHandler() {
     if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
         ///fire your event
-        document.getElementById("menubar").style.display = "block";
+        document.getElementById("menubar").style.display = "none";
     }
-}  */
+}  
 </script>
--->
