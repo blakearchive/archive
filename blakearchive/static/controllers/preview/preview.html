@@ -27,14 +27,14 @@
                             <div id="toolbar" style="z-index:999;margin-top:1%"></div>
                              
                                 
-                                <div class="reading-wrapper" auto-height adjust="150" breakpoint="768" ng-style="{'filter':'contrast('+mycontrast+'%)'}" style="height:96%;margin-left:0px" breakpoint="768" id="example">
+                                <div class="reading-wrapper" auto-height breakpoint="768" ng-style="{'filter':'contrast('+mycontrast+'%)'}" style="height:96%;margin-left:0px" breakpoint="768" id="example">
                                     
                                     <!--This works, but <seadragon> doesn't-->
                                     <!--<img ng-if="i.dbi != ''" magnify-image-preview ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">-->
                                     
                                     <seadragon style="height:95%" id="seadragon" ng-if="previewCtrl.optionsSet" options="previewCtrl.options"/>
 
-                                    <div style="width:20%; position:relative;margin:auto; margin-bottom:0%; z-index:99999;background:none;border:#1d1d1d;" class="contrast-slider" range-slider min="0" max="200" show-values="false" model-max="mycontrast" pin-handle="min" step="5" attach-handle-values="true"></div>
+                                    <div style="width:20%; position:relative;margin:auto; margin-bottom:0%; z-index:99999;background:none;border:#1d1d1d;bottom:4%" class="contrast-slider" range-slider min="0" max="200" show-values="false" model-max="mycontrast" pin-handle="min" step="5" attach-handle-values="true"></div>
 
                                     
                                     
