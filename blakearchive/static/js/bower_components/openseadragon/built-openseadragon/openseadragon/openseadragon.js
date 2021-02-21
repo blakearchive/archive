@@ -8094,6 +8094,7 @@ $.extend( $.Viewer.prototype, $.EventSource.prototype, $.ControlDock.prototype, 
             for ( i = 0; i < nodes; i++ ) {
                 body.appendChild( this.previousBody.shift() );
             }
+            body.appendChild(document.getElement('contrast-slider'));
 
             $.removeClass( this.element, 'fullpage' );
             THIS[ this.hash ].prevElementParent.insertBefore(
