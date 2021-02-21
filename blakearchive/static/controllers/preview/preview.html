@@ -4,7 +4,24 @@
     <div style="width:-webkit-fill-available;background:#222" id="compare" class="featured-object">
         <div class="compare-inner" height:inherit;padding-bottom:6px;padding-top:0px;padding-left:0px;font-size:13px;">
                 <div class="item" style="height:100vh"> 
-                        
+                        <div id="OverlayCopyInfo" class="overlay" ng-show="$root.showOverlayCopyInfoForPreview == true">
+    <a style="text-decoration: none" href="" class="closebtnleft" ng-click="$root.showOverlayCopyInfoForPreview = false">&times;</a>
+    <header class="page-header">
+      <p class="subhead">WORK INFORMATION</p>
+      <h1 style="color:rgba(233,188,71,1)">{{ previewCtrl.bds.copy.title }} (Composed {{ previewCtrl.bds.copy.composition_date_string }})</h1>
+    </header>
+    <div id="archive-tabs" role="tabpanel">
+        <div class="container-fluid overlaycopyinfo">
+          <div class="container">
+            <div class="tab-content">
+              <div role="tabpanel" class="fadeinout tab-pane active in">
+              <copy-information copy="previewCtrl.bds.copy" object=""></copy-information>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
 
                            <!-- <div style="height:95%;padding-left:0px;width:100%;margin-top:13px" class="item" ng-repeat="i in previewCtrl.images track by $index" id="item-{{$index}}"> -->
                             <div id="toolbar" style="z-index:999;margin-top:1%"></div>
@@ -25,24 +42,7 @@
                                     <span style="color:#e3b838;">|</span>
                                     <a style="color:#e3b838;" scroll-to-top href="javascript:openFullscreen();">Full Screen</a>
 
-                                    <div id="OverlayCopyInfo" class="overlay" ng-show="$root.showOverlayCopyInfoForPreview == true">
-    <a style="text-decoration: none" href="" class="closebtnleft" ng-click="$root.showOverlayCopyInfoForPreview = false">&times;</a>
-    <header class="page-header">
-      <p class="subhead">WORK INFORMATION</p>
-      <h1 style="color:rgba(233,188,71,1)">{{ previewCtrl.bds.copy.title }} (Composed {{ previewCtrl.bds.copy.composition_date_string }})</h1>
-    </header>
-    <div id="archive-tabs" role="tabpanel">
-        <div class="container-fluid overlaycopyinfo">
-          <div class="container">
-            <div class="tab-content">
-              <div role="tabpanel" class="fadeinout tab-pane active in">
-              <copy-information copy="previewCtrl.bds.copy" object=""></copy-information>
-              </div>
-            </div>
-          </div>
-        </div>
-    </div>
-</div>
+                                    
 
                                 </span></div>
                                     
