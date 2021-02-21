@@ -1,41 +1,37 @@
 <div id="OverlayCopyInfo" class="overlay" ng-show="$root.showOverlayCopyInfoForPreview == true">
     <a style="text-decoration: none" href="" class="closebtnleft" ng-click="$root.showOverlayCopyInfoForPreview = false">&times;</a>
     <header class="page-header">
-      <p class="subhead">WORK INFORMATION</p>
-      <h1 style="color:rgba(233,188,71,1)">{{ previewCtrl.bds.copy.title }} (Composed {{ previewCtrl.bds.copy.composition_date_string }})</h1>
+        <p class="subhead">WORK INFORMATION</p>
+        <h1 style="color:rgba(233,188,71,1)">{{ previewCtrl.bds.copy.title }} (Composed {{ previewCtrl.bds.copy.composition_date_string }})</h1>
     </header>
     <div id="archive-tabs" role="tabpanel">
         <div class="container-fluid overlaycopyinfo">
-          <div class="container">
-            <div class="tab-content">
-              <div role="tabpanel" class="fadeinout tab-pane active in">
-              <copy-information copy="previewCtrl.bds.copy" object=""></copy-information>
-              </div>
+            <div class="container">
+                <div class="tab-content">
+                    <div role="tabpanel" class="fadeinout tab-pane active in">
+                        <copy-information copy="previewCtrl.bds.copy" object=""></copy-information>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
     </div>
 </div>
-
-<div>
+<div id="archive" class="container-fluid archive-top">
+    <div id="object-container" class="row">
+        <div id="object-view" class="reading-view">
+            <div id="gallery" auto-height adjust="60" breakpoint="768" class="container-fluid" ng-style="{'margin-left':galleriesMarginLeft}">
+                
                             <div id="toolbar" style="z-index:9999999;margin-top:1%"></div>
-                             
-                                
-                                <div auto-height class="reading-wrapper" ng-style="{'filter':'contrast('+mycontrast+'%)'}" style="margin-left:0px" breakpoint="768" id="example">
-                                    
+                            <div style="height:95%;padding-left:0px;width:100%;margin-top:13px" class="item">
+                                <div class="reading-wrapper" ng-style="{'filter':'contrast('+mycontrast+'%)'}" style="height:96%;margin-left:0px" breakpoint="768" id="example">
                                     <!--This works, but <seadragon> doesn't-->
                                     <!--<img ng-if="i.dbi != ''" magnify-image-preview ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">-->
-                                    
-                                    <seadragon style="height:95%" id="seadragon" ng-if="previewCtrl.optionsSet" options="previewCtrl.options"/>
-
+                                    <seadragon style="height:95%" id="seadragon" ng-if="previewCtrl.optionsSet" options="previewCtrl.options" />
                                     <div style="width:20%; position:relative;margin:auto; margin-bottom:0%; z-index:99999;background:none;border:#1d1d1d;" class="contrast-slider" range-slider min="0" max="200" show-values="false" model-max="mycontrast" pin-handle="min" step="5" attach-handle-values="true"></div>
-
                                     <div ng-style="{'filter':'contrast('+mycontrastForMenu+'%)'}" style="display:grid;align-content:center;"><span style="float:right;margin:auto"><a style="color:#e3b838;" scroll-to-top href="" ng-click="$root.showOverlayCopyInfoForPreview = true">Work Information</a> <span style="color:#e3b838;">|</span> <span ng-mouseover="previewCtrl.showEditorsNotes = true" ng-mouseleave="previewCtrl.showEditorsNotes = false" style="color:#e3b838;">Editors' Notes</span>
-                                    <span style="color:#e3b838;">|</span>
-                                    <a style="color:#e3b838;" scroll-to-top href="" ng-click="previewCtrl.addToLightBox()">Add to Lightbox</a>
-
-                                </span></div>
-                                    
+                                            <span style="color:#e3b838;">|</span>
+                                            <a style="color:#e3b838;" scroll-to-top href="" ng-click="previewCtrl.addToLightBox()">Add to Lightbox</a>
+                                        </span></div>
                                     <!--<div ng-show="previewCtrl.showEditorsNotes" style="height:500px;width:500px;z-index:999999"><editor-notes object="previewCtrl.bds.copyObjects[0]"></editor-notes></div>-->
                                     <!--<script type="text/javascript">
             OpenSeadragon({
@@ -47,25 +43,23 @@
                 }
             });
         </script>-->
-
-                                  
-                                    
                                 </div>
-                                
-                                
-                                <span ng-show="previewCtrl.showEditorsNotes"><editor-notes style="border-radius: 25px;z-index: 9999999; position: absolute;bottom: 8%;margin-left:auto;margin-right:auto;left:0;right:0;background-color: black;width: 25%;padding-right: 5%;color: white;padding-left: 2%;padding-top: 1%;padding-bottom: 1%;" object="previewCtrl.bds.copyObjects[0]"></editor-notes></span>  
-                                
+                                <span ng-show="previewCtrl.showEditorsNotes">
+                                    <editor-notes style="border-radius: 25px;z-index: 9999999; position: absolute;bottom: 8%;margin-left:auto;margin-right:auto;left:0;right:0;background-color: black;width: 25%;padding-right: 5%;color: white;padding-left: 2%;padding-top: 1%;padding-bottom: 1%;" object="previewCtrl.bds.copyObjects[0]"></editor-notes>
+                                </span>
                                 <!--<div style="margin: 0;position: absolute;left: 50%;transform: translate(-50%, -50%);top: 97%;" class="btn-group edit-object " role="group " >
         
         <button type="button " style="height:21px;line-height:0.6;text-align:center" class="btn btn-default " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " ng-click="previewCtrl.zoom() ">
             <span class="gr-abbreviation " style="height:21px;font-size:13px; ">Magnifying Glass</span>
             <span class="gr-title "></span>
         </button>-->
-      </div>
-
-      
-
-                            
+                            </div>
+                       
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 <!--
 <script>
 /* Get the element you want displayed in fullscreen mode (a video in this example): */
