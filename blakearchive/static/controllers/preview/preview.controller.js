@@ -30,6 +30,7 @@ angular.module('blake').controller('PreviewController', function (
     vm.options = {
             id: "example",
             toolbar: "toolbar",
+            showFullPageControl: "false",
             prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
             tileSources:   {
                 type: 'image',
