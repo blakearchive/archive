@@ -1,4 +1,5 @@
-#container:-webkit-full-screen {
+::backdrop
+{
     background-color: #333333;
 }
 
