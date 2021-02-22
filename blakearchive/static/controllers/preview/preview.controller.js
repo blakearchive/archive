@@ -19,7 +19,7 @@ angular.module('blake').controller('PreviewController', function (
     //$rootScope.galleriesMarginLeft = '33%';
     $rootScope.zoom = false;
     var optionsSet = false;
-    var showEditorsNotes = true;
+    var showEditorsNotes = false;
     var imageLoader = true;
     vm.wts = worktitleService;
     vm.rs = $rootScope;
