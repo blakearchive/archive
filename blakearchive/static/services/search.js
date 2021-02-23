@@ -513,6 +513,15 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                 return string;
         }
     };
+
+    s.getCopyOrPreview = function () {
+        let work = resultTree[s.selectedWork][0];
+        if (work.image == "preview") {
+            return "preview";
+        }
+        else {return "copy";}
+               
+    }
     
     s.getPreviewHref = function (tree, resultTree) {
         try {
