@@ -5,7 +5,7 @@
     width: 15%;color: white;
     padding: 10px;
     font-size: 11px;
-    bottom:125%;
+    bottom:130%;
 }
 
 .editorsnotesInPreview:after {
@@ -17,7 +17,7 @@
     content:'';
     width: 0;
     height: 0;
-    border-top: solid 10px #e15915;
+    border-top: solid 10px black;
     border-left: solid 10px transparent;
     border-right: solid 10px transparent;
 }
