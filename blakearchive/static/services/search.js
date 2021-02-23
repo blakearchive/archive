@@ -514,7 +514,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
         }
     };
 
-    s.getCopyOrPreview = function () {
+    s.getCopyOrPreview = function (tree, resultTree) {
         let work = resultTree[s.selectedWork][0];
         if (work.image == "preview") {
             return "preview";
