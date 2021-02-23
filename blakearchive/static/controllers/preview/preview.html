@@ -1,7 +1,7 @@
 <div class="scrollbar">
     <div style="width:-webkit-fill-available;background:#222" id="compare" class="featured-object">
         <div class="compare-inner" height:inherit;padding-bottom:6px;padding-top:0px;padding-left:0px;font-size:13px;">
-            <div class="item" auto-height adjust="120" breakpoint="768">
+            <div class="item" style="height:100vh">
                 <div id="OverlayCopyInfo" class="overlay" ng-show="$root.showOverlayCopyInfoForPreview == true">
                     <a style="text-decoration: none" class="closebtnleft" ng-click="$root.showOverlayCopyInfoForPreview = false">&times;</a>
                     <header class="page-header">
@@ -27,7 +27,7 @@
                 
                 
                 
-                <div id="reading-wrapper" class="reading-wrapper" ng-style="{'filter':'brightness('+mycontrast+'%)'}" style="height:94%;margin-left:0px" breakpoint="768" id="example">
+                <div class="reading-wrapper" auto-height adjust="120" breakpoint="768" ng-style="{'filter':'brightness('+mycontrast+'%)'}" style="height:96%;margin-left:0px" breakpoint="768" id="example">
                     
                     <!--This works, but <seadragon> doesn't-->
                     <!--<img ng-if="i.dbi != ''" magnify-image-preview ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">-->
