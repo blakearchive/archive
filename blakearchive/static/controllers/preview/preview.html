@@ -1,135 +1,116 @@
-
-
 <div class="scrollbar">
     <div style="width:-webkit-fill-available;background:#222" id="compare" class="featured-object">
         <div class="compare-inner" height:inherit;padding-bottom:6px;padding-top:0px;padding-left:0px;font-size:13px;">
-                <div class="item" style="height:100vh"> 
-                        <div id="OverlayCopyInfo" class="overlay" ng-show="$root.showOverlayCopyInfoForPreview == true">
-    <a style="text-decoration: none" class="closebtnleft" ng-click="$root.showOverlayCopyInfoForPreview = false">&times;</a>
-    <header class="page-header">
-      <p class="subhead">WORK INFORMATION</p>
-      <h1 style="color:rgba(233,188,71,1)">{{ previewCtrl.bds.copy.title }} (Composed {{ previewCtrl.bds.copy.composition_date_string }})</h1>
-    </header>
-    <div id="archive-tabs" role="tabpanel">
-        <div class="container-fluid overlaycopyinfo">
-          <div class="container">
-            <div class="tab-content">
-              <div role="tabpanel" class="fadeinout tab-pane active in">
-              <copy-information copy="previewCtrl.bds.copy" object=""></copy-information>
-              </div>
+            <div class="item" style="height:100vh">
+                <div id="OverlayCopyInfo" class="overlay" ng-show="$root.showOverlayCopyInfoForPreview == true">
+                    <a style="text-decoration: none" class="closebtnleft" ng-click="$root.showOverlayCopyInfoForPreview = false">&times;</a>
+                    <header class="page-header">
+                        <p class="subhead">WORK INFORMATION</p>
+                        <h1 style="color:rgba(233,188,71,1)">{{ previewCtrl.bds.copy.title }} (Composed {{ previewCtrl.bds.copy.composition_date_string }})</h1>
+                    </header>
+                    <div id="archive-tabs" role="tabpanel">
+                        <div class="container-fluid overlaycopyinfo">
+                            <div class="container">
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="fadeinout tab-pane active in">
+                                        <copy-information copy="previewCtrl.bds.copy" object=""></copy-information>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div style="height:95%;padding-left:0px;width:100%;margin-top:13px" class="item" ng-repeat="i in previewCtrl.images track by $index" id="item-{{$index}}"> -->
+                <div id="toolbar" style="z-index:999;margin-top:1%"></div>
+                <div style="width:20%; position:relative;margin:auto; margin-bottom:0%; z-index:999;background:none;border:#1d1d1d;" class="contrast-slider" range-slider min="0" max="200" show-values="false" model-max="mycontrast" pin-handle="min" step="5" attach-handle-values="true"></div>
+                
+                
+                
+                
+                <div id="reading-wrapper" class="reading-wrapper" auto-height adjust="120" breakpoint="768" ng-style="{'filter':'brightness('+mycontrast+'%)'}" style="height:96%;margin-left:0px" breakpoint="768" id="example">
+                    
+                    <!--This works, but <seadragon> doesn't-->
+                    <!--<img ng-if="i.dbi != ''" magnify-image-preview ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">-->
+                    
+                    <seadragon id="seadragon" ng-if="previewCtrl.optionsSet" options="previewCtrl.options"/>
+                    
+                    
+                    
+                    
+                    
+                    <!--<div ng-show="previewCtrl.showEditorsNotes" style="height:500px;width:500px;z-index:999999"><editor-notes object="previewCtrl.bds.copyObjects[0]"></editor-notes></div>-->
+                    <!--<script type="text/javascript">
+                    OpenSeadragon({
+                    id:            "example",
+                    prefixUrl:     "http://openseadragon.github.io/openseadragon/images/",
+                    tileSources:   {
+                    type: 'image',
+                    url:  'http://london.lib.unc.edu/images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
+                    }
+                    });
+                    </script>-->
+                    
+                    
+                </div>
+                <div ng-style="{'filter':'contrast('+mycontrastForMenu+'%)'}" style="display:grid;align-content:center;"><span style="float:right;margin:auto;position:relative"><a style="color:#e3b838;" scroll-to-top href="" ng-click="$root.showOverlayCopyInfoForPreview = true">Work Information</a> <span style="color:#e3b838;">|</span> <span ng-click="previewCtrl.toggleEditorsNotes()" style="color:#e3b838;">Editors' Notes</span>
+                <div class="editorsnotesInPreview" ng-show="previewCtrl.showEditorsNotes">
+                    <a style="color:white;font-size:25px;float:right;margin-top:-9px" class="closebtnright" ng-click="previewCtrl.showEditorsNotes = false">&times;</a>
+                    <editor-notes object="previewCtrl.bds.copyObjects[0]">
+                    </editor-notes>
+                    
+                </div>
+                <span style="color:#e3b838;">|</span>
+                <a style="color:#e3b838;" scroll-to-top href="" ng-click="previewCtrl.addToLightBox()">Add to Lightbox</a>
+                <span style="color:#e3b838;">|</span>
+                <a style="color:#e3b838;" scroll-to-top href="javascript:toggleFullscreen();">Enter/Exit Full Screen</a>
+                
+            </span></div>
+            
+            
+            
+            
+            <!--<div style="margin: 0;position: absolute;left: 50%;transform: translate(-50%, -50%);top: 97%;" class="btn-group edit-object " role="group " >
+                
+                <button type="button " style="height:21px;line-height:0.6;text-align:center" class="btn btn-default " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " ng-click="previewCtrl.zoom() ">
+                <span class="gr-abbreviation " style="height:21px;font-size:13px; ">Magnifying Glass</span>
+                <span class="gr-title "></span>
+                </button>-->
             </div>
-          </div>
+            
         </div>
+        
+        
     </div>
 </div>
 
-                           <!-- <div style="height:95%;padding-left:0px;width:100%;margin-top:13px" class="item" ng-repeat="i in previewCtrl.images track by $index" id="item-{{$index}}"> -->
-                            <div id="toolbar" style="z-index:999;margin-top:1%"></div>
-
-                            <div style="width:20%; position:relative;margin:auto; margin-bottom:0%; z-index:999;background:none;border:#1d1d1d;" class="contrast-slider" range-slider min="0" max="200" show-values="false" model-max="mycontrast" pin-handle="min" step="5" attach-handle-values="true"></div> 
-                            
-                        
-                            
-                                
-                                <div class="reading-wrapper" auto-height adjust="120" breakpoint="768" ng-style="{'filter':'brightness('+mycontrast+'%)'}" style="height:96%;margin-left:0px" breakpoint="768" id="example">
-                                    
-                                    <!--This works, but <seadragon> doesn't-->
-                                    <!--<img ng-if="i.dbi != ''" magnify-image-preview ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">-->
-                                    
-                                        <seadragon id="seadragon" ng-if="previewCtrl.optionsSet" options="previewCtrl.options"/>
-                                   
-                                     
-                                   
-                                    
-
-                                    
-                                    <!--<div ng-show="previewCtrl.showEditorsNotes" style="height:500px;width:500px;z-index:999999"><editor-notes object="previewCtrl.bds.copyObjects[0]"></editor-notes></div>-->
-                                    <!--<script type="text/javascript">
-            OpenSeadragon({
-                id:            "example",
-                prefixUrl:     "http://openseadragon.github.io/openseadragon/images/",
-                tileSources:   {
-                    type: 'image',
-                    url:  'http://london.lib.unc.edu/images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
-                }
-            });
-        </script>-->
-
-                                  
-                                    
-                                </div>
-                                <div ng-style="{'filter':'contrast('+mycontrastForMenu+'%)'}" style="display:grid;align-content:center;"><span style="float:right;margin:auto;position:relative"><a style="color:#e3b838;" scroll-to-top href="" ng-click="$root.showOverlayCopyInfoForPreview = true">Work Information</a> <span style="color:#e3b838;">|</span> <span ng-click="previewCtrl.toggleEditorsNotes()" style="color:#e3b838;">Editors' Notes</span>
-
-                                    <div class="editorsnotesInPreview" ng-show="previewCtrl.showEditorsNotes">
-                                <a style="color:white;font-size:25px;float:right;margin-top:-9px" class="closebtnright" ng-click="previewCtrl.showEditorsNotes = false">&times;</a>
-                                <editor-notes object="previewCtrl.bds.copyObjects[0]">
-                            </editor-notes>
-                            
-                        </div>
-
-                                    <span style="color:#e3b838;">|</span>
-                                    <a style="color:#e3b838;" scroll-to-top href="" ng-click="previewCtrl.addToLightBox()">Add to Lightbox</a>
-                                    <span style="color:#e3b838;">|</span>
-                                    <a style="color:#e3b838;" scroll-to-top href="javascript:toggleFullscreen();">Enter/Exit Full Screen</a>
-
-                                    
-
-                                </span></div>
-                                    
-                                
-                                
-                                
-                                <!--<div style="margin: 0;position: absolute;left: 50%;transform: translate(-50%, -50%);top: 97%;" class="btn-group edit-object " role="group " >
-        
-        <button type="button " style="height:21px;line-height:0.6;text-align:center" class="btn btn-default " ng-class="{ 'hover':zoom==true, 'inactive':zoom==false} " ng-click="previewCtrl.zoom() ">
-            <span class="gr-abbreviation " style="height:21px;font-size:13px; ">Magnifying Glass</span>
-            <span class="gr-title "></span>
-        </button>-->
-      </div>
-      
-
-                            </div>
-
-                            
-      
-                        </div>
-                    </div>
-                    
-
-
-                                    
 
 <script>
 /* Get the element you want displayed in fullscreen mode (a video in this example): */
 var elem = document.getElementById("compare");
 var overlay = document.getElementById("OverlayCopyInfo");
+var readingwrapper = document.getElementById("reading-wrapper");
 //let box = document.querySelector('compare');
 /* When the openFullscreen() function is executed, open the video in fullscreen.
 Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
 function toggleFullscreen(event) {
-  var element = document.getElementById("compare");
-
+    var element = document.getElementById("compare");
     if (event instanceof HTMLElement) {
         element = event;
     }
-
-    var isFullscreen = document.webkitIsFullScreen || document.mozFullScreen || false;
-
-    element.requestFullScreen = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || function () { return false; };
-    document.cancelFullScreen = document.cancelFullScreen || document.webkitCancelFullScreen || document.mozCancelFullScreen || function () { return false; };
-
-    isFullscreen ? document.cancelFullScreen() : element.requestFullScreen();
+var isFullscreen = document.webkitIsFullScreen || document.mozFullScreen || false;
+element.requestFullScreen = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || function () { readingwrapper.style.height = "94%"; return false; };
+document.cancelFullScreen = document.cancelFullScreen || document.webkitCancelFullScreen || document.mozCancelFullScreen || function () { return false; };
+isFullscreen ? document.cancelFullScreen() : element.requestFullScreen();
 }
 /*
 document.addEventListener('fullscreenchange', exitHandler);
 document.addEventListener('webkitfullscreenchange', exitHandler);
 document.addEventListener('mozfullscreenchange', exitHandler);
 document.addEventListener('MSFullscreenChange', exitHandler);
-
 function exitHandler() {
-    if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
-        ///fire your event
-        //elem.style.height = box.offsetHeight;
-    }
+if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+///fire your event
+//elem.style.height = box.offsetHeight;
+}
 } */
 </script>
