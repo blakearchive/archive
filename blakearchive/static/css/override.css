@@ -1,3 +1,7 @@
+.reading-wrapper:fullscreen {
+    height:94vh;
+}
+
 .editorsnotesInPreview {
     z-index: 999;
     position: absolute;
