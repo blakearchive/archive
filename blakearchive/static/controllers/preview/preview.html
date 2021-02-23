@@ -30,9 +30,10 @@
                             
                         
                             <div ng-show="previewCtrl.showEditorsNotes" style="z-index: 999;position: absolute;background-color: black;width: 15%;color: white;padding: 10px;font-size: 11px;left:50%;margin:auto;top:50%;transform: translateX(-50%);" >
+                                <a style="color:white;font-size:25px;float:right;margin-top:-3px" class="closebtnright" ng-click="previewCtrl.showEditorsNotes = false">&times;</a>
                                 <editor-notes object="previewCtrl.bds.copyObjects[0]">
                             </editor-notes>
-                            <a style="color:white;font-size:25px;float:right;margin-top:-3px" class="closebtnright" ng-click="previewCtrl.showEditorsNotes = false">&times;</a>
+                            
                         </div>
                                 
                                 <div class="reading-wrapper" auto-height adjust="120" breakpoint="768" ng-style="{'filter':'brightness('+mycontrast+'%)'}" style="height:96%;margin-left:0px" breakpoint="768" id="example">
