@@ -27,7 +27,7 @@
                 
                 
                 
-                <div id="readingwrapper" class="reading-wrapper" auto-height adjust="120" breakpoint="768" ng-style="{'filter':'brightness('+mycontrast+'%)'}" style="height:96%;margin-left:0px" breakpoint="768" id="example">
+                <div class="reading-wrapper" auto-height adjust="120" breakpoint="768" ng-style="{'filter':'brightness('+mycontrast+'%)'}" style="height:96%;margin-left:0px" breakpoint="768" id="example">
                     
                     <!--This works, but <seadragon> doesn't-->
                     <!--<img ng-if="i.dbi != ''" magnify-image-preview ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">-->
@@ -93,13 +93,12 @@ var overlay = document.getElementById("OverlayCopyInfo");
 Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
 function toggleFullscreen(event) {
 var element = document.getElementById("compare");
-var readingwrapper = document.getElementById("readingwrapper");
 if (event instanceof HTMLElement) {
 element = event;
 }
 var isFullscreen = document.webkitIsFullScreen || document.mozFullScreen || false;
-element.requestFullScreen = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || function () { readingwrapper.setAttribute(adjust, "0"); return false; };
-document.cancelFullScreen = document.cancelFullScreen || document.webkitCancelFullScreen || document.mozCancelFullScreen || function () { readingwrapper.setAttribute(adjust, "120"); return false; };
+element.requestFullScreen = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || function () { return false; };
+document.cancelFullScreen = document.cancelFullScreen || document.webkitCancelFullScreen || document.mozCancelFullScreen || function () { return false; };
 isFullscreen ? document.cancelFullScreen() : element.requestFullScreen();
 }
 /*
