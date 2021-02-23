@@ -29,11 +29,11 @@
                             <div style="width:20%; position:relative;margin:auto; margin-bottom:0%; z-index:999;background:none;border:#1d1d1d;" class="contrast-slider" range-slider min="0" max="200" show-values="false" model-max="mycontrast" pin-handle="min" step="5" attach-handle-values="true"></div> 
                             
                         
-                            <span ng-show="previewCtrl.showEditorsNotes">
-                                <editor-notes style="z-index: 999;position: absolute;background-color: black;width: 15%;color: white;padding: 10px;font-size: 11px;left:50%;margin:auto;top:50%" object="previewCtrl.bds.copyObjects[0]">
-                                <a style="color:white;font-size:25px;float:right;margin-top:-3px" class="closebtnright" ng-click="previewCtrl.showEditorsNotes = false">&times;</a>
+                            <div ng-show="previewCtrl.showEditorsNotes" style="z-index: 999;position: absolute;background-color: black;width: 15%;color: white;padding: 10px;font-size: 11px;left:50%;margin:auto;top:50%;transform: translateX(-50%);" >
+                                <editor-notes object="previewCtrl.bds.copyObjects[0]">
                             </editor-notes>
-                        </span>
+                            <a style="color:white;font-size:25px;float:right;margin-top:-3px" class="closebtnright" ng-click="previewCtrl.showEditorsNotes = false">&times;</a>
+                        </div>
                                 
                                 <div class="reading-wrapper" auto-height adjust="120" breakpoint="768" ng-style="{'filter':'brightness('+mycontrast+'%)'}" style="height:96%;margin-left:0px" breakpoint="768" id="example">
                                     
