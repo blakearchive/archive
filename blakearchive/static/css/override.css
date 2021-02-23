@@ -5,7 +5,8 @@
     width: 15%;color: white;
     padding: 10px;
     font-size: 11px;
-    bottom:130%;
+    bottom:150%;
+    margin-left:38px;
 }
 
 .editorsnotesInPreview:after {
