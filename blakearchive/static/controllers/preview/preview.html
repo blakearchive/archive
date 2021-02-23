@@ -60,7 +60,7 @@
                                 </div>
                                 <div ng-style="{'filter':'contrast('+mycontrastForMenu+'%)'}" style="display:grid;align-content:center;"><span style="float:right;margin:auto"><a style="color:#e3b838;" scroll-to-top href="" ng-click="$root.showOverlayCopyInfoForPreview = true">Work Information</a> <span style="color:#e3b838;">|</span> <span ng-click="previewCtrl.toggleEditorsNotes()" style="color:#e3b838;">Editors' Notes</span>
 
-                                    <div ng-show="previewCtrl.showEditorsNotes" style="z-index: 999;position: absolute;background-color: black;width: 15%;color: white;padding: 10px;font-size: 11px;bottom:125%;">
+                                    <div class="editorsnotesInPreview" ng-show="previewCtrl.showEditorsNotes">
                                 <a style="color:white;font-size:25px;float:right;margin-top:-9px" class="closebtnright" ng-click="previewCtrl.showEditorsNotes = false">&times;</a>
                                 <editor-notes object="previewCtrl.bds.copyObjects[0]">
                             </editor-notes>
