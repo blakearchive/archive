@@ -481,12 +481,12 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                     endstring = '';
 
 
-                if(label == 'Copy/Set/Receipt Information') {
+                if(label == 'Copy/Set/Receipt/Work in Preview Information') {
                     if(results[workIndex][2].length > 1 && !results[workIndex][0].virtual){
                         string += '(' + results[workIndex][2].length+ ' Copies/Sets' + ')';
                     }
                     if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
-                        string += '(' + results[workIndex][2].length+ ' Copy/Set/Receipt' + ')';
+                        string += '(' + results[workIndex][2].length+ ' Copy/Set/Receipt/Work in Preview' + ')';
 
                     }
                     return string;
@@ -504,7 +504,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                     string += ' across '+results[workIndex][2].length+ ' Copies/Sets';
                 }
                 if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
-                    string += ' across '+results[workIndex][2].length+ ' Copy/Set/Receipt';
+                    string += ' across '+results[workIndex][2].length+ ' Copy/Set/Receipt/Work in Preview';
 
                 }
 
@@ -537,7 +537,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                     let work2 = resultTree[s.selectedWork][0];
                     if(work2.image != "preview") {
                         return 'copy/' + resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id;
-                    } else {return 'preview/' + resultTree[s.selectedWork][2].bad_id;}
+                    } else {return 'preview/' + work2.bad_id;}
             }
         } catch (e) {}
     };
