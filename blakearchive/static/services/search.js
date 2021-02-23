@@ -519,7 +519,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
             switch (tree) {
                 case 'object':
                     let work = resultTree[s.selectedWork][0],
-                        copyBad = work.virtual ? work.bad_id : resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id,
+                        copyBad = work.virtual | work.image == 'preview' ? work.bad_id : resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id,
                         descId = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].desc_id;
                     return copyBad + '?descId=' + descId;
                 case 'copy':
