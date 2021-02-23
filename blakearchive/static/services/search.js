@@ -534,6 +534,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                         return 'copy/' + copyBad + '?descId=' + descId;
                     } else {return 'preview/' + copyBad + '?descId=' + descId;}
                 case 'copy':
+                    let work = resultTree[s.selectedWork][0];
                     if(work.image != "preview") {
                         return 'copy/' + resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id;
                     } else {return 'preview/' + resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id;}
