@@ -26,7 +26,7 @@ angular.module("blake").directive('autoHeight', function (WindowSize, $rootScope
                 element.height("100%");
             }
             else {
-                setStyles(w)
+                setStyles(w);
             }
         });
     };
