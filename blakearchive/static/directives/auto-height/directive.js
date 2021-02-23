@@ -21,7 +21,13 @@ angular.module("blake").directive('autoHeight', function (WindowSize, $rootScope
 
 
         $rootScope.$on('resize::resize', function (e, w) {
-            setStyles(w)
+            var mywindow = angular.element($window);
+            if (mywindow.innerHeight == screen.height) {
+                element.height("106vh");
+            }
+            else {
+                setStyles(w)
+            }
         });
     };
     return {
