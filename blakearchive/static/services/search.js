@@ -621,13 +621,9 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                         return resultTree[workIndex][2][0][2][0][0].dbi + '.100.jpg';
                     }
                 case 'copy':
-                    
-                        return resultTree[workIndex][2][0][0].image + '.100.jpg';
-                    
+                    return resultTree[workIndex][2][0][0].image + '.100.jpg';
                 case 'work':
-                    if(resultTree[workIndex][0].image != "preview") {
-                        return resultTree[workIndex][0].image;
-                    } else { return resultTree[workIndex][2][0][2][0][0].dbi + '.100.jpg';}
+                    return resultTree[workIndex][0].image;
             }
         } catch (e) {}
     };
