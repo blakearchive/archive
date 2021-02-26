@@ -621,7 +621,6 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                         return resultTree[workIndex][2][0][2][0][0].dbi + '.100.jpg';
                     }
                 case 'copy':
-                    console.log(resultTree[workIndex][2][0][0].image);
                     return resultTree[workIndex][2][0][0].image + '.100.jpg';
                 case 'work':
                     return resultTree[workIndex][0].image;
