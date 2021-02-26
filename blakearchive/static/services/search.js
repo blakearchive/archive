@@ -623,7 +623,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                 case 'copy':
                     BlakeDataService.getPreview(resultTree[workIndex][2][0][0].bad_id).then(function (results) {
                         console.log(results);
-                    }
+                    });
                     return resultTree[workIndex][2][0][0].image + '.100.jpg';
                 case 'work':
                     return resultTree[workIndex][0].image;
