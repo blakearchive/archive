@@ -623,7 +623,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                 case 'copy':
                     if(resultTree[workIndex][0].image != "preview") {
                         return resultTree[workIndex][2][0][0].image + '.100.jpg';
-                    } else { return resultTree[workIndex][2][0][2][0][0].dbi + '.100.jpg'}
+                    } else { return resultTree[workIndex][2][0][2][0][0].dbi + '.100.jpg';}
                 case 'work':
                     return resultTree[workIndex][0].image;
             }
