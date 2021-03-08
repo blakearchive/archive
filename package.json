@@ -2,7 +2,7 @@
   "name": "BlakeArchive",
   "version": "0.1.0",
   "devDependencies": {
-    "angular": "^1.6.1",
+    "angular": "^1.8.0",
     "angular-animate": "^1.6.1",
     "angular-cookies": "^1.6.1",
     "angular-fullscreen": "^2.0.0",
