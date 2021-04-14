@@ -171,7 +171,7 @@ angular.module('blake').controller('ExhibitController', function (
     vm.scroll = function(id) {
       console.log(`scrolling to ${id}`);
       let el = document.getElementById(id);
-      el.parentNode.scrollTop = target.offsetTop;
+      el.parentNode.scrollTop = el.offsetTop;
     }
 
 //vm.images = ["1.1","1.2","1.3"];
