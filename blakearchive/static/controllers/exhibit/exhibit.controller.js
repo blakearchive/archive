@@ -170,7 +170,8 @@ angular.module('blake').controller('ExhibitController', function (
 
     vm.goToByScroll = function(id) {
       console.log('scrolling');
-      $('exhibit_article_content').animate({scrollTop: $("#"+id).offset().top},'fast');
+      var element = document.getElementById('exhibit_article_content');
+      element.animate({scrollTop: $("#"+id).offset().top},'fast');
     }
 
 //vm.images = ["1.1","1.2","1.3"];
