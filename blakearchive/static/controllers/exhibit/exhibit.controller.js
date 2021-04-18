@@ -168,7 +168,7 @@ angular.module('blake').controller('ExhibitController', function (
         console.log(target);
     }
 
-    function goToByScroll(id){
+    vm.goToByScroll = function(id) {
       $('exhibit_article_content').animate({scrollTop: $("#"+id).offset().top},'fast');
     }
 
