@@ -7,6 +7,8 @@ angular.module("blake").directive('autoHeight', function (WindowSize, $rootScope
         function setStyles (windowSize) {
             if(windowSize.width < breakpoint){
                 element.height('auto');
+            } else if (windowSize.height == screen.height && element[0].id == "previewwindow") {
+                element.height("93.4%");
             } else {
                 let newHeight = (windowSize.height - adjust);
                 if(divide){
@@ -21,7 +23,9 @@ angular.module("blake").directive('autoHeight', function (WindowSize, $rootScope
 
 
         $rootScope.$on('resize::resize', function (e, w) {
-            setStyles(w)
+            
+            setStyles(w);
+            
         });
     };
     return {

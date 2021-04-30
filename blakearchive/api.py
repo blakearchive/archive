@@ -185,6 +185,28 @@ def get_exhibit_images(exhibit_id):
         return abort(404)
     return jsonify({"results": [r.to_dict for r in results]})
 
+
+
+@api.route("/preview/<preview_id>")
+def get_preview_by_id(preview_id):
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    result = blake_data_service.get_preview(preview_id)
+
+    if not result:
+        return abort(404)
+    images =  blake_data_service.get_images_for_preview(preview_id)
+
+    return jsonify({"preview":result.to_dict,"images":[r.to_dict for r in images]})
+
+@api.route("/preview-images/<preview_id>")
+def get_preview_images(preview_id):
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    results = blake_data_service.get_images_for_preview(preview_id)
+    if not results:
+        return abort(404)
+    return jsonify({"results": [r.to_dict for r in results]})
+
+
 @api.route("/exhibit-captions/<exhibit_id>/<image_id>")
 def get_exhibit_image_captions(exhibit_id, image_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
@@ -203,4 +225,10 @@ def get_exhibit_html(exhibit_id):
 def get_exhibits():
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     results = blake_data_service.get_exhibits()
+    return jsonify({"results": [r.to_dict for r in results]})
+
+@api.route("/previews/")
+def get_previews():
+    blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
+    results = blake_data_service.get_previews()
     return jsonify({"results": [r.to_dict for r in results]})

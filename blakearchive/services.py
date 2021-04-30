@@ -219,6 +219,19 @@ class BlakeDataService(object):
     ###end------ service methods for Exhibits ------
 
     @classmethod
+    def get_preview(cls, preview_id):
+        result = models.BlakePreview.query \
+            .options(joinedload(models.BlakePreview.preview_images)) \
+            .filter(models.BlakePreview.preview_id == preview_id).first()
+        return result
+
+    @classmethod
+    def get_images_for_preview(cls, preview_id=None):
+        return models.BlakePreviewImage.query \
+            .filter(models.BlakePreviewImage.preview_id == preview_id) \
+            .order_by(models.BlakePreviewImage.image_id).all()
+
+    @classmethod
     def get_object(cls, desc_id):
         return models.BlakeObject.query.filter(models.BlakeObject.desc_id == desc_id).first()
 

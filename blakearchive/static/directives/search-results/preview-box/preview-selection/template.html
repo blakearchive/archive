@@ -1,11 +1,11 @@
 <!-- preview -->
 <div class="object-preview col-sm-12 text-center" auto-width adjust="100" breakpoint="992" divide="3">
     <h5 ng-if="ps.s.type != 'copy-info'" style="">Selected Object</h5>
-    <h5 ng-if="ps.s.type == 'copy-info'" style="">Selected Copy/Set/Receipt</h5>
+    <h5 ng-if="ps.s.type == 'copy-info'" style="">Selected Copy/Set/Receipt/Work in Preview</h5>
 
     <br>
     <div class="object-img-container text-center" auto-height adjust="350" breakpoint="992">
-        <a ng-href="/copy/{{ps.s.getPreviewHref(ps.tree, ps.results)}}">
+        <a ng-href="/{{ps.s.getPreviewHref(ps.tree, ps.results)}}">
             <img ng-src="/images/{{ ps.s.getPreviewImage(ps.tree, ps.results) }}.100.jpg">
             <p></p>
             <p class="object-subtitle">

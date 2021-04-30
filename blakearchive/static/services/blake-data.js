@@ -1,5 +1,5 @@
 
-angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork,BlakeExhibit, BlakeExhibitImage,BlakeExhibitCaption,directoryPrefix) {
+angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, $http, $q, $location, BlakeObject, BlakeCopy, BlakeWork,BlakeExhibit, BlakeExhibitImage,BlakeExhibitCaption,BlakePreview,BlakePreviewImage,directoryPrefix) {
     /**
      * For the time being, all data accessor functions should be placed here.  This service should mirror the API
      * of the back-end BlakeDataService.
@@ -14,7 +14,8 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
         object: {},
         fragment_pairs: [],
 
-        exhibit: {}
+        exhibit: {},
+        preview: {}
     };
 
     /**
@@ -663,6 +664,57 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
 
       function getObjectsFailed(error){
           $log.error('XHR Failed for getCaptionsForImage: multi...\n' + angular.toJson(error.data, true));
+      }
+    };
+
+
+    blakeData.setSelectedPreview = function(previewId){
+      // TODO: make it work!
+      return blakeData.getPreview(previewId).then(function(prev){
+        blakeData.preview = prev;
+        //console.log("===="+exhib);
+        //$rootScope.selectedExhibit = exhib;
+      });
+    };
+
+    blakeData.getPreview = function(previewId){
+      // TODO: implement API and then fix update this!!!!
+      var url = directoryPrefix + '/api/preview/'+previewId;
+
+      //$log.info('getting objects: multi');
+
+      return $http.get(url)
+          .then(getObjectsComplete)
+          .catch(getObjectsFailed);
+
+      function getObjectsComplete(response){
+        //console.log("==="+JSON.stringify(response.data));
+        return BlakePreview.create(response.data);
+
+      }
+
+      function getObjectsFailed(error){
+          $log.error('XHR Failed for getObjects: multi...\n' + angular.toJson(error.data, true));
+      }
+    };
+    blakeData.getImagesForPreview = function(previewId){
+      // TODO: implement API and then fix update this!!!!
+      var url = directoryPrefix + '/api/preview-images/'+previewId;
+
+      //$log.info('getting objects: multi');
+
+      return $http.get(url)
+          .then(getObjectsComplete)
+          .catch(getObjectsFailed);
+
+      function getObjectsComplete(response){
+        //console.log("===>>>>>"+JSON.stringify(response.data));
+        return BlakePreviewImage.create(response.data.results);
+
+      }
+
+      function getObjectsFailed(error){
+          $log.error('XHR Failed for getImagesForPreview: multi...\n'+ previewId + angular.toJson(error.data, true));
       }
     };
 

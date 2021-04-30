@@ -11,6 +11,9 @@ import 'fabric';
 import 'ng-cropperjs';
 import 'dexie';
 import 'ng-dexie';
+import 'ng-openseadragon'
+import 'openseadragon'
+import 'script-loader!./js/bower_components/openseadragon/built-openseadragon/openseadragon/openseadragon.min'
 import './js/angular.ngStorage';
 import './js/Sortable/Sortable.min';
 import './js/Sortable/ng-sortable.min';
@@ -27,7 +30,7 @@ let carousel = angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition
 carousel.controller('CarouselController', function ($scope, $timeout, $transition, $q) {});
 carousel.directive('carousel', function () { return {} });
 
-let blake = angular.module('blake', ['angular-bind-html-compile','ngRoute', 'ngSanitize', 'ui-rangeSlider','ui.bootstrap', 'ng-sortable', 'FBAngular','common.fabric','common.fabric.utilities','common.fabric.constants','ngAnimate', 'ngStorage','ngCookies','ngTouch','ngCropper','markdown','angular-loading-bar','ngdexie', 'ngdexie.ui'])
+let blake = angular.module('blake', ['angular-bind-html-compile','ngRoute', 'ngSanitize', 'ui-rangeSlider','ui.bootstrap', 'ng-sortable', 'FBAngular','common.fabric','common.fabric.utilities','common.fabric.constants','ngAnimate', 'ngStorage','ngCookies','ngTouch','ngCropper','markdown','angular-loading-bar','ngdexie', 'ngdexie.ui','ui.openseadragon'])
 //blake.constant('dexie',window.Dexie);
 blake.config(function(ngDexieProvider){
 
@@ -77,6 +80,14 @@ blake.config(function ($routeProvider, $locationProvider) {
         controllerAs: 'exhibitCtrl',
         reloadOnSearch: false
     });
+
+    $routeProvider.when(directoryPrefix + '/preview/:previewId', {
+        templateUrl: directoryPrefix + '/static/controllers/preview/preview.html',
+        controller: "PreviewController",
+        controllerAs: 'previewCtrl',
+        reloadOnSearch: false
+    });
+
     $routeProvider.when(directoryPrefix + '/new-window/:what/:copyId', {
         templateUrl: directoryPrefix + '/static/controllers/showme/showme.html',
         controller: "ShowMeController",

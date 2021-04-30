@@ -481,12 +481,12 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                     endstring = '';
 
 
-                if(label == 'Copy/Set/Receipt Information') {
+                if(label == 'Copy/Set/Receipt/Work in Preview Information') {
                     if(results[workIndex][2].length > 1 && !results[workIndex][0].virtual){
                         string += '(' + results[workIndex][2].length+ ' Copies/Sets' + ')';
                     }
                     if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
-                        string += '(' + results[workIndex][2].length+ ' Copy/Set/Receipt' + ')';
+                        string += '(' + results[workIndex][2].length+ ' Copy/Set/Receipt/Work in Preview' + ')';
 
                     }
                     return string;
@@ -504,7 +504,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                     string += ' across '+results[workIndex][2].length+ ' Copies/Sets';
                 }
                 if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
-                    string += ' across '+results[workIndex][2].length+ ' Copy/Set/Receipt';
+                    string += ' across '+results[workIndex][2].length+ ' Copy/Set/Receipt/Work in Preview';
 
                 }
 
@@ -513,17 +513,31 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                 return string;
         }
     };
-    
+/*
+    s.getCopyOrPreview = function (tree, resultTree) {
+        let work = resultTree[s.selectedWork][0];
+        if (work.image == "preview") {
+            return "preview";
+        }
+        else {return "copy";}
+               
+    }
+*/    
     s.getPreviewHref = function (tree, resultTree) {
         try {
             switch (tree) {
                 case 'object':
                     let work = resultTree[s.selectedWork][0],
-                        copyBad = work.virtual ? work.bad_id : resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id,
+                        copyBad = work.virtual || (work.image == "preview") ? work.bad_id : resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id,
                         descId = resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].desc_id;
-                    return copyBad + '?descId=' + descId;
+                    if(work.image != "preview") {
+                        return 'copy/' + copyBad + '?descId=' + descId;
+                    } else {return 'preview/' + copyBad + '?descId=' + descId;}
                 case 'copy':
-                    return resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id;
+                    let work2 = resultTree[s.selectedWork][0];
+                    if(work2.image != "preview") {
+                        return 'copy/' + resultTree[s.selectedWork][2][s.selectedCopy][0].bad_id;
+                    } else {return 'preview/' + work2.bad_id;}
             }
         } catch (e) {}
     };

@@ -51,8 +51,8 @@
       <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].wc"><a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
         (Composed {{ menu_list.composition_date_string }})</a></li>
       <li role="presentation" class="dropdown-header">Paintings</li>
-      <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].paintings"><a
-          href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a></li>
+      <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].paintings"><a ng-if="menu_list.image != 'preview'" href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a><a ng-if="menu_list.image == 'preview'" href="/preview/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }}) [Preview]</a>
+      </li>
     </ul>
   </li>
   <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">Manuscripts
@@ -70,18 +70,23 @@
       <li ng-if="menu.lists.manuscripts_typo[0].typographic[0] == null" class="empty-subcat">—</li>
     </ul>
   </li>
+  <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">Works in <span>Preview</span></a>
+    <ul class="dropdown-menu" role="menu">
+      <li ng-if="menu_list.image == 'preview'" ng-repeat="menu_list in menu.allWorksCompDateValue"><a href="/preview/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a></li>
+    </ul>
+  </li>
   <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">All
     <span>Works</span></a>
     <ul class="dropdown-menu" role="menu">
       <div style="height:65vh; overflow-y:scroll">
         <li role="presentation" class="dropdown-header">In Alphabetical Order</li>
       <li ng-repeat="workAlpha in menu.allWorksAlpha">
-        <a ng-if="workAlpha != false && workAlpha.medium != 'exhibit'" style="color:#ccc" href="/work/{{ workAlpha.bad_id }}">{{ workAlpha.menuTitle }} (Composed {{ workAlpha.composition_date_string }})</a></li>
+        <a ng-if="workAlpha != false && workAlpha.medium != 'exhibit' && workAlpha.image !='preview'" style="color:#ccc" href="/work/{{ workAlpha.bad_id }}">{{ workAlpha.menuTitle }} (Composed {{ workAlpha.composition_date_string }})</a><a ng-if="workAlpha != false && workAlpha.medium != 'exhibit' && workAlpha.image =='preview'" style="color:#ccc" href="/preview/{{ workAlpha.bad_id }}">{{ workAlpha.menuTitle }} (Composed {{ workAlpha.composition_date_string }}) [Preview]</a></li>
       </div>
       <div style="height:65vh; overflow-y:scroll">
         <li role="presentation" class="dropdown-header">In Order of Composition Date</li>
       <li ng-repeat="workCompDateValue in menu.allWorksCompDateValue">
-        <a ng-if="workCompDateValue != false && workCompDateValue.medium != 'exhibit'" style="color:#ccc" href="/work/{{ workCompDateValue.bad_id }}">{{ workCompDateValue.menuTitle }} (Composed {{ workCompDateValue.composition_date_string }})</a></li>
+        <a ng-if="workCompDateValue != false && workCompDateValue.medium != 'exhibit' && workCompDateValue.image !='preview'" style="color:#ccc" href="/work/{{ workCompDateValue.bad_id }}">{{ workCompDateValue.menuTitle }} (Composed {{ workCompDateValue.composition_date_string }})</a><a ng-if="workCompDateValue != false && workCompDateValue.medium != 'exhibit' && workCompDateValue.image =='preview'" style="color:#ccc" href="/preview/{{ workCompDateValue.bad_id }}">{{ workCompDateValue.menuTitle }} (Composed {{ workCompDateValue.composition_date_string }}) [Preview]</a></li>
       </div>
     </ul>
   </li>

@@ -1,3 +1,30 @@
+.editorsnotesInPreview {
+    z-index: 999;
+    position: absolute;
+    background-color: black;
+    width: 62%;
+    color: white;
+    padding: 10px;
+    font-size: 11px;
+    bottom:150%;
+    margin-left:20px;
+}
+
+.editorsnotesInPreview:after {
+    z-index: -1;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -10px;
+    content:'';
+    width: 0;
+    height: 0;
+    border-top: solid 10px black;
+    border-left: solid 10px transparent;
+    border-right: solid 10px transparent;
+}
+
+
 .pulsate {
     -webkit-animation: pulsate 3s ease-out;
     -webkit-animation-iteration-count: 2; 
@@ -520,7 +547,8 @@ div .containerForRelatedInOverlay h3 {
   nav.navbar ul.navbar-nav > li {
 
     /*width: 16.66666666%;*/
-    width: 14.2857142857%;
+    /*width: 14.2857142857%;*/
+    width: 12.5%;
 
   }
 }

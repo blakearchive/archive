@@ -30,6 +30,9 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             case "exhibit":
                 return "exhibits";
                 break;
+            case "preview":
+                return "previews";
+                break;
             case "illbk":
                 return "illuminated_books";
                 break;
@@ -147,7 +150,8 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                 lettersandreceipts: [],
                 typographic: []
             }],
-            exhibits: []
+            exhibits: [],
+            previews: []
         };
 
         // Add to menu categories

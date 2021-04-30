@@ -58,6 +58,10 @@ angular.module("blake").factory("BlakeWork", function (GenericService, BlakeCopy
                     work.medium_pretty = "Archive Exhibits";
                     work.probable = 'composition';
                     break;
+                case "preview":
+                    work.medium_pretty = "Archive Previews";
+                    work.probable = 'composition';
+                    break;
                 default:
                     return false;
             }
