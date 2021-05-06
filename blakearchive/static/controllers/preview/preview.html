@@ -33,7 +33,7 @@
                     <!--This works, but <seadragon> doesn't-->
                     <!--<img ng-if="i.dbi != ''" magnify-image-preview ng-src="/images/previews/{{previewCtrl.pId}}/{{ i.dbi }}.cc.jpg" id="{{ $index+1 }}">-->
                     
-                    <seadragon id="seadragon" ng-if="previewCtrl.optionsSet" options="previewCtrl.options"/>
+                    <seadragon id="seadragon" ng-if="previewCtrl.optionsSet == true && previewCtrl.multi == false" options="previewCtrl.options"/>
                     
                     <div ng-if="previewCtrl.multi" style="display: grid;grid-template-columns: repeat(2, 1fr);gap: 0px;">
                     <seadragon id="seadragon1" ng-if="previewCtrl.multi" options="previewCtrl.options1"/>
