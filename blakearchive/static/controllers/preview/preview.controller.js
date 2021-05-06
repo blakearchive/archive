@@ -49,7 +49,7 @@ angular.module('blake').controller('PreviewController', function (
             //navigatorWidth:    "10%",
 
     };
-    vm.options1 = {x:0,y:0,id:"1",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options1 = {x:40,y:0,id:"1",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
     vm.options2 = {x:0,y:0,id:"2",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
     vm.options3 = {x:0,y:0,id:"3",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
     vm.options4 = {x:0,y:0,id:"4",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
