@@ -35,8 +35,16 @@
                     
                     <seadragon id="seadragon" ng-if="previewCtrl.optionsSet" options="previewCtrl.options"/>
                     
-                    
-                    
+                    <div ng-if="previewCtrl.multi" style="display: grid;grid-template-columns: repeat(2, 1fr);gap: 0px;">
+                    <seadragon id="seadragon1" ng-if="previewCtrl.multi" options="previewCtrl.options1"/>
+                    <seadragon id="seadragon2" ng-if="previewCtrl.multi" options="previewCtrl.options2"/>
+                    <seadragon id="seadragon3" ng-if="previewCtrl.multi" options="previewCtrl.options3"/>
+                    <seadragon id="seadragon4" ng-if="previewCtrl.multi" options="previewCtrl.options4"/>
+                    <seadragon id="seadragon5" ng-if="previewCtrl.multi" options="previewCtrl.options5"/>
+                    <seadragon id="seadragon6" ng-if="previewCtrl.multi" options="previewCtrl.options6"/>
+                    <seadragon id="seadragon7" ng-if="previewCtrl.multi" options="previewCtrl.options7"/>
+                    <seadragon id="seadragon8" ng-if="previewCtrl.multi" options="previewCtrl.options8"/>
+                    </div>
                     
                     
                     <!--<div ng-show="previewCtrl.showEditorsNotes" style="height:500px;width:500px;z-index:999999"><editor-notes object="previewCtrl.bds.copyObjects[0]"></editor-notes></div>-->
