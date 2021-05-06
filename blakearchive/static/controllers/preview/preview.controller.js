@@ -93,7 +93,7 @@ angular.module('blake').controller('PreviewController', function (
                     //tilesources.push(url);
                     switch(i) {
                         case 1:
-                            vm.options1.tileSource.url = url;
+                            vm.options1.tileSource[url] = url;
                             vm.options1.tileSource.x = 1;
                             vm.options1.tileSource.y = 0;
                             break;
