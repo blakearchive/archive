@@ -25,7 +25,6 @@ angular.module('blake').controller('PreviewController', function (
     vm.rs = $rootScope;
     $rootScope.mycontrast = 100;
     $rootScope.mycontrastForMenu = $rootScope.mycontrast + 5;
-    var tilesources = [];
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
             id: "example",
@@ -74,11 +73,12 @@ angular.module('blake').controller('PreviewController', function (
             });*/
             if(vm.bds.copyObjects[0].dbi == 'but770.1.1.pt') {
                 var url = "";
+                var tilesources = [];
                 for (var i = 1; i < 9; i++) {
                     url = 'images/' + vm.bds.copyObjects[0].dbi + '.0' + i + '.300.dzi';
                     vm.tilesources.push(url);
                 }
-                vm.options.tileSources = vm.tilesources;
+                vm.options.tileSources = tilesources;
             }
             else {
                 vm.options.tileSources = 'images/' + vm.bds.copyObjects[0].dbi + '.300.dzi';
