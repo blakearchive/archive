@@ -76,7 +76,7 @@ angular.module('blake').controller('PreviewController', function (
                 var tilesources = [];
                 for (var i = 1; i < 9; i++) {
                     url = 'images/' + vm.bds.copyObjects[0].dbi + '.0' + i + '.300.dzi';
-                    vm.tilesources.push(url);
+                    tilesources.push(url);
                 }
                 vm.options.tileSources = tilesources;
             }
