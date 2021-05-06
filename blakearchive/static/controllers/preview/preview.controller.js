@@ -49,14 +49,14 @@ angular.module('blake').controller('PreviewController', function (
             //navigatorWidth:    "10%",
 
     };
-    vm.options1 = {x:1,y:0,id:"1",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSource:{x:1,y:0,url:''},};
-    vm.options2 = {x:0,y:0,id:"2",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSource:{x:0,y:0,url:''},};
-    vm.options3 = {x:1,y:0,id:"3",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSource:{x:1,y:0,url:''},};
-    vm.options4 = {x:0,y:0,id:"4",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSource:{x:0,y:0,url:''},};
-    vm.options5 = {x:1,y:0,id:"5",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSource:{x:1,y:0,url:''},};
-    vm.options6 = {x:0,y:0,id:"6",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSource:{x:0,y:0,url:''},};
-    vm.options7 = {x:1,y:0,id:"7",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSource:{x:1,y:0,url:''},};
-    vm.options8 = {x:0,y:0,id:"8",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSource:{x:0,y:0,url:''},};
+    vm.options1 = {x:1,y:0,id:"1",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{x:1,y:0,url:''},};
+    vm.options2 = {x:0,y:0,id:"2",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{x:0,y:0,url:''},};
+    vm.options3 = {x:1,y:0,id:"3",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{x:1,y:0,url:''},};
+    vm.options4 = {x:0,y:0,id:"4",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{x:0,y:0,url:''},};
+    vm.options5 = {x:1,y:0,id:"5",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{x:1,y:0,url:''},};
+    vm.options6 = {x:0,y:0,id:"6",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{x:0,y:0,url:''},};
+    vm.options7 = {x:1,y:0,id:"7",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{x:1,y:0,url:''},};
+    vm.options8 = {x:0,y:0,id:"8",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{x:0,y:0,url:''},};
 /*
     vm.zoom = function() {
         $rootScope.zoom = !$rootScope.zoom;
@@ -93,32 +93,32 @@ angular.module('blake').controller('PreviewController', function (
                     //tilesources.push(url);
                     switch(i) {
                         case 1:
-                            vm.options1.tileSource[url] = url;
-                            vm.options1.tileSource.x = 1;
-                            vm.options1.tileSource.y = 0;
+                            vm.options1.tileSources[0].url = url;
+                            vm.options1.tileSources[0].x = 1;
+                            vm.options1.tileSources[0].y = 0;
                             break;
                         case 2:
-                            vm.options2.tileSource.url = url;
-                            vm.options2.tileSource.x = 0;
-                            vm.options2.tileSource.y = 0;
+                            vm.options2.tileSources[0].url = url;
+                            vm.options2.tileSources[0].x = 0;
+                            vm.options2.tileSources[0].y = 0;
                             break;
                         case 3:
-                            vm.options3.tileSource.url = url;
+                            vm.options3.tileSources[0].url = url;
                             break;
                         case 4:
-                            vm.options4.tileSource.url = url;
+                            vm.options4.tileSources[0].url = url;
                             break;
                         case 5:
-                            vm.options5.tileSource.url = url;
+                            vm.options5.tileSources[0].url = url;
                             break;
                         case 6:
-                            vm.options6.tileSource.url = url;
+                            vm.options6.tileSources[0].url = url;
                             break;
                         case 7:
-                            vm.options7.tileSource.url = url;
+                            vm.options7.tileSources[0].url = url;
                             break;
                         case 8:
-                            vm.options8.tileSource.url = url;
+                            vm.options8.tileSources[0].url = url;
                             break;
                     }
                 }
