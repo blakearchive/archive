@@ -49,13 +49,13 @@ angular.module('blake').controller('PreviewController', function (
             //navigatorWidth:    "10%",
 
     };
-    vm.options1 = {x:40,y:0,id:"1",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options1 = {x:1,y:0,id:"1",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
     vm.options2 = {x:0,y:0,id:"2",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
-    vm.options3 = {x:0,y:0,id:"3",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options3 = {x:1,y:0,id:"3",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
     vm.options4 = {x:0,y:0,id:"4",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
-    vm.options5 = {x:0,y:0,id:"5",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options5 = {x:1,y:0,id:"5",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
     vm.options6 = {x:0,y:0,id:"6",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
-    vm.options7 = {x:0,y:0,id:"7",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options7 = {x:1,y:0,id:"7",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
     vm.options8 = {x:0,y:0,id:"8",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
 /*
     vm.zoom = function() {
