@@ -126,6 +126,8 @@ angular.module('blake').controller('PreviewController', function (
             }
             vm.optionsSet = true;
             vm.showEditorsNotes = false;
+            console.log(vm.optionsSet);
+            console.log(vm.multi);
 
         });
     });
