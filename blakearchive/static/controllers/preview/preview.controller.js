@@ -40,7 +40,7 @@ angular.module('blake').controller('PreviewController', function (
             },
             collectionRows: 4,
             collectionColumns: 2,
-            collectionMode = false,
+            collectionMode: false,
             //sequenceMode: true,
             //showNavigator: true,
             //navigatorHeight:   "20%",
