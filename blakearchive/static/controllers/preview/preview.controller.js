@@ -40,6 +40,7 @@ angular.module('blake').controller('PreviewController', function (
             },
             collectionRows: 4,
             collectionColumns: 2,
+            collectionMode = false,
             //sequenceMode: true,
             //showNavigator: true,
             //navigatorHeight:   "20%",
@@ -80,6 +81,7 @@ angular.module('blake').controller('PreviewController', function (
                     url = 'images/' + vm.bds.copyObjects[0].dbi + '.0' + i + '.300.dzi';
                     tilesources.push(url);
                 }
+                vm.options.collectionMode = true;
                 vm.options.tileSources = tilesources;
             }
             else {
