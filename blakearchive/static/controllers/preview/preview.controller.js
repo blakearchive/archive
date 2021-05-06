@@ -122,6 +122,7 @@ angular.module('blake').controller('PreviewController', function (
                 //vm.options.tileSources = tilesources;
             }
             else {
+                vm.multi = false;
                 vm.options.tileSources = 'images/' + vm.bds.copyObjects[0].dbi + '.300.dzi';
             }
             vm.optionsSet = true;
