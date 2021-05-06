@@ -41,6 +41,7 @@ angular.module('blake').controller('PreviewController', function (
             collectionRows: 4,
             collectionColumns: 2,
             collectionMode: false,
+            collectionTileMargin: 0,
             //sequenceMode: true,
             //showNavigator: true,
             //navigatorHeight:   "20%",
