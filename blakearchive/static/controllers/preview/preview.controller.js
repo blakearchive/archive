@@ -25,7 +25,7 @@ angular.module('blake').controller('PreviewController', function (
     vm.rs = $rootScope;
     $rootScope.mycontrast = 100;
     $rootScope.mycontrastForMenu = $rootScope.mycontrast + 5;
-
+    var tilesources = [];
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
             id: "example",
@@ -72,7 +72,17 @@ angular.module('blake').controller('PreviewController', function (
                 vm.options.tileSources.url = 'images/' + vm.object.dbi + '.300.jpg';
                 vm.optionsSet = true;
             });*/
-            vm.options.tileSources = 'images/' + vm.bds.copyObjects[0].dbi + '.300.dzi';
+            if(vm.bds.copyObjects[0].dbi == 'but770.1.1.pt') {
+                var url = "";
+                for (var i = 1; i < 9; i++) {
+                    url = 'images/' + vm.bds.copyObjects[0].dbi + '.0' + i + '.300.dzi';
+                    vm.tilesources.push(url);
+                }
+                vm.options.tileSources = vm.tilesources;
+            }
+            else {
+                vm.options.tileSources = 'images/' + vm.bds.copyObjects[0].dbi + '.300.dzi';
+            }
             vm.optionsSet = true;
             vm.showEditorsNotes = false;
 
