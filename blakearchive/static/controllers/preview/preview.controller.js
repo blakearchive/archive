@@ -38,6 +38,8 @@ angular.module('blake').controller('PreviewController', function (
 
                 url: ''
             },
+            collectionRows: 4,
+            collectionColumns: 2,
             //sequenceMode: true,
             //showNavigator: true,
             //navigatorHeight:   "20%",
