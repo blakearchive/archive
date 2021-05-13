@@ -21,7 +21,7 @@ angular.module('blake').controller('PreviewController', function (
     var optionsSet = false;
     var showEditorsNotes = false;
     var imageLoader = true;
-    var multi = false;
+    //var multi = false;
     vm.wts = worktitleService;
     vm.rs = $rootScope;
     $rootScope.mycontrast = 100;
