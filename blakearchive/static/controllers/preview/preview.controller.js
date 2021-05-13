@@ -39,16 +39,17 @@ angular.module('blake').controller('PreviewController', function (
 
                 url: ''
             },
-            collectionRows: 4,
-            collectionColumns: 2,
-            collectionMode: false,
-            collectionTileMargin: 0,
+            //collectionRows: 4,
+            //collectionColumns: 2,
+            //collectionMode: false,
+            //collectionTileMargin: 0,
             //sequenceMode: true,
             //showNavigator: true,
             //navigatorHeight:   "20%",
             //navigatorWidth:    "10%",
 
     };
+    /*
     vm.options1 = {id:"1",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
     vm.options2 = {id:"2",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
     vm.options3 = {id:"3",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
@@ -57,6 +58,7 @@ angular.module('blake').controller('PreviewController', function (
     vm.options6 = {id:"6",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
     vm.options7 = {id:"7",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
     vm.options8 = {id:"8",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    */
 /*
     vm.zoom = function() {
         $rootScope.zoom = !$rootScope.zoom;
@@ -84,6 +86,7 @@ angular.module('blake').controller('PreviewController', function (
                 vm.options.tileSources.url = 'images/' + vm.object.dbi + '.300.jpg';
                 vm.optionsSet = true;
             });*/
+            /*
             if(vm.bds.copyObjects[0].dbi == 'but770.1.1.pt') {
                 vm.multi = true;
                 var url = "";
@@ -125,10 +128,12 @@ angular.module('blake').controller('PreviewController', function (
                 vm.multi = false;
                 vm.options.tileSources = 'images/' + vm.bds.copyObjects[0].dbi + '.300.dzi';
             }
+            */
+            vm.options.tileSources = 'images/' + vm.bds.copyObjects[0].dbi + '.300.dzi';
             vm.optionsSet = true;
             vm.showEditorsNotes = false;
-            console.log(vm.optionsSet);
-            console.log(vm.multi);
+            //console.log(vm.optionsSet);
+            //console.log(vm.multi);
 
         });
     });
