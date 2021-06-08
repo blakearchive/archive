@@ -21,11 +21,11 @@ angular.module('blake').controller('PreviewController', function (
     var optionsSet = false;
     var showEditorsNotes = false;
     var imageLoader = true;
+    //var multi = false;
     vm.wts = worktitleService;
     vm.rs = $rootScope;
     $rootScope.mycontrast = 100;
     $rootScope.mycontrastForMenu = $rootScope.mycontrast + 5;
-
     //vm.the_exhibit = BlakeDataService.getExhibit(exhibitId);
     vm.options = {
             id: "example",
@@ -39,12 +39,26 @@ angular.module('blake').controller('PreviewController', function (
 
                 url: ''
             },
+            //collectionRows: 4,
+            //collectionColumns: 2,
+            //collectionMode: false,
+            //collectionTileMargin: 0,
             //sequenceMode: true,
             //showNavigator: true,
             //navigatorHeight:   "20%",
             //navigatorWidth:    "10%",
 
     };
+    /*
+    vm.options1 = {id:"1",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options2 = {id:"2",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options3 = {id:"3",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options4 = {id:"4",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options5 = {id:"5",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options6 = {id:"6",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options7 = {id:"7",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options8 = {id:"8",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    */
 /*
     vm.zoom = function() {
         $rootScope.zoom = !$rootScope.zoom;
@@ -72,9 +86,54 @@ angular.module('blake').controller('PreviewController', function (
                 vm.options.tileSources.url = 'images/' + vm.object.dbi + '.300.jpg';
                 vm.optionsSet = true;
             });*/
+            /*
+            if(vm.bds.copyObjects[0].dbi == 'but770.1.1.pt') {
+                vm.multi = true;
+                var url = "";
+                var tilesources = [];
+                for (var i = 1; i < 9; i++) {
+                    url = 'images/' + vm.bds.copyObjects[0].dbi + '.0' + i + '.300.dzi';
+                    //tilesources.push(url);
+                    switch(i) {
+                        case 1:
+                            vm.options1.tileSources = url;
+                            break;
+                        case 2:
+                            vm.options2.tileSources = url;
+                            break;
+                        case 3:
+                            vm.options3.tileSources = url;
+                            break;
+                        case 4:
+                            vm.options4.tileSources = url;
+                            break;
+                        case 5:
+                            vm.options5.tileSources = url;
+                            break;
+                        case 6:
+                            vm.options6.tileSources = url;
+                            break;
+                        case 7:
+                            vm.options7.tileSources = url;
+                            break;
+                        case 8:
+                            vm.options8.tileSources = url;
+                            break;
+                    }
+                }
+                //vm.options.collectionMode = true;
+                //vm.options.tileSources = tilesources;
+            }
+            else {
+                vm.multi = false;
+                vm.options.tileSources = 'images/' + vm.bds.copyObjects[0].dbi + '.300.dzi';
+            }
+            */
             vm.options.tileSources = 'images/' + vm.bds.copyObjects[0].dbi + '.300.dzi';
             vm.optionsSet = true;
             vm.showEditorsNotes = false;
+            //console.log(vm.optionsSet);
+            //console.log(vm.multi);
 
         });
     });

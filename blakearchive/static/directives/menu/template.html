@@ -39,17 +39,20 @@
   <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">Drawings and <span>Paintings</span></a>
     <ul class="dropdown-menu" role="menu">
       <li role="presentation" class="dropdown-header">Pencil Sketches</li>
-      <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].pencil"><a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
-        (Composed {{ menu_list.composition_date_string }})</a></li>
+      <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].pencil"><a ng-if="menu_list.image != 'preview'" href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
+        (Composed {{ menu_list.composition_date_string }})</a><a ng-if="menu_list.image == 'preview'" href="/preview/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
+        (Composed {{ menu_list.composition_date_string }}) [Preview]</a></li>
       <li role="presentation" class="dropdown-header">Pen and Ink Drawings</li>
       <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].pen"><a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
         (Composed {{ menu_list.composition_date_string }})</a></li>
       <li role="presentation" class="dropdown-header">Monochrome Wash Drawings</li>
       <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].monochrome"><a
-          href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a></li>
+          ng-if="menu_list.image != 'preview'" href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a><a
+          ng-if="menu_list.image == 'preview'" href="/preview/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }}) [Preview]</a></li>
       <li role="presentation" class="dropdown-header">Water Color Drawings</li>
-      <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].wc"><a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
-        (Composed {{ menu_list.composition_date_string }})</a></li>
+      <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].wc"><a ng-if="menu_list.image != 'preview'" href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
+        (Composed {{ menu_list.composition_date_string }})</a><a
+          ng-if="menu_list.image == 'preview'" href="/preview/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }}) [Preview]</a></li>
       <li role="presentation" class="dropdown-header">Paintings</li>
       <li ng-repeat="menu_list in menu.lists.drawings_paintings[0].paintings"><a ng-if="menu_list.image != 'preview'" href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a><a ng-if="menu_list.image == 'preview'" href="/preview/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }}) [Preview]</a>
       </li>
