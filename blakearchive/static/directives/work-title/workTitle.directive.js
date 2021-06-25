@@ -15,11 +15,6 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
 
         /*WORKS PAGES*/
         if($rootScope.showWorkTitle == 'work'){
-            console.log(vm.bds.work.title);
-            if(vm.bds.work.title.match(/.*â.*/)) {
-                console.log('hello');
-                vm.bds.work.title = vm.bds.work.title.replace('â','&#8212;');
-            }
             return vm.bds.work.title;
         }
 
