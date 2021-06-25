@@ -73,6 +73,9 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
         if(title.match(/.*, The/)) {
             title = "The " + title.match(/(.*), The/)[1];
         }
+        if(title.match(/Ã/)) {
+            title = title.replace('Ã','&#8212;');
+        }
         return title.trim();
 
 
