@@ -7,6 +7,11 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
     vm.showOverlayExhibitContents  = false;
 
     vm.getTitle = function(){
+        console.log(vm.bds.work.title);
+        if(vm.bds.work.title.match(/.*â.*/)) {
+            console.log('hello');
+            vm.bds.work.title = vm.bds.work.title.replace('â','&#8212;');
+        }
 
         /*HOME PAGE*/
         if($rootScope.showWorkTitle == 'home') {
@@ -72,10 +77,6 @@ angular.module("blake").controller("WorkTitleController", function ($rootScope,$
         }
         if(title.match(/.*, The/)) {
             title = "The " + title.match(/(.*), The/)[1];
-        }
-        if(title.match(/.*â.*/)) {
-            console.log('hello');
-            title = title.replace('â','&#8212;');
         }
         return title.trim();
 
