@@ -4,7 +4,7 @@
     <a style="text-decoration: none" href="" class="closebtnleft" ng-click="$root.showOverlay = false">&times;</a>
     <header class="page-header">
       <p class="subhead">{{ workTitle.bds.work.medium_pretty }}</p>
-      <h1 style="color:rgba(233,188,71,1)">{{ workTitle.bds.work.title }} (Composed {{ workTitle.bds.work.composition_date_string }})</h1>
+      <h1 style="color:rgba(233,188,71,1)"><span ng-bind-html="workTitle.bds.work.title"></span> (Composed {{ workTitle.bds.work.composition_date_string }})</h1>
     </header>
 
     <article class="categories">
