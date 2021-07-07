@@ -30,7 +30,7 @@
 
             <div style="height:100%;" class="item" ng-repeat="i in exhibitCtrl.images track by $index" id="item-{{$index}}">
 
-              <div class="reading-wrapper" style="height:100%;width:83vw" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
+              <div class="reading-wrapper" style="height:100%;width:63vw" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
 
                 <img style="width: 62%" ng-if="i.dbi != ''" magnify-image ng-src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg" id="{{ $index+1 }}">
                 <div class="reading-copy " style="width:min-content;width:38%">
