@@ -28,12 +28,12 @@
         </button>
       </div>
 
-            <div style="height:100%;width:67vw" class="item" ng-repeat="i in exhibitCtrl.images track by $index" id="item-{{$index}}">
+            <div style="height:100%;" class="item" ng-repeat="i in exhibitCtrl.images track by $index" id="item-{{$index}}">
 
-              <div class="reading-wrapper" style="height:100%;" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
+              <div class="reading-wrapper" style="height:100%;width:83vw" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
 
-                <img ng-if="i.dbi != ''" magnify-image ng-src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg" id="{{ $index+1 }}">
-                <div class="reading-copy " style="width:min-content;width:-moz-min-content">
+                <img style="width: 62%" ng-if="i.dbi != ''" magnify-image ng-src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg" id="{{ $index+1 }}">
+                <div class="reading-copy " style="width:min-content;width:38%">
                   <div id="reading-copy-item-{{$index}}" style="width:10%" class="reading-copy-inner ">
                     <h2 ng-if="i.title" style="margin-top:-10px; line-height:0px; color:rgba(233,188,71,1)"><span ng-bind-html="trustAsHtml(i.title)"></span></h2>
 
