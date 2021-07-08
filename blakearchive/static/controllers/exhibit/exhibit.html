@@ -32,7 +32,7 @@
 
               <div class="reading-wrapper" style="height:100%;width:63vw" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
 
-                <img style="max-width: 62%;object-fit:scale-down; object-position:0 0;" ng-if="i.dbi != ''" magnify-image ng-src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg" id="{{ $index+1 }}">
+                <img ng-if="i.dbi != ''" magnify-image ng-src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg" id="{{ $index+1 }}">
                 <div class="reading-copy " style="width:min-content;width:38%">
                   <div id="reading-copy-item-{{$index}}" style="width:10%;min-width:-moz-available" class="reading-copy-inner ">
                     <h2 ng-if="i.title" style="margin-top:-10px; line-height:0px; color:rgba(233,188,71,1)"><span ng-bind-html="trustAsHtml(i.title)"></span></h2>
