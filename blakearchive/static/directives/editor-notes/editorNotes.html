@@ -18,7 +18,7 @@
 <p><strong>Text</strong></p>
 <ul ng-if="noteCtrl.textNotes()">
     <li ng-repeat="note in noteCtrl.object.notes | filter:{type:'text'} track by $index">
-        <span ng-if="note.line != 'XX'">Line {{ note.line }}: </span><span ng-bind-html="note.note.trim() | markdown | highlight:noteCtrl.highlight"></span>
+        <sspan ng-if="note.line != 'XX'">Line {{ note.line }}: </span><span ng-bind-html="note.note.trim() | markdown | highlight:noteCtrl.highlight"></span>
 
         
 				<div ng-repeat="text_note_image_filename in note.text_note_image_filenames" style="display:inline-flex;">
