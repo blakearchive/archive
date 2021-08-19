@@ -47,7 +47,7 @@ def flatten_to_series(df):
     """converts DataFrame into series"""
     lst = []
     for index, row in df.iterrows():
-        lst.append((index,','.join(row.dropna().keys())))
+        lst.append((index,','.join(list(row.dropna().keys()))))
 
     indexes = pd.DataFrame(lst)[0]
     mappings = pd.DataFrame(lst)[1]
@@ -90,7 +90,7 @@ def normalize_relations(df):
         for desc_id, row in df[[k]].dropna().iterrows():
             desc_ids = []
 
-            if isinstance(desc_id, basestring):
+            if isinstance(desc_id, str):
                 try:
                     desc_ids = row.str.split(',')[k] # reference is necessary here
 
@@ -118,7 +118,7 @@ def normalize_relations(df):
         for desc_id, row in df[[k]].dropna().iterrows():
             desc_ids = []
 
-            if isinstance(desc_id, basestring):
+            if isinstance(desc_id, str):
                 try:
                     desc_ids = row.str.split(',')[k] # reference is necessary here
                     error_message = ''
@@ -171,12 +171,13 @@ def main(args):
 
     normalize_df.to_csv(args.out_file, encoding='utf-8')
 
+
     if args.diff:
-        for k, val in diff_dict.items():
+        for k, val in list(diff_dict.items()):
 
             logger.info("New edges added for {}".format(k))
             logger.info("==================================")
-            for _k, _v in val.items():
+            for _k, _v in list(val.items()):
                 logger.info("{} -> {}".format(_k, _v))
 
 if __name__ == '__main__':
@@ -193,3 +194,8 @@ if __name__ == '__main__':
     _args.out_file = prefix + "_" + _args.out_suffix + sep+suffix
 
     main(_args)
+    
+    with open(_args.out_file, 'r+') as f:
+        content = f.read()
+        f.seek(0, 0)
+        f.write('desc_id' + content)
