@@ -3,6 +3,10 @@ import argparse
 import pandas as pd
 import numpy as np
 from tqdm import tqdm
+try:
+    basestring
+except NameError:
+    basestring = str
 
 
 logging.basicConfig()
@@ -76,6 +80,7 @@ def normalize_relations(df):
     Makes all relations in blake_relations.csv file reflexive.
     
     """
+
     
     result = {k: None for k in REFLEXIVE_COLS}
     diff_result = {k: None for k in REFLEXIVE_COLS}
