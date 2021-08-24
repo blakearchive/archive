@@ -9,14 +9,16 @@ from collections import defaultdict
 import itertools
 from lxml import etree
 import xmltodict
-import models
-import config
+#from . import models
+import doqu
+from . import config
 from sqlalchemy.orm import sessionmaker
 import titlecase
 from tqdm import tqdm
 import logging
 from collections import namedtuple
 import socket
+import wsgiref
 
 logging.basicConfig()
 logger = logging.getLogger('import')
@@ -70,7 +72,7 @@ class BlakePreviewImporter(BlakeImporter):
       # 2. add the model to self.exhibits for processing by populate_database
       # 3. each exhibit has a collection of exhibit-images. we need to iterate over them.
       #    -- creating a model for each and adding them to self.exhibit_images
-      print "processing: "+preview
+      print("processing: "+preview)
       root = etree.parse(preview).getroot()
       document_name = os.path.split(preview)[1]
       #Sprint "document name: "+document_name
@@ -82,7 +84,7 @@ class BlakePreviewImporter(BlakeImporter):
       p.composition_date_string = root.get("composition_date_string").encode("utf-8")
       self.previews[p.preview_id] = p
 
-      print "preview id is: "+root.get("id")
+      print("preview id is: "+root.get("id"))
       
       p.source = self.get_source_for_preview(root)
       # iterate images and add them to the list
@@ -98,7 +100,7 @@ class BlakePreviewImporter(BlakeImporter):
       previewImage.dbi = imageXml.get("dbi")
       previewImage.preview_id = preview.preview_id
       preview.preview_images.append(previewImage)
-      print preview.preview_images
+      print(preview.preview_images)
 
   @staticmethod
   def get_source_for_preview(document):
@@ -146,7 +148,7 @@ class BlakeExhibitImporter(BlakeImporter):
       # 2. add the model to self.exhibits for processing by populate_database
       # 3. each exhibit has a collection of exhibit-images. we need to iterate over them.
       #    -- creating a model for each and adding them to self.exhibit_images
-      print "processing: "+exhibit
+      print("processing: "+exhibit)
       root = etree.parse(exhibit).getroot()
       document_name = os.path.split(exhibit)[1]
       #Sprint "document name: "+document_name
@@ -159,7 +161,7 @@ class BlakeExhibitImporter(BlakeImporter):
       ex.composition_date_string = root.get("composition_date_string").encode("utf-8")
       self.exhibits[ex.exhibit_id] = ex
 
-      print "exhibit id is: "+root.get("id")
+      print("exhibit id is: "+root.get("id"))
 
 
       # iterate images and add them to the list
@@ -487,10 +489,10 @@ class BlakeDocumentImporter(BlakeImporter):
         #models.BlakePreviewImage.metadata.create_all(bind=engine)
 
 
-        session.add_all(self.works.values())
-        session.add_all(self.object_importer.members.values())
+        session.add_all(list(self.works.values()))
+        session.add_all(list(self.object_importer.members.values()))
         #session.add_all(self.fragmentpairs.values())
-        session.add_all(self.exhibit_importer.exhibits.values())
+        session.add_all(list(self.exhibit_importer.exhibits.values()))
         #session.add_all(self.preview_importer.previews.values())
         session.commit()
 
@@ -626,7 +628,7 @@ class BlakeCopyImporter(BlakeImporter):
         return root
 
     def get(self, bad_ids):
-        if isinstance(bad_ids, basestring):
+        if isinstance(bad_ids, str):
             return self.members.get(bad_ids)
         else:
             return [self.members[bad_id] for bad_id in bad_ids if bad_id in self.members]
@@ -639,7 +641,7 @@ class BlakeObjectImporter(BlakeImporter):
         self.members = {}
 
     def get(self, desc_ids):
-        if isinstance(desc_ids, basestring):
+        if isinstance(desc_ids, str):
             return self.members.get(desc_ids)
         else:
             return [self.members[desc_id] for desc_id in desc_ids if desc_id in self.members]
