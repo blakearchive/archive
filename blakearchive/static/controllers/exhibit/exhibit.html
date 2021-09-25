@@ -107,7 +107,7 @@ text-align: center;
 
     <div id="object-view" class="reading-view">
 
-      <div id="Overlay" class="overlay" ng-if="$root.showArticle == true">
+      <div id="Overlay" class="overlay" ng-if="$root.showArticle == true" style="position:absolute">
       
          
         <div bind-html-compile="exhibitCtrl.exhibit_article_content"></div>
@@ -115,7 +115,7 @@ text-align: center;
       
       <div id="gallery" auto-height adjust="60" breakpoint="768"  class="container-fluid" ng-style="{'margin-left':galleriesMarginLeft}">
       <div style="height:80%; overflow-y:hidden; margin-bottom:0px; "
-        id="compare" class="scrollbar"  left-on-broadcast="viewSubMenu::readingMode" style="width:67%;">
+        id="compare" class="scrollbar"  left-on-broadcast="viewSubMenu::readingMode" style="width:100%;">
         
         <div class="featured-object" style="height:100%;">
           
