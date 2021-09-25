@@ -109,7 +109,7 @@ text-align: center;
 
       <div id="Overlay" class="overlay" ng-if="$root.showArticle == true" style="position:absolute">
       
-        <a style="text-decoration: none" href="" class="closebtnleft" ng-click="$root.showArticle = false">&times;</a>
+        <a style="text-decoration: none;z-index:999" href="" class="closebtnleft" ng-click="$root.showArticle = false">&times;</a>
         <div bind-html-compile="exhibitCtrl.exhibit_article_content"></div>
       </div>
       
