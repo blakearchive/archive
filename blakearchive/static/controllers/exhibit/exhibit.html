@@ -2,7 +2,7 @@
   <div id="object-container" class="row" >
 
     <div id="object-view" class="reading-view">
-      <div ng-if="$root.showArticle == true" auto-height adjust="60" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; min-width:300px;background:white" id="exhibit_article_content" >
+      <div ng-if="$root.showArticle == true" auto-height adjust="60" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; min-width:300px;background:#171515" id="exhibit_article_content" >
          
         <div bind-html-compile="exhibitCtrl.exhibit_article_content">
           
@@ -106,12 +106,13 @@ text-align: center;
   <div id="object-container" class="row" >
 
     <div id="object-view" class="reading-view">
-      <div ng-if="$root.showArticle == true" auto-height adjust="60" breakpoint="768" style="overflow-y:scroll; overflow-x:none; float:left; width:33%; min-width:300px;background:white" id="exhibit_article_content" >
+
+      <div id="Overlay" class="overlay" ng-if="$root.showArticle == true">
+      
          
-        <div bind-html-compile="exhibitCtrl.exhibit_article_content">
-          
-        </div>
+        <div bind-html-compile="exhibitCtrl.exhibit_article_content"></div>
       </div>
+      
       <div id="gallery" auto-height adjust="60" breakpoint="768"  class="container-fluid" ng-style="{'margin-left':galleriesMarginLeft}">
       <div style="height:80%; overflow-y:hidden; margin-bottom:0px; "
         id="compare" class="scrollbar"  left-on-broadcast="viewSubMenu::readingMode" style="width:67%;">
