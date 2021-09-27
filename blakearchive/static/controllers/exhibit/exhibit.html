@@ -139,7 +139,10 @@ text-align: center;
 
                 <div class="reading-copy " style="width:min-content;width:-moz-min-content" id="{{ $index+1 }}">
                   <div id="reading-copy-item-{{$index}}" style="width:10%" class="reading-copy-inner ">
-                    <h2 ng-if="i.title" style="margin-top:-10px; line-height:0px; color:rgba(233,188,71,1)"><span ng-bind-html="trustAsHtml(i.title)"></span></h2>
+                    <h2 ng-if="i.title" style="margin-top:-10px; line-height:0px; color:rgba(233,188,71,1)">
+                      <span ng-if="$index!=1" ng-bind-html="trustAsHtml(i.title)"></span>
+                      <span style="font-size: 12px;writing-mode: vertical-lr;margin-top: 10px;float: left;margin-right: 5px;padding-left: 5px;text-orientation: upright;padding-right: 30px;" ng-if="$index==1" ng-bind-html="trustAsHtml(i.title)"></span>
+                    </h2>
 
                     <span ng-repeat="c in exhibitCtrl.captions[$index]">
 
