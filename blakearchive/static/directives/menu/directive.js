@@ -92,22 +92,22 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         if (!data) { return; }
         data.sort(function(a, b) {
             if(a.menuTitle.match(/^The /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^The/,"") + ", The"
+                a.menuTitle = a.menuTitle.replace(/^The /,"") + ", The"
             }
             if(b.menuTitle.match(/^The /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^The/,"") + ", The"
+                b.menuTitle = b.menuTitle.replace(/^The /,"") + ", The"
             }
             if(a.menuTitle.match(/^A /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^A/,"") + ", A"
+                a.menuTitle = a.menuTitle.replace(/^A /,"") + ", A"
             }
             if(b.menuTitle.match(/^A /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^A/,"") + ", A"
+                b.menuTitle = b.menuTitle.replace(/^A /,"") + ", A"
             }
             if(a.menuTitle.match(/^An /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^A/,"") + ", A"
+                a.menuTitle = a.menuTitle.replace(/^An /,"") + ", An"
             }
             if(b.menuTitle.match(/^An /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^A/,"") + ", A"
+                b.menuTitle = b.menuTitle.replace(/^An /,"") + ", An"
             }
             if(a.menuTitle < b.menuTitle) return -1;
             if(a.menuTitle > b.menuTitle) return 1;
