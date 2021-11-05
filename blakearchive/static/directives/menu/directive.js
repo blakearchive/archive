@@ -91,16 +91,16 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
 
         if (!data) { return; }
         data.sort(function(a, b) {
-            if(a.menuTitle.match(/^The/) != null) {
+            if(a.menuTitle.match(/^The /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^The/,"") + ", The"
             }
-            if(b.menuTitle.match(/^The/) != null) {
+            if(b.menuTitle.match(/^The /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^The/,"") + ", The"
             }
-            if(a.menuTitle.match(/^A/) != null) {
+            if(a.menuTitle.match(/^A /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^A/,"") + ", A"
             }
-            if(b.menuTitle.match(/^A/) != null) {
+            if(b.menuTitle.match(/^A /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^A/,"") + ", A"
             }
             if(a.menuTitle < b.menuTitle) return -1;
