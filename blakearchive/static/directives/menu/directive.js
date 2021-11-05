@@ -115,6 +115,30 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             if(b.menuTitle.match(/^William Hayley/) != null) {
                 b.menuTitle = "Hayley, William" + b.menuTitle.replace(/^William Hayley/,"")
             }
+            if(a.menuTitle.match(/^Illustrations to /) != null) {
+                a.menuTitle = a.menuTitle.replace(/^Illustrations to /,"") + ", Illustrations to"
+            }
+            if(b.menuTitle.match(/^Illustrations to /) != null) {
+                b.menuTitle = b.menuTitle.replace(/^Illustrations to /,"") + ", Illustrations to"
+            }
+            if(a.menuTitle.match(/^Drawings for /) != null) {
+                a.menuTitle = a.menuTitle.replace(/^Drawings for /,"") + ", Drawings for"
+            }
+            if(b.menuTitle.match(/^Drawings for /) != null) {
+                b.menuTitle = b.menuTitle.replace(/^Drawings for /,"") + ", Drawings for"
+            }
+            if(a.menuTitle.match(/^Blake's Illustrations to /) != null) {
+                a.menuTitle = a.menuTitle.replace(/^Blake's Illustrations to /,"") + ", Blake's Illustrations to"
+            }
+            if(b.menuTitle.match(/^Blake's Illustrations to /) != null) {
+                b.menuTitle = b.menuTitle.replace(/^Blake's Illustrations to /,"") + ", Blake's Illustrations to"
+            }
+            if(a.menuTitle.match(/^Blake's /) != null) {
+                a.menuTitle = a.menuTitle.replace(/^Blake's /,"") + ", Blake's"
+            }
+            if(b.menuTitle.match(/^Blake's for /) != null) {
+                b.menuTitle = b.menuTitle.replace(/^Blake's /,"") + ", Blake's"
+            }
             if(a.menuTitle < b.menuTitle) return -1;
             if(a.menuTitle > b.menuTitle) return 1;
             return 0;
