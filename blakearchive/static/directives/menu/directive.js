@@ -109,6 +109,12 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             if(b.menuTitle.match(/^An /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^An /,"") + ", An"
             }
+            if(a.menuTitle.match(/^William Hayley/) != null) {
+                a.menuTitle = a.menuTitle.replace(/^William Hayley/,"") + "Hayley, William"
+            }
+            if(b.menuTitle.match(/^William Hayley/) != null) {
+                b.menuTitle = b.menuTitle.replace(/^William Hayley/,"") + "Hayley, William"
+            }
             if(a.menuTitle < b.menuTitle) return -1;
             if(a.menuTitle > b.menuTitle) return 1;
             return 0;
