@@ -103,6 +103,12 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             if(b.menuTitle.match(/^A /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^A/,"") + ", A"
             }
+            if(a.menuTitle.match(/^An /) != null) {
+                a.menuTitle = a.menuTitle.replace(/^A/,"") + ", A"
+            }
+            if(b.menuTitle.match(/^An /) != null) {
+                b.menuTitle = b.menuTitle.replace(/^A/,"") + ", A"
+            }
             if(a.menuTitle < b.menuTitle) return -1;
             if(a.menuTitle > b.menuTitle) return 1;
             return 0;
