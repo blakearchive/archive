@@ -115,11 +115,23 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             if(b.menuTitle.match(/^William Hayley/) != null) {
                 b.menuTitle = "Hayley, William" + b.menuTitle.replace(/^William Hayley/,"")
             }
+            if(a.menuTitle.match(/^Illustrations to the /) != null) {
+                a.menuTitle = a.menuTitle.replace(/^Illustrations to /,"") + ", Illustrations to the"
+            }
+            if(b.menuTitle.match(/^Illustrations to the /) != null) {
+                b.menuTitle = b.menuTitle.replace(/^Illustrations to the /,"") + ", Illustrations to the"
+            }
             if(a.menuTitle.match(/^Illustrations to /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^Illustrations to /,"") + ", Illustrations to"
             }
             if(b.menuTitle.match(/^Illustrations to /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^Illustrations to /,"") + ", Illustrations to"
+            }
+            if(a.menuTitle.match(/^Drawings for "The Pastorals of Virgil"/) != null) {
+                a.menuTitle = a.menuTitle.replace(/^Drawings for "The Pastorals of Virgil"/,"") + "\"Pastorals of Virgil, The\", Drawings for"
+            }
+            if(b.menuTitle.match(/^Drawings for /) != null) {
+                b.menuTitle = b.menuTitle.replace(/^Drawings for "The Pastorals of Virgil"/,"") + "\"Pastorals of Virgil, The\", Drawings for"
             }
             if(a.menuTitle.match(/^Drawings for /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^Drawings for /,"") + ", Drawings for"
@@ -127,11 +139,11 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             if(b.menuTitle.match(/^Drawings for /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^Drawings for /,"") + ", Drawings for"
             }
-            if(a.menuTitle.match(/^Blake's Illustrations to /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^Blake's Illustrations to /,"") + ", Blake's Illustrations to"
+            if(a.menuTitle.match(/^Blake's Illustrations of /) != null) {
+                a.menuTitle = a.menuTitle.replace(/^Blake's Illustrations of /,"") + ", Blake's Illustrations of"
             }
-            if(b.menuTitle.match(/^Blake's Illustrations to /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^Blake's Illustrations to /,"") + ", Blake's Illustrations to"
+            if(b.menuTitle.match(/^Blake's Illustrations of /) != null) {
+                b.menuTitle = b.menuTitle.replace(/^Blake's Illustrations of /,"") + ", Blake's Illustrations of"
             }
             if(a.menuTitle.match(/^Blake's /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^Blake's /,"") + ", Blake's"
