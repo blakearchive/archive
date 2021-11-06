@@ -217,8 +217,8 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             if(b.menuTitle.match(/^Sketches for Robert Blair's "The Grave"/) != null) {
                 b.menuTitle = "Blair's, Robert, \"The Grave,\" Sketches for"
             }
-            if(a.menuTitle.replace(/"/g,"") < b.menuTitle.replace(/"/g,"")) return -1;
-            if(a.menuTitle.replace(/"/g,"") > b.menuTitle.replace(/"/g,"")) return 1;
+            if(a.menuTitle.replace(/[",']/g,"") < b.menuTitle.replace(/[",']/g,"")) return -1;
+            if(a.menuTitle.replace(/[",']/g,"") > b.menuTitle.replace(/[",']/g,"")) return 1;
             return 0;
         });
         
