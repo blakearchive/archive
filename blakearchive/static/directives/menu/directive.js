@@ -128,7 +128,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                 b.menuTitle = b.menuTitle.replace(/^Drawings for "The Pastorals of Virgil"/,"") + "\"Pastorals of Virgil, The\", Drawings for"
             }
             if(a.menuTitle.match(/^Drawings for Mary Wollstonecraft's/) != null) {
-                a.menuTitle = "Wollstonecraft's, Mary," + "Original Stories from Real Life," + "Drawings for"
+                a.menuTitle = "Wollstonecraft's, Mary, Original Stories from Real Life, Drawings for"
             }
             if(b.menuTitle.match(/^Drawings for Mary Wollstonecraft's/) != null) {
                 b.menuTitle = "Wollstonecraft's, Mary, Original Stories from Real Life, Drawings for"
