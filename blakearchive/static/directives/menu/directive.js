@@ -181,6 +181,12 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             else if(b.menuTitle.match(/^Mary Wollstonecraft/) != null) {
                 b.menuTitle = "Wollstonecraft, Mary" + b.menuTitle.replace(/^Mary Wollstonecraft/,"")
             }
+            else if(a.menuTitle.match(/^Edward Young's/) != null) {
+                a.menuTitle = "Young's, Edward," + a.menuTitle.replace(/^Edward Young's/,"")
+            }
+            else if(b.menuTitle.match(/^Edward Young's/) != null) {
+                b.menuTitle = "Young's, Edward," + b.menuTitle.replace(/^Edward Young's/,"")
+            }
             else if(a.menuTitle.match(/^Edward Young/) != null) {
                 a.menuTitle = "Young, Edward" + a.menuTitle.replace(/^Edward Young/,"")
             }
