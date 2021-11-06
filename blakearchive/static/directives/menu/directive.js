@@ -127,6 +127,12 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             else if(b.menuTitle.match(/^Drawings for /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^Drawings for "The Pastorals of Virgil"/,"") + "\"Pastorals of Virgil, The\", Drawings for"
             }
+            else if(a.menuTitle.match(/^Drawings for Mary Wollstonecraft's/) != null) {
+                a.menuTitle = "Wollstonecraft's, Mary," + "Original Stories from Real Life," + "Drawings for"
+            }
+            else if(b.menuTitle.match(/^Drawings for Mary Wollstonecraft's/) != null) {
+                b.menuTitle = "Wollstonecraft's, Mary, Original Stories from Real Life, Drawings for"
+            }
             else if(a.menuTitle.match(/^Drawings for /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^Drawings for /,"") + ", Drawings for"
             }
@@ -187,6 +193,12 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             else if(b.menuTitle.match(/^Portrait of George Romney/) != null) {
                 b.menuTitle = "Romney, George, Portrait of"
             }
+            else if(a.menuTitle.match(/^Robert Blair's/) != null) {
+                a.menuTitle = "Blair's, Robert" + a.menuTitle.replace(/^Robert Blair's/,"")
+            }
+            else if(b.menuTitle.match(/^Robert Blair's/) != null) {
+                b.menuTitle = "Blair's, Robert" + b.menuTitle.replace(/^Robert Blair's/,"")
+            }
             else if(a.menuTitle.match(/^Robert Blair/) != null) {
                 a.menuTitle = "Blair, Robert" + a.menuTitle.replace(/^Robert Blair/,"")
             }
@@ -194,10 +206,10 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                 b.menuTitle = "Blair, Robert" + b.menuTitle.replace(/^Robert Blair/,"")
             }
             else if(a.menuTitle.match(/^Sketches for Robert Blair's "The Grave"/) != null) {
-                a.menuTitle = "\"Blair's, Robert\", \"The Grave,\" Sketches for"
+                a.menuTitle = "Blair's, Robert, \"The Grave,\" Sketches for"
             }
             else if(b.menuTitle.match(/^Sketches for Robert Blair's "The Grave"/) != null) {
-                b.menuTitle = "\"Blair's, Robert\", \"The Grave,\" Sketches for"
+                b.menuTitle = "Blair's, Robert, \"The Grave,\" Sketches for"
             }
             if(a.menuTitle.replace(/"/g,"") < b.menuTitle.replace(/"/g,"")) return -1;
             if(a.menuTitle.replace(/"/g,"") > b.menuTitle.replace(/"/g,"")) return 1;
