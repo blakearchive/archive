@@ -94,127 +94,127 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             if(a.menuTitle.match(/^The /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^The /,"") + ", The"
             }
-            else if(b.menuTitle.match(/^The /) != null) {
+            if(b.menuTitle.match(/^The /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^The /,"") + ", The"
             }
-            else if(a.menuTitle.match(/^A /) != null) {
+            if(a.menuTitle.match(/^A /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^A /,"") + ", A"
             }
-            else if(b.menuTitle.match(/^A /) != null) {
+            if(b.menuTitle.match(/^A /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^A /,"") + ", A"
             }
-            else if(a.menuTitle.match(/^An /) != null) {
+            if(a.menuTitle.match(/^An /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^An /,"") + ", An"
             }
-            else if(b.menuTitle.match(/^An /) != null) {
+            if(b.menuTitle.match(/^An /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^An /,"") + ", An"
             }
-            else if(a.menuTitle.match(/^Illustrations to the /) != null) {
+            if(a.menuTitle.match(/^Illustrations to the /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^Illustrations to /,"") + ", Illustrations to the"
             }
-            else if(b.menuTitle.match(/^Illustrations to the /) != null) {
+            if(b.menuTitle.match(/^Illustrations to the /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^Illustrations to the /,"") + ", Illustrations to the"
             }
-            else if(a.menuTitle.match(/^Illustrations to /) != null) {
+            if(a.menuTitle.match(/^Illustrations to /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^Illustrations to /,"") + ", Illustrations to"
             }
-            else if(b.menuTitle.match(/^Illustrations to /) != null) {
+            if(b.menuTitle.match(/^Illustrations to /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^Illustrations to /,"") + ", Illustrations to"
             }
-            else if(a.menuTitle.match(/^Drawings for "The Pastorals of Virgil"/) != null) {
+            if(a.menuTitle.match(/^Drawings for "The Pastorals of Virgil"/) != null) {
                 a.menuTitle = "\"Pastorals of Virgil, The\", Drawings for"
             }
-            else if(b.menuTitle.match(/^Drawings for /) != null) {
+            if(b.menuTitle.match(/^Drawings for /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^Drawings for "The Pastorals of Virgil"/,"") + "\"Pastorals of Virgil, The\", Drawings for"
             }
-            else if(a.menuTitle.match(/^Drawings for Mary Wollstonecraft's/) != null) {
+            if(a.menuTitle.match(/^Drawings for Mary Wollstonecraft's/) != null) {
                 a.menuTitle = "Wollstonecraft's, Mary," + "Original Stories from Real Life," + "Drawings for"
             }
-            else if(b.menuTitle.match(/^Drawings for Mary Wollstonecraft's/) != null) {
+            if(b.menuTitle.match(/^Drawings for Mary Wollstonecraft's/) != null) {
                 b.menuTitle = "Wollstonecraft's, Mary, Original Stories from Real Life, Drawings for"
             }
-            else if(a.menuTitle.match(/^Drawings for /) != null) {
+            if(a.menuTitle.match(/^Drawings for /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^Drawings for /,"") + ", Drawings for"
             }
-            else if(b.menuTitle.match(/^Drawings for /) != null) {
+            if(b.menuTitle.match(/^Drawings for /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^Drawings for /,"") + ", Drawings for"
             }
-            else if(a.menuTitle.match(/^Blake's Illustrations of /) != null) {
+            if(a.menuTitle.match(/^Blake's Illustrations of /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^Blake's Illustrations of /,"") + ", Blake's Illustrations of"
             }
-            else if(b.menuTitle.match(/^Blake's Illustrations of /) != null) {
+            if(b.menuTitle.match(/^Blake's Illustrations of /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^Blake's Illustrations of /,"") + ", Blake's Illustrations of"
             }
-            else if(a.menuTitle.match(/^Blake's /) != null) {
+            if(a.menuTitle.match(/^Blake's /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^Blake's /,"") + ", Blake's"
             }
-            else if(b.menuTitle.match(/^Blake's for /) != null) {
+            if(b.menuTitle.match(/^Blake's for /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^Blake's /,"") + ", Blake's"
             }
-            else if(a.menuTitle.match(/^Twelve Illustrations to /) != null) {
+            if(a.menuTitle.match(/^Twelve Illustrations to /) != null) {
                 a.menuTitle = a.menuTitle.replace(/^Twelve Illustrations to /,"") + ", Twelve Illustrations to"
             }
-            else if(b.menuTitle.match(/^Twelve Illustrations to /) != null) {
+            if(b.menuTitle.match(/^Twelve Illustrations to /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^Twelve Illustrations to /,"") + ", Twelve Illustrations to"
             }
-            else if(a.menuTitle.match(/^William Hayley/) != null) {
+            if(a.menuTitle.match(/^William Hayley/) != null) {
                 a.menuTitle = "Hayley, William" + a.menuTitle.replace(/^William Hayley/,"")
             }
-            else if(b.menuTitle.match(/^William Hayley/) != null) {
+            if(b.menuTitle.match(/^William Hayley/) != null) {
                 b.menuTitle = "Hayley, William" + b.menuTitle.replace(/^William Hayley/,"")
             }
-            else if(a.menuTitle.match(/^John Flaxman /) != null) {
+            if(a.menuTitle.match(/^John Flaxman /) != null) {
                 a.menuTitle = "Flaxman, John" + a.menuTitle.replace(/^John Flaxman/,"")
             }
-            else if(b.menuTitle.match(/^John Flaxman/) != null) {
+            if(b.menuTitle.match(/^John Flaxman/) != null) {
                 b.menuTitle = "Flaxman, John" + b.menuTitle.replace(/^John Flaxman/,"")
             }
-            else if(a.menuTitle.match(/^John Gabriel Stedman/) != null) {
+            if(a.menuTitle.match(/^John Gabriel Stedman/) != null) {
                 a.menuTitle = "Stedman, John Gabriel" + a.menuTitle.replace(/^John Gabriel Stedman/,"")
             }
-            else if(b.menuTitle.match(/^John Gabriel Stedman/) != null) {
+            if(b.menuTitle.match(/^John Gabriel Stedman/) != null) {
                 b.menuTitle = "Stedman, John Gabriel" + b.menuTitle.replace(/^John Gabriel Stedman/,"")
             }
-            else if(a.menuTitle.match(/^Mary Wollstonecraft/) != null) {
+            if(a.menuTitle.match(/^Mary Wollstonecraft/) != null) {
                 a.menuTitle = "Wollstonecraft, Mary" + a.menuTitle.replace(/^Mary Wollstonecraft/,"")
             }
-            else if(b.menuTitle.match(/^Mary Wollstonecraft/) != null) {
+            if(b.menuTitle.match(/^Mary Wollstonecraft/) != null) {
                 b.menuTitle = "Wollstonecraft, Mary" + b.menuTitle.replace(/^Mary Wollstonecraft/,"")
             }
-            else if(a.menuTitle.match(/^Edward Young's/) != null) {
+            if(a.menuTitle.match(/^Edward Young's/) != null) {
                 a.menuTitle = "Young's, Edward," + a.menuTitle.replace(/^Edward Young's/,"")
             }
-            else if(b.menuTitle.match(/^Edward Young's/) != null) {
+            if(b.menuTitle.match(/^Edward Young's/) != null) {
                 b.menuTitle = "Young's, Edward," + b.menuTitle.replace(/^Edward Young's/,"")
             }
-            else if(a.menuTitle.match(/^Edward Young/) != null) {
+            if(a.menuTitle.match(/^Edward Young/) != null) {
                 a.menuTitle = "Young, Edward" + a.menuTitle.replace(/^Edward Young/,"")
             }
-            else if(b.menuTitle.match(/^Edward Young/) != null) {
+            if(b.menuTitle.match(/^Edward Young/) != null) {
                 b.menuTitle = "Young, Edward" + b.menuTitle.replace(/^Edward Young/,"")
             }
-            else if(a.menuTitle.match(/^Portrait of George Romney/) != null) {
+            if(a.menuTitle.match(/^Portrait of George Romney/) != null) {
                 a.menuTitle = "Romney, George, Portrait of"
             }
-            else if(b.menuTitle.match(/^Portrait of George Romney/) != null) {
+            if(b.menuTitle.match(/^Portrait of George Romney/) != null) {
                 b.menuTitle = "Romney, George, Portrait of"
             }
-            else if(a.menuTitle.match(/^Robert Blair's/) != null) {
+            if(a.menuTitle.match(/^Robert Blair's/) != null) {
                 a.menuTitle = "Blair's, Robert," + a.menuTitle.replace(/^Robert Blair's/,"")
             }
-            else if(b.menuTitle.match(/^Robert Blair's/) != null) {
+            if(b.menuTitle.match(/^Robert Blair's/) != null) {
                 b.menuTitle = "Blair's, Robert," + b.menuTitle.replace(/^Robert Blair's/,"")
             }
-            else if(a.menuTitle.match(/^Robert Blair/) != null) {
+            if(a.menuTitle.match(/^Robert Blair/) != null) {
                 a.menuTitle = "Blair, Robert" + a.menuTitle.replace(/^Robert Blair/,"")
             }
-            else if(b.menuTitle.match(/^Robert Blair/) != null) {
+            if(b.menuTitle.match(/^Robert Blair/) != null) {
                 b.menuTitle = "Blair, Robert" + b.menuTitle.replace(/^Robert Blair/,"")
             }
-            else if(a.menuTitle.match(/^Sketches for Robert Blair's "The Grave"/) != null) {
+            if(a.menuTitle.match(/^Sketches for Robert Blair's "The Grave"/) != null) {
                 a.menuTitle = "Blair's, Robert, \"The Grave,\" Sketches for"
             }
-            else if(b.menuTitle.match(/^Sketches for Robert Blair's "The Grave"/) != null) {
+            if(b.menuTitle.match(/^Sketches for Robert Blair's "The Grave"/) != null) {
                 b.menuTitle = "Blair's, Robert, \"The Grave,\" Sketches for"
             }
             if(a.menuTitle.replace(/"/g,"") < b.menuTitle.replace(/"/g,"")) return -1;
