@@ -194,10 +194,10 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                 b.menuTitle = "Romney, George, Portrait of"
             }
             else if(a.menuTitle.match(/^Robert Blair's/) != null) {
-                a.menuTitle = "Blair's, Robert" + a.menuTitle.replace(/^Robert Blair's/,"")
+                a.menuTitle = "Blair's, Robert," + a.menuTitle.replace(/^Robert Blair's/,"")
             }
             else if(b.menuTitle.match(/^Robert Blair's/) != null) {
-                b.menuTitle = "Blair's, Robert" + b.menuTitle.replace(/^Robert Blair's/,"")
+                b.menuTitle = "Blair's, Robert," + b.menuTitle.replace(/^Robert Blair's/,"")
             }
             else if(a.menuTitle.match(/^Robert Blair/) != null) {
                 a.menuTitle = "Blair, Robert" + a.menuTitle.replace(/^Robert Blair/,"")
