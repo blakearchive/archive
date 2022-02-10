@@ -142,7 +142,7 @@ text-align: center;
             <div style="height:100%;" class="item" ng-repeat="i in exhibitCtrl.images track by $index" id="item-{{$index}}">
 
               <div class="reading-wrapper" style="height:100%;" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
-
+                <img ng-if="i.dbi != ''" magnify-image ng-src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg">
                 <div class="reading-copy " style="width:min-content;width:-moz-min-content" id="{{ $index+1 }}">
                   <h2 ng-if="i.title" style="height:100%;margin-top:-10px; line-height:0px; color:rgba(233,188,71,1)">
                       
@@ -181,7 +181,7 @@ text-align: center;
 ">end of gallery i</p>-->
                 </div>
 
-                <img ng-if="i.dbi != ''" magnify-image ng-src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg">
+                
                 
 
               </div>
