@@ -140,15 +140,16 @@ text-align: center;
             
 
             <div style="height:100%;" class="item" ng-repeat="i in exhibitCtrl.images track by $index" id="item-{{$index}}">
-              <div style="float: left;width:min-content">
+              
+
+              <div class="reading-wrapper" style="height:100%;float:right" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
+
+                <div style="float: left;width:min-content">
               <h2 ng-if="i.title" style="margin-top:-10px; line-height:0px; color:rgba(233,188,71,1)">
                       
                       <span style="font-size: 12px;margin-top: 10px;" ng-bind-html="trustAsHtml(i.title)"></span>
                     </h2>
               </div>
-
-              <div class="reading-wrapper" style="height:100%;float:right" breakpoint="768" id="{{ read.cssSafeId(o.desc_id) }}">
-
                 
 
                 <img ng-if="i.dbi != ''" magnify-image ng-src="/images/exhibits/{{exhibitCtrl.exId}}/{{ i.dbi }}.jpg" id="{{ $index+1 }}">
