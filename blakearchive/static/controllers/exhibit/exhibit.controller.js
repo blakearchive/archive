@@ -184,7 +184,7 @@ angular.module('blake').controller('ExhibitController', function (
         vm.scrollTo(1);
       }
       else {
-        vm.scrollTo("start");
+        vm.scrollTo("1galleryheader");
       }  
     });
     //console.log("===>>>>"+JSON.stringify(vm.bds));
