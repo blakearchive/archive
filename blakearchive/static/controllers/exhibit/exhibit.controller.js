@@ -180,12 +180,7 @@ angular.module('blake').controller('ExhibitController', function (
       //console.log(">>>>>hey, tae, you were wrong!!!!");
       $rootScope.doneSettingExhibit = true;
       console.log(vm.bds.exhibit);
-      if(vm.exId == "fakeblakesshort") {
-        vm.scrollTo(1);
-      }
-      else {
-        vm.scrollTo("1galleryheader");
-      }  
+      vm.scrollTo(1);
     });
     //console.log("===>>>>"+JSON.stringify(vm.bds));
     $http.get("/api/exhibit-html/"+exhibitId).then(function(response){
