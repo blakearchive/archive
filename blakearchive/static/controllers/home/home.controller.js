@@ -12,7 +12,7 @@ angular.module('blake').controller('HomeController', function($scope,$rootScope,
     $rootScope.help = 'home';
 
     //uncomment after Works in Preview publication
-    vm.bds.setSelectedWork("but829");
+    vm.bds.setSelectedWork("bb208");
 
     if(!angular.isDefined($rootScope.persistentmode)){
         $rootScope.persistentmode = 'gallery';
