@@ -4,6 +4,7 @@ import pysolr
 import config
 import models
 import unicodedata
+from string_helpers import convert_to_string
 
 
 def main():
@@ -22,7 +23,7 @@ def main():
         blake_copy_solr = pysolr.Solr('http://localhost:8983/solr/blake_copy')
         blake_work_solr = pysolr.Solr('http://localhost:8983/solr/blake_work')
 
-    engine = models.db.create_engine(config.db_connection_string)
+    engine = models.db.create_engine(config.db_connection_string, {})
     session = sessionmaker(bind=engine)()
     objects = session.query(models.BlakeObject).all()
     blake_object_solr.delete(q='*:*')
@@ -43,9 +44,9 @@ def main():
                     "copy_title": blake_object.copy.title,
                     "copy_institution": blake_object.copy.institution,
                     # FIXME: properly convert unicode rather than stripping characters
-                    "notes": json.dumps([unicodedata.normalize('NFKD', note["note"]).encode('ascii', 'ignore') for note in blake_object.notes])
+                    "notes": json.dumps([unicodedata.normalize('NFKD', note["note"]) for note in blake_object.notes])
                 }
-                print obj["id"]
+                print(obj["id"])
                 if blake_object.copy.work:
                     obj["work_title"] = blake_object.copy.work.title
                     obj["work_id"] = blake_object.copy.work.bad_id
@@ -54,7 +55,7 @@ def main():
                     obj["medium"] = blake_object.copy.work.medium
                 blake_object_solr.add([obj])
         except pysolr.SolrError as err:
-            print err
+            print(err)
     blake_object_solr.optimize()
 
     copies = session.query(models.BlakeCopy).all()
@@ -66,7 +67,7 @@ def main():
             "source": blake_copy.source,
             "title": blake_copy.title,
             "institution": blake_copy.institution,
-            "header": blake_copy.header,
+            "header": convert_to_string(blake_copy.header),
             "composition_date": blake_copy.composition_date,
             "print_date": blake_copy.print_date,
             "effective_copy_id": blake_copy.effective_copy_id
@@ -91,6 +92,7 @@ def main():
             "composition_date_string": blake_work.composition_date_string
         }])
     blake_work_solr.optimize()
+
 
 if __name__ == "__main__":
     main()
