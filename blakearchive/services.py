@@ -91,10 +91,8 @@ class BlakeDataService(object):
 
     @classmethod
     def solr_copy_query(cls, query):
-        def object_results(objects):
-            return [[o["value"], o["count"]] for o in objects]
-            
         def copy_results(copies):
+            console.log(copies)
             return [[c["value"], c["count"]] for c in copies]
 
         def work_results(works):
