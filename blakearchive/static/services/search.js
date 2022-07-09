@@ -268,7 +268,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                 });
             }
             s.copyResults = results[1];
-            //console.log(s.copyResults);
+            console.log(s.copyResults);
             for (let type in s.copyResults) {
                 let works = s.copyResults[type];
                 works.forEach((work,index) => {
