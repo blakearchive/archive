@@ -40,6 +40,7 @@ def main():
                     "components": json.dumps(blake_object.components),
                     "illustration_description": json.dumps(blake_object.illustration_description),
                     "text": json.dumps(blake_object.text),
+                    "source": blake_object.source,
                     "copy_title": blake_object.copy.title,
                     "copy_institution": blake_object.copy.institution,
                     # FIXME: properly convert unicode rather than stripping characters
