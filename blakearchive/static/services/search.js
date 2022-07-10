@@ -20,7 +20,6 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
         s.objectResults = [];
         s.copyResults = [];
         s.workResults = [];
-        s.copyAndObjectInfo = [];
     };
 
     s.resetFilters = function () {
@@ -270,7 +269,6 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                 });
             }
             s.copyResults = results[1];
-            s.copyAndObjectInfo = s.copyResults['copy-info'].append(s.objectResults['source']);
             console.log(s.copyResults);
             for (let type in s.copyResults) {
                 let works = s.copyResults[type];
