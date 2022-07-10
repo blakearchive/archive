@@ -25,6 +25,7 @@ angular.module('blake').directive('searchResults', function(){
         controller: "SearchResultsController",
         scope: {
             results: '<results',
+            results2: '<results2',
             label: '@label',
             type: '@type',
             tree: '@tree'

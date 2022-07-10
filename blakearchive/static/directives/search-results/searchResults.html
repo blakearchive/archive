@@ -9,7 +9,7 @@
         </ul>
 </span>
 
-<div class="row search-result-row" ng-show="esr.results.length > 0">
+<div class="row search-result-row" ng-show="esr.results.length > 0 || esr.results2.length > 0">
     <div class="col-xs-12 full-width">
         <slide-box id="{{esr.type}}-slide-box" type="esr.type">
             <div ng-repeat="(k,work) in esr.results" class="search-result-item" ng-class="{selected:k == esr.s.selectedWork && esr.type == esr.s.type}">
@@ -22,6 +22,18 @@
                         ></handprint-block>
                 </div>
             </div>
+
+            <div ng-repeat="(k,work) in esr.results2" class="search-result-item" ng-class="{selected:k == esr.s.selectedWork && esr.type == esr.s.type}">
+                <div scroll-to-element="#{{esr.type}}" offset="125">
+                    <!--to slide, put slideBox.scrollToResult($index); into action for handprint-blocks-->
+                    <handprint-block
+                        action="esr.s.showCopies(esr.type, esr.results2, $index); slideBox.scrollToResult($index);"
+                        image="{{ esr.s.getWorkImage(esr.tree, esr.results2, $index) }}"
+                        footer="{{ esr.s.getHandprintDescription(esr.tree, esr.results2, $index, esr.label) }}"
+                        ></handprint-block>
+                </div>
+            </div>
+
         </slide-box>
     </div>
     <preview-box results="esr.results" tree="esr.tree" type="esr.type"/>
