@@ -30,16 +30,19 @@
             <h5 class="text-center">Image Tags</h5>
             <illustration-description object="orh.selectedObject()" highlight="{{orh.s.highlight}}" keywords="only"></illustration-description>
         </div>
-
+        <!--
         <div ng-if="orh.type == 'copy-info'" id="searchResultCopyInfo">
              <h5 class="text-center">Copy/Set/Receipt/Work in Preview Information</h5>
 
             <copy-information copy="orh.selectedCopy()" highlight="{{orh.s.highlight}}"></copy-information>
         </div>
-
-        <div ng-if="orh.type == 'source'" id="searchResultObjectInfo">
+        -->
+        <div ng-if="orh.type == 'copy-info'">
+             <h5 class="text-center">Copy/Set/Receipt/Work in Preview Information</h5>
+            <copy-information copy="orh.selectedCopy()" highlight="{{orh.s.highlight}}"></copy-information>
+        </div>
+        <div ng-if="orh.type == 'source'">
              <h5 class="text-center">Object-in-Virtual-Group Information</h5>
-
             <copy-information copy="orh.selectedObject()" highlight="{{orh.s.highlight}}"></copy-information>
         </div>
     </div>
