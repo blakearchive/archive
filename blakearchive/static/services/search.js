@@ -483,12 +483,12 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                     endstring = '';
 
 
-                if(label == 'Copy/Set/Receipt/Work in Preview Information') {
+                if(label == 'Copy/Set/Receipt/Work-in-Preview Information') {
                     if(results[workIndex][2].length > 1 && !results[workIndex][0].virtual){
                         string += '(' + results[workIndex][2].length+ ' Copies/Sets' + ')';
                     }
                     if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
-                        string += '(' + results[workIndex][2].length+ ' Copy/Set/Receipt/Work in Preview' + ')';
+                        string += '(' + results[workIndex][2].length+ ' Copy/Set/Receipt/Work-in-Preview' + ')';
 
                     }
                     return string;
