@@ -28,7 +28,7 @@ angular.module("blake").controller("PreviewBoxController", function (SearchServi
     
     vm.showCopiesInWorkPreview = function () {
         try {
-            let multipleObjects = vm.results[vm.s.selectedWork][1] > 0;
+            let multipleObjects = vm.results[vm.s.selectedWork][1] > 1;
             return multipleObjects && vm.tree == 'copy';
         } catch (e) {
             return false;
