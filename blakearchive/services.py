@@ -104,7 +104,7 @@ class BlakeDataService(object):
 
     @classmethod
     def query_objects(cls, cfg):
-        results = {"title": [], "tag": [], "text": [], "description": [], "notes": []}
+        results = {"title": [], "tag": [], "text": [], "description": [], "notes": [], "source": []}
         if cfg.get("searchTitle") or cfg.get("searchAllFields"):
             search_string = cls.generate_search_element("title", cfg)
             results["title"] = cls.solr_object_query(search_string)
@@ -120,6 +120,9 @@ class BlakeDataService(object):
         if cfg.get("searchNotes") or cfg.get("searchAllFields"):
             search_string = cls.generate_search_element("notes", cfg)
             results["notes"] = cls.solr_object_query(search_string)
+        if cfg.get("searchCopyInformation") or cfg.get("searchAllFields"):
+            search_string = cls.generate_search_element("source", cfg)
+            results["source"] = cls.solr_object_query(search_string)
 
         def add_object_query_works(results_):
             works = dict((w.bad_id, w) for w in cls.get_works([r[0] for r in results_]))
