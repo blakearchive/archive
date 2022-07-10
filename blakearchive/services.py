@@ -91,8 +91,19 @@ class BlakeDataService(object):
 
     @classmethod
     def solr_copy_query(cls, query):
+        vgroups = ['biblicalwc', '1780swc', 'gravepd', 'biblicaltemperas', 'gravewc', 'cpd', 'gravewd', 'pid','pencil1']
+        a = [[],[]]
+
+        def object_results(objects):
+            return [[o["value"], o["count"]] for o in objects]
+
         def copy_results(copies):
-            return [[c["value"], c["count"]] for c in copies]
+            for c in copies:
+                if any(c.work.bad_id in s for s in vgroups):
+                    a.append(object_results(c["pivot"]))
+                else:
+                    a.append([c["value"], c["count"]])
+            return a
 
         def work_results(works):
             return [[w["value"], w["count"], copy_results(w["pivot"])] for w in works]
