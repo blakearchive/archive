@@ -110,7 +110,7 @@ class BlakeDataService(object):
 
         search_parameters = {"facet": "on", "facet.pivot": "work_id,bad_id"}
         facets = blake_copy_solr.search(query, **search_parameters).facets['facet_pivot'].values()[0]
-        # print work_results(facets)
+        print work_results(facets)
         return work_results(facets)
 
     @classmethod
