@@ -36,6 +36,12 @@
 
             <copy-information copy="orh.selectedCopy()" highlight="{{orh.s.highlight}}"></copy-information>
         </div>
+
+        <div ng-if="orh.type == 'source'" id="searchResultObjectInfo">
+             <h5 class="text-center">Object-in-Virtual-Group Information</h5>
+
+            <copy-information copy="orh.selectedObject()" highlight="{{orh.s.highlight}}"></copy-information>
+        </div>
     </div>
 
     <div class="object-result-highlight" auto-width adjust="100" breakpoint="992" ng-if="orh.tree == 'work'" class="text-center" to-top-on-broadcast="searchCtrl::changeResult">
