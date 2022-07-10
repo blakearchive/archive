@@ -671,7 +671,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
     s.getPreviewTitle = function (tree, resultTree){
         try {
             if (tree == 'object') {
-                //console.log(resultTree);
+                console.log(resultTree);
                 return resultTree[s.selectedWork][2][s.selectedCopy][2][s.selectedObject][0].title;
             }
         } catch (e) {}

@@ -9,7 +9,7 @@
             <img ng-src="/images/{{ ps.s.getPreviewImage(ps.tree, ps.results) }}.100.jpg">
             <p></p>
             <p class="object-subtitle">
-                <span ng-if="ps.s.getPreviewTitle(ps.tree, ps.results) != null" class="object-no">{{ps.getPreviewTitle(ps.tree, ps.results)}}<br></span>
+                <span ng-if="ps.tree == 'object' && ps.s.getPreviewTitle(ps.tree, ps.results) != null" class="object-no">{{ps.getPreviewTitle(ps.tree, ps.results)}}<br></span>
                 <span ng-if="ps.results[ps.s.selectedWork][0].virtual && ps.results[ps.s.selectedWork][0].bad_id != 'letters' && ps.results[ps.s.selectedWork][0].bad_id != 'shakespearewc'" class="object-no">{{ps.s.getPreviewLabel(ps.tree, ps.results).replace("Object 1","")}}</span>
                 <span ng-if="ps.results[ps.s.selectedWork][0].virtual && (ps.results[ps.s.selectedWork][0].bad_id == 'letters' || ps.results[ps.s.selectedWork][0].bad_id == 'shakespearewc')" class="object-no">{{ps.s.getPreviewLabel(ps.tree, ps.results)}}</span>
                 <span ng-if="!ps.results[ps.s.selectedWork][0].virtual" class="object-no">{{ps.s.getPreviewLabel(ps.tree, ps.results)}}</span></p>
