@@ -37,7 +37,11 @@
             <copy-information copy="orh.selectedCopy()" highlight="{{orh.s.highlight}}"></copy-information>
         </div>
         -->
-        <div ng-if="orh.type == 'copy-info'">
+        <div ng-if="orh.type == 'copy-info'" style="margin-left:61px" ng-if=orh.selectedCopy().objdescid.imprint>
+             <h5 class="text-center">Copy/Set/Receipt/Work in Preview Information</h5>
+            <copy-information copy="orh.selectedCopy()" highlight="{{orh.s.highlight}}"></copy-information>
+        </div>
+        <div ng-if="orh.type == 'copy-info'" ng-if=!orh.selectedCopy().objdescid.imprint>
              <h5 class="text-center">Copy/Set/Receipt/Work in Preview Information</h5>
             <copy-information copy="orh.selectedCopy()" highlight="{{orh.s.highlight}}"></copy-information>
         </div>
