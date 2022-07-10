@@ -300,7 +300,8 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
             s.objectResults['tag'] && s.objectResults['tag'].length != 0 ||
             s.objectResults['notes'] && s.objectResults['notes'].length != 0 ||
             s.objectResults['text'] && s.objectResults['text'].length != 0 ||
-            s.objectResults['text'] && s.objectResults['description'].length != 0)
+            s.objectResults['text'] && s.objectResults['description'].length != 0) ||
+            s.objectResults['source'] && s.objectResults['source'].length != 0)
     };
 
     s.hasCopyResults = function () {
