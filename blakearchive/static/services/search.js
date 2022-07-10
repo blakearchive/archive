@@ -259,7 +259,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
             workSearch = BlakeDataService.queryWorks(s.searchConfig);
         return $q.all([objectSearch,copySearch,workSearch]).then(function(results){
             s.objectResults = results[0];
-            console.log(s.objectResults);
+            //console.log(s.objectResults);
             for (let type in s.objectResults) {
                 let works = s.objectResults[type];
                 works.forEach((work,index) =>{
@@ -269,7 +269,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                 });
             }
             s.copyResults = results[1];
-            console.log(s.copyResults);
+            //console.log(s.copyResults);
             for (let type in s.copyResults) {
                 let works = s.copyResults[type];
                 works.forEach((work,index) => {
