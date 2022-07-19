@@ -36,7 +36,7 @@ On Unix:
 2. Then
 ```gem install capistrano```
 
-### Python
+### Python (This needs to be 3.8.x or higher)
 1. Have Python?
 ```python --version```
 
