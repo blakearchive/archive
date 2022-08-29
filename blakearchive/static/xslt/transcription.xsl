@@ -204,7 +204,7 @@ transforms transcriptions
                                 <xsl:value-of select="number(substring(@n, string-length(@n) - 1))"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="number(@n)"/>
+                                <xsl:value-of select="number(@n)">
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:when>
