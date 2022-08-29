@@ -200,7 +200,7 @@ transforms transcriptions
                 <xsl:choose>
                     <xsl:when test="not(contains(@n, 'XX'))">
                         <xsl:choose>
-                            <xsl:when test="contains(substring(@n,string-length(@n) - 2,string-length(@n) - 2),'1')">
+                            <xsl:when test="contains(substring(@n,string-length(@n) - 2,1),'1')">
                                 <xsl:value-of select="number(substring(@n, string-length(@n) - 2))"/>
                             </xsl:when>
                             <xsl:otherwise>
