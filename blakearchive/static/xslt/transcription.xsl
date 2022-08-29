@@ -203,9 +203,9 @@ transforms transcriptions
                             <xsl:when test="not(contains(@n, '.1'))">
                                 <xsl:value-of select="number(substring(@n, string-length(@n) - 1))"/>
                             </xsl:when>
-                            <xsl:otherise>
+                            <xsl:otherwise>
                                 <xsl:value-of select="number(substring(@n, string-length(@n) - 2))"/>
-                            </xsl:otherise>
+                            </xsl:otherwise>
                         </xsl:choose>
                     </xsl:when>
                     <xsl:otherwise>
