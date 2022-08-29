@@ -199,7 +199,7 @@ transforms transcriptions
             <td class="tei-line-number"> <!-- "width: 5%; font-family:Times New Roman;font-size:8pt;color:gray;" -->
                 <xsl:choose>
                     <xsl:when test="not(contains(@n, 'XX'))">
-                        <xsl:value-of select="number(substring(@n, string-length(@n) - 1))"/>
+                        <xsl:value-of select="number(substring(@n, string-length(@n)))"/>
                     </xsl:when>
                     <xsl:otherwise>
                         &#160;
