@@ -93,7 +93,11 @@
     -->
   
   <!--for Works in Preview publication-->
-  <span ng-if="showWorkTitle == 'home'" class="worktitle" style="padding: 19px;
+  <span ng-if="showWorkTitle == 'home'" class="worktitle" style="padding: 19px;">
+      <a scroll-to-top href="http://blakearchive.org/staticpage/update" style="color:#e3b838;">LATEST PUBLICATION (8/30/22): America a Prophecy Copy MPI</a>
+    </span>
+  
+  <span ng-if="showWorkTitle != 'home' && showWorkTitle != 'exhibit' && showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;
     position: absolute;
     /* right: 35%; */
     margin-left: auto;
@@ -102,10 +106,6 @@
     right: 0;
     text-align: center;
     width: max-content;">
-      <a scroll-to-top href="http://blakearchive.org/staticpage/update" style="color:#e3b838;">LATEST PUBLICATION (8/30/22): America a Prophecy Copy MPI</a>
-    </span>
-  
-  <span ng-if="showWorkTitle != 'home' && showWorkTitle != 'exhibit' && showWorkTitle != 'work' && showWorkTitle != 'static' && $root.view.mode != 'compare'" class="worktitle" style="padding: 19px;">
     <span ng-if="workTitle.bds.copy.bad_id == 'letters'">
       <a scroll-to-top href="" ng-click="$root.showOverlay = true" style="color:white;">Letters (Composed {{workTitle.bds.work.composition_date_string}})</a>: {{ workTitle.getTitle() }}
     </span>
