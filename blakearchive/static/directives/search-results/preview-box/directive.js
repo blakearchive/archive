@@ -8,7 +8,7 @@ angular.module("blake").controller("PreviewBoxController", function (SearchServi
     
     vm.showObjectsInVirtualWorkPreview = function () {
         try {
-            let multipleObjects = vm.results[vm.s.selectedWork][1] > 1,
+            let multipleObjects = vm.results[vm.s.selectedWork][1] > 0,
                 isVirtual = vm.results[vm.s.selectedWork][0].virtual;
             return multipleObjects && vm.tree == 'object' && isVirtual;
         } catch (e) {
@@ -18,7 +18,7 @@ angular.module("blake").controller("PreviewBoxController", function (SearchServi
     
     vm.showObjectsInCopyPreview = function () {
         try {
-            let multipleObjects = vm.results[vm.s.selectedWork][2][vm.s.selectedCopy][1] > 1,
+            let multipleObjects = vm.results[vm.s.selectedWork][2][vm.s.selectedCopy][1] > 0,
                 isVirtual = vm.results[vm.s.selectedWork][0].virtual;
             return multipleObjects && vm.tree == 'object' && !isVirtual;
         } catch (e) {

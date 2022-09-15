@@ -38,6 +38,7 @@
     <field name="components" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="illustration_description" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="notes" type="text" indexed="true" stored="true" multiValued="false"/>
+    <field name="source" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="text" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="copy_title" type="text" indexed="true" stored="true" multiValued="false"/>
     <field name="work_id" type="string" indexed="true" stored="true" multiValued="false"/>

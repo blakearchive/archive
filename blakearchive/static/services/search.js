@@ -259,6 +259,7 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
             workSearch = BlakeDataService.queryWorks(s.searchConfig);
         return $q.all([objectSearch,copySearch,workSearch]).then(function(results){
             s.objectResults = results[0];
+            //console.log(s.objectResults);
             for (let type in s.objectResults) {
                 let works = s.objectResults[type];
                 works.forEach((work,index) =>{
@@ -299,7 +300,8 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
             s.objectResults['tag'] && s.objectResults['tag'].length != 0 ||
             s.objectResults['notes'] && s.objectResults['notes'].length != 0 ||
             s.objectResults['text'] && s.objectResults['text'].length != 0 ||
-            s.objectResults['text'] && s.objectResults['description'].length != 0)
+            s.objectResults['text'] && s.objectResults['description'].length != 0 ||
+            s.objectResults['source'] && s.objectResults['source'].length != 0);
     };
 
     s.hasCopyResults = function () {
@@ -481,12 +483,12 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                     endstring = '';
 
 
-                if(label == 'Copy/Set/Receipt/Work in Preview Information') {
+                if(label == 'Copy/Set/Receipt/Work-in-Preview Information') {
                     if(results[workIndex][2].length > 1 && !results[workIndex][0].virtual){
                         string += '(' + results[workIndex][2].length+ ' Copies/Sets' + ')';
                     }
                     if(results[workIndex][2].length == 1 && !results[workIndex][0].virtual){
-                        string += '(' + results[workIndex][2].length+ ' Copy/Set/Receipt/Work in Preview' + ')';
+                        string += '(' + results[workIndex][2].length+ ' Copy/Set/Receipt/Work-in-Preview' + ')';
 
                     }
                     return string;
@@ -621,7 +623,13 @@ angular.module("blake").factory("SearchService", function (worktitleService, lig
                         return resultTree[workIndex][2][0][2][0][0].dbi + '.100.jpg';
                     }
                 case 'copy':
-                    return resultTree[workIndex][2][0][0].image + '.100.jpg';
+                    //console.log(resultTree[workIndex]);
+                    if (resultTree[workIndex][0].virtual == true) {
+                        return resultTree[workIndex][0].image;
+                    }
+                    else {
+                        return resultTree[workIndex][2][0][0].image + '.100.jpg';
+                    }
                 case 'work':
                     return resultTree[workIndex][0].image;
             }
