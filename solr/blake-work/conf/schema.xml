@@ -19,7 +19,7 @@
 <schema name="example core one" version="1.6">
 
     <fieldtype name="string"  class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
-    <fieldType name="long" class="solr.LongPointField" docValues="true" positionIncrementGap="0"/>
+    <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
     <fieldType name="text" class="solr.TextField" omitNorms="false">
         <analyzer>
             <tokenizer class="solr.StandardTokenizerFactory"/>
