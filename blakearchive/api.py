@@ -127,7 +127,7 @@ def get_copies():
 def get_copy(copy_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     result = blake_data_service.get_copy(copy_id)
-    return jsonify(result)
+    return jsonify(result.to_dict)
 
 
 @api.route('/copy/<copy_id>/objects')
