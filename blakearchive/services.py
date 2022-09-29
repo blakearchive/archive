@@ -86,7 +86,7 @@ class BlakeDataService(object):
             return [[w["value"], w["count"], copy_results(w["pivot"])] for w in works]
 
         search_parameters = {"facet": "on", "facet.pivot": "work_id,copy_id,desc_id"}
-        facets = blake_object_solr.search(query, **search_parameters).facets['facet_pivot'].values()[0]
+        facets = list(blake_object_solr.search(query, **search_parameters).facets['facet_pivot'].values())[0]
         return work_results(facets)
 
     @classmethod
@@ -98,7 +98,7 @@ class BlakeDataService(object):
             return [[w["value"], w["count"], copy_results(w["pivot"])] for w in works]
 
         search_parameters = {"facet": "on", "facet.pivot": "work_id,bad_id"}
-        facets = blake_copy_solr.search(query, **search_parameters).facets['facet_pivot'].values()[0]
+        facets = list(blake_copy_solr.search(query, **search_parameters).facets['facet_pivot'].values())[0]
         # print work_results(facets)
         return work_results(facets)
 
