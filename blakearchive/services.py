@@ -163,7 +163,7 @@ class BlakeDataService(object):
         #    .filter(models.BlakeObject.supplemental == None)
         query = models.BlakeObject.query \
             .order_by(models.BlakeObject.object_number) \
-            .filter(models.BlakeObject.supplemental is None)
+            .filter(models.BlakeObject.supplemental.is_(None))
         return query
 
     @staticmethod
@@ -172,7 +172,7 @@ class BlakeDataService(object):
             .order_by(models.BlakeObject.copy_print_date_value,
                       models.BlakeObject.copy_composition_date_value,
                       models.BlakeObject.object_number) \
-            .filter(models.BlakeObject.supplemental is None)
+            .filter(models.BlakeObject.supplemental.is_(None))
         return query
 
     @classmethod
@@ -317,7 +317,7 @@ class BlakeDataService(object):
             query = cls.get_virtual_sorted_query()
         else:
             query = cls.get_sorted_object_query()
-
+        print(query)
         results = query.join(models.BlakeCopy).filter(models.BlakeCopy.bad_id == bad_id).all()
         return results
 
