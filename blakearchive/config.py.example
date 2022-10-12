@@ -4,3 +4,4 @@ production = False
 solr = 'local'
 local_image_path = ""
 local_data_path = ""
+wsgi_path = "/htdocs/flask/<app name>"
