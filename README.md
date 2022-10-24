@@ -2,19 +2,19 @@
 
 ## Requirements
 
-### Postgres
+### Postgres == 14.x
 On Mac:
 
-1. Install [Postgresql](http://postgresapp.com/)
+1. Install [Postgresql](https://postgresapp.com/)
 2. Start the postgres service
     * Find and click the "Postgres" Elephant icon in you applications, then click "open psql"
-    * Or, in terminal, run ```'/Applications/Postgres.app/Contents/Versions/9.5/bin'/psql -p5432```
+    * Or, in terminal, run ```'/Applications/Postgres.app/Contents/Versions/14.4/bin'/psql -p5432```
         * -p = port number
 3. Setup your blake database
     * In the postgres terminal, run ```CREATE DATABASE blake_archive;```
 
 On Unix:
-1. Install [Postgresql](http://postgresapp.com/)
+1. Install [Postgresql](https://postgresapp.com/)
     * sudo apt-get install postgresql
 2. Configure postgresql
     * sudo -u postgres psql template1
@@ -27,7 +27,7 @@ On Unix:
     * In the postgres terminal, run ```CREATE DATABASE blake_archive;```
 
 
-### Solr >= 5.3.x
+### Solr >= 8.11.1
 [Download and install solr](https://cwiki.apache.org/confluence/display/solr/Installing+Solr)
 
 ### Ruby & Capistrano
@@ -36,7 +36,7 @@ On Unix:
 2. Then
 ```gem install capistrano```
 
-### Python
+### Python (This needs to be 3.8.x or higher)
 1. Have Python?
 ```python --version```
 

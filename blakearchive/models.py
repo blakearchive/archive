@@ -1,8 +1,7 @@
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql import case
-from sqlalchemy.dialects.postgresql import JSON
-import json
 
 db = SQLAlchemy()
 
@@ -61,6 +60,7 @@ text_match__object = db.Table(
     db.Column("object_id", db.Integer, db.ForeignKey("object.object_id")),
     db.Column("related_object_id", db.Integer, db.ForeignKey("object.object_id"))
 )
+
 
 class BlakeFragmentPair(db.Model):
     __tablename__ = "fragmentpair"
@@ -130,7 +130,7 @@ class BlakeObject(db.Model):
         primaryjoin=object_id == production_sequence__object.c.object_id,
         secondaryjoin=object_id == production_sequence__object.c.related_object_id,
         remote_side=production_sequence__object.c.related_object_id,
-        )
+    )
     objects_with_text_matches = db.relationship(
         "BlakeObject",
         order_by="BlakeObject.ordering_date",
@@ -138,7 +138,7 @@ class BlakeObject(db.Model):
         primaryjoin=object_id == text_match__object.c.object_id,
         secondaryjoin=object_id == text_match__object.c.related_object_id,
         remote_side=text_match__object.c.related_object_id,
-        )
+    )
 
     objects_with_same_motif = db.relationship(
         "BlakeObject",
@@ -235,7 +235,7 @@ class BlakeCopy(db.Model):
     effective_copy_id = db.Column(db.UnicodeText, index=True)
     number_of_objects = db.Column(db.Integer)
 
-    #bad_xml = db.Column(db.Text)
+    # bad_xml = db.Column(db.Text)
 
     def __init__(self, *args, **kwargs):
         super(BlakeCopy, self).__init__(*args, **kwargs)
@@ -318,14 +318,16 @@ class BlakeFeaturedWork(db.Model):
             "bad_id": self.bad_id
         }
 
+
 class BlakeExhibitCaption(db.Model):
     __tablename__ = "exhibit_caption"
-    exhibit_caption_id = db.Column(db.Text,primary_key=True)
+    exhibit_caption_id = db.Column(db.Text, primary_key=True)
     caption = db.Column(db.Text)
     image_id = db.Column(db.Integer, index=True)
     exhibit_id = db.Column(db.Text, index=True)
-    image_pk = db.Column(db.Integer,db.ForeignKey("exhibit_image.exhibit_image_pk"))
+    image_pk = db.Column(db.Integer, db.ForeignKey("exhibit_image.exhibit_image_pk"))
     title = db.Column(db.UnicodeText)
+
     @property
     def to_dict(self):
         return {
@@ -335,31 +337,33 @@ class BlakeExhibitCaption(db.Model):
             "title": self.title
         }
 
-class BlakeExhibitImage(db.Model): # todo: change to correct columns name, image, etc
+
+class BlakeExhibitImage(db.Model):  # todo: change to correct columns name, image, etc
     __tablename__ = "exhibit_image"
     exhibit_image_pk = db.Column(db.Integer, primary_key=True)
     image_id = db.Column(db.Integer, index=True)
     exhibit_id = db.Column(db.Text, index=True)
     exhibit_pk = db.Column(db.Integer, db.ForeignKey("exhibit.exhibit_pk"))
-    #caption = db.Column(db.UnicodeText)
+    # caption = db.Column(db.UnicodeText)
     dbi = db.Column(db.UnicodeText)
     title = db.Column(db.Text)
-    #bad_id = db.Column(db.Text)
+    # bad_id = db.Column(db.Text)
     captions = db.relationship(BlakeExhibitCaption, backref="exhibit_image")
 
     @property
     def to_dict(self):
         return {
-            #"caption": self.caption,
+            # "caption": self.caption,
             "dbi": self.dbi,
             "exhibit_id": self.exhibit_id,
             "title": self.title,
             "image_id": self.image_id
         }
 
+
 # Represents an Exhibit. A presentation that has text passages on the left side
 # with links to images in a horizontal 'slideshow' on the right.
-class BlakeExhibit(db.Model): # todo: change to correct columns name, image, etc
+class BlakeExhibit(db.Model):  # todo: change to correct columns name, image, etc
     __tablename__ = "exhibit"
     exhibit_pk = db.Column(db.Integer, primary_key=True)
     exhibit_id = db.Column(db.Text, index=True)
@@ -367,16 +371,17 @@ class BlakeExhibit(db.Model): # todo: change to correct columns name, image, etc
     article = db.Column(db.UnicodeText)
     exhibit_images = db.relationship(BlakeExhibitImage, backref="exhibit")
     composition_date_string = db.Column(db.UnicodeText)
-    #bad_id = db.Column(db.Text)
+
+    # bad_id = db.Column(db.Text)
 
     @property
     def to_dict(self):
-#        image_json = "["
-#        for x in self.exhibit_images:
-#            #print x.__dict__
-#            image_json += str(x.__dict__)
-#        image_json += "]"
-#        print image_json
+        #        image_json = "["
+        #        for x in self.exhibit_images:
+        #            #print x.__dict__
+        #            image_json += str(x.__dict__)
+        #        image_json += "]"
+        #        print image_json
 
         return {
             "title": self.title,
@@ -385,27 +390,29 @@ class BlakeExhibit(db.Model): # todo: change to correct columns name, image, etc
             "composition_date_string": self.composition_date_string
         }
 
-class BlakePreviewImage(db.Model): # todo: change to correct columns name, image, etc
+
+class BlakePreviewImage(db.Model):  # todo: change to correct columns name, image, etc
     __tablename__ = "preview_image"
     preview_image_pk = db.Column(db.Integer, primary_key=True)
     image_id = db.Column(db.Integer, index=True)
     preview_id = db.Column(db.Text, index=True)
     preview_pk = db.Column(db.Integer, db.ForeignKey("preview.preview_pk"))
-    #caption = db.Column(db.UnicodeText)
+    # caption = db.Column(db.UnicodeText)
     dbi = db.Column(db.UnicodeText)
 
     @property
     def to_dict(self):
         return {
-            #"caption": self.caption,
+            # "caption": self.caption,
             "dbi": self.dbi,
             "preview_id": self.preview_id,
             "image_id": self.image_id
         }
 
+
 # Represents an Exhibit. A presentation that has text passages on the left side
 # with links to images in a horizontal 'slideshow' on the right.
-class BlakePreview(db.Model): # todo: change to correct columns name, image, etc
+class BlakePreview(db.Model):  # todo: change to correct columns name, image, etc
     __tablename__ = "preview"
     preview_pk = db.Column(db.Integer, primary_key=True)
     preview_id = db.Column(db.Text, index=True)
@@ -413,16 +420,17 @@ class BlakePreview(db.Model): # todo: change to correct columns name, image, etc
     preview_images = db.relationship(BlakePreviewImage, backref="preview")
     composition_date_string = db.Column(db.UnicodeText)
     source = db.Column(JSON)
-    #bad_id = db.Column(db.Text)
+
+    # bad_id = db.Column(db.Text)
 
     @property
     def to_dict(self):
-#        image_json = "["
-#        for x in self.exhibit_images:
-#            #print x.__dict__
-#            image_json += str(x.__dict__)
-#        image_json += "]"
-#        print image_json
+        #        image_json = "["
+        #        for x in self.exhibit_images:
+        #            #print x.__dict__
+        #            image_json += str(x.__dict__)
+        #        image_json += "]"
+        #        print image_json
 
         return {
             "title": self.title,
@@ -430,4 +438,3 @@ class BlakePreview(db.Model): # todo: change to correct columns name, image, etc
             "composition_date_string": self.composition_date_string,
             "source": self.source
         }
-

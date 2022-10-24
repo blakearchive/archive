@@ -33,6 +33,7 @@ ALL_COLS = ['dbi',
               'reference_work_ids',
               'supplemental_ids']
 
+
 def load(file_name):
     """loads file, checks for required columns"""
     
@@ -168,9 +169,7 @@ def main(args):
     df.set_index('desc_id', inplace=True)
 
     normalize_df, diff_dict = normalize_relations(df)
-
     normalize_df.to_csv(args.out_file, encoding='utf-8')
-
 
     if args.diff:
         for k, val in list(diff_dict.items()):
@@ -179,6 +178,7 @@ def main(args):
             logger.info("==================================")
             for _k, _v in list(val.items()):
                 logger.info("{} -> {}".format(_k, _v))
+
 
 if __name__ == '__main__':
 
