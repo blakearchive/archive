@@ -317,7 +317,6 @@ class BlakeDataService(object):
             query = cls.get_virtual_sorted_query()
         else:
             query = cls.get_sorted_object_query()
-        print(query)
         results = query.join(models.BlakeCopy).filter(models.BlakeCopy.bad_id == bad_id).all()
         return results
 
