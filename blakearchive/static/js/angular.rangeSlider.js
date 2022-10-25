@@ -11,7 +11,7 @@
  *  Originally forked from https://github.com/leongersen/noUiSlider
  *
 
-    This code is released under the MIT Licence - http://opensource.org/licenses/MIT
+    This code is released under the MIT Licence - https://opensource.org/licenses/MIT
 
     Copyright (c) 2013 Daniel Crisp
 
@@ -696,7 +696,7 @@
         }]);
 
     // requestAnimationFramePolyFill
-    // http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+    // https://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
     // shim layer with setTimeout fallback
     window.requestAnimFrame = (function() {
         return window.requestAnimationFrame ||

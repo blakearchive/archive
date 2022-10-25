@@ -5,11 +5,11 @@ Have a usage question?
 ======================
 The issue tracker is only for bugs (with reproducible minimal test case) and feature requests, so please do the following if you have a question:
 
-- Read the tutorial: http://fabricjs.com/articles
-- Read the object caching introduction: http://fabricjs.com/fabric-object-caching
-- Read the docs: http://fabricjs.com/docs
-- Explore demos: http://fabricjs.com/demos
-- Look for/ask questions on StackOverflow: http://stackoverflow.com/questions/tagged/fabricjs
+- Read the tutorial: https://fabricjs.com/articles
+- Read the object caching introduction: https://fabricjs.com/fabric-object-caching
+- Read the docs: https://fabricjs.com/docs
+- Explore demos: https://fabricjs.com/demos
+- Look for/ask questions on StackOverflow: https://stackoverflow.com/questions/tagged/fabricjs
 - Ask on Google Group: https://groups.google.com/forum/#!forum/fabricjs
 
 
@@ -28,7 +28,7 @@ Remove the template from below and provide thoughtful commentary *and code sampl
 1.7.16
 
 ## Test Case
-http://jsfiddle.net/fabricjs/Da7SP/
+https://jsfiddle.net/fabricjs/Da7SP/
 
 ## Steps to reproduce
 

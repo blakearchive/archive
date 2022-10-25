@@ -137,7 +137,7 @@
     components that provide the various functions offered by the Archive.
     It might be understood as the "glue" that binds the Apache server
     software, the eXist database of XML documents, and the XSL
-    transforms. More information about Apache Cocoon is available <a href="http://cocoon.apache.org">here</a>.
+    transforms. More information about Apache Cocoon is available <a href="https://cocoon.apache.org">here</a>.
  </li>
 
         <li><b>eXist</b> is an open source native XML database used by the Archive to
@@ -179,7 +179,7 @@ store, index, and search our XML-encoded documents. eXist utilizes
 
         
       
-      <p><a href="http://www.javasoft.com">Java</a> is a platform-independent programming language developed by Sun
+      <p><a href="https://www.javasoft.com">Java</a> is a platform-independent programming language developed by Sun
 Microsystems in order to facilitate object-oriented programming in
 conjunction with the HTTP layer of the World Wide Web. 
 Software written in Java can be "run" (activated) directly from ordinary
@@ -291,7 +291,7 @@ record embedded in each digital image file (see above).</p>
 
         
       
-      <p>[See also&nbsp;<a href="http://www.rc.umd.edu/dispatches/column7/">"Managing the Blake Archive."</a> <i>Romantic
+      <p>[See also&nbsp;<a href="https://www.rc.umd.edu/dispatches/column7/">"Managing the Blake Archive."</a> <i>Romantic
         Circles</i> (March 1998).]</p>  
     <hr class="c2" noshade="noshade" width="70%">
      <h2 class="c2"><b id="2007">2007 - 2016</b></h2>
@@ -310,11 +310,11 @@ record embedded in each digital image file (see above).</p>
 
 <h3 class="c3">System Architecture and Basic Front-End Navigation</h3> 
 
-<p>The new Blake Archive site does not use some of the technologies that the old site did, such as Java and ImageSizer, and the entire architecture of the old site's web application has been replaced. The new application is divided into four parts: the <a target="_blank" href="http://www.blakearchive.org">site proper</a>, meaning our archive of Blake's works; a collection of back issues from <a target="_blank" href="http://bq.blakearchive.org"><i>Blake: An Illustrated Quarterly</i></a>; <a target="_blank" href="http://blog.blakearchive.org">our blog</a>; and <a target="_blank" href="http://erdman.blakearchive.org"><i>The Complete Poetry and Prose of William Blake</i></a> edited by David Erdman.</p>
+<p>The new Blake Archive site does not use some of the technologies that the old site did, such as Java and ImageSizer, and the entire architecture of the old site's web application has been replaced. The new application is divided into four parts: the <a target="_blank" href="https://www.blakearchive.org">site proper</a>, meaning our archive of Blake's works; a collection of back issues from <a target="_blank" href="https://bq.blakearchive.org"><i>Blake: An Illustrated Quarterly</i></a>; <a target="_blank" href="https://blog.blakearchive.org">our blog</a>; and <a target="_blank" href="https://erdman.blakearchive.org"><i>The Complete Poetry and Prose of William Blake</i></a> edited by David Erdman.</p>
 
 <p>The site proper is made up of three components: images, data, and application code. Images are processed as they have been since 2007 (see above). The data come in two forms, CSV files and <a target="_blank" href="https://www.w3.org/XML/">XML</a> files. Our CSV files encode such data as: relationships between objects; types of those relationships; work information; virtual groupings of works; homepage images and links; and more. We have two types of XML documents. The first we call a work info file. It lists 'All Known Related Works' for a particular work, which include works or objects not currently in the Archive. The second type of XML document we use is what we call a Blake Archive Document, or BAD, which contains the entire critical apparatus for a particular copy of a work and all of its objects.</p>
 
-<p>These data meet the application code at <a target="_blank" href="https://www.python.org/">Python</a> scripts, which convert some of them into <a target="_blank" href="http://www.json.org/">JSON</a> for further processing, import them into a <a target="_blank" href="https://www.postgresql.org/">PostgreSQL</a> database, and index them in a <a target="_blank" href="https://lucene.apache.org/solr/">Solr</a> instance. The database has three tables: BlakeWork, BlakeCopy, and BlakeObject. They overlap somewhat. For example, a BlakeWork and a BlakeCopy both contain the composition date of the associated work. They are constructed this way to allow for the most efficient access from the modular architecture of the <a target="_blank" href="https://angularjs.org/">AngularJS</a> that governs the site.</p>
+<p>These data meet the application code at <a target="_blank" href="https://www.python.org/">Python</a> scripts, which convert some of them into <a target="_blank" href="https://www.json.org/">JSON</a> for further processing, import them into a <a target="_blank" href="https://www.postgresql.org/">PostgreSQL</a> database, and index them in a <a target="_blank" href="https://lucene.apache.org/solr/">Solr</a> instance. The database has three tables: BlakeWork, BlakeCopy, and BlakeObject. They overlap somewhat. For example, a BlakeWork and a BlakeCopy both contain the composition date of the associated work. They are constructed this way to allow for the most efficient access from the modular architecture of the <a target="_blank" href="https://angularjs.org/">AngularJS</a> that governs the site.</p>
 
 <p>This part of the application code begins in main.html, which imports all the necessary <a target="_blank" href="https://www.javascript.com/">Javascript</a> libraries and CSS stylesheets. It also establishes a number of stable parts of the site: the persistent banner, from which a user may return to the homepage, select a work, change viewing modes, or search the Archive; a persistent footer, from which a user may get to the site's static pages; and a viewport, through which our AngularJS application is routed. The AngularJS application is divided into a few minor controllers and five main ones. The main ones are: a Home controller, a Work, Copy, Static Page, and Search controller. At a high level, they are practically self-explanatory. The Home controller operates the homepage, which gives access to a random set of objects in the Archive. The Work controller operates the work info page for each of Blake's works. The Copy controller operates the object view page for each copy, the compare view for objects being compared, and the reading view. The Static Page controller operates the static pages accessible via the persistent footer. And the Search controller operates the search feature in the banner and the search results page.</p>
 
@@ -328,9 +328,9 @@ record embedded in each digital image file (see above).</p>
 
 <p>The banner of the site changes, depending on where a user is stationed and what mode the user is in. If the user is viewing a static page, the banner will display the title of the page in a little black strip. In Reading Mode, the black strip will show the title of the work being viewed and the copy designation if applicable. In Gallery Mode, the black strip will do the same if in the object view, or will indicate 'Selected' if in the compare view. The work title in both modes is always linked to an overlay window containing an index of all the copies of that work. This overlay is equivalent to the work info page for the work, but being accessible beyond the work info page, the overlay allows the user to more efficiently navigate between copies.</p>
 
-<p>The front end of the site is styled with <a target="_blank" href="https://www.w3.org/Style/CSS/Overview.en.html">CSS</a>. Some of the site's marked-up text, such as the transcriptions, is rendered with <a target="_blank" href="https://www.w3.org/TR/xslt">XSLT</a>. And the code for the entire site is written on top of <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>, the Javascript framework for responsive design, so the Archive may be enjoyed in miniature on mobile devices.</p>
+<p>The front end of the site is styled with <a target="_blank" href="https://www.w3.org/Style/CSS/Overview.en.html">CSS</a>. Some of the site's marked-up text, such as the transcriptions, is rendered with <a target="_blank" href="https://www.w3.org/TR/xslt">XSLT</a>. And the code for the entire site is written on top of <a target="_blank" href="https://getbootstrap.com/">Bootstrap</a>, the Javascript framework for responsive design, so the Archive may be enjoyed in miniature on mobile devices.</p>
 
-<p>The other parts of the Archive--to repeat--are: a collection of back issues from <a target="_blank" href="http://bq.blakearchive.org"><i>Blake: An Illustrated Quarterly</i></a>, our <a target="_blank" href="http://blog.blakearchive.org">blog</a>, and <a target="_blank" href="http://erdman.blakearchive.org"><i>The Complete Poetry and Prose of William Blake</i></a> edited by David Erdman. The journal archive is written in <a target="_blank" href="http://www.php.net/">PHP</a> and indexed in its own Solr core. The blog is done in <a target="_blank" href="https://wordpress.com/">Wordpress</a>, and the digital Erdman edition, architected similarly to the site proper, is encoded in XML, which is indexed in its own Solr core and transformed with XSLT. And the application for the edition is written in AngularJS and styled with CSS.</p>
+<p>The other parts of the Archive--to repeat--are: a collection of back issues from <a target="_blank" href="https://bq.blakearchive.org"><i>Blake: An Illustrated Quarterly</i></a>, our <a target="_blank" href="https://blog.blakearchive.org">blog</a>, and <a target="_blank" href="https://erdman.blakearchive.org"><i>The Complete Poetry and Prose of William Blake</i></a> edited by David Erdman. The journal archive is written in <a target="_blank" href="https://www.php.net/">PHP</a> and indexed in its own Solr core. The blog is done in <a target="_blank" href="https://wordpress.com/">Wordpress</a>, and the digital Erdman edition, architected similarly to the site proper, is encoded in XML, which is indexed in its own Solr core and transformed with XSLT. And the application for the edition is written in AngularJS and styled with CSS.</p>
 
 <p>We also make available an API for those users who wish to mine our data.</p>
 

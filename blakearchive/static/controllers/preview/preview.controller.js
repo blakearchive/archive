@@ -32,7 +32,7 @@ angular.module('blake').controller('PreviewController', function (
             toolbar: "toolbar",
             showFullPageControl: false,
             nextButton: "en",
-            prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
+            prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
             tileSources:   {
                 type: 'image',
                 //url:  'images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'
@@ -50,14 +50,14 @@ angular.module('blake').controller('PreviewController', function (
 
     };
     /*
-    vm.options1 = {id:"1",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
-    vm.options2 = {id:"2",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
-    vm.options3 = {id:"3",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
-    vm.options4 = {id:"4",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
-    vm.options5 = {id:"5",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
-    vm.options6 = {id:"6",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
-    vm.options7 = {id:"7",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
-    vm.options8 = {id:"8",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "http://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options1 = {id:"1",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "https://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options2 = {id:"2",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "https://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options3 = {id:"3",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "https://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options4 = {id:"4",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "https://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options5 = {id:"5",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "https://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options6 = {id:"6",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "https://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options7 = {id:"7",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "https://openseadragon.github.io/openseadragon/images/",tileSources:{},};
+    vm.options8 = {id:"8",toolbar:"toolbar",showFullPageControl: false,nextButton: "en",prefixUrl: "https://openseadragon.github.io/openseadragon/images/",tileSources:{},};
     */
 /*
     vm.zoom = function() {

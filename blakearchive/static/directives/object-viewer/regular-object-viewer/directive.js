@@ -10,7 +10,7 @@ angular.module("blake").controller("RegularObjectViewerController", function ($r
             degrees: 0,
             showRotationControl: true,
             id: "example",
-            prefixUrl: "http://openseadragon.github.io/openseadragon/images/",
+            prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
             tileSources: {
                 type: 'image',
                 //url:  'images/previews/but649/BUT649.1.1r.PT.300.cc.jpg'

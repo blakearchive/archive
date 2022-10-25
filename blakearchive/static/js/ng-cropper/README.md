@@ -33,10 +33,10 @@ app.controller('Main', function(Cropper) {
      ng-cropper-hide="'hide.cropper'">
 ```
 
-Read [Demo code](http://github.com/koorgoo/ngCropper/tree/master/demo) for detailed example.
+Read [Demo code](https://github.com/koorgoo/ngCropper/tree/master/demo) for detailed example.
 
 
 
 ### API
 
-Look at [demo.js](http://github.com/koorgoo/ngCropper/tree/master/demo/demo.js) to learn workflow.
+Look at [demo.js](https://github.com/koorgoo/ngCropper/tree/master/demo/demo.js) to learn workflow.
