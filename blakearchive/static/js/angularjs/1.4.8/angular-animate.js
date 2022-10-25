@@ -1,6 +1,6 @@
 /**
  * @license AngularJS v1.4.8
- * (c) 2010-2015 Google, Inc. http://angularjs.org
+ * (c) 2010-2015 Google, Inc. https://angularjs.org
  * License: MIT
  */
 (function(window, angular, undefined) {'use strict';
@@ -40,7 +40,7 @@
 // do the same for `transitionend` as Safari is likely to exhibit similar behavior.
 // Also, the only modern browser that uses vendor prefixes for transitions/keyframes is webkit
 // therefore there is no reason to test anymore for other vendor prefixes:
-// http://caniuse.com/#search=transition
+// https://caniuse.com/#search=transition
     if (isUndefined(window.ontransitionend) && isDefined(window.onwebkittransitionend)) {
         CSS_PREFIX = '-webkit-';
         TRANSITION_PROP = 'WebkitTransition';

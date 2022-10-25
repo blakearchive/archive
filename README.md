@@ -94,7 +94,7 @@ mkdir blake_copy
 ln -s <path-to-repo>(probably ~/Sites/blake)/archive/solr/blake-copy/conf <path-to-solr-install>/server/solr/blake_copy/conf
 ```
 
-Go to http://localhost:8983/solr/admin
+Go to https://localhost:8983/solr/admin
 Click "Core Admin"
 Click "Add Core"
 Change **name** and **instanceDir** to **blake_object** and click "Add Core" (repeat for blake_copy & blake_work)

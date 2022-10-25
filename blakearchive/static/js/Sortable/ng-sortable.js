@@ -51,7 +51,7 @@
 						};
 					}
 
-					// tests: http://jsbin.com/kosubutilo/1/edit?js,output
+					// tests: https://jsbin.com/kosubutilo/1/edit?js,output
 					ngRepeat = ngRepeat.nodeValue.match(/ngRepeat:\s*(?:\(.*?,\s*)?([^\s)]+)[\s)]+in\s+([^\s|]+)/);
 
 					var itemsExpr = $parse(ngRepeat[2]);

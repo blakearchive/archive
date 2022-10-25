@@ -1,8 +1,8 @@
 //! openseadragon 2.4.2
 //! Built on 2020-03-05
 //! Git commit: v2.4.2-0-c450749
-//! http://openseadragon.github.io
-//! License: http://openseadragon.github.io/license/
+//! https://openseadragon.github.io
+//! License: https://openseadragon.github.io/license/
 
 /*
  * OpenSeadragon
@@ -790,7 +790,7 @@ function OpenSeadragon( options ){
      * Taken from jQuery 1.6.1
      * @function isFunction
      * @memberof OpenSeadragon
-     * @see {@link http://www.jquery.com/ jQuery}
+     * @see {@link https://www.jquery.com/ jQuery}
      */
     $.isFunction = function( obj ) {
         return $.type(obj) === "function";
@@ -801,7 +801,7 @@ function OpenSeadragon( options ){
      * Taken from jQuery 1.6.1
      * @function isArray
      * @memberof OpenSeadragon
-     * @see {@link http://www.jquery.com/ jQuery}
+     * @see {@link https://www.jquery.com/ jQuery}
      */
     $.isArray = Array.isArray || function( obj ) {
         return $.type(obj) === "array";
@@ -813,7 +813,7 @@ function OpenSeadragon( options ){
      * Taken from jQuery 1.6.1
      * @function isWindow
      * @memberof OpenSeadragon
-     * @see {@link http://www.jquery.com/ jQuery}
+     * @see {@link https://www.jquery.com/ jQuery}
      */
     $.isWindow = function( obj ) {
         return obj && typeof obj === "object" && "setInterval" in obj;
@@ -824,7 +824,7 @@ function OpenSeadragon( options ){
      * Taken from jQuery 1.6.1
      * @function type
      * @memberof OpenSeadragon
-     * @see {@link http://www.jquery.com/ jQuery}
+     * @see {@link https://www.jquery.com/ jQuery}
      */
     $.type = function( obj ) {
         return ( obj === null ) || ( obj === undefined ) ?
@@ -837,7 +837,7 @@ function OpenSeadragon( options ){
      * Taken from jQuery 1.6.1
      * @function isPlainObject
      * @memberof OpenSeadragon
-     * @see {@link http://www.jquery.com/ jQuery}
+     * @see {@link https://www.jquery.com/ jQuery}
      */
     $.isPlainObject = function( obj ) {
         // Must be an Object.
@@ -870,7 +870,7 @@ function OpenSeadragon( options ){
      * Taken from jQuery 1.6.1
      * @function isEmptyObject
      * @memberof OpenSeadragon
-     * @see {@link http://www.jquery.com/ jQuery}
+     * @see {@link https://www.jquery.com/ jQuery}
      */
     $.isEmptyObject = function( obj ) {
         for ( var name in obj ) {
@@ -964,7 +964,7 @@ function OpenSeadragon( options ){
      * Taken from jQuery 1.6.1
      * @function extend
      * @memberof OpenSeadragon
-     * @see {@link http://www.jquery.com/ jQuery}
+     * @see {@link https://www.jquery.com/ jQuery}
      */
     $.extend = function() {
         var options,
@@ -2143,7 +2143,7 @@ function OpenSeadragon( options ){
          * @function
          * @private
          * @param {String} url The url to retrieve the protocol from.
-         * @return {String} The protocol (http:, https:, file:, ftp: ...)
+         * @return {String} The protocol (https:, https:, file:, ftp: ...)
          */
         getUrlProtocol: function( url ) {
             var match = url.match(/^([a-z]+:)\/\//i);
@@ -2164,7 +2164,7 @@ function OpenSeadragon( options ){
         createAjaxRequest: function( local ) {
             // IE11 does not support window.ActiveXObject so we just try to
             // create one to see if it is supported.
-            // See: http://msdn.microsoft.com/en-us/library/ie/dn423948%28v=vs.85%29.aspx
+            // See: https://msdn.microsoft.com/en-us/library/ie/dn423948%28v=vs.85%29.aspx
             var supportActiveX;
             try {
                 /* global ActiveXObject:true */
@@ -2240,7 +2240,7 @@ function OpenSeadragon( options ){
                     // the 200's on Firefox and 0 on other browsers
                     if ( (request.status >= 200 && request.status < 300) ||
                         ( request.status === 0 &&
-                          protocol !== "http:" &&
+                          protocol !== "https:" &&
                           protocol !== "https:" )) {
                         onSuccess( request );
                     } else {
@@ -2289,7 +2289,7 @@ function OpenSeadragon( options ){
                 */
                 var oldIE = $.Browser.vendor == $.BROWSERS.IE && $.Browser.version < 10;
                 if ( oldIE && typeof ( e.number ) != "undefined" && e.number == -2147024891 ) {
-                    msg += "\nSee http://msdn.microsoft.com/en-us/library/ms537505(v=vs.85).aspx#xdomain";
+                    msg += "\nSee https://msdn.microsoft.com/en-us/library/ms537505(v=vs.85).aspx#xdomain";
                 }
 
                 $.console.log( "%s while making AJAX request: %s", e.name, msg );
@@ -2649,7 +2649,7 @@ function OpenSeadragon( options ){
 
     // Adding support for HTML5's requestAnimationFrame as suggested by acdha.
     // Implementation taken from matt synder's post here:
-    // http://mattsnider.com/cross-browser-and-legacy-supported-requestframeanimation/
+    // https://mattsnider.com/cross-browser-and-legacy-supported-requestframeanimation/
     (function( w ) {
 
         // most browsers have an implementation
@@ -4128,7 +4128,7 @@ $.EventSource.prototype = {
 
     // Note: window.navigator.pointerEnable is deprecated on IE 11 and not part of W3C spec.
     if ( window.PointerEvent && ( window.navigator.pointerEnabled || $.Browser.vendor !== $.BROWSERS.IE ) ) {
-        // IE11 and other W3C Pointer Event implementations (see http://www.w3.org/TR/pointerevents)
+        // IE11 and other W3C Pointer Event implementations (see https://www.w3.org/TR/pointerevents)
         $.MouseTracker.havePointerEvents = true;
         $.MouseTracker.subscribeEvents.push( "pointerover", "pointerout", "pointerdown", "pointerup", "pointermove", "pointercancel" );
         $.MouseTracker.unprefixedPointerEvents = true;
@@ -4162,7 +4162,7 @@ $.EventSource.prototype = {
         $.MouseTracker.subscribeEvents.push( "mousedown", "mouseup", "mousemove" );
         if ( 'ontouchstart' in window ) {
             // iOS, Android, and other W3c Touch Event implementations
-            //    (see http://www.w3.org/TR/touch-events/)
+            //    (see https://www.w3.org/TR/touch-events/)
             //    (see https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html)
             //    (see https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html)
             $.MouseTracker.subscribeEvents.push( "touchstart", "touchend", "touchmove", "touchcancel" );
@@ -7827,7 +7827,7 @@ $.extend( $.Viewer.prototype, $.EventSource.prototype, $.ControlDock.prototype, 
 
         // Go through top element (passed to us) and remove all children
         // Use removeChild to make sure it handles SVG or any non-html
-        // also it performs better - http://jsperf.com/innerhtml-vs-removechild/15
+        // also it performs better - https://jsperf.com/innerhtml-vs-removechild/15
         if (this.element){
             while (this.element.firstChild) {
                 this.element.removeChild(this.element.firstChild);
@@ -11531,7 +11531,7 @@ $.Point.prototype = {
 
     /**
      * Rotates the point around the specified pivot
-     * From http://stackoverflow.com/questions/4465931/rotate-rectangle-around-a-point
+     * From https://stackoverflow.com/questions/4465931/rotate-rectangle-around-a-point
      * @function
      * @param {Number} degress to rotate around the pivot.
      * @param {OpenSeadragon.Point} [pivot=(0,0)] Point around which to rotate.
@@ -12535,7 +12535,7 @@ function configureFromXML( tileSource, xmlDoc ){
 
             configuration = {
                 Image: {
-                    xmlns:       "http://schemas.microsoft.com/deepzoom/2008",
+                    xmlns:       "https://schemas.microsoft.com/deepzoom/2008",
                     Url:         root.getAttribute( "Url" ),
                     Format:      root.getAttribute( "Format" ),
                     DisplayRect: null,
@@ -12704,7 +12704,7 @@ function configureFromObject( tileSource, configuration ){
  *
  * @memberof OpenSeadragon
  * @extends OpenSeadragon.TileSource
- * @see http://iiif.io/api/image/
+ * @see https://iiif.io/api/image/
  * @param {String} [options.tileFormat='jpg']
  *      The extension that will be used when requiring tiles.
  */
@@ -12815,24 +12815,24 @@ $.extend( $.IIIFTileSource.prototype, $.TileSource.prototype, /** @lends OpenSea
 
     supports: function( data, url ) {
         // Version 2.0 and forwards
-        if (data.protocol && data.protocol == 'http://iiif.io/api/image') {
+        if (data.protocol && data.protocol == 'https://iiif.io/api/image') {
             return true;
         // Version 1.1
         } else if ( data['@context'] && (
-            data['@context'] == "http://library.stanford.edu/iiif/image-api/1.1/context.json" ||
-            data['@context'] == "http://iiif.io/api/image/1/context.json") ) {
+            data['@context'] == "https://library.stanford.edu/iiif/image-api/1.1/context.json" ||
+            data['@context'] == "https://iiif.io/api/image/1/context.json") ) {
             // N.B. the iiif.io context is wrong, but where the representation lives so likely to be used
             return true;
 
         // Version 1.0
         } else if ( data.profile &&
-            data.profile.indexOf("http://library.stanford.edu/iiif/image-api/compliance.html") === 0) {
+            data.profile.indexOf("https://library.stanford.edu/iiif/image-api/compliance.html") === 0) {
             return true;
         } else if ( data.identifier && data.width && data.height ) {
             return true;
         } else if ( data.documentElement &&
             "info" == data.documentElement.tagName &&
-            "http://library.stanford.edu/iiif/image-api/ns/" ==
+            "https://library.stanford.edu/iiif/image-api/ns/" ==
                 data.documentElement.namespaceURI) {
             return true;
 
@@ -12848,8 +12848,8 @@ $.extend( $.IIIFTileSource.prototype, $.TileSource.prototype, /** @lends OpenSea
      * @param {Object} data - the raw configuration
      * @example <caption>IIIF 1.1 Info Looks like this</caption>
      * {
-     *   "@context" : "http://library.stanford.edu/iiif/image-api/1.1/context.json",
-     *   "@id" : "http://iiif.example.com/prefix/1E34750D-38DB-4825-A38A-B60A345E591C",
+     *   "@context" : "https://library.stanford.edu/iiif/image-api/1.1/context.json",
+     *   "@id" : "https://iiif.example.com/prefix/1E34750D-38DB-4825-A38A-B60A345E591C",
      *   "width" : 6000,
      *   "height" : 4000,
      *   "scale_factors" : [ 1, 2, 4 ],
@@ -12857,20 +12857,20 @@ $.extend( $.IIIFTileSource.prototype, $.TileSource.prototype, /** @lends OpenSea
      *   "tile_height" : 1024,
      *   "formats" : [ "jpg", "png" ],
      *   "qualities" : [ "native", "grey" ],
-     *   "profile" : "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0"
+     *   "profile" : "https://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0"
      * }
      */
     configure: function( data, url ){
         // Try to deduce our version and fake it upwards if needed
         if ( !$.isPlainObject(data) ) {
             var options = configureFromXml10( data );
-            options['@context'] = "http://iiif.io/api/image/1.0/context.json";
+            options['@context'] = "https://iiif.io/api/image/1.0/context.json";
             options['@id'] = url.replace('/info.xml', '');
             options.version = 1;
             return options;
         } else {
             if ( !data['@context'] ) {
-                data['@context'] = 'http://iiif.io/api/image/1.0/context.json';
+                data['@context'] = 'https://iiif.io/api/image/1.0/context.json';
                 data['@id'] = url.replace('/info.json', '');
                 data.version = 1;
             } else {
@@ -12878,22 +12878,22 @@ $.extend( $.IIIFTileSource.prototype, $.TileSource.prototype, /** @lends OpenSea
                 if (Array.isArray(context)) {
                     for (var i = 0; i < context.length; i++) {
                         if (typeof context[i] === 'string' &&
-                            ( /^http:\/\/iiif\.io\/api\/image\/[1-3]\/context\.json$/.test(context[i]) ||
-                            context[i] === 'http://library.stanford.edu/iiif/image-api/1.1/context.json' ) ) {
+                            ( /^https:\/\/iiif\.io\/api\/image\/[1-3]\/context\.json$/.test(context[i]) ||
+                            context[i] === 'https://library.stanford.edu/iiif/image-api/1.1/context.json' ) ) {
                             context = context[i];
                             break;
                         }
                     }
                 }
                 switch (context) {
-                    case 'http://iiif.io/api/image/1/context.json':
-                    case 'http://library.stanford.edu/iiif/image-api/1.1/context.json':
+                    case 'https://iiif.io/api/image/1/context.json':
+                    case 'https://library.stanford.edu/iiif/image-api/1.1/context.json':
                         data.version = 1;
                         break;
-                    case 'http://iiif.io/api/image/2/context.json':
+                    case 'https://iiif.io/api/image/2/context.json':
                         data.version = 2;
                         break;
-                    case 'http://iiif.io/api/image/3/context.json':
+                    case 'https://iiif.io/api/image/3/context.json':
                         data.version = 3;
                         break;
                     default:
@@ -13112,9 +13112,9 @@ $.extend( $.IIIFTileSource.prototype, $.TileSource.prototype, /** @lends OpenSea
      */
     function canBeTiled ( options ) {
         var level0Profiles = [
-            "http://library.stanford.edu/iiif/image-api/compliance.html#level0",
-            "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0",
-            "http://iiif.io/api/image/2/level0.json",
+            "https://library.stanford.edu/iiif/image-api/compliance.html#level0",
+            "https://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0",
+            "https://iiif.io/api/image/2/level0.json",
             "level0",
             "https://iiif.io/api/image/3/level0.json"
         ];
@@ -13241,7 +13241,7 @@ $.extend( $.IIIFTileSource.prototype, $.TileSource.prototype, /** @lends OpenSea
 
 /*
  * Derived from the OSM tile source in Rainer Simon's seajax-utils project
- * <http://github.com/rsimon/seajax-utils>.  Rainer Simon has contributed
+ * <https://github.com/rsimon/seajax-utils>.  Rainer Simon has contributed
  * the included code to the OpenSeadragon project under the New BSD license;
  * see <https://github.com/openseadragon/openseadragon/issues/58>.
  */
@@ -13255,11 +13255,11 @@ $.extend( $.IIIFTileSource.prototype, $.TileSource.prototype, /** @lends OpenSea
  *
  * Note 1. Zoomlevels. Deep Zoom and OSM define zoom levels differently. In  Deep
  * Zoom, level 0 equals an image of 1x1 pixels. In OSM, level 0 equals an image of
- * 256x256 levels (see http://gasi.ch/blog/inside-deep-zoom-2). I.e. there is a
+ * 256x256 levels (see https://gasi.ch/blog/inside-deep-zoom-2). I.e. there is a
  * difference of log2(256)=8 levels.<br><br>
  *
  * Note 2. Image dimension. According to the OSM Wiki
- * (http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Zoom_levels)
+ * (https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Zoom_levels)
  * the highest Mapnik zoom level has 256.144x256.144 tiles, with a 256x256
  * pixel size. I.e. the Deep Zoom image dimension is 65.572.864x65.572.864
  * pixels.
@@ -13299,7 +13299,7 @@ $.OsmTileSource = function( width, height, tileSize, tileOverlap, tilesUrl ) {
         options.tileOverlap = 0;
     }
     if( !options.tilesUrl ){
-        options.tilesUrl = "http://tile.openstreetmap.org/";
+        options.tilesUrl = "https://tile.openstreetmap.org/";
     }
     options.minLevel = 8;
 
@@ -13387,7 +13387,7 @@ $.extend( $.OsmTileSource.prototype, $.TileSource.prototype, /** @lends OpenSead
 
 /*
  * Derived from the TMS tile source in Rainer Simon's seajax-utils project
- * <http://github.com/rsimon/seajax-utils>.  Rainer Simon has contributed
+ * <https://github.com/rsimon/seajax-utils>.  Rainer Simon has contributed
  * the included code to the OpenSeadragon project under the New BSD license;
  * see <https://github.com/openseadragon/openseadragon/issues/58>.
  */
@@ -13399,7 +13399,7 @@ $.extend( $.OsmTileSource.prototype, $.TileSource.prototype, /** @lends OpenSead
  * @class TmsTileSource
  * @classdesc A tilesource implementation for Tiled Map Services (TMS).
  * TMS tile scheme ( [ as supported by OpenLayers ] is described here
- * ( http://openlayers.org/dev/examples/tms.html ).
+ * ( https://openlayers.org/dev/examples/tms.html ).
  *
  * @memberof OpenSeadragon
  * @extends OpenSeadragon.TileSource
@@ -15257,7 +15257,7 @@ $.Rect.prototype = {
 
         // Get intersection point of segments [a,b] and [c,d]
         function getIntersection(a, b, c, d) {
-            // http://stackoverflow.com/a/1968345/1440403
+            // https://stackoverflow.com/a/1968345/1440403
             var abVector = b.minus(a);
             var cdVector = d.minus(c);
 
@@ -15401,7 +15401,7 @@ $.Rect.prototype = {
     containsPoint: function(point, epsilon) {
         epsilon = epsilon || 0;
 
-        // See http://stackoverflow.com/a/2752754/1440403 for explanation
+        // See https://stackoverflow.com/a/2752754/1440403 for explanation
         var topLeft = this.getTopLeft();
         var topRight = this.getTopRight();
         var bottomLeft = this.getBottomLeft();
@@ -16495,7 +16495,7 @@ ImageJob.prototype = {
                     var blb;
                     // Make the raw data into a blob.
                     // BlobBuilder fallback adapted from
-                    // http://stackoverflow.com/questions/15293694/blob-constructor-browser-compatibility
+                    // https://stackoverflow.com/questions/15293694/blob-constructor-browser-compatibility
                     try {
                         blb = new window.Blob([request.response]);
                     } catch (e) {

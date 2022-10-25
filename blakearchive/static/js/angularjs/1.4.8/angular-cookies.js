@@ -1,6 +1,6 @@
 /**
  * @license AngularJS v1.4.8
- * (c) 2010-2015 Google, Inc. http://angularjs.org
+ * (c) 2010-2015 Google, Inc. https://angularjs.org
  * License: MIT
  */
 (function(window, angular, undefined) {'use strict';
@@ -292,7 +292,7 @@ function $$CookieWriter($document, $log, $browser) {
     str += expires ? ';expires=' + expires.toUTCString() : '';
     str += options.secure ? ';secure' : '';
 
-    // per http://www.ietf.org/rfc/rfc2109.txt browser must allow at minimum:
+    // per https://www.ietf.org/rfc/rfc2109.txt browser must allow at minimum:
     // - 300 cookies
     // - 20 cookies per unique domain
     // - 4096 bytes per cookie

@@ -30,8 +30,8 @@ If you are sure that it's a bug in Fabric.js or a suggestion, open a new [issue]
 
 - **Description:** Use the questions above to describe the issue. Add logs, screenshots or videos if that makes sense.
 
-- **Test case:** Please post code to replicate the bug - best on [jsfiddle](http://jsfiddle.net). Ideally a failing test would be
-perfect, but even a simple script demonstrating the error would suffice. You could use [this jsfiddle template](http://jsfiddle.net/fabricjs/Da7SP/) as a
+- **Test case:** Please post code to replicate the bug - best on [jsfiddle](https://jsfiddle.net). Ideally a failing test would be
+perfect, but even a simple script demonstrating the error would suffice. You could use [this jsfiddle template](https://jsfiddle.net/fabricjs/Da7SP/) as a
 starting point.
 
 - **Fabric.js version:** Make sure to specify which version of Fabric.js you are using. The version can be found in [fabric.js file](https://github.com/kangax/fabric.js/blob/master/dist/fabric.js#L5) or just by executing `fabric.version` in the browser console.
@@ -48,9 +48,9 @@ Here are a few notes you should take into account:
 
 - **Distribution files:** Do your changes only in the [source files](https://github.com/kangax/fabric.js/tree/master/src). Don't include the [distribution files](https://github.com/kangax/fabric.js/tree/master/dist) in your commit.
 
-- **Add tests**: Tests are always a great addition - invest a little time and expand the [unit tests suite](https://github.com/kangax/fabric.js/tree/master/test/unit). More informations about [QUnit](http://qunitjs.com/) tests can be found in the [wiki](https://github.com/kangax/fabric.js/wiki/How-to-contribute-to-Fabric#testing-fabric).
+- **Add tests**: Tests are always a great addition - invest a little time and expand the [unit tests suite](https://github.com/kangax/fabric.js/tree/master/test/unit). More informations about [QUnit](https://qunitjs.com/) tests can be found in the [wiki](https://github.com/kangax/fabric.js/wiki/How-to-contribute-to-Fabric#testing-fabric).
 
-- **Add documentation:** Fabric uses [JSDoc 3] for documentation. The generated documentation can be found at [fabricjs.com](http://fabricjs.com/docs).
+- **Add documentation:** Fabric uses [JSDoc 3] for documentation. The generated documentation can be found at [fabricjs.com](https://fabricjs.com/docs).
 
 - **Create topic branches.** Don't use your master branch for pull request. It's better to create a new branch for every pull request.
 
@@ -59,12 +59,12 @@ Here are a few notes you should take into account:
 - **And there you go!** If you still have questions we're always happy to help. Also feel free to consult [wiki](https://github.com/kangax/fabric.js/wiki/How-to-contribute-to-Fabric).
 
 [Fabric's google group]: https://groups.google.com/forum/#!forum/fabricjs
-[stackoverflow]: http://stackoverflow.com/questions/tagged/fabricjs
+[stackoverflow]: https://stackoverflow.com/questions/tagged/fabricjs
 [@fabric.js]: https://twitter.com/fabricjs
 [@kangax]: https://twitter.com/kangax
 [@kienzle_s]: https://twitter.com/kienzle_s
-[jsfiddle]: http://jsfiddle.net/user/fabricjs/fiddles
-[codepen.io]: http://codepen.io/tag/fabricjs
-[fabricjs.com]: http://fabricjs.com/demos
-[JSDoc 3]: http://usejsdoc.org/
+[jsfiddle]: https://jsfiddle.net/user/fabricjs/fiddles
+[codepen.io]: https://codepen.io/tag/fabricjs
+[fabricjs.com]: https://fabricjs.com/demos
+[JSDoc 3]: https://usejsdoc.org/
 [issue]: https://github.com/kangax/fabric.js/issues
