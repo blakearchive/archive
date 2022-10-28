@@ -363,7 +363,7 @@ class BlakeDocumentImporter(BlakeImporter):
                                  'copies', 'bad_id', 'info', 'info_filename', 'virtual', 'virtual_objects', 'preview',
                                  'preview_copies'])
             entry = Record(*entry)
-            if socket.gethostname() == 'islington.lib.unc.edu' and bool(entry.preview):
+            if socket.gethostname() == 'lambeth.lib.unc.edu' and bool(entry.preview):
                 continue
             else:
                 self.process_work(entry)
@@ -387,7 +387,7 @@ class BlakeDocumentImporter(BlakeImporter):
         else:
             logger.error("info file does not exist: %s" % entry.info_filename)
         self.works[bad_id] = work
-        if socket.gethostname() == 'islington.lib.unc.edu':
+        if socket.gethostname() == 'lambeth.lib.unc.edu':
             diff = set(self.split_ids(entry.copies)) - set(work.preview_copies)
             result = [o for o in self.split_ids(entry.copies) if o in diff]
             all_non_preview_copies = list(result)
@@ -401,7 +401,7 @@ class BlakeDocumentImporter(BlakeImporter):
 
     def process_virtual_work(self, entry, work):
         # Virtual works need to have a special copy created just for them
-        if socket.gethostname() == 'islington.lib.unc.edu':
+        if socket.gethostname() == 'lambeth.lib.unc.edu':
             diff = set(self.split_ids(entry.virtual_objects)) - set(work.preview_copies)
             result = [o for o in self.split_ids(entry.virtual_objects) if o in diff]
             all_non_preview_objects = list(result)
