@@ -460,7 +460,7 @@ class BlakeDocumentImporter(BlakeImporter):
     def populate_database(self):
         print("populating database")
         engine = models.db.create_engine(config.db_connection_string, {})
-        session = sessionmaker(bind=engine)()
+        Session = sessionmaker(bind=engine)
         models.BlakeObject.metadata.drop_all(bind=engine)
         models.BlakeObject.metadata.create_all(bind=engine)
         models.BlakeExhibit.metadata.drop_all(bind=engine)
@@ -474,13 +474,13 @@ class BlakeDocumentImporter(BlakeImporter):
         # models.BlakePreview.metadata.create_all(bind=engine)
         # models.BlakePreviewImage.metadata.drop_all(bind=engine)
         # models.BlakePreviewImage.metadata.create_all(bind=engine)
-
-        session.add_all(self.works.values())
-        session.add_all(self.object_importer.members.values())
-        # session.add_all(self.fragmentpairs.values())
-        session.add_all(self.exhibit_importer.exhibits.values())
-        # session.add_all(self.preview_importer.previews.values())
-        session.commit()
+        with Session() as session:
+            session.add_all(self.works.values())
+            session.add_all(self.object_importer.members.values())
+            # session.add_all(self.fragmentpairs.values())
+            session.add_all(self.exhibit_importer.exhibits.values())
+            # session.add_all(self.preview_importer.previews.values())
+            session.commit()
 
 
 class BlakeCopyImporter(BlakeImporter):
