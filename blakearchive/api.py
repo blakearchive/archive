@@ -225,7 +225,7 @@ def get_exhibit_image_captions(exhibit_id, image_id):
 @api.route("/exhibit-html/<exhibit_id>")
 def get_exhibit_html(exhibit_id):
     filename = config.local_data_path+"exhibits/"+exhibit_id+"/"+exhibit_id+".exhibit.html"
-    exhib_html_file = open(filename, 'r')
+    exhib_html_file = open(filename, 'rb')
     return exhib_html_file.read()
 
 
