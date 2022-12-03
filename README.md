@@ -62,6 +62,7 @@ git clone https://github.com/blakearchive/data.git #clone the blakearchive/data 
 git clone https://github.com/blakearchive/archive.git #clone the blakearchvie/archive repo
 cd archive #cd into the repo
 pip install -r requirements.txt #install the python requirements
+  or python3 -m pip install -r requirements.txt
 ```
 
 ### Setup your config
