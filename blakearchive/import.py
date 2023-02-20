@@ -431,7 +431,7 @@ class BlakeDocumentImporter(BlakeImporter):
                 i += 1
             obj.virtualwork_title = work.title
             #obj.full_object_id = re.sub(r"\s*[Oo]bject 1\s*", "Object " + str(obj.object_number) + " ",
-                                        obj.full_object_id)
+                                        #obj.full_object_id)
             obj.full_object_id = obj.full_object_id.rstrip()
             obj.copy = copy
             obj.object_group = old_copy.title
