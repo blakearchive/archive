@@ -16,6 +16,7 @@ angular.module("blake").directive('ovpImage', function(imageManipulation){
             if(width > (2*height)){  
                 image.css({'height':'auto','width':'100%','margin-top':'0'});
                 me.css({'display': 'flex','justify-content': 'center', 'align-items': 'center'});
+            }
             else if(width > height)){
                 var newHeight = Math.round((height * parentHeight / width));
                 var margin = Math.round(((parentHeight - newHeight) / 2));
