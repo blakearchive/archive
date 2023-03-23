@@ -6,7 +6,7 @@
             <!--<seadragon ng-if="rov.optionsSet" options="rov.options"/>-->
         </a>
         <a ng-if="rov.bds.copy.bad_id == 'esxvi.1-1a' || rov.bds.copy.bad_id == 'esxvi.2-2c' || rov.bds.copy.bad_id == 'esxvi.3-3i' || rov.bds.copy.bad_id == 'esxvi.4-4dd'" style="display:flex;justify-content:center;align-items:center" href="/images/{{ rov.bds.object.dbi }}.{{rov.rs.dpivalue}}.jpg" target="_blank" class="object-img-container" ng-class="{hidden: rov.rs.view.scope == 'text'}" ovp-image>
-            <img style="width:100% !important;height:auto;margin-top:0px" ng-src="/images/{{ rov.bds.object.dbi }}.{{rov.rs.dpivalue}}.jpg" magnify-image>
+            <img style="width:100% !important;height:auto;margin-top:0px;padding-left:1px" ng-src="/images/{{ rov.bds.object.dbi }}.{{rov.rs.dpivalue}}.jpg" magnify-image>
             <!--<seadragon ng-if="rov.optionsSet" options="rov.options"/>-->
         </a>
         <div to-top-on-broadcast="change::selectedObject" class="reading-copy" ng-class="{hidden: rov.rs.view.scope == 'image'}">
