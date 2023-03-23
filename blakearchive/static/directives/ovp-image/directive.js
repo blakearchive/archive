@@ -3,6 +3,7 @@ angular.module("blake").directive('ovpImage', function(imageManipulation){
 
         var image = angular.element(element.children()),
             container = angular.element(element.parent()),
+            me = angular.element;
             height = 0,
             width = 0,
             parentHeight = 0;
@@ -17,7 +18,7 @@ angular.module("blake").directive('ovpImage', function(imageManipulation){
                 //var margin = Math.round(((parentHeight - newHeight) / 2));
                 //image.css({'height':'auto','width':parentHeight+'px','margin-top':margin+'px'});
                 image.css({'height':'auto','width':'100%','margin-top':'0'});
-                container.css({'display': 'flex','justify-content': 'center', 'align-items': 'center'});
+                me.css({'display': 'flex','justify-content': 'center', 'align-items': 'center'});
             } else {
                 image.css({'height':'100%','width':'auto','margin-top':'0'});
             }
