@@ -3,7 +3,7 @@ angular.module("blake").directive('ovpImage', function(imageManipulation){
 
         var image = angular.element(element.children()),
             container = angular.element(element.parent()),
-            me = angular.element;
+            me = angular.element(element);
             height = 0,
             width = 0,
             parentHeight = 0;
