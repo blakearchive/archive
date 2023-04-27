@@ -407,7 +407,7 @@ class BlakeDocumentImporter(BlakeImporter):
             if work.image == 'preview':
                 copy.is_copy_for_work_in_preview = True
                 for(j, obj) in enumerate(copy.objects, 1):
-                    obj.is_object_for_work_in_prevew = True
+                    obj.is_object_for_work_in_preview = True
 
 
     def process_virtual_work(self, entry, work):
