@@ -210,7 +210,7 @@ class BlakeObject(db.Model):
             "object_note_images": self.object_note_images,
             "object_group": self.object_group,
             "fragment": self.fragment,
-            "is_object_for_work_in_preview":self.is_object_for_work_in_preview
+            "is_object_for_work_in_preview": self.is_object_for_work_in_preview
         }
 
 
