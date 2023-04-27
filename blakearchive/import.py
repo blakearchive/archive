@@ -397,7 +397,8 @@ class BlakeDocumentImporter(BlakeImporter):
             work.copies = self.copy_importer.get(self.split_ids(entry.copies))
         if work.virtual:
             self.process_virtual_work(entry, work)
-        self.set_copy_attributes(work)
+        if work.image = 'preview':
+            self.set_copy_attributes(work)
         return work
 
     @staticmethod
@@ -405,8 +406,9 @@ class BlakeDocumentImporter(BlakeImporter):
         for (i, copy) in enumerate(work.copies, 1):
             if work.image == 'preview':
                 copy.is_copy_for_work_in_preview = True
-            else:
-                copy.is_copy_for_work_in_preview = False
+                for(i, obj) in enumerate(copy.objects, 1):
+                    obj.is_object_for_work_in_prevew = True
+
 
     def process_virtual_work(self, entry, work):
         # Virtual works need to have a special copy created just for them
@@ -448,7 +450,6 @@ class BlakeDocumentImporter(BlakeImporter):
             old_copy.effective_copy_id = copy.bad_id
             obj.copy_bad_id = old_copy.bad_id
             obj.virtualwork_id = entry.bad_id
-            obj.is_object_for_work_in_prevew = False
         work.copies.append(copy)
         self.copy_importer.members[entry.bad_id] = copy
 
