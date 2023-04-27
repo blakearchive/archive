@@ -408,6 +408,7 @@ class BlakeDocumentImporter(BlakeImporter):
                 copy.is_copy_for_work_in_preview = True
                 for(j, obj) in enumerate(copy.objects, 1):
                     obj.is_object_for_work_in_preview = True
+                    obj.work_bad_id = work.bad_id
 
 
     def process_virtual_work(self, entry, work):

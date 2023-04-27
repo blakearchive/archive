@@ -116,6 +116,7 @@ class BlakeObject(db.Model):
     supplemental = db.Column(db.UnicodeText)
     fragment = db.Column(db.UnicodeText)
     is_object_for_work_in_preview = db.Column(db.Boolean)
+    work_bad_id = db.Column(db.Text)
 
     objects_from_same_matrix = db.relationship(
         "BlakeObject",
@@ -210,7 +211,8 @@ class BlakeObject(db.Model):
             "object_note_images": self.object_note_images,
             "object_group": self.object_group,
             "fragment": self.fragment,
-            "is_object_for_work_in_preview": self.is_object_for_work_in_preview
+            "is_object_for_work_in_preview": self.is_object_for_work_in_preview,
+            "work_bad_id": self.work_bad_id
         }
 
 
