@@ -402,10 +402,11 @@ class BlakeDocumentImporter(BlakeImporter):
 
     @staticmethod
     def set_copy_attributes(work):
-        if work.image == 'preview':
-            copy.is_copy_for_work_in_preview = True
-        else:
-            copy.is_copy_for_work_in_preview = False
+        for (i, copy) in enumerate(work.copies, 1):
+            if work.image == 'preview':
+                copy.is_copy_for_work_in_preview = True
+            else:
+                copy.is_copy_for_work_in_preview = False
 
     def process_virtual_work(self, entry, work):
         # Virtual works need to have a special copy created just for them
