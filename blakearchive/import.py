@@ -552,7 +552,6 @@ class BlakeCopyImporter(BlakeImporter):
             obj.copy_print_date_value = copy.print_date_value
             obj.copy_print_date_string = copy.print_date_string
             obj.copy_bad_id = copy.bad_id
-            obj.is_object_for_work_in_prevew = copy.is_copy_for_work_in_preview
 
     @staticmethod
     def get_number_of_objects(objects):
