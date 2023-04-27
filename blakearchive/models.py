@@ -115,6 +115,7 @@ class BlakeObject(db.Model):
     object_group = db.Column(db.UnicodeText)
     supplemental = db.Column(db.UnicodeText)
     fragment = db.Column(db.UnicodeText)
+    is_object_for_work_in_preview = db.Column(db.Boolean)
 
     objects_from_same_matrix = db.relationship(
         "BlakeObject",
@@ -208,7 +209,8 @@ class BlakeObject(db.Model):
             "notes": self.notes,
             "object_note_images": self.object_note_images,
             "object_group": self.object_group,
-            "fragment": self.fragment
+            "fragment": self.fragment,
+            "is_object_for_work_in_preview":self.is_object_for_work_in_preview
         }
 
 
@@ -234,6 +236,7 @@ class BlakeCopy(db.Model):
     print_date_value = db.Column(db.UnicodeText)
     effective_copy_id = db.Column(db.UnicodeText, index=True)
     number_of_objects = db.Column(db.Integer)
+    is_copy_for_work_in_preview = db.Column(db.Boolean)
 
     # bad_xml = db.Column(db.Text)
 
@@ -260,6 +263,7 @@ class BlakeCopy(db.Model):
             "print_date": self.print_date,
             "effective_copy_id": self.effective_copy_id,
             "number_of_objects": self.number_of_objects,
+            "is_copy_for_work_in_preview": self.is_copy_for_work_in_preview
         }
 
 

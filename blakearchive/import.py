@@ -397,7 +397,15 @@ class BlakeDocumentImporter(BlakeImporter):
             work.copies = self.copy_importer.get(self.split_ids(entry.copies))
         if work.virtual:
             self.process_virtual_work(entry, work)
+        self.set_copy_attributes(work)
         return work
+
+    @staticmethod
+    def set_copy_attributes(work):
+        if work.image == 'preview':
+            copy.is_copy_for_work_in_preview = True
+        else:
+            copy.is_copy_for_work_in_preview = False
 
     def process_virtual_work(self, entry, work):
         # Virtual works need to have a special copy created just for them
@@ -416,6 +424,7 @@ class BlakeDocumentImporter(BlakeImporter):
         copy.archive_copy_id = entry.bad_id
         copy.composition_date = self.extract_date(entry.composition_date)
         copy.composition_date_string = entry.composition_date
+        copy.is_copy_for_work_in_preview = False
         virtual_group_header = self.virtual_group_header(entry.bad_id)
         if virtual_group_header:
             copy.header = self.element_to_dict(virtual_group_header)
@@ -438,6 +447,7 @@ class BlakeDocumentImporter(BlakeImporter):
             old_copy.effective_copy_id = copy.bad_id
             obj.copy_bad_id = old_copy.bad_id
             obj.virtualwork_id = entry.bad_id
+            obj.is_object_for_work_in_prevew = False
         work.copies.append(copy)
         self.copy_importer.members[entry.bad_id] = copy
 
@@ -540,6 +550,7 @@ class BlakeCopyImporter(BlakeImporter):
             obj.copy_print_date_value = copy.print_date_value
             obj.copy_print_date_string = copy.print_date_string
             obj.copy_bad_id = copy.bad_id
+            obj.is_object_for_work_in_prevew = copy.is_copy_for_work_in_preview
 
     @staticmethod
     def get_number_of_objects(objects):
