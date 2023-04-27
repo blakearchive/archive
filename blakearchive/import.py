@@ -406,7 +406,7 @@ class BlakeDocumentImporter(BlakeImporter):
         for (i, copy) in enumerate(work.copies, 1):
             if work.image == 'preview':
                 copy.is_copy_for_work_in_preview = True
-                for(i, obj) in enumerate(copy.objects, 1):
+                for(j, obj) in enumerate(copy.objects, 1):
                     obj.is_object_for_work_in_prevew = True
 
 
