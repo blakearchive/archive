@@ -4,8 +4,13 @@
     <div class="row" ng-if="tr.bds.object.text_ref.objects.length > 0">
         <h3>Objects</h3>
         <div ng-repeat="obj in tr.bds.object.text_ref.objects track by $index" class="col-sm-6 col-md-3">
-            <handprint-block ng-if="obj.object_group !== null"
+            <handprint-block ng-if="obj.object_group !== null && obj.image != 'preview'"
                              link="/copy/{{obj.virtualwork_id}}?descId={{ obj.desc_id }}"
+                             image="{{ obj.dbi }}.100.jpg"
+                             footer="<b>{{obj.virtualwork_title}}</b><br>{{obj.title}}</b>, Composed {{obj.copy_composition_date_string}}<br>{{obj.full_object_id}}">
+            </handprint-block>
+            <handprint-block ng-if="obj.object_group !== null && obj.image == 'preview'"
+                             link="/preview/{{obj.virtualwork_id}}?descId={{ obj.desc_id }}"
                              image="{{ obj.dbi }}.100.jpg"
                              footer="<b>{{obj.virtualwork_title}}</b><br>{{obj.title}}</b>, Composed {{obj.copy_composition_date_string}}<br>{{obj.full_object_id}}">
             </handprint-block>
