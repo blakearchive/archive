@@ -16,7 +16,7 @@
  limitations under the License.
 -->
 
-<schema name="example core two" version="1.6">
+<schema name="blake-copy" version="1.6">
 
     <fieldtype name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
     <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
