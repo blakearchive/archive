@@ -19,7 +19,7 @@
         <handprint-block ng-repeat="obj in siv.bds.object.supplemental_objects"
                          action="siv.ovs.changeObject(obj); siv.ovs.toggleSupplemental();"
                          image="{{ obj.dbi }}.100.jpg"
-                         footer="{{ obj.full_object_id }}, leaf {{siv.getSource().objinfo.leafsize}}">
+                         footer="{{ obj.full_object_id }}, leaf {{siv.ovs.getSource().objinfo.leafsize}}">
         </handprint-block>
     </div>
     <p ng-if="siv.bds.object.title" class="object-subtitle">{{siv.bds.object.title}}, {{ siv.bds.object.full_object_id }}, <span>{{ siv.bds.object.physical_description.objsize['#text'] }} </span>

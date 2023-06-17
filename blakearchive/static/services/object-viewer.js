@@ -2,6 +2,16 @@ angular.module("blake").factory("ObjectViewerService", function (BlakeDataServic
     let ovs = {};
     ovs.bds = BlakeDataService;
 
+    ovs.getSource = function(){
+        if(ovs.bds.copy){
+            if (ovs.bds.copy.virtual) {
+                return ovs.bds.object.source;
+            } else {
+                return ovs.bds.copy.source;
+            }
+        }
+    };
+
     ovs.userestrictOpen = function(copy,object){
         let header = null;
         if(copy.header.userestrict) {
