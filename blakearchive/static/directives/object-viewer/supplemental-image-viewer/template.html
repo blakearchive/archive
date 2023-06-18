@@ -16,10 +16,10 @@
         </handprint-block>
 
         <!-- the supplemental views -->
-        <handprint-block ng-repeat="obj in siv.bds.object.supplemental_objects"
+        <handprint-block ng-if="obj.full_object_id.includes('full view')" ng-repeat="obj in siv.bds.object.supplemental_objects"
                          action="siv.ovs.changeObject(obj); siv.ovs.toggleSupplemental();"
                          image="{{ obj.dbi }}.100.jpg"
-                         footer="{{ obj.full_object_id }}, leaf {{siv.ovs.getSource().objinfo.leafsize['#text'].trim()}}">
+                         footer="{{ obj.full_object_id }}">
         </handprint-block>
     </div>
     <p ng-if="siv.bds.object.title" class="object-subtitle">{{siv.bds.object.title}}, {{ siv.bds.object.full_object_id }}, <span>{{ siv.bds.object.physical_description.objsize['#text'] }} </span>
