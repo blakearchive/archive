@@ -19,6 +19,11 @@
         <handprint-block ng-if="obj.full_object_id.includes('full view')" ng-repeat="obj in siv.bds.object.supplemental_objects"
                          action="siv.ovs.changeObject(obj); siv.ovs.toggleSupplemental();"
                          image="{{ obj.dbi }}.100.jpg"
+                         footer="{{ obj.full_object_id }}, leaf {{siv.ovs.getSource().objinfo.leafsize['#text'].trim()}}">
+        </handprint-block>
+        <handprint-block ng-if="obj.full_object_id.includes('full view') == false" ng-repeat="obj in siv.bds.object.supplemental_objects"
+                         action="siv.ovs.changeObject(obj); siv.ovs.toggleSupplemental();"
+                         image="{{ obj.dbi }}.100.jpg"
                          footer="{{ obj.full_object_id }}">
         </handprint-block>
     </div>
