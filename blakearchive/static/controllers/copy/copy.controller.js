@@ -7,7 +7,7 @@ angular.module("blake").controller("CopyController", function ($scope,$routePara
     $rootScope.zoom = false;
     $rootScope.supplemental = false;
     $rootScope.help = 'copy';
-    $rootScope.dpivalue = '100';
+    $rootScope.dpivalue = '300';
     vm.bds = BlakeDataService;
     vm.cof = CompareObjectsFactory;
     $rootScope.doneSettingCopy = false;
