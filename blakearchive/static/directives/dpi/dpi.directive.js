@@ -2,7 +2,7 @@ angular.module('blake').controller("DpiController", function ($rootScope) {
     var vm = this;
 
     if(!angular.isDefined($rootScope.dpivalue)){
-        $rootScope.dpivalue = '300';
+        $rootScope.dpivalue = '100';
     }
 
     vm.reloadWith100or300 = function(dpiValue) {
