@@ -459,7 +459,6 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
                     blakeData.work.related_works.forEach((obj,key) => {
                         if(obj.type == 'object' && obj.link){
                             var matchingObject = data.filter(function(o){return o.desc_id == obj.link});
-                            console.log(matchingObject);
                             blakeData.work.related_works[key].link = '/copy/'+matchingObject[0].copy_bad_id+'?descId='+obj.link;
                         }
                     });
