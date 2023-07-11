@@ -453,14 +453,14 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
             var related_work_objects = blakeData.work.related_works.filter(function(obj) {
                 return obj.type == 'object' && obj.link;
             });
-            console.log(related_work_objects)
+            console.log(related_work_objects);
             if(related_work_objects.length > 0){
                 var object_ids = related_work_objects.map(function(obj) { return obj.link; });
                 return blakeData.getObjects(object_ids).then(function(data){
                     blakeData.work.related_works.forEach((obj,key) => {
                         if(obj.type == 'object' && obj.link){
                             var matchingObject = data.filter(function(o){return o.desc_id == obj.link});
-                            console.log(matchingObject)
+                            console.log(matchingObject);
                             blakeData.work.related_works[key].link = '/copy/'+matchingObject[0].copy_bad_id+'?descId='+obj.link;
                         }
                     });
