@@ -449,8 +449,8 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
     };
 
     blakeData.setRelatedWorkObjectLinks = function(){
-        console.log(blakeData.related_works);
-        if(blakeData.related_works){
+        console.log(blakeData.work.related_works);
+        if(blakeData.work.related_works){
             var related_work_objects = blakeData.work.related_works.filter(function(obj) {
                 return obj.type == 'object' && obj.link;
             });
