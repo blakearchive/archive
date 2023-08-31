@@ -112,8 +112,11 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             if(a.menuTitle.match(/^"A Fairy leapt"/) != null) {
                 a.menuTitle = "\"Fairy leapt, A\""
             }
+            if(b.menuTitle.match(/^"A Fairy leapt"/) != null) {
+                b.menuTitle = "\"Fairy leapt, A\""
+            }
             if(a.menuTitle.match(/^Illustrations to the /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^Illustrations to /,"") + ", Illustrations to the"
+                a.menuTitle = a.menuTitle.replace(/^Illustrations to the /,"") + ", Illustrations to the"
             }
             if(b.menuTitle.match(/^Illustrations to the /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^Illustrations to the /,"") + ", Illustrations to the"
