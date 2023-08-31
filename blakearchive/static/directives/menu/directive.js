@@ -127,6 +127,12 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             if(b.menuTitle.match(/^Illustrations to /) != null) {
                 b.menuTitle = b.menuTitle.replace(/^Illustrations to /,"") + ", Illustrations to"
             }
+            if(a.menuTitle.match(/^Preliminary Illustrations to /) != null) {
+                a.menuTitle = a.menuTitle.replace(/^Preliminary Illustrations to /,"") + ", Preliminary Illustrations to"
+            }
+            if(b.menuTitle.match(/^Preliminary Illustrations to /) != null) {
+                b.menuTitle = b.menuTitle.replace(/^Preliminary Illustrations to /,"") + ", Preliminary Illustrations to"
+            }
             if(a.menuTitle.match(/^Drawings for "The Pastorals of Virgil"/) != null) {
                 a.menuTitle = "\"Pastorals of Virgil, The\", Drawings for"
             }
