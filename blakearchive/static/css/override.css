@@ -1,3 +1,14 @@
+.no-view  {
+  display: none; // by default it is hidden
+}
+
+@media only screen and (max-width: 700px) {
+  .no-view {
+    display: block;
+    background-color: lightblue;
+  }
+}
+
 .editorsnotesInPreview {
     z-index: 999;
     position: absolute;
