@@ -1,8 +1,13 @@
-@media (max-width: 768px) {
-  .ng-scope {
+@media only screen and (max-width: 767px) {
+  .no-view {
     display:none;
   }
 }
+
+@media(min-width: 768px) {
+  .message {
+    display:none;
+  }
   
 .editorsnotesInPreview {
     z-index: 999;
