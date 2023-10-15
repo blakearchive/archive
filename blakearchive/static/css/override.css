@@ -1,3 +1,9 @@
+@media (min-width: 768px) {
+  .ng-scope {
+    display:none;
+  }
+}
+  
 .editorsnotesInPreview {
     z-index: 999;
     position: absolute;
