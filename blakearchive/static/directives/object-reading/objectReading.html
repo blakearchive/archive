@@ -131,7 +131,7 @@
                     <img id="{{read.getStrippedDescId(o.desc_id)}}" magnify-image ng-mouseover="read.hover = true;" ng-mouseleave="read.hover = false;" ng-src="/images/{{ o.dbi }}.{{dpi}}.jpg" ng-click="read.changeObject(o)">
 
                     <div class="reading-copy">
-                        <div class="reading-copy-inner" ng-show="(read.apparatus == 'transcriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'">
+                        <div class="reading-copy-inner" style="width:100vh" ng-show="(read.apparatus == 'transcriptions' || read.apparatusArray[$index] == 'transcriptions') && read.apparatusArray[$index] != 'illustrationdescriptions' && read.apparatusArray[$index] != 'editorsnotes' && read.apparatusArray[$index] != 'motif' && read.apparatusArray[$index] != 'samematrix' && read.apparatusArray[$index] != 'productionsequence' && read.apparatusArray[$index] != 'textreference'">
                             <h4 ng-if="o.title" ng-click="read.changeObject(o)">{{o.title}}<br><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <h4 ng-if="!o.title" ng-click="read.changeObject(o)"><span>{{ o.full_object_id }}</span><span ng-if="truesize == true">, {{o.physical_description.objsize['#text'] }}</span></h4>
                             <text-transcription object="o"></text-transcription>
