@@ -606,7 +606,7 @@
        such as /select?qt=XXX
 
        handleSelect="true" will cause the SolrDispatchFilter to process
-       the request and dispatch the query to a handler specified by the 
+       the request and dispatch the query to a handler specified by the
        "qt" param, assuming "/select" isn't already registered.
 
        handleSelect="false" will cause the SolrDispatchFilter to
@@ -628,29 +628,29 @@
 
          multipartUploadLimitInKB - specifies the max size (in KiB) of
          Multipart File Uploads that Solr will allow in a Request.
-         
+
          formdataUploadLimitInKB - specifies the max size (in KiB) of
          form data (application/x-www-form-urlencoded) sent via
          POST. You can use POST to pass request parameters not
          fitting into the URL.
-         
+
          addHttpRequestToContext - if set to true, it will instruct
          the requestParsers to include the original HttpServletRequest
-         object in the context map of the SolrQueryRequest under the 
+         object in the context map of the SolrQueryRequest under the
          key "httpRequest". It will not be used by any of the existing
-         Solr components, but may be useful when developing custom 
+         Solr components, but may be useful when developing custom
          plugins.
-         
+
          *** WARNING ***
          The settings below authorize Solr to fetch remote files, You
          should make sure your system has some authentication before
          using enableRemoteStreaming="true"
 
-      -->
+
     <requestParsers enableRemoteStreaming="true"
                     multipartUploadLimitInKB="2048000"
                     formdataUploadLimitInKB="2048"
-                    addHttpRequestToContext="false"/>
+                    addHttpRequestToContext="false"/> -->
 
     <!-- HTTP Caching
 
@@ -663,21 +663,21 @@
     <!-- If you include a <cacheControl> directive, it will be used to
          generate a Cache-Control header (as well as an Expires header
          if the value contains "max-age=")
-         
+
          By default, no Cache-Control header is generated.
-         
+
          You can use the <cacheControl> option even if you have set
          never304="true"
       -->
     <!--
        <httpCaching never304="true" >
-         <cacheControl>max-age=30, public</cacheControl> 
+         <cacheControl>max-age=30, public</cacheControl>
        </httpCaching>
       -->
     <!-- To enable Solr to respond with automatically generated HTTP
          Caching headers, and to response to Cache Validation requests
          correctly, set the value of never304="false"
-         
+
          This will cause Solr to generate Last-Modified and ETag
          headers based on the properties of the Index.
 
@@ -702,7 +702,7 @@
     <!--
        <httpCaching lastModifiedFrom="openTime"
                     etagSeed="Solr">
-         <cacheControl>max-age=30, public</cacheControl> 
+         <cacheControl>max-age=30, public</cacheControl>
        </httpCaching>
       -->
   </requestDispatcher>
