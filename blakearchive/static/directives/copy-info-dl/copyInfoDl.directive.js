@@ -11,4 +11,5 @@ angular.module('blake').directive('copyInfoDl', function(){
         controllerAs: 'dl',
         bindToController: true
     };
+    console.log(infoObject)
 });
