@@ -1,4 +1,4 @@
-angular.module('blake').controller("CopyInfoDlController", function(){
+angular.module('blake').controller("CopyInfoDlController", function($scope,$sce){
     var vm = this;
 
     vm.getNote = function(note) {
