@@ -3,10 +3,15 @@ angular.module('blake').controller("CopyInfoDlController", function($scope,$sce)
 
     vm.getNote = function(note) {
         if(note) {
-            let noteText = '';
-            noteText = note['#text'].replace("^", '<sup>');
-            noteText = noteText.replace("^", '</sup>');
-            console.log(noteText);
+            let noteText = note['#text'];
+            while(noteText.indexOf('^') > -1) {
+                noteText = noteText.replace("^", '<sup>');
+                noteText = noteText.replace("^", '</sup>');
+            }
+            while(noteText.indexOf('*') > -1) {
+                noteText = noteText.replace("*", '<i>');
+                noteText = noteText.replace("*", '</i>');
+            }
             return noteText;
         }
     }
