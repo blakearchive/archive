@@ -11,6 +11,12 @@ angular.module('blake').controller("CopyInfoDlController", function(){
         }
     }
 
+    .filter('to_trusted', ['$sce', function($sce){
+        return function(text) {
+            return $sce.trustAsHtml(text);
+        };
+    }]);
+
 });
 
 angular.module('blake').directive("copyInfoDl", function(){
