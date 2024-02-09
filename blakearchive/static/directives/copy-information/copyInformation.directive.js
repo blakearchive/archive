@@ -16,10 +16,10 @@ angular.module('blake').controller("CopyInformationController", function () {
             if (vm.copy.virtual) {
                 return vm.object.source;
             } else {
+                console.log(vm.copy.source)
                 return vm.copy.source;
             }
         }
-        console.log(vm.copy.source)
     };
 
     vm.getOrigination = function(){
