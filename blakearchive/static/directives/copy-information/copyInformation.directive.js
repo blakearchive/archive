@@ -19,6 +19,7 @@ angular.module('blake').controller("CopyInformationController", function () {
                 return vm.copy.source;
             }
         }
+        console.log(vm.copy.source)
     };
 
     vm.getOrigination = function(){
