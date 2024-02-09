@@ -5,7 +5,7 @@ angular.module('blake').controller("CopyInfoDlController", function(){
         if(note) {
             let noteText = '';
             noteText = note['#text'].replace("^", '<sup>');
-            noteText = note['#text'].replace("^", '</sup>');
+            noteText = noteText.replace("^", '</sup>');
             console.log(noteText);
             return noteText;
         }
