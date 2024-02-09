@@ -1425,14 +1425,15 @@
     <str name="params.resource.loader.enabled">${velocity.params.resource.loader.enabled:false}</str>
   </queryResponseWriter>
 
+    <!-- @TODO I don't think this is used by blake archives -->
   <!-- XSLT response writer transforms the XML output by any xslt file found
        in Solr's conf/xslt directory.  Changes to xslt files are checked for
        every xsltCacheLifetimeSeconds.  
-    -->
+
   <queryResponseWriter name="xslt" class="solr.scripting.xslt.XSLTResponseWriter">
     <int name="xsltCacheLifetimeSeconds">5</int>
   </queryResponseWriter>
-
+  -->
   <!-- Query Parsers
 
        http://wiki.apache.org/solr/SolrQuerySyntax
