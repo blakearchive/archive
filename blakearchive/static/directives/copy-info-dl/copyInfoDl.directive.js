@@ -1,7 +1,7 @@
-angular.module("blake").controller("copyInfoDlController", function(){
-    const vm = this;
+angular.module('blake').controller("CopyInfoDlController", function(){
+    var vm = this;
 
-    vm.getNote(note) = function(note) {
+    vm.getNote = function(note) {
         if(note) {
             let noteText = '';
             noteText = note['#text'].replace("^", '<sup>');
@@ -12,18 +12,17 @@ angular.module("blake").controller("copyInfoDlController", function(){
 
 });
 
-angular.module('blake').directive('copyInfoDl', function(){
+angular.module('blake').directive("copyInfoDl", function(){
 
     return {
         restrict: 'EA',
         template: require('html-loader!./copyInfoDl.html'),
-        controller: function () { var vm = this; },
         scope: {
             infoObject: '=',
             dt: '@',
             highlight: '@'
         },
-        controller: "copyInfoDlController",
+        controller: "CopyInfoDlController",
         controllerAs: 'dl',
         bindToController: true
     };
