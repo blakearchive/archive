@@ -180,7 +180,7 @@ angular.module('blake').controller('ExhibitController', function (
       //console.log(">>>>>hey, tae, you were wrong!!!!");
       $rootScope.doneSettingExhibit = true;
       console.log(vm.bds.exhibit);
-      if(exhibitId == "fakeblakes") {
+      if(exhibitId == "fakeblakes" || exhibitId == "absorbedbythepoets") {
         console.log("hello");
         vm.scrollTo("1galleryheader");
       }
