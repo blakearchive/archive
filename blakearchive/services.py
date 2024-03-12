@@ -6,9 +6,9 @@ from blakearchive import models
 from blakearchive import config
 
 if hasattr(config, "solr") and config.solr == "local":
-    blake_object_solr = pysolr.Solr('http://127.0.0.1:8983/solr/blake_object')
-    blake_copy_solr = pysolr.Solr('http://127.0.0.1:8983/solr/blake_copy')
-    blake_work_solr = pysolr.Solr('http://127.0.0.1:8983/solr/blake_work')
+    blake_object_solr = pysolr.Solr('http://127.0.0.1:28983/solr/blake_object')
+    blake_copy_solr = pysolr.Solr('http://127.0.0.1:28983/solr/blake_copy')
+    blake_work_solr = pysolr.Solr('http://127.0.0.1:28983/solr/blake_work')
 else:
     blake_object_solr = pysolr.Solr('http://ctools-dev.its.unc.edu/solr/blake-object')
     blake_copy_solr = pysolr.Solr('http://ctools-dev.its.unc.edu/solr/blake-copy')
