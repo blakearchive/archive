@@ -354,7 +354,7 @@ content: '▾';
 
 
 #archive #object-view.reading-view #compare.scrollbar .compare-inner .item p {
-  width:115%;
+  width:113%;
 }
 
 @media (min-width: 768px) {
