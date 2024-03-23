@@ -8,6 +8,6 @@
     </div>
     <div ng-if="dl.infoObject.note[0]" ng-repeat="note in dl.infoObject.note track by $index" class="indent-dl">
         <dt><li style="margin-left:90%"></li></dt>
-        <dd ng-bind-html="dl.getNote(dl.infoObject.note).trim() | highlight:dl.highlight | markdown"></dd>
+        <dd ng-bind-html="dl.getNote(note).trim() | highlight:dl.highlight | markdown"></dd>
     </div>
 </div>
