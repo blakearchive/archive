@@ -4,7 +4,6 @@ angular.module('blake').controller("CopyInfoDlController", function($scope,$sce)
     vm.getNote = function(note) {
         if(note) {
             let noteText = note['#text'];
-            console.log(noteText)
             while(noteText.indexOf('^') > -1) {
                 noteText = noteText.replace("^", '<sup>');
                 noteText = noteText.replace("^", '</sup>');
