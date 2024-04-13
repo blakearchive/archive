@@ -12,14 +12,11 @@ angular.module("blake").directive('ovpImage', function(imageManipulation){
             height = image[0].naturalHeight;
             width = image[0].naturalWidth;
             parentHeight = container.height();
-            console.log(height);
-            console.log(width);
-            console.log(parentHeight);
             /*if(width > height && $scope.descId != 'bb128.c.te.01' && $scope.descId != 'bb128.c.te.02'){*/
             if(width > (2*height)){  
                 image.css({'height':'auto','width':'100%','margin-top':'0'});
                 me.css({'display': 'flex','justify-content': 'center', 'align-items': 'center'});
-            } else if(width > height && $scope.descId != 'but343.1.pt.08'){
+            } else if(width > height){
                 var newHeight = Math.round((height * parentHeight / width));
                 var margin = Math.round(((parentHeight - newHeight) / 2));
                 image.css({'height':'auto','width':parentHeight+'px','margin-top':margin+'px'});
