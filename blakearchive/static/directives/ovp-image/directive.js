@@ -12,6 +12,8 @@ angular.module("blake").directive('ovpImage', function(imageManipulation, $route
             height = image[0].naturalHeight;
             width = image[0].naturalWidth;
             parentHeight = container.height();
+            console.log(width);
+            console.log(height);
             /*if(width > height && $scope.descId != 'bb128.c.te.01' && $scope.descId != 'bb128.c.te.02'){*/
             if(width > (2*height) || $routeParams.descId == "but343.1.pt.08" || $routeParams.descId == "but343.1.pt.10" || $routeParams.descId == "but343.1.pt.13" || $routeParams.descId == "but343.1.pt.15" || $routeParams.descId == "but343.1.pt.16"){  
                 image.css({'height':'auto','width':'100%','margin-top':'0'});
