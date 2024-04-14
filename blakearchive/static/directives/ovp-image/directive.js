@@ -18,7 +18,7 @@ angular.module("blake").directive('ovpImage', function(imageManipulation, $route
                 console.log("hello0");
                 image.css({'height':'auto','width':'100%','margin-top':'0'});
                 me.css({'display': 'flex','justify-content': 'center', 'align-items': 'center'});
-            } else if($routeParams == "but343.1.pt.08") {
+            } else if($routeParams.descId == "but343.1.pt.08") {
                 console.log("hello1");
                 image.css({'height':'auto','width':'100%','margin-top':'0'});
             } else if(width > height){
