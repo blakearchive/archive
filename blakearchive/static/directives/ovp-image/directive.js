@@ -12,22 +12,17 @@ angular.module("blake").directive('ovpImage', function(imageManipulation, $route
             height = image[0].naturalHeight;
             width = image[0].naturalWidth;
             parentHeight = container.height();
-            console.log($routeParams.descId);
             /*if(width > height && $scope.descId != 'bb128.c.te.01' && $scope.descId != 'bb128.c.te.02'){*/
             if(width > (2*height)){  
-                console.log("hello0");
                 image.css({'height':'auto','width':'100%','margin-top':'0'});
                 me.css({'display': 'flex','justify-content': 'center', 'align-items': 'center'});
             } else if($routeParams.descId == "but343.1.pt.08" || $routeParams.descId == "but343.1.pt.10" || $routeParams.descId == "but343.1.pt.13" || $routeParams.descId == "but343.1.pt.15" || $routeParams.descId == "but343.1.pt.16") {
-                console.log("hello1");
                 image.css({'height':'auto','width':'100%','margin-top':'0'});
             } else if(width > height){
-                console.log("hello2");
                 var newHeight = Math.round((height * parentHeight / width));
                 var margin = Math.round(((parentHeight - newHeight) / 2));
                 image.css({'height':'auto','width':parentHeight+'px','margin-top':margin+'px'});
             } else {
-                console.log("hello3");
                 image.css({'height':'100%','width':'auto','margin-top':'0'});
             }
         });
