@@ -12,7 +12,8 @@ angular.module("blake").directive('ovpImage', function(imageManipulation){
             height = image[0].naturalHeight;
             width = image[0].naturalWidth;
             parentHeight = container.height();
-            console.log($scope.descId);
+            console.log(image.descId);
+            console.log("hello");
             /*if(width > height && $scope.descId != 'bb128.c.te.01' && $scope.descId != 'bb128.c.te.02'){*/
             if(width > (2*height)){  
                 image.css({'height':'auto','width':'100%','margin-top':'0'});
