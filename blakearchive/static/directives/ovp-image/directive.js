@@ -17,10 +17,12 @@ angular.module("blake").directive('ovpImage', function(imageManipulation, $route
             if(width > (2*height)){  
                 image.css({'height':'auto','width':'100%','margin-top':'0'});
                 me.css({'display': 'flex','justify-content': 'center', 'align-items': 'center'});
-            } else if(width > height && $routeParams.descId != "but343.1.pt.08"){
+            } else if(width > height){
                 var newHeight = Math.round((height * parentHeight / width));
                 var margin = Math.round(((parentHeight - newHeight) / 2));
                 image.css({'height':'auto','width':parentHeight+'px','margin-top':margin+'px'});
+            } else if($routeParams == "but343.1.pt.08") {
+                image.css({'height':'auto','width':'100%','margin-top':'0'});
             } else {
                 image.css({'height':'100%','width':'auto','margin-top':'0'});
             }
