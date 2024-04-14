@@ -13,11 +13,9 @@ angular.module("blake").directive('ovpImage', function(imageManipulation, $route
             width = image[0].naturalWidth;
             parentHeight = container.height();
             /*if(width > height && $scope.descId != 'bb128.c.te.01' && $scope.descId != 'bb128.c.te.02'){*/
-            if(width > (2*height)){  
+            if(width > (2*height) || $routeParams.descId == "but343.1.pt.08" || $routeParams.descId == "but343.1.pt.10" || $routeParams.descId == "but343.1.pt.13" || $routeParams.descId == "but343.1.pt.15" || $routeParams.descId == "but343.1.pt.16"){  
                 image.css({'height':'auto','width':'100%','margin-top':'0'});
                 me.css({'display': 'flex','justify-content': 'center', 'align-items': 'center'});
-            } else if($routeParams.descId == "but343.1.pt.08" || $routeParams.descId == "but343.1.pt.10" || $routeParams.descId == "but343.1.pt.13" || $routeParams.descId == "but343.1.pt.15" || $routeParams.descId == "but343.1.pt.16") {
-                image.css({'height':'auto','width':'100%','margin-top':'0'});
             } else if(width > height){
                 var newHeight = Math.round((height * parentHeight / width));
                 var margin = Math.round(((parentHeight - newHeight) / 2));
