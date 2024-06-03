@@ -18,13 +18,11 @@
       "illuminatedprinting":"Illuminated Printing"
     }
   },
-  "generalbib":{
+  "resources":{
     "title":"Resources for Further Research",
-    "initial":"generalbib",
+    "initial":"resources",
     "subSections":{
       "bibliography":"Bibliography",
-      "generalbib":"General Bibliography",
-      "specificbib":"Specific Bibliography",
       "collectionlists":"Collection Lists"
     }
   },
