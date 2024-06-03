@@ -20,7 +20,7 @@
   },
   "resources":{
     "title":"Resources for Further Research",
-    "initial":"resources",
+    "initial":"bibliography",
     "subSections":{
       "bibliography":"Bibliography",
       "collectionlists":"Collection Lists"
