@@ -20,9 +20,10 @@
   },
   "resources":{
     "title":"Resources for Further Research",
-    "initial":"bibliography",
+    "initial":"generalbib",
     "subSections":{
-      "bibliography":"Bibliography",
+      "generalbib":"General Bibliography",
+      "specificbib":"Specific Bibliography",
       "collectionlists":"Collection Lists"
     }
   },
