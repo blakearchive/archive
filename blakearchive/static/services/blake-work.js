@@ -100,6 +100,7 @@ angular.module("blake").factory("BlakeWork", function (GenericService, BlakeCopy
                     break;
 
                 case 'letters':
+                case '1780smonowash':
                 case 'shakespearewc':
                 case 'gravepd':
                 case 'gravewc':
