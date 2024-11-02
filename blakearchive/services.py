@@ -310,7 +310,7 @@ class BlakeDataService(object):
 
     @classmethod
     def get_objects_for_copy(cls, bad_id):
-        vgroups = ['biblicalwc', '1780swc', 'gravepd', 'biblicaltemperas', 'gravewc', 'cpd', 'gravewd', 'pid',
+        vgroups = ['1780smonowash','biblicalwc', '1780swc', 'gravepd', 'biblicaltemperas', 'gravewc', 'cpd', 'gravewd', 'pid',
                    'pencil1']
 
         if any(bad_id in s for s in vgroups):
