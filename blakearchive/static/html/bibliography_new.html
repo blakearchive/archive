@@ -47,6 +47,21 @@
         } else {
             console.log('Iframe not found');
         }
+
+        // Additional check to see if the PDF is accessible
+        fetch('images/bibliography_121824.pdf')
+            .then(response => {
+                if (response.ok) {
+                    console.log('PDF is accessible');
+                } else {
+                    console.log('PDF is not accessible');
+                    document.querySelector('.fallback').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.log('Error fetching PDF:', error);
+                document.querySelector('.fallback').style.display = 'block';
+            });
     </script>
 </body>
 </html>
