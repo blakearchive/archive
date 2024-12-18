@@ -37,15 +37,9 @@
         const iframe = document.querySelector('iframe');
         if (iframe) {
             console.log('Iframe found');
-            iframe.addEventListener('load', function() {
-                console.log('PDF loaded successfully');
-            });
-            iframe.addEventListener('error', function() {
-                console.log('Error loading PDF');
-                document.querySelector('.fallback').style.display = 'block';
-            });
         } else {
             console.log('Iframe not found');
+            document.querySelector('.fallback').style.display = 'block';
         }
 
         // Additional check to see if the PDF is accessible
