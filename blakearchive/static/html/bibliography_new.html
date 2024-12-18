@@ -32,6 +32,10 @@
         <p>Your browser does not support iframes. 
         <a href="images/bibliography_121824.pdf" download>Download the bibliography here</a>.</p>
     </div>
+    <script>
+        document.querySelector('iframe').addEventListener('error', function() {
+            document.querySelector('.fallback').style.display = 'block';
+        });
+    </script>
 </body>
 </html>
-
