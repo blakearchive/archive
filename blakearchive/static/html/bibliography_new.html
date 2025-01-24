@@ -9,40 +9,66 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            line-height: 1.6;
         }
-        iframe {
-            display: block;
-            width: 100%;
-            height: 80vh; /* Adjusts height to 80% of the viewport height */
-            border: none;
+        .container {
+            padding: 20px;
         }
-        .fallback {
+        h1 {
             text-align: center;
-            margin: 20px;
+        }
+        .instructions {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+        }
+        .instructions p {
+            margin: 0 0 10px;
+        }
+        .download-link {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .download-link:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <iframe 
-        src="../images/bibliography_121824.pdf" 
-        frameborder="0" 
-        allowfullscreen>
-    </iframe>
-    <div class="fallback" style="display: none;">
-        <p>Your browser does not support iframes. 
-        <a href="bibliography_121824.pdf" download>Download the bibliography here</a>.</p>
+
+<div class="container">
+    <h1>Bibliography Download</h1>
+
+    <!-- Link to download PDF -->
+    <a href="images/bibliography_121824.pdf" download class="download-link">Download the Bibliography PDF</a>
+
+    <!-- Instructions for using Adobe Acrobat -->
+    <div class="instructions">
+        <h2>Instructions for Best Viewing:</h2>
+        <p>To best utilize this bibliography, open the bookmarks side pane and split the viewing window. The bookmarks side pane (Click the bookmarks icon) provides a complete table of contents that links to the relevant section. A shorter table of contents can be found on pages x to x.</p>
+        <p>The split window option (Menu → Window → Split) will create an anchor to the user’s present location in the document when clicking an interior link.</p>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Script is running');
-            const iframe = document.querySelector('iframe');
-            if (iframe) {
-                console.log('Iframe found');
-            } else {
-                console.log('Iframe not found');
-                document.querySelector('.fallback').style.display = 'block';
-            }
-        });
-    </script>
+
+    <!-- Adobe Acrobat plugin or app information -->
+    <div class="instructions">
+        <h2>Get Adobe Acrobat</h2>
+        <p>If you don't have Adobe Acrobat Reader installed, you can <a href="https://get.adobe.com/reader/" target="_blank">download the Adobe Acrobat Reader plugin for your browser here</a> for a seamless viewing experience.</p>
+
+        <p>If you're using a mobile device, you can download the Adobe Acrobat Reader app:</p>
+        <ul>
+            <li><a href="https://apps.apple.com/us/app/adobe-acrobat-reader/id469337564" target="_blank">Download Adobe Acrobat Reader for iOS (iPhone/iPad)</a></li>
+            <li><a href="https://play.google.com/store/apps/details?id=com.adobe.reader&hl=en&gl=US" target="_blank">Download Adobe Acrobat Reader for Android</a></li>
+        </ul>
+    </div>
+</div>
+
 </body>
 </html>
