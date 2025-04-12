@@ -25,6 +25,7 @@
     "ng-cropperjs": "^1.1.2",
     "ng-dexie": "0.0.18",
     "ng-openseadragon": "file:../../../ng-openseadragon",
+    "ngstorage": "^0.3.11",
     "openseadragon": "^2.4.2"
   },
   "devDependencies": {
