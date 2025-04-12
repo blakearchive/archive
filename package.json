@@ -1,24 +1,6 @@
 {
   "name": "blake-archive",
   "version": "0.1.0",
-  "devDependencies": {
-    "babel-cli": "^6.22.2",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^6.4.1",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2016": "^6.22.0",
-    "babel-preset-latest": "^6.22.0",
-    "css-loader": "^0.26.1",
-    "gulp": "^4.0.2",
-    "gulp-concat": "^2.6.0",
-    "gulp-cssmin": "^0.2.0",
-    "gulp-uglify": "^3.0.2",
-    "html-loader": "^0.4.4",
-    "script-loader": "^0.7.2",
-    "style-loader": "^0.23.1",
-    "webpack": "^2.7.0",
-    "webpack-closure-compiler": "^2.1.6"
-  },
   "scripts": {
     "build": "webpack",
     "build-watch": "webpack --watch"
@@ -44,5 +26,23 @@
     "ng-dexie": "0.0.18",
     "ng-openseadragon": "file:../../../ng-openseadragon",
     "openseadragon": "^2.4.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^6.4.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2016": "^6.22.0",
+    "babel-preset-latest": "^6.22.0",
+    "css-loader": "^0.26.1",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-uglify": "^3.0.2",
+    "html-loader": "^0.4.4",
+    "script-loader": "^0.7.2",
+    "style-loader": "^0.23.1",
+    "webpack": "^2.7.0",
+    "webpack-closure-compiler": "^2.1.6"
   }
 }
