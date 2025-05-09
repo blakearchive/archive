@@ -82,6 +82,9 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             case "te":
                 return "manuscripts_typo:typographic";
                 break;
+            case "ann":
+                return "manuscripts_typo:annotations";
+                break;
             default:
                 return false;
         }
