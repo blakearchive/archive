@@ -289,7 +289,8 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             manuscripts_typo: [{
                 manuscripts: [],
                 lettersandreceipts: [],
-                typographic: []
+                typographic: [],
+                annotations: []
             }],
             exhibits: [],
             previews: []
