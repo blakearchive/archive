@@ -73,6 +73,9 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
             case "wc":
                 return "drawings_paintings:wc";
                 break;
+            case "ann":
+                return "manuscripts_typo:annotations";
+                break;
             case "ms":
                 return "manuscripts_typo:manuscripts";
                 break;
@@ -81,9 +84,6 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                 break;
             case "te":
                 return "manuscripts_typo:typographic";
-                break;
-            case "ann":
-                return "manuscripts_typo:annotations";
                 break;
             default:
                 return false;
@@ -287,10 +287,10 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                 paintings: []
             }],
             manuscripts_typo: [{
+                annotations: [],
                 manuscripts: [],
                 lettersandreceipts: [],
-                typographic: [],
-                annotations: []
+                typographic: []
             }],
             exhibits: [],
             previews: []

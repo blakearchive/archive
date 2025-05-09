@@ -65,6 +65,9 @@
   <li dropdown class="dropdown"><a dropdown-toggle role="button" aria-expanded="false">Manuscripts
     and <span>Typographic Works</span></a>
     <ul class="dropdown-menu" role="menu">
+      <li role="presentation" class="dropdown-header">Annotations in Books</li>
+      <li ng-repeat="menu_list in menu.lists.manuscripts_typo[0].annotations">
+        <a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a>
       <li role="presentation" class="dropdown-header">Manuscripts</li>
       <li ng-repeat="menu_list in menu.lists.manuscripts_typo[0].manuscripts"><a
           href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a></li>
@@ -75,9 +78,6 @@
       <li ng-if="menu.lists.manuscripts_typo[0].typographic[0] != null" ng-repeat="menu_list in menu.lists.manuscripts_typo[0].typographic"><a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }}
         (Composed {{ menu_list.composition_date_string }})</a></li>
       <li ng-if="menu.lists.manuscripts_typo[0].typographic[0] == null" class="empty-subcat">—</li>
-      <li role="presentation" class="dropdown-header">Annotations in Books</li>
-      <li ng-repeat="menu_list in menu.lists.manuscripts_typo[0].annotations">
-        <a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a>
       </li>
     </ul>
   </li>
