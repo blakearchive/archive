@@ -74,6 +74,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                 return "drawings_paintings:wc";
                 break;
             case "ann":
+            case "annotations":   
                 return "manuscripts_typo:annotations";
                 break;
             case "ms":
