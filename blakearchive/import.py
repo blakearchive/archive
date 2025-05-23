@@ -372,12 +372,13 @@ class BlakeDocumentImporter(BlakeImporter):
         bad_id = entry.bad_id or entry.info_filename.split(".", 1)[0]
         work = models.BlakeWork()
         work.title = entry.title
+        # Prefer the CSV medium, but if missing, use the medium from the first copy (from XML BAD type)
         work.medium = entry.medium
-        # Only set medium from XML BAD type if it is 'ann' and CSV is empty
-        if (not work.medium or work.medium.strip() == ""):
+        if not work.medium or work.medium.strip() == "":
+            # Try to get from the first copy's medium (set from BAD XML type)
             copies = self.copy_importer.get(self.split_ids(entry.copies))
-            if copies and hasattr(copies[0], 'medium') and copies[0].medium == 'ann':
-                work.medium = 'ann'
+            if copies and hasattr(copies[0], 'medium'):
+                work.medium = copies[0].medium
         work.bad_id = bad_id
         work.virtual = bool(entry.virtual)
         work.preview = bool(entry.preview)
