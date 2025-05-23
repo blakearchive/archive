@@ -94,154 +94,48 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
     vm.alphabetizeAll = function(data) {
 
         if (!data) { return; }
+        // Create a sortTitle for each work, do not mutate menuTitle
+        data.forEach(function(work) {
+            if (!work.menuTitle || typeof work.menuTitle !== 'string') {
+                work.sortTitle = '';
+                return;
+            }
+            let t = work.menuTitle;
+            // Apply all the sorting transformations to sortTitle only
+            if(t.match(/^The /)) t = t.replace(/^The /,"") + ", The";
+            if(t.match(/^A /)) t = t.replace(/^A /,"") + ", A";
+            if(t.match(/^An /)) t = t.replace(/^An /,"") + ", An";
+            if(t.match(/^\"A Fairy leapt"/)) t = '"Fairy leapt, A"';
+            if(t.match(/^Illustrations to the /)) t = t.replace(/^Illustrations to the /,"") + ", Illustrations to the";
+            if(t.match(/^Illustrations to /)) t = t.replace(/^Illustrations to /,"") + ", Illustrations to";
+            if(t.match(/^Preliminary Illustrations to /)) t = t.replace(/^Preliminary Illustrations to /,"") + ", Preliminary Illustrations to";
+            if(t.match(/^Drawings for \"The Pastorals of Virgil"/)) t = '"Pastorals of Virgil, The", Drawings for';
+            if(t.match(/^Drawings for Mary Wollstonecraft's/)) t = "Wollstonecraft's, Mary, Original Stories from Real Life, Drawings for";
+            if(t.match(/^Drawings for /)) t = t.replace(/^Drawings for /,"") + ", Drawings for";
+            if(t.match(/^Blake's Illustrations of /)) t = t.replace(/^Blake's Illustrations of /,"") + ", Blake's Illustrations of";
+            if(t.match(/^Blake's /)) t = t.replace(/^Blake's /,"") + ", Blake's";
+            if(t.match(/^Twelve Illustrations to /)) t = t.replace(/^Twelve Illustrations to /,"") + ", Twelve Illustrations to";
+            if(t.match(/^William Hayley/)) t = "Hayley, William" + t.replace(/^William Hayley/,"");
+            if(t.match(/^John Flaxman /)) t = "Flaxman, John" + t.replace(/^John Flaxman/,"");
+            if(t.match(/^John Gabriel Stedman/)) t = "Stedman, John Gabriel" + t.replace(/^John Gabriel Stedman/,"");
+            if(t.match(/^Mary Wollstonecraft/)) t = "Wollstonecraft, Mary" + t.replace(/^Mary Wollstonecraft/,"");
+            if(t.match(/^Edward Young's/)) t = "Young's, Edward," + t.replace(/^Edward Young's/,"");
+            if(t.match(/^Edward Young/)) t = "Young, Edward" + t.replace(/^Edward Young/,"");
+            if(t.match(/^Portrait of George Romney/)) t = "Romney, George, Portrait of";
+            if(t.match(/^Robert Blair's/)) t = "Blair's, Robert," + t.replace(/^Robert Blair's/,"");
+            if(t.match(/^Robert Blair/)) t = "Blair, Robert" + t.replace(/^Robert Blair/,"");
+            if(t.match(/^Sketches for Robert Blair's \"The Grave"/)) t = 'Blair\'s, Robert, "The Grave," Sketches for';
+            work.sortTitle = t.replace(/[",']/g,"");
+        });
+        // Sort by sortTitle
         data.sort(function(a, b) {
-            if(a.menuTitle.match(/^The /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^The /,"") + ", The"
-            }
-            if(b.menuTitle.match(/^The /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^The /,"") + ", The"
-            }
-            if(a.menuTitle.match(/^A /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^A /,"") + ", A"
-            }
-            if(b.menuTitle.match(/^A /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^A /,"") + ", A"
-            }
-            if(a.menuTitle.match(/^An /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^An /,"") + ", An"
-            }
-            if(b.menuTitle.match(/^An /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^An /,"") + ", An"
-            }
-            if(a.menuTitle.match(/^"A Fairy leapt"/) != null) {
-                a.menuTitle = "\"Fairy leapt, A\""
-            }
-            if(b.menuTitle.match(/^"A Fairy leapt"/) != null) {
-                b.menuTitle = "\"Fairy leapt, A\""
-            }
-            if(a.menuTitle.match(/^Illustrations to the /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^Illustrations to the /,"") + ", Illustrations to the"
-            }
-            if(b.menuTitle.match(/^Illustrations to the /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^Illustrations to the /,"") + ", Illustrations to the"
-            }
-            if(a.menuTitle.match(/^Illustrations to /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^Illustrations to /,"") + ", Illustrations to"
-            }
-            if(b.menuTitle.match(/^Illustrations to /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^Illustrations to /,"") + ", Illustrations to"
-            }
-            if(a.menuTitle.match(/^Preliminary Illustrations to /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^Preliminary Illustrations to /,"") + ", Preliminary Illustrations to"
-            }
-            if(b.menuTitle.match(/^Preliminary Illustrations to /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^Preliminary Illustrations to /,"") + ", Preliminary Illustrations to"
-            }
-            if(a.menuTitle.match(/^Drawings for "The Pastorals of Virgil"/) != null) {
-                a.menuTitle = "\"Pastorals of Virgil, The\", Drawings for"
-            }
-            if(b.menuTitle.match(/^Drawings for "The Pastorals of Virgil"/) != null) {
-                b.menuTitle = "\"Pastorals of Virgil, The\", Drawings for"
-            }
-            if(a.menuTitle.match(/^Drawings for Mary Wollstonecraft's/) != null) {
-                a.menuTitle = "Wollstonecraft's, Mary, Original Stories from Real Life, Drawings for"
-            }
-            if(b.menuTitle.match(/^Drawings for Mary Wollstonecraft's/) != null) {
-                b.menuTitle = "Wollstonecraft's, Mary, Original Stories from Real Life, Drawings for"
-            }
-            if(a.menuTitle.match(/^Drawings for /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^Drawings for /,"") + ", Drawings for"
-            }
-            if(b.menuTitle.match(/^Drawings for /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^Drawings for /,"") + ", Drawings for"
-            }
-            if(a.menuTitle.match(/^Blake's Illustrations of /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^Blake's Illustrations of /,"") + ", Blake's Illustrations of"
-            }
-            if(b.menuTitle.match(/^Blake's Illustrations of /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^Blake's Illustrations of /,"") + ", Blake's Illustrations of"
-            }
-            if(a.menuTitle.match(/^Blake's /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^Blake's /,"") + ", Blake's"
-            }
-            if(b.menuTitle.match(/^Blake's for /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^Blake's /,"") + ", Blake's"
-            }
-            if(a.menuTitle.match(/^Twelve Illustrations to /) != null) {
-                a.menuTitle = a.menuTitle.replace(/^Twelve Illustrations to /,"") + ", Twelve Illustrations to"
-            }
-            if(b.menuTitle.match(/^Twelve Illustrations to /) != null) {
-                b.menuTitle = b.menuTitle.replace(/^Twelve Illustrations to /,"") + ", Twelve Illustrations to"
-            }
-            if(a.menuTitle.match(/^William Hayley/) != null) {
-                a.menuTitle = "Hayley, William" + a.menuTitle.replace(/^William Hayley/,"")
-            }
-            if(b.menuTitle.match(/^William Hayley/) != null) {
-                b.menuTitle = "Hayley, William" + b.menuTitle.replace(/^William Hayley/,"")
-            }
-            if(a.menuTitle.match(/^John Flaxman /) != null) {
-                a.menuTitle = "Flaxman, John" + a.menuTitle.replace(/^John Flaxman/,"")
-            }
-            if(b.menuTitle.match(/^John Flaxman/) != null) {
-                b.menuTitle = "Flaxman, John" + b.menuTitle.replace(/^John Flaxman/,"")
-            }
-            if(a.menuTitle.match(/^John Gabriel Stedman/) != null) {
-                a.menuTitle = "Stedman, John Gabriel" + a.menuTitle.replace(/^John Gabriel Stedman/,"")
-            }
-            if(b.menuTitle.match(/^John Gabriel Stedman/) != null) {
-                b.menuTitle = "Stedman, John Gabriel" + b.menuTitle.replace(/^John Gabriel Stedman/,"")
-            }
-            if(a.menuTitle.match(/^Mary Wollstonecraft/) != null) {
-                a.menuTitle = "Wollstonecraft, Mary" + a.menuTitle.replace(/^Mary Wollstonecraft/,"")
-            }
-            if(b.menuTitle.match(/^Mary Wollstonecraft/) != null) {
-                b.menuTitle = "Wollstonecraft, Mary" + b.menuTitle.replace(/^Mary Wollstonecraft/,"")
-            }
-            if(a.menuTitle.match(/^Edward Young's/) != null) {
-                a.menuTitle = "Young's, Edward," + a.menuTitle.replace(/^Edward Young's/,"")
-            }
-            if(b.menuTitle.match(/^Edward Young's/) != null) {
-                b.menuTitle = "Young's, Edward," + b.menuTitle.replace(/^Edward Young's/,"")
-            }
-            if(a.menuTitle.match(/^Edward Young/) != null) {
-                a.menuTitle = "Young, Edward" + a.menuTitle.replace(/^Edward Young/,"")
-            }
-            if(b.menuTitle.match(/^Edward Young/) != null) {
-                b.menuTitle = "Young, Edward" + b.menuTitle.replace(/^Edward Young/,"")
-            }
-            if(a.menuTitle.match(/^Portrait of George Romney/) != null) {
-                a.menuTitle = "Romney, George, Portrait of"
-            }
-            if(b.menuTitle.match(/^Portrait of George Romney/) != null) {
-                b.menuTitle = "Romney, George, Portrait of"
-            }
-            if(a.menuTitle.match(/^Robert Blair's/) != null) {
-                a.menuTitle = "Blair's, Robert," + a.menuTitle.replace(/^Robert Blair's/,"")
-            }
-            if(b.menuTitle.match(/^Robert Blair's/) != null) {
-                b.menuTitle = "Blair's, Robert," + b.menuTitle.replace(/^Robert Blair's/,"")
-            }
-            if(a.menuTitle.match(/^Robert Blair/) != null) {
-                a.menuTitle = "Blair, Robert" + a.menuTitle.replace(/^Robert Blair/,"")
-            }
-            if(b.menuTitle.match(/^Robert Blair/) != null) {
-                b.menuTitle = "Blair, Robert" + b.menuTitle.replace(/^Robert Blair/,"")
-            }
-            if(a.menuTitle.match(/^Sketches for Robert Blair's "The Grave"/) != null) {
-                a.menuTitle = "Blair's, Robert, \"The Grave,\" Sketches for"
-            }
-            if(b.menuTitle.match(/^Sketches for Robert Blair's "The Grave"/) != null) {
-                b.menuTitle = "Blair's, Robert, \"The Grave,\" Sketches for"
-            }
-            if(a.menuTitle.replace(/[",']/g,"") < b.menuTitle.replace(/[",']/g,"")) return -1;
-            if(a.menuTitle.replace(/[",']/g,"") > b.menuTitle.replace(/[",']/g,"")) return 1;
+            let at = a.sortTitle || '', bt = b.sortTitle || '';
+            if(at < bt) return -1;
+            if(at > bt) return 1;
             return 0;
         });
-        
         vm.allWorksAlpha = data;
-        console.log(vm.allWorksAlpha);
         $sessionStorage.allWorksAlpha = vm.allWorksAlpha;
-        
     }
 
     vm.orderByCompDateAll = function(data) {
