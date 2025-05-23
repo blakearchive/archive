@@ -51,6 +51,7 @@ angular.module("blake").factory("BlakeWork", function (GenericService, BlakeCopy
                 case "ms":
                 case "ltr":
                 case "te":
+                case "ann": // <-- Add this line
                     work.medium_pretty = 'Manuscripts and Typographic Works';
                     work.probable = 'composition';
                     break;

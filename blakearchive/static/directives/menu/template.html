@@ -67,7 +67,7 @@
     <ul class="dropdown-menu" role="menu">
       <li role="presentation" class="dropdown-header">Annotations in Books</li>
       <li ng-repeat="menu_list in menu.lists.manuscripts_typo[0].annotations">
-        <a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a>
+      <a href="/work/{{ menu_list.bad_id }}">{{ menu_list.menuTitle }} (Composed {{ menu_list.composition_date_string }})</a>
       </li>
       <li role="presentation" class="dropdown-header">Manuscripts</li>
       <li ng-repeat="menu_list in menu.lists.manuscripts_typo[0].manuscripts"><a
