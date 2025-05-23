@@ -66,8 +66,10 @@ angular.module("blake").factory("BlakeWork", function (GenericService, BlakeCopy
                     return false;
             }
 
-            //Create an alternative work title for virtual works
+            //Ensure menuTitle and composition_date_string are set for menu rendering
             work.menuTitle = work.title;
+            work.composition_date_string = work.composition_date;
+
             //FIXME:: Figure out why the Laocoon work's title isn't getting encoded in utf8
             if(work.title == "LaocoÃ¶n"){
                 work.title = "Laocoön";
