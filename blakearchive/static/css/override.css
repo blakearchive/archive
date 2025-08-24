@@ -491,8 +491,8 @@ content: '▾';
 .site-header .lightbox {
     /* pin the lightbox to the top-right of the header */
     position: absolute !important;
-    right: 12px !important;
-    top: 6px !important;
+    right: 18px !important;
+    top: 10px !important;
     width: auto !important;
     height: auto !important;
     float: none !important;
