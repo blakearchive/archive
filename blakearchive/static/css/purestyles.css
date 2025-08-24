@@ -2833,9 +2833,10 @@ h3 {
   text-align: center;
   background-color: #168bc1;
   border-radius: 50%;
-  display: block;
+  display: inline-block;
   width: 20px;
-  margin: 0 auto;
+  margin: 0;
+  vertical-align: middle;
   -webkit-transition: all 0.2s ease-out;
   -o-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
@@ -2861,6 +2862,7 @@ h3 {
   width: auto;
   padding-right: 2px;
   display: inline-block;
+  white-space: nowrap;
 }
 
 .lightbox a.lb-amount { /* ensure badge aligns middle */
