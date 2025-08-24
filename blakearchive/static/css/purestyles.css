@@ -2852,7 +2852,7 @@ h3 {
   color: black;
   font-size: 12px;
   line-height: 20px;
-  margin: 0 6px 0 0; /* space between X and badge */
+  margin: 0 0 0 6px; /* space to left of X so it sits right of badge */
   font-weight: bold;
   vertical-align: middle;
 }
