@@ -2848,17 +2848,23 @@ h3 {
 /* Align the clear lightbox 'X' and allow icons to sit flush when tweet button removed */
 #clear-cart-link {
   float: none;
-  display: block;
+  display: inline-block;
   color: black;
   font-size: 12px;
-  line-height: 1;
-  margin-top: 6px; /* visually center with the lightbox badge */
+  line-height: 20px;
+  margin: 0 6px 0 0; /* space between X and badge */
   font-weight: bold;
+  vertical-align: middle;
 }
 
 .site-header .lightbox { /* ensure lightbox doesn't reserve extra width */
   width: auto;
-  padding-right: 6px;
+  padding-right: 2px;
+  display: inline-block;
+}
+
+.lightbox a.lb-amount { /* ensure badge aligns middle */
+  vertical-align: middle;
 }
 .object-view-menu {
   background-color: #303030;
