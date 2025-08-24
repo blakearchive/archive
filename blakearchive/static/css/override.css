@@ -469,6 +469,29 @@ content: '▾';
   margin-top:0px;
 }
 
+/* Force lightbox badge and clear X to remain on one line and align */
+.site-header .lightbox {
+    white-space: nowrap !important;
+}
+.site-header .lightbox a.lb-amount {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 0 !important;
+}
+#clear-cart-link {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin-left: 6px !important;
+}
+
+/* Allow the lightbox container to expand so the X can sit to the right */
+.site-header .lightbox {
+    width: auto !important;
+    padding-top: 0 !important;
+    height: auto !important;
+    float: none !important;
+}
+
 td,
 th {
   padding: 0;
