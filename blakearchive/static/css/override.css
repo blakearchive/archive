@@ -485,11 +485,18 @@ content: '▾';
 }
 
 /* Allow the lightbox container to expand so the X can sit to the right */
+.site-header {
+    position: relative; /* allow absolute positioning of lightbox */
+}
 .site-header .lightbox {
+    /* pin the lightbox to the top-right of the header */
+    position: absolute !important;
+    right: 12px !important;
+    top: 6px !important;
     width: auto !important;
-    padding-top: 0 !important;
     height: auto !important;
     float: none !important;
+    white-space: nowrap !important;
 }
 
 td,
