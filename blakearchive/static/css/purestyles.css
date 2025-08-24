@@ -2845,6 +2845,21 @@ h3 {
   text-decoration: none;
   background-color: #fff;
 }
+/* Align the clear lightbox 'X' and allow icons to sit flush when tweet button removed */
+#clear-cart-link {
+  float: none;
+  display: block;
+  color: black;
+  font-size: 12px;
+  line-height: 1;
+  margin-top: 6px; /* visually center with the lightbox badge */
+  font-weight: bold;
+}
+
+.site-header .lightbox { /* ensure lightbox doesn't reserve extra width */
+  width: auto;
+  padding-right: 6px;
+}
 .object-view-menu {
   background-color: #303030;
   border-bottom: 1px solid #454545;
