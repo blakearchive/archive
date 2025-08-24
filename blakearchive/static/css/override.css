@@ -506,8 +506,8 @@ content: '▾';
 .site-header .lightbox {
     /* pin the lightbox to the top-right of the header */
     position: absolute !important;
-    right: 26px !important;
-    top: 23px !important;
+    right: 20px !important;
+    top: 20px !important;
     /* size to the icon so the badge can be positioned inside */
     width: 30px !important;
     height: 41px !important;
