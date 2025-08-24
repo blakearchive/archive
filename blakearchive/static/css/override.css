@@ -486,9 +486,17 @@ content: '▾';
     border-radius: 50% !important;
 }
 #clear-cart-link {
+    /* position the clear 'X' so it's visible to the right of the lightbox icon */
     display: inline-block !important;
     vertical-align: middle !important;
     margin-left: 6px !important;
+    position: absolute !important;
+    top: 12px !important;
+    left: 36px !important; /* sits just right of the 30px icon */
+    color: #333 !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    background: transparent !important;
 }
 
 /* Allow the lightbox container to expand so the X can sit to the right */
