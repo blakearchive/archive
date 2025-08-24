@@ -486,13 +486,15 @@ content: '▾';
     border-radius: 50% !important;
 }
 #clear-cart-link {
-    /* position the clear 'X' so it's visible to the right of the lightbox icon */
+    /* position the clear 'X' so it's visible to the right of the lightbox icon
+       use right so it stays attached to the lightbox container even if container is moved */
     display: inline-block !important;
     vertical-align: middle !important;
     margin-left: 6px !important;
     position: absolute !important;
     top: 12px !important;
-    left: 36px !important; /* sits just right of the 30px icon */
+    right: -8px !important; /* sits just right of the 30px icon */
+    z-index: 20 !important; /* ensure it's not hidden behind other header elements */
     color: #333 !important;
     font-weight: 700 !important;
     text-decoration: none !important;
