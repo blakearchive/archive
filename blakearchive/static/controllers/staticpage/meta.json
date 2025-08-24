@@ -19,11 +19,9 @@
     }
   },
   "resources":{
-    "title":"Resources for Further Research",
-    "initial":"generalbib",
+    "title":"Collection Lists",
+    "initial":"collectionlists",
     "subSections":{
-      "generalbib":"General Bibliography",
-      "specificbib":"Specific Bibliography",
       "collectionlists":"Collection Lists"
     }
   },
