@@ -474,9 +474,16 @@ content: '▾';
     white-space: nowrap !important;
 }
 .site-header .lightbox a.lb-amount {
-    display: inline-block !important;
-    vertical-align: middle !important;
+    /* position the badge centered over the lightbox icon */
+    display: block !important;
+    position: absolute !important;
+    top: 12px !important; /* vertical offset inside the icon */
+    left: 5px !important; /* centers a 20px badge inside a 30px icon */
+    width: 20px !important;
+    line-height: 20px !important;
+    text-align: center !important;
     margin: 0 !important;
+    border-radius: 50% !important;
 }
 #clear-cart-link {
     display: inline-block !important;
@@ -492,9 +499,11 @@ content: '▾';
     /* pin the lightbox to the top-right of the header */
     position: absolute !important;
     right: 26px !important;
-    top: 22px !important;
-    width: auto !important;
-    height: auto !important;
+    top: 23px !important;
+    /* size to the icon so the badge can be positioned inside */
+    width: 30px !important;
+    height: 41px !important;
+    padding-top: 11px !important;
     float: none !important;
     white-space: nowrap !important;
 }
