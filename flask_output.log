@@ -1,0 +1,44 @@
+ * Serving Flask app 'blakearchive' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://127.0.0.1:8002 (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 472-780-976
+127.0.0.1 - - [25/Aug/2025 08:41:19] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2025 08:41:29] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2025 08:53:42] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2025 08:53:42] "GET /static/fonts/Lato/lato.css HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2025 08:53:42] "GET /static/css/styles.css HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2025 08:53:42] "GET /static/css/angular.rangeSlider.css HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2025 08:53:42] "GET /static/css/angular-loading-bar.css HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2025 08:53:42] "GET /static/css/magnifypreview.css HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2025 08:53:42] "GET /static/css/magnify.css HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2025 08:53:42] "GET /static/css/override.css HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2025 08:53:42] "GET /static/css/tei.css HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2025 08:53:42] "GET /static/build/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2025 08:53:42] "[35m[1mGET /images/instagram.png HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/grantglass/SITES/BLAKE/blake_venv/lib/python3.9/site-packages/flask/app.py", line 2095, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/Users/grantglass/SITES/BLAKE/blake_venv/lib/python3.9/site-packages/flask/app.py", line 2080, in wsgi_app
+    response = self.handle_exception(e)
+  File "/Users/grantglass/SITES/BLAKE/blake_venv/lib/python3.9/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/grantglass/SITES/BLAKE/blake_venv/lib/python3.9/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/grantglass/SITES/BLAKE/blake_venv/lib/python3.9/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/grantglass/SITES/BLAKE/blake_venv/lib/python3.9/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/Users/grantglass/SITES/BLAKE/archive/run.py", line 17, in get_image
+    return send_file(config.local_image_path+image)
+  File "/Users/grantglass/SITES/BLAKE/blake_venv/lib/python3.9/site-packages/flask/helpers.py", line 610, in send_file
+    return werkzeug.utils.send_file(
+  File "/Users/grantglass/SITES/BLAKE/blake_venv/lib/python3.9/site-packages/werkzeug/utils.py", line 440, in send_file
+    stat = os.stat(path)
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/grantglass/SITES/BLAKE/imagesinstagram.png'
+127.0.0.1 - - [25/Aug/2025 08:53:42] "GET /static/img/favicon.ico HTTP/1.1" 200 -
+127.0.0.1 - - [26/Aug/2025 20:29:38] "GET /static/build/bundle.js HTTP/1.1" 200 -

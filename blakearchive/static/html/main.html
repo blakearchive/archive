@@ -36,20 +36,19 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
     </head>
-    <body ng-app="blake" resize scroll>
+    <body>
       <!--
     <div class="message" style="color:white">The mobile view for the William Blake Archive is under construction. Please enjoy the Archive on your desktop.</div>
     <span class="no-view">
     -->
-    <blake-menu></blake-menu>
+    <!-- Angular 17 Application Root -->
+    <app-root>Loading Blake Archive...</app-root>
 
-<!-- This div is the viewport where all views will be loaded, so css for individual pages should
- be based on elements below this point in the DOM -->
+    <!-- Loading indicator for Angular bootstrap -->
     <div class="loading-bar-container"></div>
- <div ng-view autoscroll></div>
- <span class="back-top" scroll-to-top to-top-button>Back to top</span>
-
- <div class="container" ng-class="{hidden:showmePage}">
+    
+    <!-- Fallback footer for non-JavaScript users -->
+    <div class="container" id="fallback-footer" style="display:none;">
 
   <footer>
 
@@ -123,60 +122,22 @@
 <!-- /container -->
 <!--</span>-->
 </body>
-<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
-<!-- <script src="/static/js/jquery-1.12.3.min.js"></script>
-<script src="/static/js/angularjs/1.4.8/angular.min.js"></script>
-<script src="/static/js/angularjs/1.4.8/angular-route.min.js"></script>
-<script src="/static/js/angularjs/1.4.8/angular-sanitize.min.js"></script>
-<script src="/static/js/angularjs/1.4.8/angular-animate.js"></script>
-<script src="/static/js/angularjs/1.4.8/angular-cookies.js"></script>
-<script src="/static/js/angularjs/1.4.8/angular-touch.js"></script>
-<script src="/static/js/angular-ui-bootstrap/0.12.1/ui-bootstrap.min.js"></script>
-<script src="/static/js/Sortable/1.4.2/Sortable.min.js"></script>
-<script src="/static/js/Sortable/ng-sortable.min.js"></script>
-<script src="/static/js/angular-fullscreen/angular-fullscreen.min.js"></script>
-<script src="/static/js/jquery.lazyload.min.js"></script>
-<script src="/static/js/jquery.fs.scroller.min.js"></script>
-<script src="/static/js/angular.rangeSlider.min.js"></script>
-<script src="/static/js/angular.ngStorage.js"></script>
-<script src="/static/js/angular-markdown-it/markdown-it.min.js"></script>
-<script src="/static/js/angular-markdown-it/angular-markdown-it.js"></script>
-<script src="/static/js/angular-loading-bar/angular-loading-bar.min.js"></script>
-<script src="/static/js/scripts.js"></script>
-<script src="/static/js/main.js"></script>
-<script src="/static/directives/view-sub-menu/viewSubMenu.directive.js"></script>
-<script src="/static/directives/dpi/dpi.directive.js"></script>
-<script src="/static/directives/menu/directive.js"></script>
-<script src="/static/directives/copy-information/copyInformation.directive.js"></script>
-<script src="/static/directives/objects-from-same/objectsFromSame.directive.js"></script>
-<script src="/static/directives/info-tray/infoTray.directive.js"></script>
-<script src="/static/directives/copy-tabs/copyTabs.directive.js"></script>
-<script src="/static/directives/handprint-block/handprintBlock.directive.js"></script>
-<script src="/static/directives/text-transcription/textTranscription.directive.js"></script>
-<script src="/static/directives/work-copies/workCopies.directive.js"></script>
-<script src="/static/directives/work-title/workTitle.directive.js"></script>
-<script src="/static/directives/illustration-description/illustrationDescription.directive.js"></script>
-<script src="/static/directives/editor-notes/editorNotes.directive.js"></script>
-<script src="/static/directives/object-viewer/objectViewer.directive.js"></script>
-<script src="/static/directives/image-tags/imageTags.directive.js"></script>
-<script src="/static/directives/object-compare/objectCompare.directive.js"></script>
-<script src="/static/directives/object-reading/objectReading.directive.js"></script>
-<script src="/static/directives/slide-box/slideBox.directive.js"></script>
-<script src="/static/directives/client-ppi/clientPpi.directive.js"></script>
-<script src="/static/directives/search-results/searchResults.directive.js"></script>
-<script src="/static/directives/copy-info-dl/copyInfoDl.directive.js"></script>
-<script src="/static/controllers/copy/copy.controller.js"></script>
-<script src="/static/controllers/exhibit/exhibit.controller.js"></script>
-<script src="/static/controllers/work/work.controller.js"></script>
-<script src="/static/controllers/search/search.controller.js"></script>
-<script src="/static/controllers/home/home.controller.js"></script>
-<script src="/static/controllers/staticpage/staticpage.controller.js"></script>
-<script src="/static/controllers/showme/showme.controller.js"></script>
-<script src="/static/controllers/modal/modal.controller.js"></script>
- -->
+<!-- Pure Angular 17 Application Bundle -->
 <script src="/static/build/bundle.js"></script>
-<!--<script src="/static/js/minified/output.min.js"></script>-->
+
+<!-- External dependencies still needed -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/1.4.2/dexie.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/1.4.2/dexie.js.map"></script>
+
+<!-- Show fallback footer if JavaScript fails -->
+<script>
+  // Show fallback footer if Angular doesn't load
+  setTimeout(function() {
+    const appRoot = document.querySelector('app-root');
+    if (!appRoot || appRoot.innerHTML === 'Loading Blake Archive...') {
+      document.getElementById('fallback-footer').style.display = 'block';
+    }
+  }, 5000);
+</script>
 
 </html>
