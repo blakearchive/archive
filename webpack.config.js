@@ -8,10 +8,13 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'blakearchive/static/build')
     },
+    // Disable source maps to prevent 404 requests from crawlers
+    devtool: false,
     module: {
         rules: [
             {
                 test: /\.js$/,
+                exclude: /node_modules/,
                 use: [{
                     loader: 'babel-loader'
                 }]
