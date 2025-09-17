@@ -8,32 +8,33 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
     });
     if(angular.isUndefined($sessionStorage.menus) && angular.isUndefined($sessionStorage.allWorksAlpha) && angular.isUndefined($sessionStorage.allWorksCompDateValue)){
-        // Load both works and exhibitions, then merge them
-        $q.all([
-            BlakeDataService.getWorks(),
-            BlakeDataService.getExhibits()
-        ]).then(function (results) {
-            var works = results[0];
-            var exhibitions = results[1];
-            
-            // Transform exhibitions to match work structure
-            var transformedExhibitions = exhibitions.map(function(exhibit) {
-                return {
-                    bad_id: exhibit.exhibit_id,  // Use exhibit_id as bad_id
-                    title: exhibit.title,
-                    menuTitle: exhibit.title,
-                    medium: 'exhibit',
-                    composition_date_string: exhibit.composition_date_string,
-                    composition_date_value: exhibit.composition_date_string // Use string for sorting
-                };
+        // Load both works and exhibitions
+        BlakeDataService.getWorks().then(function(works) {
+            return BlakeDataService.getExhibits().then(function(exhibitions) {
+                // Filter out BlakeWork records with medium="exhibit" to avoid duplicates
+                var filteredWorks = works.filter(function(work) {
+                    return work.medium !== 'exhibit';
+                });
+                
+                // Transform exhibitions to match work structure
+                var transformedExhibitions = exhibitions.map(function(exhibit) {
+                    return {
+                        bad_id: exhibit.exhibit_id,  // Use exhibit_id as bad_id
+                        title: exhibit.title,
+                        menuTitle: exhibit.title,
+                        medium: 'exhibit',
+                        composition_date_string: exhibit.composition_date_string,
+                        composition_date_value: exhibit.composition_date_string // Use string for sorting
+                    };
+                });
+                
+                // Merge filtered works and exhibitions
+                var allData = filteredWorks.concat(transformedExhibitions);
+                
+                vm.organizeMenus(allData);
+                vm.alphabetizeAll(allData);
+                vm.orderByCompDateAll(allData);
             });
-            
-            // Merge works and exhibitions
-            var allData = works.concat(transformedExhibitions);
-            
-            vm.organizeMenus(allData);
-            vm.alphabetizeAll(allData);
-            vm.orderByCompDateAll(allData);
         });
     } else {
         vm.lists = $sessionStorage.menus;
