@@ -1,4 +1,4 @@
-angular.module("blake").controller("navMenu", function($scope, BlakeDataService, $sessionStorage){
+angular.module("blake").controller("navMenu", function($scope, BlakeDataService, $sessionStorage, $q){
     var vm = this;
 
     $('nav.navbar ul.navbar-nav > li.dropdown').click(function() {
@@ -8,14 +8,32 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
     });
     if(angular.isUndefined($sessionStorage.menus) && angular.isUndefined($sessionStorage.allWorksAlpha) && angular.isUndefined($sessionStorage.allWorksCompDateValue)){
-        BlakeDataService.getWorks().then(function (data) {
-            vm.organizeMenus(data);
-        });
-        BlakeDataService.getWorks().then(function (data2) {
-            vm.alphabetizeAll(data2);
-        });
-        BlakeDataService.getWorks().then(function (data3) {
-            vm.orderByCompDateAll(data3);
+        // Load both works and exhibitions, then merge them
+        $q.all([
+            BlakeDataService.getWorks(),
+            BlakeDataService.getExhibits()
+        ]).then(function (results) {
+            var works = results[0];
+            var exhibitions = results[1];
+            
+            // Transform exhibitions to match work structure
+            var transformedExhibitions = exhibitions.map(function(exhibit) {
+                return {
+                    bad_id: exhibit.exhibit_id,  // Use exhibit_id as bad_id
+                    title: exhibit.title,
+                    menuTitle: exhibit.title,
+                    medium: 'exhibit',
+                    composition_date_string: exhibit.composition_date_string,
+                    composition_date_value: exhibit.composition_date_string // Use string for sorting
+                };
+            });
+            
+            // Merge works and exhibitions
+            var allData = works.concat(transformedExhibitions);
+            
+            vm.organizeMenus(allData);
+            vm.alphabetizeAll(allData);
+            vm.orderByCompDateAll(allData);
         });
     } else {
         vm.lists = $sessionStorage.menus;
