@@ -16,17 +16,21 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
                     return work.medium !== 'exhibit';
                 });
                 
-                // Transform exhibitions to match work structure
-                var transformedExhibitions = exhibitions.map(function(exhibit) {
-                    return {
-                        bad_id: exhibit.exhibit_id,  // Use exhibit_id as bad_id
-                        title: exhibit.title,
-                        menuTitle: exhibit.title,
-                        medium: 'exhibit',
-                        composition_date_string: exhibit.composition_date_string,
-                        composition_date_value: exhibit.composition_date_string // Use string for sorting
-                    };
-                });
+                // Transform exhibitions to match work structure, filtering out "Illuminating VALA"
+                var transformedExhibitions = exhibitions
+                    .filter(function(exhibit) {
+                        return exhibit.exhibit_id !== 'illuminatingvala';  // Hide Illuminating VALA exhibition
+                    })
+                    .map(function(exhibit) {
+                        return {
+                            bad_id: exhibit.exhibit_id,  // Use exhibit_id as bad_id
+                            title: exhibit.title,
+                            menuTitle: exhibit.title,
+                            medium: 'exhibit',
+                            composition_date_string: exhibit.composition_date_string,
+                            composition_date_value: exhibit.composition_date_string // Use string for sorting
+                        };
+                    });
                 
                 // Merge filtered works and exhibitions
                 var allData = filteredWorks.concat(transformedExhibitions);
