@@ -1,4 +1,4 @@
-angular.module("blake").controller("navMenu", function($scope, BlakeDataService, $sessionStorage){
+angular.module("blake").controller("navMenu", function($scope, BlakeDataService, $sessionStorage, $q){
     var vm = this;
 
     $('nav.navbar ul.navbar-nav > li.dropdown').click(function() {
@@ -8,14 +8,37 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         $(this).find('ul.dropdown-menu').css({'width': viewport_width + 'px', 'left': '-' + element_position + 'px'});
     });
     if(angular.isUndefined($sessionStorage.menus) && angular.isUndefined($sessionStorage.allWorksAlpha) && angular.isUndefined($sessionStorage.allWorksCompDateValue)){
-        BlakeDataService.getWorks().then(function (data) {
-            vm.organizeMenus(data);
-        });
-        BlakeDataService.getWorks().then(function (data2) {
-            vm.alphabetizeAll(data2);
-        });
-        BlakeDataService.getWorks().then(function (data3) {
-            vm.orderByCompDateAll(data3);
+        // Load both works and exhibitions
+        BlakeDataService.getWorks().then(function(works) {
+            return BlakeDataService.getExhibits().then(function(exhibitions) {
+                // Filter out BlakeWork records with medium="exhibit" to avoid duplicates
+                var filteredWorks = works.filter(function(work) {
+                    return work.medium !== 'exhibit';
+                });
+                
+                // Transform exhibitions to match work structure, filtering out "Illuminating VALA"
+                var transformedExhibitions = exhibitions
+                    .filter(function(exhibit) {
+                        return exhibit.exhibit_id !== 'illuminatingvala';  // Hide Illuminating VALA exhibition
+                    })
+                    .map(function(exhibit) {
+                        return {
+                            bad_id: exhibit.exhibit_id,  // Use exhibit_id as bad_id
+                            title: exhibit.title,
+                            menuTitle: exhibit.title,
+                            medium: 'exhibit',
+                            composition_date_string: exhibit.composition_date_string,
+                            composition_date_value: exhibit.composition_date_string // Use string for sorting
+                        };
+                    });
+                
+                // Merge filtered works and exhibitions
+                var allData = filteredWorks.concat(transformedExhibitions);
+                
+                vm.organizeMenus(allData);
+                vm.alphabetizeAll(allData);
+                vm.orderByCompDateAll(allData);
+            });
         });
     } else {
         vm.lists = $sessionStorage.menus;
