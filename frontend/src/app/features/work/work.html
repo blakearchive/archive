@@ -1,1 +1,65 @@
-<p>work works!</p>
+<div class="work-container">
+  @if (loading) {
+    <app-loading-spinner message="Loading work information..."></app-loading-spinner>
+  }
+
+  @if (error) {
+    <div class="error-message">
+      <p>{{ error }}</p>
+      <a routerLink="/">Return to Home</a>
+    </div>
+  }
+
+  @if (work && !loading) {
+    <header class="work-header">
+      <p class="work-medium">{{ getMediumLabel() }}</p>
+      <h1 class="work-title">
+        {{ work.title }}
+        @if (work.composition_date) {
+          <span class="composition-date">(Composed {{ work.composition_date }})</span>
+        }
+      </h1>
+    </header>
+
+    <article class="work-content">
+      <section class="work-info">
+        @if (work.work_information) {
+          <div class="info-content" [innerHTML]="work.work_information"></div>
+        }
+
+        @if (copies.length > 0) {
+          <hr />
+          <p class="copy-count">
+            This work has <strong>{{ getCopyCountText() }}</strong> available in the archive.
+          </p>
+        }
+      </section>
+
+      @if (copies.length > 0) {
+        <section class="copies-section">
+          <h2>Copies</h2>
+          <div class="copies-grid">
+            @for (copy of copies; track copy.bad_id) {
+              <div class="copy-card">
+                <h3>
+                  <a [routerLink]="['/copy', copy.bad_id]">
+                    Copy {{ copy.bad_id }}
+                  </a>
+                </h3>
+                @if (copy.institution) {
+                  <p class="copy-institution">{{ copy.institution }}</p>
+                }
+                @if (copy.composition_date) {
+                  <p class="copy-date">{{ copy.composition_date }}</p>
+                }
+                <a [routerLink]="['/copy', copy.bad_id]" class="view-copy-link">
+                  View Copy →
+                </a>
+              </div>
+            }
+          </div>
+        </section>
+      }
+    </article>
+  }
+</div>

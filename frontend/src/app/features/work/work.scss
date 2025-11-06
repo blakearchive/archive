@@ -1,0 +1,166 @@
+.work-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.work-header {
+  margin-bottom: 3rem;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 1.5rem;
+
+  .work-medium {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+
+  .work-title {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin: 0;
+    line-height: 1.3;
+
+    .composition-date {
+      font-size: 1.5rem;
+      color: #7f8c8d;
+      font-weight: normal;
+      display: block;
+      margin-top: 0.5rem;
+
+      @media (min-width: 768px) {
+        display: inline;
+        margin-left: 1rem;
+      }
+    }
+  }
+}
+
+.work-content {
+  .work-info {
+    margin-bottom: 3rem;
+
+    .info-content {
+      line-height: 1.8;
+      color: #34495e;
+
+      :deep(p) {
+        margin-bottom: 1rem;
+      }
+
+      :deep(h2) {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+      }
+    }
+
+    hr {
+      margin: 2rem 0;
+      border: none;
+      border-top: 1px solid #ecf0f1;
+    }
+
+    .copy-count {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #7f8c8d;
+      font-style: italic;
+
+      strong {
+        color: #2c3e50;
+        font-style: normal;
+      }
+    }
+  }
+
+  .copies-section {
+    h2 {
+      margin-bottom: 1.5rem;
+      color: #2c3e50;
+      font-size: 2rem;
+    }
+
+    .copies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .copy-card {
+      background: white;
+      border: 1px solid #e1e4e8;
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.2s;
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
+
+      h3 {
+        margin: 0 0 0.75rem 0;
+        font-size: 1.3rem;
+
+        a {
+          color: #3498db;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .copy-institution {
+        color: #555;
+        margin: 0.5rem 0;
+        font-size: 0.95rem;
+      }
+
+      .copy-date {
+        color: #7f8c8d;
+        margin: 0.5rem 0;
+        font-size: 0.9rem;
+      }
+
+      .view-copy-link {
+        display: inline-block;
+        margin-top: 1rem;
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s;
+
+        &:hover {
+          color: #2980b9;
+        }
+      }
+    }
+  }
+}
+
+.error-message {
+  text-align: center;
+  padding: 3rem;
+  background-color: #fee;
+  border-radius: 8px;
+  margin: 2rem 0;
+
+  p {
+    color: #c33;
+    margin-bottom: 1rem;
+  }
+
+  a {
+    color: #3498db;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

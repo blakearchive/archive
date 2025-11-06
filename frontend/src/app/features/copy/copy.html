@@ -1,1 +1,91 @@
-<p>copy works!</p>
+<div class="copy-container">
+  @if (loading) {
+    <app-loading-spinner message="Loading copy information..."></app-loading-spinner>
+  }
+
+  @if (error) {
+    <div class="error-message">
+      <p>{{ error }}</p>
+      <a routerLink="/">Return to Home</a>
+    </div>
+  }
+
+  @if (copy && !loading) {
+    <header class="copy-header">
+      <div class="header-content">
+        <h1 class="copy-title">{{ copy.title }}</h1>
+        <p class="copy-id">Copy {{ copy.bad_id }}</p>
+        @if (copy.work_id) {
+          <p class="work-link">
+            <a [routerLink]="['/work', copy.work_id]">View Complete Work →</a>
+          </p>
+        }
+      </div>
+    </header>
+
+    <div class="copy-main">
+      <aside class="copy-info">
+        <section class="info-section">
+          <h2>Copy Information</h2>
+          
+          @if (copy.institution) {
+            <div class="info-item">
+              <h3>Institution</h3>
+              <p>{{ copy.institution }}</p>
+            </div>
+          }
+
+          @if (copy.composition_date) {
+            <div class="info-item">
+              <h3>Date</h3>
+              <p>{{ copy.composition_date }}</p>
+            </div>
+          }
+
+          @if (copy.copy_information) {
+            <div class="info-item">
+              <h3>Details</h3>
+              <div [innerHTML]="copy.copy_information"></div>
+            </div>
+          }
+        </section>
+
+        @if (objects.length > 0) {
+          <section class="objects-summary">
+            <h3>{{ getObjectCountText() }}</h3>
+            <button (click)="toggleViewMode()" class="view-toggle">
+              {{ viewMode === 'grid' ? 'List View' : 'Grid View' }}
+            </button>
+          </section>
+        }
+      </aside>
+
+      <main class="objects-section">
+        <h2>Objects in this Copy</h2>
+
+        @if (objects.length > 0) {
+          <div [class]="'objects-' + viewMode">
+            @for (object of objects; track object.desc_id) {
+              <div class="object-card">
+                <div class="object-content">
+                  <h3 class="object-number">Object {{ object.object_number }}</h3>
+                  @if (object.title) {
+                    <p class="object-title">{{ object.title }}</p>
+                  }
+                  @if (object.illustration_description) {
+                    <p class="object-description">{{ object.illustration_description }}</p>
+                  }
+                  <a [routerLink]="['/object', object.desc_id]" class="view-object-link">
+                    View Object →
+                  </a>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <p class="no-objects">No objects available for this copy.</p>
+        }
+      </main>
+    </div>
+  }
+</div>

@@ -1,1 +1,98 @@
-<p>object works!</p>
+<div class="object-container">
+  @if (loading) {
+    <app-loading-spinner message="Loading object..."></app-loading-spinner>
+  }
+
+  @if (error) {
+    <div class="error-message">
+      <p>{{ error }}</p>
+      <a routerLink="/">Return to Home</a>
+    </div>
+  }
+
+  @if (object && !loading) {
+    <header class="object-header">
+      <div class="header-content">
+        <h1 class="object-title">{{ object.title || 'Untitled' }}</h1>
+        <div class="object-meta">
+          <span class="object-number">Object {{ object.object_number }}</span>
+          @if (object.copy_bad_id) {
+            <span class="copy-link">
+              <a [routerLink]="['/copy', object.copy_bad_id]">Copy {{ object.copy_bad_id }}</a>
+            </span>
+          }
+        </div>
+      </div>
+    </header>
+
+    <div class="object-tabs">
+      <button
+        [class.active]="activeTab === 'image'"
+        (click)="setActiveTab('image')"
+        class="tab-button"
+      >
+        Image
+      </button>
+      @if (hasTranscription()) {
+        <button
+          [class.active]="activeTab === 'transcription'"
+          (click)="setActiveTab('transcription')"
+          class="tab-button"
+        >
+          Transcription
+        </button>
+      }
+      @if (hasDescription()) {
+        <button
+          [class.active]="activeTab === 'info'"
+          (click)="setActiveTab('info')"
+          class="tab-button"
+        >
+          Information
+        </button>
+      }
+    </div>
+
+    <main class="object-content">
+      <!-- Image Tab -->
+      @if (activeTab === 'image') {
+        <div class="image-view">
+          <div class="image-container">
+            <img
+              [src]="getImageUrl()"
+              [alt]="object.title || 'Blake Archive Object'"
+              class="object-image"
+              (error)="$any($event.target).src='/static/img/placeholder.jpg'"
+            />
+          </div>
+          <div class="image-controls">
+            <p class="image-info">Object {{ object.object_number }} - {{ object.desc_id }}</p>
+            <div class="control-buttons">
+              <button class="control-btn" title="Zoom In">🔍 Zoom In</button>
+              <button class="control-btn" title="Zoom Out">🔍 Zoom Out</button>
+              <button class="control-btn" title="Fit to Screen">⬜ Fit</button>
+              <button class="control-btn" title="Add to Lightbox">💾 Save</button>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Transcription Tab -->
+      @if (activeTab === 'transcription' && hasTranscription()) {
+        <div class="transcription-view">
+          <div class="transcription-content" [innerHTML]="object.text_transcription"></div>
+        </div>
+      }
+
+      <!-- Information Tab -->
+      @if (activeTab === 'info' && hasDescription()) {
+        <div class="info-view">
+          <section class="info-section">
+            <h2>Illustration Description</h2>
+            <div [innerHTML]="object.illustration_description"></div>
+          </section>
+        </div>
+      }
+    </main>
+  }
+</div>
