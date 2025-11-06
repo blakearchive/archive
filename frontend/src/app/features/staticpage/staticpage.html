@@ -1,1 +1,19 @@
-<p>staticpage works!</p>
+<div class="staticpage-container">
+  @if (loading) {
+    <app-loading-spinner message="Loading page..."></app-loading-spinner>
+  }
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (content && !loading) {
+    <header class="page-header">
+      <h1>{{ pageTitle }}</h1>
+    </header>
+
+    <article class="page-content">
+      <div [innerHTML]="content"></div>
+    </article>
+  }
+</div>

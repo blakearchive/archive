@@ -1,1 +1,42 @@
-<p>cropper works!</p>
+<div class="cropper-container">
+  @if (loading) {
+    <app-loading-spinner message="Loading image..."></app-loading-spinner>
+  }
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (imageLoaded && !loading) {
+    <header class="cropper-header">
+      <h1>Image Cropper</h1>
+      <div class="cropper-instructions">
+        Click and drag on the image to select the area you want to crop
+      </div>
+    </header>
+
+    <div class="cropper-workspace">
+      <div class="canvas-container">
+        <canvas
+          #canvas
+          class="main-canvas"
+          (mousedown)="onMouseDown($event)"
+          (mousemove)="onMouseMove($event)"
+          (mouseup)="onMouseUp()"
+          (mouseleave)="onMouseUp()"
+        ></canvas>
+      </div>
+
+      <div class="cropper-controls">
+        <button class="btn btn-primary" (click)="cropImage()">Crop</button>
+        <button class="btn btn-success" (click)="downloadCroppedImage()">Download</button>
+        <button class="btn btn-secondary" (click)="resetCrop()">Reset</button>
+      </div>
+
+      <div class="crop-preview">
+        <h3>Cropped Preview</h3>
+        <canvas #cropCanvas class="crop-canvas"></canvas>
+      </div>
+    </div>
+  }
+</div>

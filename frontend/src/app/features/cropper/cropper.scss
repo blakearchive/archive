@@ -1,0 +1,145 @@
+.cropper-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.cropper-header {
+  margin-bottom: 2rem;
+  text-align: center;
+
+  h1 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+  }
+
+  .cropper-instructions {
+    color: #7f8c8d;
+    font-size: 0.95rem;
+    font-style: italic;
+  }
+}
+
+.cropper-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.canvas-container {
+  border: 2px solid #e1e8ed;
+  border-radius: 8px;
+  overflow: auto;
+  max-width: 100%;
+  max-height: 600px;
+  background: #f8f9fa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main-canvas {
+  display: block;
+  cursor: crosshair;
+  max-width: 100%;
+  height: auto;
+
+  &:active {
+    cursor: move;
+  }
+}
+
+.cropper-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &.btn-primary {
+    background-color: #3498db;
+    color: white;
+
+    &:hover {
+      background-color: #2980b9;
+    }
+  }
+
+  &.btn-success {
+    background-color: #27ae60;
+    color: white;
+
+    &:hover {
+      background-color: #229954;
+    }
+  }
+
+  &.btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+
+    &:hover {
+      background-color: #7f8c8d;
+    }
+  }
+}
+
+.crop-preview {
+  text-align: center;
+  width: 100%;
+
+  h3 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+    font-size: 1.25rem;
+  }
+
+  .crop-canvas {
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.error-message {
+  padding: 2rem;
+  background-color: #fee;
+  color: #c33;
+  border-radius: 8px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .cropper-container {
+    padding: 1rem;
+  }
+
+  .cropper-controls {
+    flex-direction: column;
+    width: 100%;
+
+    .btn {
+      width: 100%;
+    }
+  }
+}

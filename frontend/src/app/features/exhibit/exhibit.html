@@ -1,1 +1,21 @@
-<p>exhibit works!</p>
+<div class="exhibit-container">
+  @if (loading) {
+    <app-loading-spinner message="Loading exhibit..."></app-loading-spinner>
+  }
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (exhibit && !loading) {
+    <header class="exhibit-header">
+      <h1>{{ exhibit.title }}</h1>
+    </header>
+
+    <article class="exhibit-content">
+      @if (exhibit.content) {
+        <div [innerHTML]="exhibit.content"></div>
+      }
+    </article>
+  }
+</div>

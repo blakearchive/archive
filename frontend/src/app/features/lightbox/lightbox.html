@@ -1,1 +1,100 @@
-<p>lightbox works!</p>
+<div class="lightbox-container">
+  <header class="lightbox-header">
+    <h1>My Lightbox</h1>
+    <p class="subtitle">Save and organize images from the Blake Archive</p>
+  </header>
+
+  @if (hasItems) {
+    <div class="lightbox-controls">
+      <div class="controls-left">
+        <button (click)="toggleViewMode()" class="control-btn">
+          {{ viewMode === 'grid' ? '☰ List View' : '⊞ Grid View' }}
+        </button>
+        <button (click)="toggleSortBy()" class="control-btn">
+          Sort by: {{ sortBy === 'date' ? 'Date' : 'Title' }}
+        </button>
+        <label class="select-all-label">
+          <input
+            type="checkbox"
+            [checked]="selectAll"
+            (change)="toggleSelectAll()"
+          />
+          Select All
+        </label>
+      </div>
+
+      <div class="controls-right">
+        <span class="item-count">{{ itemCount }} item{{ itemCount !== 1 ? 's' : '' }}</span>
+        @if (selectedCount > 0) {
+          <button (click)="deleteSelected()" class="control-btn danger">
+            🗑 Delete Selected ({{ selectedCount }})
+          </button>
+        }
+        <button (click)="exportCart()" class="control-btn">
+          ⬇ Export
+        </button>
+        <button (click)="clearCart()" class="control-btn danger">
+          Clear All
+        </button>
+      </div>
+    </div>
+
+    <main [class]="'lightbox-items items-' + viewMode">
+      @for (item of cartItems; track item.id) {
+        <div class="lightbox-item" [class.selected]="isSelected(item.id)">
+          <div class="item-checkbox">
+            <input
+              type="checkbox"
+              [checked]="isSelected(item.id)"
+              (change)="toggleItemSelection(item.id)"
+            />
+          </div>
+
+          <div class="item-image">
+            <img [src]="item.url" [alt]="item.title" />
+          </div>
+
+          <div class="item-info">
+            <h3 class="item-title">{{ item.title }}</h3>
+            @if (item.caption) {
+              <p class="item-caption">{{ item.caption }}</p>
+            }
+            <div class="item-meta">
+              @if (item.objectId) {
+                <a [routerLink]="['/object', item.objectId]" class="meta-link">
+                  View Object
+                </a>
+              }
+              @if (item.copyId) {
+                <a [routerLink]="['/copy', item.copyId]" class="meta-link">
+                  View Copy
+                </a>
+              }
+              <span class="item-date">
+                Added {{ item.addedAt | date: 'short' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="item-actions">
+            <button
+              (click)="removeItem(item.id)"
+              class="action-btn delete"
+              title="Remove from lightbox"
+            >
+              🗑
+            </button>
+          </div>
+        </div>
+      }
+    </main>
+  } @else {
+    <div class="empty-lightbox">
+      <div class="empty-icon">💡</div>
+      <h2>Your lightbox is empty</h2>
+      <p>Browse the archive and save images to your lightbox for later viewing.</p>
+      <p>Images are saved locally in your browser.</p>
+      <a routerLink="/" class="browse-link">Start Browsing →</a>
+    </div>
+  }
+</div>

@@ -1,1 +1,138 @@
-<p>showme works!</p>
+<div class="showme-container">
+  @if (loading) {
+    <app-loading-spinner message="Loading content..."></app-loading-spinner>
+  }
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (!loading && copy) {
+    <header class="showme-header">
+      @if (work) {
+        <h1>{{ work.title }}</h1>
+      }
+      @if (copy) {
+        <h2>{{ copy.copy_title || copy.copy_id }}</h2>
+      }
+    </header>
+
+    <div class="showme-content">
+      @if (what === 'objects') {
+        <section class="objects-view">
+          <h3>Objects</h3>
+          <div class="objects-grid">
+            @for (obj of objects; track obj.desc_id) {
+              <div class="object-card">
+                <a [routerLink]="['/object', obj.desc_id]" target="_blank">
+                  <img
+                    [src]="getObjectThumbnailUrl(obj)"
+                    [alt]="obj.title || obj.desc_id"
+                    class="object-thumbnail"
+                  />
+                  <div class="object-info">
+                    <div class="object-title">{{ obj.title || obj.desc_id }}</div>
+                    @if (obj.object_number) {
+                      <div class="object-number">Object {{ obj.object_number }}</div>
+                    }
+                  </div>
+                </a>
+              </div>
+            }
+          </div>
+        </section>
+      }
+
+      @if (what === 'transcription') {
+        <section class="transcription-view">
+          <h3>Transcription</h3>
+          <div class="transcription-list">
+            @for (obj of objects; track obj.desc_id) {
+              <div class="transcription-item">
+                <h4>{{ obj.title || obj.desc_id }}</h4>
+                @if (obj.text) {
+                  <div class="transcription-text" [innerHTML]="obj.text"></div>
+                } @else {
+                  <p class="no-transcription">No transcription available</p>
+                }
+              </div>
+            }
+          </div>
+        </section>
+      }
+
+      @if (what === 'comparison') {
+        <section class="comparison-view">
+          <h3>Comparison View</h3>
+          <div class="comparison-grid">
+            @for (obj of objects; track obj.desc_id) {
+              <div class="comparison-item">
+                <div class="comparison-image">
+                  <img
+                    [src]="getObjectImageUrl(obj)"
+                    [alt]="obj.title || obj.desc_id"
+                  />
+                </div>
+                <div class="comparison-text">
+                  <h4>{{ obj.title || obj.desc_id }}</h4>
+                  @if (obj.text) {
+                    <div [innerHTML]="obj.text"></div>
+                  } @else {
+                    <p class="no-transcription">No transcription available</p>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </section>
+      }
+
+      @if (what === 'info') {
+        <section class="info-view">
+          <h3>Copy Information</h3>
+          <div class="info-content">
+            @if (work) {
+              <div class="info-section">
+                <h4>Work</h4>
+                <dl>
+                  <dt>Title:</dt>
+                  <dd>{{ work.title }}</dd>
+                  @if (work.composition_date) {
+                    <dt>Composition Date:</dt>
+                    <dd>{{ work.composition_date }}</dd>
+                  }
+                  @if (work.info) {
+                    <dt>Description:</dt>
+                    <dd [innerHTML]="work.info"></dd>
+                  }
+                </dl>
+              </div>
+            }
+
+            @if (copy) {
+              <div class="info-section">
+                <h4>Copy</h4>
+                <dl>
+                  <dt>Copy ID:</dt>
+                  <dd>{{ copy.copy_id }}</dd>
+                  @if (copy.institution) {
+                    <dt>Institution:</dt>
+                    <dd>{{ copy.institution }}</dd>
+                  }
+                  @if (copy.composition_date) {
+                    <dt>Date:</dt>
+                    <dd>{{ copy.composition_date }}</dd>
+                  }
+                  @if (copy.medium) {
+                    <dt>Medium:</dt>
+                    <dd>{{ copy.medium }}</dd>
+                  }
+                </dl>
+              </div>
+            }
+          </div>
+        </section>
+      }
+    </div>
+  }
+</div>

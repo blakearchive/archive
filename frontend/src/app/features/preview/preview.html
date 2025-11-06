@@ -1,1 +1,21 @@
-<p>preview works!</p>
+<div class="preview-container">
+  @if (loading) {
+    <app-loading-spinner message="Loading preview..."></app-loading-spinner>
+  }
+
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  @if (preview && !loading) {
+    <header class="preview-header">
+      <h1>{{ preview.title }}</h1>
+    </header>
+
+    <article class="preview-content">
+      @if (preview.content) {
+        <div [innerHTML]="preview.content"></div>
+      }
+    </article>
+  }
+</div>
