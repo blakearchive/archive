@@ -11,7 +11,7 @@ import 'fabric';
 import 'ng-cropperjs';
 import 'dexie';
 import 'ng-dexie';
-import 'ng-openseadragon'
+// import 'ng-openseadragon'  // Commented out - package not found
 import 'openseadragon'
 import 'script-loader!./js/bower_components/openseadragon/built-openseadragon/openseadragon/openseadragon.min'
 import './js/angular.ngStorage';

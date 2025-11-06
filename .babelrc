@@ -1,9 +1,12 @@
 {
-  "presets": [[
-    "latest",
-    {
-      "es2016": false,
-      "es2015": false,
-      "es2017": false
-    }]]
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "browsers": ["last 2 versions", "ie >= 11"]
+      }
+    }]
+  ],
+  "plugins": [
+    "angularjs-annotate"
+  ]
 }

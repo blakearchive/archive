@@ -1,33 +1,36 @@
-var path = require('path');
-var ClosureCompilerPlugin = require('webpack-closure-compiler');
-var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
+const path = require('path');
 
 module.exports = {
+    mode: 'production',
     entry: './blakearchive/static/index.js',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'blakearchive/static/build')
+        path: path.resolve(__dirname, 'blakearchive/static/build'),
+        clean: true
     },
     module: {
         rules: [
             {
                 test: /\.js$/,
-                use: [{
+                exclude: /node_modules/,
+                use: {
                     loader: 'babel-loader'
-                }]
+                }
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.html$/,
+                use: 'html-loader'
             }
         ]
     },
-    plugins: [
-        new ngAnnotatePlugin({
-            add: true,
-            // other ng-annotate options here
-        })/*,
-        new ClosureCompilerPlugin({
-          compiler: {
-            compilation_level: 'SIMPLE'
-          },
-          concurrency: 3,
-        })*/
-    ]
+    optimization: {
+        minimize: true
+    },
+    performance: {
+        hints: false
+    }
 };
