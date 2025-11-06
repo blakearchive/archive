@@ -2,9 +2,10 @@
 
 ## Project Structure
 
-This repository contains two frontend implementations:
-- **Legacy AngularJS (1.8.3)**: Located in `blakearchive/static/` - Currently in production
-- **Modern Angular (v20)**: Located in `frontend/` - New implementation with TypeScript
+This repository contains the Blake Archive application:
+- **Backend**: Flask application in `blakearchive/`
+- **Frontend**: Modern Angular (v20) application in `frontend/`
+- **Static Assets**: CSS, fonts, images, and HTML templates in `blakearchive/static/`
 
 ## Requirements
 
@@ -12,7 +13,7 @@ This repository contains two frontend implementations:
 The project requires Python 3.11 or higher.
 
 ### Node.js >= 18.x
-Required for building both the legacy AngularJS and modern Angular frontends.
+Required for building and running the Angular frontend.
 
 ### PostgreSQL >= 14.x
 On Mac:
@@ -82,20 +83,14 @@ pip install -r requirements.txt
 
 ### Install JavaScript Dependencies
 
-For Legacy AngularJS Build:
-```bash
-npm install
-npm run build
-```
-
-For Modern Angular (Development):
+For Development:
 ```bash
 cd frontend
 npm install
 npm start  # Runs dev server with Flask proxy on http://localhost:4200
 ```
 
-For Modern Angular (Production):
+For Production Build:
 ```bash
 cd frontend
 npm run build  # Output goes to ../blakearchive/static/ng-dist/
@@ -162,16 +157,7 @@ The application will be available at http://localhost:5000
 - **PostgreSQL** - Database
 - **Apache Solr** - Full-text search
 
-### Legacy Frontend (AngularJS)
-- **AngularJS 1.8.3** (EOL)
-- **Webpack 5.96.1** - Module bundler
-- **Babel 7.26.0** - JavaScript transpiler
-- **Bootstrap 3.4.1** - UI framework
-- **jQuery 3.7.1** - DOM manipulation
-- **OpenSeadragon 5.0.0** - Deep zoom image viewer
-- **Fabric.js 6.4.4** - Canvas manipulation
-
-### Modern Frontend (Angular)
+### Frontend
 - **Angular 20** - Modern web framework
 - **TypeScript 5.7+** - Type-safe JavaScript
 - **RxJS 7.8+** - Reactive programming
@@ -180,12 +166,7 @@ The application will be available at http://localhost:5000
 
 ## Development Workflow
 
-### Legacy AngularJS Development
-```bash
-npm run build-watch  # Watches for changes and rebuilds
-```
-
-### Modern Angular Development
+### Angular Development
 ```bash
 cd frontend
 npm start  # Dev server with hot reload at http://localhost:4200
@@ -193,26 +174,40 @@ npm start  # Dev server with hot reload at http://localhost:4200
 
 The Angular dev server proxies API requests to Flask (http://localhost:5000)
 
-## Build Output Locations
-
-- **Legacy AngularJS**: `blakearchive/static/build/bundle.js`
-- **Modern Angular**: `blakearchive/static/ng-dist/browser/`
+### Production Build
+```bash
+cd frontend
+npm run build  # Output: blakearchive/static/ng-dist/browser/
+```
 
 ## Migration Status
 
-The project is currently in transition from AngularJS to modern Angular:
+✅ **Migration to Angular 20 Complete!**
 
-✅ **Completed:**
-- Angular 20 project structure
-- Routing for all 11 main routes
-- Core data service (BlakeDataService)
-- Home component with featured works
-- Scaffolded components for all routes
-- Build and deployment configuration
+All components have been successfully migrated from AngularJS 1.8 to Angular 20:
 
-🚧 **In Progress:**
-- Implementing remaining component logic
-- Migrating 53 AngularJS directives to Angular components
-- State management implementation
-- UI component library
-- Complete styling migration
+**Core Services:**
+- `BlakeDataService` - Full API integration with all 15+ endpoints
+- `SearchService` - Comprehensive search with 15+ filter options and signal-based state
+- `CartService` - Shopping cart with localStorage persistence and cross-tab sync
+
+**Components Implemented (11 routes):**
+- `Home` - Featured works display
+- `Search` - Advanced search interface with filters
+- `Work` - Work information and copies listing
+- `Copy` - Copy details with object grid/list views
+- `Object` - Tabbed interface (image/transcription/info)
+- `Lightbox` - Cart management with bulk operations and export
+- `Exhibit` - Curated exhibits display
+- `Preview` - Preview content viewer
+- `Staticpage` - Static HTML content loader
+- `Cropper` - Interactive image cropping tool
+- `Showme` - Multi-mode popup viewer (objects/transcription/comparison/info)
+
+**Technical Features:**
+- Standalone components (no NgModules)
+- TypeScript with full type safety
+- Signal-based reactive state management
+- Lazy loading with code splitting
+- RxJS observables for async operations
+- Production build: 297.69 KB initial (84.34 KB gzipped)

@@ -1,52 +1,22 @@
 {
   "name": "BlakeArchive",
-  "version": "0.1.0",
-  "devDependencies": {
-    "@babel/cli": "^7.25.9",
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
-    "angular": "^1.8.3",
-    "angular-animate": "^1.8.3",
-    "angular-cookies": "^1.8.3",
-    "angular-fullscreen": "^2.0.0",
-    "angular-loading-bar": "^0.9.0",
-    "angular-markdown-it": "^0.6.1",
-    "angular-rangeslider": "0.0.14",
-    "angular-route": "^1.8.3",
-    "angular-sanitize": "^1.8.3",
-    "angular-sortable": "0.0.0",
-    "angular-storage": "0.0.15",
-    "angular-touch": "^1.8.3",
-    "angular-ui-bootstrap": "^2.5.6",
-    "babel-loader": "^9.2.1",
-    "babel-plugin-angularjs-annotate": "^0.10.0",
-    "bootstrap": "^3.4.1",
-    "css-loader": "^7.1.2",
-    "fabric": "^6.4.4",
-    "gulp": "^5.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-cssmin": "^0.2.0",
-    "gulp-uglify": "^3.0.2",
-    "html-loader": "^5.1.0",
-    "jquery": "^3.7.1",
-    "markdown": "^0.5.0",
-    "markdown-it": "^14.1.0",
-    "ng-cropperjs": "^1.0.2",
-    "script-loader": "^0.7.2",
-    "sortable": "^2.0.0",
-    "style-loader": "^4.0.0",
-    "webpack": "^5.96.1",
-    "webpack-cli": "^5.1.4"
-  },
+  "version": "0.2.0",
+  "description": "William Blake Archive - Flask backend with Angular frontend",
+  "private": true,
   "scripts": {
-    "build": "webpack",
-    "build-watch": "webpack --watch"
+    "postinstall": "echo 'Note: Frontend dependencies are in ./frontend directory. Run: cd frontend && npm install'"
   },
-  "dependencies": {
-    "dexie": "^4.0.10",
-    "fabric": "^6.4.4",
-    "ng-cropperjs": "^1.0.2",
-    "ng-dexie": "^0.0.18",
-    "openseadragon": "^5.0.0"
-  }
+  "workspaces": [
+    "frontend"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blakearchive/archive.git"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "devDependencies": {},
+  "dependencies": {}
 }
