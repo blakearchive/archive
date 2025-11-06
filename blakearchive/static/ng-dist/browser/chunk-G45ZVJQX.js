@@ -1,0 +1,1 @@
+import{Aa as o,Sa as n,Ta as r,Xa as a}from"./chunk-QJJFUPYE.js";var s=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=o({type:t,selectors:[["app-work"]],decls:2,vars:0,template:function(e,p){e&1&&(n(0,"p"),a(1,"work works!"),r())},encapsulation:2})};export{s as Work};

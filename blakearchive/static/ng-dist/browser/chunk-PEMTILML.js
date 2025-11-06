@@ -1,0 +1,1 @@
+import{Aa as o,Sa as i,Ta as n,Xa as a}from"./chunk-QJJFUPYE.js";var s=class e{static \u0275fac=function(t){return new(t||e)};static \u0275cmp=o({type:e,selectors:[["app-lightbox"]],decls:2,vars:0,template:function(t,p){t&1&&(i(0,"p"),a(1,"lightbox works!"),n())},encapsulation:2})};export{s as Lightbox};

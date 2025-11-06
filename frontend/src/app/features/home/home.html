@@ -1,0 +1,26 @@
+<div class="home-container">
+  <h1>William Blake Archive</h1>
+
+  <div class="featured-works" *ngIf="featuredWorks.length > 0">
+    <h2>Featured Works</h2>
+
+    <div class="columns-container">
+      @for (column of [1,2,3,4,5,6]; track column) {
+        <div class="column" [style.top]="columns[column].topOffset">
+          @for (work of featuredWorks; track work.bad_id) {
+            @if (work.column === column) {
+              <div class="featured-work-card">
+                <h3>{{ work.title }}</h3>
+                <a [routerLink]="['/work', work.bad_id]">View Work</a>
+              </div>
+            }
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="featuredWorks.length === 0">
+    <p>Loading featured works...</p>
+  </div>
+</div>

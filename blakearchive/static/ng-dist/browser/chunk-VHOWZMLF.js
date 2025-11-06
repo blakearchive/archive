@@ -1,0 +1,1 @@
+import{Aa as a,Sa as i,Ta as p,Xa as s}from"./chunk-QJJFUPYE.js";var n=class e{static \u0275fac=function(t){return new(t||e)};static \u0275cmp=a({type:e,selectors:[["app-staticpage"]],decls:2,vars:0,template:function(t,o){t&1&&(i(0,"p"),s(1,"staticpage works!"),p())},encapsulation:2})};export{n as Staticpage};

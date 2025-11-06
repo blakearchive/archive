@@ -1,0 +1,1 @@
+import{Aa as o,Sa as p,Ta as n,Xa as a}from"./chunk-QJJFUPYE.js";var s=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=o({type:t,selectors:[["app-copy"]],decls:2,vars:0,template:function(e,i){e&1&&(p(0,"p"),a(1,"copy works!"),n())},encapsulation:2})};export{s as Copy};

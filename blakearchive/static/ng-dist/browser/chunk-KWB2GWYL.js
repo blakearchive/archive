@@ -1,0 +1,1 @@
+import{Aa as o,Sa as s,Ta as m,Xa as n}from"./chunk-QJJFUPYE.js";var a=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=o({type:t,selectors:[["app-showme"]],decls:2,vars:0,template:function(e,p){e&1&&(s(0,"p"),n(1,"showme works!"),m())},encapsulation:2})};export{a as Showme};
