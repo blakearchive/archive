@@ -1,1 +1,0 @@
-import{Aa as p,Sa as r,Ta as o,Xa as n}from"./chunk-QJJFUPYE.js";var a=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=p({type:t,selectors:[["app-cropper"]],decls:2,vars:0,template:function(e,c){e&1&&(r(0,"p"),n(1,"cropper works!"),o())},encapsulation:2})};export{a as Cropper};

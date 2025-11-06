@@ -1,1 +1,175 @@
-<p>search works!</p>
+<div class="search-container">
+  <header class="search-header">
+    <h1>Search the Blake Archive</h1>
+    
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="onSearch()"
+        placeholder="Search works, objects, or text..."
+        class="search-input"
+      />
+      <button (click)="onSearch()" class="search-button" [disabled]="searching">
+        @if (searching) {
+          Searching...
+        } @else {
+          Search
+        }
+      </button>
+      <button (click)="toggleFilters()" class="filter-button">
+        {{ showFilters ? 'Hide' : 'Show' }} Filters
+      </button>
+    </div>
+
+    @if (error) {
+      <div class="error-message">{{ error }}</div>
+    }
+  </header>
+
+  <!-- Filters Panel -->
+  @if (showFilters) {
+    <aside class="filters-panel">
+      <h3>Filter Search</h3>
+
+      <div class="filter-group">
+        <h4>Search In</h4>
+        @for (field of searchFields; track field.key) {
+          <label class="filter-checkbox">
+            <input
+              type="checkbox"
+              [checked]="isFieldChecked(field.key)"
+              (change)="toggleField(field.key)"
+            />
+            {{ field.label }}
+          </label>
+        }
+      </div>
+
+      <div class="filter-group">
+        <h4>Medium Type</h4>
+        @for (type of mediumTypes; track type.key) {
+          <label class="filter-checkbox">
+            <input
+              type="checkbox"
+              [checked]="isTypeChecked(type.key)"
+              (change)="toggleType(type.key)"
+            />
+            {{ type.label }}
+          </label>
+        }
+      </div>
+
+      <div class="filter-group">
+        <h4>Date Range</h4>
+        <div class="date-range">
+          <input
+            type="number"
+            [value]="searchConfig.minDate"
+            (change)="updateDateRange($any($event.target).value, searchConfig.maxDate!)"
+            min="1772"
+            max="1827"
+          />
+          <span>to</span>
+          <input
+            type="number"
+            [value]="searchConfig.maxDate"
+            (change)="updateDateRange(searchConfig.minDate!, $any($event.target).value)"
+            min="1772"
+            max="1827"
+          />
+        </div>
+      </div>
+
+      <button (click)="resetFilters()" class="reset-button">Reset Filters</button>
+    </aside>
+  }
+
+  <!-- Search Results -->
+  <main class="search-results">
+    @if (searching) {
+      <app-loading-spinner message="Searching Blake Archive..."></app-loading-spinner>
+    }
+
+    @if (results && !searching) {
+      <div class="results-summary">
+        <h2>Search Results</h2>
+        <p>
+          Found {{ getTotalCount() }} results
+          @if (getTotalCount() > 0) {
+            <span>
+              ({{ getObjectCount() }} objects, {{ getCopyCount() }} copies, {{ getWorkCount() }} works)
+            </span>
+          }
+        </p>
+      </div>
+
+      <!-- Objects Results -->
+      @if (getObjectCount() > 0) {
+        <section class="result-section">
+          <h3>Objects ({{ getObjectCount() }})</h3>
+          <div class="results-grid">
+            @for (object of results.objects; track $index) {
+              <div class="result-card">
+                <h4>{{ object.title || 'Untitled' }}</h4>
+                <p class="result-meta">Object {{ object.object_number }}</p>
+                <a [routerLink]="['/object', object.desc_id]" class="view-link">
+                  View Object
+                </a>
+              </div>
+            }
+          </div>
+        </section>
+      }
+
+      <!-- Copies Results -->
+      @if (getCopyCount() > 0) {
+        <section class="result-section">
+          <h3>Copies ({{ getCopyCount() }})</h3>
+          <div class="results-grid">
+            @for (copy of results.copies; track $index) {
+              <div class="result-card">
+                <h4>{{ copy.title || 'Untitled' }}</h4>
+                <p class="result-meta">Copy {{ copy.bad_id }}</p>
+                <a [routerLink]="['/copy', copy.bad_id]" class="view-link">
+                  View Copy
+                </a>
+              </div>
+            }
+          </div>
+        </section>
+      }
+
+      <!-- Works Results -->
+      @if (getWorkCount() > 0) {
+        <section class="result-section">
+          <h3>Works ({{ getWorkCount() }})</h3>
+          <div class="results-grid">
+            @for (work of results.works; track $index) {
+              <div class="result-card">
+                <h4>{{ work.title || 'Untitled' }}</h4>
+                <p class="result-meta">{{ work.medium }}</p>
+                <a [routerLink]="['/work', work.bad_id]" class="view-link">
+                  View Work
+                </a>
+              </div>
+            }
+          </div>
+        </section>
+      }
+
+      @if (getTotalCount() === 0) {
+        <div class="no-results">
+          <p>No results found for "{{ searchQuery }}"</p>
+          <p>Try adjusting your search terms or filters.</p>
+        </div>
+      }
+    }
+
+    @if (!results && !searching) {
+      <div class="empty-state">
+        <p>Enter a search query to find works, objects, and copies in the Blake Archive.</p>
+      </div>
+    }
+  </main>
+</div>

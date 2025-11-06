@@ -1,1 +1,0 @@
-import{Aa as i,Sa as n,Ta as r,Xa as o}from"./chunk-QJJFUPYE.js";var p=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=i({type:t,selectors:[["app-preview"]],decls:2,vars:0,template:function(e,s){e&1&&(n(0,"p"),o(1,"preview works!"),r())},encapsulation:2})};export{p as Preview};
