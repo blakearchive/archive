@@ -69,11 +69,7 @@ angular.module("blake").factory("BlakeWork", function (GenericService, BlakeCopy
 
             //Ensure menuTitle and composition_date_string are set for menu rendering
             work.menuTitle = work.title;
-            // Only override composition_date_string if it's not already set (for exhibitions)
-            // and if composition_date exists (for regular works)
-            if (!work.composition_date_string && work.composition_date) {
-                work.composition_date_string = work.composition_date;
-            }
+            work.composition_date_string = work.composition_date;
 
             //FIXME:: Figure out why the Laocoon work's title isn't getting encoded in utf8
             if(work.title == "LaocoÃ¶n"){
