@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BlakeDataService, BlakeWork, BlakeCopy } from '../../core/services/blake-data.service';
 import { LoadingSpinner } from '../../shared/components/loading-spinner/loading-spinner';
+import { BaseComponent } from '../../core/base/base-component';
+import { getMediumLabel } from '../../core/models/blake.models';
 
 @Component({
   selector: 'app-work',
@@ -10,14 +12,12 @@ import { LoadingSpinner } from '../../shared/components/loading-spinner/loading-
   templateUrl: './work.html',
   styleUrl: './work.scss',
 })
-export class Work implements OnInit {
+export class Work extends BaseComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private blakeData = inject(BlakeDataService);
 
   work: BlakeWork | null = null;
   copies: BlakeCopy[] = [];
-  loading = true;
-  error: string | null = null;
   workId: string = '';
 
   ngOnInit() {
@@ -28,50 +28,30 @@ export class Work implements OnInit {
   }
 
   private loadWork() {
-    this.loading = true;
-    this.error = null;
-
-    this.blakeData.getWork(this.workId).subscribe({
-      next: (work) => {
+    this.loadData(
+      this.blakeData.getWork(this.workId),
+      (work) => {
         this.work = work;
         this.loadCopies();
-      },
-      error: (err) => {
-        this.error = 'Failed to load work information.';
-        this.loading = false;
-        console.error('Error loading work:', err);
       }
-    });
+    );
   }
 
   private loadCopies() {
     this.blakeData.getWorkCopies(this.workId).subscribe({
       next: (copies) => {
         this.copies = copies;
-        this.loading = false;
+        this.setLoading(false);
       },
       error: (err) => {
-        console.error('Error loading copies:', err);
-        this.loading = false;
+        this.logError(err, 'loadCopies');
+        this.setLoading(false);
       }
     });
   }
 
   getMediumLabel(): string {
-    if (!this.work?.medium) return '';
-
-    const mediumMap: { [key: string]: string } = {
-      'illbk': 'Illuminated Book',
-      'cbi': 'Commercial Book Illustration',
-      'spri': 'Separate Print',
-      'mono': 'Monotype',
-      'draw': 'Drawing',
-      'paint': 'Painting',
-      'ms': 'Manuscript',
-      'rmpage': 'Related Material'
-    };
-
-    return mediumMap[this.work.medium] || this.work.medium;
+    return getMediumLabel(this.work?.medium);
   }
 
   getCopyCountText(): string {

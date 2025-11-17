@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { Observable, forkJoin, map, tap } from 'rxjs';
-import { BlakeDataService, SearchConfig } from './blake-data.service';
+import { Observable, forkJoin, tap, catchError, of, map } from 'rxjs';
+import { BlakeDataService, SearchConfig, BlakeObject, BlakeCopy, BlakeWork } from './blake-data.service';
 
 export interface SearchConfiguration extends SearchConfig {
   useCompDate?: boolean;
@@ -18,9 +18,9 @@ export interface SearchConfiguration extends SearchConfig {
 }
 
 export interface SearchResults {
-  objects: any[];
-  copies: any[];
-  works: any[];
+  objects: BlakeObject[];
+  copies: BlakeCopy[];
+  works: BlakeWork[];
 }
 
 @Injectable({

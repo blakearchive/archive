@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BlakeDataService, BlakeObject } from '../../core/services/blake-data.service';
 import { LoadingSpinner } from '../../shared/components/loading-spinner/loading-spinner';
+import { BaseComponent } from '../../core/base/base-component';
+import { getObjectImageUrl } from '../../core/utils/image.utils';
 
 type ViewTab = 'image' | 'transcription' | 'info' | 'notes';
 
@@ -12,13 +14,11 @@ type ViewTab = 'image' | 'transcription' | 'info' | 'notes';
   templateUrl: './object.html',
   styleUrl: './object.scss',
 })
-export class Object implements OnInit {
+export class Object extends BaseComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private blakeData = inject(BlakeDataService);
 
   object: BlakeObject | null = null;
-  loading = true;
-  error: string | null = null;
   descId: string = '';
 
   // View state
@@ -32,20 +32,12 @@ export class Object implements OnInit {
   }
 
   private loadObject() {
-    this.loading = true;
-    this.error = null;
-
-    this.blakeData.getObject(this.descId).subscribe({
-      next: (object) => {
+    this.loadData(
+      this.blakeData.getObject(this.descId),
+      (object) => {
         this.object = object;
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = 'Failed to load object information.';
-        this.loading = false;
-        console.error('Error loading object:', err);
       }
-    });
+    );
   }
 
   setActiveTab(tab: ViewTab) {
@@ -54,9 +46,7 @@ export class Object implements OnInit {
 
   getImageUrl(): string {
     if (!this.object) return '';
-    // This would need to be configured based on your image storage
-    // For now, return a placeholder
-    return `/static/img/${this.object.full_object_id || this.descId}.jpg`;
+    return getObjectImageUrl(this.object);
   }
 
   hasTranscription(): boolean {

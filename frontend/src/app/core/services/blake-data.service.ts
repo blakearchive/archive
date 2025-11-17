@@ -1,6 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
+import {
+  BlakeObject,
+  BlakeCopy,
+  BlakeWork,
+  BlakeExhibit,
+  BlakePreview,
+  FeaturedWork
+} from '../models/blake.models';
 
 /**
  * BlakeDataService - Core service for accessing Blake Archive API
@@ -27,49 +35,8 @@ export interface SearchConfig {
   [key: string]: any;
 }
 
-export interface BlakeObject {
-  desc_id: string;
-  title: string;
-  copy_bad_id: string;
-  object_number: number;
-  full_object_id: string;
-  illustration_description?: string;
-  text_transcription?: string;
-  [key: string]: any;
-}
-
-export interface BlakeCopy {
-  bad_id: string;
-  title: string;
-  copy_information?: string;
-  work_id: string;
-  institution?: string;
-  composition_date?: string;
-  [key: string]: any;
-}
-
-export interface BlakeWork {
-  bad_id: string;
-  title: string;
-  composition_date?: string;
-  medium?: string;
-  work_information?: string;
-  [key: string]: any;
-}
-
-export interface BlakeExhibit {
-  id: number;
-  title: string;
-  content?: string;
-  [key: string]: any;
-}
-
-export interface BlakePreview {
-  id: number;
-  title: string;
-  content?: string;
-  [key: string]: any;
-}
+// Re-export types for backwards compatibility
+export type { BlakeObject, BlakeCopy, BlakeWork, BlakeExhibit, BlakePreview, FeaturedWork };
 
 @Injectable({
   providedIn: 'root'
@@ -81,8 +48,8 @@ export class BlakeDataService {
   /**
    * Query objects from Solr
    */
-  queryObjects(config: SearchConfig): Observable<any> {
-    return this.http.post(`${this.apiBase}/query_objects`, config).pipe(
+  queryObjects(config: SearchConfig): Observable<BlakeObject[]> {
+    return this.http.post<BlakeObject[]>(`${this.apiBase}/query_objects`, config).pipe(
       catchError(this.handleError('queryObjects'))
     );
   }
@@ -90,8 +57,8 @@ export class BlakeDataService {
   /**
    * Query copies from Solr
    */
-  queryCopies(config: SearchConfig): Observable<any> {
-    return this.http.post(`${this.apiBase}/query_copies`, config).pipe(
+  queryCopies(config: SearchConfig): Observable<BlakeCopy[]> {
+    return this.http.post<BlakeCopy[]>(`${this.apiBase}/query_copies`, config).pipe(
       catchError(this.handleError('queryCopies'))
     );
   }
@@ -99,8 +66,8 @@ export class BlakeDataService {
   /**
    * Query works from Solr
    */
-  queryWorks(config: SearchConfig): Observable<any> {
-    return this.http.post(`${this.apiBase}/query_works`, config).pipe(
+  queryWorks(config: SearchConfig): Observable<BlakeWork[]> {
+    return this.http.post<BlakeWork[]>(`${this.apiBase}/query_works`, config).pipe(
       catchError(this.handleError('queryWorks'))
     );
   }
@@ -171,8 +138,8 @@ export class BlakeDataService {
   /**
    * Get featured works for the homepage
    */
-  getFeaturedWorks(): Observable<any> {
-    return this.http.get(`${this.apiBase}/featured`).pipe(
+  getFeaturedWorks(): Observable<FeaturedWork[]> {
+    return this.http.get<FeaturedWork[]>(`${this.apiBase}/featured`).pipe(
       catchError(this.handleError('getFeaturedWorks'))
     );
   }
