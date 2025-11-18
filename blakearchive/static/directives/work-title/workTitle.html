@@ -73,12 +73,12 @@
 
 
     <span ng-if="showWorkTitle == 'exhibit' && workTitle.bds.exhibit.exhibit.exhibit_id != 'fakeblakesshort'" class="worktitle" style="padding: 19px;">
-        <span scroll-to-top style="color:#eabd39;">Archive Exhibition: {{ workTitle.getTitle() }}<span ng-if="workTitle.bds.exhibit.exhibit.composition_date_string"> ({{workTitle.bds.exhibit.exhibit.composition_date_string}})</span> </span>
+        <span scroll-to-top style="color:#eabd39;">Archive Exhibition: {{ workTitle.getTitle() }} ({{workTitle.bds.exhibit.exhibit.composition_date_string}}) </span>
         <!--<span scroll-to-top style="color:white;">Exhibition</span>-->
     </span>
 
     <span ng-if="showWorkTitle == 'exhibit' && workTitle.bds.exhibit.exhibit.exhibit_id == 'fakeblakesshort'" class="worktitle" style="padding: 19px;">
-        <span scroll-to-top style="color:#eabd39;">Archive Exhibition: <a scroll-to-top href="" ng-click="$root.showArticle = true" style="color:#eabd39;font-weight:bold">{{ workTitle.getTitle() }}</a><span ng-if="workTitle.bds.exhibit.exhibit.composition_date_string"> ({{workTitle.bds.exhibit.exhibit.composition_date_string}})</span></span>
+        <span scroll-to-top style="color:#eabd39;">Archive Exhibition: <a scroll-to-top href="" ng-click="$root.showArticle = true" style="color:#eabd39;font-weight:bold">{{ workTitle.getTitle() }}</a> ({{workTitle.bds.exhibit.exhibit.composition_date_string}})</span>
         <!--<span scroll-to-top style="color:white;">Exhibition</span>-->
     </span>
 <!--

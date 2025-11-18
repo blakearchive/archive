@@ -717,23 +717,5 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
       }
     };
 
-    blakeData.getExhibits = function () {
-        var url = directoryPrefix + '/api/exhibits/';
-
-        //$log.info('getting exhibits: multi');
-
-        return $http.get(url)
-            .then(getExhibitsComplete)
-            .catch(getExhibitsFailed);
-
-        function getExhibitsComplete(response){
-            return response.data.results;
-        }
-
-        function getExhibitsFailed(error){
-            $log.error('XHR Failed for getExhibits: multi.\n' + angular.toJson(error.data, true));
-        }
-    };
-
     return blakeData;
 });

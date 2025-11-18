@@ -185,15 +185,15 @@ class BlakeDataService(object):
         return results
 
     # start------ service methods for Exhibits ------
-    @classmethod
-    def get_exhibits(cls, exhibit_ids=None):
-        query = models.BlakeExhibit.query \
-            .order_by(models.BlakeExhibit.exhibit_id)
-        if exhibit_ids:
-            results = query.filter(models.BlakeExhibit.exhibit_id.in_(exhibit_ids)).all()
-        else:
-            results = query.all()
-        return results
+    #    @classmethod
+    #    def get_exhibits(cls, exhibit_ids=None):
+    #        query = models.BlakeExhibit.query \
+    #            .order_by(models.BlakeExhibit.exhibit_id)
+    #        if exhibit_ids:
+    #            results = query.filter(models.BlakeObjectExhibit.exhibit_id.in_(exhibit_ids)).all()
+    #        else:
+    #            results = query.all()
+    #        return results
 
     @classmethod
     def get_exhibit(cls, exhibit_id):
