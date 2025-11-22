@@ -503,6 +503,20 @@ class BlakeDocumentImporter(BlakeImporter):
             session.add_all(self.exhibit_importer.exhibits.values())
             # session.add_all(self.preview_importer.previews.values())
             session.commit()
+            # Debug: verify but653 was saved
+            but653_work = session.query(models.BlakeWork).filter(models.BlakeWork.bad_id == 'but653').first()
+            if but653_work:
+                print(f"DEBUG DB: but653 work saved with work_id={but653_work.work_id}")
+                print(f"DEBUG DB: but653 copies count = {len(but653_work.copies)}")
+                for c in but653_work.copies:
+                    print(f"DEBUG DB: copy bad_id={c.bad_id}, copy_id={c.copy_id}, work_id={c.work_id}")
+            else:
+                print("DEBUG DB: but653 work NOT FOUND in database after commit!")
+            but653_copy = session.query(models.BlakeCopy).filter(models.BlakeCopy.bad_id == 'but653.1').first()
+            if but653_copy:
+                print(f"DEBUG DB: but653.1 copy found directly, copy_id={but653_copy.copy_id}, work_id={but653_copy.work_id}")
+            else:
+                print("DEBUG DB: but653.1 copy NOT FOUND in database after commit!")
 
 
 class BlakeCopyImporter(BlakeImporter):
