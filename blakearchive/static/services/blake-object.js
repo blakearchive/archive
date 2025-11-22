@@ -134,10 +134,12 @@ angular.module("blake").factory("BlakeObject", function (GenericService) {
                                         }
                                         if (Array.isArray(reg)) {
                                             angular.forEach(reg, function (v) {
-                                                var alt = {reg: v['#text'].toLowerCase(), orig: orig.toLowerCase()};
-                                                altspelling.push(alt);
+                                                if (v && v['#text']) {
+                                                    var alt = {reg: v['#text'].toLowerCase(), orig: orig.toLowerCase()};
+                                                    altspelling.push(alt);
+                                                }
                                             });
-                                        } else {
+                                        } else if (reg && reg['#text']) {
                                             var alt = {reg: reg['#text'].toLowerCase(), orig: orig.toLowerCase()};
                                             altspelling.push(alt);
                                         }
@@ -161,10 +163,12 @@ angular.module("blake").factory("BlakeObject", function (GenericService) {
 
                                     if (Array.isArray(reg)) {
                                         angular.forEach(reg, function (v) {
-                                            var alt = {reg: v['#text'].toLowerCase(), orig: orig.toLowerCase()};
-                                            altspelling.push(alt);
+                                            if (v && v['#text']) {
+                                                var alt = {reg: v['#text'].toLowerCase(), orig: orig.toLowerCase()};
+                                                altspelling.push(alt);
+                                            }
                                         });
-                                    } else {
+                                    } else if (reg && reg['#text']) {
                                         var alt = {reg: reg['#text'].toLowerCase(), orig: orig.toLowerCase()};
                                         altspelling.push(alt);
                                     }
