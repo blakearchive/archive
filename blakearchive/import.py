@@ -403,7 +403,7 @@ class BlakeDocumentImporter(BlakeImporter):
     @staticmethod
     def set_copy_attributes(work):
         for (i, copy) in enumerate(work.copies, 1):
-            if work.image == 'preview':
+            if work.preview:
                 copy.is_copy_for_work_in_preview = True
                 for(j, obj) in enumerate(copy.objects, 1):
                     obj.is_object_for_work_in_preview = True
