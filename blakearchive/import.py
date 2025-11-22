@@ -395,6 +395,12 @@ class BlakeDocumentImporter(BlakeImporter):
             work.copies = self.copy_importer.get(all_non_preview_copies)
         else:
             work.copies = self.copy_importer.get(self.split_ids(entry.copies))
+        # Debug for but653
+        if bad_id == 'but653':
+            print(f"DEBUG but653: copies field = '{entry.copies}'")
+            print(f"DEBUG but653: split_ids = {self.split_ids(entry.copies)}")
+            print(f"DEBUG but653: work.copies = {work.copies}")
+            print(f"DEBUG but653: copy_importer.members keys containing 'but653' = {[k for k in self.copy_importer.members.keys() if 'but653' in k]}")
         if work.virtual:
             self.process_virtual_work(entry, work)
         self.set_copy_attributes(work)
