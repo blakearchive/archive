@@ -306,7 +306,20 @@ class BlakeDataService(object):
 
     @classmethod
     def get_copy(cls, bad_id):
-        return models.BlakeCopy.query.filter(models.BlakeCopy.bad_id == bad_id).first()
+        result = models.BlakeCopy.query.filter(models.BlakeCopy.bad_id == bad_id).first()
+        # Debug logging for but653.1 issue
+        if 'but653' in bad_id:
+            import sys
+            print(f"DEBUG get_copy: Querying for bad_id='{bad_id}'", file=sys.stderr)
+            print(f"DEBUG get_copy: Result = {result}", file=sys.stderr)
+            if result:
+                print(f"DEBUG get_copy: Found copy_id={result.copy_id}, work_id={result.work_id}", file=sys.stderr)
+            # Also check all copies in database
+            all_copies = models.BlakeCopy.query.all()
+            print(f"DEBUG get_copy: Total copies in database = {len(all_copies)}", file=sys.stderr)
+            but_copies = [c for c in all_copies if 'but653' in c.bad_id.lower()]
+            print(f"DEBUG get_copy: Copies with 'but653' in bad_id = {[(c.bad_id, c.copy_id) for c in but_copies]}", file=sys.stderr)
+        return result
 
     @classmethod
     def get_objects_for_copy(cls, bad_id):
@@ -318,6 +331,11 @@ class BlakeDataService(object):
         else:
             query = cls.get_sorted_object_query()
         results = query.join(models.BlakeCopy).filter(models.BlakeCopy.bad_id == bad_id).all()
+        # Debug logging for but653.1 issue
+        if 'but653' in bad_id:
+            import sys
+            print(f"DEBUG get_objects_for_copy: Querying for bad_id='{bad_id}'", file=sys.stderr)
+            print(f"DEBUG get_objects_for_copy: Found {len(results)} objects", file=sys.stderr)
         return results
 
     @classmethod
@@ -334,10 +352,18 @@ class BlakeDataService(object):
 
     @classmethod
     def get_copies_for_work(cls, bad_id):
-        return models.BlakeCopy.query \
+        results = models.BlakeCopy.query \
             .join(models.BlakeWork) \
             .filter(models.BlakeWork.bad_id == bad_id) \
             .order_by(models.BlakeCopy.print_date_value, models.BlakeCopy.composition_date_value).all()
+        # Debug logging for but653 issue
+        if 'but653' in bad_id:
+            import sys
+            print(f"DEBUG get_copies_for_work: Querying for work bad_id='{bad_id}'", file=sys.stderr)
+            print(f"DEBUG get_copies_for_work: Found {len(results)} copies", file=sys.stderr)
+            for c in results:
+                print(f"DEBUG get_copies_for_work: copy bad_id={c.bad_id}, copy_id={c.copy_id}", file=sys.stderr)
+        return results
 
     @classmethod
     def get_featured_works(cls, count=25):

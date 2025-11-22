@@ -515,8 +515,19 @@ class BlakeDocumentImporter(BlakeImporter):
             but653_copy = session.query(models.BlakeCopy).filter(models.BlakeCopy.bad_id == 'but653.1').first()
             if but653_copy:
                 print(f"DEBUG DB: but653.1 copy found directly, copy_id={but653_copy.copy_id}, work_id={but653_copy.work_id}")
+                # Check for objects associated with this copy
+                objects_count = session.query(models.BlakeObject).filter(models.BlakeObject.copy_id == but653_copy.copy_id).count()
+                print(f"DEBUG DB: but653.1 objects count = {objects_count}")
+                if objects_count > 0:
+                    objects = session.query(models.BlakeObject).filter(models.BlakeObject.copy_id == but653_copy.copy_id).all()
+                    for obj in objects:
+                        print(f"DEBUG DB: object desc_id={obj.desc_id}, object_id={obj.object_id}, copy_id={obj.copy_id}")
             else:
                 print("DEBUG DB: but653.1 copy NOT FOUND in database after commit!")
+
+            # Also check object_importer for but653 objects
+            but653_objects = [k for k in self.object_importer.members.keys() if 'but653' in k.lower()]
+            print(f"DEBUG: object_importer has {len(but653_objects)} objects with 'but653' in desc_id: {but653_objects}")
 
 
 class BlakeCopyImporter(BlakeImporter):
@@ -549,13 +560,22 @@ class BlakeCopyImporter(BlakeImporter):
         copy.source = self.get_source(root)
         copy.header_html = self.get_header_html(root)
         # copy.bad_xml = bad_xml
-        copy.objects = [self.object_importer.process(element) for element in root.xpath(".//desc")]
+        desc_elements = root.xpath(".//desc")
+        copy.objects = [self.object_importer.process(element) for element in desc_elements]
         copy.number_of_objects = self.get_number_of_objects(copy.objects)
         copy.effective_copy_id = copy.bad_id
         copy.title = self.get_copy_title(root)
         copy.institution = self.get_copy_institution(root)
         copy.medium = root.get("type")
         copy.image = self.copy_handprints.get(copy.bad_id)
+        # Debug for but653.1
+        if 'but653' in copy.bad_id:
+            print(f"DEBUG CopyImporter: Processing {document}")
+            print(f"DEBUG CopyImporter: copy.bad_id = {copy.bad_id}")
+            print(f"DEBUG CopyImporter: Found {len(desc_elements)} <desc> elements in XML")
+            print(f"DEBUG CopyImporter: Created {len(copy.objects)} objects")
+            for obj in copy.objects:
+                print(f"DEBUG CopyImporter: object desc_id={obj.desc_id}")
         self.members[copy.bad_id] = copy
         self.set_object_attributes(copy)
         logger.info("added copy: %s" % copy.bad_id)
