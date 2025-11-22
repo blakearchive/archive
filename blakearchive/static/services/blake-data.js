@@ -324,11 +324,18 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
             .catch(getObjectsForCopyFailed);
 
         function getObjectsForCopyComplete(response){
-            return BlakeObject.create(response.data.results);
+            try {
+                return BlakeObject.create(response.data.results);
+            } catch(e) {
+                $log.error('Error in BlakeObject.create: ' + e.message);
+                $log.error(e.stack);
+                return [];
+            }
         }
 
         function getObjectsForCopyFailed(error){
-            $log.error('XHR Failed for getObjectsForCopy.\n' + angular.toJson(error.data, true));
+            $log.error('XHR Failed for getObjectsForCopy.');
+            $log.error(error);
             $log.error('Reuesting: ' + url);
             return []; // Return empty array instead of undefined
         }
