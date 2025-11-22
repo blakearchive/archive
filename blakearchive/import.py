@@ -387,7 +387,7 @@ class BlakeDocumentImporter(BlakeImporter):
         else:
             logger.error("info file does not exist: %s" % entry.info_filename)
         self.works[bad_id] = work
-        if socket.gethostname() == 'lambeth.lib.unc.edu':
+        if socket.gethostname() == 'lambeth.lib.unc.edu' and work.preview:
             diff = set(self.split_ids(entry.copies)) - set(work.preview_copies)
             result = [o for o in self.split_ids(entry.copies) if o in diff]
             all_non_preview_copies = list(result)
@@ -395,6 +395,12 @@ class BlakeDocumentImporter(BlakeImporter):
             work.copies = self.copy_importer.get(all_non_preview_copies)
         else:
             work.copies = self.copy_importer.get(self.split_ids(entry.copies))
+        # Debug for but653
+        if bad_id == 'but653':
+            print(f"DEBUG but653: copies field = '{entry.copies}'")
+            print(f"DEBUG but653: split_ids = {self.split_ids(entry.copies)}")
+            print(f"DEBUG but653: work.copies = {work.copies}")
+            print(f"DEBUG but653: copy_importer.members keys containing 'but653' = {[k for k in self.copy_importer.members.keys() if 'but653' in k]}")
         if work.virtual:
             self.process_virtual_work(entry, work)
         self.set_copy_attributes(work)
@@ -416,7 +422,7 @@ class BlakeDocumentImporter(BlakeImporter):
 
     def process_virtual_work(self, entry, work):
         # Virtual works need to have a special copy created just for them
-        if socket.gethostname() == 'lambeth.lib.unc.edu':
+        if socket.gethostname() == 'lambeth.lib.unc.edu' and work.preview:
             diff = set(self.split_ids(entry.virtual_objects)) - set(work.preview_copies)
             result = [o for o in self.split_ids(entry.virtual_objects) if o in diff]
             all_non_preview_objects = list(result)
