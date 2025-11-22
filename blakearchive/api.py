@@ -127,6 +127,8 @@ def get_copies():
 def get_copy(copy_id):
     blake_data_service = current_app.config["BLAKE_DATA_SERVICE"]
     result = blake_data_service.get_copy(copy_id)
+    if not result:
+        return abort(404)
     return jsonify(result.to_dict)
 
 
