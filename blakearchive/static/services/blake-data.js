@@ -455,14 +455,22 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
                 return obj.type == 'object' && obj.link;
             });
             if(related_work_objects.length > 0){
-                var object_ids = related_work_objects.map(function(obj) { return obj.link; });
+                // Extract desc_id from link (format: "copy/xxx?descId=yyy" or just "yyy")
+                var extractDescId = function(link) {
+                    if (link.indexOf('descId=') !== -1) {
+                        return link.split('descId=')[1];
+                    }
+                    return link;
+                };
+                var object_ids = related_work_objects.map(function(obj) { return extractDescId(obj.link); });
                 return blakeData.getObjects(object_ids).then(function(data){
                     if(!data) return;
                     blakeData.work.related_works.forEach((obj,key) => {
                         if(obj.type == 'object' && obj.link){
-                            var matchingObject = data.filter(function(o){return o.desc_id == obj.link});
+                            var descId = extractDescId(obj.link);
+                            var matchingObject = data.filter(function(o){return o.desc_id == descId});
                             if(matchingObject.length > 0 && matchingObject[0].copy_bad_id){
-                                blakeData.work.related_works[key].link = '/copy/'+matchingObject[0].copy_bad_id+'?descId='+obj.link;
+                                blakeData.work.related_works[key].link = '/copy/'+matchingObject[0].copy_bad_id+'?descId='+descId;
                             }
                         }
                     });
