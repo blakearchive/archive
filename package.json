@@ -4,7 +4,6 @@
   "devDependencies": {
     "@angular/cli": "^17.0.0",
     "@angular/compiler-cli": "^17.0.0",
-    "@angular/testing": "^0.0.0-0",
     "@types/jasmine": "^5.1.9",
     "@types/jest": "^30.0.0",
     "babel-cli": "^6.26.0",

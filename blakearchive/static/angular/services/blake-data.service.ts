@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, combineLatest, of } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
+import { map, catchError, tap, switchMap } from 'rxjs/operators';
 
 export interface SearchConfig {
   searchTitle?: boolean;
@@ -379,37 +379,47 @@ export class BlakeDataService {
       this.getWork(workId),
       this.getCopiesForWork(workId)
     ]).pipe(
-      tap(([work, copies]) => {
+      switchMap(([work, copies]) => {
         this.blakeData.work = work;
         this.blakeData.workCopies = copies;
-        this.setRelatedWorkObjectLinks();
-        
-        if (work.virtual === true) {
-          return this.getObjectsForCopy(this.blakeData.workCopies[0].bad_id).pipe(
-            tap(data => {
-              this.blakeData.workCopies = data;
-              
-              if (work.bad_id === 'letters' || work.bad_id === 'shakespearewc') {
-                const objectGroup: any = {};
-                const objectArray: any[] = [];
-                
-                this.blakeData.workCopies.forEach((obj: any) => {
-                  if (!objectGroup[obj.object_group]) {
-                    objectGroup[obj.object_group] = obj;
-                  }
-                });
-                
-                Object.values(objectGroup).forEach(v => {
-                  objectArray.push(v);
-                });
-                
-                this.blakeData.workCopies = objectArray;
-              } else {
-                this.blakeData.workCopies = this.numberVirtualWorkObjects(this.blakeData.workCopies);
-              }
-            })
-          ).subscribe();
-        }
+
+        // setRelatedWorkObjectLinks() returns a cold Observable; compose it into
+        // the stream so it actually runs (and completes) before we finish.
+        return this.setRelatedWorkObjectLinks().pipe(
+          switchMap(() => {
+            if (work.virtual !== true) {
+              return of(void 0);
+            }
+
+            // Virtual works need their objects fetched and renumbered. This must
+            // be part of the stream so callers don't see workCopies mid-transform.
+            return this.getObjectsForCopy(this.blakeData.workCopies[0].bad_id).pipe(
+              tap(data => {
+                this.blakeData.workCopies = data;
+
+                if (work.bad_id === 'letters' || work.bad_id === 'shakespearewc') {
+                  const objectGroup: any = {};
+                  const objectArray: any[] = [];
+
+                  this.blakeData.workCopies.forEach((obj: any) => {
+                    if (!objectGroup[obj.object_group]) {
+                      objectGroup[obj.object_group] = obj;
+                    }
+                  });
+
+                  Object.values(objectGroup).forEach(v => {
+                    objectArray.push(v);
+                  });
+
+                  this.blakeData.workCopies = objectArray;
+                } else {
+                  this.blakeData.workCopies = this.numberVirtualWorkObjects(this.blakeData.workCopies);
+                }
+              }),
+              map(() => void 0)
+            );
+          })
+        );
       }),
       map(() => void 0)
     );
@@ -462,24 +472,26 @@ export class BlakeDataService {
       tap(([copy, copyObjects]) => {
         this.blakeData.copy = copy;
         this.blakeData.copyObjects = copyObjects;
-        
-        console.log(this.blakeData.copyObjects);
-        
+
         // Programmatically order objects if "copy" is a virtual group
-        if (this.blakeData.work.virtual === true && 
-            this.blakeData.work.bad_id !== 'letters' && 
+        if (this.blakeData.work.virtual === true &&
+            this.blakeData.work.bad_id !== 'letters' &&
             this.blakeData.work.bad_id !== 'shakespearewc') {
           this.blakeData.copyObjects = this.numberVirtualWorkObjects(this.blakeData.copyObjects);
         }
-        
-        // Set the selected object
-        if (descId) {
-          this.getObject(descId).subscribe(data => {
-            this.changeObject(data);
-          });
-        } else {
-          this.changeObject(this.blakeData.copyObjects[0]);
-        }
+      }),
+      // Resolve the object to select, then apply it through changeObject so its
+      // side effects (setFromSameX, blakeData.object, broadcasts) actually run.
+      // changeObject() returns a cold Observable, so it must be composed in here
+      // rather than called fire-and-forget.
+      switchMap(() => {
+        const selectedObject$ = descId
+          ? this.getObject(descId)
+          : of(this.blakeData.copyObjects[0]);
+
+        return selectedObject$.pipe(
+          switchMap(object => this.changeObject(object))
+        );
       }),
       map(() => void 0)
     );
