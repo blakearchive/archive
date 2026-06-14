@@ -12,16 +12,24 @@ export interface GenericFactory<T = any> {
 export class GenericService {
 
   /**
-   * Creates a factory function that can instantiate objects from configurations
-   * @param constructor - The constructor function to use for creating instances
+   * Creates a factory that can instantiate objects from configurations.
+   *
+   * The supplied factory is a plain function (typically a bound instance method
+   * such as `this.createObject.bind(this)`) that returns a fully-built model.
+   * It must be *called*, not used with `new`: invoking a bound function with
+   * `new` discards its bound `this`, which would make the service's helper
+   * methods (parseJsonField, etc.) unavailable inside the factory. This mirrors
+   * the original AngularJS GenericService, which also called the constructor.
+   *
+   * @param factory - Function that builds a model instance from a config
    */
-  createFactory<T>(constructor: Constructor<T>): GenericFactory<T> {
+  createFactory<T>(factory: (config: any) => T): GenericFactory<T> {
     return {
       create: (config: any): T | T[] => {
         if (Array.isArray(config)) {
-          return config.map(item => new constructor(item));
+          return config.map(item => factory(item));
         } else {
-          return new constructor(config);
+          return factory(config);
         }
       }
     };

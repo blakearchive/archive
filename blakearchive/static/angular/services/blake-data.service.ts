@@ -2,6 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, combineLatest, of } from 'rxjs';
 import { map, catchError, tap, switchMap } from 'rxjs/operators';
+import { BlakeObjectService } from './blake-object.service';
+import { BlakeCopyService } from './blake-copy.service';
+import { BlakeWorkService } from './blake-work.service';
+import { BlakeFragmentPairService } from './blake-fragment-pair.service';
+import { BlakeExhibitService } from './blake-exhibit.service';
+import { BlakeExhibitImageService } from './blake-exhibit-image.service';
+import { BlakeExhibitCaptionService } from './blake-exhibit-caption.service';
+import { BlakePreviewService } from './blake-preview.service';
+import { BlakePreviewImageService } from './blake-preview-image.service';
 
 export interface SearchConfig {
   searchTitle?: boolean;
@@ -58,7 +67,18 @@ export class BlakeDataService {
     preview: {}
   };
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private blakeObjectService: BlakeObjectService,
+    private blakeCopyService: BlakeCopyService,
+    private blakeWorkService: BlakeWorkService,
+    private blakeFragmentPairService: BlakeFragmentPairService,
+    private blakeExhibitService: BlakeExhibitService,
+    private blakeExhibitImageService: BlakeExhibitImageService,
+    private blakeExhibitCaptionService: BlakeExhibitCaptionService,
+    private blakePreviewService: BlakePreviewService,
+    private blakePreviewImageService: BlakePreviewImageService
+  ) {
     // Get directory prefix from global or assume empty
     this.directoryPrefix = (window as any).directoryPrefix || '';
   }
@@ -613,51 +633,44 @@ export class BlakeDataService {
     );
   }
 
-  // Factory methods for creating Blake objects
-  // These would typically use actual factory classes
+  // Factory methods for creating Blake models. These delegate to the dedicated
+  // model services, which apply the transformations (JSON field parsing,
+  // alternative-spelling extraction, etc.) the AngularJS factories used to do.
+  // Null/undefined is passed through so empty API responses don't throw.
   private createBlakeObject(data: any): any {
-    // TODO: Implement proper BlakeObject factory
-    return data;
+    return data == null ? data : this.blakeObjectService.create(data);
   }
 
   private createBlakeCopy(data: any): any {
-    // TODO: Implement proper BlakeCopy factory
-    return data;
+    return data == null ? data : this.blakeCopyService.create(data);
   }
 
   private createBlakeWork(data: any): any {
-    // TODO: Implement proper BlakeWork factory
-    return data;
+    return data == null ? data : this.blakeWorkService.create(data);
   }
 
   private createBlakeFragmentPair(data: any): any {
-    // TODO: Implement proper BlakeFragmentPair factory
-    return data;
+    return data == null ? data : this.blakeFragmentPairService.create(data);
   }
 
   private createBlakeExhibit(data: any): any {
-    // TODO: Implement proper BlakeExhibit factory
-    return data;
+    return data == null ? data : this.blakeExhibitService.create(data);
   }
 
   private createBlakeExhibitImage(data: any): any {
-    // TODO: Implement proper BlakeExhibitImage factory
-    return data;
+    return data == null ? data : this.blakeExhibitImageService.create(data);
   }
 
   private createBlakeExhibitCaption(data: any): any {
-    // TODO: Implement proper BlakeExhibitCaption factory
-    return data;
+    return data == null ? data : this.blakeExhibitCaptionService.create(data);
   }
 
   private createBlakePreview(data: any): any {
-    // TODO: Implement proper BlakePreview factory
-    return data;
+    return data == null ? data : this.blakePreviewService.create(data);
   }
 
   private createBlakePreviewImage(data: any): any {
-    // TODO: Implement proper BlakePreviewImage factory
-    return data;
+    return data == null ? data : this.blakePreviewImageService.create(data);
   }
 
   // Helper method to broadcast events for AngularJS compatibility
