@@ -408,20 +408,14 @@ export class ClientPpiComponent implements OnInit {
     
     try {
       localStorage.setItem('clientPpi', JSON.stringify(this.config));
-      
-      // Broadcast event for AngularJS compatibility
-      const $rootScope = (window as any).$rootScope;
-      if ($rootScope && $rootScope.$broadcast) {
-        $rootScope.$broadcast('clientPpi::savedPpi');
-      }
-      
-      // Emit custom DOM event
-      const event = new CustomEvent('clientPpi:savedPpi', {
+
+      // Notify listeners (e.g. copy.component) that PPI was saved. Note the
+      // double colon: it must match the 'clientPpi::savedPpi' name the
+      // listeners and the modal emitter use.
+      const event = new CustomEvent('clientPpi::savedPpi', {
         detail: { config: this.config }
       });
       window.dispatchEvent(event);
-      
-      console.log('PPI configuration saved:', this.config);
     } catch (error) {
       console.error('Could not save PPI configuration:', error);
     }

@@ -673,14 +673,10 @@ export class BlakeDataService {
     return data == null ? data : this.blakePreviewImageService.create(data);
   }
 
-  // Helper method to broadcast events for AngularJS compatibility
+  // Emit a DOM CustomEvent that components listen for. (This used to also call
+  // $rootScope.$broadcast for the AngularJS hybrid, but nothing assigns a
+  // $broadcast on the global anymore, so that path was dead.)
   private broadcastEvent(eventName: string, data?: any): void {
-    const $rootScope = (window as any).$rootScope;
-    if ($rootScope && $rootScope.$broadcast) {
-      $rootScope.$broadcast(eventName, data);
-    }
-    
-    // Also emit custom DOM events for broader compatibility
     const event = new CustomEvent(eventName, { detail: data });
     window.dispatchEvent(event);
   }
