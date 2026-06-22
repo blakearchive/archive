@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="object-subtitle text-capitalize"><a href="/copy/{{o.copy_bad_id}}?descId={{o.desc_id}}">{{ o.full_object_id }}, {{ o.copy_composition_date }}, {{ o.copy_institution }}</a></p>
+                <p class="object-subtitle text-capitalize"><a href="/copy/{{o.copy_bad_id}}?descId={{o.desc_id}}">{{ o.full_object_id }}, Composed {{ o.copy_composition_date_string }}<span ng-if="o.copy_print_date_string">; Printed {{ o.copy_print_date_string }}</span>, {{ o.copy_institution }}</a></p>
             </div>
         </div>
     </div>
