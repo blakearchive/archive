@@ -504,6 +504,11 @@ angular.module("blake").factory("BlakeDataService", function ($rootScope, $log, 
             blakeData.setSelectedWork(workId)
             //blakeData.getWork(workId)
         ]).then(function (data) {
+            //Bad or mismatched copyId (e.g. a virtual work's object id used instead of its group id) yields no copy
+            if (!data[0]) {
+                return $q.reject('Copy not found: ' + copyId);
+            }
+
             blakeData.copy = data[0];
             blakeData.copyObjects = data[1];
 

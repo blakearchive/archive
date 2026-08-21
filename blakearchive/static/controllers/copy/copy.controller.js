@@ -1,4 +1,4 @@
-angular.module("blake").controller("CopyController", function ($scope,$routeParams,$rootScope,$window,$modal,$cookies,BlakeDataService,imageManipulation,CompareObjectsFactory) {
+angular.module("blake").controller("CopyController", function ($scope,$routeParams,$rootScope,$location,$log,$window,$modal,$cookies,BlakeDataService,imageManipulation,CompareObjectsFactory) {
     var vm = this;
 
     $rootScope.worksNavState = false;
@@ -21,6 +21,10 @@ angular.module("blake").controller("CopyController", function ($scope,$routePara
         $rootScope.view.mode = 'object';
         $rootScope.view.scope = 'image';
         $rootScope.doneSettingCopy = true;
+    }).catch(function(error){
+        //Avoid a blank screen when copyId doesn't correspond to any known copy
+        $log.error('Failed to load copy "' + $routeParams.copyId + '": ' + error);
+        $location.path('/');
     });
 
     /*

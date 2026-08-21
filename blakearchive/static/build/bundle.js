@@ -33592,7 +33592,7 @@ __webpack_require__(9)(__webpack_require__(230))
 /* 52 */
 /***/ (function(module, exports) {
 
-angular.module("blake").controller("CopyController", ["$scope", "$routeParams", "$rootScope", "$window", "$modal", "$cookies", "BlakeDataService", "imageManipulation", "CompareObjectsFactory", function ($scope, $routeParams, $rootScope, $window, $modal, $cookies, BlakeDataService, imageManipulation, CompareObjectsFactory) {
+angular.module("blake").controller("CopyController", ["$scope", "$routeParams", "$rootScope", "$location", "$log", "$window", "$modal", "$cookies", "BlakeDataService", "imageManipulation", "CompareObjectsFactory", function ($scope, $routeParams, $rootScope, $location, $log, $window, $modal, $cookies, BlakeDataService, imageManipulation, CompareObjectsFactory) {
     var vm = this;
 
     $rootScope.worksNavState = false;
@@ -33615,6 +33615,10 @@ angular.module("blake").controller("CopyController", ["$scope", "$routeParams", 
         $rootScope.view.mode = 'object';
         $rootScope.view.scope = 'image';
         $rootScope.doneSettingCopy = true;
+    }).catch(function (error) {
+        //Avoid a blank screen when copyId doesn't correspond to any known copy
+        $log.error('Failed to load copy "' + $routeParams.copyId + '": ' + error);
+        $location.path('/');
     });
 
     /*
@@ -40554,6 +40558,11 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
         return $q.all([blakeData.getCopy(copyId), blakeData.getObjectsForCopy(copyId), blakeData.setSelectedWork(workId)
         //blakeData.getWork(workId)
         ]).then(function (data) {
+            //Bad or mismatched copyId (e.g. a virtual work's object id used instead of its group id) yields no copy
+            if (!data[0]) {
+                return $q.reject('Copy not found: ' + copyId);
+            }
+
             blakeData.copy = data[0];
             blakeData.copyObjects = data[1];
 
