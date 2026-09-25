@@ -73,9 +73,10 @@
        with their external dependencies.
     -->
 
-    <lib dir="${solr.install.dir:../../../..}/modules/extraction/lib" regex=".*\.jar" />
-    <lib dir="${solr.install.dir:../../../..}/modules/clustering/lib/" regex=".*\.jar" />
-    <lib dir="${solr.install.dir:../../../..}/modules/langid/lib/" regex=".*\.jar" />
+    <!-- NOTE: The <lib dir="..."/modules/{extraction,clustering,langid}/lib">
+         directives that used to live here have been removed. Solr 9.x ignores
+         them (modules must be opted in via SOLR_MODULES), and Solr 10 drops
+         them entirely. None of these modules are used by the Blake Archive. -->
 
   <!-- an exact 'path' can be used instead of a 'dir' to specify a 
        specific jar file.  This will cause a serious error to be logged 
@@ -833,15 +834,10 @@
        http://wiki.apache.org/solr/ExtractingRequestHandler 
 
     -->
-  <requestHandler name="/update/extract"
-                  startup="lazy"
-                  class="solr.extraction.ExtractingRequestHandler" >
-    <lst name="defaults">
-      <str name="lowernames">true</str>
-      <str name="fmap.meta">ignored_</str>
-      <str name="fmap.content">_text_</str>
-    </lst>
-  </requestHandler>
+  <!-- The Solr Cell (/update/extract) handler has been removed. The Blake
+       importer (solrimport.py) indexes via pysolr's standard /update handler
+       and never posts rich documents, and the "extraction" module the handler
+       depends on is no longer loaded via <lib> in Solr 9.x. -->
 
   <!--
     The export request handler is used to export full sorted result sets.
