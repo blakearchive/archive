@@ -76,25 +76,39 @@ def norm_cli(cmd: str) -> str:
 
 # ---------------------------------------------------------------------------
 
+IMPERATIVE = {
+    "Retrieving": "Retrieve", "Creating": "Create", "Updating": "Update", "Deleting": "Delete", "Adding": "Add",
+    "Removing": "Remove", "Enabling": "Enable", "Configuring": "Configure", "Modifying": "Modify",
+    "Monitoring": "Monitor", "Disabling": "Disable", "Restoring": "Restore", "Installing": "Install",
+    "Simulating": "Simulate", "Moving": "Move", "Starting": "Start", "Specifying": "Specify",
+    "Regenerating": "Regenerate", "Renaming": "Rename", "Changing": "Change", "Clearing": "Clear",
+    "Cloning": "Clone", "Assigning": "Assign", "Stopping": "Stop", "Writing": "Write", "Invoking": "Invoke",
+    "Committing": "Commit", "Promoting": "Promote", "Demoting": "Demote", "Setting": "Set", "Running": "Run",
+    "Shutting": "Shut", "Powering": "Power", "Downloading": "Download", "Checking": "Check",
+    "Upgrading": "Upgrade", "Uploading": "Upload", "Repairing": "Repair", "Searching": "Search",
+    "Applying": "Apply", "Reordering": "Reorder", "Locking": "Lock", "Rekeying": "Rekey", "Listing": "List",
+    "Signing": "Sign", "Synchronizing": "Synchronize", "Using": "Use", "Unfailing": "Unfail",
+    "Reading": "Read", "Identifying": "Identify", "Pausing": "Pause", "Aborting": "Abort",
+    "Retrieves": "Retrieve", "Enables": "Enable", "Creates": "Create", "Updates": "Update", "Disables": "Disable",
+    "Adds": "Add", "Deletes": "Delete", "Shows": "Show", "Sets": "Set", "Triggers": "Trigger",
+}
+
+
+def imperative(title: str) -> str:
+    """Turn REST example headings ("Creating a volume", "Retrieves ...") into
+    task names ("Create a volume"). Unknown leading words are left as is."""
+    first, _, rest = title.partition(" ")
+    if first in IMPERATIVE:
+        return IMPERATIVE[first] + (" " + rest if rest else "")
+    return title
+
+
 def rest_example_tasks(examples, rest: RestIndex) -> list[dict]:
     tasks = []
     seen = Counter()
     for ex in examples:
         title = ex["title"].strip().rstrip(".:")
-        # "Creating a volume" -> "Create a volume"
-        m = re.match(r"^(\w+?)ing\b(.*)$", title)
-        if m:
-            verb = m.group(1)
-            fixes = {"Creat": "Create", "Retriev": "Retrieve", "Updat": "Update", "Delet": "Delete", "Modify": "Modify",
-                     "Configur": "Configure", "Enabl": "Enable", "Disabl": "Disable", "Remov": "Remove", "Mov": "Move",
-                     "Chang": "Change", "Renam": "Rename", "Resiz": "Resize", "Initializ": "Initialize", "Restor": "Restore",
-                     "Revers": "Reverse", "Clos": "Close", "Us": "Use", "Manag": "Manage", "Stor": "Store", "Rais": "Raise",
-                     "Generat": "Generate", "Replac": "Replace", "Releas": "Release", "Sav": "Save", "Relocat": "Relocate",
-                     "Promot": "Promote", "Demot": "Demote", "Validat": "Validate", "Schedul": "Schedule",
-                     "Increas": "Increase", "Decreas": "Decrease", "Execut": "Execute", "Provid": "Provide",
-                     "Merg": "Merge", "Exclud": "Exclude", "Includ": "Include", "Revok": "Revoke", "Analyz": "Analyze"}
-            verb = fixes.get(verb, verb[:-1] if re.search(r"(tt|pp|nn|gg|mm|dd|ll)$", verb) and not verb.endswith("ll") else verb)
-            title = verb + m.group(2)
+        title = imperative(title)  # "Creating a volume" -> "Create a volume"
         op_ids = [x for x in (rest.match(c) for c in ex["calls"]) if x]
         slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:80]
         base = "ontap-restapi/" + os.path.basename(ex["source"])[:-5]
