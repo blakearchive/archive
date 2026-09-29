@@ -209,7 +209,7 @@ def promote_implicit_steps(segs, rel, loose: bool = False) -> bool:
         key = (tuple(s.heads), tuple(s.tabs))
         if key in has_steps or not any(b.kind == "list" and b.ordered for b in s.blocks):
             continue
-        in_phase = bool(s.heads and PHASE_RE.match(s.heads[-1][1]))
+        in_phase = any(PHASE_RE.match(h[1]) for h in s.heads)
         long_list = any(b.kind == "list" and b.ordered and len(b.items) >= 2 for b in s.blocks)
         if s.tabs or in_phase or (is_task_page and not any_steps) or (loose and long_list):
             s.role, s.implicit = "steps", True
@@ -224,7 +224,7 @@ def promote_implicit_steps(segs, rel, loose: bool = False) -> bool:
         heads, tabs = key
         if key in has_steps:
             continue
-        in_phase = bool(heads and PHASE_RE.match(heads[-1][1]))
+        in_phase = any(PHASE_RE.match(h[1]) for h in heads)
         if not (in_phase or (api_page and not heads and not any_steps)):
             continue
         members = [s for s in segs if (tuple(s.heads), tuple(s.tabs)) == key and s.role in ("body", "other", "example")]
@@ -738,55 +738,88 @@ def _union(lists):
     return list(dict.fromkeys(x for l in lists for x in l))
 
 
+def _phase_index(sp: list[str]) -> int:
+    for i in range(len(sp) - 1, -1, -1):
+        if PHASE_RE.match(sp[i]):
+            return i
+    return -1
+
+
+def _method_as_step(m: dict, n: int, text: str | None = None) -> dict:
+    step = {"n": n, "text": text or "", "interface": m["interface"]}
+    if m["intro"]:
+        step["details"] = m["intro"]
+    step["substeps"] = m["steps"]
+    return step
+
+
 def merge_phases(tasks: list[dict]) -> list[dict]:
     """Pages written as "== Step 1: Prepare", "== Step 2: Replace ..." describe
     one task in phases. Merge the per-phase records into a single task whose
-    top-level steps are the phases."""
+    top-level steps are the phases. Procedures in "=== ..." subsections of a
+    phase become that phase's sub-steps."""
     order: list = []
-    groups: dict[tuple, list[dict]] = {}
+    groups: dict[tuple, dict[str, list]] = {}
     for t in tasks:
         sp = t["section_path"]
-        if sp and PHASE_RE.match(sp[-1]):
-            key = tuple(sp[:-1])
-            if key not in groups:
-                groups[key] = []
-                order.append(key)
-            groups[key].append(t)
-        else:
+        i = _phase_index(sp)
+        if i < 0:
             order.append(t)
+            continue
+        key = tuple(sp[:i])
+        if key not in groups:
+            groups[key] = {}
+            order.append(key)
+        groups[key].setdefault(sp[i], []).append((tuple(sp[i + 1:]), t))
     out = []
     for item in order:
         if isinstance(item, dict):
             out.append(item)
             continue
-        phases = groups[item]
-        base = phases[0]
-        common_prereq = [p for p in base["prerequisites"] if all(p in ph["prerequisites"] for ph in phases)]
-        common_about = [a for a in base["about"] if all(a in ph["about"] for ph in phases)]
+        phase_map = groups[item]
+        records = [t for members in phase_map.values() for _, t in members]
+        base = records[0]
+        common_prereq = [p for p in base["prerequisites"] if all(p in r["prerequisites"] for r in records)]
+        common_about = [a for a in base["about"] if all(a in r["about"] for r in records)]
         steps, weight, all_ifaces = [], Counter(), set()
-        for k, ph in enumerate(phases, 1):
-            head = ph["section_path"][-1]
+        for k, (head, members) in enumerate(phase_map.items(), 1):
             step = {"n": k, "text": PHASE_RE.sub("", head).strip() or head}
-            own_prereq = [p for p in ph["prerequisites"] if p not in common_prereq]
-            if own_prereq:
-                step["prerequisites"] = own_prereq
-            own_about = [a for a in ph["about"] if a not in common_about]
-            if own_about:
-                step["about"] = own_about
-            if len(ph["methods"]) == 1:
-                m = ph["methods"][0]
-                step["interface"] = m["interface"]
-                if m["intro"]:
-                    step["details"] = m["intro"]
-                step["substeps"] = m["steps"]
-            else:
-                step["variants"] = [{"variant": m["interface_label"] or m["variant"] or m["interface"],
-                                     "interface": m["interface"], "substeps": m["steps"]} for m in ph["methods"]]
-            for m in ph["methods"]:
-                weight[m["interface"]] += max(1, len(m["steps"]))
-                all_ifaces.add(m["interface"])
+            prereq = _union([p for p in r["prerequisites"] if p not in common_prereq] for _, r in members)
+            about = _union([a for a in r["about"] if a not in common_about] for _, r in members)
+            if prereq:
+                step["prerequisites"] = prereq
+            if about:
+                step["about"] = about
+            subs, variants, ifaces = [], [], Counter()
+            for rest, r in members:
+                for m in r["methods"]:
+                    ifaces[m["interface"]] += max(1, len(m["steps"]))
+                    all_ifaces.add(m["interface"])
+                if rest:  # a "=== subsection" procedure inside the phase
+                    label = " / ".join(rest)
+                    if len(r["methods"]) == 1:
+                        subs.append(_method_as_step(r["methods"][0], len(subs) + 1, label))
+                    else:
+                        subs.append({"n": len(subs) + 1, "text": label, "variants": [
+                            {"variant": m["interface_label"] or m["variant"] or m["interface"],
+                             "interface": m["interface"], "substeps": m["steps"]} for m in r["methods"]]})
+                elif len(r["methods"]) == 1:
+                    m = r["methods"][0]
+                    if m["intro"]:
+                        step["details"] = m["intro"]
+                    for st in m["steps"]:
+                        subs.append(dict(st, n=len(subs) + 1))
+                else:
+                    variants.extend({"variant": m["interface_label"] or m["variant"] or m["interface"],
+                                     "interface": m["interface"], "substeps": m["steps"]} for m in r["methods"])
+            step["interface"] = ifaces.most_common(1)[0][0] if ifaces else "unknown"
+            if subs:
+                step["substeps"] = subs
+            if variants:
+                step["variants"] = variants
+            weight.update(ifaces)
             steps.append(step)
-        methods = [m for ph in phases for m in ph["methods"]]
+        methods = [m for r in records for m in r["methods"]]
         title = item[-1] if item else base["page_title"]
         slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:80]
         merged = dict(base)
@@ -797,9 +830,9 @@ def merge_phases(tasks: list[dict]) -> list[dict]:
             "interfaces": sorted(all_ifaces - {"unknown"}) or ["unknown"],
             "prerequisites": common_prereq,
             "about": common_about,
-            "after": _union(ph["after"] for ph in phases),
-            "examples": _union(ph["examples"] for ph in phases),
-            "cli_reference_links": sorted(set(_union(ph["cli_reference_links"] for ph in phases))),
+            "after": _union(r["after"] for r in records),
+            "examples": _union(r["examples"] for r in records),
+            "cli_reference_links": sorted(set(_union(r["cli_reference_links"] for r in records))),
             "methods": [{
                 "interface": weight.most_common(1)[0][0],
                 "interface_label": None,

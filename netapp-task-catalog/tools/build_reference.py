@@ -37,7 +37,8 @@ def section(body: str, title_re: str) -> str:
 
 
 def clean(text: str) -> str:
-    t = re.sub(r"link:([^\[]+)\[([^\]]*)\]", r"\2", text)
+    t = re.sub(r"(?m)^=+\s+", "", text)
+    t = re.sub(r"link:([^\[]+)\[([^\]]*)\]", r"\2", t)
     t = re.sub(r"<<[^,>]+,([^>]+)>>", r"\1", t)
     t = re.sub(r"\n{3,}", "\n\n", t)
     return t.strip()

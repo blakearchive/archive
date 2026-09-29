@@ -254,6 +254,37 @@ def test_discrete_heading_and_table_inside_procedure():
     assert steps[1]["details"][0] == "Field | Description\nName | A descriptive name.\nPort | The port to use."
 
 
+PHASE_WITH_SUBSECTIONS = """= Set up a standby database
+
+== Step 1: Install prerequisites
+
+=== Install Docker
+
+.Steps
+. Download Docker.
+. Start Docker.
+
+=== Install Docker Compose
+
+.Steps
+. Download Compose.
+
+== Step 2: Deploy
+
+.Steps
+. Run the playbook.
+"""
+
+
+def test_phase_subsections_nest_under_their_phase():
+    tasks = extract(PHASE_WITH_SUBSECTIONS)
+    assert len(tasks) == 1
+    phases = tasks[0]["methods"][0]["steps"]
+    assert [p["text"] for p in phases] == ["Install prerequisites", "Deploy"]
+    assert [s["text"] for s in phases[0]["substeps"]] == ["Install Docker", "Install Docker Compose"]
+    assert len(phases[0]["substeps"][0]["substeps"]) == 2
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):

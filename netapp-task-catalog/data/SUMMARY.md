@@ -1,8 +1,8 @@
 # NetApp task catalog: coverage summary
 
-- **12,621 tasks** (13,284 interface-specific methods) from **92 documentation sites**
-- 809 tasks are documented for more than one interface (e.g. System Manager *and* CLI)
-- 1,921 ONTAP tasks are linked to equivalent REST API operations (inferred from the CLI commands they use)
+- **12,504 tasks** (13,166 interface-specific methods) from **92 documentation sites**
+- 831 tasks are documented for more than one interface (e.g. System Manager *and* CLI)
+- 1,917 ONTAP tasks are linked to equivalent REST API operations (inferred from the CLI commands they use)
 
 ## By product family
 
@@ -10,29 +10,29 @@ Interface columns count tasks that have at least one method for that interface.
 
 | Family | Tasks | gui | cli | api | automation | hardware | unknown |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| ONTAP | 6,134 | 1,346 | 3,070 | 1,199 | 0 | 843 | 325 |
+| ONTAP | 6,050 | 1,344 | 3,063 | 1,199 | 0 | 782 | 325 |
 | Data protection and host integration | 943 | 628 | 241 | 3 | 0 | 0 | 96 |
 | Monitoring and analytics | 835 | 746 | 54 | 3 | 1 | 0 | 31 |
 | StorageGRID | 824 | 537 | 122 | 0 | 0 | 126 | 54 |
-| Solutions and reference architectures | 785 | 373 | 257 | 0 | 8 | 7 | 149 |
-| E-Series / SANtricity | 684 | 496 | 92 | 0 | 9 | 107 | 43 |
-| Element / SolidFire / HCI | 594 | 465 | 67 | 11 | 0 | 24 | 31 |
+| Solutions and reference architectures | 784 | 373 | 257 | 0 | 8 | 7 | 148 |
+| E-Series / SANtricity | 668 | 488 | 92 | 0 | 9 | 104 | 43 |
+| Element / SolidFire / HCI | 587 | 461 | 67 | 11 | 0 | 24 | 30 |
 | NetApp Console data services | 564 | 514 | 26 | 4 | 5 | 0 | 18 |
 | NetApp Console (BlueXP) platform | 441 | 325 | 31 | 95 | 2 | 0 | 26 |
-| Kubernetes (Trident / Astra) | 275 | 103 | 119 | 23 | 32 | 0 | 21 |
-| Workload Factory | 211 | 200 | 2 | 0 | 0 | 0 | 10 |
+| Kubernetes (Trident / Astra) | 274 | 104 | 120 | 23 | 32 | 0 | 21 |
+| Workload Factory | 210 | 199 | 2 | 0 | 0 | 0 | 10 |
 | Cloud Volumes ONTAP | 133 | 93 | 21 | 13 | 0 | 0 | 9 |
 | Keystone | 58 | 50 | 10 | 0 | 0 | 0 | 0 |
 | Data migration | 56 | 37 | 16 | 0 | 0 | 0 | 5 |
-| NetApp Console storage services | 37 | 34 | 0 | 1 | 0 | 0 | 3 |
+| NetApp Console storage services | 36 | 33 | 0 | 1 | 0 | 0 | 3 |
 | Tools and meta | 33 | 32 | 0 | 0 | 0 | 0 | 1 |
-| Automation | 14 | 3 | 14 | 0 | 0 | 0 | 0 |
+| Automation | 8 | 3 | 8 | 0 | 0 | 0 | 0 |
 
 ## By documentation site
 
 | Family | Site (repo) | Title | Pages | Tasks | Multi-interface | gui | cli | api | automation | hardware | unknown |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Automation | `netapp-automation` | NetApp Automation | 20 | 14 | 3 | 3 | 14 | 0 | 0 | 0 | 0 |
+| Automation | `netapp-automation` | NetApp Automation | 20 | 8 | 3 | 3 | 8 | 0 | 0 | 0 | 0 |
 | Cloud Volumes ONTAP | `storage-management-cloud-volumes-ontap` | Cloud Volumes ONTAP | 134 | 133 | 2 | 93 | 21 | 13 | 0 | 0 | 9 |
 | Data migration | `data-migrator` | NetApp Data Migrator | 32 | 42 | 2 | 34 | 8 | 0 | 0 | 0 | 2 |
 | Data migration | `xcp` | XCP | 78 | 14 | 0 | 3 | 8 | 0 | 0 | 0 | 3 |
@@ -44,18 +44,18 @@ Interface columns count tasks that have at least one method for that interface.
 | Data protection and host integration | `sc-plugin-vmware-vsphere` | SnapCenter Plug-in for VMware vSphere 6.2 | 106 | 63 | 0 | 57 | 2 | 1 | 0 | 0 | 3 |
 | Data protection and host integration | `smis-provider` | NetApp SMI-S Provider | 107 | 22 | 0 | 2 | 15 | 0 | 0 | 0 | 5 |
 | Data protection and host integration | `nfs-plugin-vmware-vaai` | NetApp NFS Plug-in for VMware VAAI | 5 | 2 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
-| E-Series / SANtricity | `e-series` | E-Series storage systems | 477 | 374 | 59 | 213 | 79 | 0 | 0 | 104 | 39 |
+| E-Series / SANtricity | `e-series` | E-Series storage systems | 477 | 358 | 63 | 205 | 79 | 0 | 0 | 101 | 39 |
 | E-Series / SANtricity | `e-series-santricity` | SANtricity software | 644 | 285 | 1 | 280 | 1 | 0 | 0 | 3 | 2 |
 | E-Series / SANtricity | `beegfs` | BeeGFS on NetApp with E-Series Storage | 68 | 22 | 1 | 0 | 12 | 0 | 9 | 0 | 2 |
 | E-Series / SANtricity | `storage-management-e-series` | E-Series | 7 | 3 | 0 | 3 | 0 | 0 | 0 | 0 | 0 |
-| Element / SolidFire / HCI | `element-software` | Element Software | 800 | 280 | 1 | 213 | 38 | 6 | 0 | 9 | 15 |
-| Element / SolidFire / HCI | `hci` | NetApp HCI | 183 | 184 | 3 | 128 | 27 | 5 | 0 | 15 | 12 |
+| Element / SolidFire / HCI | `element-software` | Element Software | 800 | 278 | 2 | 212 | 38 | 6 | 0 | 9 | 15 |
+| Element / SolidFire / HCI | `hci` | NetApp HCI | 183 | 179 | 4 | 125 | 27 | 5 | 0 | 15 | 11 |
 | Element / SolidFire / HCI | `vcp` | VCP | 47 | 113 | 0 | 108 | 2 | 0 | 0 | 0 | 3 |
 | Element / SolidFire / HCI | `solidfire-active-iq` | SolidFire Active IQ | 37 | 17 | 0 | 16 | 0 | 0 | 0 | 0 | 1 |
 | Keystone | `keystone-staas` | Keystone | 85 | 29 | 1 | 25 | 5 | 0 | 0 | 0 | 0 |
 | Keystone | `keystone-staas-2` | Keystone | 84 | 29 | 1 | 25 | 5 | 0 | 0 | 0 | 0 |
 | Kubernetes (Trident / Astra) | `astra-control-center` | Astra Control Center | 74 | 122 | 9 | 89 | 31 | 0 | 7 | 0 | 4 |
-| Kubernetes (Trident / Astra) | `trident` | Trident | 129 | 115 | 13 | 10 | 84 | 1 | 25 | 0 | 8 |
+| Kubernetes (Trident / Astra) | `trident` | Trident | 129 | 114 | 15 | 11 | 85 | 1 | 25 | 0 | 8 |
 | Kubernetes (Trident / Astra) | `astra-automation` | Astra Automation | 344 | 38 | 1 | 4 | 4 | 22 | 0 | 0 | 9 |
 | Monitoring and analytics | `active-iq-unified-manager` | Active IQ Unified Manager | 818 | 381 | 0 | 355 | 21 | 0 | 0 | 0 | 5 |
 | Monitoring and analytics | `oncommand-insight` | OnCommand Insight | 575 | 269 | 0 | 231 | 22 | 0 | 0 | 0 | 16 |
@@ -81,7 +81,7 @@ Interface columns count tasks that have at least one method for that interface.
 | NetApp Console data services | `data-services-copy-sync` | NetApp Copy and Sync | 29 | 40 | 0 | 32 | 2 | 2 | 0 | 0 | 4 |
 | NetApp Console data services | `data-services-cloud-tiering` | NetApp Cloud Tiering | 20 | 25 | 0 | 18 | 0 | 1 | 0 | 0 | 6 |
 | NetApp Console data services | `data-services-replication` | NetApp Replication | 11 | 3 | 0 | 3 | 0 | 0 | 0 | 0 | 0 |
-| NetApp Console storage services | `storage-management-fsx-ontap` | Amazon FSx for NetApp ONTAP | 15 | 13 | 0 | 13 | 0 | 0 | 0 | 0 | 0 |
+| NetApp Console storage services | `storage-management-fsx-ontap` | Amazon FSx for NetApp ONTAP | 15 | 12 | 0 | 12 | 0 | 0 | 0 | 0 | 0 |
 | NetApp Console storage services | `storage-management-azure-netapp-files` | Azure NetApp Files | 13 | 9 | 1 | 7 | 0 | 1 | 0 | 0 | 2 |
 | NetApp Console storage services | `storage-management-ontap-onprem` | On-premises ONTAP clusters | 12 | 5 | 0 | 5 | 0 | 0 | 0 | 0 | 0 |
 | NetApp Console storage services | `storage-management-google-cloud-netapp-volumes` | Google Cloud NetApp Volumes | 13 | 4 | 0 | 3 | 0 | 0 | 0 | 0 | 1 |
@@ -89,14 +89,14 @@ Interface columns count tasks that have at least one method for that interface.
 | NetApp Console storage services | `storage-management-google-cloud-storage` | Google Cloud Storage | 8 | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 |
 | NetApp Console storage services | `storage-management-s3-storage` | Amazon S3 storage | 8 | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 |
 | ONTAP | `ontap` | ONTAP 9 | 2879 | 1,449 | 192 | 404 | 1,174 | 2 | 0 | 1 | 61 |
-| ONTAP | `ontap-systems` | Install and maintain | 1797 | 1,292 | 390 | 171 | 764 | 0 | 0 | 753 | 13 |
+| ONTAP | `ontap-systems` | Install and maintain | 1797 | 1,212 | 404 | 171 | 759 | 0 | 0 | 692 | 13 |
 | ONTAP | `ontap-restapi` | ONTAP REST API | 234 | 1,172 | 0 | 0 | 0 | 1,172 | 0 | 0 | 0 |
-| ONTAP | `ontap-metrocluster` | ONTAP MetroCluster | 513 | 562 | 2 | 22 | 443 | 0 | 0 | 35 | 64 |
+| ONTAP | `ontap-metrocluster` | ONTAP MetroCluster | 513 | 560 | 2 | 22 | 441 | 0 | 0 | 35 | 64 |
 | ONTAP | `ontap-system-manager-classic` | System Manager Classic | 872 | 546 | 4 | 456 | 48 | 0 | 0 | 0 | 46 |
 | ONTAP | `ontap-systems-upgrade` | Upgrade controllers | 395 | 342 | 8 | 10 | 224 | 0 | 0 | 15 | 101 |
 | ONTAP | `ontap-systems-switches` | Install and maintain | 356 | 188 | 10 | 20 | 151 | 0 | 0 | 16 | 11 |
 | ONTAP | `ontap-7mode-transition` | ONTAP 7-Mode Transition | 376 | 170 | 0 | 53 | 105 | 0 | 0 | 0 | 12 |
-| ONTAP | `asa-r2` | ASA r2 | 99 | 117 | 2 | 99 | 9 | 0 | 0 | 8 | 3 |
+| ONTAP | `asa-r2` | ASA r2 | 99 | 115 | 2 | 97 | 9 | 0 | 0 | 8 | 3 |
 | ONTAP | `ontap-sanhost` | ONTAP SAN Host Utilities | 307 | 94 | 6 | 12 | 80 | 0 | 0 | 3 | 8 |
 | ONTAP | `ontap-afx` | AFX | 86 | 75 | 5 | 60 | 7 | 1 | 0 | 12 | 0 |
 | ONTAP | `ontap-select` | ONTAP Select | 140 | 57 | 7 | 38 | 25 | 1 | 0 | 0 | 0 |
@@ -106,7 +106,7 @@ Interface columns count tasks that have at least one method for that interface.
 | ONTAP | `upgrade-health-checker` | Upgrade Health Checker | 12 | 3 | 0 | 0 | 3 | 0 | 0 | 0 | 0 |
 | ONTAP | `ontap-apps-dbs` | Enterprise applications | 290 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
 | Solutions and reference architectures | `flexpod` | FlexPod | 249 | 217 | 0 | 143 | 58 | 0 | 0 | 0 | 16 |
-| Solutions and reference architectures | `netapp-solutions-virtualization` | NetApp virtualization solutions | 195 | 170 | 5 | 86 | 44 | 0 | 5 | 0 | 42 |
+| Solutions and reference architectures | `netapp-solutions-virtualization` | NetApp virtualization solutions | 195 | 169 | 5 | 86 | 44 | 0 | 5 | 0 | 41 |
 | Solutions and reference architectures | `netapp-solutions-databases` | NetApp database solutions | 96 | 105 | 1 | 57 | 35 | 0 | 0 | 0 | 14 |
 | Solutions and reference architectures | `netapp-solutions-sap` | NetApp solutions for SAP | 381 | 99 | 0 | 37 | 35 | 0 | 0 | 5 | 22 |
 | Solutions and reference architectures | `netapp-solutions-ai` | NetApp artificial intelligence solutions | 215 | 76 | 0 | 12 | 41 | 0 | 1 | 2 | 20 |
@@ -118,7 +118,7 @@ Interface columns count tasks that have at least one method for that interface.
 | StorageGRID | `storagegrid-enable` | StorageGRID solutions and resources | 101 | 32 | 0 | 18 | 8 | 0 | 0 | 0 | 6 |
 | StorageGRID | `storage-management-storagegrid` | StorageGRID | 11 | 6 | 0 | 6 | 0 | 0 | 0 | 0 | 0 |
 | Tools and meta | `interoperability-matrix-tool` | Interoperability Matrix Tool | 66 | 33 | 0 | 32 | 0 | 0 | 0 | 0 | 1 |
-| Workload Factory | `workload-fsx-ontap` | Amazon FSx for NetApp ONTAP | 96 | 99 | 0 | 99 | 0 | 0 | 0 | 0 | 0 |
+| Workload Factory | `workload-fsx-ontap` | Amazon FSx for NetApp ONTAP | 96 | 98 | 0 | 98 | 0 | 0 | 0 | 0 | 0 |
 | Workload Factory | `workload-setup-admin` | Setup and administration | 30 | 38 | 0 | 33 | 0 | 0 | 0 | 0 | 5 |
 | Workload Factory | `workload-eda` | EDA workloads | 30 | 27 | 0 | 26 | 0 | 0 | 0 | 0 | 1 |
 | Workload Factory | `workload-databases` | Database workloads | 31 | 25 | 0 | 25 | 0 | 0 | 0 | 0 | 0 |

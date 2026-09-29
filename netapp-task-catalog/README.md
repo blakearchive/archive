@@ -11,8 +11,13 @@ product documentation. Each record captures:
 The catalog is organized by product, and it is meant to be the raw material for
 an eval of an agent that operates NetApp storage across products.
 
-Current coverage is in [`data/SUMMARY.md`](data/SUMMARY.md). Browse the tasks in
-[`data/task_index.csv`](data/task_index.csv), which has one row per task.
+**Current build:** 12,504 tasks (13,166 interface-specific methods) from 92
+current documentation sites.
+
+- 831 tasks are documented for more than one interface.
+- 1,917 ONTAP tasks are linked to the equivalent ONTAP REST operations.
+- Full coverage tables are in [`data/SUMMARY.md`](data/SUMMARY.md).
+- Browse the tasks in [`data/task_index.csv`](data/task_index.csv), which has one row per task.
 
 ## Sources
 
@@ -128,12 +133,43 @@ A step can also carry:
 pip install pyyaml
 python tools/fetch_repos.py  --dest /path/to/clones            # ~95 text-only clones, a few minutes
 python tools/build_catalog.py --src /path/to/clones --out data # ~6 minutes
-python tools/report.py --data data
 gzip -f data/tasks/*.jsonl data/reference/*.jsonl
+python tools/report.py --data data
+python tests/test_extract.py                                   # parser regression tests
 ```
 
 To refresh the repo list, list `github.com/orgs/NetAppDocs/repositories` and
 keep the names that have no locale suffix (`.ja-jp`, `.zh-cn`, and so on).
+
+## Accuracy
+
+Each audit sampled task records and had an independent reviewer check them
+against the source `.adoc` (and any included files). The reviewer looked at:
+
+- whether every step is present, in order,
+- whether there is unrelated content,
+- whether methods are split correctly and each has the right interface,
+- whether the title makes sense.
+
+The verdicts mean:
+
+- **OK:** fully correct.
+- **MINOR:** a small issue, such as a lost note or an awkward title.
+- **MAJOR:** an agent would do the wrong thing: missing or extra steps, the wrong interface, or not actually a task.
+
+| Audit | Sample | OK | MINOR | MAJOR |
+|---|---|---:|---:|---:|
+| 1. First parser | 51 tasks, stratified by family | 14 | 24 | 13 |
+| 2. After fixes | same 51 tasks | 26 | 20 | 5 |
+| 3. Held out | 40 new tasks, uniform random, not used for tuning | 22 | 15 | 3 (7.5%) |
+
+In the held-out audit, all three MAJOR defects were in solution or automation
+guides. The fix for two of them ("Step N" sections made of `===` subsections)
+is included in this build. The 33 tasks sampled from core product docs had no
+MAJOR defects.
+
+`tests/test_extract.py` covers each failure pattern the audits found. Run it
+with `python tests/test_extract.py`.
 
 ## Known limitations
 
@@ -151,4 +187,15 @@ keep the names that have no locale suffix (`.ja-jp`, `.zh-cn`, and so on).
 
   Merging these into one canonical task taxonomy is the next step.
 - **`rest_equivalents` is inferred** from CLI commands through the REST docs' "Related ONTAP commands" lists. It points to the right endpoint family, but it is not a verified one-to-one translation of the procedure.
+- **Some source pages have malformed markup,** for example an unbalanced `--` tab
+  delimiter in `ontap/update/firmware-task`. Content in those pages can be
+  dropped. The audits found these to be rare.
+- **Known cosmetic issues:**
+  - Images appear as their alt text in brackets, for example `[Menu options icon]`.
+  - Some task titles are just the section heading, for example "Option 3: ...".
+  - A note that follows the last step without a `+` goes into `result` and is not attached to that step.
+- **Solution guides are least reliable.** `netapp-solutions-*` and `flexpod` pages
+  are narrative, so they are extracted with a looser rule (see `detection:
+  implicit-ordered-list`). Filter them out, or review them, before using them as
+  eval tasks.
 - **Hardware and physical tasks are included and labeled `hardware`.** An agent cannot perform them, but they matter for scoping the eval (for example, "agent should hand off").

@@ -13,15 +13,15 @@
   "status": "current",
   "pages": 20,
   "pages_with_tasks": 8,
-  "tasks": 14,
-  "methods": 14,
+  "tasks": 8,
+  "methods": 8,
   "tasks_by_interface": {
-   "cli": 14,
+   "cli": 8,
    "gui": 3
   },
   "multi_interface_tasks": 3,
   "tasks_with_rest_equivalent": 0,
-  "tasks_in_nav": 14
+  "tasks_in_nav": 8
  },
  {
   "slug": "cloud-volumes-ontap-9100-relnotes",
@@ -628,17 +628,17 @@
   "status": "current",
   "pages": 477,
   "pages_with_tasks": 309,
-  "tasks": 374,
-  "methods": 375,
+  "tasks": 358,
+  "methods": 358,
   "tasks_by_interface": {
-   "gui": 213,
+   "gui": 205,
    "cli": 79,
    "unknown": 39,
-   "hardware": 104
+   "hardware": 101
   },
-  "multi_interface_tasks": 59,
+  "multi_interface_tasks": 63,
   "tasks_with_rest_equivalent": 0,
-  "tasks_in_nav": 374
+  "tasks_in_nav": 358
  },
  {
   "slug": "e-series-cli",
@@ -731,18 +731,18 @@
   "status": "current",
   "pages": 800,
   "pages_with_tasks": 195,
-  "tasks": 280,
-  "methods": 280,
+  "tasks": 278,
+  "methods": 278,
   "tasks_by_interface": {
    "hardware": 9,
    "cli": 38,
-   "gui": 213,
+   "gui": 212,
    "unknown": 15,
    "api": 6
   },
-  "multi_interface_tasks": 1,
+  "multi_interface_tasks": 2,
   "tasks_with_rest_equivalent": 0,
-  "tasks_in_nav": 274
+  "tasks_in_nav": 272
  },
  {
   "slug": "element-software-123",
@@ -778,18 +778,18 @@
   "status": "current",
   "pages": 183,
   "pages_with_tasks": 91,
-  "tasks": 184,
-  "methods": 185,
+  "tasks": 179,
+  "methods": 180,
   "tasks_by_interface": {
-   "unknown": 12,
+   "unknown": 11,
    "cli": 27,
-   "gui": 128,
+   "gui": 125,
    "api": 5,
    "hardware": 15
   },
-  "multi_interface_tasks": 3,
+  "multi_interface_tasks": 4,
   "tasks_with_rest_equivalent": 0,
-  "tasks_in_nav": 179
+  "tasks_in_nav": 174
  },
  {
   "slug": "hci18",
@@ -1005,18 +1005,18 @@
   "status": "current",
   "pages": 129,
   "pages_with_tasks": 57,
-  "tasks": 115,
-  "methods": 140,
+  "tasks": 114,
+  "methods": 139,
   "tasks_by_interface": {
-   "cli": 84,
-   "gui": 10,
+   "cli": 85,
+   "gui": 11,
    "unknown": 8,
    "automation": 25,
    "api": 1
   },
-  "multi_interface_tasks": 13,
+  "multi_interface_tasks": 15,
   "tasks_with_rest_equivalent": 0,
-  "tasks_in_nav": 115
+  "tasks_in_nav": 114
  },
  {
   "slug": "trident-2304",
@@ -1786,14 +1786,14 @@
   "status": "current",
   "pages": 15,
   "pages_with_tasks": 6,
-  "tasks": 13,
-  "methods": 14,
+  "tasks": 12,
+  "methods": 13,
   "tasks_by_interface": {
-   "gui": 13
+   "gui": 12
   },
   "multi_interface_tasks": 0,
   "tasks_with_rest_equivalent": 0,
-  "tasks_in_nav": 13
+  "tasks_in_nav": 12
  },
  {
   "slug": "storage-management-google-cloud-netapp-volumes",
@@ -1889,17 +1889,17 @@
   "status": "current",
   "pages": 99,
   "pages_with_tasks": 65,
-  "tasks": 117,
-  "methods": 125,
+  "tasks": 115,
+  "methods": 123,
   "tasks_by_interface": {
-   "gui": 99,
+   "gui": 97,
    "hardware": 8,
    "cli": 9,
    "unknown": 3
   },
   "multi_interface_tasks": 2,
   "tasks_with_rest_equivalent": 7,
-  "tasks_in_nav": 117
+  "tasks_in_nav": 115
  },
  {
   "slug": "ontap",
@@ -2106,17 +2106,17 @@
   "status": "current",
   "pages": 513,
   "pages_with_tasks": 246,
-  "tasks": 562,
-  "methods": 581,
+  "tasks": 560,
+  "methods": 579,
   "tasks_by_interface": {
-   "cli": 443,
+   "cli": 441,
    "unknown": 64,
    "hardware": 35,
    "gui": 22
   },
   "multi_interface_tasks": 2,
-  "tasks_with_rest_equivalent": 225,
-  "tasks_in_nav": 557
+  "tasks_with_rest_equivalent": 223,
+  "tasks_in_nav": 555
  },
  {
   "slug": "ontap-restapi",
@@ -2257,17 +2257,17 @@
   "status": "current",
   "pages": 1797,
   "pages_with_tasks": 1121,
-  "tasks": 1292,
-  "methods": 1423,
+  "tasks": 1212,
+  "methods": 1343,
   "tasks_by_interface": {
-   "cli": 764,
+   "cli": 759,
    "gui": 171,
-   "hardware": 753,
+   "hardware": 692,
    "unknown": 13
   },
-  "multi_interface_tasks": 390,
-  "tasks_with_rest_equivalent": 635,
-  "tasks_in_nav": 1292
+  "multi_interface_tasks": 404,
+  "tasks_with_rest_equivalent": 633,
+  "tasks_in_nav": 1212
  },
  {
   "slug": "ontap-systems-family",
@@ -2700,17 +2700,17 @@
   "status": "current",
   "pages": 195,
   "pages_with_tasks": 86,
-  "tasks": 170,
-  "methods": 171,
+  "tasks": 169,
+  "methods": 170,
   "tasks_by_interface": {
    "gui": 86,
-   "unknown": 42,
+   "unknown": 41,
    "cli": 44,
    "automation": 5
   },
   "multi_interface_tasks": 5,
   "tasks_with_rest_equivalent": 0,
-  "tasks_in_nav": 152
+  "tasks_in_nav": 151
  },
  {
   "slug": "storage-management-storagegrid",
@@ -2934,14 +2934,14 @@
   "status": "current",
   "pages": 96,
   "pages_with_tasks": 46,
-  "tasks": 99,
-  "methods": 108,
+  "tasks": 98,
+  "methods": 107,
   "tasks_by_interface": {
-   "gui": 99
+   "gui": 98
   },
   "multi_interface_tasks": 0,
   "tasks_with_rest_equivalent": 0,
-  "tasks_in_nav": 97
+  "tasks_in_nav": 96
  },
  {
   "slug": "workload-infosec",
