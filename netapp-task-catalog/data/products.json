@@ -1,0 +1,3011 @@
+[
+ {
+  "slug": "netapp-automation",
+  "title": "NetApp Automation",
+  "summary": "NetApp provides access to programmatic APIs for many of our products, as well as scripted automation solutions that can help you automate workloads for the NetApp portfolio of products and services.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "NetApp Console automation hub",
+   "NetApp product APIs",
+   "Knowledge and support"
+  ],
+  "family": "Automation",
+  "status": "current",
+  "pages": 20,
+  "pages_with_tasks": 8,
+  "tasks": 14,
+  "methods": 14,
+  "tasks_by_interface": {
+   "cli": 14,
+   "gui": 3
+  },
+  "multi_interface_tasks": 3,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 14
+ },
+ {
+  "slug": "cloud-volumes-ontap-9100-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9101-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9110-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9111-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9120-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9121-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9130-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9131-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9140-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9141-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9150-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9151-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9161-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9171-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-9181-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-93-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-94-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-95-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-96-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-97-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-98-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-990-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-991-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "cloud-volumes-ontap-relnotes",
+  "family": "Cloud Volumes ONTAP",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "storage-management-cloud-volumes-ontap",
+  "title": "Cloud Volumes ONTAP",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Cloud Volumes ONTAP",
+  "status": "current",
+  "pages": 134,
+  "pages_with_tasks": 70,
+  "tasks": 133,
+  "methods": 140,
+  "tasks_by_interface": {
+   "gui": 93,
+   "unknown": 9,
+   "cli": 21,
+   "api": 13
+  },
+  "multi_interface_tasks": 2,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 133
+ },
+ {
+  "slug": "data-migrator",
+  "title": "NetApp Data Migrator",
+  "summary": "NetApp Data Migrator is an enterprise grade, multicloud, data migration software application that simplifies the migration of unstructured file data from on-premises or third-party storage systems to public cloud storage services powered by NetApp. NetApp Data Migrator is an independent application that runs on user-managed virtual machines and eliminates the need for complex custom scripts and disjointed tools.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Data migration",
+  "status": "current",
+  "pages": 32,
+  "pages_with_tasks": 19,
+  "tasks": 42,
+  "methods": 48,
+  "tasks_by_interface": {
+   "gui": 34,
+   "cli": 8,
+   "unknown": 2
+  },
+  "multi_interface_tasks": 2,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 42
+ },
+ {
+  "slug": "xcp",
+  "title": "XCP",
+  "summary": "NetApp XCP is a client-based software that allows for scalable and high-performance data migrations for any-to-NetApp and NetApp-to-NetApp data migrations and file analytics.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Data migration",
+  "status": "current",
+  "pages": 78,
+  "pages_with_tasks": 11,
+  "tasks": 14,
+  "methods": 14,
+  "tasks_by_interface": {
+   "gui": 3,
+   "unknown": 3,
+   "cli": 8
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 14
+ },
+ {
+  "slug": "nfs-plugin-vmware-vaai",
+  "title": "NetApp NFS Plug-in for VMware VAAI",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Data protection and host integration",
+  "status": "current",
+  "pages": 5,
+  "pages_with_tasks": 2,
+  "tasks": 2,
+  "methods": 2,
+  "tasks_by_interface": {
+   "cli": 2
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 2
+ },
+ {
+  "slug": "ontap-tools-vmware-vsphere",
+  "title": "ONTAP tools for VMware vSphere 9.13",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [
+   "Concepts",
+   "Deploy and upgrade ONTAP tools",
+   "Configure ONTAP tools",
+   "Protect datastores and virtual machines",
+   "Manage ONTAP tools"
+  ],
+  "family": "Data protection and host integration",
+  "status": "current",
+  "pages": 124,
+  "pages_with_tasks": 63,
+  "tasks": 67,
+  "methods": 67,
+  "tasks_by_interface": {
+   "gui": 57,
+   "unknown": 5,
+   "cli": 5
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 63
+ },
+ {
+  "slug": "ontap-tools-vmware-vsphere-10",
+  "title": "ONTAP tools for VMware vSphere 10",
+  "summary": null,
+  "versioned_copy": true,
+  "nav_sections": [
+   "Release notes",
+   "Concepts",
+   "Deploy ONTAP tools for VMware vSphere",
+   "Configure ONTAP tools for VMware vSphere",
+   "Protect datastores and virtual machines",
+   "Manage ONTAP tools for VMware vSphere",
+   "Upgrade ONTAP tools for VMware vSphere",
+   "Migrate ONTAP tools for VMware vSphere 9.xx to 10.6",
+   "Automate using the REST API"
+  ],
+  "family": "Data protection and host integration",
+  "status": "current",
+  "pages": 106,
+  "pages_with_tasks": 70,
+  "tasks": 78,
+  "methods": 85,
+  "tasks_by_interface": {
+   "cli": 5,
+   "api": 1,
+   "gui": 68,
+   "unknown": 4
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 78
+ },
+ {
+  "slug": "ontap-tools-vmware-vsphere-100",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-tools-vmware-vsphere-101",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-tools-vmware-vsphere-102",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-tools-vmware-vsphere-103",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-tools-vmware-vsphere-104",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-tools-vmware-vsphere-105",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-tools-vmware-vsphere-910",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-tools-vmware-vsphere-911",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-tools-vmware-vsphere-912",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-tools-vmware-vsphere-98",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "sc-plugin-vmware-vsphere",
+  "title": "SnapCenter Plug-in for VMware vSphere 6.2",
+  "summary": "SnapCenter Plug-in for VMware vSphere (SCV) is a Linux-based Virtual Appliance. As a standalone, it provides fast, space-efficient, crash-consistent, and VM-consistent backup and restore operations for VMs, Datastores, and VMDKs. It also works with SnapCenter Server to support application-based backup and restore operations in VMware environments for SnapCenter application-specific plug-ins.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Data protection and host integration",
+  "status": "current",
+  "pages": 106,
+  "pages_with_tasks": 56,
+  "tasks": 63,
+  "methods": 63,
+  "tasks_by_interface": {
+   "api": 1,
+   "gui": 57,
+   "cli": 2,
+   "unknown": 3
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 60
+ },
+ {
+  "slug": "sc-plugin-vmware-vsphere-45",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "sc-plugin-vmware-vsphere-46",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "sc-plugin-vmware-vsphere-47",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "sc-plugin-vmware-vsphere-48",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "sc-plugin-vmware-vsphere-49",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "sc-plugin-vmware-vsphere-50",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "sc-plugin-vmware-vsphere-60",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "sc-plugin-vmware-vsphere-61",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "smis-provider",
+  "title": "NetApp SMI-S Provider",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Data protection and host integration",
+  "status": "current",
+  "pages": 107,
+  "pages_with_tasks": 22,
+  "tasks": 22,
+  "methods": 22,
+  "tasks_by_interface": {
+   "cli": 15,
+   "gui": 2,
+   "unknown": 5
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 22
+ },
+ {
+  "slug": "snap-creator-framework",
+  "title": "Snap Creator Framework",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Data protection and host integration",
+  "status": "current",
+  "pages": 280,
+  "pages_with_tasks": 114,
+  "tasks": 114,
+  "methods": 114,
+  "tasks_by_interface": {
+   "gui": 61,
+   "cli": 46,
+   "unknown": 7
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 114
+ },
+ {
+  "slug": "snapcenter",
+  "title": "SnapCenter software",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [
+   "Release notes",
+   "Get started",
+   "Install and configure SnapCenter Server",
+   "Protect Microsoft SQL Server databases",
+   "Protect SAP HANA databases",
+   "Protect Oracle databases",
+   "Protect Windows file systems",
+   "Protect Microsoft Exchange Server databases",
+   "Protect IBM Db2",
+   "Protect PostgreSQL",
+   "Protect MySQL",
+   "Protect applications using NetApp supported plug-ins",
+   "Protect Unix file systems",
+   "Protect applications running on Azure NetApp Files",
+   "Manage SnapCenter Server and plug-ins",
+   "Upgrade SnapCenter Server and plug-ins",
+   "Tech refresh",
+   "Uninstall SnapCenter Server and plug-ins",
+   "Automate using REST APIs"
+  ],
+  "family": "Data protection and host integration",
+  "status": "current",
+  "pages": 664,
+  "pages_with_tasks": 366,
+  "tasks": 446,
+  "methods": 470,
+  "tasks_by_interface": {
+   "cli": 130,
+   "gui": 285,
+   "unknown": 55,
+   "api": 1
+  },
+  "multi_interface_tasks": 25,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 443
+ },
+ {
+  "slug": "snapcenter-45",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "snapcenter-46",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "snapcenter-47",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "snapcenter-48",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "snapcenter-49",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "snapcenter-50",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "snapcenter-60",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "snapcenter-61",
+  "family": "Data protection and host integration",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "workflow-automation",
+  "title": "OnCommand Workflow Automation",
+  "summary": "Welcome to the OnCommand Workflow Automation 5.1 Information Library.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Installation and setup for Linux",
+   "Installation and setup for Windows",
+   "Workflow",
+   "Manage and configure"
+  ],
+  "family": "Data protection and host integration",
+  "status": "current",
+  "pages": 379,
+  "pages_with_tasks": 151,
+  "tasks": 151,
+  "methods": 151,
+  "tasks_by_interface": {
+   "gui": 98,
+   "cli": 36,
+   "unknown": 17
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 151
+ },
+ {
+  "slug": "beegfs",
+  "title": "BeeGFS on NetApp with E-Series Storage",
+  "summary": "Solution support for BeeGFS parallel cluster file system that runs on high-performance, low-latency NetApp E-Series storage. A cost-effective, easy-to-manage, and highly available HPC solution, with support from NetApp.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "E-Series / SANtricity",
+  "status": "current",
+  "pages": 68,
+  "pages_with_tasks": 22,
+  "tasks": 22,
+  "methods": 22,
+  "tasks_by_interface": {
+   "cli": 12,
+   "automation": 9,
+   "unknown": 2
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 22
+ },
+ {
+  "slug": "e-series",
+  "title": "E-Series storage systems",
+  "summary": "E-Series systems give you an integrated hardware and software solution for dedicated, high-bandwidth applications like data analytics, video surveillance, and disk-based backup that need simple, fast, reliable SAN storage.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "E-Series / SANtricity",
+  "status": "current",
+  "pages": 477,
+  "pages_with_tasks": 309,
+  "tasks": 374,
+  "methods": 375,
+  "tasks_by_interface": {
+   "gui": 213,
+   "cli": 79,
+   "unknown": 39,
+   "hardware": 104
+  },
+  "multi_interface_tasks": 59,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 374
+ },
+ {
+  "slug": "e-series-cli",
+  "family": "E-Series / SANtricity",
+  "status": "reference",
+  "tasks": 0
+ },
+ {
+  "slug": "e-series-family",
+  "family": "E-Series / SANtricity",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "e-series-santricity",
+  "title": "SANtricity software",
+  "summary": "SANtricity System Manager and Unified Manager",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "E-Series / SANtricity",
+  "status": "current",
+  "pages": 644,
+  "pages_with_tasks": 284,
+  "tasks": 285,
+  "methods": 285,
+  "tasks_by_interface": {
+   "gui": 280,
+   "unknown": 2,
+   "hardware": 3,
+   "cli": 1
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 274
+ },
+ {
+  "slug": "e-series-santricity-117",
+  "family": "E-Series / SANtricity",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "e-series-santricity-118",
+  "family": "E-Series / SANtricity",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "e-series-santricity-119",
+  "family": "E-Series / SANtricity",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "storage-management-e-series",
+  "title": "E-Series",
+  "summary": "Discover your E-Series systems from NetApp Console to get a complete view of data across your hybrid multicloud.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "E-Series / SANtricity",
+  "status": "current",
+  "pages": 7,
+  "pages_with_tasks": 3,
+  "tasks": 3,
+  "methods": 3,
+  "tasks_by_interface": {
+   "gui": 3
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 3
+ },
+ {
+  "slug": "element-software",
+  "title": "Element Software",
+  "summary": "A SolidFire all-flash storage system is comprised of hardware components such as drives and nodes that are combined into a pool of storage resources. As a single storage system, this unified cluster is managed with NetApp Element software.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Concepts",
+   "Try it out",
+   "Install and maintain hardware",
+   "Set up storage",
+   "Manage storage with Element software",
+   "Manage and monitor storage with NetApp Hybrid Cloud Control",
+   "Manage storage with Element API",
+   "Work with the management node",
+   "Upgrade your NetApp SolidFire all-flash storage system"
+  ],
+  "family": "Element / SolidFire / HCI",
+  "status": "current",
+  "pages": 800,
+  "pages_with_tasks": 195,
+  "tasks": 280,
+  "methods": 280,
+  "tasks_by_interface": {
+   "hardware": 9,
+   "cli": 38,
+   "gui": 213,
+   "unknown": 15,
+   "api": 6
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 274
+ },
+ {
+  "slug": "element-software-123",
+  "family": "Element / SolidFire / HCI",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "element-software-125",
+  "family": "Element / SolidFire / HCI",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "element-software-127",
+  "family": "Element / SolidFire / HCI",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "element-software-128",
+  "family": "Element / SolidFire / HCI",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "hci",
+  "title": "NetApp HCI",
+  "summary": "Learn more by using NetApp HCI configuration and management documentation and NetApp HCI solutions information.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Element / SolidFire / HCI",
+  "status": "current",
+  "pages": 183,
+  "pages_with_tasks": 91,
+  "tasks": 184,
+  "methods": 185,
+  "tasks_by_interface": {
+   "unknown": 12,
+   "cli": 27,
+   "gui": 128,
+   "api": 5,
+   "hardware": 15
+  },
+  "multi_interface_tasks": 3,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 179
+ },
+ {
+  "slug": "hci18",
+  "family": "Element / SolidFire / HCI",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "hci19",
+  "family": "Element / SolidFire / HCI",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "solidfire-active-iq",
+  "title": "SolidFire Active IQ",
+  "summary": "NetApp SolidFire Active IQ is a web-based tool that provides continually updated historical views of cluster-wide statistics. The SolidFire Active IQ tool makes monitoring capacity and performance easy and accessible from anywhere.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Element / SolidFire / HCI",
+  "status": "current",
+  "pages": 37,
+  "pages_with_tasks": 7,
+  "tasks": 17,
+  "methods": 17,
+  "tasks_by_interface": {
+   "gui": 16,
+   "unknown": 1
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 17
+ },
+ {
+  "slug": "vcp",
+  "title": "VCP",
+  "summary": "NetApp Element Plug-in for VMware vCenter Server provides a plug-in to the VMware vSphere interface so that you can manage and monitor storage clusters running NetApp Element software. You can use this doc site learn about and use the plug-in. This doc site addresses the remote Element Plug-in for vCenter 5.0 and later and the local Element Plug-in for vCenter 4.6 to 4.10.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Element / SolidFire / HCI",
+  "status": "current",
+  "pages": 47,
+  "pages_with_tasks": 29,
+  "tasks": 113,
+  "methods": 115,
+  "tasks_by_interface": {
+   "gui": 108,
+   "cli": 2,
+   "unknown": 3
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 113
+ },
+ {
+  "slug": "keystone-staas",
+  "title": "Keystone",
+  "summary": "NetApp Keystone is a pay-as-you-go, storage-as-a-service offering for both on-premises and cloud data storage services under one subscription with the ability to reallocate storage spend across clouds.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Keystone",
+  "status": "current",
+  "pages": 85,
+  "pages_with_tasks": 23,
+  "tasks": 29,
+  "methods": 46,
+  "tasks_by_interface": {
+   "gui": 25,
+   "cli": 5
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 29
+ },
+ {
+  "slug": "keystone-staas-2",
+  "title": "Keystone",
+  "summary": "NetApp Keystone is a pay-as-you-go, storage-as-a-service offering for both on-premises and cloud data storage services under one subscription with the ability to reallocate storage spend across clouds.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Keystone",
+  "status": "current",
+  "pages": 84,
+  "pages_with_tasks": 23,
+  "tasks": 29,
+  "methods": 46,
+  "tasks_by_interface": {
+   "gui": 25,
+   "cli": 5
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 29
+ },
+ {
+  "slug": "astra-automation",
+  "title": "Astra Automation",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [
+   "Release notes",
+   "Features and benefits",
+   "Get started",
+   "Infrastructure workflows",
+   "Management workflows",
+   "Using Python",
+   "Additional resources"
+  ],
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "current",
+  "pages": 344,
+  "pages_with_tasks": 37,
+  "tasks": 38,
+  "methods": 38,
+  "tasks_by_interface": {
+   "gui": 4,
+   "cli": 4,
+   "api": 22,
+   "unknown": 9
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 38
+ },
+ {
+  "slug": "astra-automation-2304",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "astra-automation-2307",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "astra-automation-2310",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "astra-control-center",
+  "title": "Astra Control Center",
+  "summary": "Astra Control Center software provides application-aware data management of Kubernetes clusters in your on-premises environment. Easily back up Kubernetes apps, migrate data to a different cluster, and instantly create working application clones. If you need to manage Kubernetes apps running in a public cloud, go to the docs for Astra Control Service.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Release notes",
+   "Get started",
+   "Concepts",
+   "Use Astra Control Center",
+   "Use Astra Control Provisioner",
+   "Automate with Astra Control REST API",
+   "Knowledge and support"
+  ],
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "current",
+  "pages": 74,
+  "pages_with_tasks": 42,
+  "tasks": 122,
+  "methods": 135,
+  "tasks_by_interface": {
+   "gui": 89,
+   "cli": 31,
+   "automation": 7,
+   "unknown": 4
+  },
+  "multi_interface_tasks": 9,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 121
+ },
+ {
+  "slug": "astra-control-center-2304",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "astra-control-center-2307",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "astra-control-center-2310",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "astra-family",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "trident",
+  "title": "Trident",
+  "summary": "Trident is an open source storage provisioner and orchestrator maintained by NetApp. It enables you to create storage volumes for containerized applications managed by Docker and Kubernetes.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Get started",
+   "Install Trident",
+   "Use Trident",
+   "Manage and monitor Trident",
+   "Trident for Docker",
+   "Best practices and recommendations",
+   "Protect applications with Trident Protect",
+   "Reference"
+  ],
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "current",
+  "pages": 129,
+  "pages_with_tasks": 57,
+  "tasks": 115,
+  "methods": 140,
+  "tasks_by_interface": {
+   "cli": 84,
+   "gui": 10,
+   "unknown": 8,
+   "automation": 25,
+   "api": 1
+  },
+  "multi_interface_tasks": 13,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 115
+ },
+ {
+  "slug": "trident-2304",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "trident-2307",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "trident-2310",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "trident-2402",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "trident-2406",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "trident-2410",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "trident-2502",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "trident-2506",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "trident-2510",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "trident-2602",
+  "family": "Kubernetes (Trident / Astra)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "active-iq",
+  "title": "Digital Advisor",
+  "summary": "Active IQ Digital Advisor (also known as Digital Advisor) enables you to optimize your data infrastructure across your global hybrid cloud by delivering actionable predictive analytics and proactive support through a cloud-based portal and mobile app. Digital Advisor's cloud-based services leverage community wisdom and peer comparisons that are drawn from NetApp's massive installed base, combining these insights with AutoSupport telemetry and My AutoSupport features to deliver an advanced set of unparalleled analytics services.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Monitoring and analytics",
+  "status": "current",
+  "pages": 69,
+  "pages_with_tasks": 40,
+  "tasks": 47,
+  "methods": 51,
+  "tasks_by_interface": {
+   "gui": 40,
+   "cli": 6,
+   "unknown": 1
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 47
+ },
+ {
+  "slug": "active-iq-unified-manager",
+  "title": "Active IQ Unified Manager",
+  "summary": "Documentation for Active IQ Unified Manager",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Install Unified Manager on VMware vSphere systems",
+   "Install Unified Manager on Linux systems",
+   "Install Unified Manager on Windows systems",
+   "Perform configuration and administrative tasks",
+   "Monitor and manage storage",
+   "Manage events and alerts",
+   "Monitor and manage cluster performance",
+   "Monitor and manage cluster health",
+   "Protect and restore data",
+   "Generate custom reports",
+   "Manage storage using REST APIs"
+  ],
+  "family": "Monitoring and analytics",
+  "status": "current",
+  "pages": 818,
+  "pages_with_tasks": 364,
+  "tasks": 381,
+  "methods": 381,
+  "tasks_by_interface": {
+   "gui": 355,
+   "cli": 21,
+   "unknown": 5
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 379
+ },
+ {
+  "slug": "active-iq-unified-manager-910",
+  "family": "Monitoring and analytics",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "active-iq-unified-manager-911",
+  "family": "Monitoring and analytics",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "active-iq-unified-manager-912",
+  "family": "Monitoring and analytics",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "active-iq-unified-manager-913",
+  "family": "Monitoring and analytics",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "active-iq-unified-manager-914",
+  "family": "Monitoring and analytics",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "active-iq-unified-manager-916",
+  "family": "Monitoring and analytics",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "active-iq-unified-manager-97",
+  "family": "Monitoring and analytics",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "active-iq-unified-manager-98",
+  "family": "Monitoring and analytics",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "active-iq-unified-manager-99",
+  "family": "Monitoring and analytics",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ai-data-engine",
+  "title": "AI Data Engine",
+  "summary": "AI Data Engine documentation covers how to deploy, connect data sources, and use AI Data Engine for storage optimization, metadata investigation, and data governance.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Release notes",
+   "Get started",
+   "Deploy",
+   "Connect data sources"
+  ],
+  "family": "Monitoring and analytics",
+  "status": "current",
+  "pages": 25,
+  "pages_with_tasks": 14,
+  "tasks": 37,
+  "methods": 37,
+  "tasks_by_interface": {
+   "gui": 32,
+   "unknown": 5
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 37
+ },
+ {
+  "slug": "data-infrastructure-insights",
+  "title": "Data Infrastructure Insights",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Monitoring and analytics",
+  "status": "current",
+  "pages": 252,
+  "pages_with_tasks": 55,
+  "tasks": 94,
+  "methods": 94,
+  "tasks_by_interface": {
+   "gui": 84,
+   "unknown": 4,
+   "cli": 5,
+   "automation": 1
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 79
+ },
+ {
+  "slug": "digital-advisor-automation",
+  "title": "Digital Advisor API",
+  "summary": "NetApp Digital Advisor uses automation and artificial intelligence to analyze telemetry and product data. It provides predictive analytics for NetApp environments through API access to telemetry-driven insights and install base details. You can integrate these analytics into your workflows, dashboards, and NetApp inventory management systems.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Monitoring and analytics",
+  "status": "current",
+  "pages": 15,
+  "pages_with_tasks": 6,
+  "tasks": 7,
+  "methods": 7,
+  "tasks_by_interface": {
+   "gui": 4,
+   "api": 3
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 7
+ },
+ {
+  "slug": "oncommand-insight",
+  "title": "OnCommand Insight",
+  "summary": "OnCommand Insight simplifies operational management of hybrid IT infrastructures for on-premise environments and on public and private clouds.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Release Notes",
+   "What is OnCommand Insight?",
+   "Installation for Linux",
+   "Installation for Microsoft Windows",
+   "Configuration and administration",
+   "Data Warehouse administration",
+   "Reporting",
+   "FAQ",
+   "How-To guides"
+  ],
+  "family": "Monitoring and analytics",
+  "status": "current",
+  "pages": 575,
+  "pages_with_tasks": 267,
+  "tasks": 269,
+  "methods": 269,
+  "tasks_by_interface": {
+   "cli": 22,
+   "gui": 231,
+   "unknown": 16
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 268
+ },
+ {
+  "slug": "oncommand-unified-manager-95",
+  "family": "Monitoring and analytics",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "about",
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "console-alerts",
+  "title": "ONTAP alerts",
+  "summary": "View issues or potential risks in your NetApp ONTAP environment. You can drill into alert details and view cluster information using ONTAP System Manager.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "current",
+  "pages": 11,
+  "pages_with_tasks": 2,
+  "tasks": 2,
+  "methods": 2,
+  "tasks_by_interface": {
+   "gui": 2
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 2
+ },
+ {
+  "slug": "console-all-family",
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "console-automation",
+  "title": "API",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [
+   "Get started",
+   "NetApp Console common workflows and tasks",
+   "Automation technologies",
+   "Knowledge and support"
+  ],
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "current",
+  "pages": 1562,
+  "pages_with_tasks": 89,
+  "tasks": 123,
+  "methods": 124,
+  "tasks_by_interface": {
+   "gui": 28,
+   "api": 88,
+   "unknown": 16,
+   "cli": 13
+  },
+  "multi_interface_tasks": 22,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 121
+ },
+ {
+  "slug": "console-family",
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "console-licenses-subscriptions",
+  "title": "Licenses and subscriptions",
+  "summary": "Manage and monitor your licenses and subscriptions in the NetApp Console.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "current",
+  "pages": 18,
+  "pages_with_tasks": 11,
+  "tasks": 36,
+  "methods": 36,
+  "tasks_by_interface": {
+   "gui": 35,
+   "unknown": 1
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 34
+ },
+ {
+  "slug": "console-lifecycle-planning",
+  "title": "Lifecycle planning",
+  "summary": "Lifecycle planning identifies clusters with current or forecasted low capacity and provides you recommendations on data tiering.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Release notes",
+   "Get started",
+   "Use NetApp lifecycle planning",
+   "Knowledge and support"
+  ],
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "current",
+  "pages": 17,
+  "pages_with_tasks": 6,
+  "tasks": 9,
+  "methods": 9,
+  "tasks_by_interface": {
+   "gui": 9
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 4
+ },
+ {
+  "slug": "console-local",
+  "title": "NetApp Console local deployment",
+  "summary": "Use NetApp Console local deployment",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "current",
+  "pages": 152,
+  "pages_with_tasks": 32,
+  "tasks": 83,
+  "methods": 83,
+  "tasks_by_interface": {
+   "gui": 81,
+   "unknown": 2
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 82
+ },
+ {
+  "slug": "console-local-automation",
+  "title": "API",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [
+   "Get started"
+  ],
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "current",
+  "pages": 285,
+  "pages_with_tasks": 1,
+  "tasks": 1,
+  "methods": 1,
+  "tasks_by_interface": {
+   "api": 1,
+   "gui": 1
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 1
+ },
+ {
+  "slug": "console-local-family",
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "console-local-relnotes",
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "console-relnotes",
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "console-setup-admin",
+  "title": "NetApp Console setup and administration",
+  "summary": "Get started with NetApp Console so that you can start building, protecting, and governing data across your on-premises and cloud environments. After set up is complete, you can control access to your resources using identity and access management (IAM), administer Console agents, cloud provider accounts, and more.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "current",
+  "pages": 182,
+  "pages_with_tasks": 61,
+  "tasks": 156,
+  "methods": 165,
+  "tasks_by_interface": {
+   "unknown": 5,
+   "cli": 18,
+   "gui": 140,
+   "api": 6,
+   "automation": 2
+  },
+  "multi_interface_tasks": 11,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 152
+ },
+ {
+  "slug": "console-software-updates",
+  "title": "Software updates",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [
+   "Release notes",
+   "Get started with software updates",
+   "Use software updates",
+   "Knowledge and support"
+  ],
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "current",
+  "pages": 13,
+  "pages_with_tasks": 5,
+  "tasks": 5,
+  "methods": 5,
+  "tasks_by_interface": {
+   "gui": 5
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 5
+ },
+ {
+  "slug": "console-volume-caching",
+  "title": "Volume caching",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [
+   "Release notes",
+   "Get started",
+   "Use Volume Caching",
+   "Knowledge and support"
+  ],
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "current",
+  "pages": 15,
+  "pages_with_tasks": 3,
+  "tasks": 7,
+  "methods": 7,
+  "tasks_by_interface": {
+   "gui": 7
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 7
+ },
+ {
+  "slug": "console-well-architected",
+  "title": "Well-architected dashboard",
+  "summary": "The well-architected dashboard in NetApp Console helps you maintain and operate reliable, secure, efficient, and cost-effective configurations that align with the well-architected frameworks for the storage type you use.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "current",
+  "pages": 14,
+  "pages_with_tasks": 5,
+  "tasks": 19,
+  "methods": 25,
+  "tasks_by_interface": {
+   "gui": 17,
+   "unknown": 2
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 19
+ },
+ {
+  "slug": "storage-management-family",
+  "family": "NetApp Console (BlueXP) platform",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "data-services-backup-recovery",
+  "title": "NetApp Backup and Recovery",
+  "summary": "NetApp Backup and Recovery is a data service that provides efficient, secure, and cost-effective data protection for all your ONTAP workloads, including volumes, databases, virtual machines, and Kubernetes workloads.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console data services",
+  "status": "current",
+  "pages": 154,
+  "pages_with_tasks": 79,
+  "tasks": 258,
+  "methods": 269,
+  "tasks_by_interface": {
+   "api": 1,
+   "gui": 230,
+   "cli": 18,
+   "automation": 4,
+   "unknown": 6
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 258
+ },
+ {
+  "slug": "data-services-cloud-tiering",
+  "title": "NetApp Cloud Tiering",
+  "summary": "NetApp Cloud Tiering extends your data center to the cloud by automatically tiering inactive data from on-premises ONTAP clusters to object storage.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console data services",
+  "status": "current",
+  "pages": 20,
+  "pages_with_tasks": 8,
+  "tasks": 25,
+  "methods": 26,
+  "tasks_by_interface": {
+   "gui": 18,
+   "unknown": 6,
+   "api": 1
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 25
+ },
+ {
+  "slug": "data-services-copy-sync",
+  "title": "NetApp Copy and Sync",
+  "summary": "NetApp Copy and Sync is a cloud replication and synchronization service for transferring NAS data between on-premises and cloud object stores.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console data services",
+  "status": "current",
+  "pages": 29,
+  "pages_with_tasks": 16,
+  "tasks": 40,
+  "methods": 43,
+  "tasks_by_interface": {
+   "api": 2,
+   "gui": 32,
+   "cli": 2,
+   "unknown": 4
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 40
+ },
+ {
+  "slug": "data-services-data-classification",
+  "title": "NetApp Data Classification",
+  "summary": "NetApp Data Classification enables you to scan and classify data across your organization's hybrid multicloud. Data Classification utilizes AI-driven natural language processing (NLP) for contextual data analysis and categorization, giving you actionable insights into your data to address compliance requirements, detect security vulnerabilities, optimize costs, and accelerate migration.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console data services",
+  "status": "current",
+  "pages": 66,
+  "pages_with_tasks": 23,
+  "tasks": 56,
+  "methods": 59,
+  "tasks_by_interface": {
+   "gui": 53,
+   "unknown": 1,
+   "cli": 2
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 56
+ },
+ {
+  "slug": "data-services-disaster-recovery",
+  "title": "NetApp Disaster Recovery",
+  "summary": "With NetApp Disaster Recovery, you can replicate your on-premises VMware workloads running ONTAP storage to a VMware software-defined data center in a public cloud as a disaster recovery site using NetApp cloud storage.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Release notes",
+   "Get started",
+   "Use NetApp Disaster Recovery",
+   "Reference",
+   "Knowledge and support"
+  ],
+  "family": "NetApp Console data services",
+  "status": "current",
+  "pages": 50,
+  "pages_with_tasks": 20,
+  "tasks": 54,
+  "methods": 62,
+  "tasks_by_interface": {
+   "gui": 53,
+   "cli": 2
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 54
+ },
+ {
+  "slug": "data-services-family",
+  "family": "NetApp Console data services",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "data-services-ransomware-resilience",
+  "title": "NetApp Ransomware Resilience",
+  "summary": "NetApp Ransomware Resilience protects, detects, and supports recovery of workloads from ransomware threats in on-premises and cloud storage. Ransomware Resilience enables secure backup and recovery, helping organizations safeguard critical data and maintain business continuity for Oracle, VM datastores, NAS storage, and more.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Knowledge and support"
+  ],
+  "family": "NetApp Console data services",
+  "status": "current",
+  "pages": 47,
+  "pages_with_tasks": 21,
+  "tasks": 64,
+  "methods": 67,
+  "tasks_by_interface": {
+   "gui": 61,
+   "unknown": 1,
+   "automation": 1,
+   "cli": 2
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 61
+ },
+ {
+  "slug": "data-services-replication",
+  "title": "NetApp Replication",
+  "summary": "Replicate data between ONTAP storage systems to support backup and disaster recovery to the cloud or between clouds.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console data services",
+  "status": "current",
+  "pages": 11,
+  "pages_with_tasks": 3,
+  "tasks": 3,
+  "methods": 3,
+  "tasks_by_interface": {
+   "gui": 3
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 3
+ },
+ {
+  "slug": "saasbackupO365",
+  "title": "SaaS Backup for Microsoft 365",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console data services",
+  "status": "current",
+  "pages": 69,
+  "pages_with_tasks": 55,
+  "tasks": 64,
+  "methods": 64,
+  "tasks_by_interface": {
+   "gui": 64
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 60
+ },
+ {
+  "slug": "storage-management-azure-netapp-files",
+  "title": "Azure NetApp Files",
+  "summary": "Azure NetApp Files is a Microsoft Azure native, high performance file storage service for your core business applications. This documentation describes how to set up and manage Azure NetApp Files by using the NetApp Console.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console storage services",
+  "status": "current",
+  "pages": 13,
+  "pages_with_tasks": 5,
+  "tasks": 9,
+  "methods": 9,
+  "tasks_by_interface": {
+   "gui": 7,
+   "unknown": 2,
+   "api": 1
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 9
+ },
+ {
+  "slug": "storage-management-blob-storage",
+  "title": "Azure Blob storage",
+  "summary": "Get started using Azure Blob storage with the NetApp Console.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console storage services",
+  "status": "current",
+  "pages": 8,
+  "pages_with_tasks": 2,
+  "tasks": 2,
+  "methods": 2,
+  "tasks_by_interface": {
+   "gui": 2
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 2
+ },
+ {
+  "slug": "storage-management-fsx-ontap",
+  "title": "Amazon FSx for NetApp ONTAP",
+  "summary": "Amazon FSx for NetApp ONTAP brings the full capabilities of ONTAP to a native AWS managed service delivering a consistent hybrid cloud experience. This documentation describes how to manage FSx for ONTAP in the NetApp Console.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console storage services",
+  "status": "current",
+  "pages": 15,
+  "pages_with_tasks": 6,
+  "tasks": 13,
+  "methods": 14,
+  "tasks_by_interface": {
+   "gui": 13
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 13
+ },
+ {
+  "slug": "storage-management-google-cloud-netapp-volumes",
+  "title": "Google Cloud NetApp Volumes",
+  "summary": "Google Cloud NetApp Volumes enables enterprises to migrate and run their performance-intensive and latency-sensitive core, business-critical applications in Google with no need to refactor for the cloud. This documentation describes how to set up and manage Google Cloud NetApp Volumes by using the NetApp Console.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console storage services",
+  "status": "current",
+  "pages": 13,
+  "pages_with_tasks": 3,
+  "tasks": 4,
+  "methods": 4,
+  "tasks_by_interface": {
+   "gui": 3,
+   "unknown": 1
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 4
+ },
+ {
+  "slug": "storage-management-google-cloud-storage",
+  "title": "Google Cloud Storage",
+  "summary": "Get started using Google Cloud Storage with NetApp Console.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console storage services",
+  "status": "current",
+  "pages": 8,
+  "pages_with_tasks": 2,
+  "tasks": 2,
+  "methods": 2,
+  "tasks_by_interface": {
+   "gui": 2
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 2
+ },
+ {
+  "slug": "storage-management-ontap-onprem",
+  "title": "On-premises ONTAP clusters",
+  "summary": "Manage your NetApp AFF and FAS systems from the NetApp Console to provision storage, replicate data, and configure critical cloud-based data services.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console storage services",
+  "status": "current",
+  "pages": 12,
+  "pages_with_tasks": 4,
+  "tasks": 5,
+  "methods": 5,
+  "tasks_by_interface": {
+   "gui": 5
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 5
+ },
+ {
+  "slug": "storage-management-s3-storage",
+  "title": "Amazon S3 storage",
+  "summary": "Get started using Amazon S3 storage with NetApp Console.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "NetApp Console storage services",
+  "status": "current",
+  "pages": 8,
+  "pages_with_tasks": 2,
+  "tasks": 2,
+  "methods": 2,
+  "tasks_by_interface": {
+   "gui": 2
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 2
+ },
+ {
+  "slug": "asa-r2",
+  "title": "ASA r2",
+  "summary": "NetApp ASA r2 systems deliver a unified hardware and software solution that creates a simplified experience specific to the needs of SAN-only customers.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Release notes",
+   "Get started",
+   "Use ONTAP to manage your data",
+   "Administer and monitor",
+   "Learn more",
+   "Get help"
+  ],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 99,
+  "pages_with_tasks": 65,
+  "tasks": 117,
+  "methods": 125,
+  "tasks_by_interface": {
+   "gui": 99,
+   "hardware": 8,
+   "cli": 9,
+   "unknown": 3
+  },
+  "multi_interface_tasks": 2,
+  "tasks_with_rest_equivalent": 7,
+  "tasks_in_nav": 117
+ },
+ {
+  "slug": "ontap",
+  "title": "ONTAP 9",
+  "summary": "NetApp ONTAP, the industry's leading data management software, brings the simplicity and flexibility of cloud to your data center and brings all the enterprise capabilities of your data center to the public cloud. Use the information on this site to set up or upgrade ONTAP, provision storage for clients, and protect and manage your data with System Manager or the ONTAP CLI.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Release notes",
+   "Get started",
+   "Upgrade and revert ONTAP",
+   "Cluster administration",
+   "Volume administration",
+   "Network management",
+   "NAS storage management",
+   "SAN storage management",
+   "S3 object storage management",
+   "Authentication and access control",
+   "Security and data encryption",
+   "Data protection and disaster recovery",
+   "Event, performance, and health monitoring"
+  ],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 2879,
+  "pages_with_tasks": 1138,
+  "tasks": 1449,
+  "methods": 1681,
+  "tasks_by_interface": {
+   "gui": 404,
+   "cli": 1174,
+   "unknown": 61,
+   "api": 2,
+   "hardware": 1
+  },
+  "multi_interface_tasks": 192,
+  "tasks_with_rest_equivalent": 724,
+  "tasks_in_nav": 1441
+ },
+ {
+  "slug": "ontap-7mode-transition",
+  "title": "ONTAP 7-Mode Transition",
+  "summary": "7-Mode Transition documentation includes information to help you install and setup the 7-Mode Transition Tool, transition data using SnapMirror commands, perform a copy-based or copy-free transition, collect information for transition, and complete pre/post transition procedures for SAN hosts.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Command map for 7-Mode administrators",
+   "7-Mode Transition Tool installation and administration",
+   "Copy-based transition",
+   "Copy-free transition",
+   "Host and Storage Information Collection Guide",
+   "7-Mode data transition using SnapMirror",
+   "SAN host transition and remediation"
+  ],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 376,
+  "pages_with_tasks": 170,
+  "tasks": 170,
+  "methods": 171,
+  "tasks_by_interface": {
+   "gui": 53,
+   "cli": 105,
+   "unknown": 12
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 15,
+  "tasks_in_nav": 170
+ },
+ {
+  "slug": "ontap-afx",
+  "title": "AFX",
+  "summary": "The NetApp ONTAP AFX storage system is a disaggregated hardware and software solution focused on the unique needs of high-performance NAS and S3 customers. The performance and scalability are specifically designed to meet the requirements of AI and ML workloads. AFX provides a simplified user experience enabling it to be administered by both storage specialists and non-specialists.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Release notes",
+   "Get started",
+   "Administer your cluster",
+   "Administer your storage VMs and data",
+   "Use the REST API",
+   "Learn more"
+  ],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 86,
+  "pages_with_tasks": 47,
+  "tasks": 75,
+  "methods": 76,
+  "tasks_by_interface": {
+   "gui": 60,
+   "cli": 7,
+   "hardware": 12,
+   "api": 1
+  },
+  "multi_interface_tasks": 5,
+  "tasks_with_rest_equivalent": 1,
+  "tasks_in_nav": 75
+ },
+ {
+  "slug": "ontap-apps-dbs",
+  "title": "Enterprise applications",
+  "summary": "ONTAP is the foundation for data management and data protection for many enterprise application and database technologies. The following pages provide guidance on the best practices and implementation procedures for ONTAP and enterprise applications and infrastructure.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Epic",
+   "Hyper-V",
+   "Microsoft SQL Server",
+   "MySQL",
+   "Oracle Database",
+   "PostgreSQL",
+   "VMware"
+  ],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 290,
+  "pages_with_tasks": 1,
+  "tasks": 1,
+  "methods": 1,
+  "tasks_by_interface": {
+   "cli": 1
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 1
+ },
+ {
+  "slug": "ontap-automation",
+  "title": "ONTAP automation",
+  "summary": "You can automate the deployment and administration of your ONTAP storage systems using one of several available options.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Get started",
+   "ONTAP REST API",
+   "Workflows",
+   "Software tools",
+   "Migrate from ONTAPI to the REST API",
+   "API reference",
+   "Learn more"
+  ],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 100,
+  "pages_with_tasks": 25,
+  "tasks": 25,
+  "methods": 25,
+  "tasks_by_interface": {
+   "api": 23,
+   "cli": 2
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 24
+ },
+ {
+  "slug": "ontap-family",
+  "family": "ONTAP",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-fli",
+  "title": "ONTAP Foreign LUN Import",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [
+   "Release notes",
+   "Get started",
+   "ONTAP FLI phases",
+   "Configure ONTAP FLI",
+   "FLI migration",
+   "FLI post-migration",
+   "Sample site survey and planning worksheet"
+  ],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 191,
+  "pages_with_tasks": 17,
+  "tasks": 31,
+  "methods": 31,
+  "tasks_by_interface": {
+   "cli": 26,
+   "unknown": 5
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 4,
+  "tasks_in_nav": 31
+ },
+ {
+  "slug": "ontap-metrocluster",
+  "title": "ONTAP MetroCluster",
+  "summary": "NetApp MetroCluster configurations combine array-based clustering with synchronous replication to deliver continuous availability, immediately duplicating all of your mission-critical data on a transaction-by-transaction basis. MetroCluster configurations enhance the built-in high availability and nondisruptive operations of NetApp hardware and ONTAP storage software, providing an additional layer of protection for the entire storage and host environment.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "MetroCluster release notes",
+   "Install a fabric-attached MetroCluster",
+   "Install a MetroCluster IP configuration",
+   "Install a stretch MetroCluster configuration",
+   "Install and configure MetroCluster Tiebreaker",
+   "Perform switchover, healing, and switchback",
+   "Maintain the MetroCluster components",
+   "Transition from MetroCluster FC to MetroCluster IP",
+   "Upgrade, refresh, or expand the MetroCluster configuration",
+   "Recover from a disaster"
+  ],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 513,
+  "pages_with_tasks": 246,
+  "tasks": 562,
+  "methods": 581,
+  "tasks_by_interface": {
+   "cli": 443,
+   "unknown": 64,
+   "hardware": 35,
+   "gui": 22
+  },
+  "multi_interface_tasks": 2,
+  "tasks_with_rest_equivalent": 225,
+  "tasks_in_nav": 557
+ },
+ {
+  "slug": "ontap-restapi",
+  "title": "ONTAP REST API",
+  "family": "ONTAP",
+  "status": "reference",
+  "summary": "Worked examples from the ONTAP REST API reference",
+  "pages": 234,
+  "pages_with_tasks": null,
+  "tasks": 1172,
+  "methods": 1172,
+  "tasks_by_interface": {
+   "api": 1172
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 1172
+ },
+ {
+  "slug": "ontap-sanhost",
+  "title": "ONTAP SAN Host Utilities",
+  "summary": "This content provides distribution-specific guidance on how to configure SAN clients connected to ONTAP storage.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 307,
+  "pages_with_tasks": 81,
+  "tasks": 94,
+  "methods": 98,
+  "tasks_by_interface": {
+   "cli": 80,
+   "gui": 12,
+   "hardware": 3,
+   "unknown": 8
+  },
+  "multi_interface_tasks": 6,
+  "tasks_with_rest_equivalent": 21,
+  "tasks_in_nav": 92
+ },
+ {
+  "slug": "ontap-select",
+  "title": "ONTAP Select",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 140,
+  "pages_with_tasks": 35,
+  "tasks": 57,
+  "methods": 62,
+  "tasks_by_interface": {
+   "gui": 38,
+   "cli": 25,
+   "api": 1
+  },
+  "multi_interface_tasks": 7,
+  "tasks_with_rest_equivalent": 5,
+  "tasks_in_nav": 57
+ },
+ {
+  "slug": "ontap-select-9111",
+  "family": "ONTAP",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-select-9121",
+  "family": "ONTAP",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-select-9131",
+  "family": "ONTAP",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-select-9141",
+  "family": "ONTAP",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-select-9151",
+  "family": "ONTAP",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-select-9161",
+  "family": "ONTAP",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-select-9171",
+  "family": "ONTAP",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-select-9181",
+  "family": "ONTAP",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-system-manager-classic",
+  "title": "System Manager Classic",
+  "summary": "ONTAP System Manager is a simple and versatile product that enables you to easily configure and manage ONTAP clusters. System Manager simplifies common storage tasks such as creating volumes, LUNs, qtrees, shares, and exports, which saves time and helps prevent errors.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 872,
+  "pages_with_tasks": 398,
+  "tasks": 546,
+  "methods": 550,
+  "tasks_by_interface": {
+   "cli": 48,
+   "gui": 456,
+   "unknown": 46
+  },
+  "multi_interface_tasks": 4,
+  "tasks_with_rest_equivalent": 25,
+  "tasks_in_nav": 530
+ },
+ {
+  "slug": "ontap-systems",
+  "title": "Install and maintain",
+  "summary": "NetApp's AFF, ASA and FAS storage systems provide leading-edge, enterprise-class, scale-out all flash or hybrid storage with the industry's most advanced data management. Use the docs on this site to install, expand, upgrade and maintain your AFF, ASA and FAS systems along with its storage shelves, and cluster switches.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 1797,
+  "pages_with_tasks": 1121,
+  "tasks": 1292,
+  "methods": 1423,
+  "tasks_by_interface": {
+   "cli": 764,
+   "gui": 171,
+   "hardware": 753,
+   "unknown": 13
+  },
+  "multi_interface_tasks": 390,
+  "tasks_with_rest_equivalent": 635,
+  "tasks_in_nav": 1292
+ },
+ {
+  "slug": "ontap-systems-family",
+  "family": "ONTAP",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-systems-switches",
+  "title": "Install and maintain",
+  "summary": "Use the docs on this site to install, upgrade and maintain your cluster, shared storage and MetroCluster switches.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 356,
+  "pages_with_tasks": 186,
+  "tasks": 188,
+  "methods": 207,
+  "tasks_by_interface": {
+   "cli": 151,
+   "unknown": 11,
+   "hardware": 16,
+   "gui": 20
+  },
+  "multi_interface_tasks": 10,
+  "tasks_with_rest_equivalent": 95,
+  "tasks_in_nav": 170
+ },
+ {
+  "slug": "ontap-systems-upgrade",
+  "title": "Upgrade controllers",
+  "summary": "Upgrade controller hardware by relocating aggregates, moving volumes, or moving storage.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Upgrade by moving volumes or storage"
+  ],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 395,
+  "pages_with_tasks": 245,
+  "tasks": 342,
+  "methods": 346,
+  "tasks_by_interface": {
+   "hardware": 15,
+   "cli": 224,
+   "unknown": 101,
+   "gui": 10
+  },
+  "multi_interface_tasks": 8,
+  "tasks_with_rest_equivalent": 157,
+  "tasks_in_nav": 338
+ },
+ {
+  "slug": "ontap-technical-reports",
+  "title": "ONTAP Technical Reports",
+  "summary": "ONTAP technical reports provide additional context for planning and optimizing deployments within different ecosystems or with different protocols. Some ONTAP technical reports provide architectural context and recommended practices for ONTAP features and capabilities.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 100,
+  "pages_with_tasks": 9,
+  "tasks": 10,
+  "methods": 10,
+  "tasks_by_interface": {
+   "cli": 8,
+   "unknown": 1,
+   "gui": 1
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 6,
+  "tasks_in_nav": 10
+ },
+ {
+  "slug": "upgrade-health-checker",
+  "title": "Upgrade Health Checker",
+  "summary": "Upgrade Health Checker performs comprehensive health checks to help you plan and perform a successful ONTAP upgrade.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "ONTAP",
+  "status": "current",
+  "pages": 12,
+  "pages_with_tasks": 3,
+  "tasks": 3,
+  "methods": 3,
+  "tasks_by_interface": {
+   "cli": 3
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 1,
+  "tasks_in_nav": 3
+ },
+ {
+  "slug": "ontap-ems",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "reference",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-ems-9101",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-ems-9111",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-ems-9121",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-ems-9131",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-ems-9141",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-ems-9151",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-ems-9161",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-ems-9171",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-ems-9181",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-restapi",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "reference",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-restapi-9101",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-restapi-9111",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-restapi-9121",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-restapi-9131",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-restapi-9141",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-restapi-9151",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-restapi-9161",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-restapi-9171",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-restapi-9181",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "ontap-restapi-991",
+  "family": "ONTAP reference (CLI/REST/EMS)",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "flexpod",
+  "title": "FlexPod",
+  "summary": "FlexPod solutions are a set of strategic and technology capabilities that emphasize the NetApp portfolio of products and services to support our customers' most critical business needs.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "FlexPod Definition",
+   "FlexPod Datacenter",
+   "Hybrid Cloud",
+   "Enterprise Databases",
+   "Healthcare",
+   "Virtual Desktop Infrastructure",
+   "Modern Apps",
+   "FlexPod Express",
+   "FlexPod and Security",
+   "ONTAP Select on Cisco Unified Edge",
+   "Cisco Intersight with NetApp ONTAP Storage",
+   "Infrastructure"
+  ],
+  "family": "Solutions and reference architectures",
+  "status": "current",
+  "pages": 249,
+  "pages_with_tasks": 42,
+  "tasks": 217,
+  "methods": 217,
+  "tasks_by_interface": {
+   "cli": 58,
+   "unknown": 16,
+   "gui": 143
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 217
+ },
+ {
+  "slug": "netapp-solutions-ai",
+  "title": "NetApp artificial intelligence solutions",
+  "summary": "NetApp provides comprehensive AI solutions that combine enterprise-grade data management, validated reference architectures, and strategic partnerships to accelerate your AI initiatives and support critical business outcomes. From infrastructure deployment to MLOps automation, our solutions scale seamlessly across edge, data center, and hybrid cloud environments.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "AI converged infrastructures",
+   "MLOps and data management",
+   "AI use cases",
+   "Modern data analytics"
+  ],
+  "family": "Solutions and reference architectures",
+  "status": "current",
+  "pages": 215,
+  "pages_with_tasks": 44,
+  "tasks": 76,
+  "methods": 76,
+  "tasks_by_interface": {
+   "gui": 12,
+   "unknown": 20,
+   "cli": 41,
+   "automation": 1,
+   "hardware": 2
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 74
+ },
+ {
+  "slug": "netapp-solutions-cloud",
+  "title": "NetApp public and hybrid cloud solutions",
+  "summary": "NetApp solutions are a set of strategic and technology capabilities that emphasize the NetApp portfolio of products and services to support our customers' most critical business needs.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "NetApp hybrid multicloud with VMware",
+   "NetApp hybrid multicloud with Red Hat OpenShift"
+  ],
+  "family": "Solutions and reference architectures",
+  "status": "current",
+  "pages": 112,
+  "pages_with_tasks": 28,
+  "tasks": 52,
+  "methods": 54,
+  "tasks_by_interface": {
+   "unknown": 18,
+   "cli": 6,
+   "automation": 1,
+   "gui": 28
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 52
+ },
+ {
+  "slug": "netapp-solutions-containers",
+  "title": "NetApp container solutions",
+  "summary": "NetApp Container Solutions are validated deployments of many popular Kubernetes-based container orchestrators and their integration with NetApp storage management systems and software.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "vSphere Kubernetes Service with NetApp Storage",
+   "Red Hat OpenShift with NetApp",
+   "Red Hat OpenShift Service on AWS with FSxN",
+   "Anthos with NetApp"
+  ],
+  "family": "Solutions and reference architectures",
+  "status": "current",
+  "pages": 73,
+  "pages_with_tasks": 30,
+  "tasks": 47,
+  "methods": 47,
+  "tasks_by_interface": {
+   "gui": 9,
+   "cli": 25,
+   "unknown": 12,
+   "automation": 1
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 45
+ },
+ {
+  "slug": "netapp-solutions-databases",
+  "title": "NetApp database solutions",
+  "summary": "NetApp enterprise database solutions are a set of strategic and technology capabilities that demonstrate the capabilities of NetApp storage in the major enterprise databases.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Solutions and reference architectures",
+  "status": "current",
+  "pages": 96,
+  "pages_with_tasks": 27,
+  "tasks": 105,
+  "methods": 109,
+  "tasks_by_interface": {
+   "cli": 35,
+   "gui": 57,
+   "unknown": 14
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 105
+ },
+ {
+  "slug": "netapp-solutions-dataops",
+  "title": "NetApp data management solutions",
+  "summary": "NetApp solutions are a set of strategic and technology capabilities that emphasize the NetApp portfolio of products and services to support our customers' most critical business needs.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Data protection with ONTAP cyber vault",
+   "Data migration with NetApp XCP",
+   "Solution automation"
+  ],
+  "family": "Solutions and reference architectures",
+  "status": "current",
+  "pages": 44,
+  "pages_with_tasks": 12,
+  "tasks": 19,
+  "methods": 19,
+  "tasks_by_interface": {
+   "unknown": 5,
+   "gui": 1,
+   "cli": 13
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 19
+ },
+ {
+  "slug": "netapp-solutions-family",
+  "family": "Solutions and reference architectures",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "netapp-solutions-sap",
+  "title": "NetApp solutions for SAP",
+  "summary": "NetApp has an extensive collection of technical reports, validated designs, videos, blogs and solution briefs for SAP and SAP HANA.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Best Practices",
+   "Backup, Restore and Disaster Recovery",
+   "Lifecycle Management",
+   "Solution Briefs"
+  ],
+  "family": "Solutions and reference architectures",
+  "status": "current",
+  "pages": 381,
+  "pages_with_tasks": 73,
+  "tasks": 99,
+  "methods": 99,
+  "tasks_by_interface": {
+   "gui": 37,
+   "unknown": 22,
+   "cli": 35,
+   "hardware": 5
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 99
+ },
+ {
+  "slug": "netapp-solutions-virtualization",
+  "title": "NetApp virtualization solutions",
+  "summary": "NetApp provides comprehensive virtualization solutions that enable organizations to optimize their IT infrastructure across multiple hypervisors and platforms. Discover strategies to modernize VMware environments, migrate to alternative hypervisors, and leverage NetApp's advanced data management and cloud integration features.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Get started",
+   "VMware virtualization",
+   "Hyper-V virtualization",
+   "OpenShift virtualization",
+   "Proxmox virtualization",
+   "KVM virtualization",
+   "VM migration solutions",
+   "OpenNebula",
+   "End User Computing with NetApp"
+  ],
+  "family": "Solutions and reference architectures",
+  "status": "current",
+  "pages": 195,
+  "pages_with_tasks": 86,
+  "tasks": 170,
+  "methods": 171,
+  "tasks_by_interface": {
+   "gui": 86,
+   "unknown": 42,
+   "cli": 44,
+   "automation": 5
+  },
+  "multi_interface_tasks": 5,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 152
+ },
+ {
+  "slug": "storage-management-storagegrid",
+  "title": "StorageGRID",
+  "summary": "Manage your StorageGRID systems from the NetApp Console using Grid Manager and use NetApp data services for backups, data tiering, and more.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "StorageGRID",
+  "status": "current",
+  "pages": 11,
+  "pages_with_tasks": 5,
+  "tasks": 6,
+  "methods": 6,
+  "tasks_by_interface": {
+   "gui": 6
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 6
+ },
+ {
+  "slug": "storagegrid",
+  "title": "StorageGRID software",
+  "summary": "NetApp StorageGRID is a software-defined object storage suite that supports a wide range of use cases across public, private, and hybrid multicloud environments. StorageGRID offers native support for the Amazon S3 API and delivers industry-leading innovations such as automated lifecycle management to store, secure, protect, and preserve unstructured data cost effectively over long periods.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Expand grid"
+  ],
+  "family": "StorageGRID",
+  "status": "current",
+  "pages": 886,
+  "pages_with_tasks": 333,
+  "tasks": 541,
+  "methods": 548,
+  "tasks_by_interface": {
+   "gui": 426,
+   "unknown": 30,
+   "cli": 86
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 519
+ },
+ {
+  "slug": "storagegrid-115",
+  "family": "StorageGRID",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "storagegrid-116",
+  "family": "StorageGRID",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "storagegrid-117",
+  "family": "StorageGRID",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "storagegrid-118",
+  "family": "StorageGRID",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "storagegrid-119",
+  "family": "StorageGRID",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "storagegrid-120",
+  "family": "StorageGRID",
+  "status": "versioned-copy",
+  "tasks": 0
+ },
+ {
+  "slug": "storagegrid-appliances",
+  "title": "StorageGRID appliances",
+  "summary": "NetApp StorageGRID is a software-defined object storage suite that supports a wide range of use cases across public, private, and hybrid multicloud environments. StorageGRID offers native support for the Amazon S3 API and delivers industry-leading innovations such as automated lifecycle management to store, secure, protect, and preserve unstructured data cost effectively over long periods.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Install appliance"
+  ],
+  "family": "StorageGRID",
+  "status": "current",
+  "pages": 298,
+  "pages_with_tasks": 191,
+  "tasks": 245,
+  "methods": 275,
+  "tasks_by_interface": {
+   "gui": 87,
+   "unknown": 18,
+   "cli": 28,
+   "hardware": 126
+  },
+  "multi_interface_tasks": 14,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 239
+ },
+ {
+  "slug": "storagegrid-enable",
+  "title": "StorageGRID solutions and resources",
+  "summary": "NetApp StorageGRID is a software-defined object storage suite that supports a wide range of use cases across public, private, and hybrid multi-cloud environments. StorageGRID uses industry leading innovations such as automated lifecycle management to store, secure, protect, and preserve unstructured data for multi-purpose use over long periods of time.",
+  "versioned_copy": false,
+  "nav_sections": [
+   "Validated third-party solutions",
+   "Product feature guides",
+   "Tool and application guides",
+   "Procedures and API examples",
+   "Technical reports"
+  ],
+  "family": "StorageGRID",
+  "status": "current",
+  "pages": 101,
+  "pages_with_tasks": 28,
+  "tasks": 32,
+  "methods": 32,
+  "tasks_by_interface": {
+   "gui": 18,
+   "cli": 8,
+   "unknown": 6
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 32
+ },
+ {
+  "slug": "storagegrid-family",
+  "family": "StorageGRID",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "common",
+  "family": "Tools and meta",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "docs-mcp",
+  "family": "Tools and meta",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "interoperability-matrix-tool",
+  "title": "Interoperability Matrix Tool",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Tools and meta",
+  "status": "current",
+  "pages": 66,
+  "pages_with_tasks": 31,
+  "tasks": 33,
+  "methods": 33,
+  "tasks_by_interface": {
+   "gui": 32,
+   "unknown": 1
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 32
+ },
+ {
+  "slug": "workload-databases",
+  "title": "Database workloads",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Workload Factory",
+  "status": "current",
+  "pages": 31,
+  "pages_with_tasks": 12,
+  "tasks": 25,
+  "methods": 31,
+  "tasks_by_interface": {
+   "gui": 25
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 24
+ },
+ {
+  "slug": "workload-eda",
+  "title": "EDA workloads",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Workload Factory",
+  "status": "current",
+  "pages": 30,
+  "pages_with_tasks": 11,
+  "tasks": 27,
+  "methods": 27,
+  "tasks_by_interface": {
+   "gui": 26,
+   "unknown": 1
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 27
+ },
+ {
+  "slug": "workload-family",
+  "family": "Workload Factory",
+  "status": "landing",
+  "tasks": 0
+ },
+ {
+  "slug": "workload-fsx-ontap",
+  "title": "Amazon FSx for NetApp ONTAP",
+  "summary": null,
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Workload Factory",
+  "status": "current",
+  "pages": 96,
+  "pages_with_tasks": 46,
+  "tasks": 99,
+  "methods": 108,
+  "tasks_by_interface": {
+   "gui": 99
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 97
+ },
+ {
+  "slug": "workload-infosec",
+  "title": "Information Security for Workload Factory",
+  "summary": "Workload Factory includes security and data protection guidance, including how data is collected, stored, retained, and accessed. Use this reference to understand the architecture, permissions, and compliance posture, and to support a faster, consistent security review and onboarding process.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Workload Factory",
+  "status": "current",
+  "pages": 34,
+  "pages_with_tasks": 3,
+  "tasks": 4,
+  "methods": 4,
+  "tasks_by_interface": {
+   "unknown": 4
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 4
+ },
+ {
+  "slug": "workload-relnotes",
+  "family": "Workload Factory",
+  "status": "release-notes",
+  "tasks": 0
+ },
+ {
+  "slug": "workload-setup-admin",
+  "title": "Setup and administration",
+  "summary": "Get started with NetApp Workload Factory so you can get the most of your workloads when using Amazon FSx for NetApp ONTAP. After set up is complete, you can create, optimize, and manage FSx for ONTAP file systems for your workloads, explore cost savings with FSx for ONTAP, use the built-in Infrastructure-as-Code co-pilot for automation across platforms, and manage your workloads in Workload Factory.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Workload Factory",
+  "status": "current",
+  "pages": 30,
+  "pages_with_tasks": 15,
+  "tasks": 38,
+  "methods": 41,
+  "tasks_by_interface": {
+   "gui": 33,
+   "unknown": 5
+  },
+  "multi_interface_tasks": 0,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 35
+ },
+ {
+  "slug": "workload-vmware",
+  "title": "VMware workloads",
+  "summary": "Streamline migrations from on-premises vSphere environments to VMware Cloud on AWS and implement customized FSx for ONTAP file systems as external datastores.",
+  "versioned_copy": false,
+  "nav_sections": [],
+  "family": "Workload Factory",
+  "status": "current",
+  "pages": 26,
+  "pages_with_tasks": 13,
+  "tasks": 18,
+  "methods": 21,
+  "tasks_by_interface": {
+   "gui": 17,
+   "cli": 2
+  },
+  "multi_interface_tasks": 1,
+  "tasks_with_rest_equivalent": 0,
+  "tasks_in_nav": 16
+ }
+]
