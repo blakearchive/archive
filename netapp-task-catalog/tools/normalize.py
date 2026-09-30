@@ -35,7 +35,8 @@ def domain(task: dict) -> str:
 GENERIC_TITLE_RE = re.compile(
     r"^(option \d+|step \d+|method \d+|choice \d+|procedure|steps?|overview|access the wizard|start the wizard|"
     r"review (your )?(selections|summary)|summary|results?|before you begin|what'?s next|next steps|"
-    r"(initial|final)?\s*\w* administrator tasks|verification|verify|examples?|scenario \d+)\b", re.I)
+    r"(initial|final)?\s*\w* administrator tasks|verification|verify|examples?|scenario \d+|"
+    r"inline post body|post body included|post response|retrieve specific fields|request|response)\b", re.I)
 
 MODEL_PATTERNS = [
     r"\b(?:AFF|FAS|ASA|AFX|AFF\s+and\s+FAS)\s*-?\s*(?:[A-Z]{1,2})?\d{2,5}[A-Z]{0,3}(?:\s*/\s*[A-Z]?\d{2,5}[A-Z]*)*\b",

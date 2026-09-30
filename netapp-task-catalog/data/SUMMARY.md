@@ -138,3 +138,133 @@ Interface columns count tasks that have at least one method for that interface.
 - `reference/ontap-cli-commands.jsonl.gz`: 1,589 records
 - `reference/ontap-rest-examples.jsonl.gz`: 1,185 records
 - `reference/ontap-rest-operations.jsonl.gz`: 1,087 records
+
+## Distinct operations
+
+- **5,532 distinct operations** merged from 12,504 documented tasks (2.3 tasks per operation on average)
+- 5,338 are agent-performable (not physical hardware work or non-tasks)
+- 797 can be done through more than one interface
+
+### By domain
+
+| Domain | Operations | Tasks | Agent-performable | gui | cli | api | automation | hardware |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| ONTAP | 2,144 | 6,339 | 2,070 | 778 | 1,261 | 671 | 0 | 61 |
+| StorageGRID | 399 | 824 | 374 | 307 | 72 | 0 | 0 | 26 |
+| E-Series / SANtricity | 324 | 646 | 300 | 280 | 36 | 0 | 0 | 26 |
+| Element / SolidFire / HCI | 257 | 570 | 246 | 208 | 48 | 5 | 0 | 9 |
+| Active IQ Unified Manager | 253 | 381 | 253 | 245 | 18 | 0 | 0 | 0 |
+| NetApp Console platform | 243 | 436 | 242 | 193 | 19 | 48 | 1 | 0 |
+| OnCommand Insight | 176 | 269 | 174 | 157 | 17 | 0 | 0 | 0 |
+| Astra Control Center | 111 | 160 | 111 | 81 | 27 | 17 | 7 | 0 |
+| SnapCenter | 108 | 470 | 105 | 71 | 43 | 1 | 0 | 0 |
+| Console: backup and recovery | 106 | 258 | 106 | 95 | 10 | 1 | 2 | 0 |
+| Solutions: netapp-solutions-virtualization | 100 | 154 | 90 | 64 | 30 | 0 | 5 | 0 |
+| Solutions: flexpod | 97 | 187 | 92 | 70 | 20 | 0 | 0 | 0 |
+| ONTAP tools for VMware vSphere | 94 | 150 | 94 | 80 | 10 | 1 | 0 | 0 |
+| Trident | 84 | 119 | 84 | 5 | 63 | 1 | 24 | 0 |
+| Snap Creator Framework | 73 | 114 | 72 | 47 | 31 | 0 | 0 | 0 |
+| OnCommand Workflow Automation | 71 | 151 | 71 | 49 | 20 | 0 | 0 | 0 |
+| Data Infrastructure Insights | 59 | 96 | 57 | 55 | 2 | 0 | 1 | 0 |
+| SnapCenter Plug-in for VMware vSphere | 54 | 71 | 54 | 49 | 2 | 1 | 0 | 0 |
+| Solutions: netapp-solutions-ai | 51 | 71 | 40 | 9 | 29 | 0 | 1 | 2 |
+| SaaS Backup for Microsoft 365 | 50 | 64 | 50 | 50 | 0 | 0 | 0 | 0 |
+| Solutions: netapp-solutions-databases | 47 | 89 | 45 | 23 | 24 | 0 | 0 | 0 |
+| Solutions: netapp-solutions-sap | 44 | 89 | 40 | 24 | 10 | 0 | 0 | 2 |
+| Console: ransomware resilience | 43 | 64 | 42 | 41 | 2 | 0 | 1 | 0 |
+| Data Migrator | 40 | 42 | 40 | 32 | 8 | 0 | 0 | 0 |
+| Digital Advisor | 40 | 54 | 40 | 35 | 2 | 2 | 0 | 0 |
+| Console: disaster recovery | 38 | 60 | 38 | 37 | 2 | 0 | 0 | 0 |
+| Console: data classification | 35 | 56 | 35 | 33 | 2 | 0 | 0 | 0 |
+| AI Data Engine | 33 | 37 | 33 | 29 | 0 | 0 | 0 | 0 |
+| Workload Factory | 32 | 42 | 31 | 29 | 0 | 0 | 0 | 0 |
+| Interoperability Matrix Tool | 31 | 33 | 31 | 30 | 0 | 0 | 0 | 0 |
+| Console: copy and sync | 29 | 40 | 29 | 25 | 2 | 2 | 0 | 0 |
+| Solutions: netapp-solutions-cloud | 29 | 39 | 24 | 15 | 5 | 0 | 1 | 0 |
+| Solutions: netapp-solutions-containers | 26 | 43 | 20 | 8 | 13 | 0 | 1 | 0 |
+| Keystone | 24 | 58 | 23 | 22 | 5 | 0 | 0 | 0 |
+| Workload Factory: EDA | 24 | 27 | 24 | 23 | 0 | 0 | 0 | 0 |
+| SMI-S Provider | 22 | 23 | 22 | 2 | 15 | 0 | 0 | 0 |
+| Workload Factory: databases | 22 | 25 | 22 | 22 | 0 | 0 | 0 | 0 |
+| BeeGFS on E-Series | 20 | 22 | 18 | 0 | 11 | 0 | 9 | 0 |
+| Console: cloud tiering | 15 | 25 | 15 | 14 | 0 | 1 | 0 | 0 |
+| SolidFire Active IQ | 15 | 17 | 14 | 14 | 0 | 0 | 0 | 0 |
+| Solutions: netapp-solutions-dataops | 13 | 19 | 11 | 1 | 8 | 0 | 0 | 0 |
+| XCP | 12 | 14 | 12 | 3 | 7 | 0 | 0 | 0 |
+| Workload Factory: VMware | 10 | 18 | 10 | 10 | 1 | 0 | 0 | 0 |
+| Azure NetApp Files (Console) | 9 | 9 | 9 | 7 | 0 | 1 | 0 | 0 |
+| Console: volume caching | 6 | 7 | 6 | 6 | 0 | 0 | 0 | 0 |
+| Solutions: netapp-automation | 6 | 8 | 6 | 1 | 6 | 0 | 0 | 0 |
+| Google Cloud NetApp Volumes (Console) | 4 | 4 | 4 | 3 | 0 | 0 | 0 | 0 |
+| Console: replication | 3 | 3 | 3 | 3 | 0 | 0 | 0 | 0 |
+| Amazon S3 (Console) | 2 | 3 | 2 | 2 | 0 | 0 | 0 | 0 |
+| Azure Blob storage (Console) | 2 | 2 | 2 | 2 | 0 | 0 | 0 | 0 |
+| Google Cloud Storage (Console) | 2 | 2 | 2 | 2 | 0 | 0 | 0 | 0 |
+
+### By category and kind
+
+| Category | Operations |
+|---|---:|
+| Security and access control | 729 |
+| Data protection and replication | 728 |
+| Monitoring, performance, and alerts | 672 |
+| Upgrade and lifecycle | 322 |
+| Cluster and system administration | 290 |
+| Networking | 268 |
+| Storage provisioning | 266 |
+| Host and application integration | 263 |
+| Setup and deployment | 250 |
+| File access protocols (NAS) | 228 |
+| Troubleshooting and support | 218 |
+| Capacity and efficiency | 169 |
+| Block access protocols (SAN) | 161 |
+| Business continuity and high availability | 145 |
+| Cloud and hybrid services | 131 |
+| Encryption and key management | 130 |
+| Automation and integration | 124 |
+| Ransomware protection and compliance | 122 |
+| Hardware maintenance | 114 |
+| Licensing and subscriptions | 82 |
+| Object storage (S3) | 80 |
+| Other | 40 |
+
+| Kind | Operations |
+|---|---:|
+| configure | 3,255 |
+| query | 940 |
+| lifecycle | 322 |
+| step | 317 |
+| recovery | 315 |
+| workflow | 201 |
+| hardware | 115 |
+| not_a_task | 67 |
+
+### Most-duplicated operations
+
+| Operation | Domain | Tasks merged | Interfaces |
+|---|---|---:|---|
+| Shut down the impaired controller | ONTAP | 149 | cli, gui |
+| Replace the chassis | ONTAP | 106 | cli, hardware |
+| Replace a controller module | ONTAP | 88 | cli, gui, hardware |
+| Recover from a node crash during a controller upgrade | ONTAP | 84 | cli |
+| Boot the recovery image on the replacement boot media | ONTAP | 71 | cli, gui |
+| Replace the boot media | ONTAP | 67 | cli, hardware |
+| Shut down the controllers for chassis replacement | ONTAP | 53 | cli |
+| Activate backup for ONTAP volumes to object storage | Console: backup and recovery | 50 | gui |
+| Replace an I/O module or PCIe card | ONTAP | 50 | cli, hardware |
+| Hot-add a drive shelf | ONTAP | 46 | cli, hardware |
+| Replace a DIMM | ONTAP | 44 | cli, hardware |
+| Replace the NV battery | ONTAP | 44 | cli, gui, hardware |
+| Replace the real-time clock battery | ONTAP | 44 | cli, hardware |
+| Restore and verify the system configuration after a controller replacement | ONTAP | 44 | cli, hardware |
+| Monitor SnapCenter jobs | SnapCenter | 40 | gui |
+| Replace a power supply unit | ONTAP | 39 | hardware |
+| Check encryption support before replacing the boot media | ONTAP | 38 | cli |
+| Restore encryption on the replacement boot media | ONTAP | 38 | gui |
+| Configure a host for FC and iSCSI with ONTAP storage | ONTAP | 36 | cli, gui |
+| Replace a fan module | ONTAP | 34 | cli, hardware |
+| Add an I/O module or PCIe card | ONTAP | 33 | cli, hardware |
+| Restore and recover a database from a backup | SnapCenter | 32 | cli, gui |
+| Give back the controller | ONTAP | 30 | cli, gui, hardware |
+| Replace a drive | ONTAP | 30 | cli, hardware |
+| Verify the health of a MetroCluster configuration | ONTAP | 29 | api, cli, gui |

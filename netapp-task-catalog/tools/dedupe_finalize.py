@@ -34,6 +34,93 @@ def gz_writer(path: str):
     return io.TextIOWrapper(gzip.GzipFile(path, "wb", compresslevel=9, mtime=0), encoding="utf-8")
 
 
+GENERIC_REST_RE = re.compile(r"^(inline post body|post body included|post response|retrieve specific fields|"
+                             r"request|response|example)", re.I)
+
+
+def rehome_generic_rest_examples(ops: list[dict], tasks: dict, home: dict, rest_ref: dict) -> int:
+    """REST reference examples with generic headings ("Inline POST body", "POST
+    Response", "Retrieve specific fields and limiting the output using
+    filters") were pre-grouped across endpoint pages by their identical titles.
+    Re-home each by the REST operation it calls:
+      * a fragment without a call (e.g. "POST Response") takes the call of a
+        generic sibling on the same endpoint page;
+      * it moves to the operation most other tasks calling that REST operation
+        belong to;
+      * if no other task calls it, it gets its own operation named from the
+        REST reference ("Create a new DR group")."""
+    def rest_ops(t):
+        return [r for m in t["methods"] for r in m.get("rest_operations", [])]
+
+    generic = sorted(tid for tid, t in tasks.items()
+                     if tid in home and t["product"] == "ontap-restapi" and GENERIC_REST_RE.match(t["title"]))
+    page_call = {}
+    for tid in generic:
+        calls = rest_ops(tasks[tid])
+        if calls:
+            page_call.setdefault(tasks[tid]["page_title"], calls[0])
+    votes = collections.defaultdict(collections.Counter)
+    gen_set = set(generic)
+    for tid, i in home.items():
+        if tid in gen_set or tid not in tasks:
+            continue
+        for r in rest_ops(tasks[tid]):
+            votes[r][i] += 1
+        for r in tasks[tid].get("rest_equivalents", []):  # CLI tasks: REST ops inferred from their commands
+            votes[r][i] += 0.5
+    created: dict[str, int] = {}
+    moved = 0
+    for tid in generic:
+        t = tasks[tid]
+        calls = rest_ops(t) or ([page_call[t["page_title"]]] if t["page_title"] in page_call else [])
+        cur = home[tid]
+        if not calls:
+            # no call at all: join the operation holding most other examples of its endpoint page
+            same_page = collections.Counter(i for x, i in home.items() if x in tasks and x not in gen_set
+                                            and tasks[x]["product"] == "ontap-restapi"
+                                            and tasks[x]["page_title"] == t["page_title"])
+            if same_page:
+                best = same_page.most_common(1)[0][0]
+                if best != cur:
+                    ops[cur]["tasks"].remove(tid)
+                    ops[best]["tasks"].append(tid)
+                    home[tid] = best
+                    moved += 1
+            continue
+        tally = collections.Counter()
+        for r in calls:
+            tally.update(votes.get(r, {}))
+        if tally:
+            best = tally.most_common(1)[0][0]
+        else:
+            call = calls[0]
+            # stay if the current operation is about this call already
+            cur_calls = collections.Counter(r for x in ops[cur]["tasks"] if x in tasks for r in rest_ops(tasks[x]))
+            if cur_calls and cur_calls.most_common(1)[0][0] == call:
+                continue
+            if call not in created:
+                ref = rest_ref.get(call, {})
+                method = call.split(" ")[0]
+                action = {"GET": "view", "POST": "create", "PATCH": "modify", "DELETE": "delete"}.get(method, "configure")
+                ops.append({"uid": f"rest:{call}", "domain": ops[cur]["domain"],
+                            "name": (ref.get("summary") or call).rstrip("."), "action": action,
+                            "object": call.split(" ", 1)[1], "kind": "query" if method == "GET" else "configure",
+                            "category": ops[cur].get("category", "Other"),
+                            "description": (ref.get("description") or "")[:200], "variants": [],
+                            "pregroups": [], "pregroup_titles": [], "tasks": [], "auto": True})
+                created[call] = len(ops) - 1
+            best = created[call]
+        if best != cur and ops[best]["domain"] == ops[cur]["domain"]:
+            ops[cur]["tasks"].remove(tid)
+            ops[best]["tasks"].append(tid)
+            home[tid] = best
+            moved += 1
+    ops[:] = [o for o in ops if o["tasks"]]
+    home.clear()
+    home.update({t: i for i, o in enumerate(ops) for t in o["tasks"]})
+    return moved
+
+
 def load_tasks(data_dir: str) -> dict[str, dict]:
     tasks = {}
     for f in sorted(glob.glob(os.path.join(data_dir, "tasks", "*.jsonl.gz"))):
@@ -63,6 +150,12 @@ def main():
             if base in home:
                 ops[home[base]]["tasks"].append(tid)
                 home[tid] = home[base]
+    rest_ref = {}
+    ref_path = os.path.join(args.data, "reference", "ontap-rest-operations.jsonl.gz")
+    if os.path.exists(ref_path):
+        with gzip.open(ref_path, "rt") as fh:
+            rest_ref = {r["id"]: r for r in (json.loads(l) for l in fh)}
+    moved = rehome_generic_rest_examples(ops, tasks, home, rest_ref)
 
     domain_primary = {}
     per_domain = collections.defaultdict(collections.Counter)
@@ -165,7 +258,8 @@ def main():
         for r in rows:
             r["operation_id"] = op_of_task.get(r["id"], "")
             w.writerow(r)
-    print(f"operations={len(records)} tasks_linked={len(op_of_task)} missing={len(missing)} duplicate_links={dup}")
+    print(f"operations={len(records)} tasks_linked={len(op_of_task)} missing={len(missing)} duplicate_links={dup} "
+          f"generic_rest_examples_rehomed={moved}")
 
 
 if __name__ == "__main__":
