@@ -48,7 +48,12 @@ const JUDGE_SCHEMA = {
   required: ['window', 'decisions'],
 }
 
+function paths(s) {
+  return { file: `${args.dir}/${s.window}.tsv`, domain_file: `${args.dir}/domain_${s.dslug}.tsv` }
+}
+
 async function sweep(s) {
+  s = { ...s, ...paths(s) }
   return agent(`You are finding DUPLICATE operations in a catalog built from NetApp product documentation (for an evaluation of an AI agent that operates NetApp storage). Earlier passes merged duplicates found by word overlap; you are looking for the ones they missed, including ones worded differently.
 ${RULES}
 
@@ -60,6 +65,7 @@ Return window="${s.window}".`, { label: `reconcile:${s.window}`, phase: 'Sweep',
 
 async function judge(p, s) {
   if (!p) return null
+  s = { ...s, ...paths(s) }
   if (!p.groups.length) return { window: s.window, proposed: 0, accepted: 0 }
   const lines = p.groups.map(g => `${g.id} ${g.uids.join(', ')} as "${g.name}" (${g.action} / ${g.object} / ${g.kind}) — ${g.reason}`).join('\n')
   const res = await agent(`You are the JUDGE for proposed merges of duplicate operations in a catalog built from NetApp product documentation.
