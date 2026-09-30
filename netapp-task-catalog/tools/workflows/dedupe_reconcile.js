@@ -39,7 +39,7 @@ const MAP_SCHEMA = {
   properties: {
     window: { type: 'string' },
     mappings: { type: 'array', items: MAPPING },
-    groups: { type: 'array', items: GROUP, description: 'merges among solution-guide operations of the SAME solution domain' },
+    groups: { type: 'array', items: GROUP, description: 'merges among operations of one domain' },
   },
   required: ['window', 'mappings', 'groups'],
 }
@@ -70,9 +70,9 @@ async function propose(w) {
     return agent(`You are de-duplicating a catalog of operations extracted from NetApp documentation (for an evaluation of an AI agent that operates NetApp storage).
 ${RULES}
 
-Read ${fileOf(w)} (Read tool). Each row is an operation from a SOLUTION GUIDE (reference architectures such as FlexPod, Oracle/SAP/VMware on NetApp) with candidate duplicates from the core product domains (ONTAP, StorageGRID, E-Series, ...) and from its own solution domain. Rows after the "# Candidate targets" line are context only.
+Read ${fileOf(w)} (Read tool). Rows whose domain starts with "Solutions:" are operations from SOLUTION GUIDES (reference architectures such as FlexPod, Oracle/SAP/VMware on NetApp); the other rows are core product operations (ONTAP, StorageGRID, E-Series, ...). Each row lists candidate duplicates found by word overlap. Rows after the "# Candidate targets" line are context only (they may be a mapping target or part of a group, but never form a group on their own).
 1. MAPPINGS: for each solution-guide operation that is the SAME operation as one of its candidate core-product operations (e.g. a FlexPod section "Create an SVM" = ONTAP "Create an SVM"), return a mapping {id: "M1"..., uid: solution op uid, target: core op uid}. Solution-specific parameters (names, sizes) do not make it different; a solution procedure that is an end-to-end workflow (deploy Oracle, set up a VMware datastore with SnapCenter) is NOT the same as a single core operation. Only map to a uid that appears as a candidate in the file.
-2. GROUPS: merges among operations of the same solution domain that are the same operation (ids "G1"...; fill name/action/object/kind/category/description for the merged operation, kind and category using the same vocabulary as the file).
+2. GROUPS: merges among operations of ONE domain (a solution domain, or a core domain such as ONTAP) that are the same operation (ids "G1"...; fill name/action/object/kind/category/description for the merged operation, kind and category using the same vocabulary as the file).
 Return window="${w.window}". Empty lists are valid.`, { label: `map:${w.window}`, phase: 'Reconcile', schema: MAP_SCHEMA })
   }
   return agent(`You are de-duplicating a catalog of operations extracted from NetApp documentation (for an evaluation of an AI agent that operates NetApp storage). Operations were first grouped within topic buckets; you now catch copies of the same operation that ended up in different buckets.
