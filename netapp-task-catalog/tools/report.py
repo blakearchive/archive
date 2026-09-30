@@ -13,6 +13,42 @@ from collections import Counter, defaultdict
 IFACES = ["gui", "cli", "api", "automation", "hardware", "unknown"]
 
 
+def operations_section(data_dir: str) -> list[str]:
+    path = os.path.join(data_dir, "operations.jsonl.gz")
+    if not os.path.exists(path):
+        return []
+    import gzip
+    with gzip.open(path, "rt") as fh:
+        ops = [json.loads(l) for l in fh]
+    tasks = sum(o["task_count"] for o in ops)
+    out = ["", "## Distinct operations", "",
+           f"- **{len(ops):,} distinct operations** merged from {tasks:,} documented tasks "
+           f"({tasks / len(ops):.1f} tasks per operation on average)",
+           f"- {sum(o['agent_performable'] for o in ops):,} are agent-performable (not physical hardware work or non-tasks)",
+           f"- {sum(1 for o in ops if len(o['interfaces']) > 1):,} can be done through more than one interface",
+           "", "### By domain", "",
+           "| Domain | Operations | Tasks | Agent-performable | gui | cli | api | automation | hardware |",
+           "|---|---:|---:|---:|---:|---:|---:|---:|---:|"]
+    by_dom = defaultdict(list)
+    for o in ops:
+        by_dom[o["domain"]].append(o)
+    for d, lst in sorted(by_dom.items(), key=lambda kv: -len(kv[1])):
+        iface = Counter(i for o in lst for i in o["interfaces"])
+        out.append(f"| {d} | {len(lst):,} | {sum(o['task_count'] for o in lst):,} | "
+                   f"{sum(o['agent_performable'] for o in lst):,} | " +
+                   " | ".join(f"{iface.get(i, 0):,}" for i in ["gui", "cli", "api", "automation", "hardware"]) + " |")
+    out += ["", "### By category and kind", "", "| Category | Operations |", "|---|---:|"]
+    for c, n in Counter(o["category"] for o in ops).most_common():
+        out.append(f"| {c} | {n:,} |")
+    out += ["", "| Kind | Operations |", "|---|---:|"]
+    for k, n in Counter(o["kind"] for o in ops).most_common():
+        out.append(f"| {k} | {n:,} |")
+    out += ["", "### Most-duplicated operations", "", "| Operation | Domain | Tasks merged | Interfaces |", "|---|---|---:|---|"]
+    for o in sorted(ops, key=lambda o: -o["task_count"])[:25]:
+        out.append(f"| {o['name']} | {o['domain']} | {o['task_count']} | {', '.join(o['interfaces'])} |")
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", required=True)
@@ -65,6 +101,7 @@ def main():
             with opener(path, "rt") as fh:
                 n = sum(1 for _ in fh)
             lines.append(f"- `reference/{f}`: {n:,} records")
+    lines += operations_section(args.data)
     with open(os.path.join(args.data, "SUMMARY.md"), "w") as fh:
         fh.write("\n".join(lines) + "\n")
     print("\n".join(lines[:8]))
