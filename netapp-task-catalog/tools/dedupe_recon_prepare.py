@@ -88,6 +88,9 @@ def main():
     ap.add_argument("--work", required=True)
     ap.add_argument("--ops", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--exact", action="store_true",
+                    help="candidates = same domain + action family + object words (second pass)")
+    ap.add_argument("--prefix", default="w", help="window id prefix")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
     pgs = {}
@@ -147,7 +150,31 @@ def main():
         out.sort(reverse=True)
         return out[:6]
 
-    cand = {i: candidates(i) for i in range(len(ops))}
+    def exact_candidates(i: int) -> list[tuple[float, int]]:
+        """Second pass: operations of one domain with the same action family and
+        the same object words (or the same normalised name). Catches twins that
+        fuzzy scoring drops when their words are very common."""
+        o = ops[i]
+        if o["kind"] == "not_a_task":
+            return []
+        out = []
+        for j in exact_key_members[(o["domain"], o["_ag"], frozenset(o["_obj"]))] | \
+                exact_name_members[(o["domain"], frozenset(o["_name"]))]:
+            if j != i and ops[j]["kind"] != "not_a_task":
+                out.append((1.0, j))
+        return sorted(out)[:8]
+
+    if args.exact:
+        exact_key_members = collections.defaultdict(set)
+        exact_name_members = collections.defaultdict(set)
+        for i, o in enumerate(ops):
+            if o["_obj"]:
+                exact_key_members[(o["domain"], o["_ag"], frozenset(o["_obj"]))].add(i)
+            if o["_name"]:
+                exact_name_members[(o["domain"], frozenset(o["_name"]))].add(i)
+        cand = {i: exact_candidates(i) for i in range(len(ops))}
+    else:
+        cand = {i: candidates(i) for i in range(len(ops))}
     # union candidate graph for packing
     parent = list(range(len(ops)))
 
@@ -185,7 +212,7 @@ def main():
 
     manifest = []
     for wi, (scope, members) in enumerate(windows, 1):
-        wid = f"w{wi:03d}"
+        wid = f"{args.prefix}{wi:03d}"
         path = os.path.join(args.out, f"{wid}.tsv")
         member_set = set(members)
         extra = []  # candidate targets that are not themselves in this window

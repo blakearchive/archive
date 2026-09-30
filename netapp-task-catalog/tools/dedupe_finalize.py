@@ -51,6 +51,18 @@ def main():
     args = ap.parse_args()
     tasks = load_tasks(args.data)
     ops = [json.loads(l) for l in open(args.ops)]
+    # each task id once; tasks renamed "<id>-2" by extract_tasks.unique_ids
+    # after de-duplication ran join the operation of "<id>"
+    seen = set()
+    for o in ops:
+        o["tasks"] = [t for t in o["tasks"] if not (t in seen or seen.add(t))]
+    home = {t: i for i, o in enumerate(ops) for t in o["tasks"]}
+    for tid in tasks:
+        if tid not in home:
+            base = re.sub(r"-\d+$", "", tid)
+            if base in home:
+                ops[home[base]]["tasks"].append(tid)
+                home[tid] = home[base]
 
     domain_primary = {}
     per_domain = collections.defaultdict(collections.Counter)

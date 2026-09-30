@@ -874,7 +874,18 @@ def extract_repo(repo_dir: str, slug: str, loose: bool = False):
             continue
         tasks.extend(t)
         pages.append(info)
+    unique_ids(tasks)
     return meta, tasks, pages
+
+
+def unique_ids(tasks: list[dict]) -> None:
+    """A phased merge can produce the id of a sibling record on the same page;
+    later occurrences get a -2, -3, ... suffix (in extraction order)."""
+    seen = Counter()
+    for t in tasks:
+        seen[t["id"]] += 1
+        if seen[t["id"]] > 1:
+            t["id"] = f"{t['id']}-{seen[t['id']]}"
 
 
 def main():
