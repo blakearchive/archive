@@ -77,10 +77,18 @@ def tokens(text: str) -> set[str]:
     for w in words:
         if w in STOP:
             continue
-        if len(w) > 3 and w.endswith("s") and not w.endswith("ss"):
-            w = w[:-1]
-        out.add(w)
+        out.add(stem(w))
     return out
+
+
+def stem(w: str) -> str:
+    """Light suffix stripping: auditing -> audit, statistics -> statistic, policies -> policy."""
+    if len(w) <= 4:
+        return w
+    for suf, rep in (("ies", "y"), ("ing", ""), ("ations", ""), ("ation", ""), ("ed", ""), ("es", ""), ("s", "")):
+        if w.endswith(suf) and len(w) - len(suf) >= 3 and not w.endswith("ss"):
+            return w[: len(w) - len(suf)] + rep
+    return w
 
 
 def main():
@@ -90,6 +98,8 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--exact", action="store_true",
                     help="candidates = same domain + action family + object words (second pass)")
+    ap.add_argument("--pairwise", action="store_true",
+                    help="candidates = every pair in one domain + action family with overlapping object words (third pass)")
     ap.add_argument("--prefix", default="w", help="window id prefix")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
@@ -164,7 +174,43 @@ def main():
                 out.append((1.0, j))
         return sorted(out)[:8]
 
-    if args.exact:
+    def pairwise_candidates() -> dict[int, list[tuple[float, int]]]:
+        """Third pass: compare every pair of operations in one domain and action
+        family (no common-word skipping), so generic objects such as "volume"
+        still meet "FlexVol volume", "NFS volume", ..."""
+        groups = collections.defaultdict(list)
+        for i, o in enumerate(ops):
+            if o["kind"] != "not_a_task":
+                key = ("Solutions" if o["_solution"] else o["domain"], o["_ag"])
+                groups[key].append(i)
+        out = {i: [] for i in range(len(ops))}
+        for key, members in groups.items():
+            for x in range(len(members)):
+                i = members[x]
+                a, n1 = ops[i]["_obj"], ops[i]["_name"]
+                for y in range(x + 1, len(members)):
+                    j = members[y]
+                    if ops[i]["_solution"] and ops[j]["_solution"] and ops[i]["domain"] != ops[j]["domain"]:
+                        continue
+                    if ops[i]["_solution"] != ops[j]["_solution"] and not (ops[i]["_solution"] or ops[j]["_solution"]):
+                        continue
+                    b, n2 = ops[j]["_obj"], ops[j]["_name"]
+                    if not a or not b:
+                        continue
+                    inter = len(a & b)
+                    jac = inter / len(a | b)
+                    cont = inter / min(len(a), len(b))
+                    extra = len(a | b) - min(len(a), len(b))
+                    name_j = len(n1 & n2) / max(1, len(n1 | n2))
+                    if jac >= 0.5 or (cont == 1 and extra <= 2) or name_j >= 0.6:
+                        score = round(max(jac, name_j, 0.7 if cont == 1 else 0), 2)
+                        out[i].append((score, j))
+                        out[j].append((score, i))
+        return {i: sorted(v, reverse=True)[:6] for i, v in out.items()}
+
+    if args.pairwise:
+        cand = pairwise_candidates()
+    elif args.exact:
         exact_key_members = collections.defaultdict(set)
         exact_name_members = collections.defaultdict(set)
         for i, o in enumerate(ops):
