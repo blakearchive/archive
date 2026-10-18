@@ -320,7 +320,7 @@ class BlakeDocumentImporter(BlakeImporter):
             try:
                 self.copy_importer.process(matching_file)
             except Exception as err:
-                logger.error("Error processing BAD [%s]: %s" % (matching_file, err))
+                logger.exception("Error processing BAD [%s]: %s" % (matching_file, err))
 
     # region Relationship processing
     def process_relationships(self):
@@ -693,7 +693,8 @@ class BlakeObjectImporter(BlakeImporter):
     def process(self, element):
         obj = models.BlakeObject()
         obj.desc_id = element.attrib.get("id").lower()
-        obj.butnumber = re.split('\.|t', obj.desc_id)[1]
+        id_parts = re.split('\.|t', obj.desc_id)
+        obj.butnumber = id_parts[1] if len(id_parts) > 1 else None
         obj.dbi = element.attrib.get("dbi").lower()
         obj.components = self.get_components(element)
         obj.characteristics = self.get_characteristics(element)
@@ -751,10 +752,13 @@ class BlakeObjectImporter(BlakeImporter):
                 return element_dict
 
         def generate_illustration(ill):
+            illusobjdesc = ill.xpath("./illusobjdesc")
+            if not illusobjdesc:
+                logger.warning("Illustration missing <illusobjdesc>: %s", etree.tostring(ill).decode())
             return {
                 'type': ill.attrib["type"] if 'type' in ill.attrib else "",
                 'location': ill.attrib["location"] if 'location' in ill.attrib else "",
-                '#text': etree.tostring(cls.transform(ill.xpath("./illusobjdesc")[0])).decode(),
+                '#text': etree.tostring(cls.transform(illusobjdesc[0])).decode() if illusobjdesc else "",
                 'components': [generate_component(c) for c in ill.xpath("./component")]
             }
 
@@ -801,7 +805,9 @@ class BlakeObjectImporter(BlakeImporter):
             parent = note.xpath('parent::l')
             text_note_images = note.xpath(".//illus")
             if len(parent):
-                line = parent[0].attrib["n"].rsplit(".", 1)[1]
+                n_attrib = parent[0].attrib.get("n", "")
+                n_parts = n_attrib.rsplit(".", 1)
+                line = n_parts[1] if len(n_parts) > 1 else n_parts[0]
                 if len(text_note_images):
                     for text_note_image in text_note_images:
                         text_note_image_filenames.append(text_note_image.attrib["filename"])
