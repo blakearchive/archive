@@ -16,7 +16,12 @@
     
     <div class="container-fluid main" id="search">
 
-         
+        <div class="alert alert-info" role="note">
+            To see all objects in a series or copy that responds to the term(s) searched, click on the first object.
+            A new window will open. All other objects in the series or copy yielding hits to your search will appear
+            in the scrollable left column.
+        </div>
+
         <div ng-if="search.s.queryString == ''" style="padding-top:20px; text-align:center; color:white">Search string with stopwords removed: <span style="color:yellow">NULL<span></div>
         <div ng-if="!search.s.queryString == ''" style="padding-top:20px; text-align:center; color:white">Search string with stopwords removed: <i style="color:yellow">{{search.s.queryString}}</i></div>
 
