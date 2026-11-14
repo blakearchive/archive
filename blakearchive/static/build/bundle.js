@@ -40480,33 +40480,34 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
             blakeData.work = data[0];
             //console.log(data[0]);
             blakeData.workCopies = data[1];
-            blakeData.setRelatedWorkObjectLinks();
-            if (blakeData.work.virtual == true) {
-                return blakeData.getObjectsForCopy(blakeData.workCopies[0].bad_id).then(function (data) {
+            return blakeData.setRelatedWorkObjectLinks().then(function () {
+                if (blakeData.work.virtual == true) {
+                    return blakeData.getObjectsForCopy(blakeData.workCopies[0].bad_id).then(function (data) {
 
-                    blakeData.workCopies = data;
+                        blakeData.workCopies = data;
 
-                    if (blakeData.work.bad_id == 'letters' || blakeData.work.bad_id == 'shakespearewc') {
+                        if (blakeData.work.bad_id == 'letters' || blakeData.work.bad_id == 'shakespearewc') {
 
-                        var objectGroup = {},
-                            objectArray = [];
+                            var objectGroup = {},
+                                objectArray = [];
 
-                        blakeData.workCopies.forEach(obj => {
-                            if (!angular.isDefined(objectGroup[obj.object_group])) {
-                                objectGroup[obj.object_group] = obj;
-                            }
-                        });
+                            blakeData.workCopies.forEach(obj => {
+                                if (!angular.isDefined(objectGroup[obj.object_group])) {
+                                    objectGroup[obj.object_group] = obj;
+                                }
+                            });
 
-                        angular.forEach(objectGroup, function (v) {
-                            objectArray.push(v);
-                        });
+                            angular.forEach(objectGroup, function (v) {
+                                objectArray.push(v);
+                            });
 
-                        blakeData.workCopies = objectArray;
-                    } else {
-                        blakeData.workCopies = blakeData.numberVirtualWorkObjects(blakeData.workCopies);
-                    }
-                });
-            }
+                            blakeData.workCopies = objectArray;
+                        } else {
+                            blakeData.workCopies = blakeData.numberVirtualWorkObjects(blakeData.workCopies);
+                        }
+                    });
+                }
+            });
         });
     };
 
@@ -40534,14 +40535,18 @@ angular.module("blake").factory("BlakeDataService", ["$rootScope", "$log", "$htt
                             var matchingObject = data.filter(function (o) {
                                 return o.desc_id == descId;
                             });
-                            if (matchingObject.length > 0 && matchingObject[0].copy_bad_id) {
-                                blakeData.work.related_works[key].link = '/copy/' + matchingObject[0].copy_bad_id + '?descId=' + descId;
+                            if (matchingObject.length > 0) {
+                                var copyId = matchingObject[0].virtualwork_id || matchingObject[0].copy_bad_id;
+                                if (copyId) {
+                                    blakeData.work.related_works[key].link = '/copy/' + copyId + '?descId=' + descId;
+                                }
                             }
                         }
                     });
                 });
             }
         }
+        return $q.when();
     };
 
     blakeData.setWorkNoCopies = function (workId) {
