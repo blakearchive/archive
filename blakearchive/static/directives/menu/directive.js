@@ -117,6 +117,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
     vm.alphabetizeAll = function(data) {
 
         if (!data) { return; }
+        data = data.slice();
         // Create a sortTitle for each work, do not mutate menuTitle
         data.forEach(function(work) {
             if (!work.menuTitle || typeof work.menuTitle !== 'string') {
@@ -163,6 +164,7 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
 
     vm.orderByCompDateAll = function(data) {
         if (!data) { return; }
+        data = data.slice();
         data.sort(function(a, b) { 
             if(a.composition_date_value < b.composition_date_value) return -1;
             if(a.composition_date_value > b.composition_date_value) return 1;
