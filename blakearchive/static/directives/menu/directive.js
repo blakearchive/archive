@@ -118,45 +118,18 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
 
         if (!data) { return; }
         data = data.slice();
-        // Create a sortTitle for each work, do not mutate menuTitle
         data.forEach(function(work) {
             if (!work.menuTitle || typeof work.menuTitle !== 'string') {
                 work.sortTitle = '';
                 return;
             }
-            let t = work.menuTitle;
-            // Apply all the sorting transformations to sortTitle only
-            if(t.match(/^The /)) t = t.replace(/^The /,"") + ", The";
-            if(t.match(/^A /)) t = t.replace(/^A /,"") + ", A";
-            if(t.match(/^An /)) t = t.replace(/^An /,"") + ", An";
-            if(t.match(/^\"A Fairy leapt"/)) t = '"Fairy leapt, A"';
-            if(t.match(/^Illustrations to the /)) t = t.replace(/^Illustrations to the /,"") + ", Illustrations to the";
-            if(t.match(/^Illustrations to /)) t = t.replace(/^Illustrations to /,"") + ", Illustrations to";
-            if(t.match(/^Preliminary Illustrations to /)) t = t.replace(/^Preliminary Illustrations to /,"") + ", Preliminary Illustrations to";
-            if(t.match(/^Drawings for \"The Pastorals of Virgil"/)) t = '"Pastorals of Virgil, The", Drawings for';
-            if(t.match(/^Drawings for Mary Wollstonecraft's/)) t = "Wollstonecraft's, Mary, Original Stories from Real Life, Drawings for";
-            if(t.match(/^Drawings for /)) t = t.replace(/^Drawings for /,"") + ", Drawings for";
-            if(t.match(/^Blake's Illustrations of /)) t = t.replace(/^Blake's Illustrations of /,"") + ", Blake's Illustrations of";
-            if(t.match(/^Blake's /)) t = t.replace(/^Blake's /,"") + ", Blake's";
-            if(t.match(/^Twelve Illustrations to /)) t = t.replace(/^Twelve Illustrations to /,"") + ", Twelve Illustrations to";
-            if(t.match(/^William Hayley/)) t = "Hayley, William" + t.replace(/^William Hayley/,"");
-            if(t.match(/^John Flaxman /)) t = "Flaxman, John" + t.replace(/^John Flaxman/,"");
-            if(t.match(/^John Gabriel Stedman/)) t = "Stedman, John Gabriel" + t.replace(/^John Gabriel Stedman/,"");
-            if(t.match(/^Mary Wollstonecraft/)) t = "Wollstonecraft, Mary" + t.replace(/^Mary Wollstonecraft/,"");
-            if(t.match(/^Edward Young's/)) t = "Young's, Edward," + t.replace(/^Edward Young's/,"");
-            if(t.match(/^Edward Young/)) t = "Young, Edward" + t.replace(/^Edward Young/,"");
-            if(t.match(/^Portrait of George Romney/)) t = "Romney, George, Portrait of";
-            if(t.match(/^Robert Blair's/)) t = "Blair's, Robert," + t.replace(/^Robert Blair's/,"");
-            if(t.match(/^Robert Blair/)) t = "Blair, Robert" + t.replace(/^Robert Blair/,"");
-            if(t.match(/^Sketches for Robert Blair's \"The Grave"/)) t = 'Blair\'s, Robert, "The Grave," Sketches for';
-            work.sortTitle = t.replace(/[",']/g,"");
+            work.sortTitle = work.menuTitle
+                .replace(/^[\s"'“‘]+/, "")
+                .replace(/^(?:a|an|the)\s+/i, "");
         });
-        // Sort by sortTitle
         data.sort(function(a, b) {
             let at = a.sortTitle || '', bt = b.sortTitle || '';
-            if(at < bt) return -1;
-            if(at > bt) return 1;
-            return 0;
+            return at.localeCompare(bt, 'en', { sensitivity: 'base', ignorePunctuation: true });
         });
         vm.allWorksAlpha = data;
         $sessionStorage.allWorksAlpha = vm.allWorksAlpha;
@@ -237,6 +210,10 @@ angular.module("blake").controller("navMenu", function($scope, BlakeDataService,
         vm.lists = menus;
         //console.log(vm.lists);
         $sessionStorage.menus = menus;
+    }
+
+    if (vm.allWorksAlpha) {
+        vm.alphabetizeAll(vm.allWorksAlpha);
     }
 });
 
