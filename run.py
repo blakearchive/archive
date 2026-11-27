@@ -12,6 +12,12 @@ app.config["BLAKE_DATA_SERVICE"] = services.BlakeDataService
 models.db.init_app(app)
 
 
+@app.errorhandler(FileNotFoundError)
+def file_not_found(error):
+    """send_file raises FileNotFoundError for a missing image/icon/data file; answer 404, not 500."""
+    return "Not Found", 404
+
+
 @app.route('/images/<image>')
 def get_image(image=None):
     return send_file(config.local_image_path+image)
